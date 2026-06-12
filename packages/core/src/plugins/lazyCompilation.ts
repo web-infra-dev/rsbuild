@@ -38,6 +38,10 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
       }
 
       const { config } = environment;
+      // Lazy compilation needs the dev client to load the compiled modules.
+      if (!config.dev.hmr && !config.dev.liveReload) {
+        return;
+      }
 
       const options = config.dev?.lazyCompilation;
       if (!options) {

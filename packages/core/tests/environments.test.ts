@@ -390,4 +390,34 @@ describe('environment config', () => {
     expect(matchPlugin(configs[0], 'HotModuleReplacementPlugin')).toBeFalsy();
     expect(matchPlugin(configs[1], 'HotModuleReplacementPlugin')).toBeTruthy();
   });
+
+  it('should skip lazy compilation when environment disables hmr and liveReload', async () => {
+    rs.stubEnv('NODE_ENV', 'development');
+    const rsbuild = await createRsbuild({
+      config: {
+        dev: {
+          lazyCompilation: true,
+        },
+        environments: {
+          web: {
+            dev: {
+              hmr: false,
+              liveReload: false,
+            },
+          },
+          web2: {
+            dev: {
+              hmr: false,
+              liveReload: true,
+            },
+          },
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs({ action: 'dev' });
+
+    expect(configs[0].lazyCompilation).toBeFalsy();
+    expect(configs[1].lazyCompilation).toBeTruthy();
+  });
 });
