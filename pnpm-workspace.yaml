@@ -177,6 +177,8 @@ minimumReleaseAgeExclude:
   - '@rstest/*'
   - '@rsdoctor/*'
   - '@rslint/*'
+  - '@tailwindcss/*'
+  - 'tailwindcss'
   - 'reduce-configs'
   - '@rstack-dev/doc-ui'
   - 'rsbuild-plugin-*'
