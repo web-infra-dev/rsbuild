@@ -1,22 +1,10 @@
-import fs from 'node:fs';
-import path from 'node:path';
-
 import { expect, test } from '@e2e/helper';
-import fse from 'fs-extra';
 
-function copyPkgToNodeModules() {
-  const nodeModules = path.resolve(import.meta.dirname, 'node_modules');
-  const target = path.resolve(nodeModules, 'foo');
-
-  fse.removeSync(target);
-  fse.ensureDirSync(nodeModules);
-  fs.cpSync(path.resolve(import.meta.dirname, 'foo'), target, {
-    recursive: true,
-  });
-}
-
-test('should support ignoreEsComponent and ignoreStyleComponent', async ({ build }) => {
-  copyPkgToNodeModules();
+test('should support ignoreEsComponent and ignoreStyleComponent', async ({
+  build,
+  copyNodeModules,
+}) => {
+  await copyNodeModules();
 
   const rsbuild = await build({
     config: {
