@@ -35,8 +35,6 @@ import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 
-const ENVIRONMENT_API_HOOK_STAGE = -10000;
-
 type ExtractSocketMessageData<T extends ServerMessage['type']> = 'data' extends keyof Extract<
   ServerMessage,
   { type: T }
@@ -128,34 +126,27 @@ export async function createDevServer<
 
     context.publicPathnames = getPublicPathnames(publicPaths, config.server.base);
 
+    const hookOptions = {
+      name: 'rsbuild:environment-api',
+      // Reset API state before user watchRun hooks can read stale environment stats.
+      stage: -10000,
+    };
     if (isMultiCompiler(compiler)) {
       compiler.compilers.forEach((compiler, index) => {
-        compiler.hooks.watchRun.tap(
-          { name: 'rsbuild:environment-api', stage: ENVIRONMENT_API_HOOK_STAGE },
-          () => {
-            compileState.reset(index);
-          },
-        );
-        compiler.hooks.done.tap(
-          { name: 'rsbuild:environment-api', stage: ENVIRONMENT_API_HOOK_STAGE },
-          (stats) => {
-            compileState.done(index, stats);
-          },
-        );
+        compiler.hooks.watchRun.tap(hookOptions, () => {
+          compileState.reset(index);
+        });
+        compiler.hooks.done.tap(hookOptions, (stats) => {
+          compileState.done(index, stats);
+        });
       });
     } else {
-      compiler.hooks.watchRun.tap(
-        { name: 'rsbuild:environment-api', stage: ENVIRONMENT_API_HOOK_STAGE },
-        () => {
-          compileState.reset(0);
-        },
-      );
-      compiler.hooks.done.tap(
-        { name: 'rsbuild:environment-api', stage: ENVIRONMENT_API_HOOK_STAGE },
-        (stats) => {
-          compileState.done(0, stats);
-        },
-      );
+      compiler.hooks.watchRun.tap(hookOptions, () => {
+        compileState.reset(0);
+      });
+      compiler.hooks.done.tap(hookOptions, (stats) => {
+        compileState.done(0, stats);
+      });
     }
 
     const buildManager = new BuildManager({
