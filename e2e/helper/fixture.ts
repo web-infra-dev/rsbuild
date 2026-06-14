@@ -57,6 +57,8 @@ type RunBoth = (
   options?: DevOptions | BuildOptions,
 ) => Promise<void>;
 
+type CopyNodeModules = () => Promise<string>;
+
 type RsbuildFixture = {
   /**
    * Absolute working directory of the current test file.
@@ -91,6 +93,13 @@ type RsbuildFixture = {
    * Copies the source directory to a temporary directory for testing purposes.
    */
   copySrcDir: () => Promise<string>;
+  /**
+   * Copy _node_modules to node_modules in the test file's cwd.
+   * @returns The copied node_modules path.
+   * @example
+   * await copyNodeModules();
+   */
+  copyNodeModules: CopyNodeModules;
   /**
    * Start the dev server and auto-navigate the Playwright page.
    * Uses the test file's cwd.
@@ -340,6 +349,17 @@ export const test = base.extend<RsbuildFixture>({
       return targetDir;
     };
     await use(copySrcDir);
+  },
+
+  copyNodeModules: async ({ cwd }, use) => {
+    const copyNodeModules: CopyNodeModules = async () => {
+      const targetDir = path.join(cwd, 'node_modules');
+      await fse.remove(targetDir);
+      await fse.copy(path.join(cwd, '_node_modules'), targetDir);
+      return targetDir;
+    };
+
+    await use(copyNodeModules);
   },
 });
 

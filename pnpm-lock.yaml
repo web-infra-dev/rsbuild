@@ -654,10 +654,6 @@ importers:
         specifier: 'catalog:'
         version: 3.5.35(typescript@6.0.3)
 
-  e2e/cases/resolve/condition-names/package-foo: {}
-
-  e2e/cases/resolve/main-fields/package-foo: {}
-
   e2e/cases/resolve/node-imports-field: {}
 
   e2e/cases/resolve/pkg-imports: {}
