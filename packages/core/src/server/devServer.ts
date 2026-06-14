@@ -9,10 +9,10 @@ import type {
   EnvironmentAPI,
   InternalContext,
   NormalizedConfig,
-  Rspack,
 } from '../types';
 import { BuildManager } from './buildManager';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
+import { createCompileState } from './compileState';
 import { type GetDevMiddlewaresResult, getDevMiddlewares } from './devMiddlewares';
 import { createCacheableFunction, getTransformedHtml, loadBundle } from './environment';
 import { registerCleanup, removeCleanup, setupGracefulShutdown } from './gracefulShutdown';
@@ -111,37 +111,7 @@ export async function createDevServer<
     https: isHttps,
   };
 
-  let lastStats: Rspack.Stats[];
-
-  let waitLastCompileDoneResolve: (() => void) | null = null;
-  let waitLastCompileDone = new Promise<void>((resolve) => {
-    waitLastCompileDoneResolve = resolve;
-  });
-
-  const resetWaitLastCompileDone = () => {
-    // No need to reset if lastStats is not set
-    if (!lastStats) {
-      return;
-    }
-
-    // Resolve the previous promise if it exists
-    if (waitLastCompileDoneResolve) {
-      waitLastCompileDoneResolve();
-      waitLastCompileDoneResolve = null;
-    }
-    waitLastCompileDone = new Promise<void>((resolve) => {
-      waitLastCompileDoneResolve = resolve;
-    });
-  };
-
-  // should register onAfterDevCompile hook before startCompile
-  context.hooks.onAfterDevCompile.tap(({ stats }) => {
-    lastStats = 'stats' in stats ? stats.stats : [stats];
-    if (waitLastCompileDoneResolve) {
-      waitLastCompileDoneResolve();
-      waitLastCompileDoneResolve = null;
-    }
-  });
+  const compileState = createCompileState(context.environmentList.length);
 
   const startCompile: () => Promise<BuildManager> = async () => {
     const compiler = await createCompiler();
@@ -156,9 +126,23 @@ export async function createDevServer<
 
     context.publicPathnames = getPublicPathnames(publicPaths, config.server.base);
 
-    compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
-      resetWaitLastCompileDone();
-    });
+    if (isMultiCompiler(compiler)) {
+      compiler.compilers.forEach((compiler, index) => {
+        compiler.hooks.watchRun.tap({ name: 'rsbuild:environment-api', stage: -10000 }, () => {
+          compileState.reset(index);
+        });
+        compiler.hooks.done.tap({ name: 'rsbuild:environment-api', stage: -10000 }, (stats) => {
+          compileState.done(index, stats);
+        });
+      });
+    } else {
+      compiler.hooks.watchRun.tap({ name: 'rsbuild:environment-api', stage: -10000 }, () => {
+        compileState.reset(0);
+      });
+      compiler.hooks.done.tap({ name: 'rsbuild:environment-api', stage: -10000 }, (stats) => {
+        compileState.done(0, stats);
+      });
+    }
 
     const buildManager = new BuildManager({
       context,
@@ -284,15 +268,14 @@ export async function createDevServer<
         if (!state.buildManager) {
           throw new Error(getErrorMsg('getStats'));
         }
-        await waitLastCompileDone;
-        return lastStats[index];
+        return compileState.wait(index);
       },
       loadBundle: async <T>(entryName: string) => {
         if (!state.buildManager) {
           throw new Error(getErrorMsg('loadBundle'));
         }
-        await waitLastCompileDone;
-        return cacheableLoadBundle(lastStats[index], entryName, {
+        const stats = await compileState.wait(index);
+        return cacheableLoadBundle(stats, entryName, {
           readFileSync: state.buildManager.readFileSync,
           environment,
         }) as T;
@@ -301,8 +284,8 @@ export async function createDevServer<
         if (!state.buildManager) {
           throw new Error(getErrorMsg('getTransformedHtml'));
         }
-        await waitLastCompileDone;
-        return cacheableTransformedHtml(lastStats[index], entryName, {
+        const stats = await compileState.wait(index);
+        return cacheableTransformedHtml(stats, entryName, {
           readFileSync: state.buildManager.readFileSync,
           environment,
         });
