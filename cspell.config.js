@@ -3,6 +3,7 @@ import { banWords } from 'cspell-ban-words';
 export default {
   version: '0.2',
   language: 'en',
+  useGitignore: true,
   files: ['**/*.{ts,tsx,js,jsx,md,mdx}'],
   enableFiletypes: ['mdx'],
   ignoreRegExpList: [
@@ -19,9 +20,6 @@ export default {
     'doc_build',
     'node_modules',
     'pnpm-lock.yaml',
-    '.agents/skills/create-draft-release-notes',
-    '.agents/skills/pr-creator',
-    '.agents/skills/rspress-description-generator',
     'README.pt-BR.md',
   ],
   flagWords: banWords,
