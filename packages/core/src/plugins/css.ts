@@ -440,6 +440,14 @@ export const pluginCss = (): RsbuildPlugin => ({
               importLoaders: importLoaders.normal,
             };
           }
+
+          // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
+          if (!emitCss && type === 'main') {
+            rule.use(CHAIN_ID.USE.IGNORE_CSS).options({
+              modules: finalOptions.modules,
+            });
+          }
+
           rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
 
           if (type !== 'url') {

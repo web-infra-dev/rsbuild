@@ -1140,6 +1140,16 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "use": [
               {
                 "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
+                "options": {
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "exportOnlyLocals": true,
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                },
               },
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
