@@ -9,6 +9,11 @@ import {
   type RslintTemplateName,
   select,
 } from 'create-rstack';
+import {
+  addPluginsToRsbuildConfig,
+  reactCompilerPlugin,
+  tailwindcssPlugin,
+} from './rsbuildConfig.js';
 
 const frameworkAlias: Record<string, string> = {
   vue3: 'vue',
@@ -144,13 +149,14 @@ create({
       label: 'React Compiler - optimization',
       order: 'pre',
       when: ({ templateName }) => ['react-js', 'react-ts'].includes(templateName),
-      action: ({ templateName, distFolder }) => {
+      action: async ({ templateName, distFolder }) => {
         const toolFolder = path.join(root, 'template-react-compiler');
         copyFolder({
           from: path.join(toolFolder, templateName),
           to: distFolder,
           isMergePackageJson: true,
         });
+        await addPluginsToRsbuildConfig(distFolder, [reactCompilerPlugin]);
       },
     },
     {
@@ -174,6 +180,8 @@ create({
             break;
           }
         }
+
+        await addPluginsToRsbuildConfig(distFolder, [tailwindcssPlugin]);
       },
     },
     {
