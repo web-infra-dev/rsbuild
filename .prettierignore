@@ -1,0 +1,16 @@
+# Ignore artifacts:
+dist
+compiled
+doc_build
+pnpm-lock.yaml
+skills-lock.yaml
+.agents/skills/create-draft-release-notes
+.agents/skills/pr-creator
+.agents/skills/rspress-description-generator
+
+# Avoid syntax error
+e2e/cases/plugin-less/inline-js/src/*.less
+e2e/cases/browser-logs/skip-build-error/src/**
+
+# To use uppercase DOCTYPE
+packages/create-rsbuild/**/*.html

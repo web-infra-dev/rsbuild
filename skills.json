@@ -1,0 +1,16 @@
+{
+  "$schema": "https://unpkg.com/skills-package-manager@0.11.0/skills.schema.json",
+  "installDir": ".agents/skills",
+  "linkTargets": [],
+  "skills": {
+    "add-doc-anchor-ids": "local:*",
+    "create-draft-release-notes": "https://github.com/rstackjs/agent-skills.git#path:/skills/create-draft-release-notes",
+    "docs-en-improvement": "local:*",
+    "pr-creator": "https://github.com/rstackjs/agent-skills.git#path:/skills/pr-creator",
+    "release-core": "local:*",
+    "rspress-description-generator": "https://github.com/rstackjs/agent-skills.git#path:/skills/rspress-description-generator",
+    "sync-zh-en-docs": "local:*",
+    "upgrade-rspack": "local:*",
+    "write-e2e-cases": "local:*"
+  }
+}

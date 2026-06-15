@@ -166,3 +166,4 @@ vnode
 watchpack
 webm
 webp
+worktree

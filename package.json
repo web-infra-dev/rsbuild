@@ -14,7 +14,7 @@
     "format": "oxfmt . && heading-case --write",
     "lint": "rslint --type-check",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
-    "prepare": "simple-git-hooks && node --run prebundle && node --run build",
+    "prepare": "skills-package-manager install && simple-git-hooks && node --run prebundle && node --run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "rstest",
     "test:watch": "rstest watch"
@@ -32,6 +32,7 @@
     "nano-staged": "catalog:",
     "oxfmt": "catalog:",
     "simple-git-hooks": "catalog:",
+    "skills-package-manager": "catalog:",
     "typescript": "catalog:"
   },
   "simple-git-hooks": {
