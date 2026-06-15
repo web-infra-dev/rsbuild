@@ -48,6 +48,7 @@ While Rsbuild delivers excellent build performance out of the box, certain JavaS
 
 - [@rsbuild/plugin-babel](/plugins/list/plugin-babel): This plugin uses Babel. We recommend using the more performant [SWC](/guide/configuration/swc) for code transformation instead.
 - [@rsbuild/plugin-less](/plugins/list/plugin-less): The Less compiler has relatively poor performance. Consider using [@rsbuild/plugin-sass](/plugins/list/plugin-sass) or other performant CSS solutions instead.
+- [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check): The default TypeScript-based type-checking approach has relatively poor performance. We recommend enabling experimental [typescript-go support](https://github.com/rstackjs/rsbuild-plugin-type-check#typescript-go-support) to improve type-checking performance.
 - [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin) or [minimizer-webpack-plugin](https://www.npmjs.com/package/minimizer-webpack-plugin): You can replace Terser with faster minimizers like Rsbuild's built-in [SWC](/guide/configuration/swc) minifier.
 
 ## Development optimization
