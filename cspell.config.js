@@ -19,6 +19,7 @@ export default {
     'doc_build',
     'node_modules',
     'pnpm-lock.yaml',
+    '.agents/skills',
     'README.pt-BR.md',
   ],
   flagWords: banWords,

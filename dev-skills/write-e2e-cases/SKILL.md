@@ -3,7 +3,7 @@ name: write-e2e-cases
 description: Use when adding or updating Rsbuild end-to-end tests in `e2e/cases`, including new feature coverage, bug reproduction, and regression prevention.
 ---
 
-# Write E2E Cases
+# Write E2E cases
 
 ## Steps
 
@@ -19,7 +19,7 @@ description: Use when adding or updating Rsbuild end-to-end tests in `e2e/cases`
 
 6. Run `pnpm e2e` to validate.
 
-## Case Structure
+## Case structure
 
 - Include a `src` directory in every case (required).
 - Prefer putting static Rsbuild configurations in `rsbuild.config.ts` to enable easier debugging via `npx rsbuild`.

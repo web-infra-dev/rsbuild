@@ -127,6 +127,7 @@ catalog:
   'sass-embedded': '^1.100.0'
   'sass-loader': '^16.0.8'
   'simple-git-hooks': '^2.13.1'
+  'skills-package-manager': '0.11.0'
   'sirv': '^3.0.2'
   'solid-js': '^1.9.13'
   'solid-refresh': '^0.6.3'
