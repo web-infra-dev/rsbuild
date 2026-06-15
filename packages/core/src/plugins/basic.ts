@@ -30,11 +30,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
       // Disable performance hints, these logs are too complex
       chain.performance.hints(false);
 
-      chain.experiments({
-        ...chain.get('experiments'),
-        pureFunctions: true,
-      });
-
       chain.module.parser.merge({
         javascript: {
           typeReexportsPresence: 'tolerant',
