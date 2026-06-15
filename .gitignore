@@ -22,6 +22,9 @@ tsconfig.tsbuildinfo
 # Test temp files
 test-temp-*
 
+# skills-package-manager
+.agents/skills
+
 .vscode/**/*
 !.vscode/settings.json
 !.vscode/extensions.json

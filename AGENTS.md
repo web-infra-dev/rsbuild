@@ -35,6 +35,7 @@ pnpm e2e css
 packages/core/              # core + CLI
 packages/plugin-*/          # official plugins
 packages/create-rsbuild/    # scaffolding tool
+dev-skills/                 # repo-owned skill sources
 e2e/                        # end-to-end tests
 examples/                   # runnable examples
 website/                    # docs site
