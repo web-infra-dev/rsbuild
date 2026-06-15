@@ -70,7 +70,7 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> = async f
 ) {
   const options = this.getOptions();
 
-  if (isCSSModules(options.modules, this.resourcePath, this.resourceQuery, this.resourceFragment)) {
+  if (isCSSModules(options.modules, this)) {
     throw new Error(
       '[rsbuild:css] CSS Modules do not support the ?url query. Use ?inline to import the compiled CSS content as a string.',
     );

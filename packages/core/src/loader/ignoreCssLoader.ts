@@ -23,7 +23,7 @@ const ignoreCssLoader: LoaderDefinition<IgnoreCssLoaderOptions> = function (sour
 export const pitch: PitchLoaderDefinitionFunction<IgnoreCssLoaderOptions> = function () {
   const { modules } = this.getOptions();
 
-  if (isCSSModules(modules, this.resourcePath, this.resourceQuery, this.resourceFragment)) {
+  if (isCSSModules(modules, this)) {
     return;
   }
 
