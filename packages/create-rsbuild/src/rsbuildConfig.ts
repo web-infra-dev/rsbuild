@@ -43,6 +43,8 @@ const cache = new Map<string, ConfigState>();
 const configFiles = ['rsbuild.config.ts', 'rsbuild.config.js'];
 const indent = '  ';
 
+const normalize = (code: string) => code.replaceAll('\r\n', '\n');
+
 const getCall = ({ importName, call }: ConfigPlugin) => call ?? `${importName}()`;
 
 const addImport = (code: string, plugin: ConfigPlugin) => {
@@ -107,8 +109,9 @@ const addCalls = (code: string, plugins: ConfigPlugin[]) => {
     return addPluginsField(code, calls);
   }
 
-  if (lines[start].includes('],')) {
-    const rawCalls = /^\s*plugins: \[(.*)\],$/.exec(lines[start])?.[1]?.trim();
+  const pluginsLine = lines[start].trim();
+  if (pluginsLine.endsWith('],')) {
+    const rawCalls = /^plugins: \[(.*)\],$/.exec(pluginsLine)?.[1]?.trim();
     const oldCalls = rawCalls ? [rawCalls] : [];
     lines[start] = formatPlugins([...oldCalls, ...calls]);
     return lines.join('\n');
@@ -147,7 +150,8 @@ export const addPluginsToRsbuildConfig = async (dir: string, plugins: ConfigPlug
 
   const state = cache.get(dir) ?? {
     file,
-    base: await fs.promises.readFile(file, 'utf-8'),
+    // Normalize line endings before editing so string matching works on Windows.
+    base: normalize(await fs.promises.readFile(file, 'utf-8')),
     plugins: new Map<string, ConfigPlugin>(),
   };
 
