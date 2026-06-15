@@ -32,9 +32,6 @@ exports[`should apply default plugins correctly 1`] = `
 {
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
-  "experiments": {
-    "pureFunctions": true,
-  },
   "infrastructureLogging": {
     "level": "error",
   },
@@ -519,9 +516,6 @@ exports[`should apply default plugins correctly in production 1`] = `
 {
   "context": "<ROOT>",
   "devtool": false,
-  "experiments": {
-    "pureFunctions": true,
-  },
   "infrastructureLogging": {
     "level": "error",
   },
@@ -1036,9 +1030,6 @@ exports[`should apply default plugins correctly when target is node 1`] = `
 {
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
-  "experiments": {
-    "pureFunctions": true,
-  },
   "infrastructureLogging": {
     "level": "error",
   },
@@ -1513,9 +1504,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
 {
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
-  "experiments": {
-    "pureFunctions": true,
-  },
   "infrastructureLogging": {
     "level": "error",
   },
