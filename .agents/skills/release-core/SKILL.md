@@ -3,7 +3,7 @@ name: release-core
 description: Use when asked to release `@rsbuild/core` for a specific version.
 ---
 
-# Release core
+# Release Core
 
 ## Input
 
