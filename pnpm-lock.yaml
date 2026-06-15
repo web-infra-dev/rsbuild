@@ -347,8 +347,8 @@ catalogs:
       specifier: ^1.9.13
       version: 1.9.13
     solid-refresh:
-      specifier: ^0.6.3
-      version: 0.6.3
+      specifier: ^0.7.8
+      version: 0.7.8
     stacktrace-parser:
       specifier: ^0.1.11
       version: 0.1.11
@@ -1266,7 +1266,7 @@ importers:
         version: 1.9.12(@babel/core@7.29.7)(solid-js@1.9.13)
       solid-refresh:
         specifier: 'catalog:'
-        version: 0.6.3(solid-js@1.9.13)
+        version: 0.7.8(solid-js@1.9.13)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1415,7 +1415,7 @@ importers:
         version: 24.13.1
       rsbuild-plugin-arethetypeswrong:
         specifier: 'catalog:'
-        version: 0.3.1(@rsbuild/core@2.0.12)(typescript@6.0.3)
+        version: 0.3.1(@rsbuild/core@2.0.14)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -2486,8 +2486,8 @@ packages:
     engines: {node: '>=18.12.0'}
     hasBin: true
 
-  '@rsbuild/core@2.0.12':
-    resolution: {integrity: sha512-6f0M9TO4pAeM/VAshg9PajYK4IbfUB21Xun2kT0q3/SbBQ607KzkQZ6fmReuKUKCLbo26tGnbgg5P77eDDcfaA==}
+  '@rsbuild/core@2.0.14':
+    resolution: {integrity: sha512-SSPer6vM+v82CV6JXIOzyyT++A1ECgsVvvUuveD5rfGxX/W58vWGnB+zWcYbMfYOjTntD+9ve6QGGh6kBjPx6A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5449,8 +5449,8 @@ packages:
   solid-js@1.9.13:
     resolution: {integrity: sha512-6hJeJMOcEX8ktqjpDoJZEmld3ijvcvWBDtiXBm7f4332SiFN66QeAQI1REQshvyUoISsSeJ4PHDauKYbwao9JQ==}
 
-  solid-refresh@0.6.3:
-    resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
+  solid-refresh@0.7.8:
+    resolution: {integrity: sha512-iG442T3HXJp5jEebCy8okETrWnmX7CnxNOKrJQVeufh6WXSn+xtLXaptUXXMHTWcRqTJOJwQ8UwzxrRtVFSIzA==}
     peerDependencies:
       solid-js: ^1.3
 
@@ -6833,7 +6833,7 @@ snapshots:
       core-js: 3.47.0
       jiti: 2.7.0
 
-  '@rsbuild/core@2.0.12(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)':
+  '@rsbuild/core@2.0.14(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)':
     dependencies:
       '@rspack/core': 2.0.8(@module-federation/runtime-tools@2.5.1)(@swc/helpers@0.5.23)
       '@swc/helpers': 0.5.23
@@ -9868,11 +9868,11 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.4
       fsevents: 2.3.3
 
-  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.12)(typescript@6.0.3):
+  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.14)(typescript@6.0.3):
     dependencies:
       typescript: 6.0.3
     optionalDependencies:
-      '@rsbuild/core': 2.0.12(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+      '@rsbuild/core': 2.0.14(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
 
   rsbuild-plugin-dts@0.22.0(@rsbuild/core@2.0.8)(typescript@6.0.3):
     dependencies:
@@ -10140,14 +10140,11 @@ snapshots:
       seroval: 1.5.2
       seroval-plugins: 1.5.2(seroval@1.5.2)
 
-  solid-refresh@0.6.3(solid-js@1.9.13):
+  solid-refresh@0.7.8(solid-js@1.9.13):
     dependencies:
       '@babel/generator': 7.29.7
-      '@babel/helper-module-imports': 7.29.7
       '@babel/types': 7.29.7
       solid-js: 1.9.13
-    transitivePeerDependencies:
-      - supports-color
 
   sorted-array-functions@1.3.0: {}
 
