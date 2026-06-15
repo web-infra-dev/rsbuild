@@ -24,26 +24,6 @@ test-temp-*
 
 # skills-package-manager
 .agents/skills/*
-!.agents/skills/add-doc-anchor-ids
-!.agents/skills/docs-en-improvement
-!.agents/skills/release-core
-!.agents/skills/sync-zh-en-docs
-!.agents/skills/upgrade-rspack
-!.agents/skills/write-e2e-cases
-
-.vscode/**/*
-!.vscode/settings.json
-!.vscode/extensions.json
-.idea/
-.nx/
-.history/
-.env.local
-.env.*.local
-
-# ignore directory for artifacts produced by tests
-test-results/
-
-# Keep local skills tracked
 !.agents/
 !.agents/skills/
 !.agents/skills/add-doc-anchor-ids/
@@ -58,3 +38,15 @@ test-results/
 !.agents/skills/upgrade-rspack/**
 !.agents/skills/write-e2e-cases/
 !.agents/skills/write-e2e-cases/**
+
+.vscode/**/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+.nx/
+.history/
+.env.local
+.env.*.local
+
+# ignore directory for artifacts produced by tests
+test-results/
