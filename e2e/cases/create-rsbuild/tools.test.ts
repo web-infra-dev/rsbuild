@@ -6,7 +6,8 @@ import { createAndValidate } from './helper';
 const readCreatedFile = (dir: string, ...paths: string[]) => {
   const file = join(dir, ...paths);
   expect(existsSync(file)).toBeTruthy();
-  return readFileSync(file, 'utf-8');
+  // Windows writes generated fixtures with CRLF, but the expected snapshots use LF.
+  return readFileSync(file, 'utf-8').replaceAll('\r\n', '\n');
 };
 
 test('should create project with eslint as expected', async () => {
