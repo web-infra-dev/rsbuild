@@ -166,7 +166,7 @@ export async function createDevServer<
 
   const cliShortcutsEnabled = isCliShortcutsEnabled(config);
 
-  const printUrls = () =>
+  const printUrls = (options?: { showAllRoutes?: boolean }) =>
     printServerURLs({
       urls,
       port,
@@ -175,6 +175,7 @@ export async function createDevServer<
       printUrls: config.server.printUrls,
       fallbackPathname,
       trailingLineBreak: !cliShortcutsEnabled,
+      showAllRoutes: options?.showAllRoutes,
       originalConfig: context.originalConfig,
       logger,
     });

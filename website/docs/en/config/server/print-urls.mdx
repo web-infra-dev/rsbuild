@@ -12,8 +12,13 @@ type Routes = Array<{
   pathname: string;
 }>;
 
+type PrintUrlsOptions = {
+  maxRoutes?: number;
+};
+
 type PrintUrls =
   | boolean
+  | PrintUrlsOptions
   | ((params: {
       urls: string[];
       port: number;
@@ -32,6 +37,30 @@ By default, when you start the dev server or preview server, Rsbuild will print 
   ➜  Local:    http://localhost:3000
   ➜  Network:  use --host to expose
 ```
+
+## Limit entry URLs
+
+By default, Rsbuild prints up to 10 entry URLs. If the number of entries exceeds this limit, Rsbuild prints the remaining count:
+
+```
+  ... 5 more entries, press u + enter to show all
+```
+
+You can configure `maxRoutes` to change this limit:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls: {
+      maxRoutes: 20,
+    },
+  },
+};
+```
+
+Setting `maxRoutes` to `0` prints only the server URL without entry routes.
+
+The `maxRoutes` option only applies to the built-in URL output. If `server.printUrls` is a function, Rsbuild keeps the existing custom logging behavior.
 
 ## Custom logging
 
@@ -157,4 +186,5 @@ Output:
 
 | Version | Changes                    |
 | ------- | -------------------------- |
+| v2.0.16 | Support for `maxRoutes`    |
 | v1.5.17 | Support for custom `label` |

@@ -94,7 +94,7 @@ export async function startPreviewServer(
     return closingPromise;
   };
 
-  const printUrls = () =>
+  const printUrls = (options?: { showAllRoutes?: boolean }) =>
     printServerURLs({
       urls,
       port,
@@ -102,6 +102,7 @@ export async function startPreviewServer(
       protocol,
       printUrls: serverConfig.printUrls,
       trailingLineBreak: !cliShortcutsEnabled,
+      showAllRoutes: options?.showAllRoutes,
       originalConfig: context.originalConfig,
       logger,
     });
