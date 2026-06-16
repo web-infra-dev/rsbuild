@@ -103,10 +103,17 @@ const getPrintUrlsOptions = (printUrls: PrintUrls | undefined): PrintUrlsOptions
   return {};
 };
 
-const getMoreEntriesMessage = (moreEntries: number): string =>
-  `  ${color.dim(`... ${moreEntries} more entries, press `)}${color.bold('u + enter')}${color.dim(
-    ' to show all',
-  )}\n`;
+const getMoreEntriesMessage = (moreEntries: number, cliShortcutsEnabled: boolean): string => {
+  if (cliShortcutsEnabled) {
+    return `  ${color.dim(`... ${moreEntries} more entries, press `)}${color.bold(
+      'u + enter',
+    )}${color.dim(' to show all')}\n`;
+  }
+
+  return `  ${color.dim(`... ${moreEntries} more entries, set `)}${color.bold(
+    'server.printUrls.maxRoutes',
+  )}${color.dim(' to show more')}\n`;
+};
 
 export const isUrlPathUnderBase = (pathname: string, base: string): boolean => {
   const basePath = removeTailingSlash(base);
@@ -193,10 +200,12 @@ function getURLMessages(
   {
     maxRoutes = DEFAULT_MAX_ROUTES,
     showAllRoutes,
+    cliShortcutsEnabled,
   }: {
     maxRoutes?: number;
     showAllRoutes?: boolean;
-  } = {},
+    cliShortcutsEnabled: boolean;
+  },
 ) {
   const routeLimit = showAllRoutes ? Number.POSITIVE_INFINITY : normalizeMaxRoutes(maxRoutes);
   const printableRoutes = routeLimit === 0 ? [] : routes.slice(0, routeLimit);
@@ -215,7 +224,7 @@ function getURLMessages(
       .join('');
 
     if (moreEntries > 0) {
-      message += getMoreEntriesMessage(moreEntries);
+      message += getMoreEntriesMessage(moreEntries, cliShortcutsEnabled);
     }
 
     return message;
@@ -241,7 +250,7 @@ function getURLMessages(
   });
 
   if (moreEntries > 0) {
-    message += getMoreEntriesMessage(moreEntries);
+    message += getMoreEntriesMessage(moreEntries, cliShortcutsEnabled);
   }
 
   return message;
@@ -254,8 +263,8 @@ export function printServerURLs({
   protocol,
   printUrls,
   fallbackPathname,
-  trailingLineBreak = true,
   showAllRoutes,
+  cliShortcutsEnabled,
   originalConfig,
   logger,
 }: {
@@ -265,8 +274,8 @@ export function printServerURLs({
   protocol: string;
   printUrls?: PrintUrls;
   fallbackPathname?: string;
-  trailingLineBreak?: boolean;
   showAllRoutes?: boolean;
+  cliShortcutsEnabled: boolean;
   originalConfig?: Readonly<RsbuildConfig>;
   logger: Logger;
 }): string | null {
@@ -322,13 +331,14 @@ export function printServerURLs({
   let message = getURLMessages(urls, printableRoutes, {
     maxRoutes: useCustomUrl ? Number.POSITIVE_INFINITY : printUrlsOptions.maxRoutes,
     showAllRoutes,
+    cliShortcutsEnabled,
   });
 
   if (originalConfig && originalConfig.server?.host === undefined) {
     message += `  ➜  ${color.dim('Network:')}  ${color.dim('use')} ${color.bold('--host')} ${color.dim('to expose')}\n`;
   }
 
-  if (!trailingLineBreak && message.endsWith('\n')) {
+  if (cliShortcutsEnabled === true && message.endsWith('\n')) {
     message = message.slice(0, -1);
   }
 

@@ -48,6 +48,18 @@ test('should show all collapsed urls through shortcuts in dev', async ({ exec, l
   expectNoLog('more entries, press u + enter to show all');
 });
 
+test('should limit urls without shortcut help when shortcuts are disabled', async ({
+  exec,
+  logHelper,
+}) => {
+  exec('node ./devManyNoShortcuts.js');
+  const { expectLog, expectNoLog } = logHelper;
+
+  await expectLog('... 2 more entries, set server.printUrls.maxRoutes to show more');
+  expectNoLog('press h + enter to show shortcuts');
+  expectNoLog('press u + enter to show all');
+});
+
 test('should support custom shortcuts in dev', async ({ exec, logHelper }) => {
   const { childProcess } = exec('node ./devCustom.js');
   const { expectLog, clearLogs } = logHelper;
