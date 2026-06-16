@@ -389,6 +389,7 @@ catalogs:
 
 patchedDependencies:
   css-loader@7.1.4: b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019
+  dotenv-expand@13.0.0: 5ff37847fa487be2db4e4f14c2b21937f4e51cc7a43deea4506d4aaf3fa6149c
   postcss-loader@8.2.1: 4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14
 
 importers:
@@ -954,7 +955,7 @@ importers:
         version: 4.3.1
       dotenv-expand:
         specifier: 'catalog:'
-        version: 13.0.0
+        version: 13.0.0(patch_hash=5ff37847fa487be2db4e4f14c2b21937f4e51cc7a43deea4506d4aaf3fa6149c)
       html-rspack-plugin:
         specifier: 'catalog:'
         version: 6.1.9(@rspack/core@2.0.8)
@@ -8259,7 +8260,7 @@ snapshots:
       no-case: 3.0.4
       tslib: 2.8.1
 
-  dotenv-expand@13.0.0:
+  dotenv-expand@13.0.0(patch_hash=5ff37847fa487be2db4e4f14c2b21937f4e51cc7a43deea4506d4aaf3fa6149c):
     dependencies:
       dotenv: 17.4.2
 
