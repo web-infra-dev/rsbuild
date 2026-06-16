@@ -16,7 +16,17 @@ interface ExtWebSocket extends WebSocket {
 }
 
 function isEqualSet(a: Set<string>, b: Set<string>): boolean {
-  return a.size === b.size && [...a].every((value) => b.has(value));
+  if (a.size !== b.size) {
+    return false;
+  }
+
+  for (const value of a) {
+    if (!b.has(value)) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 const CHECK_SOCKETS_INTERVAL = 30000;
@@ -476,18 +486,23 @@ export class SocketServer {
 
   private getInitialChunks(stats: RsbuildStatsItem) {
     const initialChunks = new Set<string>();
+    const { entrypoints } = stats;
 
-    if (!stats.entrypoints) {
+    if (!entrypoints) {
       return initialChunks;
     }
 
-    for (const entrypoint of Object.values(stats.entrypoints)) {
-      const { chunks } = entrypoint;
-      if (Array.isArray(chunks)) {
-        for (const chunkName of chunks) {
-          if (chunkName) {
-            initialChunks.add(String(chunkName));
-          }
+    const entryNames = Object.keys(entrypoints);
+    for (let entryIndex = 0; entryIndex < entryNames.length; entryIndex++) {
+      const chunks = entrypoints[entryNames[entryIndex]]?.chunks;
+      if (!Array.isArray(chunks)) {
+        continue;
+      }
+
+      for (let index = 0; index < chunks.length; index++) {
+        const chunkName = chunks[index];
+        if (chunkName) {
+          initialChunks.add(typeof chunkName === 'string' ? chunkName : String(chunkName));
         }
       }
     }
