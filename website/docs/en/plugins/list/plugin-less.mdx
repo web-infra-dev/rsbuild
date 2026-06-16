@@ -129,9 +129,7 @@ pluginLess({
 - **Default:** `false`
 - **Version:** Added in v1.4.0
 
-Whether to enable parallel loader execution, running `less-loader` in worker threads. When enabled, this typically improves build performance when compiling large numbers of Less modules.
-
-Note that this option is experimental and may not work if your Less options contain functions.
+Whether to compile Less modules in parallel using worker threads. When enabled, Less modules are processed across multiple worker threads, reducing pressure on the main thread and improving overall build performance when compiling large numbers of Less modules.
 
 ```ts
 pluginLess({
@@ -139,7 +137,7 @@ pluginLess({
 });
 ```
 
-> See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
+> This feature is based on Rspack's parallel loader. Options transferred to worker threads must comply with the [HTML structured clone algorithm](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist). Otherwise, transmission will fail. For example, functions cannot be passed as options. See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
 
 ## Modifying Less version
 

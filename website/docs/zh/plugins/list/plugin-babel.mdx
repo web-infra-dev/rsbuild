@@ -251,6 +251,12 @@ pluginBabel({
 });
 ```
 
+:::tip
+当你配置 `include` 或 `exclude` 选项时，Rsbuild 会创建一条单独的 Rspack rule 来应用 babel-loader 和 swc-loader。
+
+这条单独的 rule 与 Rsbuild 内置的 SWC rule 是完全独立的，并且不会受到 [source.include](/config/source/include) 和 [source.exclude](/config/source/exclude) 的作用。
+:::
+
 ### exclude
 
 - **类型：** `string | RegExp | (string | RegExp)[]`
@@ -273,11 +279,9 @@ pluginBabel({
 
 - **类型：** `boolean`
 - **默认值：** `false`
-- **版本：** `>= 1.2.2`
+- **版本：** `>= 2.0.0`
 
-是否开启并行 loader 执行，在 worker 线程中运行 `babel-loader`。开启后，在编译大量模块时通常会有构建性能提升。
-
-注意该选项为实验性功能，当 Babel 选项中包含函数时可能无法正常工作。
+是否使用 worker 线程并行执行 Babel 转换。开启后，JavaScript 模块会被分配到多个 worker 线程中处理，降低主线程压力，并在编译大量模块时提升整体构建性能。
 
 ```ts
 pluginBabel({
@@ -285,13 +289,7 @@ pluginBabel({
 });
 ```
 
-> 详见 [Rspack - Rule.use.parallel](https://rspack.rs/zh/config/module-rules#rulesuseparallel)。
-
-:::tip
-当你配置 `include` 或 `exclude` 选项时，Rsbuild 会创建一条单独的 Rspack rule 来应用 babel-loader 和 swc-loader。
-
-这条单独的 rule 与 Rsbuild 内置的 SWC rule 是完全独立的，并且不会受到 [source.include](/config/source/include) 和 [source.exclude](/config/source/exclude) 的作用。
-:::
+> 该功能基于 Rspack 的 parallel loader 实现。传递给 worker 线程的选项必须符合 [HTML 结构化克隆算法](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist) 的要求，否则会传输失败。例如，不能将函数作为选项传递。详见 [Rspack - Rule.use.parallel](https://rspack.rs/zh/config/module-rules#rulesuseparallel)。
 
 ### 配置多个 Babel 规则
 

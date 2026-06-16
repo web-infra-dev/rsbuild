@@ -87,11 +87,14 @@ export type PluginLessOptions = {
    */
   exclude?: Rspack.RuleSetCondition;
   /**
-   * Whether to enable parallel loader execution, running `less-loader` in worker
-   * threads. When enabled, this typically improves build performance when compiling
-   * large numbers of Less modules.
-   * @experimental This is an experimental Rspack feature and will not work if your Less
-   * options contain functions.
+   * Whether to compile Less modules in parallel using worker threads. When enabled,
+   * Less modules are processed across multiple worker threads, reducing pressure on
+   * the main thread and improving overall build performance when compiling large
+   * numbers of Less modules.
+   *
+   * Options transferred to worker threads must comply with the HTML structured clone
+   * algorithm. For example, functions cannot be passed as options.
+   * @see https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist
    * @default false
    */
   parallel?: boolean;
