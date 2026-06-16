@@ -37,6 +37,16 @@ export type PluginSvgrOptions = {
   query?: RegExp;
 
   /**
+   * Whether to enable parallel loader execution, running SVGR loader in worker
+   * threads. When enabled, this typically improves build performance when compiling
+   * large numbers of SVG modules.
+   * @experimental This is an experimental Rspack feature and may not work if your SVGR
+   * options contain functions.
+   * @default false
+   */
+  parallel?: boolean;
+
+  /**
    * Exclude specific SVG files from SVGR transformation.
    */
   exclude?: Rspack.RuleSetCondition;
@@ -146,6 +156,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
   setup(api) {
     assertCoreVersion(api.context.version);
+    const { parallel = false } = options;
 
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
@@ -200,7 +211,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       }
 
       // force to react component: "foo.svg?react"
-      rule
+      const svgReactUse = rule
         .oneOf(CHAIN_ID.ONE_OF.SVG_REACT)
         .type('javascript/auto')
         .resourceQuery(options.query || /react/)
@@ -209,8 +220,11 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .options({
           ...svgrOptions,
           exportType: 'default',
-        } satisfies SvgrOptions)
-        .end();
+        } satisfies SvgrOptions);
+
+      if (parallel) {
+        svgReactUse.parallel(true);
+      }
 
       // SVG in JS files
       const { mixedImport = false } = options;
@@ -228,7 +242,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           svgRule.exclude.add(options.exclude);
         }
 
-        svgRule
+        const svgUse = svgRule
           .type('javascript/auto')
           // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
           .set('issuer', issuer)
@@ -237,8 +251,11 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           .options({
             ...svgrOptions,
             exportType,
-          })
-          .end();
+          });
+
+        if (parallel) {
+          svgUse.parallel(true);
+        }
 
         /**
          * For mixed import.
