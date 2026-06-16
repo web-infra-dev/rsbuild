@@ -374,14 +374,26 @@ export type HistoryApiFallbackOptions = {
   }[];
 };
 
+export type PrintUrlsParams = {
+  urls: string[];
+  port: number;
+  routes: Routes;
+  protocol: string;
+};
+
+export type PrintUrlsOptions = {
+  /**
+   * The maximum number of entry URLs to print.
+   * Set to `0` to print only the server URL without entry routes.
+   * @default 10
+   */
+  maxRoutes?: number;
+};
+
 export type PrintUrls =
   | boolean
-  | ((params: {
-      urls: string[];
-      port: number;
-      routes: Routes;
-      protocol: string;
-    }) => (string | { url: string; label?: string })[] | void);
+  | PrintUrlsOptions
+  | ((params: PrintUrlsParams) => (string | { url: string; label?: string })[] | void);
 
 export type PublicDirOptions = {
   /**

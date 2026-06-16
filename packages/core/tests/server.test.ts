@@ -301,6 +301,147 @@ test('should print server URLs correctly', () => {
   `);
 });
 
+test('should limit printed server routes correctly', () => {
+  let message: string | null;
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: Array.from({ length: 12 }, (_, index) => ({
+      entryName: `route${index}`,
+      pathname: `/route${index}`,
+    })),
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local
+      -  route0    http://localhost:3000/route0
+      -  route1    http://localhost:3000/route1
+      -  route2    http://localhost:3000/route2
+      -  route3    http://localhost:3000/route3
+      -  route4    http://localhost:3000/route4
+      -  route5    http://localhost:3000/route5
+      -  route6    http://localhost:3000/route6
+      -  route7    http://localhost:3000/route7
+      -  route8    http://localhost:3000/route8
+      -  route9    http://localhost:3000/route9
+      ... 2 more entries, press u + enter to show all
+    "
+  `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+      {
+        entryName: 'foo',
+        pathname: '/foo',
+      },
+      {
+        entryName: 'bar',
+        pathname: '/bar',
+      },
+    ],
+    printUrls: {
+      maxRoutes: 2,
+    },
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local
+      -  index    http://localhost:3000/
+      -  foo      http://localhost:3000/foo
+      ... 1 more entries, press u + enter to show all
+    "
+  `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+      {
+        entryName: 'foo',
+        pathname: '/foo',
+      },
+    ],
+    printUrls: {
+      maxRoutes: 0,
+    },
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local     http://localhost:3000
+    "
+  `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+      {
+        entryName: 'foo',
+        pathname: '/foo',
+      },
+      {
+        entryName: 'bar',
+        pathname: '/bar',
+      },
+    ],
+    printUrls: {
+      maxRoutes: 1,
+    },
+    showAllRoutes: true,
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local
+      -  index    http://localhost:3000/
+      -  foo      http://localhost:3000/foo
+      -  bar      http://localhost:3000/bar
+    "
+  `);
+});
+
 describe('dev server', () => {
   test('should detect client compilers correctly', () => {
     expect(isClientCompiler(rspack({}))).toBeTruthy();

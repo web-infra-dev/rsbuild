@@ -14,6 +14,7 @@ import type {
   NormalizedConfig,
   OutputStructure,
   PrintUrls,
+  PrintUrlsOptions,
   Routes,
   RsbuildConfig,
   RsbuildEntry,
@@ -79,6 +80,33 @@ export const joinUrlPath = (basePath: string, pathname: string): string => {
 
   return addTrailingSlash(basePath) + removeLeadingSlash(pathname);
 };
+
+const DEFAULT_MAX_ROUTES = 10;
+
+const normalizeMaxRoutes = (maxRoutes: number | undefined): number => {
+  if (maxRoutes === undefined) {
+    return DEFAULT_MAX_ROUTES;
+  }
+
+  if (maxRoutes === Number.POSITIVE_INFINITY) {
+    return maxRoutes;
+  }
+
+  return Math.max(0, Math.floor(maxRoutes));
+};
+
+const getPrintUrlsOptions = (printUrls: PrintUrls | undefined): PrintUrlsOptions => {
+  if (printUrls && typeof printUrls === 'object') {
+    return printUrls;
+  }
+
+  return {};
+};
+
+const getMoreEntriesMessage = (moreEntries: number): string =>
+  `  ${color.dim(`... ${moreEntries} more entries, press `)}${color.bold('u + enter')}${color.dim(
+    ' to show all',
+  )}\n`;
 
 export const isUrlPathUnderBase = (pathname: string, base: string): boolean => {
   const basePath = removeTailingSlash(base);
@@ -159,23 +187,43 @@ export const formatRoutes = (
   );
 };
 
-function getURLMessages(urls: { url: string; label: string }[], routes: Routes) {
-  if (routes.length <= 1) {
-    const pathname = routes.length ? routes[0].pathname : '';
+function getURLMessages(
+  urls: { url: string; label: string }[],
+  routes: Routes,
+  {
+    maxRoutes = DEFAULT_MAX_ROUTES,
+    showAllRoutes,
+  }: {
+    maxRoutes?: number;
+    showAllRoutes?: boolean;
+  } = {},
+) {
+  const routeLimit = showAllRoutes ? Number.POSITIVE_INFINITY : normalizeMaxRoutes(maxRoutes);
+  const printableRoutes = routeLimit === 0 ? [] : routes.slice(0, routeLimit);
+  const moreEntries = routeLimit > 0 ? routes.length - printableRoutes.length : 0;
+
+  if (routes.length <= 1 || printableRoutes.length === 0) {
+    const pathname = printableRoutes.length ? printableRoutes[0].pathname : '';
     const maxTrimmedLength = Math.max(...urls.map((u) => u.label.trimEnd().length));
     const padWidth = Math.max(maxTrimmedLength + 2, 10);
-    return urls
+    let message = urls
       .map(({ label, url }) => {
         const normalizedPathname = normalizeUrl(`${url}${pathname}`);
         const prefix = `➜  ${color.dim(label.trimEnd().padEnd(padWidth))}`;
         return `  ${prefix}${color.cyan(normalizedPathname)}\n`;
       })
       .join('');
+
+    if (moreEntries > 0) {
+      message += getMoreEntriesMessage(moreEntries);
+    }
+
+    return message;
   }
 
   let message = '';
   let prevLabel = '';
-  const maxNameLength = Math.max(...routes.map((r) => r.entryName.length));
+  const maxNameLength = Math.max(...printableRoutes.map((r) => r.entryName.length));
   urls.forEach(({ label, url }, index) => {
     if (prevLabel !== label) {
       if (index > 0) {
@@ -185,12 +233,16 @@ function getURLMessages(urls: { url: string; label: string }[], routes: Routes) 
       prevLabel = label;
     }
 
-    for (const { entryName, pathname } of routes) {
+    for (const { entryName, pathname } of printableRoutes) {
       message += `  ${color.dim('-')}  ${color.dim(
         entryName.padEnd(maxNameLength + 4),
       )}${color.cyan(normalizeUrl(`${url}${pathname}`))}\n`;
     }
   });
+
+  if (moreEntries > 0) {
+    message += getMoreEntriesMessage(moreEntries);
+  }
 
   return message;
 }
@@ -203,6 +255,7 @@ export function printServerURLs({
   printUrls,
   fallbackPathname,
   trailingLineBreak = true,
+  showAllRoutes,
   originalConfig,
   logger,
 }: {
@@ -213,6 +266,7 @@ export function printServerURLs({
   printUrls?: PrintUrls;
   fallbackPathname?: string;
   trailingLineBreak?: boolean;
+  showAllRoutes?: boolean;
   originalConfig?: Readonly<RsbuildConfig>;
   logger: Logger;
 }): string | null {
@@ -264,7 +318,11 @@ export function printServerURLs({
     return null;
   }
 
-  let message = getURLMessages(urls, printableRoutes);
+  const printUrlsOptions = getPrintUrlsOptions(printUrls);
+  let message = getURLMessages(urls, printableRoutes, {
+    maxRoutes: useCustomUrl ? Number.POSITIVE_INFINITY : printUrlsOptions.maxRoutes,
+    showAllRoutes,
+  });
 
   if (originalConfig && originalConfig.server?.host === undefined) {
     message += `  ➜  ${color.dim('Network:')}  ${color.dim('use')} ${color.bold('--host')} ${color.dim('to expose')}\n`;
