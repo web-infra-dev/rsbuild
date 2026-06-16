@@ -101,6 +101,11 @@ type PluginSvgrOptions = {
    */
   query?: RegExp;
   /**
+   * Whether to enable parallel loader execution.
+   * @default false
+   */
+  parallel?: boolean;
+  /**
    * Exclude specific SVG files from SVGR transformation.
    */
   exclude?: Rspack.RuleSetCondition;
@@ -289,6 +294,24 @@ import Logo from './logo.svg?svgr';
 
 export const App = () => <Logo />;
 ```
+
+### parallel
+
+- **Type:** `boolean`
+- **Default:** `false`
+- **Version:** Added in v2.0.4
+
+Whether to enable parallel loader execution, running SVGR loader in worker threads. When enabled, this typically improves build performance when compiling large numbers of SVG modules.
+
+Note that this option is experimental and may not work if your SVGR options contain functions.
+
+```ts
+pluginSvgr({
+  parallel: true,
+});
+```
+
+> See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
 
 ### exclude
 

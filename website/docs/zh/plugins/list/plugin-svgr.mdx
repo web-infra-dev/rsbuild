@@ -101,6 +101,11 @@ type PluginSvgrOptions = {
    */
   query?: RegExp;
   /**
+   * 是否开启并行 loader 执行
+   * @default false
+   */
+  parallel?: boolean;
+  /**
    * 排除一部分 SVG 文件，这些文件不会经过 SVGR 处理
    */
   exclude?: Rspack.RuleSetCondition;
@@ -289,6 +294,24 @@ import Logo from './logo.svg?svgr';
 
 export const App = () => <Logo />;
 ```
+
+### parallel
+
+- **类型：** `boolean`
+- **默认值：** `false`
+- **版本：** 添加于 v2.0.4
+
+是否开启并行 loader 执行，在 worker 线程中运行 SVGR loader。开启后，在编译大量 SVG 模块时通常会有构建性能提升。
+
+注意该选项为实验性功能，当 SVGR 选项中包含函数时，可能无法正常工作。
+
+```ts
+pluginSvgr({
+  parallel: true,
+});
+```
+
+> 详见 [Rspack - Rule.use.parallel](https://rspack.rs/zh/config/module-rules#rulesuseparallel)。
 
 ### exclude
 
