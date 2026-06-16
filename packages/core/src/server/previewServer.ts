@@ -101,8 +101,8 @@ export async function startPreviewServer(
       routes,
       protocol,
       printUrls: serverConfig.printUrls,
-      trailingLineBreak: !cliShortcutsEnabled,
       showAllRoutes: options?.showAllRoutes,
+      cliShortcutsEnabled,
       originalConfig: context.originalConfig,
       logger,
     });

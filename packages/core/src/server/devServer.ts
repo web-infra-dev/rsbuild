@@ -174,8 +174,8 @@ export async function createDevServer<
       protocol,
       printUrls: config.server.printUrls,
       fallbackPathname,
-      trailingLineBreak: !cliShortcutsEnabled,
       showAllRoutes: options?.showAllRoutes,
+      cliShortcutsEnabled,
       originalConfig: context.originalConfig,
       logger,
     });
