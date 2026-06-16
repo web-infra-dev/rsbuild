@@ -501,7 +501,7 @@ export class SocketServer {
 
       for (let index = 0; index < chunks.length; index++) {
         const chunkName = chunks[index];
-        if (chunkName) {
+        if (chunkName !== undefined) {
           initialChunks.add(typeof chunkName === 'string' ? chunkName : String(chunkName));
         }
       }
