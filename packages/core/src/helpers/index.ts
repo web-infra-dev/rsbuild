@@ -195,26 +195,26 @@ export const camelCase = (input: string): string =>
   input.replace(/[-_](\w)/g, (_, c: string) => c.toUpperCase());
 
 export const prettyTime = (seconds: number): string => {
-  const format = (time: string) => color.bold(time);
+  const format = (time: string, unit: 'm' | 's') => color.bold(`${time}${unit}`);
 
   if (seconds < 10) {
     const digits = seconds >= 0.01 ? 2 : 3;
-    return `${format(seconds.toFixed(digits))} s`;
+    return format(seconds.toFixed(digits), 's');
   }
 
   if (seconds < 60) {
-    return `${format(seconds.toFixed(1))} s`;
+    return format(seconds.toFixed(1), 's');
   }
 
   const minutes = Math.floor(seconds / 60);
-  const minutesLabel = `${format(minutes.toFixed(0))} m`;
+  const minutesLabel = format(minutes.toFixed(0), 'm');
   const remainingSeconds = seconds % 60;
 
   if (remainingSeconds === 0) {
     return minutesLabel;
   }
 
-  const secondsLabel = `${format(remainingSeconds.toFixed(remainingSeconds % 1 === 0 ? 0 : 1))} s`;
+  const secondsLabel = format(remainingSeconds.toFixed(remainingSeconds % 1 === 0 ? 0 : 1), 's');
 
   return `${minutesLabel} ${secondsLabel}`;
 };
