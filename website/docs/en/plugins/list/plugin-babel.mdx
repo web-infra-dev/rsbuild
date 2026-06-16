@@ -270,6 +270,24 @@ pluginBabel({
 });
 ```
 
+### parallel
+
+- **Type:** `boolean`
+- **Default:** `false`
+- **Version:** `>= 1.2.2`
+
+Whether to enable parallel loader execution, running `babel-loader` in worker threads. When enabled, this typically improves build performance when compiling large numbers of JavaScript modules.
+
+Note that this option is experimental and may not work if your Babel options contain functions.
+
+```ts
+pluginBabel({
+  parallel: true,
+});
+```
+
+> See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
+
 :::tip
 When you configure the `include` or `exclude` options, Rsbuild will create a separate Rspack rule to apply babel-loader and swc-loader.
 

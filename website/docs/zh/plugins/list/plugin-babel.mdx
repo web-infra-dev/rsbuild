@@ -269,6 +269,24 @@ pluginBabel({
 });
 ```
 
+### parallel
+
+- **类型：** `boolean`
+- **默认值：** `false`
+- **版本：** `>= 1.2.2`
+
+是否开启并行 loader 执行，在 worker 线程中运行 `babel-loader`。开启后，在编译大量模块时通常会有构建性能提升。
+
+注意该选项为实验性功能，当 Babel 选项中包含函数时可能无法正常工作。
+
+```ts
+pluginBabel({
+  parallel: true,
+});
+```
+
+> 详见 [Rspack - Rule.use.parallel](https://rspack.rs/zh/config/module-rules#rulesuseparallel)。
+
 :::tip
 当你配置 `include` 或 `exclude` 选项时，Rsbuild 会创建一条单独的 Rspack rule 来应用 babel-loader 和 swc-loader。
 
