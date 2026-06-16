@@ -37,11 +37,14 @@ export type PluginSvgrOptions = {
   query?: RegExp;
 
   /**
-   * Whether to enable parallel loader execution, running SVGR loader in worker
-   * threads. When enabled, this typically improves build performance when compiling
-   * large numbers of SVG modules.
-   * @experimental This is an experimental Rspack feature and may not work if your SVGR
-   * options contain functions.
+   * Whether to transform SVG modules into React components in parallel using worker
+   * threads. When enabled, SVG modules are processed across multiple worker threads,
+   * reducing pressure on the main thread and improving overall build performance
+   * when compiling large numbers of SVG modules.
+   *
+   * Options transferred to worker threads must comply with the HTML structured clone
+   * algorithm. For example, functions cannot be passed as options.
+   * @see https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist
    * @default false
    */
   parallel?: boolean;

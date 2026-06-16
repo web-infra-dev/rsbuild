@@ -31,5 +31,8 @@
   },
   "[javascript]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[mdx]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   }
 }
