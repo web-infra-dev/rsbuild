@@ -38,8 +38,8 @@ catalogs:
       specifier: 2.5.1
       version: 2.5.1
     '@playwright/test':
-      specifier: 1.60.0
-      version: 1.60.0
+      specifier: 1.61.0
+      version: 1.61.0
     '@prefresh/core':
       specifier: ^1.5.10
       version: 1.5.10
@@ -266,8 +266,8 @@ catalogs:
       specifier: 0.6.0
       version: 0.6.0
     playwright:
-      specifier: 1.60.0
-      version: 1.60.0
+      specifier: 1.61.0
+      version: 1.61.0
     postcss:
       specifier: ^8.5.15
       version: 8.5.15
@@ -480,7 +480,7 @@ importers:
         version: 2.5.1(@rsbuild/core@packages+core)(@rspack/core@2.0.8)(node-fetch@2.7.0)(typescript@6.0.3)
       '@playwright/test':
         specifier: 'catalog:'
-        version: 1.60.0
+        version: 1.61.0
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../packages/core
@@ -561,7 +561,7 @@ importers:
         version: 4.12.25
       playwright:
         specifier: 'catalog:'
-        version: 1.60.0
+        version: 1.61.0
       tailwindcss:
         specifier: 'catalog:'
         version: 4.3.1
@@ -1416,7 +1416,7 @@ importers:
         version: 24.13.2
       rsbuild-plugin-arethetypeswrong:
         specifier: 'catalog:'
-        version: 0.3.1(@rsbuild/core@2.0.14)(typescript@6.0.3)
+        version: 0.3.1(@rsbuild/core@2.0.15)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -2376,8 +2376,8 @@ packages:
     resolution: {integrity: sha512-tmmZ3lQxAe/k/+rNnXQRawJ4NjxO2hqiOLTHvWchtGZULp4RyFeh6aU4XdOYBFe2KE1oShQTv4AblOs2iOrNnQ==}
     engines: {node: '>= 10.0.0'}
 
-  '@playwright/test@1.60.0':
-    resolution: {integrity: sha512-O71yZIbAh/PxDMNGns37GHBIfrVkEVyn+AXyIa5dOTfb4/xNvRWV+Vv/NMbNCtODB/pO7vLlF2OTmMVLhmr7Ag==}
+  '@playwright/test@1.61.0':
+    resolution: {integrity: sha512-cKA5B6lpFEMyMGjxF54QihfYpB4FkEGH+qZhtArDEG+wezQAJY8Pq6C7T1SjWz+FFzt3TbyoXBQYk/0292TdJA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -2545,8 +2545,8 @@ packages:
       core-js:
         optional: true
 
-  '@rsbuild/core@2.0.14':
-    resolution: {integrity: sha512-SSPer6vM+v82CV6JXIOzyyT++A1ECgsVvvUuveD5rfGxX/W58vWGnB+zWcYbMfYOjTntD+9ve6QGGh6kBjPx6A==}
+  '@rsbuild/core@2.0.15':
+    resolution: {integrity: sha512-O8vmMhZu1YImO6jOqt/K/vlJSvkq7UtSq5YM1DIlcEd9LW8Gf6/dkQ1B2KPI6F+hSMFBnTTTumdcIowSLCw97g==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -4858,13 +4858,13 @@ packages:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
 
-  playwright-core@1.60.0:
-    resolution: {integrity: sha512-9bW6zvX/m0lEbgTKJ6YppOKx8H3VOPBMOCFh2irXFOT4BbHgrx5hPjwJYLT40Lu+4qtD36qKc/Hn56StUW57IA==}
+  playwright-core@1.61.0:
+    resolution: {integrity: sha512-caX7TrY3Ml6egyDX0WUcTHDxodl/b51y5wJOdCEA36QviK/s2g081hvmGs8eaE3DWb6NYZQ6BjO/QkNRPenoPA==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.60.0:
-    resolution: {integrity: sha512-hheHdokM8cdqCb0lcE3s+zT4t4W+vvjpGxsZlDnikarzx8tSzMebh3UiFtgqwFwnTnjYQcsyMF8ei2mCO/tpeA==}
+  playwright@1.61.0:
+    resolution: {integrity: sha512-Z+7BeeqQPRRzklHsVFP4KTGIyMxKUmfeRA4WisM6G3/XW6nwGeX6fX9qYaDa+CiUqpOkb2f6X3nar05R3kSuJQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -6800,9 +6800,9 @@ snapshots:
       '@parcel/watcher-win32-x64': 2.5.6
     optional: true
 
-  '@playwright/test@1.60.0':
+  '@playwright/test@1.61.0':
     dependencies:
-      playwright: 1.60.0
+      playwright: 1.61.0
 
   '@polka/url@1.0.0-next.29': {}
 
@@ -6904,7 +6904,7 @@ snapshots:
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
-  '@rsbuild/core@2.0.14(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)':
+  '@rsbuild/core@2.0.15(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)':
     dependencies:
       '@rspack/core': 2.0.8(@module-federation/runtime-tools@2.5.1)(@swc/helpers@0.5.23)
       '@swc/helpers': 0.5.23
@@ -9587,11 +9587,11 @@ snapshots:
 
   picomatch@4.0.4: {}
 
-  playwright-core@1.60.0: {}
+  playwright-core@1.61.0: {}
 
-  playwright@1.60.0:
+  playwright@1.61.0:
     dependencies:
-      playwright-core: 1.60.0
+      playwright-core: 1.61.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -9912,11 +9912,11 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.4
       fsevents: 2.3.3
 
-  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.14)(typescript@6.0.3):
+  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.15)(typescript@6.0.3):
     dependencies:
       typescript: 6.0.3
     optionalDependencies:
-      '@rsbuild/core': 2.0.14(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+      '@rsbuild/core': 2.0.15(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
 
   rsbuild-plugin-dts@0.22.1(@rsbuild/core@2.0.12)(typescript@6.0.3):
     dependencies:
