@@ -106,4 +106,11 @@ export type PluginBabelOptions = {
    * @see https://github.com/babel/babel-loader
    */
   babelLoaderOptions?: ConfigChainWithContext<BabelLoaderOptions, BabelConfigUtils>;
+  /**
+   * Whether to enable parallel loader execution, running `babel-loader` in worker
+   * threads. When enabled, this typically improves build performance when compiling
+   * large numbers of modules.
+   * @default false
+   */
+  parallel?: boolean;
 };

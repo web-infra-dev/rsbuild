@@ -116,7 +116,8 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
       handler: async (chain, { CHAIN_ID, environment }) => {
         const babelOptions = await getBabelOptions(environment);
         const babelLoader = path.resolve(__dirname, '../compiled/babel-loader/index.js');
-        const { include, exclude } = options;
+        const { include, exclude, parallel = false } = options;
+        const isV1 = api.context.version.startsWith('1.');
 
         if (include || exclude) {
           const rule = chain.module
@@ -136,17 +137,36 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
             }
           }
 
-          rule.test(SCRIPT_REGEX).use(CHAIN_ID.USE.BABEL).loader(babelLoader).options(babelOptions);
+          const loader = rule
+            .test(SCRIPT_REGEX)
+            .use(CHAIN_ID.USE.BABEL)
+            .loader(babelLoader)
+            .options(babelOptions);
+
+          if (parallel) {
+            loader.parallel(true);
+          }
         } else {
           // Compatibility for Rsbuild v1
-          const isV1 = api.context.version.startsWith('1.');
           const jsRule = chain.module.rule(CHAIN_ID.RULE.JS).test(SCRIPT_REGEX);
           const jsMainRule = isV1 ? jsRule : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
-          jsMainRule
+          const loader = jsMainRule
             .use(CHAIN_ID.USE.BABEL)
             .after(CHAIN_ID.USE.SWC)
             .loader(babelLoader)
             .options(babelOptions);
+
+          if (parallel) {
+            loader.parallel(true);
+          }
+        }
+
+        // `experiments.parallelLoader` is no longer required in Rspack 2.0+
+        if (parallel && isV1) {
+          chain.experiments({
+            ...chain.get('experiments'),
+            parallelLoader: true,
+          });
         }
       },
     });
