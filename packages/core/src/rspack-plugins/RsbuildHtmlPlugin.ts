@@ -172,10 +172,9 @@ const applyTagConfig = (
         }
 
         attrs[filenameTag] = filename;
-        tag.attrs = attrs;
       }
 
-      ret.push(fromBasicTag(tag));
+      ret.push(fromBasicTag({ ...tag, attrs }));
     }
     return ret;
   };
