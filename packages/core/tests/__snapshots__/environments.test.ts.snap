@@ -5,6 +5,9 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
   {
     "context": "<ROOT>",
     "devtool": "eval-source-map",
+    "experiments": {
+      "sourceImport": true,
+    },
     "infrastructureLogging": {
       "level": "error",
     },
@@ -486,6 +489,9 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
   {
     "context": "<ROOT>",
     "devtool": "eval",
+    "experiments": {
+      "sourceImport": true,
+    },
     "infrastructureLogging": {
       "level": "error",
     },
