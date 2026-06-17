@@ -83,11 +83,9 @@ export function getDefaultBabelOptions(
     ],
   };
 
+  // Enable caching by default to improve performance
   const { buildCache = true } = config.performance;
-
-  // Rspack does not yet support persistent cache
-  // so we use babel-loader's cache to improve rebuild performance
-  if (buildCache && context.bundlerType === 'rspack') {
+  if (buildCache) {
     const cacheDirectory = getCacheDirectory(
       context,
       typeof buildCache === 'boolean' ? undefined : buildCache.cacheDirectory,
