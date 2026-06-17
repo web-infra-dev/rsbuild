@@ -784,7 +784,6 @@ export interface PerformanceConfig {
 
   /**
    * To enable or configure persistent build cache.
-   * @experimental This feature is experimental and may be changed in the future.
    * @default false
    */
   buildCache?: BuildCacheOptions | boolean;
