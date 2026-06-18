@@ -12,7 +12,7 @@ const mergeSourceMap = async (
   generatedSourceMap: RawSourceMap | string,
 ): Promise<RawSourceMap> => {
   const { default: remapping } = await import(
-    /* webpackChunkName: "remapping" */ '@jridgewell/remapping'
+    /* rspackChunkName: "remapping" */ '@jridgewell/remapping'
   );
   return remapping(
     [generatedSourceMap, originalSourceMap] as SourceMapInput[],

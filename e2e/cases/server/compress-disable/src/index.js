@@ -3,6 +3,6 @@ import React from 'react';
 console.log(React);
 
 import(
-  /* webpackChunkName: "react-dom" */
+  /* rspackChunkName: "react-dom" */
   './react-dom.js'
 );

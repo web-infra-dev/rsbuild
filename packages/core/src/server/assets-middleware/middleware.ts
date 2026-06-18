@@ -232,7 +232,7 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
 
 const parseRangeHeaders = async (value: string): Promise<RangeResult | Ranges> => {
   const { default: rangeParser } = await import(
-    /* webpackChunkName: "range-parser" */
+    /* rspackChunkName: "range-parser" */
     'range-parser'
   );
   const [len, rangeHeader] = value.split('|');

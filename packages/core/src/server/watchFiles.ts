@@ -105,7 +105,7 @@ export async function createChokidar(
   root: string,
   options: ChokidarOptions,
 ): Promise<FSWatcher> {
-  const { default: chokidar } = await import(/* webpackChunkName: "chokidar" */ 'chokidar');
+  const { default: chokidar } = await import(/* rspackChunkName: "chokidar" */ 'chokidar');
 
   const watchFiles = new Set<string>();
 
@@ -118,7 +118,7 @@ export async function createChokidar(
   });
 
   if (globPatterns.length) {
-    const { glob } = await import(/* webpackChunkName: "tinyglobby" */ 'tinyglobby');
+    const { glob } = await import(/* rspackChunkName: "tinyglobby" */ 'tinyglobby');
     // interop default to make both CJS and ESM work
     const files = await glob(globPatterns, {
       cwd: root,

@@ -6,4 +6,4 @@ import mobile from '@e2e/assets/mobile.svg?url';
 
 console.log(icon, image, circle, mobile);
 
-import(/* webpackChunkName: "foo" */ './async');
+import(/* rspackChunkName: "foo" */ './async');

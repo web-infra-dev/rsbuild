@@ -1,7 +1,7 @@
 import './index.css';
 
 import(
-  /* webpackChunkName: "foo" */
+  /* rspackChunkName: "foo" */
   './foo'
 );
 

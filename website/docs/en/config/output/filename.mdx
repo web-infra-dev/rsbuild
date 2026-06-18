@@ -142,10 +142,10 @@ When you import a module via dynamic import, the module will be bundled into a s
 const { add } = await import('./add.ts');
 ```
 
-To specify a fixed name for the async module, use the [magic comments](https://rspack.rs/api/runtime-api/module-methods#magic-comments) supported by Rspack. Use `webpackChunkName` to specify the module name:
+To specify a fixed name for the async module, use the [magic comments](https://rspack.rs/api/runtime-api/module-methods#magic-comments) supported by Rspack. Use `rspackChunkName` to specify the module name:
 
 ```js title="src/index.ts"
-const { add } = await import(/* webpackChunkName: "my-chunk-name" */ './add.ts');
+const { add } = await import(/* rspackChunkName: "my-chunk-name" */ './add.ts');
 ```
 
 After specifying the module name as shown above, the generated file will be `dist/static/js/async/my-chunk-name.js`.

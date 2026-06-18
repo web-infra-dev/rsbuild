@@ -1,1 +1,1 @@
-import(/* webpackChunkName: "async-chunk" */ './async');
+import(/* rspackChunkName: "async-chunk" */ './async');
