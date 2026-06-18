@@ -150,6 +150,73 @@ pluginReact({
 
 大多数情况下，你应该使用插件的 [fastRefresh](#fastrefresh) 选项来启用或禁用 Fast Refresh。
 
+### reactCompiler
+
+启用或配置 [React Compiler](https://react.dev/learn/react-compiler)，Rsbuild 会将该选项传递给 Rspack 的 [`builtin:swc-loader`](https://rspack.rs/zh/guide/tech/react#using-builtinswc-loader)，对应 `jsc.transform.reactCompiler` 配置。
+
+:::tip
+该选项仅在 `@rsbuild/core` v2.1.0 及以上版本中支持。
+:::
+
+- **类型：**
+
+```ts
+type ReactCompiler =
+  | boolean
+  | {
+      compilationMode?: 'infer' | 'syntax' | 'annotation' | 'all';
+      panicThreshold?: 'none' | 'critical_errors' | 'all_errors';
+      target?: '17' | '18' | '19';
+      noEmit?: boolean;
+      outputMode?: 'client' | 'ssr' | 'lint';
+      ignoreUseNoForget?: boolean;
+      flowSuppressions?: boolean;
+      enableReanimated?: boolean;
+      isDev?: boolean;
+      eslintSuppressionRules?: string[];
+      customOptOutDirectives?: string[];
+      gating?: {
+        source: string;
+        importSpecifierName: string;
+      };
+      dynamicGating?: {
+        source: string;
+      };
+    };
+```
+
+- **默认值：** `undefined`
+
+将 `reactCompiler` 设置为 `true`，即可使用默认选项启用 React Compiler：
+
+```ts
+pluginReact({
+  reactCompiler: true,
+});
+```
+
+对于 React 17 和 18 项目，需要安装 [`react-compiler-runtime`](https://npmjs.com/package/react-compiler-runtime)，并设置编译目标：
+
+```ts
+pluginReact({
+  reactCompiler: {
+    target: '18',
+  },
+});
+```
+
+`reactCompiler` 的选项与 React Compiler 配置对齐。例如，你可以通过 [`compilationMode`](https://react.dev/reference/react-compiler/compilationMode) 控制哪些函数会被编译：
+
+```ts
+pluginReact({
+  reactCompiler: {
+    compilationMode: 'annotation',
+  },
+});
+```
+
+更多选项请参考官方 [React Compiler 配置说明](https://react.dev/reference/react-compiler/configuration)。
+
 ### splitChunks
 
 当使用 Rsbuild 的 [默认拆包 preset](/config/split-chunks#default) 时，该插件会将与 `react` 和 `react-router` 相关的包拆分到独立的 chunk 中。
