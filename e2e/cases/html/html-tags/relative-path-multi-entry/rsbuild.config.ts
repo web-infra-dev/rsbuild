@@ -15,7 +15,7 @@ export default defineConfig({
         head: true,
         append: false,
         attrs: {
-          src: './env-config.js',
+          src: './test.js',
         },
       },
     ],
