@@ -21,12 +21,24 @@ export type SplitReactChunkOptions = {
   router?: boolean;
 };
 
+export type ReactCompilerOptions = Exclude<
+  NonNullable<Rspack.SwcLoaderTransformConfig['reactCompiler']>,
+  boolean
+>;
+
 export type PluginReactOptions = {
   /**
    * Configure the behavior of SWC to transform React code,
    * the same as SWC's [jsc.transform.react](https://swc.rs/docs/configuration/compilation#jsctransformreact).
    */
   swcReactOptions?: Rspack.SwcLoaderTransformConfig['react'];
+  /**
+   * Enable or configure React Compiler via `builtin:swc-loader`,
+   * the same as Rspack's `jsc.transform.reactCompiler` option.
+   *
+   * @see https://rspack.rs/guide/tech/react#using-builtinswc-loader
+   */
+  reactCompiler?: Rspack.SwcLoaderTransformConfig['reactCompiler'];
   /**
    * Configuration for chunk splitting of React-related dependencies when `chunkSplit.strategy`
    * is set to `split-by-experience`.
@@ -154,15 +166,20 @@ export const pluginReact = (options: PluginReactOptions = {}): RsbuildPlugin => 
         runtime: 'automatic',
         ...finalOptions.swcReactOptions,
       };
+      const transformOptions: Rspack.SwcLoaderTransformConfig = {
+        react: reactOptions,
+      };
+
+      if (finalOptions.reactCompiler !== undefined) {
+        transformOptions.reactCompiler = finalOptions.reactCompiler;
+      }
 
       return mergeEnvironmentConfig(
         {
           tools: {
             swc: {
               jsc: {
-                transform: {
-                  react: reactOptions,
-                },
+                transform: transformOptions,
               },
             },
           },
