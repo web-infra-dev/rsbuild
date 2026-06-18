@@ -68,7 +68,6 @@ catalog:
   '@types/sass-loader': '^8.0.10'
   '@types/ws': '^8.18.1'
   'babel-loader': '10.1.1'
-  'babel-plugin-react-compiler': '^1.0.0'
   'babel-preset-solid': '^1.9.12'
   'browserslist-load-config': '^1.0.3'
   'cac': '^7.0.0'
