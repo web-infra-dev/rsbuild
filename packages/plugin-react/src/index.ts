@@ -1,6 +1,12 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import type { RsbuildConfig, RsbuildPlugin, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
+import {
+  rspack,
+  type RsbuildConfig,
+  type RsbuildPlugin,
+  type RsbuildPluginAPI,
+  type Rspack,
+} from '@rsbuild/core';
 import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
 import { applySplitChunksRule } from './splitChunks.js';
 
@@ -74,6 +80,18 @@ function assertCoreVersion(version: string): void {
   if (version.split('.')[0] === '1') {
     throw new Error(
       `"@rsbuild/plugin-react" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-react" v1.`,
+    );
+  }
+}
+
+function assertReactCompilerVersion(): void {
+  const [majorVersion, minorVersion] = rspack.rspackVersion.split('.');
+  const major = Number(majorVersion);
+  const minor = Number(minorVersion);
+
+  if (major < 2 || (major === 2 && minor < 1)) {
+    throw new Error(
+      `"@rsbuild/plugin-react" requires "@rspack/core" >= 2.1.0 to use the "reactCompiler" option, but found ${rspack.rspackVersion}.`,
     );
   }
 }
@@ -153,6 +171,10 @@ export const pluginReact = (options: PluginReactOptions = {}): RsbuildPlugin => 
       ...defaultOptions,
       ...options,
     };
+
+    if (finalOptions.reactCompiler !== undefined) {
+      assertReactCompilerVersion();
+    }
 
     const reactRefreshPath = finalOptions.fastRefresh ? require.resolve('react-refresh') : '';
 
