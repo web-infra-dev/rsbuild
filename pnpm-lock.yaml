@@ -221,8 +221,8 @@ catalogs:
       specifier: 6.1.9
       version: 6.1.9
     http-proxy-middleware:
-      specifier: 4.1.0
-      version: 4.1.0
+      specifier: 4.1.1
+      version: 4.1.1
     jiti:
       specifier: ^2.7.0
       version: 2.7.0
@@ -954,7 +954,7 @@ importers:
         version: 6.1.9(@rspack/core@2.1.0-beta.0)
       http-proxy-middleware:
         specifier: 'catalog:'
-        version: 4.1.0
+        version: 4.1.1
       jiti:
         specifier: 'catalog:'
         version: 2.7.0
@@ -4234,8 +4234,8 @@ packages:
     resolution: {integrity: sha512-Tz7u1i95/g2x2jz81+x0FBVhBhY5aRTvD3tXXdFaljuNdzDLJ8UGNRrTcj2cgQvAg3iW/h77Fz15nLW0L0CrZw==}
     engines: {node: '>=20.19.0'}
 
-  http-proxy-middleware@4.1.0:
-    resolution: {integrity: sha512-XUOAjKncPZjsrgDTTem+CUED6A+piUAKTOwBM8g1gAublBX/GdxTHP8mO+og1EW1evYP8wd0G2c111tExwo/jw==}
+  http-proxy-middleware@4.1.1:
+    resolution: {integrity: sha512-KX5ZofGXLFXqFAkQoOWZ+rTtaLTut7m0gyL+QzJrdejtIZ+F4bPPDoe7reISg2+v0CAz5OfVwEJEhty7X+e57g==}
     engines: {node: ^22.15.0 || ^24.0.0 || >=26.0.0}
 
   httpxy@0.5.3:
@@ -8811,7 +8811,7 @@ snapshots:
       domutils: 4.0.2
       entities: 8.0.0
 
-  http-proxy-middleware@4.1.0:
+  http-proxy-middleware@4.1.1:
     dependencies:
       debug: 4.4.3
       httpxy: 0.5.3
