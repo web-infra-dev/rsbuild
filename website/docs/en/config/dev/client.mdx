@@ -69,11 +69,51 @@ export default {
 };
 ```
 
-### Port placeholder
+## Options
 
-The port number that Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
+### path
 
-To avoid `client.port` becoming invalid due to port changes, you can use one of the following methods:
+- **Type:** `string`
+- **Default:** `'/rsbuild-hmr'`
+
+Sets the path for HMR WebSocket requests.
+
+By default, Rsbuild connects through `/rsbuild-hmr`, generating `ws://<host>:<port>/rsbuild-hmr`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      path: '/custom-hmr',
+    },
+  },
+};
+```
+
+### port
+
+- **Type:** `string | number`
+- **Default:** `''`
+
+Sets the port for HMR WebSocket requests.
+
+Default is an empty string, so the browser uses the current page's `location.port`.
+
+You can set a fixed port:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      port: 3000,
+    },
+  },
+};
+```
+
+The port that the Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
+
+To avoid `client.port` becoming invalid due to port changes, you can:
 
 - Enable [server.strictPort](/config/server/strict-port).
 - Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
@@ -88,13 +128,43 @@ export default {
 };
 ```
 
-## hot-update files
+### host
 
-During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
+- **Type:** `string`
+- **Default:** `''`
 
-Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.
+Sets the host for HMR WebSocket requests.
 
-## Options
+Default is an empty string, so the browser uses the current page's `location.hostname`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      host: '127.0.0.1',
+    },
+  },
+};
+```
+
+### protocol
+
+- **Type:** `'ws' | 'wss'`
+- **Default:** `undefined`
+
+Sets the protocol for HMR WebSocket requests.
+
+By default, Rsbuild uses `wss` for HTTPS pages and `ws` otherwise.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      protocol: 'wss',
+    },
+  },
+};
+```
 
 ### overlay
 
@@ -288,6 +358,12 @@ export default function resolveWebSocketUrl(url: string): string {
 :::tip
 The input URL contains query parameters required by Rsbuild, such as `token`. When rewriting the URL, preserve the existing query string unless you intentionally want to override it.
 :::
+
+## hot-update files
+
+During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
+
+Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.
 
 ## Version history
 

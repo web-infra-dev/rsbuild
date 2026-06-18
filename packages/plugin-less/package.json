@@ -9,6 +9,9 @@
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-less"
   },
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "files": [
     "dist",
     "compiled"

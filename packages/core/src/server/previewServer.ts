@@ -94,14 +94,15 @@ export async function startPreviewServer(
     return closingPromise;
   };
 
-  const printUrls = () =>
+  const printUrls = (options?: { showAllRoutes?: boolean }) =>
     printServerURLs({
       urls,
       port,
       routes,
       protocol,
       printUrls: serverConfig.printUrls,
-      trailingLineBreak: !cliShortcutsEnabled,
+      showAllRoutes: options?.showAllRoutes,
+      cliShortcutsEnabled,
       originalConfig: context.originalConfig,
       logger,
     });

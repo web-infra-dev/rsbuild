@@ -98,12 +98,16 @@ console.log(example.foo); // { bar: 'baz' };
 
 ## Type declaration
 
-When you import YAML or TOML files in TypeScript code, please create a `src/env.d.ts` file in your project and add the corresponding type declarations.
+When you import YAML or TOML files in TypeScript code, use one of the following methods to add type declarations:
 
-- Method 1: If the `@rsbuild/core` package is installed, you can reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
+- Method 1: If the `@rsbuild/core` package is installed, you can add the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core` to `tsconfig.json`:
 
-```ts title="src/env.d.ts"
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["@rsbuild/core/types"]
+  }
+}
 ```
 
 - Method 2: Manually add the required type declarations:

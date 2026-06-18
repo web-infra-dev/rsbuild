@@ -32,7 +32,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
       chain.experiments({
         ...chain.get('experiments'),
-        pureFunctions: true,
+        sourceImport: true,
       });
 
       chain.module.parser.merge({

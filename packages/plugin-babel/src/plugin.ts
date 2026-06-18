@@ -17,6 +17,14 @@ const require = createRequire(import.meta.url);
 export const PLUGIN_BABEL_NAME = 'rsbuild:babel';
 const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-babel" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-babel" v1.`,
+    );
+  }
+}
+
 /**
  * The `@babel/preset-typescript` default options.
  */
@@ -75,11 +83,9 @@ export function getDefaultBabelOptions(
     ],
   };
 
+  // Enable caching by default to improve performance
   const { buildCache = true } = config.performance;
-
-  // Rspack does not yet support persistent cache
-  // so we use babel-loader's cache to improve rebuild performance
-  if (buildCache && context.bundlerType === 'rspack') {
+  if (buildCache) {
     const cacheDirectory = getCacheDirectory(
       context,
       typeof buildCache === 'boolean' ? undefined : buildCache.cacheDirectory,
@@ -97,6 +103,8 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     const getBabelOptions = async (environment: EnvironmentContext) => {
       const { config } = environment;
       const baseOptions = getDefaultBabelOptions(config, api.context);
@@ -116,7 +124,7 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
       handler: async (chain, { CHAIN_ID, environment }) => {
         const babelOptions = await getBabelOptions(environment);
         const babelLoader = path.resolve(__dirname, '../compiled/babel-loader/index.js');
-        const { include, exclude } = options;
+        const { include, exclude, parallel = false } = options;
 
         if (include || exclude) {
           const rule = chain.module
@@ -136,17 +144,28 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
             }
           }
 
-          rule.test(SCRIPT_REGEX).use(CHAIN_ID.USE.BABEL).loader(babelLoader).options(babelOptions);
+          const loader = rule
+            .test(SCRIPT_REGEX)
+            .use(CHAIN_ID.USE.BABEL)
+            .loader(babelLoader)
+            .options(babelOptions);
+
+          if (parallel) {
+            loader.parallel(true);
+          }
         } else {
-          // Compatibility for Rsbuild v1
-          const isV1 = api.context.version.startsWith('1.');
-          const jsRule = chain.module.rule(CHAIN_ID.RULE.JS).test(SCRIPT_REGEX);
-          const jsMainRule = isV1 ? jsRule : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
-          jsMainRule
+          const loader = chain.module
+            .rule(CHAIN_ID.RULE.JS)
+            .test(SCRIPT_REGEX)
+            .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN)
             .use(CHAIN_ID.USE.BABEL)
             .after(CHAIN_ID.USE.SWC)
             .loader(babelLoader)
             .options(babelOptions);
+
+          if (parallel) {
+            loader.parallel(true);
+          }
         }
       },
     });

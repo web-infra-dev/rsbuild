@@ -5,6 +5,7 @@
     "target": "ES2020",
     "noEmit": true,
     "skipLibCheck": true,
+    "types": ["@rsbuild/core/types", "node"],
     "jsxImportSource": "vue",
     "useDefineForClassFields": true,
 
@@ -19,5 +20,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

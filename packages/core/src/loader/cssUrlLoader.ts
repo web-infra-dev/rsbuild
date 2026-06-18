@@ -5,6 +5,7 @@ import type {
   PathData,
   PitchLoaderDefinitionFunction,
 } from '@rspack/core';
+import { isCSSModules } from '../helpers/css';
 import type { CSSLoaderOptions } from '../types';
 
 type CSSUrlLoaderOptions = {
@@ -12,7 +13,6 @@ type CSSUrlLoaderOptions = {
   modules: CSSLoaderOptions['modules'];
 };
 
-const CSS_MODULE_REGEX = /\.module\.\w+$/i;
 const HASH_PLACEHOLDER_REGEX =
   /\[(?:[^:\]]+:)?(?:chunkhash|contenthash|hash|fullhash)(?::[^\]]+)?]/i;
 
@@ -35,37 +35,6 @@ const getCSSUrlNameSource = (root: string, resourcePath: string) =>
 
 const getCSSUrlAssetName = (nameSource: string, ext: string) =>
   ext ? nameSource.slice(0, -ext.length) : nameSource;
-
-const isCSSModules = (
-  modules: CSSLoaderOptions['modules'],
-  resourcePath: string,
-  resourceQuery: string,
-  resourceFragment: string,
-) => {
-  if (!modules) {
-    return false;
-  }
-
-  if (modules === true || typeof modules === 'string') {
-    return true;
-  }
-
-  const { auto } = modules;
-
-  if (auto === false) {
-    return false;
-  }
-
-  if (auto instanceof RegExp) {
-    return auto.test(resourcePath);
-  }
-
-  if (typeof auto === 'function') {
-    return auto(resourcePath, resourceQuery, resourceFragment);
-  }
-
-  return CSS_MODULE_REGEX.test(resourcePath);
-};
 
 const getCSSContent = (moduleExports: unknown): string => {
   const content =
@@ -101,7 +70,7 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> = async f
 ) {
   const options = this.getOptions();
 
-  if (isCSSModules(options.modules, this.resourcePath, this.resourceQuery, this.resourceFragment)) {
+  if (isCSSModules(options.modules, this)) {
     throw new Error(
       '[rsbuild:css] CSS Modules do not support the ?url query. Use ?inline to import the compiled CSS content as a string.',
     );

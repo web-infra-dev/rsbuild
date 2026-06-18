@@ -252,6 +252,12 @@ pluginBabel({
 });
 ```
 
+:::tip
+When you configure the `include` or `exclude` options, Rsbuild will create a separate Rspack rule to apply babel-loader and swc-loader.
+
+This separate rule is completely independent of the SWC rule built into Rsbuild and is not affected by [source.include](/config/source/include) and [source.exclude](/config/source/exclude).
+:::
+
 ### exclude
 
 - **Type:** `string | RegExp | (string | RegExp)[]`
@@ -270,11 +276,21 @@ pluginBabel({
 });
 ```
 
-:::tip
-When you configure the `include` or `exclude` options, Rsbuild will create a separate Rspack rule to apply babel-loader and swc-loader.
+### parallel
 
-This separate rule is completely independent of the SWC rule built into Rsbuild and is not affected by [source.include](/config/source/include) and [source.exclude](/config/source/exclude).
-:::
+- **Type:** `boolean`
+- **Default:** `false`
+- **Version:** `>= 2.0.0`
+
+Whether to run Babel transformations in parallel using worker threads. When enabled, JavaScript modules are processed across multiple worker threads, reducing pressure on the main thread and improving overall build performance when compiling large numbers of modules.
+
+```ts
+pluginBabel({
+  parallel: true,
+});
+```
+
+> This feature is based on Rspack's parallel loader. Options transferred to worker threads must comply with the [HTML structured clone algorithm](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist). Otherwise, transmission will fail. For example, functions cannot be passed as options. See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
 
 ### Configure multiple Babel rules
 

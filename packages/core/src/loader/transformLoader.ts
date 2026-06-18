@@ -8,13 +8,9 @@ export type TransformLoaderOptions = {
 };
 
 const mergeSourceMap = async (
-  originalSourceMap?: RawSourceMap | string,
-  generatedSourceMap?: RawSourceMap | string | null,
-): Promise<RawSourceMap | string | undefined> => {
-  if (!originalSourceMap || !generatedSourceMap) {
-    return generatedSourceMap ?? originalSourceMap;
-  }
-
+  originalSourceMap: RawSourceMap | string,
+  generatedSourceMap: RawSourceMap | string,
+): Promise<RawSourceMap> => {
   const { default: remapping } = await import(
     /* rspackChunkName: "remapping" */ '@jridgewell/remapping'
   );
@@ -29,19 +25,16 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> = async function
   map,
 ): Promise<void> {
   const callback = this.async();
-  const bypass = () => {
-    callback(null, source, map);
-  };
 
   const { id: transformId, getEnvironment } = this.getOptions();
   if (!transformId) {
-    bypass();
+    callback(null, source, map);
     return;
   }
 
   const transform = this._compiler?.__rsbuildTransformer?.[transformId];
   if (!transform) {
-    bypass();
+    callback(null, source, map);
     return;
   }
 
@@ -62,7 +55,7 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> = async function
     });
 
     if (result === null || result === undefined) {
-      bypass();
+      callback(null, source, map);
       return;
     }
 
@@ -71,7 +64,8 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> = async function
       return;
     }
 
-    const mergedMap = await mergeSourceMap(map, result.map);
+    const mergedMap =
+      map && result.map ? await mergeSourceMap(map, result.map) : (result.map ?? map);
     callback(null, result.code, mergedMap);
   } catch (error) {
     if (error instanceof Error) {

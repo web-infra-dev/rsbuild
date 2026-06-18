@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "2.0.11",
+  "version": "2.0.15",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.rs",
   "license": "MIT",
@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/create-rsbuild"
+  },
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },
   "bin": {
     "create-rsbuild": "./bin.js"

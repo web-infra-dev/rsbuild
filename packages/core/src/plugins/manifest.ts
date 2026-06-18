@@ -98,7 +98,9 @@ const generateManifest =
 
         if (file.chunk) {
           for (const auxiliaryFile of file.chunk.auxiliaryFiles) {
-            assets.add(auxiliaryFile);
+            assets.add(
+              manifestOptions.prefix ? ensureAssetPrefix(auxiliaryFile, publicPath) : auxiliaryFile,
+            );
           }
         }
       }

@@ -215,12 +215,12 @@ test('should print server URLs correctly', () => {
         pathname: '/',
       },
     ],
+    cliShortcutsEnabled: true,
   });
 
   expect(message!).toMatchInlineSnapshot(`
     "  ➜  local     http://localhost:3000/
-      ➜  network   http://192.168.0.1:3000/
-    "
+      ➜  network   http://192.168.0.1:3000/"
   `);
 
   message = printServerURLs({
@@ -251,6 +251,7 @@ test('should print server URLs correctly', () => {
         pathname: '/bar',
       },
     ],
+    cliShortcutsEnabled: true,
   });
 
   expect(message!).toMatchInlineSnapshot(`
@@ -262,8 +263,7 @@ test('should print server URLs correctly', () => {
       ➜  network
       -  index    http://192.168.0.1:3000/
       -  foo      http://192.168.0.1:3000/html/foo
-      -  bar      http://192.168.0.1:3000/bar
-    "
+      -  bar      http://192.168.0.1:3000/bar"
   `);
 
   message = printServerURLs({
@@ -272,6 +272,7 @@ test('should print server URLs correctly', () => {
     logger,
     urls: [],
     routes: [],
+    cliShortcutsEnabled: true,
   });
 
   expect(message).toEqual(null);
@@ -292,12 +293,224 @@ test('should print server URLs correctly', () => {
     ],
     routes: [],
     fallbackPathname: '/foo',
+    cliShortcutsEnabled: true,
   });
 
   expect(message!).toMatchInlineSnapshot(`
     "  ➜  local     http://localhost:3000/foo/
-      ➜  network   http://192.168.0.1:3000/foo/
+      ➜  network   http://192.168.0.1:3000/foo/"
+  `);
+});
+
+test('should limit printed server routes correctly', () => {
+  let message: string | null;
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: Array.from({ length: 12 }, (_, index) => ({
+      entryName: `route${index}`,
+      pathname: `/route${index}`,
+    })),
+    cliShortcutsEnabled: true,
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local
+      -  route0    http://localhost:3000/route0
+      -  route1    http://localhost:3000/route1
+      -  route2    http://localhost:3000/route2
+      -  route3    http://localhost:3000/route3
+      -  route4    http://localhost:3000/route4
+      -  route5    http://localhost:3000/route5
+      -  route6    http://localhost:3000/route6
+      -  route7    http://localhost:3000/route7
+      -  route8    http://localhost:3000/route8
+      -  route9    http://localhost:3000/route9
+      ... 2 more entries, press u + enter to show all"
+  `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: Array.from({ length: 12 }, (_, index) => ({
+      entryName: `route${index}`,
+      pathname: `/route${index}`,
+    })),
+    cliShortcutsEnabled: false,
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local
+      -  route0    http://localhost:3000/route0
+      -  route1    http://localhost:3000/route1
+      -  route2    http://localhost:3000/route2
+      -  route3    http://localhost:3000/route3
+      -  route4    http://localhost:3000/route4
+      -  route5    http://localhost:3000/route5
+      -  route6    http://localhost:3000/route6
+      -  route7    http://localhost:3000/route7
+      -  route8    http://localhost:3000/route8
+      -  route9    http://localhost:3000/route9
+      ... 2 more entries, set server.printUrls.maxRoutes to show more
     "
+  `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+      {
+        entryName: 'foo',
+        pathname: '/foo',
+      },
+      {
+        entryName: 'bar',
+        pathname: '/bar',
+      },
+    ],
+    printUrls: {
+      maxRoutes: 2,
+    },
+    cliShortcutsEnabled: true,
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local
+      -  index    http://localhost:3000/
+      -  foo      http://localhost:3000/foo
+      ... 1 more entries, press u + enter to show all"
+  `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+      {
+        entryName: 'foo',
+        pathname: '/foo',
+      },
+      {
+        entryName: 'bar',
+        pathname: '/bar',
+      },
+    ],
+    printUrls: {
+      maxRoutes: 2,
+    },
+    cliShortcutsEnabled: false,
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local
+      -  index    http://localhost:3000/
+      -  foo      http://localhost:3000/foo
+      ... 1 more entries, set server.printUrls.maxRoutes to show more
+    "
+  `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+      {
+        entryName: 'foo',
+        pathname: '/foo',
+      },
+    ],
+    printUrls: {
+      maxRoutes: 0,
+    },
+    cliShortcutsEnabled: true,
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local     http://localhost:3000"
+  `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+    ],
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+      {
+        entryName: 'foo',
+        pathname: '/foo',
+      },
+      {
+        entryName: 'bar',
+        pathname: '/bar',
+      },
+    ],
+    printUrls: {
+      maxRoutes: 1,
+    },
+    showAllRoutes: true,
+    cliShortcutsEnabled: true,
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local
+      -  index    http://localhost:3000/
+      -  foo      http://localhost:3000/foo
+      -  bar      http://localhost:3000/bar"
   `);
 });
 

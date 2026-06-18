@@ -23,7 +23,7 @@ jobs:
       changed: ${{ steps.changes.outputs.changed }}
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 1
       - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
@@ -47,7 +47,7 @@ jobs:
       pull-requests: read
     steps:
       - name: Trigger Ecosystem CI
-        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@ca8d345a115158ea5ab3807378357f2162be7467 # v0.3.1
+        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@0e65507af053729fa482e81bbdf95cb46e363aa9 # v0.3.2
         with:
           github-token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev
@@ -65,7 +65,7 @@ jobs:
       contents: write
     steps:
       - name: Trigger Ecosystem CI
-        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@ca8d345a115158ea5ab3807378357f2162be7467 # v0.3.1
+        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@0e65507af053729fa482e81bbdf95cb46e363aa9 # v0.3.2
         with:
           github-token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev

@@ -33,7 +33,7 @@ exports[`should apply default plugins correctly 1`] = `
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
   "experiments": {
-    "pureFunctions": true,
+    "sourceImport": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -520,7 +520,7 @@ exports[`should apply default plugins correctly in production 1`] = `
   "context": "<ROOT>",
   "devtool": false,
   "experiments": {
-    "pureFunctions": true,
+    "sourceImport": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1037,7 +1037,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
   "experiments": {
-    "pureFunctions": true,
+    "sourceImport": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1140,6 +1140,16 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "use": [
               {
                 "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
+                "options": {
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "exportOnlyLocals": true,
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                },
               },
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1504,7 +1514,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
   "experiments": {
-    "pureFunctions": true,
+    "sourceImport": true,
   },
   "infrastructureLogging": {
     "level": "error",

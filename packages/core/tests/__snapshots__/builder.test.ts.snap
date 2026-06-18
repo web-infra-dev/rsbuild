@@ -10,7 +10,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
     ],
   },
   "experiments": {
-    "pureFunctions": true,
+    "sourceImport": true,
   },
   "infrastructureLogging": {
     "level": "error",

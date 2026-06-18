@@ -59,7 +59,7 @@ import { Button } from 'antd';
 
 ```js
 import Button from 'antd/es/button';
-import 'antd/es/button/style';
+import 'antd/es/button/style/css';
 ```
 
 ### 按需引入 lodash
@@ -141,10 +141,14 @@ import Button from 'foo/lib/button';
 
 ### style
 
-- **类型：** `boolean`
+- **类型：** `string | boolean`
 - **默认值：** `undefined`
 
-确定是否需要引入相关样式，若为 `true`，则会引入路径 `${libraryName}/${libraryDirectory}/${member}/style`。若为 `false` 或 `undefined` 则不会引入样式。
+确定是否需要引入相关样式：
+
+- `true`：引入 `${libraryName}/${libraryDirectory}/${member}/style`。
+- `'css'`：引入 `${libraryName}/${libraryDirectory}/${member}/style/css`。
+- `false` 或 `undefined`：不引入样式。
 
 当配置为 `true` 时：
 
@@ -158,6 +162,21 @@ import { Button } from 'foo';
 import Button from 'foo/lib/button';
 import 'foo/lib/button/style';
 ```
+
+当配置为 `'css'` 时：
+
+```ts
+import { Button } from 'foo';
+```
+
+转换结果:
+
+```ts
+import Button from 'foo/lib/button';
+import 'foo/lib/button/style/css';
+```
+
+如果需要自定义样式引入路径，请使用 [customStyleName](#customstylename) 或 [styleLibraryDirectory](#stylelibrarydirectory)。
 
 ### styleLibraryDirectory
 
@@ -261,6 +280,82 @@ export default {
 - **默认值：** `undefined`
 
 自定义转换后的样式导入路径，用法与 `customName` 一致。
+
+### ignoreEsComponent
+
+- **类型：** `string[]`
+- **默认值：** `undefined`
+
+指定不需要转换为子路径导入的导入项。数组中的值需要与原始 import 语句中的导入名称一致。
+
+例如：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    transformImport: [
+      {
+        libraryName: 'foo',
+        libraryDirectory: 'lib',
+        style: true,
+        ignoreEsComponent: ['Icon'],
+      },
+    ],
+  },
+};
+```
+
+源代码如下：
+
+```js
+import { Button, Icon } from 'foo';
+```
+
+会被转换成：
+
+```js
+import Button from 'foo/lib/button';
+import 'foo/lib/button/style';
+import { Icon } from 'foo';
+```
+
+### ignoreStyleComponent
+
+- **类型：** `string[]`
+- **默认值：** `undefined`
+
+指定不需要引入相关样式的导入项。对应的 JavaScript 导入路径仍然会被转换。数组中的值需要与原始 import 语句中的导入名称一致。
+
+例如：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    transformImport: [
+      {
+        libraryName: 'foo',
+        libraryDirectory: 'lib',
+        style: true,
+        ignoreStyleComponent: ['Button'],
+      },
+    ],
+  },
+};
+```
+
+源代码如下：
+
+```js
+import { Button, Alert } from 'foo';
+```
+
+会被转换成：
+
+```js
+import Button from 'foo/lib/button';
+import Alert from 'foo/lib/alert';
+import 'foo/lib/alert/style';
+```
 
 ## Function 类型
 

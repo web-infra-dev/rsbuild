@@ -124,15 +124,15 @@ test('should get routes correctly', () => {
 });
 
 test('should format time correctly', () => {
-  expect(prettyTime(0.0012)).toEqual('0.001 s');
-  expect(prettyTime(0.0123)).toEqual('0.01 s');
-  expect(prettyTime(0.1234)).toEqual('0.12 s');
-  expect(prettyTime(1.234)).toEqual('1.23 s');
-  expect(prettyTime(12.34)).toEqual('12.3 s');
-  expect(prettyTime(120)).toEqual('2 m');
-  expect(prettyTime(123.4)).toEqual('2 m 3.4 s');
-  expect(prettyTime(1234)).toEqual('20 m 34 s');
-  expect(prettyTime(1234.5)).toEqual('20 m 34.5 s');
+  expect(prettyTime(0.0012)).toEqual('0.001s');
+  expect(prettyTime(0.0123)).toEqual('0.01s');
+  expect(prettyTime(0.1234)).toEqual('0.12s');
+  expect(prettyTime(1.234)).toEqual('1.23s');
+  expect(prettyTime(12.34)).toEqual('12.3s');
+  expect(prettyTime(120)).toEqual('2m');
+  expect(prettyTime(123.4)).toEqual('2m 3.4s');
+  expect(prettyTime(1234)).toEqual('20m 34s');
+  expect(prettyTime(1234.5)).toEqual('20m 34.5s');
 });
 
 describe('pick', () => {

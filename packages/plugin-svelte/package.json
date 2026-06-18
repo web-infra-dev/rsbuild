@@ -2,6 +2,10 @@
   "name": "@rsbuild/plugin-svelte",
   "version": "2.0.0",
   "description": "Svelte plugin for Rsbuild",
+  "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -3,6 +3,9 @@
   "version": "1.2.2",
   "description": "Solid plugin for Rsbuild",
   "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -43,6 +43,7 @@ flexbox
 flexbugs
 fnames
 frontends
+giget
 fullhash
 fullhref
 gzipped

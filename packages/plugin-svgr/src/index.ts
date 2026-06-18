@@ -37,6 +37,19 @@ export type PluginSvgrOptions = {
   query?: RegExp;
 
   /**
+   * Whether to transform SVG modules into React components in parallel using worker
+   * threads. When enabled, SVG modules are processed across multiple worker threads,
+   * reducing pressure on the main thread and improving overall build performance
+   * when compiling large numbers of SVG modules.
+   *
+   * Options transferred to worker threads must comply with the HTML structured clone
+   * algorithm. For example, functions cannot be passed as options.
+   * @see https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist
+   * @default false
+   */
+  parallel?: boolean;
+
+  /**
    * Exclude specific SVG files from SVGR transformation.
    */
   exclude?: Rspack.RuleSetCondition;
@@ -146,6 +159,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
   setup(api) {
     assertCoreVersion(api.context.version);
+    const { parallel = false } = options;
 
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
@@ -200,7 +214,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       }
 
       // force to react component: "foo.svg?react"
-      rule
+      const svgReactUse = rule
         .oneOf(CHAIN_ID.ONE_OF.SVG_REACT)
         .type('javascript/auto')
         .resourceQuery(options.query || /react/)
@@ -209,8 +223,11 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .options({
           ...svgrOptions,
           exportType: 'default',
-        } satisfies SvgrOptions)
-        .end();
+        } satisfies SvgrOptions);
+
+      if (parallel) {
+        svgReactUse.parallel(true);
+      }
 
       // SVG in JS files
       const { mixedImport = false } = options;
@@ -228,7 +245,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           svgRule.exclude.add(options.exclude);
         }
 
-        svgRule
+        const svgUse = svgRule
           .type('javascript/auto')
           // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
           .set('issuer', issuer)
@@ -237,8 +254,11 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           .options({
             ...svgrOptions,
             exportType,
-          })
-          .end();
+          });
+
+        if (parallel) {
+          svgUse.parallel(true);
+        }
 
         /**
          * For mixed import.
