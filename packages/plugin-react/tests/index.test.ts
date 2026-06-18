@@ -163,6 +163,36 @@ describe('plugins/react', () => {
     expect(JSON.stringify(config[0])).toContain(`"importSource":"@emotion/react"`);
   });
 
+  it('should allow to enable react compiler', async () => {
+    const rsbuild = await createRsbuild();
+
+    rsbuild.addPlugins([
+      pluginReact({
+        reactCompiler: true,
+      }),
+    ]);
+    const config = await rsbuild.initConfigs();
+
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(`"reactCompiler":true`);
+  });
+
+  it('should allow to configure react compiler', async () => {
+    const rsbuild = await createRsbuild();
+
+    rsbuild.addPlugins([
+      pluginReact({
+        reactCompiler: {
+          target: '18',
+        },
+      }),
+    ]);
+    const config = await rsbuild.initConfigs();
+
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
+      `"reactCompiler":{"target":"18"}`,
+    );
+  });
+
   it('should allow to add react plugin as single environment plugin', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
