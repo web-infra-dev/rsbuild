@@ -9,6 +9,9 @@
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/create-rsbuild"
   },
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "bin": {
     "create-rsbuild": "./bin.js"
   },
