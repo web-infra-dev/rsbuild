@@ -1,32 +1,43 @@
-import { expect, getFileContent, test } from '@e2e/helper';
+import { expect, getFileContent, gotoPage, test } from '@e2e/helper';
 
 test('should handle relative paths correctly for multiple entries in subdirectories', async ({
-  build,
+  page,
+  buildPreview,
 }) => {
-  const rsbuild = await build();
+  const rsbuild = await buildPreview();
   const files = rsbuild.getDistFiles();
 
-  // index.html should have the path relative to root
-  const indexHtml = getFileContent(files, 'index.html');
-  expect(
-    indexHtml.includes('src="env-config.js"') || indexHtml.includes('src="./env-config.js"'),
-  ).toBeTruthy();
-  expect(indexHtml).not.toContain('src="../env-config.js"');
-  expect(indexHtml).not.toContain('src="../../env-config.js"');
+  const entries = [
+    {
+      entry: 'index',
+      filename: 'index.html',
+      pathname: '/index.html',
+      src: 'test.js',
+    },
+    {
+      entry: 'subdir/main',
+      filename: 'subdir/main.html',
+      pathname: '/subdir/main.html',
+      src: '../test.js',
+    },
+    {
+      entry: 'subdir/test',
+      filename: 'subdir/test.html',
+      pathname: '/subdir/test.html',
+      src: '../test.js',
+    },
+  ];
 
-  // subdir/main.html should have the path relative to the subdirectory
-  const mainHtml = getFileContent(files, 'subdir/main.html');
-  expect(mainHtml).toContain('src="../env-config.js"');
-  expect(mainHtml).not.toContain('src="env-config.js"');
-  expect(mainHtml).not.toContain('src="./env-config.js"');
-  expect(mainHtml).not.toContain('src="../../env-config.js"');
+  for (const { filename, src } of entries) {
+    const html = getFileContent(files, filename);
+    expect(html).toContain(`src="${src}"`);
+  }
 
-  // subdir/test.html should also have the path relative to the subdirectory
-  // This is the case where the bug occurred - the second entry in the same subdir
-  // should have the same path as main.html
-  const testHtml = getFileContent(files, 'subdir/test.html');
-  expect(testHtml).toContain('src="../env-config.js"');
-  expect(testHtml).not.toContain('src="env-config.js"');
-  expect(testHtml).not.toContain('src="./env-config.js"');
-  expect(testHtml).not.toContain('src="../../env-config.js"');
+  for (const { entry, pathname } of entries) {
+    await gotoPage(page, rsbuild, entry);
+    expect(await page.evaluate('window.__htmlTagTest')).toEqual({
+      loaded: true,
+      pathname,
+    });
+  }
 });
