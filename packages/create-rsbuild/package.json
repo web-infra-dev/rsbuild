@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "2.0.15",
+  "version": "2.1.0-beta.0",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.rs",
   "license": "MIT",
