@@ -197,26 +197,18 @@ test('should create React project with react-compiler as expected', async () => 
     tools: ['react-compiler'],
     clean: false,
   });
-  expect(pkgJson.devDependencies['@rsbuild/plugin-babel']).toBeTruthy();
-  expect(pkgJson.devDependencies['babel-plugin-react-compiler']).toBeTruthy();
   expect(pkgJson.dependencies['react-compiler-runtime']).toBeFalsy();
 
   const configContent = readCreatedFile(dir, 'rsbuild.config.js');
   expect(configContent).toBe(`// @ts-check
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({
   plugins: [
-    pluginReact(),
-    pluginBabel({
-      include: /\\.[jt]sx?$/,
-      exclude: [/[\\\\/]node_modules[\\\\/]/],
-      babelLoaderOptions(opts) {
-        opts.plugins?.unshift('babel-plugin-react-compiler');
-      },
+    pluginReact({
+      reactCompiler: true,
     }),
   ],
 });
@@ -230,27 +222,19 @@ test('should create React project with react-compiler and tailwindcss as expecte
     tools: ['react-compiler', 'tailwindcss'],
     clean: false,
   });
-  expect(pkgJson.devDependencies['@rsbuild/plugin-babel']).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-tailwindcss']).toBeTruthy();
-  expect(pkgJson.devDependencies['babel-plugin-react-compiler']).toBeTruthy();
 
   const configContent = readCreatedFile(dir, 'rsbuild.config.js');
   expect(configContent).toBe(`// @ts-check
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginTailwindcss } from '@rsbuild/plugin-tailwindcss';
 
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({
   plugins: [
-    pluginReact(),
-    pluginBabel({
-      include: /\\.[jt]sx?$/,
-      exclude: [/[\\\\/]node_modules[\\\\/]/],
-      babelLoaderOptions(opts) {
-        opts.plugins?.unshift('babel-plugin-react-compiler');
-      },
+    pluginReact({
+      reactCompiler: true,
     }),
     pluginTailwindcss(),
   ],
@@ -265,27 +249,19 @@ test('should preserve tailwindcss when react-compiler runs after it', async () =
     tools: ['tailwindcss', 'react-compiler'],
     clean: false,
   });
-  expect(pkgJson.devDependencies['@rsbuild/plugin-babel']).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-tailwindcss']).toBeTruthy();
-  expect(pkgJson.devDependencies['babel-plugin-react-compiler']).toBeTruthy();
 
   const configContent = readCreatedFile(dir, 'rsbuild.config.js');
   expect(configContent).toBe(`// @ts-check
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginTailwindcss } from '@rsbuild/plugin-tailwindcss';
 
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({
   plugins: [
-    pluginReact(),
-    pluginBabel({
-      include: /\\.[jt]sx?$/,
-      exclude: [/[\\\\/]node_modules[\\\\/]/],
-      babelLoaderOptions(opts) {
-        opts.plugins?.unshift('babel-plugin-react-compiler');
-      },
+    pluginReact({
+      reactCompiler: true,
     }),
     pluginTailwindcss(),
   ],
@@ -300,8 +276,6 @@ test('should ignore react-compiler for non-React projects', async () => {
     tools: ['react-compiler'],
     clean: false,
   });
-  expect(pkgJson.devDependencies['@rsbuild/plugin-babel']).toBeFalsy();
-  expect(pkgJson.devDependencies['babel-plugin-react-compiler']).toBeFalsy();
   expect(pkgJson.dependencies?.['react-compiler-runtime']).toBeFalsy();
 
   const configContent = readCreatedFile(dir, 'rsbuild.config.js');

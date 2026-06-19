@@ -17,20 +17,6 @@ export const tailwindcssPlugin: ConfigPlugin = {
   order: 20,
 };
 
-export const reactCompilerPlugin: ConfigPlugin = {
-  id: 'react-compiler',
-  importName: 'pluginBabel',
-  source: '@rsbuild/plugin-babel',
-  call: `pluginBabel({
-  include: /\\.[jt]sx?$/,
-  exclude: [/[\\\\/]node_modules[\\\\/]/],
-  babelLoaderOptions(opts) {
-    opts.plugins?.unshift('babel-plugin-react-compiler');
-  },
-})`,
-  order: 10,
-};
-
 type ConfigState = {
   file: string;
   base: string;
@@ -83,6 +69,29 @@ const formatPlugins = (calls: string[]) => {
   return lines.join('\n');
 };
 
+const addReactCompilerOption = (code: string) => {
+  if (code.includes('reactCompiler:')) {
+    return code;
+  }
+
+  const reactCompilerCall = `pluginReact({
+  reactCompiler: true,
+})`;
+  const multiLineCall = `${indent}${indent}pluginReact(),`;
+  const replaceCall = (call: string) => (call === 'pluginReact()' ? reactCompilerCall : call);
+  const next = code
+    .replace(/^ {2}plugins: \[(.*pluginReact\(\).*)\],$/m, (_, calls: string) =>
+      formatPlugins(calls.split(', ').map(replaceCall)),
+    )
+    .replace(multiLineCall, formatCall(reactCompilerCall));
+
+  if (next !== code) {
+    return next;
+  }
+
+  throw new Error('Failed to update rsbuild.config: pluginReact call not found.');
+};
+
 const addPluginsField = (code: string, calls: string[]) => {
   if (code.includes('defineConfig({});')) {
     return code.replace('defineConfig({});', `defineConfig({\n${formatPlugins(calls)}\n});`);
@@ -131,9 +140,11 @@ const addCalls = (code: string, plugins: ConfigPlugin[]) => {
 
 const applyPlugins = (base: string, plugins: ConfigPlugin[]) => {
   let code = base;
+
   for (const plugin of plugins) {
     code = addImport(code, plugin);
   }
+
   return addCalls(code, plugins);
 };
 
@@ -166,4 +177,15 @@ export const addPluginsToRsbuildConfig = async (dir: string, plugins: ConfigPlug
   const ordered = [...state.plugins.values()].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
   await fs.promises.writeFile(state.file, applyPlugins(state.base, ordered));
+};
+
+export const enableReactCompilerInRsbuildConfig = async (dir: string) => {
+  const file = findConfig(dir);
+
+  if (!file) {
+    return;
+  }
+
+  const code = normalize(await fs.promises.readFile(file, 'utf-8'));
+  await fs.promises.writeFile(file, addReactCompilerOption(code));
 };
