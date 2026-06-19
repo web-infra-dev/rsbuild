@@ -11,7 +11,7 @@ import {
 } from 'create-rstack';
 import {
   addPluginsToRsbuildConfig,
-  reactCompilerPlugin,
+  enableReactCompilerInRsbuildConfig,
   tailwindcssPlugin,
 } from './rsbuildConfig.js';
 
@@ -149,14 +149,8 @@ create({
       label: 'React Compiler - optimization',
       order: 'pre',
       when: ({ templateName }) => ['react-js', 'react-ts'].includes(templateName),
-      action: async ({ templateName, distFolder }) => {
-        const toolFolder = path.join(root, 'template-react-compiler');
-        copyFolder({
-          from: path.join(toolFolder, templateName),
-          to: distFolder,
-          isMergePackageJson: true,
-        });
-        await addPluginsToRsbuildConfig(distFolder, [reactCompilerPlugin]);
+      action: async ({ distFolder }) => {
+        await enableReactCompilerInRsbuildConfig(distFolder);
       },
     },
     {
