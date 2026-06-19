@@ -26,15 +26,13 @@ Upgrading to the latest version of Rsbuild gives you access to the latest perfor
 
 Rsbuild provides a [performance.buildCache](/config/performance/build-cache) configuration that significantly improves rebuild speed.
 
+### React Compiler
+
+If your project uses React Compiler, enable Rsbuild's built-in Rust version of [React Compiler](/guide/framework/react#react-compiler) instead of running React Compiler through Babel to reduce the performance overhead introduced by Babel.
+
 ### Reduce module count
 
 Optimizing the number of modules in your application reduces bundle size and improves build performance. See [Bundle Size Optimization](/guide/optimization/optimize-bundle) to learn optimization strategies.
-
-### Optimize Tailwind CSS
-
-When using Tailwind CSS v3, incorrectly configuring the `content` field in `tailwind.config.js` can lead to poor build and HMR performance.
-
-See [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3#optimize-build-performance) for more details.
 
 ### Parallel processing
 
@@ -54,6 +52,12 @@ While Rsbuild delivers excellent build performance out of the box, certain JavaS
 - [@rsbuild/plugin-less](/plugins/list/plugin-less): The Less compiler has relatively poor performance. Consider using [@rsbuild/plugin-sass](/plugins/list/plugin-sass) or other performant CSS solutions instead.
 - [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check): The default TypeScript-based type-checking approach has relatively poor performance. We recommend enabling experimental [typescript-go support](https://github.com/rstackjs/rsbuild-plugin-type-check#typescript-go-support) to improve type-checking performance.
 - [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin) or [minimizer-webpack-plugin](https://www.npmjs.com/package/minimizer-webpack-plugin): You can replace Terser with faster minimizers like Rsbuild's built-in [SWC](/guide/configuration/swc) minifier.
+
+### Optimize Tailwind CSS
+
+When using Tailwind CSS v3, incorrectly configuring the `content` field in `tailwind.config.js` can lead to poor build and HMR performance.
+
+See [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3#optimize-build-performance) for more details.
 
 ## Development optimization
 
