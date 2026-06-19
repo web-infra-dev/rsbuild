@@ -3,14 +3,14 @@
   "version": "2.0.3",
   "description": "Tailwind CSS plugin for Rsbuild",
   "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-tailwindcss"
-  },
-  "bugs": {
-    "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },
   "files": [
     "dist"
