@@ -198,12 +198,6 @@ const calcTotalSize = (assets: FormattedAsset[], compressed?: boolean) => {
   };
 };
 
-type StatsAsset = {
-  size: number;
-  content?: Buffer | string;
-  filePath: string;
-};
-
 async function printFileSizes(
   options: PrintFileSizeOptions,
   stats: Rspack.Stats,
@@ -231,10 +225,11 @@ async function printFileSizes(
       }
     : null;
 
-  const formatAsset = async (asset: StatsAsset): Promise<FormattedAsset> => {
-    const { size, filePath } = asset;
-    const gzippedSize = asset.content === undefined ? null : await gzipSize(asset.content);
-
+  const formatAsset = (
+    filePath: string,
+    size: number,
+    gzippedSize: number | null,
+  ): FormattedAsset => {
     let normalizedPath = '';
 
     // Store current size for next build
@@ -296,39 +291,43 @@ async function printFileSizes(
   };
 
   const getAssets = async () => {
-    const exclude = options.exclude ?? excludeAsset;
-    const formattedAssets: Promise<FormattedAsset>[] = [];
+    const { exclude, include } = options;
+    const formattedAssets: (FormattedAsset | Promise<FormattedAsset>)[] = [];
+    const compilationAssets = stats.compilation.assets;
 
-    for (const [assetName, value] of Object.entries(stats.compilation.assets)) {
+    for (const assetName of Object.keys(compilationAssets)) {
+      const value = compilationAssets[assetName];
       const filePath = getFilePath(assetName);
 
-      if (!options.exclude && excludeAsset({ name: filePath, size: 0 })) {
+      if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
         continue;
       }
 
       const content = options.compressed && isCompressible(filePath) ? value.source() : undefined;
       const size = content === undefined ? value.size() : Buffer.byteLength(content);
-      const publicAsset: PrintFileSizeAsset = {
-        name: filePath,
-        size,
-      };
 
-      if (exclude(publicAsset)) {
-        continue;
-      }
-      if (options.include) {
-        if (!options.include(publicAsset)) {
+      if (exclude || include) {
+        const publicAsset: PrintFileSizeAsset = {
+          name: filePath,
+          size,
+        };
+        if (exclude?.(publicAsset)) {
           continue;
+        }
+        if (include) {
+          if (!include(publicAsset)) {
+            continue;
+          }
         }
       }
 
-      formattedAssets.push(
-        formatAsset({
-          filePath,
-          size,
-          content,
-        }),
-      );
+      if (content === undefined) {
+        formattedAssets.push(formatAsset(filePath, size, null));
+      } else {
+        formattedAssets.push(
+          gzipSize(content).then((gzippedSize) => formatAsset(filePath, size, gzippedSize)),
+        );
+      }
     }
 
     return (await Promise.all(formattedAssets)).sort((a, b) => a.size - b.size);
