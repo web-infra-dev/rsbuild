@@ -15,6 +15,11 @@
       "matchPackageNames": ["/babel/"]
     },
     {
+      "description": "Keep Babel 7 packages on v7 until Babel 8 compatibility is handled.",
+      "matchPackageNames": ["/^@babel\\//", "/^@types\\/babel__/"],
+      "allowedVersions": ">=7.0.0 <8.0.0"
+    },
+    {
       "groupName": "Rspress",
       "groupSlug": "rspress",
       "matchPackageNames": ["/rspress/"]
@@ -44,6 +49,12 @@
       "matchManagers": ["npm"],
       "matchDepTypes": ["engines"],
       "matchPackageNames": ["node"],
+      "enabled": false
+    },
+    {
+      "description": "Keep .node-version pinned until Cloudflare Pages can install newer Node.js releases reliably.",
+      "matchManagers": ["nodenv"],
+      "matchFileNames": [".node-version"],
       "enabled": false
     },
     {
