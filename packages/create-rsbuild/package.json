@@ -3,14 +3,14 @@
   "version": "2.1.0-beta.0",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/create-rsbuild"
-  },
-  "bugs": {
-    "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },
   "bin": {
     "create-rsbuild": "./bin.js"

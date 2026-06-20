@@ -3,14 +3,14 @@
   "version": "1.2.9",
   "description": "Vue 3 plugin of Rsbuild",
   "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-vue"
-  },
-  "bugs": {
-    "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },
   "files": [
     "dist"
