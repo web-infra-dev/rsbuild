@@ -3,14 +3,14 @@
   "version": "1.5.3",
   "description": "Sass plugin for Rsbuild",
   "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-sass"
-  },
-  "bugs": {
-    "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },
   "files": [
     "dist",

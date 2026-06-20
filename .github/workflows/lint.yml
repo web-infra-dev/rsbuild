@@ -37,5 +37,8 @@ jobs:
       - name: Lint
         run: node --run lint
 
+      - name: Check Format
+        run: node --run format:check
+
       - name: Check Spell
         run: node --run check-spell
