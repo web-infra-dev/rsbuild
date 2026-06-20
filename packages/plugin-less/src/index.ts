@@ -108,7 +108,7 @@ export type PluginLessOptions = {
   parallel?: boolean;
 };
 
-const getLessLoaderOptions = (
+const getLessLoaderOptions = async (
   userOptions: PluginLessOptions['lessLoaderOptions'],
   isUseCssSourceMap: boolean,
   rootPath: string,
@@ -149,7 +149,7 @@ const getLessLoaderOptions = (
     };
   };
 
-  const mergedOptions = reduceConfigsWithContext({
+  const mergedOptions = await reduceConfigsWithContext({
     initial: defaultLessLoaderOptions,
     config: userOptions,
     ctx: { addExcludes },
@@ -189,7 +189,7 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
     const LESS_INLINE = 'less-inline';
     const LESS_RAW = 'less-raw';
 
-    api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
       const lessRule = chain.module
@@ -220,7 +220,7 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
       const lessMainRule = getRule(LESS_MAIN);
 
       const { sourceMap } = config.output;
-      const { excludes, options } = getLessLoaderOptions(
+      const { excludes, options } = await getLessLoaderOptions(
         pluginOptions.lessLoaderOptions,
         typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css,
         api.context.rootPath,

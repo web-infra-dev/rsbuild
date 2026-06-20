@@ -39,7 +39,7 @@
     "@babel/plugin-transform-class-properties": "catalog:",
     "@babel/preset-typescript": "catalog:",
     "@types/babel__core": "catalog:",
-    "reduce-configs": "catalog:"
+    "reduce-configs": "^1.1.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
