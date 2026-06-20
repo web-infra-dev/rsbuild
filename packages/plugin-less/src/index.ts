@@ -12,6 +12,14 @@ export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
 
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-less" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-less" v1.`,
+    );
+  }
+}
+
 export type LessLoaderOptions = {
   /**
    * Options passed to less.
@@ -169,6 +177,8 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
   name: PLUGIN_LESS_NAME,
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     const { include = /\.less$/, parallel = false } = pluginOptions;
 
     const CSS_MAIN = 'css';
@@ -178,7 +188,6 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
     const LESS_URL = 'less-url';
     const LESS_INLINE = 'less-inline';
     const LESS_RAW = 'less-raw';
-    const isV1 = api.context.version.startsWith('1.');
 
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
@@ -190,16 +199,7 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
         .resolve.preferRelative(true)
         .end();
 
-      if (isV1) {
-        chain.module.rule(LESS_RAW).test(include);
-        chain.module.rule(LESS_INLINE).test(include);
-      }
-
       const getRule = (id: string) => {
-        // Compatibility for Rsbuild v1
-        if (isV1) {
-          return chain.module.rule(id);
-        }
         return (id.startsWith('less') ? lessRule : chain.module.rule(CHAIN_ID.RULE.CSS)).oneOf(id);
       };
 
@@ -208,7 +208,7 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
       const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
 
       // Less URL for `?url` imports.
-      const lessUrlRule = hasCssUrlRule && getRule(LESS_URL);
+      const lessUrlRule = hasCssUrlRule ? getRule(LESS_URL) : undefined;
 
       // Inline Less for `?inline` imports
       const lessInlineRule = getRule(LESS_INLINE);
@@ -234,7 +234,7 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
           type: 'main' | 'inline' | 'url',
         ) => void,
       ) => {
-        if (lessUrlRule) {
+        if (lessUrlRule && cssUrlRuleId) {
           callback(lessUrlRule, getRule(cssUrlRuleId), 'url');
         }
         callback(lessMainRule, getRule(CSS_MAIN), 'main');
@@ -276,14 +276,6 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
           loader.parallel(true);
         }
       });
-
-      // `experiments.parallelLoader` is no longer required in Rspack 2.0+
-      if (parallel && isV1) {
-        chain.experiments({
-          ...chain.get('experiments'),
-          parallelLoader: true,
-        });
-      }
     });
   },
 });
