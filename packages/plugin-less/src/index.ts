@@ -208,7 +208,7 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
       const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
 
       // Less URL for `?url` imports.
-      const lessUrlRule = hasCssUrlRule ? getRule(LESS_URL) : undefined;
+      const lessUrlRule = hasCssUrlRule && getRule(LESS_URL);
 
       // Inline Less for `?inline` imports
       const lessInlineRule = getRule(LESS_INLINE);
@@ -234,7 +234,7 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
           type: 'main' | 'inline' | 'url',
         ) => void,
       ) => {
-        if (lessUrlRule && cssUrlRuleId) {
+        if (lessUrlRule) {
           callback(lessUrlRule, getRule(cssUrlRuleId), 'url');
         }
         callback(lessMainRule, getRule(CSS_MAIN), 'main');
