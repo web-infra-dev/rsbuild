@@ -292,7 +292,7 @@ pluginBabel({
 
 > This feature is based on Rspack's parallel loader. Options transferred to worker threads must comply with the [HTML structured clone algorithm](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist). Otherwise, transmission will fail. For example, functions cannot be passed as options. See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
 
-### Configure multiple Babel rules
+## Configure multiple plugins
 
 By using the `include` and `exclude` options, you can register multiple `@rsbuild/plugin-babel` instances and create separate Babel rules for different files.
 
