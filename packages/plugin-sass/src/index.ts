@@ -14,6 +14,14 @@ export const PLUGIN_SASS_NAME = 'rsbuild:sass';
 
 export type { PluginSassOptions };
 
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-sass" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-sass" v1.`,
+    );
+  }
+}
+
 const getSassLoaderOptions = (
   userOptions: PluginSassOptions['sassLoaderOptions'],
   isUseCssSourceMap: boolean,
@@ -93,6 +101,8 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
   name: PLUGIN_SASS_NAME,
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     const { rewriteUrls = true, include = /\.s(?:a|c)ss$/ } = pluginOptions;
 
     const CSS_MAIN = 'css';
@@ -102,7 +112,6 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
     const SASS_URL = 'sass-url';
     const SASS_INLINE = 'sass-inline';
     const SASS_RAW = 'sass-raw';
-    const isV1 = api.context.version.startsWith('1.');
 
     api.onAfterCreateCompiler(({ compiler }) => {
       patchCompilerGlobalLocation(compiler);
@@ -131,16 +140,7 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
       const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
       const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
 
-      if (isV1) {
-        chain.module.rule(SASS_RAW).test(include);
-        chain.module.rule(SASS_INLINE).test(include);
-      }
-
       const getRule = (id: string) => {
-        // Compatibility for Rsbuild v1
-        if (isV1) {
-          return chain.module.rule(id);
-        }
         return (id.startsWith('sass') ? sassRule : cssRule).oneOf(id);
       };
 
