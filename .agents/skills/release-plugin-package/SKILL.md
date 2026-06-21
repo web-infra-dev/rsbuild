@@ -7,9 +7,8 @@ description: Use when asked to create a release PR for an official Rsbuild plugi
 
 ## Input
 
-- Plugin package name or short name, for example `@rsbuild/plugin-react`, `plugin-react`, or `react`.
+- Plugin package name or short name, for example `@rsbuild/plugin-react` or `plugin-react`.
 - Target version, for example `2.1.0`.
-- Optional related PRs or issue links that should be listed as release changes.
 
 If the package or version is missing, ask for it before making changes.
 
@@ -20,7 +19,6 @@ Use this skill only for official plugin packages in `packages/plugin-*`.
 Do not use it for:
 
 - `@rsbuild/core` or `create-rsbuild` releases. Use `release-core` instead.
-- Feature, bug fix, pure ESM, or v1 compatibility changes before the release version bump.
 - Publishing npm packages directly. This skill creates the release PR only.
 
 ## Workflow
@@ -38,7 +36,6 @@ Do not use it for:
 
    - `@rsbuild/plugin-react` -> `packages/plugin-react`
    - `plugin-react` -> `packages/plugin-react`
-   - `react` -> `packages/plugin-react`
 
    Confirm that `packages/plugin-<name>/package.json` exists and its `name` field matches the target package.
 
@@ -92,7 +89,7 @@ Do not use it for:
 
 9. Push the branch after re-checking it is not the default branch.
 
-10. Create the PR with the GitHub connector/plugin when possible. Use `gh pr create` only as a fallback when the connector cannot complete the operation.
+10. Create the PR using the GitHub workflow available in the current environment.
 
 ## PR Body
 
@@ -113,4 +110,4 @@ If related change PRs were provided or can be confidently identified, add a `Cha
 - https://github.com/web-infra-dev/rsbuild/pull/<number>
 ```
 
-Do not invent change links. If no related links are known, omit `Changes` and `Related Links` instead of adding empty sections.
+Do not invent change links. If no related links are known, omit `Changes` instead of adding an empty section.
