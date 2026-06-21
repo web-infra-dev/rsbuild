@@ -89,7 +89,7 @@ Do not use it for:
 
 9. Push the branch after re-checking it is not the default branch.
 
-10. Create the PR using the GitHub workflow available in the current environment.
+10. If running in Codex, create the PR with the GitHub connector/plugin. Otherwise, use the GitHub workflow available in the current environment.
 
 ## PR Body
 
