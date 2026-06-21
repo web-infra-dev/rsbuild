@@ -1,0 +1,4 @@
+interface:
+  display_name: "Release Plugin Package"
+  short_description: "Create release PRs for Rsbuild plugin packages."
+  default_prompt: "Create a release PR for an Rsbuild plugin package."
