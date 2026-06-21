@@ -20,6 +20,13 @@
       "allowedVersions": ">=7.0.0 <8.0.0"
     },
     {
+      "description": "Keep @rsbuild/plugin-babel on reduce-configs v1 because applyUserBabelConfig is an exported synchronous API.",
+      "matchManagers": ["npm"],
+      "matchFileNames": ["packages/plugin-babel/package.json"],
+      "matchPackageNames": ["reduce-configs"],
+      "enabled": false
+    },
+    {
       "groupName": "Rspress",
       "groupSlug": "rspress",
       "matchPackageNames": ["/rspress/"]
