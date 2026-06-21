@@ -25,6 +25,7 @@ description: Use when adding or updating Rsbuild end-to-end tests in `e2e/cases`
 - Prefer putting static Rsbuild configurations in `rsbuild.config.ts` to enable easier debugging via `npx rsbuild`.
 - Use inline config for dynamic values or minor per-test variations.
 - Split into multiple case directories when cases need different `src` code or different Rsbuild configs.
+- For package mocks used by one case, place them under that case's `_node_modules` directory and call `copyNodeModules()` before they are resolved.
 
 ## Constraints
 
