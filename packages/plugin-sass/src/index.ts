@@ -22,13 +22,13 @@ function assertCoreVersion(version: string): void {
   }
 }
 
-const getSassLoaderOptions = (
+const getSassLoaderOptions = async (
   userOptions: PluginSassOptions['sassLoaderOptions'],
   isUseCssSourceMap: boolean,
-): {
+): Promise<{
   options: SassLoaderOptions;
   excludes: (RegExp | string)[];
-} => {
+}> => {
   const excludes: (RegExp | string)[] = [];
 
   const addExcludes = (items: string | RegExp | (string | RegExp)[]) => {
@@ -53,7 +53,7 @@ const getSassLoaderOptions = (
     };
   };
 
-  const mergedOptions = reduceConfigsWithContext({
+  const mergedOptions = await reduceConfigsWithContext({
     initial: {
       sourceMap: isUseCssSourceMap,
       api: 'modern-compiler',
@@ -117,12 +117,12 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
       patchCompilerGlobalLocation(compiler);
     });
 
-    api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
       const { sourceMap } = config.output;
       const isUseSourceMap = typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
 
-      const { excludes, options } = getSassLoaderOptions(
+      const { excludes, options } = await getSassLoaderOptions(
         pluginOptions.sassLoaderOptions,
         // If `rewriteUrls` is true, source maps are required for loaders that run before
         // `resolve-url-loader`, otherwise the `resolve-url-loader` will throw an error.

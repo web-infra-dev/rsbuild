@@ -111,7 +111,7 @@ catalog:
   'react': '^19.2.7'
   'react-dom': '^19.2.7'
   'react-refresh': '^0.18.0'
-  'reduce-configs': '^1.1.2'
+  'reduce-configs': '^2.0.1'
   'resolve-url-loader': '^5.0.0'
   'rsbuild-plugin-arethetypeswrong': '0.3.1'
   'rsbuild-plugin-google-analytics': '^1.0.6'
