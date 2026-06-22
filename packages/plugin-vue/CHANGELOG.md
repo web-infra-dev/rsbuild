@@ -1,5 +1,20 @@
 # @rsbuild/plugin-vue
 
+## 2.0.0 (2026-06-22)
+
+### Breaking changes
+
+- feat(plugin-vue)!: publish as pure ESM package by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/7974
+- feat(plugin-vue): drop Rsbuild v1 support by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/7975
+
+### Document
+
+- docs(plugin-vue): update loader references in types by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/7976
+
+### Other changes
+
+- chore: add bugs metadata to remaining plugin packages by @killernova in https://github.com/web-infra-dev/rsbuild/pull/7935
+
 ## 1.2.9 (2026-05-30)
 
 ### Document
