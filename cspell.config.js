@@ -18,6 +18,7 @@ export default {
     'coverage',
     'doc_build',
     'node_modules',
+    'packages/plugin-*/CHANGELOG.md',
     'pnpm-lock.yaml',
     'README.pt-BR.md',
   ],
