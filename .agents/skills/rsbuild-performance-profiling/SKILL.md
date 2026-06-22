@@ -11,7 +11,7 @@ description: Use when profiling, analyzing, reporting, or optimizing Rsbuild per
 
    - operation: build, dev startup, rebuild, request serving, memory usage, or another explicit flow
    - benchmark project or fixture
-   - metric: wall time, CPU time, self time, allocations, RSS, heap, throughput, or latency
+   - metric: wall time, CPU time, self time, allocations, RSS, heap
    - success threshold, if the user provided one
 
 2. Record the baseline first. Keep runtime, package manager, dependencies, environment variables, command flags, and input project unchanged for comparisons.
