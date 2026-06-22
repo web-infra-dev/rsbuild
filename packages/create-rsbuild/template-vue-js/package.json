@@ -13,6 +13,6 @@
   },
   "devDependencies": {
     "@rsbuild/core": "^2.0.15",
-    "@rsbuild/plugin-vue": "^1.2.9"
+    "@rsbuild/plugin-vue": "^2.0.0"
   }
 }
