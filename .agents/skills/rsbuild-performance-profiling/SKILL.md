@@ -38,7 +38,6 @@ description: Use when profiling, analyzing, reporting, or optimizing Rsbuild per
 - Do not optimize generated output, dependencies, or benchmark fixture code unless the user asked for that scope.
 - For CPU profiles, call out both hot functions and why they are on the hot path.
 - For memory tasks, distinguish peak usage from stable usage after warmup or repeated rebuilds.
-- For dev server request performance, measure static asset serving separately from compile or rebuild time.
 
 ## Output
 
