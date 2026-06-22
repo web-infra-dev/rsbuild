@@ -7,7 +7,7 @@ const require = createRequire(import.meta.url);
 
 export type SplitVueChunkOptions = {
   /**
-   * Whether to enable split chunking for Vue-related dependencies (e.g., vue, vue-loader).
+   * Whether to enable split chunking for Vue-related dependencies (e.g., vue, rspack-vue-loader).
    * @default true
    */
   vue?: boolean;
@@ -25,7 +25,7 @@ export type PluginVueOptions = {
    */
   test?: Rspack.RuleSetCondition;
   /**
-   * Options passed to `vue-loader`.
+   * Options passed to `rspack-vue-loader`.
    * @see https://vue-loader.vuejs.org/
    */
   vueLoaderOptions?: VueLoaderOptions;
