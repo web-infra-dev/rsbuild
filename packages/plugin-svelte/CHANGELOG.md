@@ -140,8 +140,8 @@
 
 ### Bug fixes
 
-- fix(plugin-svelte): failed to compile \*.svslte.ts by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/3918
-- fix(plugin-svelte): `*.svslte.ts` files are transformed twice by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/3920
+- fix(plugin-svelte): failed to compile \*.svelte.ts by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/3918
+- fix(plugin-svelte): `*.svelte.ts` files are transformed twice by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/3920
 
 ## 1.0.3 (2024-10-29)
 
