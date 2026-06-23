@@ -38,6 +38,7 @@ packages/core/              # core + CLI
 packages/plugin-*/          # plugins
 packages/create-rsbuild/    # scaffolder
 e2e/                        # e2e tests
+examples/                   # runnable examples
 website/                    # docs
 scripts/                    # repo tooling
 ```
