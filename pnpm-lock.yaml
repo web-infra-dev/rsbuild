@@ -92,7 +92,7 @@ catalogs:
       specifier: ^0.10.6
       version: 0.10.6
     '@rstest/core':
-      specifier: ^0.10.6
+      specifier: https://pkg.pr.new/@rstest/core@220a248
       version: 0.10.6
     '@shikijs/transformers':
       specifier: ^4.2.0
@@ -395,7 +395,7 @@ importers:
         version: 0.10.6(@rslib/core@0.23.0)(@rstest/core@0.10.6)(typescript@6.0.3)
       '@rstest/core':
         specifier: 'catalog:'
-        version: 0.10.6(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+        version: https://pkg.pr.new/@rstest/core@220a248(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
       '@scripts/config':
         specifier: workspace:*
         version: link:scripts/config
@@ -513,7 +513,7 @@ importers:
         version: link:../packages/plugin-vue
       '@rstest/core':
         specifier: 'catalog:'
-        version: 0.10.6(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+        version: https://pkg.pr.new/@rstest/core@220a248(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../scripts/test-helper
@@ -2530,6 +2530,16 @@ packages:
       core-js:
         optional: true
 
+  '@rsbuild/core@2.1.0-beta.0':
+    resolution: {integrity: sha512-uiVwiLWjrOXORRoj6FkrtqiAP2qtl1ynxs26uyS/29gaOJLiAjDT7q0lpuToxJ4JPQQ2O65H/tOt0IBFvMjGOg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
   '@rsbuild/plugin-check-syntax@2.0.0':
     resolution: {integrity: sha512-rNc7J1DTwR+t2N/scaCsnKe1mCGc6SEky0gV+gaoLC+CP/VO6e9SxMxv0dHQJgNEzO0i+xQ9O1cU9p+dCo9xSQ==}
     peerDependencies:
@@ -2918,8 +2928,9 @@ packages:
       typescript:
         optional: true
 
-  '@rstest/core@0.10.6':
-    resolution: {integrity: sha512-nX61dw2Tnxfwy/jGZEuNbh2tzapgaH6Iwj4Aw5d2wxUwxptUL3ddUxFF5M1ZSWoLEVG30VaPg3ITzrSo5sdbTg==}
+  '@rstest/core@https://pkg.pr.new/@rstest/core@220a248':
+    resolution: {integrity: sha512-/5Io/+lOfxxtr4cr5abPfiJSaQ3TMLb2PcHgq01QY7V+peyWuUrZKvaAfjp0rMfXP8l/2LboIwveirDJ0fBbgA==, tarball: https://pkg.pr.new/@rstest/core@220a248}
+    version: 0.10.6
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -6734,6 +6745,15 @@ snapshots:
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
+  '@rsbuild/core@2.1.0-beta.0(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)':
+    dependencies:
+      '@rspack/core': 2.1.0-beta.0(@module-federation/runtime-tools@2.5.1)(@swc/helpers@0.5.23)
+      '@swc/helpers': 0.5.23
+    optionalDependencies:
+      core-js: 3.49.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+
   '@rsbuild/plugin-check-syntax@2.0.0(@rsbuild/core@packages+core)':
     dependencies:
       acorn: 8.16.0
@@ -7097,13 +7117,13 @@ snapshots:
   '@rstest/adapter-rslib@0.10.6(@rslib/core@0.23.0)(@rstest/core@0.10.6)(typescript@6.0.3)':
     dependencies:
       '@rslib/core': 0.23.0(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)(typescript@6.0.3)
-      '@rstest/core': 0.10.6(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+      '@rstest/core': https://pkg.pr.new/@rstest/core@220a248(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
     optionalDependencies:
       typescript: 6.0.3
 
-  '@rstest/core@0.10.6(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)':
+  '@rstest/core@https://pkg.pr.new/@rstest/core@220a248(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)':
     dependencies:
-      '@rsbuild/core': 2.0.15(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.0-beta.0(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
       '@types/chai': 5.2.3
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'

@@ -44,7 +44,11 @@ catalog:
   '@rspress/plugin-sitemap': '^2.0.14'
   '@rstack-dev/doc-ui': '1.14.4'
   '@rstest/adapter-rslib': '^0.10.6'
-  '@rstest/core': '^0.10.6'
+  # TODO: revert to '^0.10.6' once this rstest fix is published to npm.
+  # Pinned to a pkg.pr.new preview build only to verify CI passes. pkg.pr.new
+  # tarballs ship without an `integrity` field, which frozen-lockfile rejects,
+  # so the hash is injected manually into pnpm-lock.yaml. Do NOT merge.
+  '@rstest/core': 'https://pkg.pr.new/@rstest/core@220a248'
   '@shikijs/transformers': '^4.2.0'
   '@svgr/core': '8.1.0'
   '@svgr/plugin-jsx': '8.1.0'
