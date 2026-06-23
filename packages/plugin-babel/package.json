@@ -13,8 +13,7 @@
     "directory": "packages/plugin-babel"
   },
   "files": [
-    "dist",
-    "compiled"
+    "dist"
   ],
   "type": "module",
   "types": "./dist/index.d.ts",
@@ -30,8 +29,7 @@
   },
   "scripts": {
     "build": "rslib",
-    "dev": "rslib -w",
-    "prebundle": "prebundle"
+    "dev": "rslib -w"
   },
   "dependencies": {
     "@babel/core": "catalog:",
@@ -39,6 +37,7 @@
     "@babel/plugin-transform-class-properties": "catalog:",
     "@babel/preset-typescript": "catalog:",
     "@types/babel__core": "catalog:",
+    "babel-loader": "catalog:",
     "reduce-configs": "^1.1.2"
   },
   "devDependencies": {
@@ -46,8 +45,6 @@
     "@rslib/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "catalog:",
-    "babel-loader": "catalog:",
-    "prebundle": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {

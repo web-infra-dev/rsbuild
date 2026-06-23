@@ -1070,6 +1070,9 @@ importers:
       '@types/babel__core':
         specifier: 'catalog:'
         version: 7.20.5
+      babel-loader:
+        specifier: 'catalog:'
+        version: 10.1.1(@babel/core@7.29.7)(@rspack/core@2.0.8)
       reduce-configs:
         specifier: ^1.1.2
         version: 1.1.2
@@ -1086,12 +1089,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.2
-      babel-loader:
-        specifier: 'catalog:'
-        version: 10.1.1(@babel/core@7.29.7)(@rspack/core@2.0.8)
-      prebundle:
-        specifier: 'catalog:'
-        version: 1.6.5(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
