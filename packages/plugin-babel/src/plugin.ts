@@ -1,7 +1,5 @@
-import fs from 'node:fs';
 import { createRequire } from 'node:module';
-import path, { isAbsolute, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { isAbsolute, join } from 'node:path';
 import type {
   EnvironmentContext,
   NormalizedEnvironmentConfig,
@@ -11,8 +9,11 @@ import type {
 import { applyUserBabelConfig, castArray, getBabelRuleId } from './helper.js';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
+const BABEL_LOADER_PATH = require.resolve('babel-loader');
+const { version: BABEL_LOADER_VERSION = '' } = require('babel-loader/package.json') as {
+  version?: string;
+};
 
 export const PLUGIN_BABEL_NAME = 'rsbuild:babel';
 const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
@@ -49,14 +50,9 @@ async function getCacheIdentifier(options: BabelLoaderOptions) {
   let identifier = `${process.env.NODE_ENV}${JSON.stringify(options)}`;
 
   const { version: coreVersion } = await import('@babel/core');
-  const rawPkgJson = await fs.promises.readFile(
-    join(__dirname, '../compiled/babel-loader/package.json'),
-    'utf-8',
-  );
-  const loaderVersion: string = JSON.parse(rawPkgJson).version ?? '';
 
   identifier += `@babel/core@${coreVersion}`;
-  identifier += `babel-loader@${loaderVersion}`;
+  identifier += `babel-loader@${BABEL_LOADER_VERSION}`;
 
   return identifier;
 }
@@ -123,7 +119,6 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
       order: 'pre',
       handler: async (chain, { CHAIN_ID, environment }) => {
         const babelOptions = await getBabelOptions(environment);
-        const babelLoader = path.resolve(__dirname, '../compiled/babel-loader/index.js');
         const { include, exclude, parallel = false } = options;
 
         if (include || exclude) {
@@ -147,7 +142,7 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
           const loader = rule
             .test(SCRIPT_REGEX)
             .use(CHAIN_ID.USE.BABEL)
-            .loader(babelLoader)
+            .loader(BABEL_LOADER_PATH)
             .options(babelOptions);
 
           if (parallel) {
@@ -160,7 +155,7 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
             .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN)
             .use(CHAIN_ID.USE.BABEL)
             .after(CHAIN_ID.USE.SWC)
-            .loader(babelLoader)
+            .loader(BABEL_LOADER_PATH)
             .options(babelOptions);
 
           if (parallel) {
