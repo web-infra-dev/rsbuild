@@ -19,13 +19,7 @@ import {
 import type { Assertion, ExpectStatic } from '@rstest/core';
 import fse from 'fs-extra';
 import { chromium, request as playwrightRequest } from 'playwright';
-import type {
-  APIRequestContext,
-  Browser,
-  BrowserContext,
-  Locator,
-  Page,
-} from 'playwright';
+import type { APIRequestContext, Browser, BrowserContext, Locator, Page } from 'playwright';
 import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
   type Build,
@@ -204,28 +198,16 @@ type MatcherOptions = {
 type LocatorAssertions = {
   readonly not: LocatorAssertions;
   toBeAttached: (options?: MatcherOptions) => Promise<void>;
-  toContainText: (
-    expected: TextMatcher,
-    options?: MatcherOptions,
-  ) => Promise<void>;
-  toHaveCSS: (
-    propertyName: string,
-    expected: string,
-    options?: MatcherOptions,
-  ) => Promise<void>;
+  toContainText: (expected: TextMatcher, options?: MatcherOptions) => Promise<void>;
+  toHaveCSS: (propertyName: string, expected: string, options?: MatcherOptions) => Promise<void>;
   toHaveCount: (expected: number, options?: MatcherOptions) => Promise<void>;
-  toHaveText: (
-    expected: TextExpectation,
-    options?: MatcherOptions,
-  ) => Promise<void>;
+  toHaveJSProperty: (name: string, expected: unknown, options?: MatcherOptions) => Promise<void>;
+  toHaveText: (expected: TextExpectation, options?: MatcherOptions) => Promise<void>;
 };
 
 type PageAssertions = {
   readonly not: PageAssertions;
-  toHaveTitle: (
-    expected: TextMatcher,
-    options?: MatcherOptions,
-  ) => Promise<void>;
+  toHaveTitle: (expected: TextMatcher, options?: MatcherOptions) => Promise<void>;
 };
 
 type E2EAssertion<T> = Assertion<T> & LocatorAssertions & PageAssertions;
@@ -276,20 +258,14 @@ const isLocator = (value: unknown): value is Locator =>
   hasFunction(value, 'textContent');
 
 const isPage = (value: unknown): value is Page =>
-  hasFunction(value, 'goto') &&
-  hasFunction(value, 'locator') &&
-  hasFunction(value, 'title');
+  hasFunction(value, 'goto') && hasFunction(value, 'locator') && hasFunction(value, 'title');
 
 const normalizeText = (text: string) => text.replace(/\s+/g, ' ').trim();
 
 const formatValue = (value: unknown) =>
   typeof value === 'string' ? JSON.stringify(value) : String(value);
 
-const matchesText = (
-  actual: string,
-  expected: TextMatcher,
-  mode: 'exact' | 'contain',
-) => {
+const matchesText = (actual: string, expected: TextMatcher, mode: 'exact' | 'contain') => {
   if (expected instanceof RegExp) {
     expected.lastIndex = 0;
     return expected.test(actual);
@@ -341,15 +317,10 @@ const assertExpectation = (
   if (!shouldThrow) {
     return;
   }
-  throw new Error(
-    customMessage ? `${customMessage}\n${defaultMessage}` : defaultMessage,
-  );
+  throw new Error(customMessage ? `${customMessage}\n${defaultMessage}` : defaultMessage);
 };
 
-const waitForExpectation = async (
-  check: () => Promise<void>,
-  options?: MatcherOptions,
-) => {
+const waitForExpectation = async (check: () => Promise<void>, options?: MatcherOptions) => {
   const timeout = options?.timeout ?? DEFAULT_EXPECT_TIMEOUT;
   const start = Date.now();
   let lastError: unknown;
@@ -410,8 +381,7 @@ const createLocatorAssertions = (
   async toHaveCSS(propertyName, expected, options) {
     await waitForExpectation(async () => {
       const actual = await locator.evaluate(
-        (element, property) =>
-          getComputedStyle(element).getPropertyValue(property),
+        (element, property) => getComputedStyle(element).getPropertyValue(property),
         propertyName,
       );
       const pass = actual === expected;
@@ -439,15 +409,32 @@ const createLocatorAssertions = (
     }, options);
   },
 
+  async toHaveJSProperty(name, expected, options) {
+    await waitForExpectation(async () => {
+      const actual = await locator.evaluate(
+        (element, property) => (element as unknown as Record<string, unknown>)[property],
+        name,
+      );
+      // Deep-equal via JSON to match Playwright's `toHaveJSProperty` semantics.
+      const pass = JSON.stringify(actual) === JSON.stringify(expected);
+      assertExpectation(
+        pass,
+        isNot,
+        `Expected locator ${isNot ? 'not ' : ''}to have JS property ${name} ${formatValue(
+          expected,
+        )}, received ${formatValue(actual)}.`,
+        message,
+      );
+    }, options);
+  },
+
   async toHaveText(expected, options) {
     await waitForExpectation(async () => {
       if (Array.isArray(expected)) {
         const actual = await getLocatorTextContents(locator);
         const pass =
           actual.length === expected.length &&
-          actual.every((item, index) =>
-            matchesText(item, expected[index], 'exact'),
-          );
+          actual.every((item, index) => matchesText(item, expected[index], 'exact'));
         assertExpectation(
           pass,
           isNot,
@@ -473,11 +460,7 @@ const createLocatorAssertions = (
   },
 });
 
-const createPageAssertions = (
-  page: Page,
-  isNot: boolean,
-  message?: string,
-): PageAssertions => ({
+const createPageAssertions = (page: Page, isNot: boolean, message?: string): PageAssertions => ({
   get not() {
     return createPageAssertions(page, !isNot, message);
   },
@@ -512,10 +495,7 @@ const expectImpl = (<T>(actual: T, message?: string) => {
 
 Object.assign(expectImpl, rstestExpect);
 
-const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
-  options: T,
-  cwd: string,
-): T => {
+const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(options: T, cwd: string): T => {
   // inherit process.env from current process
   const { NODE_ENV: _, ...restEnv } = process.env;
   options.env ||= {};
