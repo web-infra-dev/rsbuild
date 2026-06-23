@@ -36,7 +36,7 @@ pnpm e2e
 ```text
 packages/core/              # core + CLI
 packages/plugin-*/          # plugins
-packages/create-rsbuild/    # scaffolder
+packages/create-rsbuild/    # scaffold
 e2e/                        # e2e tests
 examples/                   # runnable examples
 website/                    # docs
