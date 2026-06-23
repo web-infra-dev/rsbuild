@@ -542,7 +542,14 @@ const rsbuildTest = base.extend<E2EFixture>({
     if (!testPath) {
       throw new Error('Failed to resolve current test file path.');
     }
-    const cwd = path.dirname(testPath);
+    // rstest reports `testPath` with POSIX separators even on Windows (it is
+    // derived via posix path helpers), whereas rsbuild/rspack expect native
+    // paths — vue-loader scope-id hashing, module-rule matching and HMR module
+    // identity are all path-format sensitive. A POSIX cwd mixed with the native
+    // `import.meta.dirname` used inside cases caused Windows-only build failures.
+    // `path.resolve` normalizes to the platform's native format, matching the
+    // previous Playwright runner (which used the native `testInfo.file`).
+    const cwd = path.resolve(path.dirname(testPath));
     await use(cwd);
   },
 

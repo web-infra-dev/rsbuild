@@ -1,9 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, test as baseTest } from '@e2e/helper';
-
-// Prefresh does not work as expected on Windows
-const test = process.platform === 'win32' ? baseTest.skip : baseTest;
+import { expect, test } from '@e2e/helper';
 
 test('HMR should work properly', async ({ page, dev, editFile }) => {
   const root = import.meta.dirname;
