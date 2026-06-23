@@ -22,6 +22,23 @@ tsconfig.tsbuildinfo
 # Test temp files
 test-temp-*
 
+# skills-package-manager
+.agents/skills/*
+!.agents/
+!.agents/skills/
+!.agents/skills/add-doc-anchor-ids/
+!.agents/skills/add-doc-anchor-ids/**
+!.agents/skills/docs-en-improvement/
+!.agents/skills/docs-en-improvement/**
+!.agents/skills/release-core/
+!.agents/skills/release-core/**
+!.agents/skills/sync-zh-en-docs/
+!.agents/skills/sync-zh-en-docs/**
+!.agents/skills/upgrade-rspack/
+!.agents/skills/upgrade-rspack/**
+!.agents/skills/write-e2e-cases/
+!.agents/skills/write-e2e-cases/**
+
 .vscode/**/*
 !.vscode/settings.json
 !.vscode/extensions.json

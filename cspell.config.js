@@ -3,6 +3,7 @@ import { banWords } from 'cspell-ban-words';
 export default {
   version: '0.2',
   language: 'en',
+  useGitignore: true,
   files: ['**/*.{ts,tsx,js,jsx,md,mdx}'],
   enableFiletypes: ['mdx'],
   ignoreRegExpList: [
