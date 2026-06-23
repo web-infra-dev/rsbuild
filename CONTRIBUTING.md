@@ -28,8 +28,6 @@ corepack enable
 pnpm install
 ```
 
-This installs dependencies, links packages inside the monorepo, and runs the Nx-powered `prepare` script.
-
 ---
 
 ## Making changes and building

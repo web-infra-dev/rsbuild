@@ -36,5 +36,8 @@ jobs:
         with:
           run_install: true
 
+      - name: Build
+        run: node --run build
+
       - name: Publish Preview
         run: pnpx pkg-pr-new publish --pnpm ./packages/*
