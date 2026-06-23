@@ -2,12 +2,12 @@
 
 ## Stack
 
-- Node.js `22+`
-- `pnpm` workspace monorepo
-- TypeScript (strict mode), Rspack/Rsbuild ecosystem
-- Test runner: `rstest`
+- Use repo Node.js/pnpm versions (`package.json`, `.node-version`)
+- `pnpm` workspace; shared deps in `pnpm-workspace.yaml` catalogs
+- TypeScript strict, Rspack/Rsbuild
+- Tests: Rstest; e2e: Playwright
 
-## Commands (run early)
+## Commands
 
 ```bash
 # setup
@@ -16,7 +16,6 @@ corepack enable && pnpm install
 # dev checks
 pnpm lint
 pnpm test
-pnpm e2e
 
 # build / format / docs
 pnpm build
@@ -24,24 +23,31 @@ pnpm format
 pnpm doc
 
 # focused work
-pnpm --filter core run build
+pnpm --filter @rsbuild/core run build
 pnpm test packages/core/tests/foo.test.ts
 pnpm e2e css
+
+# full e2e when needed
+pnpm e2e
 ```
 
 ## Project structure
 
 ```text
 packages/core/              # core + CLI
-packages/plugin-*/          # official plugins
-packages/create-rsbuild/    # scaffolding tool
-e2e/                        # end-to-end tests
+packages/plugin-*/          # plugins
+packages/create-rsbuild/    # scaffold
+e2e/                        # e2e tests
 examples/                   # runnable examples
-website/                    # docs site
+website/                    # docs
+scripts/                    # repo tooling
 ```
+
+## Skills
+
+Use matching `.agents/skills/*/SKILL.md` for release, Rspack upgrade, e2e, docs sync, PR, and perf tasks
 
 ## Code style
 
-- Use single quotes and existing Oxfmt conventions.
-- Keep TypeScript strict-safe; avoid `any`.
-- Naming: camelCase (functions/files), PascalCase (types/classes).
+- Oxfmt; single quotes
+- camelCase functions/files; PascalCase types/classes
