@@ -102,7 +102,7 @@
     "webpack": "^5.104.1",
     "webpack-bundle-analyzer": "^5.3.0",
     "webpack-merge": "6.0.1",
-    "ws": "^8.18.3"
+    "ws": "^8.21.0"
   },
   "engines": {
     "node": ">=18.12.0"
