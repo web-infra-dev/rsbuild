@@ -110,7 +110,7 @@ jobs:
         run: node --run build
 
       - name: Install Playwright browsers
-        if: steps.changes.outputs.changed == 'true' && runner.os != 'Linux'
+        if: steps.changes.outputs.changed == 'true'
         run: cd ./e2e && node --run setup
 
       - name: Run E2E tests
