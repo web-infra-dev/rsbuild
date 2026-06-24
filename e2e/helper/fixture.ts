@@ -197,7 +197,7 @@ const rsbuildTest = base.extend<RsbuildFixture>({
     if (!testPath) {
       throw new Error('Failed to resolve current test file path.');
     }
-    const cwd = path.dirname(testPath);
+    const cwd = path.normalize(path.dirname(testPath));
     await use(cwd);
   },
 
