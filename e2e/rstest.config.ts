@@ -11,7 +11,7 @@ const isCI = Boolean(process.env.CI);
 export default defineConfig({
   include: ['cases/**/*.test.ts'],
   exclude: ['**/node_modules/**', '**/.*/**', '**/test-temp-*/**'],
-  reporters: 'default',
+  reporters: ['default', ['github-actions', { annotations: false }]],
   isolate: false,
   disableConsoleIntercept: true,
   retry: isCI ? 3 : 0,
