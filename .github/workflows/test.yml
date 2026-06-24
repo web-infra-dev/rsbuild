@@ -109,13 +109,9 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: node --run build
 
-      - name: Install Playwright browsers on Linux
-        if: steps.changes.outputs.changed == 'true' && runner.os == 'Linux'
-        run: cd ./e2e && pnpm exec playwright install chromium --with-deps
-
       - name: Install Playwright browsers
         if: steps.changes.outputs.changed == 'true' && runner.os != 'Linux'
-        run: cd ./e2e && pnpm exec playwright install chromium
+        run: cd ./e2e && node --run setup
 
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'

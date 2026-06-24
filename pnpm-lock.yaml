@@ -88,6 +88,9 @@ catalogs:
     '@rstack-dev/doc-ui':
       specifier: 1.14.4
       version: 1.14.4
+    '@rstest/adapter-rslib':
+      specifier: ^0.10.6
+      version: 0.10.6
     '@shikijs/transformers':
       specifier: ^4.2.0
       version: 4.2.0
@@ -373,14 +376,7 @@ catalogs:
       version: 2.0.4
 
 overrides:
-  '@rstest/adapter-rsbuild': https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rsbuild@07c8abd9f7681590ea991128be26d3caaa3976f1
-  '@rstest/adapter-rslib': https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rslib@07c8abd9f7681590ea991128be26d3caaa3976f1
-  '@rstest/adapter-rspack': https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rspack@07c8abd9f7681590ea991128be26d3caaa3976f1
-  '@rstest/browser': https://pkg.pr.new/web-infra-dev/rstest/@rstest/browser@07c8abd9f7681590ea991128be26d3caaa3976f1
-  '@rstest/browser-react': https://pkg.pr.new/web-infra-dev/rstest/@rstest/browser-react@07c8abd9f7681590ea991128be26d3caaa3976f1
   '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1
-  '@rstest/coverage-istanbul': https://pkg.pr.new/web-infra-dev/rstest/@rstest/coverage-istanbul@07c8abd9f7681590ea991128be26d3caaa3976f1
-  '@rstest/coverage-v8': https://pkg.pr.new/web-infra-dev/rstest/@rstest/coverage-v8@07c8abd9f7681590ea991128be26d3caaa3976f1
   '@rstest/playwright': https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1
 
 patchedDependencies:
@@ -396,8 +392,8 @@ importers:
         specifier: 'catalog:'
         version: 0.6.2(jiti@2.7.0)
       '@rstest/adapter-rslib':
-        specifier: https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rslib@07c8abd9f7681590ea991128be26d3caaa3976f1
-        version: https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rslib@07c8abd9f7681590ea991128be26d3caaa3976f1(@rslib/core@0.23.0)(@rstest/core@0.10.6)(typescript@6.0.3)
+        specifier: 'catalog:'
+        version: 0.10.6(@rslib/core@0.23.0)(@rstest/core@0.10.6)(typescript@6.0.3)
       '@rstest/core':
         specifier: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1
         version: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
@@ -2872,9 +2868,8 @@ packages:
       '@rspress/core':
         optional: true
 
-  '@rstest/adapter-rslib@https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rslib@07c8abd9f7681590ea991128be26d3caaa3976f1':
-    resolution: {integrity: sha512-vMbPpLqgYE3yXwoi2v4BpA3KtOmn9I83M4ZXp5jdBeBFTY/FDbT6hZuwBUXgQzheORc0iRU5RVzbIIlLUgZkTw==, tarball: https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rslib@07c8abd9f7681590ea991128be26d3caaa3976f1}
-    version: 0.10.6
+  '@rstest/adapter-rslib@0.10.6':
+    resolution: {integrity: sha512-QMlAjT68eEESdVPJr46Wf1khLKuftXxDQKtqcPtWe8t7QdDUpu6YPS3QCEXX1kYFpcPlWdCFJo8irxBzNDqCYQ==}
     peerDependencies:
       '@rslib/core': '>=0.18.6'
       '@rstest/core': ^0.10.6
@@ -7022,7 +7017,7 @@ snapshots:
     optionalDependencies:
       '@rspress/core': 2.0.14(@module-federation/runtime-tools@2.5.1)(@rspack/core@2.0.8)(@types/mdast@4.0.4)(@types/react@19.2.17)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
 
-  '@rstest/adapter-rslib@https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rslib@07c8abd9f7681590ea991128be26d3caaa3976f1(@rslib/core@0.23.0)(@rstest/core@0.10.6)(typescript@6.0.3)':
+  '@rstest/adapter-rslib@0.10.6(@rslib/core@0.23.0)(@rstest/core@0.10.6)(typescript@6.0.3)':
     dependencies:
       '@rslib/core': 0.23.0(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)(typescript@6.0.3)
       '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
