@@ -14,6 +14,18 @@ on:
           - rc
           - canary
           - latest
+          - latest-v1
+      npm_tag_confirm:
+        type: choice
+        description: 'Confirm npm tag'
+        required: true
+        options:
+          - alpha
+          - beta
+          - rc
+          - canary
+          - latest
+          - latest-v1
       branch:
         description: 'Release Branch (confirm release branch)'
         required: true
@@ -22,9 +34,28 @@ on:
 permissions: {}
 
 jobs:
+  validate_inputs:
+    name: Validate Inputs
+    if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate npm tag confirmation
+        env:
+          NPM_TAG: ${{ inputs.npm_tag }}
+          NPM_TAG_CONFIRM: ${{ inputs.npm_tag_confirm }}
+        run: |
+          if [ "$NPM_TAG" != "$NPM_TAG_CONFIRM" ]; then
+            echo "Error: npm_tag and npm_tag_confirm must match"
+            echo "npm_tag: $NPM_TAG"
+            echo "npm_tag_confirm: $NPM_TAG_CONFIRM"
+            exit 1
+          fi
+          echo "npm_tag validation passed: $NPM_TAG"
+
   release:
     name: Release
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
+    needs: validate_inputs
     runs-on: ubuntu-latest
     environment: npm
     permissions:

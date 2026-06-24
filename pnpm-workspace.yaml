@@ -34,7 +34,7 @@ catalog:
   '@rsbuild/plugin-type-check': '^1.4.0'
   '@rslib/core': '0.23.0'
   '@rslint/core': '^0.6.2'
-  '@rspack/core': '~2.1.0-beta.0'
+  '@rspack/core': '~2.1.0-rc.0'
   '@rspack/plugin-preact-refresh': '^2.0.1'
   '@rspack/plugin-react-refresh': '^2.0.2'
   '@rspress/core': '^2.0.14'
