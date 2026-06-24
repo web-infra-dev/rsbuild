@@ -14,6 +14,7 @@ on:
           - rc
           - canary
           - latest
+          - latest-v1
       npm_tag_confirm:
         type: choice
         description: 'Confirm npm tag'
@@ -24,6 +25,7 @@ on:
           - rc
           - canary
           - latest
+          - latest-v1
       branch:
         description: 'Release Branch (confirm release branch)'
         required: true
