@@ -7,7 +7,17 @@ import {
 } from 'node:child_process';
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
-import base, { expect } from '@playwright/test';
+import {
+  afterAll as rstestAfterAll,
+  afterEach as rstestAfterEach,
+  beforeAll as rstestBeforeAll,
+  beforeEach as rstestBeforeEach,
+  describe as rstestDescribe,
+  expect,
+  test as base,
+} from '@rstest/playwright';
+import type { PlaywrightFixture, PlaywrightOptions } from '@rstest/playwright';
+import type { TestContext } from '@rstest/core';
 import fse from 'fs-extra';
 import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
@@ -166,6 +176,12 @@ type RsbuildFixture = {
 
 type Close = DevResult['close'];
 
+type Use<T> = (value: T) => Promise<void>;
+
+type RsbuildFixtureContext<K extends keyof RsbuildFixture> = Omit<RsbuildFixture, K> &
+  PlaywrightFixture &
+  TestContext;
+
 const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(options: T, cwd: string): T => {
   // inherit process.env from current process
   const { NODE_ENV: _, ...restEnv } = process.env;
@@ -175,23 +191,35 @@ const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(options: T, c
   return options;
 };
 
-export const test = base.extend<RsbuildFixture>({
-  // rslint-disable-next-line no-empty-pattern
-  cwd: async ({}, use, { file }) => {
-    const cwd = path.dirname(file);
+const rsbuildBase = base.extend({
+  playwright: {
+    browserName: 'chromium',
+    launchOptions: {
+      // Preserve the previous Playwright CI behavior.
+      channel: process.env.CI ? 'chrome' : undefined,
+    },
+  } satisfies PlaywrightOptions,
+});
+
+const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
+  cwd: async ({ expect: currentExpect }, use) => {
+    const testPath = currentExpect.getState().testPath;
+    if (!testPath) {
+      throw new Error('Failed to resolve current test file path.');
+    }
+    const cwd = path.normalize(path.dirname(testPath));
     await use(cwd);
   },
 
   logHelper: [
-    // rslint-disable-next-line no-empty-pattern
-    async ({}, use, testInfo) => {
+    async ({ task }, use) => {
       const logHelper = proxyConsole();
       await use(logHelper);
       logHelper.restore();
 
       // If the test failed, log the console output for debugging
-      if (testInfo.status !== testInfo.expectedStatus && logHelper.logs.length) {
-        const { header, footer } = makeBox(testInfo.title);
+      if (task.result?.status === 'fail' && logHelper.logs.length) {
+        const { header, footer } = makeBox(task.name);
         console.log(header);
         logHelper.printCapturedLogs();
         console.log(footer);
@@ -268,25 +296,30 @@ export const test = base.extend<RsbuildFixture>({
     }
   },
 
-  runBoth: async ({ devOnly, build }, use) => {
-    await use(async (assert, options) => {
+  runBoth: async ({ devOnly, build }: RsbuildFixtureContext<'runBoth'>, use: Use<RunBoth>) => {
+    const runBoth: RunBoth = async (assert, options) => {
       const devResult = await devOnly(options);
       await assert({ mode: 'dev', result: devResult });
       const buildResult = await build(options);
       await assert({ mode: 'build', result: buildResult });
-    });
+    };
+    await use(runBoth);
   },
 
-  runBothServe: async ({ dev, buildPreview }, use) => {
-    await use(async (assert, options) => {
+  runBothServe: async (
+    { dev, buildPreview }: RsbuildFixtureContext<'runBothServe'>,
+    use: Use<RunBoth>,
+  ) => {
+    const runBothServe: RunBoth = async (assert, options) => {
       const devResult = await dev(options);
       await assert({ mode: 'dev', result: devResult });
       const buildResult = await buildPreview(options);
       await assert({ mode: 'build', result: buildResult });
-    });
+    };
+    await use(runBothServe);
   },
 
-  editFile: async ({ cwd }, use) => {
+  editFile: async ({ cwd }: RsbuildFixtureContext<'editFile'>, use: Use<EditFile>) => {
     const editFile: EditFile = async (filename, replacer) => {
       const resolvedFilename = path.isAbsolute(filename) ? filename : path.resolve(cwd, filename);
       const code = await promises.readFile(resolvedFilename, 'utf-8');
@@ -295,7 +328,7 @@ export const test = base.extend<RsbuildFixture>({
     await use(editFile);
   },
 
-  exec: async ({ cwd, logHelper }, use) => {
+  exec: async ({ cwd, logHelper }: RsbuildFixtureContext<'exec'>, use: Use<Exec>) => {
     let close: (() => void) | undefined;
 
     const exec: Exec = (command, options = {}) => {
@@ -321,14 +354,14 @@ export const test = base.extend<RsbuildFixture>({
     close?.();
   },
 
-  execCli: async ({ exec }, use) => {
+  execCli: async ({ exec }: RsbuildFixtureContext<'execCli'>, use: Use<Exec>) => {
     const execCli: Exec = (command, options = {}) => {
       return exec(`node ${RSBUILD_BIN_PATH} ${command}`, options);
     };
     await use(execCli);
   },
 
-  execCliSync: async ({ cwd }, use) => {
+  execCliSync: async ({ cwd }: RsbuildFixtureContext<'execCliSync'>, use: Use<ExecSync>) => {
     const execCliSync: ExecSync = (command, options = {}) => {
       return execSync(
         `node ${RSBUILD_BIN_PATH} ${command}`,
@@ -338,7 +371,10 @@ export const test = base.extend<RsbuildFixture>({
     await use(execCliSync);
   },
 
-  copySrcDir: async ({ cwd }, use) => {
+  copySrcDir: async (
+    { cwd }: RsbuildFixtureContext<'copySrcDir'>,
+    use: Use<() => Promise<string>>,
+  ) => {
     const copySrcDir = async () => {
       const targetDir = path.join(cwd, 'test-temp-src');
       await fse.remove(targetDir);
@@ -351,7 +387,10 @@ export const test = base.extend<RsbuildFixture>({
     await use(copySrcDir);
   },
 
-  copyNodeModules: async ({ cwd }, use) => {
+  copyNodeModules: async (
+    { cwd }: RsbuildFixtureContext<'copyNodeModules'>,
+    use: Use<CopyNodeModules>,
+  ) => {
     const copyNodeModules: CopyNodeModules = async () => {
       const targetDir = path.join(cwd, 'node_modules');
       await fse.remove(targetDir);
@@ -362,5 +401,35 @@ export const test = base.extend<RsbuildFixture>({
     await use(copyNodeModules);
   },
 });
+
+type Callable<T> = T extends (...args: infer Args) => infer Return
+  ? (...args: Args) => Return
+  : never;
+
+type E2ETestSkip = Callable<typeof rsbuildTest.skip> &
+  (() => void) &
+  Omit<typeof rsbuildTest.skip, 'skip'> & {
+    skip: E2ETestSkip;
+  };
+
+type E2ETest = Callable<typeof rsbuildTest> &
+  Omit<typeof rsbuildTest, 'skip'> & {
+    afterAll: typeof rstestAfterAll;
+    afterEach: typeof rstestAfterEach;
+    beforeAll: typeof rstestBeforeAll;
+    beforeEach: typeof rstestBeforeEach;
+    describe: typeof rstestDescribe;
+    fail: typeof rsbuildTest.fails;
+    skip: E2ETestSkip;
+  };
+
+export const test = Object.assign(rsbuildTest, {
+  afterAll: rstestAfterAll,
+  afterEach: rstestAfterEach,
+  beforeAll: rstestBeforeAll,
+  beforeEach: rstestBeforeEach,
+  describe: rstestDescribe,
+  fail: rsbuildTest.fails,
+}) as E2ETest;
 
 export { expect };

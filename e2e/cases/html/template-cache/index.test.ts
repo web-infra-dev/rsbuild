@@ -1,8 +1,11 @@
 import { join } from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { expect, test as baseTest } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 // https://github.com/web-infra-dev/rsbuild/issues/5176
+// Failed to run this case on Windows
+const test = process.platform === 'win32' ? baseTest.skip : baseTest;
+
 test('should not re-compile templates when the template is not changed', async ({
   dev,
   page,

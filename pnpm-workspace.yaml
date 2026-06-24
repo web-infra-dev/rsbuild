@@ -26,7 +26,6 @@ catalog:
   '@module-federation/enhanced': '2.5.1'
   '@module-federation/rsbuild-plugin': '2.5.1'
   '@module-federation/runtime-tools': '2.5.1'
-  '@playwright/test': '1.61.0'
   '@prefresh/core': '^1.5.10'
   '@prefresh/utils': '^1.2.1'
   '@rsbuild/core-v1': 'npm:@rsbuild/core@^1.7.5'
@@ -46,6 +45,7 @@ catalog:
   '@rstack-dev/doc-ui': '1.14.4'
   '@rstest/adapter-rslib': '^0.10.6'
   '@rstest/core': '^0.10.6'
+  '@rstest/playwright': '^0.10.6'
   '@shikijs/transformers': '^4.2.0'
   '@svgr/core': '8.1.0'
   '@svgr/plugin-jsx': '8.1.0'
@@ -189,6 +189,10 @@ patchedDependencies:
   css-loader@7.1.4: patches/css-loader@7.1.4.patch
   dotenv-expand@13.0.0: patches/dotenv-expand@13.0.0.patch
   postcss-loader@8.2.1: patches/postcss-loader@8.2.1.patch
+
+overrides:
+  '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/playwright': https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1
 
 # Prevent un-reviewed build scripts
 strictDepBuilds: true
