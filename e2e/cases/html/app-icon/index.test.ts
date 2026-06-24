@@ -277,9 +277,7 @@ test('should append dev.assetPrefix to icon URL', async ({ dev }) => {
   expect(html).toContain(
     '<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:3000/static/image/icon.png">',
   );
-  expect(html).toContain(
-    '<link rel="manifest" href="http://localhost:3000/manifest.webmanifest">',
-  );
+  expect(html).toContain('<link rel="manifest" href="http://localhost:3000/manifest.webmanifest">');
 
   expect(JSON.parse(files[manifestPath])).toEqual({
     name: 'My Website',
@@ -328,9 +326,7 @@ test('should append output.assetPrefix to icon URL', async ({ build }) => {
   expect(html).toContain(
     '<link rel="apple-touch-icon" sizes="180x180" href="https://example.com/static/image/icon.png">',
   );
-  expect(html).toContain(
-    '<link rel="manifest" href="https://example.com/manifest.webmanifest">',
-  );
+  expect(html).toContain('<link rel="manifest" href="https://example.com/manifest.webmanifest">');
 
   expect(JSON.parse(files[manifestPath])).toEqual({
     name: 'My Website',

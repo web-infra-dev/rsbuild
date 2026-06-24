@@ -15,25 +15,21 @@ test('should run onExit hook before process exit', async () => {
       reject(new Error('Process timeout'));
     }, 3000);
 
-    const childProcess = exec(
-      'node ./run.js',
-      { cwd: import.meta.dirname },
-      (error) => {
-        if (error) {
-          clearTimeout(timeoutId);
-          reject(error);
-          return;
-        }
+    const childProcess = exec('node ./run.js', { cwd: import.meta.dirname }, (error) => {
+      if (error) {
+        clearTimeout(timeoutId);
+        reject(error);
+        return;
+      }
 
-        try {
-          expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
-          clearTimeout(timeoutId);
-          resolve();
-        } catch (err) {
-          clearTimeout(timeoutId);
-          reject(err);
-        }
-      },
-    );
+      try {
+        expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
+        clearTimeout(timeoutId);
+        resolve();
+      } catch (err) {
+        clearTimeout(timeoutId);
+        reject(err);
+      }
+    });
   });
 });

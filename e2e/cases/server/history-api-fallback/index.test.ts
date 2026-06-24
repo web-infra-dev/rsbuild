@@ -1,10 +1,7 @@
 import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-test('should provide history api fallback for dev server correctly', async ({
-  page,
-  devOnly,
-}) => {
+test('should provide history api fallback for dev server correctly', async ({ page, devOnly }) => {
   const rsbuild = await devOnly({
     config: {
       plugins: [pluginReact()],

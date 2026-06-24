@@ -10,9 +10,7 @@ declare module '@rspack/core' {
   }
 }
 
-export type ResolvedWriteToDisk =
-  | boolean
-  | ((filePath: string, name?: string) => boolean);
+export type ResolvedWriteToDisk = boolean | ((filePath: string, name?: string) => boolean);
 
 /**
  * Resolve writeToDisk config across multiple environments.
@@ -24,9 +22,7 @@ export const resolveWriteToDiskConfig = (
   environments: Record<string, EnvironmentContext>,
   environmentList: EnvironmentContext[],
 ): ResolvedWriteToDisk => {
-  const writeToDiskValues = environmentList.map(
-    (env) => env.config.dev.writeToDisk,
-  );
+  const writeToDiskValues = environmentList.map((env) => env.config.dev.writeToDisk);
   if (new Set(writeToDiskValues).size === 1) {
     return writeToDiskValues[0];
   }
@@ -36,9 +32,7 @@ export const resolveWriteToDiskConfig = (
     if (name && environments[name]) {
       writeToDisk = environments[name].config.dev.writeToDisk ?? writeToDisk;
     }
-    return typeof writeToDisk === 'function'
-      ? writeToDisk(filePath)
-      : writeToDisk;
+    return typeof writeToDisk === 'function' ? writeToDisk(filePath) : writeToDisk;
   };
 };
 
@@ -76,41 +70,31 @@ export function setupWriteToDisk(
           }
 
           const dir = path.dirname(targetPath);
-          const name = compiler.options.name
-            ? `Child "${compiler.options.name}": `
-            : '';
+          const name = compiler.options.name ? `Child "${compiler.options.name}": ` : '';
 
-          fs.mkdir(
-            dir,
-            { recursive: true },
-            (mkdirError: NodeJS.ErrnoException | null) => {
-              if (mkdirError) {
+          fs.mkdir(dir, { recursive: true }, (mkdirError: NodeJS.ErrnoException | null) => {
+            if (mkdirError) {
+              logger.error(
+                `[rsbuild:middleware] ${name}Unable to write "${dir}" directory to disk:\n${mkdirError.message}`,
+              );
+
+              callback(mkdirError);
+              return;
+            }
+
+            fs.writeFile(targetPath, content, (writeFileError: NodeJS.ErrnoException | null) => {
+              if (writeFileError) {
                 logger.error(
-                  `[rsbuild:middleware] ${name}Unable to write "${dir}" directory to disk:\n${mkdirError.message}`,
+                  `[rsbuild:middleware] ${name}Unable to write "${targetPath}" asset to disk:\n${writeFileError.message}`,
                 );
 
-                callback(mkdirError);
+                callback(writeFileError);
                 return;
               }
 
-              fs.writeFile(
-                targetPath,
-                content,
-                (writeFileError: NodeJS.ErrnoException | null) => {
-                  if (writeFileError) {
-                    logger.error(
-                      `[rsbuild:middleware] ${name}Unable to write "${targetPath}" asset to disk:\n${writeFileError.message}`,
-                    );
-
-                    callback(writeFileError);
-                    return;
-                  }
-
-                  callback();
-                },
-              );
-            },
-          );
+              callback();
+            });
+          });
         },
       );
 

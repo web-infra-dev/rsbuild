@@ -6,12 +6,8 @@ describe('plugin-file-size', () => {
     expect(excludeAsset({ name: 'dist/a.css', size: 1000 })).toBeFalsy();
     expect(excludeAsset({ name: 'dist/a.js.map', size: 1000 })).toBeTruthy();
     expect(excludeAsset({ name: 'dist/b.css.map', size: 1000 })).toBeTruthy();
-    expect(
-      excludeAsset({ name: 'dist/a.js.LICENSE.txt', size: 1000 }),
-    ).toBeTruthy();
-    expect(
-      excludeAsset({ name: 'dist/b.css.LICENSE.txt', size: 1000 }),
-    ).toBeTruthy();
+    expect(excludeAsset({ name: 'dist/a.js.LICENSE.txt', size: 1000 })).toBeTruthy();
+    expect(excludeAsset({ name: 'dist/b.css.LICENSE.txt', size: 1000 })).toBeTruthy();
     expect(excludeAsset({ name: 'dist/a.png', size: 1000 })).toBeFalsy();
     expect(excludeAsset({ name: 'dist/a.d.ts', size: 1000 })).toBeTruthy();
   });
@@ -31,21 +27,15 @@ describe('plugin-file-size', () => {
     it('should handle adjacent hashes (overlapping dots)', () => {
       // Note: Due to overlapping match (shared dot), only first hash is removed
       // This is fine - real build tools don't generate filenames like this
-      expect(normalizeFilePath('chunk.abc12345.def67890.js')).toBe(
-        'chunk.def67890.js',
-      );
+      expect(normalizeFilePath('chunk.abc12345.def67890.js')).toBe('chunk.def67890.js');
 
       // Non-overlapping hashes work correctly
-      expect(normalizeFilePath('chunk.abc12345.min.def67890.js')).toBe(
-        'chunk.min.js',
-      );
+      expect(normalizeFilePath('chunk.abc12345.min.def67890.js')).toBe('chunk.min.js');
     });
 
     it('should not remove non-hex sequences', () => {
       // Contains 'g' and 'h' which are not hex digits
-      expect(normalizeFilePath('bundle.a1b2c3d4e5f6g7h8.js')).toBe(
-        'bundle.a1b2c3d4e5f6g7h8.js',
-      );
+      expect(normalizeFilePath('bundle.a1b2c3d4e5f6g7h8.js')).toBe('bundle.a1b2c3d4e5f6g7h8.js');
       expect(normalizeFilePath('file.xyz12345.js')).toBe('file.xyz12345.js');
     });
 
@@ -56,12 +46,8 @@ describe('plugin-file-size', () => {
     });
 
     it('should handle filenames with path separators', () => {
-      expect(normalizeFilePath('static/js/index.a1b2c3d4.js')).toBe(
-        'static/js/index.js',
-      );
-      expect(normalizeFilePath('dist/css/main.12345678.css')).toBe(
-        'dist/css/main.css',
-      );
+      expect(normalizeFilePath('static/js/index.a1b2c3d4.js')).toBe('static/js/index.js');
+      expect(normalizeFilePath('dist/css/main.12345678.css')).toBe('dist/css/main.css');
     });
 
     it('should not remove short sequences that look like hashes', () => {
@@ -71,9 +57,7 @@ describe('plugin-file-size', () => {
     });
 
     it('should handle uppercase hex digits', () => {
-      expect(normalizeFilePath('bundle.A1B2C3D4.js')).toBe(
-        'bundle.A1B2C3D4.js',
-      );
+      expect(normalizeFilePath('bundle.A1B2C3D4.js')).toBe('bundle.A1B2C3D4.js');
       // Only lowercase a-f are matched by the regex
     });
 

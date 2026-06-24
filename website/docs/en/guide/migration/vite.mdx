@@ -102,6 +102,8 @@ Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 | [vite-plugin-node-polyfills](https://npmjs.com/package/vite-plugin-node-polyfills)         | [@rsbuild/plugin-node-polyfill](https://github.com/rstackjs/rsbuild-plugin-node-polyfill)      |
 | [vite-plugin-solid](https://npmjs.com/package/vite-plugin-solid)                           | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                            |
 | [@preact/preset-vite](https://npmjs.com/package/@preact/preset-vite)                       | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                          |
+| [@tanstack/router-plugin/vite](https://npmjs.com/package/@tanstack/router-plugin)          | [@tanstack/router-plugin/rsbuild](https://npmjs.com/package/@tanstack/router-plugin)           |
+| [@sentry/vite-plugin](https://npmjs.com/package/@sentry/vite-plugin)                       | [@sentry/webpack-plugin](https://npmjs.com/package/@sentry/webpack-plugin)                     |
 | [vite-plugin-full-reload](https://npmjs.com/package/vite-plugin-full-reload)               | [dev.watchFiles](/config/dev/watch-files)                                                      |
 | [vite-plugin-html](https://npmjs.com/package/vite-plugin-html)                             | [html.template](/config/html/template)                                                         |
 | [vite-plugin-css-injected-by-js](https://npmjs.com/package/vite-plugin-css-injected-by-js) | [output.injectStyles](/config/output/inject-styles)                                            |
@@ -170,6 +172,18 @@ Notes:
 
 - The table above doesn't cover every Vite option; feel free to add more.
 
+## Server port
+
+Vite's dev server uses port `5173` by default, while Rsbuild uses port `3000` by default. If your project depends on `5173`, you can keep Vite's original port with the following configuration:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    port: 5173,
+  },
+};
+```
+
 ## Environment variables
 
 Vite injects environment variables starting with `VITE_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
@@ -198,13 +212,15 @@ Rsbuild injects the following [environment variables](/guide/advanced/env-vars) 
 
 ## Preset types
 
-Vite provides some preset type definitions through the `vite-env.d.ts` file. When migrating to Rsbuild, you can use the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
+Vite provides some preset type definitions through `vite/client`. When migrating to Rsbuild, replace it with the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
-```ts title="src/env.d.ts"
-// [!code --]
-/// <reference types="vite/client" />
-// [!code ++]
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["vite/client"], // [!code --]
+    "types": ["@rsbuild/core/types"] // [!code ++]
+  }
+}
 ```
 
 ## Web Workers
@@ -236,36 +252,7 @@ The constructor syntax also lets you pass standard `WorkerOptions` or `SharedWor
 
 ## Glob import
 
-Vite provides `import.meta.glob()` for importing multiple modules.
-
-When migrating to Rsbuild, you can use the [import.meta.webpackContext()](https://rspack.rs/api/runtime-api/module-variables#importmetawebpackcontext) function of Rspack instead:
-
-- Vite:
-
-```js
-const modules = import.meta.glob('./dir/*.js');
-
-for (const path in modules) {
-  modules[path]().then((mod) => {
-    console.log(path, mod);
-  });
-}
-```
-
-- Rsbuild:
-
-```js
-const context = import.meta.webpackContext('./dir', {
-  // Whether to search subdirectories
-  recursive: false,
-  regExp: /\.js$/,
-});
-
-for (const path of context.keys()) {
-  const mod = context(path);
-  console.log(path, mod);
-}
-```
+Rsbuild >= 2.0.8 is compatible with [import.meta.glob()](https://rspack.rs/api/runtime-api/module-variables#importmetaglob), so you can keep the Vite code unchanged when migrating to Rsbuild.
 
 ## vite-tsconfig-paths
 

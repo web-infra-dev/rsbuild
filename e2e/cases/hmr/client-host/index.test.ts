@@ -27,9 +27,7 @@ test('HMR should work when setting dev.port and dev.client.host', async ({
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace('Hello Rsbuild', 'Hello Test'),
-  );
+  await editFile(join(tempSrc, 'App.tsx'), (code) => code.replace('Hello Rsbuild', 'Hello Test'));
 
   await expect(locator).toHaveText('Hello Test!');
 });

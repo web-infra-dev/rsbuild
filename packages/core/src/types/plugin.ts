@@ -30,11 +30,7 @@ import type {
   OnCloseDevServerFn,
   OnExitFn,
 } from './hooks';
-import type {
-  AddPluginsOptions,
-  RsbuildInstance,
-  RsbuildTarget,
-} from './rsbuild';
+import type { AddPluginsOptions, RsbuildInstance, RsbuildTarget } from './rsbuild';
 import type { Rspack } from './rspack';
 import type { Falsy, MaybePromise } from './utils';
 
@@ -45,10 +41,7 @@ export type HookDescriptor<T extends (...args: any[]) => any> = {
   order: HookOrder;
 };
 
-export type EnvironmentAsyncHook<
-  Callback extends (...args: any[]) => T,
-  T = any,
-> = {
+export type EnvironmentAsyncHook<Callback extends (...args: any[]) => T, T = any> = {
   /**
    * Registers a callback function to be executed when the hook is triggered.
    * The callback can be a plain function or a HookDescriptor that includes execution order.
@@ -128,9 +121,7 @@ export type AsyncHook<Callback extends (...args: any[]) => T, T = any> = {
    * @param params The parameters to pass to each callback
    * @returns A promise that resolves with an array containing the results of all callbacks
    */
-  callBatch: (
-    ...args: Parameters<Callback>
-  ) => Promise<Awaited<ReturnType<Callback>>[]>;
+  callBatch: (...args: Parameters<Callback>) => Promise<Awaited<ReturnType<Callback>>[]>;
 };
 
 export type ModifyRspackConfigFn = (
@@ -247,9 +238,7 @@ export type GetRsbuildConfig = {
   (type: 'normalized'): NormalizedConfig;
 };
 
-type PluginHook<T extends (...args: any[]) => any> = (
-  options: T | HookDescriptor<T>,
-) => void;
+type PluginHook<T extends (...args: any[]) => any> = (options: T | HookDescriptor<T>) => void;
 
 type TransformResult =
   | string

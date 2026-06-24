@@ -105,8 +105,17 @@ export type PluginBabelOptions = {
    * Options passed to `babel-loader`.
    * @see https://github.com/babel/babel-loader
    */
-  babelLoaderOptions?: ConfigChainWithContext<
-    BabelLoaderOptions,
-    BabelConfigUtils
-  >;
+  babelLoaderOptions?: ConfigChainWithContext<BabelLoaderOptions, BabelConfigUtils>;
+  /**
+   * Whether to run Babel transformations in parallel using worker threads. When
+   * enabled, JavaScript modules are processed across multiple worker threads,
+   * reducing pressure on the main thread and improving overall build performance
+   * when compiling large numbers of modules.
+   *
+   * Options transferred to worker threads must comply with the HTML structured clone
+   * algorithm. For example, functions cannot be passed as options.
+   * @see https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist
+   * @default false
+   */
+  parallel?: boolean;
 };

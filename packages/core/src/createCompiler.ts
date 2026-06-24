@@ -65,9 +65,7 @@ function printBuildLog(
     return;
   }
 
-  const removedFiles = compiler.removedFiles
-    ? Array.from(compiler.removedFiles)
-    : null;
+  const removedFiles = compiler.removedFiles ? Array.from(compiler.removedFiles) : null;
 
   if (removedFiles?.length) {
     // workaround for https://github.com/web-infra-dev/rspack/issues/11694
@@ -108,9 +106,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   }
 
   const isMultiCompiler = rspackConfigs.length > 1;
-  const compiler = isMultiCompiler
-    ? rspack(rspackConfigs)
-    : rspack(rspackConfigs[0]);
+  const compiler = isMultiCompiler ? rspack(rspackConfigs) : rspack(rspackConfigs[0]);
 
   // Enable unsafe fast drop in non-watch mode to improve performance
   if (process.env.RSPACK_UNSAFE_FAST_DROP === 'true') {
@@ -221,42 +217,29 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     });
   }
 
-  compiler.hooks.done.tap(
-    HOOK_NAME,
-    (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
-      const stats = getRsbuildStats(
-        statsInstance,
-        compiler,
-        logger,
-        context.action,
-      );
-      const hasErrors = statsInstance.hasErrors();
+  compiler.hooks.done.tap(HOOK_NAME, (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
+    const stats = getRsbuildStats(statsInstance, compiler, logger, context.action);
+    const hasErrors = statsInstance.hasErrors();
 
-      context.buildState.stats = stats;
-      context.buildState.status = 'done';
-      context.buildState.hasErrors = hasErrors;
-      context.socketServer?.onBuildDone();
+    context.buildState.stats = stats;
+    context.buildState.status = 'done';
+    context.buildState.hasErrors = hasErrors;
+    context.socketServer?.onBuildDone();
 
-      const { message, level } = formatStats(
-        stats,
-        hasErrors,
-        options.context.rootPath,
-        logger,
-      );
+    const { message, level } = formatStats(stats, hasErrors, options.context.rootPath, logger);
 
-      if (level === 'error') {
-        logger.error(message);
-      }
-      if (level === 'warning') {
-        logger.warn(message);
-      }
-      if (!isMultiCompiler) {
-        printTime(0, hasErrors);
-      }
+    if (level === 'error') {
+      logger.error(message);
+    }
+    if (level === 'warning') {
+      logger.warn(message);
+    }
+    if (!isMultiCompiler) {
+      printTime(0, hasErrors);
+    }
 
-      isCompiling = false;
-    },
-  );
+    isCompiling = false;
+  });
 
   if (context.action === 'dev') {
     registerDevHook({

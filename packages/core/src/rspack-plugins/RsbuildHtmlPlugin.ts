@@ -54,16 +54,7 @@ const VOID_TAGS = [
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also
  */
-const HEAD_TAGS = [
-  'title',
-  'base',
-  'link',
-  'style',
-  'meta',
-  'script',
-  'noscript',
-  'template',
-];
+const HEAD_TAGS = ['title', 'base', 'link', 'style', 'meta', 'script', 'noscript', 'template'];
 
 const FILE_ATTRS = {
   link: 'href',
@@ -127,10 +118,7 @@ const fromBasicTag = (tag: HtmlBasicTag): HtmlTagObject => ({
 /**
  * `HtmlTagObject[]` -> `HtmlTag[]`
  */
-const formatTags = (
-  tags: HtmlTagObject[],
-  override?: Partial<HtmlTag>,
-): HtmlTag[] =>
+const formatTags = (tags: HtmlTagObject[], override?: Partial<HtmlTag>): HtmlTag[] =>
   tags.map((tag) => ({
     ...formatBasicTag(tag),
     publicPath: false,
@@ -184,10 +172,9 @@ const applyTagConfig = (
         }
 
         attrs[filenameTag] = filename;
-        tag.attrs = attrs;
       }
 
-      ret.push(fromBasicTag(tag));
+      ret.push(fromBasicTag({ ...tag, attrs }));
     }
     return ret;
   };
@@ -212,15 +199,11 @@ const applyTagConfig = (
     }
 
     tags = tags.sort(
-      (tag1, tag2) =>
-        getTagPriority(tag1, tagConfig) - getTagPriority(tag2, tagConfig),
+      (tag1, tag2) => getTagPriority(tag1, tagConfig) - getTagPriority(tag2, tagConfig),
     );
   }
 
-  const [headTags, bodyTags] = partition(
-    tags,
-    (tag) => tag.head ?? HEAD_TAGS.includes(tag.tag),
-  );
+  const [headTags, bodyTags] = partition(tags, (tag) => tag.head ?? HEAD_TAGS.includes(tag.tag));
   data.headTags = fromInjectTags(headTags);
   data.bodyTags = fromInjectTags(bodyTags);
 
@@ -365,9 +348,7 @@ export class RsbuildHtmlPlugin {
         return undefined;
       }
 
-      const entryName = (plugin.options as Record<symbol, string>)[
-        entryNameSymbol
-      ];
+      const entryName = (plugin.options as Record<symbol, string>)[entryNameSymbol];
       if (!entryName) {
         return undefined;
       }

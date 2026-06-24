@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should inline the constants as expected', async ({
-  page,
-  runBothServe,
-}) => {
+test('should inline the constants as expected', async ({ page, runBothServe }) => {
   await runBothServe(async ({ mode, result }) => {
     await page.waitForFunction(() => window.testDog);
     expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');

@@ -13,9 +13,7 @@ test('should clean dist path by default', async ({ build }) => {
   expect(fs.existsSync(testDistFile)).toBeFalsy();
 });
 
-test('should not clean dist path in dev when writeToDisk is false', async ({
-  dev,
-}) => {
+test('should not clean dist path in dev when writeToDisk is false', async ({ dev }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await dev({
@@ -30,9 +28,7 @@ test('should not clean dist path in dev when writeToDisk is false', async ({
   await fse.remove(testDistFile);
 });
 
-test('should clean dist path in dev when writeToDisk is true', async ({
-  dev,
-}) => {
+test('should clean dist path in dev when writeToDisk is true', async ({ dev }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await dev({
@@ -59,9 +55,7 @@ test('should not clean dist path if it is outside root', async ({ build }) => {
   });
 
   expect(
-    rsbuild.logs.find((log) =>
-      log.includes('dist path is not a subdir of root path'),
-    ),
+    rsbuild.logs.find((log) => log.includes('dist path is not a subdir of root path')),
   ).toBeTruthy();
 
   expect(fs.existsSync(testOutsideFile)).toBeTruthy();
@@ -85,9 +79,7 @@ test('should allow to disable cleanDistPath', async ({ build }) => {
   await fse.remove(testDistFile);
 });
 
-test('should allow to use `cleanDistPath.keep` to keep some files', async ({
-  build,
-}) => {
+test('should allow to use `cleanDistPath.keep` to keep some files', async ({ build }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
   await fse.outputFile(testDeepDistFile, `{ "test": 1 }`);
 

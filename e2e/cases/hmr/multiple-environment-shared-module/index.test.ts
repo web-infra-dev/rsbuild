@@ -41,25 +41,19 @@ test('should perform HMR for multiple environments with shared module', async ({
   await expectValue('bar:hello');
 
   // edit shared module
-  await editFile(join(tempSrc, 'shared.js'), (code) =>
-    code.replace('hello', 'world'),
-  );
+  await editFile(join(tempSrc, 'shared.js'), (code) => code.replace('hello', 'world'));
   await gotoPage(page, rsbuild, 'foo');
   await expectValue('foo:world');
   await gotoPage(page, rsbuild, 'bar');
   await expectValue('bar:world');
 
   // edit foo entry module
-  await editFile(join(tempSrc, 'foo.js'), (code) =>
-    code.replace('foo', 'foo2'),
-  );
+  await editFile(join(tempSrc, 'foo.js'), (code) => code.replace('foo', 'foo2'));
   await gotoPage(page, rsbuild, 'foo');
   await expectValue('foo2:world');
 
   // edit bar entry module
-  await editFile(join(tempSrc, 'bar.js'), (code) =>
-    code.replace('bar', 'bar2'),
-  );
+  await editFile(join(tempSrc, 'bar.js'), (code) => code.replace('bar', 'bar2'));
   await gotoPage(page, rsbuild, 'bar');
   await expectValue('bar2:world');
 });

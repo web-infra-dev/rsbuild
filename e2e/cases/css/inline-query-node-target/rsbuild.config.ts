@@ -9,8 +9,7 @@ export default defineConfig({
     node: {
       output: {
         target: 'node',
-        distPath:
-          process.env.NODE_ENV === 'production' ? 'dist-build' : 'dist-dev',
+        distPath: process.env.NODE_ENV === 'production' ? 'dist-build' : 'dist-dev',
       },
     },
   },

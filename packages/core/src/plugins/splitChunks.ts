@@ -25,9 +25,7 @@ function getForceSplittingGroups(
 ): CacheGroups {
   const cacheGroups: CacheGroups = {};
   const pairs = Array.isArray(forceSplitting)
-    ? forceSplitting.map(
-        (regexp, index) => [`force-split-${index}`, regexp] as const,
-      )
+    ? forceSplitting.map((regexp, index) => [`force-split-${index}`, regexp] as const)
     : Object.entries(forceSplitting);
 
   for (const [key, regexp] of pairs) {
@@ -73,9 +71,7 @@ function resolvePerPackagePreset(): Rspack.OptimizationSplitChunksOptions {
         priority: -9,
         test: NODE_MODULES_REGEX,
         name(module) {
-          return module
-            ? getPackageNameFromModulePath(module.context!)
-            : undefined;
+          return module ? getPackageNameFromModulePath(module.context!) : undefined;
         },
       },
     },
@@ -112,9 +108,7 @@ function splitByExperience(ctx: Context): SplitChunks {
 export const MODULE_PATH_REGEX: RegExp =
   /.*[\\/]node_modules[\\/](?!\.pnpm[\\/])(?:(@[^\\/]+)[\\/])?([^\\/]+)/;
 
-export function getPackageNameFromModulePath(
-  modulePath: string,
-): string | undefined {
+export function getPackageNameFromModulePath(modulePath: string): string | undefined {
   const handleModuleContext = modulePath?.match(MODULE_PATH_REGEX);
 
   if (!handleModuleContext) {
@@ -205,10 +199,7 @@ function makeLegacySplitChunksOptions(
   let forceSplittingGroups = {};
 
   if (chunkSplit.forceSplitting) {
-    forceSplittingGroups = getForceSplittingGroups(
-      chunkSplit.forceSplitting,
-      chunkSplit.strategy,
-    );
+    forceSplittingGroups = getForceSplittingGroups(chunkSplit.forceSplitting, chunkSplit.strategy);
   }
 
   // Patch the override config difference between the `custom` strategy and other strategy.
@@ -288,17 +279,9 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
 
       // Compatible with legacy `performance.chunkSplit` option
       const { chunkSplit } = config.performance;
-      if (
-        chunkSplit &&
-        splitChunks !== false &&
-        Object.keys(splitChunks).length === 0
-      ) {
+      if (chunkSplit && splitChunks !== false && Object.keys(splitChunks).length === 0) {
         chain.optimization.splitChunks(
-          makeLegacySplitChunksOptions(
-            chunkSplit,
-            config,
-            api.context.rootPath,
-          ),
+          makeLegacySplitChunksOptions(chunkSplit, config, api.context.rootPath),
         );
         return;
       }

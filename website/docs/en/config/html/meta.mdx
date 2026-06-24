@@ -128,10 +128,10 @@ The generated `meta` tags in the final HTML will look like:
 - **Type:**
 
 ```ts
-type MetaFunction = ({
-  value: MetaOptions,
-  entryName: string,
-}) => MetaOptions | void;
+type MetaFunction = (context: {
+  value: MetaOptions;
+  entryName: string;
+}) => MetaOptions | void | Promise<MetaOptions | void>;
 ```
 
 When `html.meta` is of type `Function`, the function receives an object as an argument with the following properties:
@@ -194,3 +194,9 @@ export default {
   },
 };
 ```
+
+## Version history
+
+| Version | Changes                                          |
+| ------- | ------------------------------------------------ |
+| v2.0.8  | Added support for async functions in `html.meta` |

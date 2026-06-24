@@ -37,7 +37,7 @@ worker.onmessage = (event) => {
 worker.postMessage(10);
 ```
 
-使用标准构造器语法时，你也可以将 [`WorkerOptions`](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker#options) 作为第二个参数传入。Rsbuild 会保留 `name`、`credentials` 等运行时选项，并根据 `type` 判断应该将 worker 作为 module worker 还是 classic worker 来处理。
+使用标准构造器语法时，你也可以将 [`WorkerOptions`](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker#参数) 作为第二个参数传入。Rsbuild 会保留 `name`、`credentials` 等运行时选项，并根据 `type` 判断应该将 worker 作为 module worker 还是 classic worker 来处理。
 
 ```js title="index.js"
 const worker = new Worker(new URL('./worker.js', import.meta.url), {
@@ -101,10 +101,14 @@ worker.postMessage(10);
 TS2307: Cannot find module './worker.ts?worker' or its corresponding type declarations.
 ```
 
-此时你需要添加类型声明文件，例如创建 `src/env.d.ts`，并引用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#preset-types)：
+此时你需要在 `tsconfig.json` 中添加 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#preset-types)：
 
-```ts
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["@rsbuild/core/types"]
+  }
+}
 ```
 
 预设类型中已包含 `*?worker`、`*?worker&inline` 和 `*?inline&worker` 的类型声明。

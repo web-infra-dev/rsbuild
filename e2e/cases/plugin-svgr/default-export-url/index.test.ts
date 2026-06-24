@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should import default from SVG with SVGR correctly', async ({
-  page,
-  buildPreview,
-}) => {
+test('should import default from SVG with SVGR correctly', async ({ page, buildPreview }) => {
   await buildPreview();
 
   // test svgr（namedExport）
@@ -12,15 +9,11 @@ test('should import default from SVG with SVGR correctly', async ({
   ).resolves.toBeTruthy();
 
   // test SVG asset
-  await expect(
-    page.evaluate(`document.getElementById('large-img').src`),
-  ).resolves.toMatch(/http:/);
+  await expect(page.evaluate(`document.getElementById('large-img').src`)).resolves.toMatch(/http:/);
 
   // test SVG asset
   await expect(
-    page.evaluate(
-      `document.getElementById('small-img').src.startsWith('data:image/svg')`,
-    ),
+    page.evaluate(`document.getElementById('small-img').src.startsWith('data:image/svg')`),
   ).resolves.toBeTruthy();
 
   // test SVG asset in CSS

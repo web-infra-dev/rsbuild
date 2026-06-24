@@ -6,7 +6,14 @@ description: 'This chapter introduces how to implement SSR functionality using R
 
 This chapter introduces how to implement SSR functionality using Rsbuild.
 
-Rsbuild does not ship with SSR by default. Instead, it offers low-level APIs and configurations so framework developers can build SSR support. If you need SSR that works out of the box, consider a full-stack framework built on Rsbuild, such as [Modern.js](https://github.com/web-infra-dev/modern.js).
+Rsbuild does not ship with SSR by default. Instead, it offers low-level APIs and configurations so framework developers can build SSR support.
+
+## Full-stack frameworks
+
+If you want to use SSR directly, we recommend using a full-stack framework built on Rsbuild because these frameworks already provide SSR support.
+
+- [React full-stack frameworks](/guide/framework/react#full-stack-frameworks)
+- [Solid full-stack frameworks](/guide/framework/solid#full-stack-frameworks)
 
 ## What is SSR
 
@@ -70,6 +77,9 @@ export default {
       output: {
         // Use 'node' target for the Node.js outputs
         target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
       },
     },
   },
@@ -193,12 +203,8 @@ async function renderHtmlPage(): Promise<string> {
 
   const { js, css } = entries['index'].initial;
 
-  const scriptTags = js
-    .map((url) => `<script src="${url}" defer></script>`)
-    .join('\n');
-  const styleTags = css
-    .map((file) => `<link rel="stylesheet" href="${file}">`)
-    .join('\n');
+  const scriptTags = js.map((url) => `<script src="${url}" defer></script>`).join('\n');
+  const styleTags = css.map((file) => `<link rel="stylesheet" href="${file}">`).join('\n');
 
   return `
     <!DOCTYPE html>
@@ -268,4 +274,41 @@ export const myPlugin = () => ({
     });
   },
 });
+```
+
+## Keep asset URLs consistent
+
+In multi-environment SSR, keep [output.assetPrefix](/config/output/asset-prefix) and public asset [output.distPath](/config/output/dist-path) values consistent between server and client builds. This helps ensure that the server gets the same asset path as the client when using queries such as `?url`.
+
+```ts title="rsbuild.config.ts"
+const assetPaths = {
+  css: 'assets/css',
+  image: 'assets/image',
+};
+
+export default {
+  output: {
+    assetPrefix: '/',
+  },
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+        distPath: {
+          root: 'dist/client',
+          ...assetPaths,
+        },
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+          ...assetPaths,
+        },
+      },
+    },
+  },
+};
 ```

@@ -8,9 +8,7 @@ test('should generate integrity attributes in build with native html plugin', as
   const files = rsbuild.getDistFiles();
   const html = getFileContent(files, 'index.html');
 
-  expect(html).toMatch(
-    /<script crossorigin defer integrity="sha384-[A-Za-z0-9+/=]+"/,
-  );
+  expect(html).toMatch(/<script crossorigin defer integrity="sha384-[A-Za-z0-9+/=]+"/);
   expect(html).toMatch(
     /link crossorigin href="\/static\/css\/index\.\w{10}\.css" integrity="sha384-[A-Za-z0-9+/=]+"/,
   );
@@ -29,8 +27,6 @@ test('should generate integrity attributes in dev with native html plugin', asyn
   await expect(testEl).toHaveText('Hello Rsbuild!');
 
   expect(
-    await page.evaluate(
-      'document.querySelector("script")?.getAttribute("integrity")',
-    ),
+    await page.evaluate('document.querySelector("script")?.getAttribute("integrity")'),
   ).toBeTruthy();
 });

@@ -59,9 +59,7 @@ const portMap = new Map();
  * `10080` is not available on macOS CI, `> 50000` get 'permission denied' on Windows.
  * so we use `15000` ~ `45000`.
  */
-export async function getRandomPort(
-  defaultPort = Math.ceil(Math.random() * 30000) + 15000,
-) {
+export async function getRandomPort(defaultPort = Math.ceil(Math.random() * 30000) + 15000) {
   let port = defaultPort;
   while (true) {
     if (!portMap.get(port) && (await isPortAvailable(port))) {
@@ -103,16 +101,12 @@ export const readDirContents = async (path: string, options?: GlobOptions) => {
 /**
  * Expect a file to exist
  */
-export const expectFile = (dir: string) =>
-  expectPoll(() => fs.existsSync(dir)).toBeTruthy();
+export const expectFile = (dir: string) => expectPoll(() => fs.existsSync(dir)).toBeTruthy();
 
 /**
  * Expect a file to exist and include specified content
  */
-export const expectFileWithContent = (
-  filePath: string,
-  expectedContent: string,
-) =>
+export const expectFileWithContent = (filePath: string, expectedContent: string) =>
   expectPoll(() => {
     try {
       if (!fs.existsSync(filePath)) {
@@ -284,8 +278,7 @@ export const findFile = (
   options: FindFileOptions = {},
 ): string => {
   const { ignoreHash = true } = options;
-  const getComparable = (file: string) =>
-    ignoreHash ? file.replace(HASH_PATTERN, '') : file;
+  const getComparable = (file: string) => (ignoreHash ? file.replace(HASH_PATTERN, '') : file);
   const matcherFn = toMatcherFn(matcher);
 
   for (const file of Object.keys(files)) {
@@ -294,9 +287,7 @@ export const findFile = (
     }
   }
 
-  throw new Error(
-    `Unable to find file matching "${styleText('cyan', matcher.toString())}"`,
-  );
+  throw new Error(`Unable to find file matching "${styleText('cyan', matcher.toString())}"`);
 };
 
 /**

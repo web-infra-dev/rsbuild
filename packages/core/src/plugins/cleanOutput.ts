@@ -17,9 +17,7 @@ const isStrictSubdir = (parent: string, child: string) => {
   return parentDir !== childDir && childDir.startsWith(parentDir);
 };
 
-const normalizeCleanDistPath = (
-  userOptions: CleanDistPath,
-): CleanDistPathObject => {
+const normalizeCleanDistPath = (userOptions: CleanDistPath): CleanDistPathObject => {
   const defaultOptions: CleanDistPathObject = {
     enable: 'auto',
   };
@@ -53,10 +51,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       const targetPath = join(distPath, RSBUILD_OUTPUTS_PATH);
       const { enable } = normalizeCleanDistPath(config.output.cleanDistPath);
 
-      if (
-        enable === true ||
-        (enable === 'auto' && isStrictSubdir(rootPath, targetPath))
-      ) {
+      if (enable === true || (enable === 'auto' && isStrictSubdir(rootPath, targetPath))) {
         return {
           path: targetPath,
         };
@@ -70,9 +65,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
     ): PathInfo | undefined => {
       const { rootPath } = api.context;
       const { config, distPath } = environment;
-      const { enable, keep } = normalizeCleanDistPath(
-        config.output.cleanDistPath,
-      );
+      const { enable, keep } = normalizeCleanDistPath(config.output.cleanDistPath);
 
       if (enable === 'auto') {
         // If no files are written to disk, we don't need to clean the output
@@ -88,12 +81,8 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
           };
         }
 
-        api.logger.warn(
-          'The dist path is not a subdir of root path, Rsbuild will not empty it.',
-        );
-        api.logger.warn(
-          `Please set ${color.yellow('`output.cleanDistPath`')} config manually.`,
-        );
+        api.logger.warn('The dist path is not a subdir of root path, Rsbuild will not empty it.');
+        api.logger.warn(`Please set ${color.yellow('`output.cleanDistPath`')} config manually.`);
         api.logger.warn(`Current root path: ${color.dim(rootPath)}`);
         api.logger.warn(`Current dist path: ${color.dim(distPath)}`);
         return undefined;
@@ -114,19 +103,18 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       isDev?: boolean;
     }) => {
       // dedupe environments by distPath
-      const environments = Object.values(params.environments).reduce<
-        EnvironmentContext[]
-      >((result, curr) => {
-        if (!result.find((item) => item.distPath === curr.distPath)) {
-          result.push(curr);
-        }
-        return result;
-      }, []);
+      const environments = Object.values(params.environments).reduce<EnvironmentContext[]>(
+        (result, curr) => {
+          if (!result.find((item) => item.distPath === curr.distPath)) {
+            result.push(curr);
+          }
+          return result;
+        },
+        [],
+      );
 
       const pathInfos: PathInfo[] = [
-        ...environments.map((environment) =>
-          getPathInfo(environment, params.isDev),
-        ),
+        ...environments.map((environment) => getPathInfo(environment, params.isDev)),
         getRsbuildOutputPath(),
       ].filter((pathInfo): pathInfo is PathInfo => !!pathInfo);
 

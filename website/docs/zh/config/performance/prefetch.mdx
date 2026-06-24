@@ -4,9 +4,11 @@ description: '为 Rsbuild 构建生成的静态资源注入 link 标签。'
 
 # performance.prefetch
 
-- **类型：** `undefined | true | PrefetchOptions`
+- **类型：**
 
 ```ts
+type Prefetch = undefined | true | PrefetchOptions | PrefetchOptions[];
+
 interface PrefetchOptions {
   type?: ResourceHintsIncludeType;
   include?: ResourceHintsFilter;
@@ -91,11 +93,16 @@ export default {
 
 ## 选项
 
-`performance.prefetch` 可以设置为一个对象来指定选项。
+`performance.prefetch` 可以设置为一个对象或对象数组来指定选项。
 
 ### prefetch.type
 
-- **类型：** ` 'async-chunks' | 'initial' | 'all-assets' | 'all-chunks'`
+- **类型：**
+
+```ts
+type ResourceHintsIncludeType = 'async-chunks' | 'initial' | 'all-assets' | 'all-chunks';
+```
+
 - **默认值：** `'async-chunks'`
 
 指定哪些类型的资源会被包含，目前支持的值如下：
@@ -121,6 +128,24 @@ export default {
 :::tip
 如果一个脚本已通过 HTML `<script>` 标签直接引入，则不会对其进行 prefetch。
 :::
+
+你也可以将 `performance.prefetch` 设置为数组来应用多条 prefetch 规则，匹配到的资源会被合并并去重：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    prefetch: [
+      {
+        include: /\.js$/,
+      },
+      {
+        type: 'all-chunks',
+        include: /\.png$/,
+      },
+    ],
+  },
+};
+```
 
 ### prefetch.include
 
@@ -202,3 +227,9 @@ type ResourceHintsFilter =
 - **默认值：** `undefined`
 
 一个额外的过滤器，用于指定哪些资源会被排除，用法与 `include` 类似。
+
+## 版本历史
+
+| 版本    | 变更内容                                 |
+| ------- | ---------------------------------------- |
+| v2.0.12 | 支持将 `performance.prefetch` 设置为数组 |

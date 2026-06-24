@@ -12,19 +12,10 @@ describe('sort plugins by enforce order', () => {
       { name: 'post-2', setup: () => {}, enforce: 'post' },
     ];
 
-    const result = sortPluginsByEnforce(
-      plugins.map((instance) => ({ instance })),
-    );
+    const result = sortPluginsByEnforce(plugins.map((instance) => ({ instance })));
 
     const names = result.map((item) => item.instance.name);
-    expect(names).toEqual([
-      'pre-1',
-      'pre-2',
-      'normal-1',
-      'normal-2',
-      'post-1',
-      'post-2',
-    ]);
+    expect(names).toEqual(['pre-1', 'pre-2', 'normal-1', 'normal-2', 'post-1', 'post-2']);
   });
 
   it('should handle plugins with only "pre" enforce', () => {
@@ -35,9 +26,7 @@ describe('sort plugins by enforce order', () => {
       { name: 'pre-2', setup: () => {}, enforce: 'pre' },
     ];
 
-    const result = sortPluginsByEnforce(
-      plugins.map((instance) => ({ instance })),
-    );
+    const result = sortPluginsByEnforce(plugins.map((instance) => ({ instance })));
 
     const names = result.map((item) => item.instance.name);
     expect(names).toEqual(['pre-1', 'pre-2', 'normal-1', 'normal-2']);
@@ -51,9 +40,7 @@ describe('sort plugins by enforce order', () => {
       { name: 'post-2', setup: () => {}, enforce: 'post' },
     ];
 
-    const result = sortPluginsByEnforce(
-      plugins.map((instance) => ({ instance })),
-    );
+    const result = sortPluginsByEnforce(plugins.map((instance) => ({ instance })));
 
     const names = result.map((item) => item.instance.name);
     expect(names).toEqual(['normal-1', 'normal-2', 'post-1', 'post-2']);

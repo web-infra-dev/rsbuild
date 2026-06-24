@@ -1,5 +1,6 @@
 import type { Stats as FSStats, ReadStream } from 'node:fs';
-import type { ServerResponse } from 'node:http';
+import type { IncomingHttpHeaders, OutgoingHttpHeaders, ServerResponse } from 'node:http';
+import { lookup } from 'mrmime';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import type { InternalContext, RequestHandler, Rspack } from '../../types';
@@ -13,28 +14,29 @@ function getEtag(stat: FSStats): string {
   return `W/"${size}-${mtime}"`;
 }
 
-function createReadStreamOrReadFileSync(
+// Large dev bundles pay noticeable overhead when streamed in many small chunks.
+// Use a larger read buffer while still keeping responses streamed with backpressure.
+const READ_STREAM_HIGH_WATER_MARK = 512 * 1024;
+
+function createReadStream(
   filename: string,
   outputFileSystem: Rspack.OutputFileSystem,
   start: number,
   end: number,
-): { bufferOrStream: Buffer | ReadStream; byteLength: number } {
-  const bufferOrStream = (
-    outputFileSystem.createReadStream as (
-      p: string,
-      opts: { start: number; end: number },
-    ) => ReadStream
-  )(filename, {
+): ReadStream {
+  const createOutputReadStream = outputFileSystem.createReadStream as unknown as (
+    p: string,
+    opts: { start: number; end: number; highWaterMark: number },
+  ) => ReadStream;
+
+  return createOutputReadStream(filename, {
     start,
     end,
+    highWaterMark: READ_STREAM_HIGH_WATER_MARK,
   });
-  const byteLength = end === 0 ? 0 : end - start + 1;
-
-  return { bufferOrStream, byteLength };
 }
 
-async function getContentType(str: string): Promise<false | string> {
-  const { lookup } = await import('mrmime');
+function getContentType(str: string): false | string {
   let mime = lookup(str);
   if (!mime) {
     return false;
@@ -51,15 +53,8 @@ async function getContentType(str: string): Promise<false | string> {
 
 const BYTES_RANGE_REGEXP = /^ *bytes/i;
 
-function getValueContentRangeHeader(
-  type: string,
-  size: number,
-  range?: Range,
-): string {
-  return `${type} ${range ? `${range.start}-${range.end}` : '*'}:${size}`.replace(
-    ':',
-    '/',
-  );
+function getValueContentRangeHeader(type: string, size: number, range?: Range): string {
+  return `${type} ${range ? `${range.start}-${range.end}` : '*'}:${size}`.replace(':', '/');
 }
 
 function parseHttpDate(date: string): number {
@@ -68,6 +63,153 @@ function parseHttpDate(date: string): number {
 }
 
 const CACHE_CONTROL_NO_CACHE_REGEXP = /(?:^|,)\s*?no-cache\s*?(?:,|$)/;
+
+function getRequestHeader(headers: IncomingHttpHeaders, name: string): string | undefined {
+  const value = headers[name];
+  return Array.isArray(value) ? value.join(',') : value;
+}
+
+function isConditionalGET(headers: IncomingHttpHeaders): boolean {
+  return Boolean(
+    headers['if-match'] ||
+    headers['if-unmodified-since'] ||
+    headers['if-none-match'] ||
+    headers['if-modified-since'],
+  );
+}
+
+function isPreconditionFailure(headers: IncomingHttpHeaders, res: ServerResponse): boolean {
+  const ifMatch = getRequestHeader(headers, 'if-match');
+
+  if (ifMatch) {
+    const etag = res.getHeader('ETag');
+
+    return (
+      !etag ||
+      (ifMatch !== '*' &&
+        parseTokenList(ifMatch).every(
+          (match: string) => match !== etag && match !== `W/${etag}` && `W/${match}` !== etag,
+        ))
+    );
+  }
+
+  const ifUnmodifiedSince = getRequestHeader(headers, 'if-unmodified-since');
+  if (ifUnmodifiedSince) {
+    const unmodifiedSince = parseHttpDate(ifUnmodifiedSince);
+    if (!Number.isNaN(unmodifiedSince)) {
+      const lastModified = parseHttpDate(String(res.getHeader('Last-Modified')));
+      return Number.isNaN(lastModified) || lastModified > unmodifiedSince;
+    }
+  }
+
+  return false;
+}
+
+function isCachable(statusCode: number): boolean {
+  return (statusCode >= 200 && statusCode < 300) || statusCode === HttpCode.NotModified;
+}
+
+function isFresh(headers: IncomingHttpHeaders, resHeaders: OutgoingHttpHeaders): boolean {
+  const cacheControl = getRequestHeader(headers, 'cache-control');
+
+  if (cacheControl && CACHE_CONTROL_NO_CACHE_REGEXP.test(cacheControl)) {
+    return false;
+  }
+
+  const noneMatch = getRequestHeader(headers, 'if-none-match');
+  const modifiedSince = getRequestHeader(headers, 'if-modified-since');
+
+  if (!noneMatch && !modifiedSince) {
+    return false;
+  }
+
+  if (noneMatch && noneMatch !== '*') {
+    if (!resHeaders.etag) {
+      return false;
+    }
+
+    const matches = parseTokenList(noneMatch);
+    let etagStale = true;
+
+    for (let i = 0; i < matches.length; i++) {
+      const match = matches[i];
+      if (
+        match === resHeaders.etag ||
+        match === `W/${resHeaders.etag}` ||
+        `W/${match}` === resHeaders.etag
+      ) {
+        etagStale = false;
+        break;
+      }
+    }
+
+    if (etagStale) {
+      return false;
+    }
+  }
+
+  if (noneMatch) {
+    return true;
+  }
+
+  if (modifiedSince) {
+    const lastModified = resHeaders['last-modified'];
+    const modifiedStale =
+      !lastModified || !(parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince));
+
+    if (modifiedStale) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function isRangeFresh(headers: IncomingHttpHeaders, res: ServerResponse): boolean {
+  const ifRange = getRequestHeader(headers, 'if-range');
+
+  if (!ifRange) {
+    return true;
+  }
+
+  if (ifRange.indexOf('"') !== -1) {
+    const etag = res.getHeader('ETag') as string | undefined;
+    if (!etag) {
+      return true;
+    }
+    // If-Range entity-tags require strong comparison. Weak validators should
+    // fall back to the full response instead of serving partial content.
+    if (ifRange.startsWith('W/') || etag.startsWith('W/')) {
+      return false;
+    }
+    return ifRange === etag;
+  }
+
+  const lastModified = res.getHeader('Last-Modified') as string | undefined;
+  if (!lastModified) {
+    return true;
+  }
+
+  return parseHttpDate(lastModified) <= parseHttpDate(ifRange);
+}
+
+function getRangeHeader(headers: IncomingHttpHeaders): string | undefined {
+  const range = getRequestHeader(headers, 'range');
+  if (range && BYTES_RANGE_REGEXP.test(range)) {
+    return range;
+  }
+}
+
+function getOffsetAndLenFromRange(range: Range): [number, number] {
+  const { start, end } = range;
+  const len = end - start + 1;
+  return [start, len];
+}
+
+function calcStartAndEnd(start: number, len: number): [number, number] {
+  const end = Math.max(start, start + len - 1);
+  return [start, end];
+}
 
 function destroyStream(stream: ReadStream, suppress: boolean): void {
   if (typeof stream.destroy === 'function') {
@@ -88,11 +230,9 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
   }
 }
 
-const parseRangeHeaders = async (
-  value: string,
-): Promise<RangeResult | Ranges> => {
+const parseRangeHeaders = async (value: string): Promise<RangeResult | Ranges> => {
   const { default: rangeParser } = await import(
-    /* webpackChunkName: "range-parser" */
+    /* rspackChunkName: "range-parser" */
     'range-parser'
   );
   const [len, rangeHeader] = value.split('|');
@@ -100,8 +240,6 @@ const parseRangeHeaders = async (
     combine: true,
   });
 };
-
-const acceptedMethods = ['GET', 'HEAD'];
 
 function sendError(res: ServerResponse, code: number): void {
   const errorMessages: Record<number, string> = {
@@ -140,12 +278,13 @@ function sendError(res: ServerResponse, code: number): void {
   res.end(document);
 }
 
-export function createMiddleware(
+export function createAssetsMiddleware(
   context: InternalContext,
   ready: (callback: () => void) => void,
   outputFileSystem: Rspack.OutputFileSystem,
 ): RequestHandler {
   const { logger } = context;
+
   return async function assetsMiddleware(req, res, next) {
     async function goNext() {
       return new Promise<void>((resolve) => {
@@ -156,157 +295,9 @@ export function createMiddleware(
       });
     }
 
-    if (req.method && !acceptedMethods.includes(req.method)) {
+    if (req.method && req.method !== 'GET' && req.method !== 'HEAD') {
       await goNext();
       return;
-    }
-
-    function isConditionalGET() {
-      return (
-        req.headers['if-match'] ||
-        req.headers['if-unmodified-since'] ||
-        req.headers['if-none-match'] ||
-        req.headers['if-modified-since']
-      );
-    }
-
-    function isPreconditionFailure() {
-      const ifMatch = req.headers['if-match'];
-
-      if (ifMatch) {
-        const etag = res.getHeader('ETag');
-
-        return (
-          !etag ||
-          (ifMatch !== '*' &&
-            parseTokenList(ifMatch).every(
-              (match: string) =>
-                match !== etag &&
-                match !== `W/${etag}` &&
-                `W/${match}` !== etag,
-            ))
-        );
-      }
-
-      const ifUnmodifiedSince = req.headers['if-unmodified-since'];
-      if (ifUnmodifiedSince) {
-        const unmodifiedSince = parseHttpDate(ifUnmodifiedSince);
-        if (!Number.isNaN(unmodifiedSince)) {
-          const lastModified = parseHttpDate(
-            String(res.getHeader('Last-Modified')),
-          );
-          return Number.isNaN(lastModified) || lastModified > unmodifiedSince;
-        }
-      }
-
-      return false;
-    }
-
-    function isCachable(): boolean {
-      return (
-        (res.statusCode >= 200 && res.statusCode < 300) ||
-        res.statusCode === HttpCode.NotModified
-      );
-    }
-
-    function isFresh(resHeaders: import('http').OutgoingHttpHeaders): boolean {
-      const cacheControl = req.headers['cache-control'];
-
-      if (cacheControl && CACHE_CONTROL_NO_CACHE_REGEXP.test(cacheControl)) {
-        return false;
-      }
-
-      const noneMatch = req.headers['if-none-match'];
-      const modifiedSince = req.headers['if-modified-since'];
-
-      if (!noneMatch && !modifiedSince) {
-        return false;
-      }
-
-      if (noneMatch && noneMatch !== '*') {
-        if (!resHeaders.etag) {
-          return false;
-        }
-
-        const matches = parseTokenList(noneMatch);
-        let etagStale = true;
-
-        for (let i = 0; i < matches.length; i++) {
-          const match = matches[i];
-          if (
-            match === resHeaders.etag ||
-            match === `W/${resHeaders.etag}` ||
-            `W/${match}` === resHeaders.etag
-          ) {
-            etagStale = false;
-            break;
-          }
-        }
-
-        if (etagStale) {
-          return false;
-        }
-      }
-
-      if (noneMatch) {
-        return true;
-      }
-
-      if (modifiedSince) {
-        const lastModified = resHeaders['last-modified'];
-        const modifiedStale =
-          !lastModified ||
-          !(
-            parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince)
-          );
-
-        if (modifiedStale) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    function isRangeFresh() {
-      const ifRange = req.headers['if-range'] as string | undefined;
-
-      if (!ifRange) {
-        return true;
-      }
-
-      if (ifRange.indexOf('"') !== -1) {
-        const etag = res.getHeader('ETag') as string | undefined;
-        if (!etag) {
-          return true;
-        }
-        return Boolean(etag && ifRange.indexOf(etag) !== -1);
-      }
-
-      const lastModified = res.getHeader('Last-Modified') as string | undefined;
-      if (!lastModified) {
-        return true;
-      }
-
-      return parseHttpDate(lastModified) <= parseHttpDate(ifRange);
-    }
-
-    function getRangeHeader(): string | undefined {
-      const { range } = req.headers;
-      if (range && BYTES_RANGE_REGEXP.test(range)) {
-        return range;
-      }
-    }
-
-    function getOffsetAndLenFromRange(range: Range): [number, number] {
-      const { start, end } = range;
-      const len = end - start + 1;
-      return [start, len];
-    }
-
-    function calcStartAndEnd(start: number, len: number): [number, number] {
-      const end = Math.max(start, start + len - 1);
-      return [start, end];
     }
 
     async function processRequest() {
@@ -338,7 +329,7 @@ export function createMiddleware(
       let offset = 0;
 
       if (!res.getHeader('Content-Type')) {
-        const contentType = await getContentType(filename);
+        const contentType = getContentType(filename);
         if (contentType) {
           res.setHeader('Content-Type', contentType);
         }
@@ -348,7 +339,7 @@ export function createMiddleware(
         res.setHeader('Accept-Ranges', 'bytes');
       }
 
-      const rangeHeader = getRangeHeader();
+      const rangeHeader = getRangeHeader(req.headers);
 
       if (!res.getHeader('ETag')) {
         if (fsStats) {
@@ -357,8 +348,8 @@ export function createMiddleware(
         }
       }
 
-      if (isConditionalGET()) {
-        if (isPreconditionFailure()) {
+      if (isConditionalGET(req.headers)) {
+        if (isPreconditionFailure(req.headers, res)) {
           sendError(res, HttpCode.PreconditionFailed);
           return;
         }
@@ -368,12 +359,10 @@ export function createMiddleware(
         }
 
         if (
-          isCachable() &&
-          isFresh({
+          isCachable(res.statusCode) &&
+          isFresh(req.headers, {
             etag: res.getHeader('ETag') as string | undefined,
-            'last-modified': res.getHeader('Last-Modified') as
-              | string
-              | undefined,
+            'last-modified': res.getHeader('Last-Modified') as string | undefined,
           })
         ) {
           res.statusCode = HttpCode.NotModified;
@@ -393,19 +382,14 @@ export function createMiddleware(
           `${size}|${rangeHeader}`,
         );
 
-        if (!isRangeFresh()) {
+        if (!isRangeFresh(req.headers, res)) {
           parsedRanges = [];
         }
 
         if (parsedRanges === -1) {
-          logger.error(
-            "[rsbuild:middleware] Unsatisfiable range for 'Range' header.",
-          );
+          logger.error("[rsbuild:middleware] Unsatisfiable range for 'Range' header.");
 
-          res.setHeader(
-            'Content-Range',
-            getValueContentRangeHeader('bytes', size),
-          );
+          res.setHeader('Content-Range', getValueContentRangeHeader('bytes', size));
 
           sendError(res, HttpCode.RangeNotSatisfiable);
           return;
@@ -431,24 +415,18 @@ export function createMiddleware(
         }
       }
 
-      let bufferOrStream: undefined | Buffer | ReadStream;
-      let byteLength: number;
+      let readStream: ReadStream;
 
       const [start, end] = calcStartAndEnd(offset, len);
 
       try {
-        ({ bufferOrStream, byteLength } = createReadStreamOrReadFileSync(
-          filename,
-          outputFileSystem,
-          start,
-          end,
-        ));
+        readStream = createReadStream(filename, outputFileSystem, start, end);
       } catch {
         await goNext();
         return;
       }
 
-      res.setHeader('Content-Length', byteLength);
+      res.setHeader('Content-Length', len);
 
       if (req.method === 'HEAD') {
         if (res.statusCode === HttpCode.NotFound) {
@@ -458,37 +436,26 @@ export function createMiddleware(
         return;
       }
 
-      const isPipeSupports =
-        typeof (bufferOrStream as ReadStream).pipe === 'function';
-
-      if (!isPipeSupports) {
-        res.end(bufferOrStream as Buffer);
-        return;
-      }
-
       const cleanup = () => {
-        destroyStream(bufferOrStream as ReadStream, true);
+        destroyStream(readStream, true);
       };
 
-      (bufferOrStream as ReadStream).on(
-        'error',
-        (error: NodeJS.ErrnoException) => {
-          cleanup();
-          // rslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
-          switch (error.code) {
-            case 'ENAMETOOLONG':
-            case 'ENOENT':
-            case 'ENOTDIR':
-              sendError(res, HttpCode.NotFound);
-              break;
-            default:
-              sendError(res, HttpCode.InternalServerError);
-              break;
-          }
-        },
-      );
+      readStream.on('error', (error: NodeJS.ErrnoException) => {
+        cleanup();
+        // rslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
+        switch (error.code) {
+          case 'ENAMETOOLONG':
+          case 'ENOENT':
+          case 'ENOTDIR':
+            sendError(res, HttpCode.NotFound);
+            break;
+          default:
+            sendError(res, HttpCode.InternalServerError);
+            break;
+        }
+      });
 
-      (bufferOrStream as ReadStream).pipe(res);
+      readStream.pipe(res);
 
       onFinished(res, cleanup);
     }

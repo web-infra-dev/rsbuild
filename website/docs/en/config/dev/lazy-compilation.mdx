@@ -140,7 +140,13 @@ When the `imports` option is enabled, all async modules will only be compiled wh
 
 ### Server URL
 
-Use [lazyCompilation.serverUrl](https://rspack.rs/config/experiments#lazycompilationserverurl) to tell the client the server URL that needs to be requested.
+Use [lazyCompilation.serverUrl](https://rspack.rs/config/lazy-compilation#lazycompilationserverurl) to tell the client the server URL that needs to be requested.
+
+If `lazyCompilation.serverUrl` is not configured and `dev.client.host` or `dev.client.port` is specified, Rsbuild will use the `dev.client` URL as the default `serverUrl`.
+
+An explicitly configured `lazyCompilation.serverUrl` always takes priority over the default value inferred from `dev.client`.
+
+Example:
 
 ```ts title="rsbuild.config.ts"
 export default {

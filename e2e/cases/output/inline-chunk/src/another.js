@@ -1,7 +1,7 @@
 import './style.css';
 
 import(
-  /* webpackChunkName: "foo" */
+  /* rspackChunkName: "foo" */
   './foo'
 ).then(({ foo }) => {
   window.answer = `another ${foo()}`;

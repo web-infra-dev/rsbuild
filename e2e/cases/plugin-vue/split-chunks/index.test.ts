@@ -13,9 +13,7 @@ test('should split vue chunks correctly', async ({ build }) => {
   expect(filesNames.find((file) => file.includes('lib-vue'))).toBeTruthy();
 });
 
-test('should not split vue chunks when strategy is `all-in-one`', async ({
-  build,
-}) => {
+test('should not split vue chunks when strategy is `all-in-one`', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginVue()],

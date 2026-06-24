@@ -13,9 +13,8 @@ import { type Config, type Plugin, type State, transform } from '@svgr/core';
 import jsx from '@svgr/plugin-jsx';
 import svgo from '@svgr/plugin-svgo';
 
-const transformSvg = callbackify(
-  async (contents: string, config: Config, state: Partial<State>) =>
-    transform(contents, config, state),
+const transformSvg = callbackify(async (contents: string, config: Config, state: Partial<State>) =>
+  transform(contents, config, state),
 );
 
 const svgrLoader: Rspack.LoaderDefinition<Config> = function (contents): void {

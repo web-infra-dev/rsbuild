@@ -15,13 +15,17 @@ test('should create preact-ts project as expected', async () => {
 });
 
 test('should create vue-ts project as expected', async () => {
-  const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue-ts');
+  const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue-ts', {
+    expectedBuildScript: 'vue-tsc && rsbuild build',
+  });
   expect(pkgJson.dependencies.vue).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-vue']).toBeTruthy();
 });
 
 test('should create vue3-ts project alias as expected', async () => {
-  const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue3-ts');
+  const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue3-ts', {
+    expectedBuildScript: 'vue-tsc && rsbuild build',
+  });
   expect(pkgJson.dependencies.vue).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-vue']).toBeTruthy();
 });

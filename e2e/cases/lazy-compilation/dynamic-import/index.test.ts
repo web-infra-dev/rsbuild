@@ -2,10 +2,7 @@ import { expect, gotoPage, test } from '@e2e/helper';
 
 const BUILD_FOO = 'building src/foo.js';
 
-test('should lazy compile dynamic imported modules', async ({
-  page,
-  devOnly,
-}) => {
+test('should lazy compile dynamic imported modules', async ({ page, devOnly }) => {
   const rsbuild = await devOnly();
 
   // initial build

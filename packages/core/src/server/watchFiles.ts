@@ -29,32 +29,17 @@ export async function setupWatchFiles(
     return;
   }
 
-  const closeDevFilesWatcher = await watchDevFiles(
-    config.dev,
-    buildManager,
-    root,
-  );
-  const serverFilesWatcher = await watchServerFiles(
-    config.server,
-    buildManager,
-    root,
-  );
+  const closeDevFilesWatcher = await watchDevFiles(config.dev, buildManager, root);
+  const serverFilesWatcher = await watchServerFiles(config.server, buildManager, root);
 
   return {
     async close() {
-      await Promise.all([
-        closeDevFilesWatcher?.(),
-        serverFilesWatcher?.close(),
-      ]);
+      await Promise.all([closeDevFilesWatcher?.(), serverFilesWatcher?.close()]);
     },
   };
 }
 
-async function watchDevFiles(
-  devConfig: DevConfig,
-  buildManager: BuildManager,
-  root: string,
-) {
+async function watchDevFiles(devConfig: DevConfig, buildManager: BuildManager, root: string) {
   const { watchFiles } = devConfig;
   if (!watchFiles) {
     return;
@@ -86,9 +71,7 @@ function watchServerFiles(
     return;
   }
 
-  const watchPaths = publicDir
-    .filter((item) => item.watch)
-    .map((item) => item.name);
+  const watchPaths = publicDir.filter((item) => item.watch).map((item) => item.name);
 
   if (!watchPaths.length) {
     return;
@@ -122,9 +105,7 @@ export async function createChokidar(
   root: string,
   options: ChokidarOptions,
 ): Promise<FSWatcher> {
-  const { default: chokidar } = await import(
-    /* webpackChunkName: "chokidar" */ 'chokidar'
-  );
+  const { default: chokidar } = await import(/* rspackChunkName: "chokidar" */ 'chokidar');
 
   const watchFiles = new Set<string>();
 
@@ -137,9 +118,7 @@ export async function createChokidar(
   });
 
   if (globPatterns.length) {
-    const { glob } = await import(
-      /* webpackChunkName: "tinyglobby" */ 'tinyglobby'
-    );
+    const { glob } = await import(/* rspackChunkName: "tinyglobby" */ 'tinyglobby');
     // interop default to make both CJS and ESM work
     const files = await glob(globPatterns, {
       cwd: root,
@@ -154,11 +133,7 @@ export async function createChokidar(
 }
 
 async function startWatchFiles(
-  {
-    paths,
-    options,
-    type = 'reload-page',
-  }: ReturnType<typeof prepareWatchOptions>,
+  { paths, options, type = 'reload-page' }: ReturnType<typeof prepareWatchOptions>,
   buildManager: BuildManager,
   root: string,
 ) {

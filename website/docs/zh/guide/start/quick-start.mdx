@@ -145,6 +145,20 @@ Optional skills:
   rsbuild-best-practices, rstest-best-practices, vercel-react-best-practices
 ```
 
+## 在 Monorepo 中使用 Rsbuild \{#use-rsbuild-in-monorepos}
+
+以下 Monorepo 工具提供了 Rsbuild 集成或示例，可用于在工作区中创建和管理 Rsbuild 应用。
+
+- [Nx](https://nx.dev/docs/technologies/build-tools/rsbuild/introduction) 通过 `@nx/rsbuild` 插件支持 Rsbuild，为 Nx 工作区提供生成器和执行器。
+- [Turborepo](https://turborepo.dev/docs/guides/frameworks/rsbuild) 提供创建 Rsbuild 应用和使用 Module Federation 的示例和指南。
+
+## 全栈框架 \{#full-stack-frameworks}
+
+如果你的应用需要全栈能力，可以直接使用基于 Rsbuild 的全栈框架，例如 [TanStack Start](https://tanstack.com/start/latest) 或 [Modern.js](https://github.com/web-infra-dev/modern.js)。这类框架基于 Rsbuild 构建，并提供 SSR、路由等更高层的能力。
+
+- [React 全栈框架](/guide/framework/react#full-stack-frameworks)
+- [Solid 全栈框架](/guide/framework/solid#full-stack-frameworks)
+
 ## 从现有项目迁移 \{#migrate-from-existing-projects}
 
 如需从现有项目迁移到 Rsbuild，参考以下指南：
@@ -244,16 +258,8 @@ import NextSteps from '@components/NextSteps';
 import Step from '@components/Step';
 
 <NextSteps>
-  <Step
-    href="/guide/start/features"
-    title="功能导航"
-    description="了解 Rsbuild 提供的所有功能"
-  />
-  <Step
-    href="/guide/configuration/rsbuild"
-    title="查阅配置"
-    description="了解如何配置 Rsbuild"
-  />
+  <Step href="/guide/start/features" title="功能导航" description="了解 Rsbuild 提供的所有功能" />
+  <Step href="/guide/configuration/rsbuild" title="查阅配置" description="了解如何配置 Rsbuild" />
   <Step
     href="https://github.com/web-infra-dev/rsbuild"
     title="支持 Rsbuild"

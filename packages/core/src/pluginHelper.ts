@@ -8,9 +8,7 @@ import type { HtmlRspackPlugin, NormalizedEnvironmentConfig } from './types';
 
 let htmlPlugin: typeof HtmlRspackPlugin;
 
-export function getHTMLPlugin(
-  config?: NormalizedEnvironmentConfig,
-): typeof HtmlRspackPlugin {
+export function getHTMLPlugin(config?: NormalizedEnvironmentConfig): typeof HtmlRspackPlugin {
   if (config?.html.implementation === 'native') {
     // TODO: remove type assertion
     return rspack.HtmlRspackPlugin as unknown as typeof HtmlRspackPlugin;

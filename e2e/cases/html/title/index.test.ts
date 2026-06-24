@@ -1,12 +1,10 @@
-import path from 'node:path';
-
 import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should generate default title correctly', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
     },
   });
@@ -16,13 +14,11 @@ test('should generate default title correctly', async ({ build }) => {
   expect(html).toContain('<title>Rsbuild App</title>');
 });
 
-test('should allow setting empty title to unset the default title', async ({
-  build,
-}) => {
+test('should allow setting empty title to unset the default title', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: '',
@@ -39,7 +35,7 @@ test('should generate title correctly', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: 'foo',
@@ -52,17 +48,15 @@ test('should generate title correctly', async ({ build }) => {
   expect(html).toContain('<title>foo</title>');
 });
 
-test('should generate title correctly when using custom HTML template', async ({
-  build,
-}) => {
+test('should generate title correctly when using custom HTML template', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: 'foo',
-        template: path.resolve(import.meta.dirname, './src/empty.html'),
+        template: './src/empty.html',
       },
     },
   });
@@ -72,20 +66,15 @@ test('should generate title correctly when using custom HTML template', async ({
   expect(html).toContain('<title>foo</title>');
 });
 
-test('should generate title correctly when using htmlPlugin.options.title', async ({
-  build,
-}) => {
+test('should generate title correctly when using htmlPlugin.options.title', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: 'foo',
-        template: path.resolve(
-          import.meta.dirname,
-          './src/plugin-options-title.html',
-        ),
+        template: './src/plugin-options-title.html',
       },
     },
   });
@@ -100,8 +89,8 @@ test('should generate title via function correctly', async ({ build }) => {
     config: {
       source: {
         entry: {
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
-          bar: path.resolve(import.meta.dirname, './src/foo.js'),
+          foo: './src/foo.js',
+          bar: './src/foo.js',
         },
       },
       html: {
@@ -120,13 +109,11 @@ test('should generate title via function correctly', async ({ build }) => {
   expect(barHtml).toContain('<title>bar</title>');
 });
 
-test('should not inject title if template already contains a title', async ({
-  build,
-}) => {
+test('should not inject title if template already contains a title', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: 'Hello',

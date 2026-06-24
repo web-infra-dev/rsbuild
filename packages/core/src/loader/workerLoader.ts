@@ -1,14 +1,9 @@
 import path from 'node:path';
-import type {
-  Compilation,
-  LoaderContext,
-  LoaderDefinition,
-} from '@rspack/core';
+import type { Compilation, LoaderContext, LoaderDefinition } from '@rspack/core';
 
 const INLINE_QUERY_REGEX = /[?&]inline(?:&|=|$)/;
 const JS_FILE_REGEX = /\.m?js(?:\?.*)?$/;
-const SOURCE_MAPPING_URL_REGEX =
-  /(?:\/\*# sourceMappingURL=.*?\*\/|\/\/# sourceMappingURL=.*)$/gm;
+const SOURCE_MAPPING_URL_REGEX = /(?:\/\*# sourceMappingURL=.*?\*\/|\/\/# sourceMappingURL=.*)$/gm;
 
 type WorkerLoaderOptions = {
   name?: string;
@@ -16,8 +11,7 @@ type WorkerLoaderOptions = {
 
 const normalizePath = (value: string) => value.replace(/\\/g, '/');
 
-const toWorkerRequest = (resourcePath: string) =>
-  `./${normalizePath(path.basename(resourcePath))}`;
+const toWorkerRequest = (resourcePath: string) => `./${normalizePath(path.basename(resourcePath))}`;
 
 const getWorkerOptionsCode = (isModule: boolean) => `{
   ${isModule ? 'type: "module",' : ''}
@@ -39,16 +33,9 @@ const getWorkerWrapper = ({
 }`;
 };
 
-const stripSourceMappingURL = (source: string) =>
-  source.replace(SOURCE_MAPPING_URL_REGEX, '');
+const stripSourceMappingURL = (source: string) => source.replace(SOURCE_MAPPING_URL_REGEX, '');
 
-const getInlineWorkerWrapper = ({
-  source,
-  isModule,
-}: {
-  source: string;
-  isModule: boolean;
-}) => {
+const getInlineWorkerWrapper = ({ source, isModule }: { source: string; isModule: boolean }) => {
   const workerOptions = getWorkerOptionsCode(isModule);
   const revokeCode = isModule
     ? 'URL.revokeObjectURL(import.meta.url);'
@@ -89,9 +76,7 @@ const deleteAsset = (compilation: Compilation, filename: string) => {
   }
 };
 
-const compileInlineWorker = (
-  context: LoaderContext<WorkerLoaderOptions>,
-): Promise<string> => {
+const compileInlineWorker = (context: LoaderContext<WorkerLoaderOptions>): Promise<string> => {
   const compiler = context._compiler;
   const compilation = context._compilation;
   const { rspack } = compiler;
@@ -149,9 +134,7 @@ const compileInlineWorker = (
       const entry = entries?.[0];
       if (!entry || !childCompilation) {
         reject(
-          new Error(
-            `[rsbuild:worker] Failed to compile inline worker "${context.resourcePath}".`,
-          ),
+          new Error(`[rsbuild:worker] Failed to compile inline worker "${context.resourcePath}".`),
         );
         return;
       }
@@ -217,10 +200,7 @@ const workerLoader: LoaderDefinition<WorkerLoaderOptions> =
 
     try {
       if (!INLINE_QUERY_REGEX.test(this.resourceQuery)) {
-        callback(
-          null,
-          getWorkerWrapper({ resourcePath: this.resourcePath, isModule }),
-        );
+        callback(null, getWorkerWrapper({ resourcePath: this.resourcePath, isModule }));
         return;
       }
 

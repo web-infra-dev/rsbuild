@@ -7,10 +7,11 @@ import fse from 'fs-extra';
 export const expectPackageJson = (
   pkgJson: Record<string, any>,
   name: string,
+  expectedBuildScript = 'rsbuild build',
 ) => {
   expect(pkgJson.name).toBe(name);
   expect(pkgJson.scripts.dev).toBe('rsbuild --open');
-  expect(pkgJson.scripts.build).toBe('rsbuild build');
+  expect(pkgJson.scripts.build).toBe(expectedBuildScript);
   expect(pkgJson.devDependencies['@rsbuild/core']).toBeTruthy();
 };
 
@@ -21,10 +22,12 @@ export const createAndValidate = async (
     name = `test-temp-${template}`,
     tools = [],
     clean = true,
+    expectedBuildScript,
   }: {
     name?: string;
     tools?: string[];
     clean?: boolean;
+    expectedBuildScript?: string;
   } = {},
 ) => {
   const dir = path.join(cwd, name);
@@ -47,7 +50,7 @@ export const createAndValidate = async (
   });
 
   const pkgJson = await fse.readJSON(path.join(dir, 'package.json'));
-  expectPackageJson(pkgJson, path.basename(name));
+  expectPackageJson(pkgJson, path.basename(name), expectedBuildScript);
 
   if (template.endsWith('-ts')) {
     expect(pkgJson.devDependencies.typescript).toBeTruthy();

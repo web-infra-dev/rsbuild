@@ -1,10 +1,7 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-test('should treat specified modules as externals', async ({
-  page,
-  buildPreview,
-}) => {
+test('should treat specified modules as externals', async ({ page, buildPreview }) => {
   await buildPreview({
     config: {
       plugins: [pluginReact()],
@@ -30,9 +27,7 @@ test('should treat specified modules as externals', async ({
   expect(externalVar).toBeDefined();
 });
 
-test('should not externalize dependencies when target is web worker', async ({
-  build,
-}) => {
+test('should not externalize dependencies when target is web worker', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],

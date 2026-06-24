@@ -1,14 +1,12 @@
 import { rspack } from '@rspack/core';
-import {
-  type ConfigChainAsyncWithContext,
-  reduceConfigsAsyncWithContext,
-} from 'reduce-configs';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import { merge } from 'rspack-merge';
 import { CHAIN_ID, modifyBundlerChain } from './configChain';
 import { castArray, color, getNodeEnv } from './helpers';
 import type { Logger } from './logger';
 import { getHTMLPlugin } from './pluginHelper';
 import type {
+  ConfigChainAsyncWithContext,
   EnvironmentContext,
   InternalContext,
   ModifyChainUtils,
@@ -38,13 +36,12 @@ async function modifyRspackConfig(
   });
 
   if (utils.environment.config.tools?.rspack) {
-    const toolsRspackConfig = utils.environment.config.tools
-      .rspack as ConfigChainAsyncWithContext<
+    const toolsRspackConfig = utils.environment.config.tools.rspack as ConfigChainAsyncWithContext<
       NarrowedRspackConfig,
       ModifyRspackConfigUtils
     >;
 
-    currentConfig = await reduceConfigsAsyncWithContext({
+    currentConfig = await reduceConfigsWithContext({
       initial: currentConfig as NarrowedRspackConfig,
       config: toolsRspackConfig,
       ctx: utils,
@@ -153,12 +150,7 @@ function validateRspackConfig(config: Rspack.Configuration, logger: Logger) {
   // validate plugins
   if (config.plugins) {
     for (const plugin of config.plugins) {
-      if (
-        plugin &&
-        plugin.apply === undefined &&
-        'name' in plugin &&
-        'setup' in plugin
-      ) {
+      if (plugin && plugin.apply === undefined && 'name' in plugin && 'setup' in plugin) {
         const name = color.bold(color.yellow(plugin.name));
         throw new Error(
           `${color.dim('[rsbuild:plugin]')} "${color.yellow(name)}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,

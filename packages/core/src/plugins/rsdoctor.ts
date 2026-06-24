@@ -25,8 +25,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
       const pluginName = 'RsdoctorRspackPlugin';
 
       const isRsdoctorPlugin = (plugin: MaybeRsdoctorPlugin) =>
-        plugin?.isRsdoctorPlugin === true ||
-        plugin?.constructor?.name === pluginName;
+        plugin?.isRsdoctorPlugin === true || plugin?.constructor?.name === pluginName;
 
       for (const config of bundlerConfigs) {
         // If user has added the Rsdoctor plugin manually, skip the auto-registration.
@@ -55,9 +54,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
       let module: RsdoctorExports;
       try {
-        const moduleURL = isWindows
-          ? pathToFileURL(packagePath).href
-          : packagePath;
+        const moduleURL = isWindows ? pathToFileURL(packagePath).href : packagePath;
         module = await import(moduleURL);
       } catch {
         api.logger.error(

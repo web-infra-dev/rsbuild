@@ -1,10 +1,7 @@
-import path from 'node:path';
 import { expect, getFileContent, normalizeNewlines, test } from '@e2e/helper';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
-test('should preserve the expected script injection order', async ({
-  build,
-}) => {
+test('should preserve the expected script injection order', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [
@@ -23,9 +20,7 @@ test('should preserve the expected script injection order', async ({
   const html = getFileContent(files, 'index.html');
 
   // rem => normal resource => template custom resource
-  expect(
-    html.indexOf('/js/convert-rem') < html.indexOf('/js/index'),
-  ).toBeTruthy();
+  expect(html.indexOf('/js/convert-rem') < html.indexOf('/js/index')).toBeTruthy();
   expect(html.indexOf('/js/index') < html.indexOf('/assets/a.js')).toBeTruthy();
 
   expect(html.indexOf('/js/index')).toBe(html.lastIndexOf('/js/index'));
@@ -36,8 +31,8 @@ test('should set inject via function correctly', async ({ build }) => {
     config: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          index: './src/index.js',
+          foo: './src/foo.js',
         },
       },
       output: {

@@ -15,10 +15,10 @@ After ejecting a CRA project, it becomes more like a project directly using webp
 
 ## Using Agent Skills
 
-For coding agents that support Skills, install the [migrate-cra-to-rsbuild](https://github.com/rstackjs/agent-skills#migrate-cra-to-rsbuild) skill to help with the migration process.
+For coding agents that support Skills, install the [migrate-to-rsbuild](https://github.com/rstackjs/agent-skills#migrate-to-rsbuild) skill to help with the migration process.
 
 ```bash
-npx skills add rstackjs/agent-skills --skill migrate-cra-to-rsbuild
+npx skills add rstackjs/agent-skills --skill migrate-to-rsbuild
 ```
 
 After installation, let the coding agent guide you through the migration process.
@@ -401,8 +401,7 @@ export default {
       resolve: {
         mainFields: ['browser', 'module', 'main'],
       },
-      plugins:
-        process.env.NODE_ENV === 'development' ? [new MyWebpackPlugin()] : [],
+      plugins: process.env.NODE_ENV === 'development' ? [new MyWebpackPlugin()] : [],
     },
   },
 };

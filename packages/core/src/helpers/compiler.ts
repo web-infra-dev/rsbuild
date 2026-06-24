@@ -39,9 +39,6 @@ export const applyToCompiler = (
   }
 };
 
-export const addCompilationError = (
-  compilation: Rspack.Compilation,
-  message: string,
-): void => {
+export const addCompilationError = (compilation: Rspack.Compilation, message: string): void => {
   compilation.errors.push(new rspack.WebpackError(message));
 };

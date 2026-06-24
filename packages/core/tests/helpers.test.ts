@@ -4,7 +4,7 @@ import { join, sep } from 'node:path';
 import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
 import { readPackageJsonByPath } from '../src/helpers/packageJson';
-import { ensureAssetPrefix } from '../src/helpers/url';
+import { ensureAssetPrefix, removeTailingSlash } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext, RsbuildTarget } from '../src/types';
 
@@ -31,10 +31,7 @@ describe('readPackageJsonByPath', () => {
   });
 
   it('should return undefined when package.json does not exist or is invalid', async () => {
-    const missingPath = join(
-      mkdtempSync(join(tmpdir(), 'rsbuild-package-json-')),
-      'package.json',
-    );
+    const missingPath = join(mkdtempSync(join(tmpdir(), 'rsbuild-package-json-')), 'package.json');
     await expect(readPackageJsonByPath(missingPath)).resolves.toBeUndefined();
 
     const invalidRoot = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
@@ -127,15 +124,15 @@ test('should get routes correctly', () => {
 });
 
 test('should format time correctly', () => {
-  expect(prettyTime(0.0012)).toEqual('0.001 s');
-  expect(prettyTime(0.0123)).toEqual('0.01 s');
-  expect(prettyTime(0.1234)).toEqual('0.12 s');
-  expect(prettyTime(1.234)).toEqual('1.23 s');
-  expect(prettyTime(12.34)).toEqual('12.3 s');
-  expect(prettyTime(120)).toEqual('2 m');
-  expect(prettyTime(123.4)).toEqual('2 m 3.4 s');
-  expect(prettyTime(1234)).toEqual('20 m 34 s');
-  expect(prettyTime(1234.5)).toEqual('20 m 34.5 s');
+  expect(prettyTime(0.0012)).toEqual('0.001s');
+  expect(prettyTime(0.0123)).toEqual('0.01s');
+  expect(prettyTime(0.1234)).toEqual('0.12s');
+  expect(prettyTime(1.234)).toEqual('1.23s');
+  expect(prettyTime(12.34)).toEqual('12.3s');
+  expect(prettyTime(120)).toEqual('2m');
+  expect(prettyTime(123.4)).toEqual('2m 3.4s');
+  expect(prettyTime(1234)).toEqual('20m 34s');
+  expect(prettyTime(1234.5)).toEqual('20m 34.5s');
 });
 
 describe('pick', () => {
@@ -163,14 +160,7 @@ describe('pick', () => {
   });
 
   it('should pick falsy values correctly', () => {
-    expect(
-      pick({ foo: 0, bar: false, baz: null, qux: '' }, [
-        'foo',
-        'bar',
-        'baz',
-        'qux',
-      ]),
-    ).toEqual({
+    expect(pick({ foo: 0, bar: false, baz: null, qux: '' }, ['foo', 'bar', 'baz', 'qux'])).toEqual({
       foo: 0,
       bar: false,
       baz: null,
@@ -184,13 +174,17 @@ it('should normalize URLs correctly', () => {
     'https://www.example.com/static/a',
   );
 
-  expect(normalizeUrl('https://www.example.com/static/a')).toBe(
-    'https://www.example.com/static/a',
-  );
+  expect(normalizeUrl('https://www.example.com/static/a')).toBe('https://www.example.com/static/a');
 
-  expect(normalizeUrl('https://www.example.com/static/')).toBe(
-    'https://www.example.com/static/',
-  );
+  expect(normalizeUrl('https://www.example.com/static/')).toBe('https://www.example.com/static/');
+});
+
+it('should remove trailing slashes correctly', () => {
+  expect(removeTailingSlash('/base')).toBe('/base');
+  expect(removeTailingSlash('/base/')).toBe('/base');
+  expect(removeTailingSlash('/base///')).toBe('/base');
+  expect(removeTailingSlash('/')).toBe('');
+  expect(removeTailingSlash('')).toBe('');
 });
 
 describe('ensureAssetPrefix', () => {
@@ -217,18 +211,12 @@ describe('ensureAssetPrefix', () => {
   });
 
   it('should handle absolute URLs with hostname and protocol', () => {
-    expect(ensureAssetPrefix('http://foo.com/bar.js', ASSET_PREFIX)).toBe(
-      'http://foo.com/bar.js',
-    );
-    expect(ensureAssetPrefix('http://foo.com/bar.js', '/')).toBe(
-      'http://foo.com/bar.js',
-    );
+    expect(ensureAssetPrefix('http://foo.com/bar.js', ASSET_PREFIX)).toBe('http://foo.com/bar.js');
+    expect(ensureAssetPrefix('http://foo.com/bar.js', '/')).toBe('http://foo.com/bar.js');
   });
 
   it('should handle absolute URLs with double slash', () => {
-    expect(ensureAssetPrefix('//foo.com/bar.js', ASSET_PREFIX)).toBe(
-      '//foo.com/bar.js',
-    );
+    expect(ensureAssetPrefix('//foo.com/bar.js', ASSET_PREFIX)).toBe('//foo.com/bar.js');
     expect(ensureAssetPrefix('//foo.com/bar.js', '/')).toBe('//foo.com/bar.js');
     expect(ensureAssetPrefix('/bar.js', '//foo.com')).toBe('//foo.com/bar.js');
   });
@@ -255,19 +243,13 @@ describe('getCommonParentPath', () => {
     const result = getCommonParentPath(paths);
     expect(result).toBe(normalize('/home/user/project/dist'));
 
-    const paths2 = [
-      normalize('/home/user/project/dist1'),
-      normalize('/home/user/project/dist2'),
-    ];
+    const paths2 = [normalize('/home/user/project/dist1'), normalize('/home/user/project/dist2')];
     const result2 = getCommonParentPath(paths2);
     expect(result2).toBe(normalize('/home/user/project'));
   });
 
   it('should return empty string if there is no common parent path', () => {
-    const paths = [
-      normalize('/home/user/project/dist'),
-      normalize('/home2/user/project/dist'),
-    ];
+    const paths = [normalize('/home/user/project/dist'), normalize('/home2/user/project/dist')];
     const result = getCommonParentPath(paths);
     expect(result).toBe('');
   });
@@ -289,11 +271,7 @@ test('should dedupeNestedPaths correctly', async () => {
   ).toEqual(['package/to/root/dist']);
 
   expect(
-    dedupeNestedPaths([
-      'package/to/root',
-      'package/to/root/dist/web2',
-      'package/to/root/dist',
-    ]),
+    dedupeNestedPaths(['package/to/root', 'package/to/root/dist/web2', 'package/to/root/dist']),
   ).toEqual(['package/to/root']);
 
   expect(

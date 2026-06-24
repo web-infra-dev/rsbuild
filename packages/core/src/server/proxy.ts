@@ -1,11 +1,7 @@
 import type { RequestHandler } from 'http-proxy-middleware';
 import { color } from '../helpers';
 import type { Logger } from '../logger';
-import type {
-  RequestHandler as Middleware,
-  ProxyConfig,
-  ProxyOptions,
-} from '../types';
+import type { RequestHandler as Middleware, ProxyConfig, ProxyOptions } from '../types';
 import { HttpCode, type UpgradeEvent } from './helper';
 
 function formatProxyOptions(proxyOptions: ProxyConfig, logger: Logger) {
@@ -53,7 +49,7 @@ export async function createProxyMiddleware(
   const middlewares: Middleware[] = [];
 
   const { createProxyMiddleware: baseMiddleware } = await import(
-    /* webpackChunkName: "http-proxy-middleware" */ 'http-proxy-middleware'
+    /* rspackChunkName: "http-proxy-middleware" */ 'http-proxy-middleware'
   );
 
   for (const opts of formattedOptions) {
@@ -61,9 +57,7 @@ export async function createProxyMiddleware(
 
     const middleware: Middleware = async (req, res, next) => {
       const bypassUrl =
-        typeof opts.bypass === 'function'
-          ? await opts.bypass(req, res, opts)
-          : null;
+        typeof opts.bypass === 'function' ? await opts.bypass(req, res, opts) : null;
 
       if (bypassUrl === false) {
         res.statusCode = HttpCode.NotFound;

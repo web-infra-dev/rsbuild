@@ -64,9 +64,7 @@ export function extractChunks(
     // should not be hinted.
     return [
       {
-        files: Object.keys(compilation.assets).filter(
-          (file) => !LICENSE_ASSET_REGEX.test(file),
-        ),
+        files: Object.keys(compilation.assets).filter((file) => !LICENSE_ASSET_REGEX.test(file)),
       },
     ];
   }

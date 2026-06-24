@@ -18,10 +18,7 @@ description: '用于指定额外需要被 SWC 编译的 JavaScript 文件。'
 `source.include` 的默认值可以表示为：
 
 ```ts
-const defaultInclude = [
-  { not: /[\\/]node_modules[\\/]/ },
-  /\.(?:ts|tsx|jsx|mts|cts)$/,
-];
+const defaultInclude = [{ not: /[\\/]node_modules[\\/]/ }, /\.(?:ts|tsx|jsx|mts|cts)$/];
 ```
 
 ## 用法
@@ -84,10 +81,7 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   source: {
-    include: [
-      /node_modules[\\/]query-string[\\/]/,
-      /node_modules[\\/]decode-uri-component[\\/]/,
-    ],
+    include: [/node_modules[\\/]query-string[\\/]/, /node_modules[\\/]decode-uri-component[\\/]/],
   },
 };
 ```

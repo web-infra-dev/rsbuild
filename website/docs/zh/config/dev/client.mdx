@@ -24,6 +24,8 @@ type Client = {
   overlay?: boolean | OverlayOptions;
   // 控制浏览器控制台中日志的级别
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
+  // 解析 WebSocket URL 的浏览器端模块路径
+  webSocketUrlResolver?: string;
 };
 ```
 
@@ -40,6 +42,9 @@ const defaultConfig = {
   protocol: undefined,
   reconnect: 100,
   overlay: true,
+  // 继承根级 logLevel，默认为 'info'
+  logLevel: 'info',
+  webSocketUrlResolver: undefined,
 };
 ```
 
@@ -64,11 +69,51 @@ export default {
 };
 ```
 
-### 端口号占位符
+## 选项
+
+### path
+
+- **类型：** `string`
+- **默认值：** `'/rsbuild-hmr'`
+
+用于设置 HMR WebSocket 请求的路径。
+
+默认通过 `/rsbuild-hmr` 连接到 dev server，因此生成的 WebSocket URL 为 `ws://<host>:<port>/rsbuild-hmr`。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      path: '/custom-hmr',
+    },
+  },
+};
+```
+
+### port
+
+- **类型：** `string | number`
+- **默认值：** `''`
+
+用于设置 HMR WebSocket 请求的端口号。
+
+默认值为空字符串，浏览器会使用当前页面的 `location.port`。
+
+你可以设置固定端口号：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      port: 3000,
+    },
+  },
+};
+```
 
 Rsbuild server 监听的端口号可能会发生变更。比如，当端口被占用时，Rsbuild 会自动递增端口号，直至找到一个可用端口。
 
-为了避免端口变化导致 `client.port` 失效，你可以使用以下方法之一：
+为了避免端口变化导致 `client.port` 失效，你可以：
 
 - 开启 [server.strictPort](/config/server/strict-port)。
 - 使用 `<port>` 占位符来指代当前端口号，Rsbuild 会将占位符替换为实际监听的端口号。
@@ -83,13 +128,43 @@ export default {
 };
 ```
 
-## hot-update 文件
+### host
 
-在热更新过程中，页面会发起 GET 请求来获取 hot-update 文件，包括 `*.hot-update.json` 和 `*.hot-update.js`。这些文件包含了热更新所需的信息，比如被更新的模块、模块的代码等。
+- **类型：** `string`
+- **默认值：** `''`
 
-hot-update 文件属于静态资源，如果你需要配置 hot-update 文件的 URL，请使用 [dev.assetPrefix](/config/dev/asset-prefix) 选项。
+用于设置 HMR WebSocket 请求的 host。
 
-## 选项
+默认值为空字符串，浏览器会使用当前页面的 `location.hostname`。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      host: '127.0.0.1',
+    },
+  },
+};
+```
+
+### protocol
+
+- **类型：** `'ws' | 'wss'`
+- **默认值：** `undefined`
+
+用于设置 HMR WebSocket 请求的协议。
+
+默认在 HTTPS 页面使用 `wss`，其他情况使用 `ws`。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      protocol: 'wss',
+    },
+  },
+};
+```
 
 ### overlay
 
@@ -189,8 +264,7 @@ export default {
   dev: {
     client: {
       overlay: {
-        runtime: (error) =>
-          error.name !== 'AbortError' && error.message.includes('Foo'),
+        runtime: (error) => error.name !== 'AbortError' && error.message.includes('Foo'),
       },
     },
   },
@@ -247,6 +321,50 @@ export default {
 
 将该值设为 `0` 可禁用自动重连，此时连接断开后只能通过手动刷新页面恢复。
 
+### webSocketUrlResolver
+
+- **类型：** `string`
+- **默认值：** `undefined`
+
+如果 WebSocket URL 需要在浏览器运行时动态解析，可以使用 `dev.client.webSocketUrlResolver` 配置一个浏览器端模块。该值可以是相对路径或绝对路径。
+
+该模块需要 default export 一个函数，签名为 `(url: string) => string`。Rsbuild 会传入生成好的 WebSocket URL，函数需要返回最终使用的 WebSocket URL 字符串。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      webSocketUrlResolver: './src/resolveWebSocketUrl.ts',
+    },
+  },
+};
+```
+
+```ts title="src/resolveWebSocketUrl.ts"
+export default function resolveWebSocketUrl(url: string): string {
+  const resolved = new URL(url);
+  const script = document.currentScript as HTMLScriptElement | null;
+
+  if (script?.src) {
+    const scriptURL = new URL(script.src);
+    resolved.protocol = scriptURL.protocol === 'https:' ? 'wss:' : 'ws:';
+    resolved.host = scriptURL.host;
+  }
+
+  return resolved.toString();
+}
+```
+
+:::tip
+传入的 URL 包含 Rsbuild 所需的查询参数，比如 `token`。改写 URL 时，请保留已有 query string，除非你明确需要覆盖它们。
+:::
+
+## hot-update 文件
+
+在热更新过程中，页面会发起 GET 请求来获取 hot-update 文件，包括 `*.hot-update.json` 和 `*.hot-update.js`。这些文件包含了热更新所需的信息，比如被更新的模块、模块的代码等。
+
+hot-update 文件属于静态资源，如果你需要配置 hot-update 文件的 URL，请使用 [dev.assetPrefix](/config/dev/asset-prefix) 选项。
+
 ## 版本历史
 
 | 版本    | 变更内容                              |
@@ -255,3 +373,4 @@ export default {
 | v1.7.0  | 新增 `overlay.runtime` 选项           |
 | v2.0.3  | 新增 `overlay.errors` 选项            |
 | v2.0.4  | 支持为 `overlay.runtime` 配置过滤函数 |
+| v2.0.12 | 新增 `webSocketUrlResolver` 选项      |

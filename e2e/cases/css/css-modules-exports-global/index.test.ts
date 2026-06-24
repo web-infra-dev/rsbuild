@@ -1,9 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should export globals in CSS Modules correctly', async ({
-  page,
-  runBothServe,
-}) => {
+test('should export globals in CSS Modules correctly', async ({ page, runBothServe }) => {
   await runBothServe(async ({ mode, result }) => {
     const test1Locator = page.locator('#test1');
     await expect(test1Locator).toHaveCSS('color', 'rgb(255, 0, 0)');

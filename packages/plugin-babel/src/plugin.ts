@@ -1,7 +1,5 @@
-import fs from 'node:fs';
 import { createRequire } from 'node:module';
-import path, { isAbsolute, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { isAbsolute, join } from 'node:path';
 import type {
   EnvironmentContext,
   NormalizedEnvironmentConfig,
@@ -11,11 +9,22 @@ import type {
 import { applyUserBabelConfig, castArray, getBabelRuleId } from './helper.js';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
+const BABEL_LOADER_PATH = require.resolve('babel-loader');
+const { version: BABEL_LOADER_VERSION = '' } = require('babel-loader/package.json') as {
+  version?: string;
+};
 
 export const PLUGIN_BABEL_NAME = 'rsbuild:babel';
 const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
+
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-babel" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-babel" v1.`,
+    );
+  }
+}
 
 /**
  * The `@babel/preset-typescript` default options.
@@ -32,9 +41,7 @@ const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
 
 function getCacheDirectory(context: RsbuildContext, cacheDirectory?: string) {
   if (cacheDirectory) {
-    return isAbsolute(cacheDirectory)
-      ? cacheDirectory
-      : join(context.rootPath, cacheDirectory);
+    return isAbsolute(cacheDirectory) ? cacheDirectory : join(context.rootPath, cacheDirectory);
   }
   return join(context.cachePath);
 }
@@ -43,14 +50,9 @@ async function getCacheIdentifier(options: BabelLoaderOptions) {
   let identifier = `${process.env.NODE_ENV}${JSON.stringify(options)}`;
 
   const { version: coreVersion } = await import('@babel/core');
-  const rawPkgJson = await fs.promises.readFile(
-    join(__dirname, '../compiled/babel-loader/package.json'),
-    'utf-8',
-  );
-  const loaderVersion: string = JSON.parse(rawPkgJson).version ?? '';
 
   identifier += `@babel/core@${coreVersion}`;
-  identifier += `babel-loader@${loaderVersion}`;
+  identifier += `babel-loader@${BABEL_LOADER_VERSION}`;
 
   return identifier;
 }
@@ -66,30 +68,20 @@ export function getDefaultBabelOptions(
     configFile: false,
     compact: config.mode === 'production',
     plugins: [
-      [
-        require.resolve('@babel/plugin-proposal-decorators'),
-        { ...config.source.decorators },
-      ],
+      [require.resolve('@babel/plugin-proposal-decorators'), { ...config.source.decorators }],
       // If you are using @babel/preset-env and legacy decorators, you must ensure the class elements transform is enabled regardless of your targets, because Babel only supports compiling legacy decorators when also compiling class properties:
       // see https://babeljs.io/docs/babel-plugin-proposal-decorators#legacy
-      ...(isLegacyDecorators
-        ? [require.resolve('@babel/plugin-transform-class-properties')]
-        : []),
+      ...(isLegacyDecorators ? [require.resolve('@babel/plugin-transform-class-properties')] : []),
     ],
     presets: [
       // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
-      [
-        require.resolve('@babel/preset-typescript'),
-        { ...DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS },
-      ],
+      [require.resolve('@babel/preset-typescript'), { ...DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS }],
     ],
   };
 
+  // Enable caching by default to improve performance
   const { buildCache = true } = config.performance;
-
-  // Rspack does not yet support persistent cache
-  // so we use babel-loader's cache to improve rebuild performance
-  if (buildCache && context.bundlerType === 'rspack') {
+  if (buildCache) {
     const cacheDirectory = getCacheDirectory(
       context,
       typeof buildCache === 'boolean' ? undefined : buildCache.cacheDirectory,
@@ -103,20 +95,17 @@ export function getDefaultBabelOptions(
   return options;
 }
 
-export const pluginBabel = (
-  options: PluginBabelOptions = {},
-): RsbuildPlugin => ({
+export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     const getBabelOptions = async (environment: EnvironmentContext) => {
       const { config } = environment;
       const baseOptions = getDefaultBabelOptions(config, api.context);
 
-      const mergedOptions = applyUserBabelConfig(
-        baseOptions,
-        options.babelLoaderOptions,
-      );
+      const mergedOptions = applyUserBabelConfig(baseOptions, options.babelLoaderOptions);
 
       // calculate cacheIdentifier with the merged options
       if (mergedOptions.cacheDirectory && !mergedOptions.cacheIdentifier) {
@@ -130,11 +119,7 @@ export const pluginBabel = (
       order: 'pre',
       handler: async (chain, { CHAIN_ID, environment }) => {
         const babelOptions = await getBabelOptions(environment);
-        const babelLoader = path.resolve(
-          __dirname,
-          '../compiled/babel-loader/index.js',
-        );
-        const { include, exclude } = options;
+        const { include, exclude, parallel = false } = options;
 
         if (include || exclude) {
           const rule = chain.module
@@ -154,23 +139,28 @@ export const pluginBabel = (
             }
           }
 
-          rule
+          const loader = rule
             .test(SCRIPT_REGEX)
             .use(CHAIN_ID.USE.BABEL)
-            .loader(babelLoader)
+            .loader(BABEL_LOADER_PATH)
             .options(babelOptions);
+
+          if (parallel) {
+            loader.parallel(true);
+          }
         } else {
-          // Compatibility for Rsbuild v1
-          const isV1 = api.context.version.startsWith('1.');
-          const jsRule = chain.module.rule(CHAIN_ID.RULE.JS).test(SCRIPT_REGEX);
-          const jsMainRule = isV1
-            ? jsRule
-            : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
-          jsMainRule
+          const loader = chain.module
+            .rule(CHAIN_ID.RULE.JS)
+            .test(SCRIPT_REGEX)
+            .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN)
             .use(CHAIN_ID.USE.BABEL)
             .after(CHAIN_ID.USE.SWC)
-            .loader(babelLoader)
+            .loader(BABEL_LOADER_PATH)
             .options(babelOptions);
+
+          if (parallel) {
+            loader.parallel(true);
+          }
         }
       },
     });

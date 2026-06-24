@@ -220,9 +220,7 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
       const config = api.getNormalizedConfig();
       if (config.output.minify !== false) {
         // let it crash when enable minimize.
-        throw new Error(
-          'You must disable minimize to upload readable dist files.',
-        );
+        throw new Error('You must disable minimize to upload readable dist files.');
       }
     });
     api.onAfterBuild(() => {

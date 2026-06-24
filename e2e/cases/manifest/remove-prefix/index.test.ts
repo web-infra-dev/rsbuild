@@ -18,11 +18,7 @@ test('should remove prefix from manifest', async ({ build }) => {
   const manifestContent = getFileContent(files, 'manifest.json');
   const manifest = JSON.parse(manifestContent);
 
-  expect(manifest.allFiles).toEqual([
-    'static/css/index.css',
-    'static/js/index.js',
-    'index.html',
-  ]);
+  expect(manifest.allFiles).toEqual(['static/css/index.css', 'static/js/index.js', 'index.html']);
   expect(manifest.entries.index).toMatchObject({
     initial: {
       js: ['static/js/index.js'],

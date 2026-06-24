@@ -1,4 +1,4 @@
-const url = new URL(/* webpackIgnore: true */ '/sw.js', import.meta.url);
+const url = new URL(/* rspackIgnore: true */ '/sw.js', import.meta.url);
 
 navigator.serviceWorker
   .register(url)

@@ -56,10 +56,7 @@ test('support SSR with esm target', async ({ page, devOnly }) => {
   delete process.env.TEST_ESM_LIBRARY;
 });
 
-test('support SSR with esm target and autoExternal', async ({
-  page,
-  devOnly,
-}) => {
+test('support SSR with esm target and autoExternal', async ({ page, devOnly }) => {
   process.env.TEST_ESM_LIBRARY = 'true';
 
   const rsbuild = await devOnly({

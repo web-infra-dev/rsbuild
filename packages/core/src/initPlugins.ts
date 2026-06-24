@@ -78,9 +78,7 @@ const mapProcessAssetsStage = (stage: ProcessAssetsStage) => {
     case 'report':
       return Compilation.PROCESS_ASSETS_STAGE_REPORT;
     default:
-      throw new Error(
-        `${color.dim('[rsbuild]')} Invalid process assets stage: ${stage}`,
-      );
+      throw new Error(`${color.dim('[rsbuild]')} Invalid process assets stage: ${stage}`);
   }
 };
 
@@ -95,14 +93,11 @@ export function initPluginAPI({
   const publicContext = createPublicContext(context);
 
   function getNormalizedConfig(): NormalizedConfig;
-  function getNormalizedConfig(options: {
-    environment: string;
-  }): NormalizedEnvironmentConfig;
+  function getNormalizedConfig(options: { environment: string }): NormalizedEnvironmentConfig;
   function getNormalizedConfig(options?: { environment: string }) {
     if (context.normalizedConfig) {
       if (options?.environment) {
-        const config =
-          context.normalizedConfig.environments[options.environment];
+        const config = context.normalizedConfig.environments[options.environment];
 
         if (!config) {
           throw new Error(
@@ -168,28 +163,20 @@ export function initPluginAPI({
         compiler.__rsbuildTransformer = transformer;
 
         for (const { handler, environment: pluginEnvironment } of resolveFns) {
-          if (
-            pluginEnvironment &&
-            !isEnvironmentMatch(pluginEnvironment, environment.name)
-          ) {
+          if (pluginEnvironment && !isEnvironmentMatch(pluginEnvironment, environment.name)) {
             continue;
           }
 
-          compiler.hooks.compilation.tap(
-            pluginName,
-            (compilation, { normalModuleFactory }) => {
-              normalModuleFactory.hooks.resolve.tapPromise(
-                pluginName,
-                async (resolveData) =>
-                  handler({
-                    compiler,
-                    compilation,
-                    environment,
-                    resolveData,
-                  }),
-              );
-            },
-          );
+          compiler.hooks.compilation.tap(pluginName, (compilation, { normalModuleFactory }) => {
+            normalModuleFactory.hooks.resolve.tapPromise(pluginName, async (resolveData) =>
+              handler({
+                compiler,
+                compilation,
+                environment,
+                resolveData,
+              }),
+            );
+          });
         }
 
         compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
@@ -199,11 +186,7 @@ export function initPluginAPI({
 
           const { sources } = rspack;
 
-          for (const {
-            descriptor,
-            handler,
-            environment: pluginEnvironment,
-          } of processAssetsFns) {
+          for (const { descriptor, handler, environment: pluginEnvironment } of processAssetsFns) {
             // filter by targets
             if (descriptor.targets && !descriptor.targets.includes(target)) {
               continue;
@@ -211,11 +194,9 @@ export function initPluginAPI({
 
             // filter by environments
             if (
-              (descriptor.environments &&
-                !descriptor.environments.includes(environment.name)) ||
+              (descriptor.environments && !descriptor.environments.includes(environment.name)) ||
               // the plugin is registered in a specific environment config
-              (pluginEnvironment &&
-                !isEnvironmentMatch(pluginEnvironment, environment.name))
+              (pluginEnvironment && !isEnvironmentMatch(pluginEnvironment, environment.name))
             ) {
               continue;
             }
@@ -294,9 +275,7 @@ export function initPluginAPI({
             rule.enforce(descriptor.enforce);
           }
 
-          const loaderName = descriptor.raw
-            ? 'transformRawLoader.mjs'
-            : 'transformLoader.mjs';
+          const loaderName = descriptor.raw ? 'transformRawLoader.mjs' : 'transformLoader.mjs';
           const loaderPath = join(LOADER_PATH, loaderName);
 
           rule
@@ -315,10 +294,9 @@ export function initPluginAPI({
       processAssetsFns.push({ environment, descriptor, handler });
     };
 
-  const setResolve: (environment?: string) => ResolveHook =
-    (environment) => (handler) => {
-      resolveFns.push({ environment, handler });
-    };
+  const setResolve: (environment?: string) => ResolveHook = (environment) => (handler) => {
+    resolveFns.push({ environment, handler });
+  };
 
   let onExitListened = false;
 

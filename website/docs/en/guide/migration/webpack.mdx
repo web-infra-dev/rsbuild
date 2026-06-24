@@ -188,12 +188,7 @@ Note that Rsbuild does not inject polyfill by default. See [Polyfill mode](/guid
 
 ```js title="babel.config.js"
 module.exports = {
-  plugins: [
-    [
-      'import',
-      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
-    ],
-  ],
+  plugins: [['import', { libraryName: 'some-library', libraryDirectory: 'es', style: true }]],
 };
 ```
 
@@ -202,9 +197,7 @@ module.exports = {
 ```ts title="rsbuild.config.ts"
 export default {
   source: {
-    transformImport: [
-      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
-    ],
+    transformImport: [{ libraryName: 'some-library', libraryDirectory: 'es', style: true }],
   },
 };
 ```

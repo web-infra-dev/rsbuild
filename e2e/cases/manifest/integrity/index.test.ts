@@ -1,9 +1,7 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 import type { ManifestData } from '@rsbuild/core';
 
-const checkManifestIntegrity = (rsbuild: {
-  getDistFiles: () => Record<string, string>;
-}) => {
+const checkManifestIntegrity = (rsbuild: { getDistFiles: () => Record<string, string> }) => {
   const files = rsbuild.getDistFiles();
   const manifestContent = getFileContent(files, 'manifest.json');
   const manifest = JSON.parse(manifestContent) as ManifestData;

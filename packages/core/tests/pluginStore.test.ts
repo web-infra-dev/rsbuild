@@ -192,19 +192,28 @@ describe('plugin manager', () => {
       'plugin2',
     ]);
 
-    expect(
-      pluginManager.getPlugins({ environment: 'a' }).map((p) => p.name),
-    ).toEqual(['plugin0', 'plugin1', 'plugin2']);
+    expect(pluginManager.getPlugins({ environment: 'a' }).map((p) => p.name)).toEqual([
+      'plugin0',
+      'plugin1',
+      'plugin2',
+    ]);
 
-    expect(
-      pluginManager.getPlugins({ environment: 'b' }).map((p) => p.name),
-    ).toEqual(['plugin0', 'plugin1', 'plugin2', 'plugin1', 'plugin5']);
+    expect(pluginManager.getPlugins({ environment: 'b' }).map((p) => p.name)).toEqual([
+      'plugin0',
+      'plugin1',
+      'plugin2',
+      'plugin1',
+      'plugin5',
+    ]);
 
     pluginManager.removePlugins(['plugin1'], { environment: 'b' });
 
     // should remove environment's plugin1 and keep global plugin1
-    expect(
-      pluginManager.getPlugins({ environment: 'b' }).map((p) => p.name),
-    ).toEqual(['plugin0', 'plugin1', 'plugin2', 'plugin5']);
+    expect(pluginManager.getPlugins({ environment: 'b' }).map((p) => p.name)).toEqual([
+      'plugin0',
+      'plugin1',
+      'plugin2',
+      'plugin5',
+    ]);
   });
 });

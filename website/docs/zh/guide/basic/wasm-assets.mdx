@@ -39,6 +39,25 @@ const wasmURL = new URL('./add.wasm', import.meta.url);
 console.log(wasmURL.pathname); // "/static/wasm/[contenthash:10].module.wasm"
 ```
 
+## Source import
+
+你可以使用 [Source Phase Imports](https://github.com/tc39/proposal-source-phase-imports) 获取编译后的 `WebAssembly.Module`，而不是直接获取模块导出：
+
+```js title="index.js"
+import source wasmModule from './add.wasm';
+
+const instance = await WebAssembly.instantiate(wasmModule);
+const { add } = instance.exports;
+
+console.log(add(1, 2)); // 3
+```
+
+当你需要手动实例化 Wasm 模块、使用不同的 imports 创建多个实例，或将模块传递给 worker 时，这种方式会很有用。
+
+:::tip
+`import source` 用法在 Rsbuild v2.1.0 及以上版本中支持。
+:::
+
 ## 输出目录
 
 当 `.wasm` 资源被引用后，默认会被 Rsbuild 输出到 `dist/static/wasm` 目录下。

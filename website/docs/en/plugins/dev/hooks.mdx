@@ -422,10 +422,7 @@ type ModifyBundlerChainUtils = {
 };
 
 function ModifyBundlerChain(
-  callback: (
-    chain: RspackChain,
-    utils: ModifyBundlerChainUtils,
-  ) => Promise<void> | void,
+  callback: (chain: RspackChain, utils: ModifyBundlerChainUtils) => Promise<void> | void,
 ): void;
 ```
 
@@ -439,9 +436,7 @@ const myPlugin = () => ({
         chain.devtool('eval');
       }
 
-      chain
-        .plugin('circular-dependency')
-        .use(utils.rspack.CircularDependencyRspackPlugin);
+      chain.plugin('circular-dependency').use(utils.rspack.CircularDependencyRspackPlugin);
     });
   },
 });
@@ -478,9 +473,7 @@ type Context = {
   environment: EnvironmentContext;
 };
 
-function ModifyHTML(
-  callback: (html: string, context: Context) => MaybePromise<string>,
-): void;
+function ModifyHTML(callback: (html: string, context: Context) => MaybePromise<string>): void;
 ```
 
 - **Version:** Added in v1.3.15
@@ -682,10 +675,7 @@ import OnBeforeEnvironmentCompile from '@en/shared/onBeforeEnvironmentCompile.md
 const myPlugin = () => ({
   setup(api) {
     api.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
-      console.log(
-        `the bundler config for the ${environment.name} is `,
-        bundlerConfig,
-      );
+      console.log(`the bundler config for the ${environment.name} is `, bundlerConfig);
     });
   },
 });

@@ -101,6 +101,11 @@ type PluginSvgrOptions = {
    */
   query?: RegExp;
   /**
+   * Whether to transform SVG modules into React components in parallel.
+   * @default false
+   */
+  parallel?: boolean;
+  /**
    * Exclude specific SVG files from SVGR transformation.
    */
   exclude?: Rspack.RuleSetCondition;
@@ -290,6 +295,22 @@ import Logo from './logo.svg?svgr';
 export const App = () => <Logo />;
 ```
 
+### parallel
+
+- **Type:** `boolean`
+- **Default:** `false`
+- **Version:** Added in v2.0.4
+
+Whether to transform SVG modules into React components in parallel using worker threads. When enabled, SVG modules are processed across multiple worker threads, reducing pressure on the main thread and improving overall build performance when compiling large numbers of SVG modules.
+
+```ts
+pluginSvgr({
+  parallel: true,
+});
+```
+
+> This feature is based on Rspack's parallel loader. Options transferred to worker threads must comply with the [HTML structured clone algorithm](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist). Otherwise, transmission will fail. For example, functions cannot be passed as options. See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
+
 ### exclude
 
 - **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
@@ -396,9 +417,7 @@ declare module '*.svg?react' {
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement>
-  >;
+  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 }
 declare module '*.svg?react' {
   const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
@@ -410,9 +429,7 @@ declare module '*.svg?react' {
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement>
-  >;
+  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   const content: string;
   export default content;
 }

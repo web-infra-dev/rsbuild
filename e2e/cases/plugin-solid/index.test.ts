@@ -37,10 +37,7 @@ test('should build basic solid component properly', async ({ page, build }) => {
   await expect(button).toHaveText('count: 1');
 });
 
-test('should build solid component with typescript', async ({
-  page,
-  build,
-}) => {
+test('should build solid component with typescript', async ({ page, build }) => {
   const rsbuild = await buildFixture(build, 'ts');
 
   await gotoPage(page, rsbuild);

@@ -1,10 +1,11 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import type {
-  RsbuildConfig,
-  RsbuildPlugin,
-  RsbuildPluginAPI,
-  Rspack,
+import {
+  rspack,
+  type RsbuildConfig,
+  type RsbuildPlugin,
+  type RsbuildPluginAPI,
+  type Rspack,
 } from '@rsbuild/core';
 import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
 import { applySplitChunksRule } from './splitChunks.js';
@@ -26,12 +27,24 @@ export type SplitReactChunkOptions = {
   router?: boolean;
 };
 
+export type ReactCompilerOptions = Exclude<
+  NonNullable<Rspack.SwcLoaderTransformConfig['reactCompiler']>,
+  boolean
+>;
+
 export type PluginReactOptions = {
   /**
    * Configure the behavior of SWC to transform React code,
    * the same as SWC's [jsc.transform.react](https://swc.rs/docs/configuration/compilation#jsctransformreact).
    */
   swcReactOptions?: Rspack.SwcLoaderTransformConfig['react'];
+  /**
+   * Enable or configure React Compiler via `builtin:swc-loader`,
+   * the same as Rspack's `jsc.transform.reactCompiler` option.
+   *
+   * @see https://rspack.rs/guide/tech/react#using-builtinswc-loader
+   */
+  reactCompiler?: Rspack.SwcLoaderTransformConfig['reactCompiler'];
   /**
    * Configuration for chunk splitting of React-related dependencies when `chunkSplit.strategy`
    * is set to `split-by-experience`.
@@ -67,6 +80,18 @@ function assertCoreVersion(version: string): void {
   if (version.split('.')[0] === '1') {
     throw new Error(
       `"@rsbuild/plugin-react" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-react" v1.`,
+    );
+  }
+}
+
+function assertReactCompilerVersion(): void {
+  const [majorVersion, minorVersion] = rspack.rspackVersion.split('.');
+  const major = Number(majorVersion);
+  const minor = Number(minorVersion);
+
+  if (major < 2 || (major === 2 && minor < 1)) {
+    throw new Error(
+      `"@rsbuild/plugin-react" requires "@rspack/core" >= 2.1.0 to use the "reactCompiler" option, but found ${rspack.rspackVersion}.`,
     );
   }
 }
@@ -130,9 +155,7 @@ function applyReactProfiler(api: RsbuildPluginAPI): void {
   });
 }
 
-export const pluginReact = (
-  options: PluginReactOptions = {},
-): RsbuildPlugin => ({
+export const pluginReact = (options: PluginReactOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_REACT_NAME,
 
   setup(api) {
@@ -149,14 +172,15 @@ export const pluginReact = (
       ...options,
     };
 
-    const reactRefreshPath = finalOptions.fastRefresh
-      ? require.resolve('react-refresh')
-      : '';
+    if (finalOptions.reactCompiler !== undefined) {
+      assertReactCompilerVersion();
+    }
+
+    const reactRefreshPath = finalOptions.fastRefresh ? require.resolve('react-refresh') : '';
 
     api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
       const isDev = config.mode === 'development';
-      const usingHMR =
-        isDev && config.dev.hmr && config.output.target === 'web';
+      const usingHMR = isDev && config.dev.hmr && config.output.target === 'web';
 
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
         development: isDev,
@@ -164,15 +188,20 @@ export const pluginReact = (
         runtime: 'automatic',
         ...finalOptions.swcReactOptions,
       };
+      const transformOptions: Rspack.SwcLoaderTransformConfig = {
+        react: reactOptions,
+      };
+
+      if (finalOptions.reactCompiler !== undefined) {
+        transformOptions.reactCompiler = finalOptions.reactCompiler;
+      }
 
       return mergeEnvironmentConfig(
         {
           tools: {
             swc: {
               jsc: {
-                transform: {
-                  react: reactOptions,
-                },
+                transform: transformOptions,
               },
             },
           },
@@ -191,37 +220,29 @@ export const pluginReact = (
       });
     }
 
-    api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, environment, isDev, target }) => {
-        const { config } = environment;
-        const usingHMR = isDev && config.dev.hmr && target === 'web';
-        if (!usingHMR || !finalOptions.fastRefresh) {
-          return;
-        }
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isDev, target }) => {
+      const { config } = environment;
+      const usingHMR = isDev && config.dev.hmr && target === 'web';
+      if (!usingHMR || !finalOptions.fastRefresh) {
+        return;
+      }
 
-        chain.resolve.alias.set(
-          'react-refresh',
-          path.dirname(reactRefreshPath),
-        );
+      chain.resolve.alias.set('react-refresh', path.dirname(reactRefreshPath));
 
-        const { ReactRefreshRspackPlugin } =
-          await import('@rspack/plugin-react-refresh');
+      const { ReactRefreshRspackPlugin } = await import('@rspack/plugin-react-refresh');
 
-        const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+      const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
 
-        chain
-          .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
-          .use(ReactRefreshRspackPlugin, [
-            {
-              test: jsRule.get('test'),
-              include: jsRule.include.values(),
-              exclude: jsRule.exclude.values(),
-              resourceQuery: { not: /^\?raw$/ },
-              ...finalOptions.reactRefreshOptions,
-            },
-          ]);
-      },
-    );
+      chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).use(ReactRefreshRspackPlugin, [
+        {
+          test: jsRule.get('test'),
+          include: jsRule.include.values(),
+          exclude: jsRule.exclude.values(),
+          resourceQuery: { not: /^\?raw$/ },
+          ...finalOptions.reactRefreshOptions,
+        },
+      ]);
+    });
 
     applySplitChunksRule(api, finalOptions.splitChunks);
 

@@ -133,21 +133,19 @@ describe('environment config', () => {
       {
         name: 'test-environment',
         setup(api) {
-          api.modifyEnvironmentConfig(
-            (config, { name, mergeEnvironmentConfig }) => {
-              if (name !== 'web') {
-                return config;
-              }
+          api.modifyEnvironmentConfig((config, { name, mergeEnvironmentConfig }) => {
+            if (name !== 'web') {
+              return config;
+            }
 
-              return mergeEnvironmentConfig(config, {
-                resolve: {
-                  alias: {
-                    '@common1': './src/common1',
-                  },
+            return mergeEnvironmentConfig(config, {
+              resolve: {
+                alias: {
+                  '@common1': './src/common1',
                 },
-              });
-            },
-          );
+              },
+            });
+          });
         },
       },
     ]);
@@ -164,17 +162,15 @@ describe('environment config', () => {
     const plugin: (pluginId: string) => RsbuildPlugin = (pluginId) => ({
       name: 'test-environment',
       setup(api) {
-        api.modifyEnvironmentConfig(
-          (config, { name, mergeEnvironmentConfig }) => {
-            return mergeEnvironmentConfig(config, {
-              resolve: {
-                alias: {
-                  [pluginId]: name,
-                },
+        api.modifyEnvironmentConfig((config, { name, mergeEnvironmentConfig }) => {
+          return mergeEnvironmentConfig(config, {
+            resolve: {
+              alias: {
+                [pluginId]: name,
               },
-            });
-          },
-        );
+            },
+          });
+        });
       },
     });
     const rsbuild = await createRsbuild({
@@ -198,10 +194,7 @@ describe('environment config', () => {
 
     expect(
       Object.fromEntries(
-        Object.entries(environmentConfigs).map(([name, config]) => [
-          name,
-          config.resolve.alias,
-        ]),
+        Object.entries(environmentConfigs).map(([name, config]) => [name, config.resolve.alias]),
       ),
     ).toMatchSnapshot();
   });
@@ -396,5 +389,35 @@ describe('environment config', () => {
 
     expect(matchPlugin(configs[0], 'HotModuleReplacementPlugin')).toBeFalsy();
     expect(matchPlugin(configs[1], 'HotModuleReplacementPlugin')).toBeTruthy();
+  });
+
+  it('should skip lazy compilation when environment disables hmr and liveReload', async () => {
+    rs.stubEnv('NODE_ENV', 'development');
+    const rsbuild = await createRsbuild({
+      config: {
+        dev: {
+          lazyCompilation: true,
+        },
+        environments: {
+          web: {
+            dev: {
+              hmr: false,
+              liveReload: false,
+            },
+          },
+          web2: {
+            dev: {
+              hmr: false,
+              liveReload: true,
+            },
+          },
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs({ action: 'dev' });
+
+    expect(configs[0].lazyCompilation).toBeFalsy();
+    expect(configs[1].lazyCompilation).toBeTruthy();
   });
 });

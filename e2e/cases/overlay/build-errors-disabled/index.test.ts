@@ -1,11 +1,5 @@
 import { join } from 'node:path';
-import {
-  expect,
-  HMR_CONNECTED_LOG,
-  MODULE_BUILD_FAILED_LOG,
-  OVERLAY_ID,
-  test,
-} from '@e2e/helper';
+import { expect, HMR_CONNECTED_LOG, MODULE_BUILD_FAILED_LOG, OVERLAY_ID, test } from '@e2e/helper';
 
 test('should allow disabling build error overlay independently', async ({
   page,
@@ -36,9 +30,7 @@ test('should allow disabling build error overlay independently', async ({
   const errorOverlay = page.locator(OVERLAY_ID);
   await expect(errorOverlay).not.toBeAttached();
 
-  await editFile(join(tempSrc, 'App.jsx'), (code) =>
-    code.replace('</div>', '</a>'),
-  );
+  await editFile(join(tempSrc, 'App.jsx'), (code) => code.replace('</div>', '</a>'));
 
   await expectLog(MODULE_BUILD_FAILED_LOG);
   await expect(errorOverlay).not.toBeAttached();

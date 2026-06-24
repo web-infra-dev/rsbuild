@@ -1,10 +1,7 @@
 import { expect, gotoPage, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
-test('should run onBeforeStartDevServer hooks and add custom middleware', async ({
-  page,
-  dev,
-}) => {
+test('should run onBeforeStartDevServer hooks and add custom middleware', async ({ page, dev }) => {
   const plugin: RsbuildPlugin = {
     name: 'test-plugin',
     setup(api) {

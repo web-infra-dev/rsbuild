@@ -4,19 +4,16 @@ import {
   Link,
   type DocLayoutProps,
 } from '@rspress/core/theme-original';
-import { Announcement } from '@rstack-dev/doc-ui/announcement';
+// import { Announcement } from '@rstack-dev/doc-ui/announcement';
 import { BlogBackButton } from '@rstack-dev/doc-ui/blog-back-button';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { HomeLayout } from './pages';
 import './index.scss';
-import { NoSSR, useLang, usePage } from '@rspress/core/runtime';
-import {
-  Search as PluginAlgoliaSearch,
-  ZH_LOCALES,
-} from '@rspress/plugin-algolia/runtime';
+import { useLang, usePage } from '@rspress/core/runtime';
+import { Search as PluginAlgoliaSearch, ZH_LOCALES } from '@rspress/plugin-algolia/runtime';
 
 // Enable announcement when we have something to announce
-const ANNOUNCEMENT_URL = '/blog/v2-0';
+// const ANNOUNCEMENT_URL = '/blog/v2-0';
 
 const DocLayout = (props: DocLayoutProps) => {
   const { page } = usePage();
@@ -27,11 +24,7 @@ const DocLayout = (props: DocLayoutProps) => {
       {...props}
       beforeDocContent={
         <>
-          <BlogBackButton
-            pathname={page.routePath}
-            lang={lang}
-            LinkComp={Link}
-          />
+          <BlogBackButton pathname={page.routePath} lang={lang} LinkComp={Link} />
           {props.beforeDocContent}
         </>
       }
@@ -39,34 +32,29 @@ const DocLayout = (props: DocLayoutProps) => {
   );
 };
 
-const Layout = () => {
-  const { page } = usePage();
-  const lang = useLang();
-
-  return (
-    <BaseLayout
-      beforeNavTitle={<NavIcon />}
-      beforeNav={
-        ANNOUNCEMENT_URL ? (
-          <NoSSR>
-            <Announcement
-              href={
-                lang === 'en' ? ANNOUNCEMENT_URL : `/${lang}${ANNOUNCEMENT_URL}`
-              }
-              message={
-                lang === 'en'
-                  ? 'Rsbuild 2.0 has been released!'
-                  : 'Rsbuild 2.0 正式发布！'
-              }
-              localStorageKey="rsbuild-v2-announcement-closed"
-              display={page.pageType === 'home'}
-            />
-          </NoSSR>
-        ) : null
-      }
-    />
-  );
-};
+const Layout = () => (
+  <BaseLayout
+    beforeNavTitle={<NavIcon />}
+    // beforeNav={
+    //   ANNOUNCEMENT_URL ? (
+    //     <NoSSR>
+    //       <Announcement
+    //         href={
+    //           lang === 'en' ? ANNOUNCEMENT_URL : `/${lang}${ANNOUNCEMENT_URL}`
+    //         }
+    //         message={
+    //           lang === 'en'
+    //             ? 'Rsbuild 2.0 has been released!'
+    //             : 'Rsbuild 2.0 正式发布！'
+    //         }
+    //         localStorageKey="rsbuild-v2-announcement-closed"
+    //         display={page.pageType === 'home'}
+    //       />
+    //     </NoSSR>
+    //   ) : null
+    // }
+  />
+);
 const Search = () => {
   const lang = useLang();
   return (

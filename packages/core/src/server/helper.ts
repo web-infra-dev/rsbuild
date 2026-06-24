@@ -6,11 +6,7 @@ import { posix, relative, sep } from 'node:path';
 import { ALL_INTERFACES_IPV4, LOCALHOST } from '../constants';
 import { color, isFunction } from '../helpers';
 import { getCommonParentPath } from '../helpers/path';
-import {
-  addTrailingSlash,
-  removeLeadingSlash,
-  removeTailingSlash,
-} from '../helpers/url';
+import { addTrailingSlash, removeLeadingSlash, removeTailingSlash } from '../helpers/url';
 import type { Logger } from '../logger';
 import type {
   Connect,
@@ -18,6 +14,7 @@ import type {
   NormalizedConfig,
   OutputStructure,
   PrintUrls,
+  PrintUrlsOptions,
   Routes,
   RsbuildConfig,
   RsbuildEntry,
@@ -28,11 +25,7 @@ import type { RsbuildPreviewServer } from './previewServer';
 /**
  * It used to subscribe http upgrade event
  */
-export type UpgradeEvent = (
-  req: IncomingMessage,
-  socket: Socket,
-  head: any,
-) => void;
+export type UpgradeEvent = (req: IncomingMessage, socket: Socket, head: any) => void;
 
 export type ServerStartResult<T> = {
   /**
@@ -54,8 +47,7 @@ export type StartDevServerResult = ServerStartResult<RsbuildDevServer>;
 export type StartPreviewServerResult = ServerStartResult<RsbuildPreviewServer>;
 
 // remove repeat '/'
-export const normalizeUrl = (url: string): string =>
-  url.replace(/([^:]\/)\/+/g, '$1');
+export const normalizeUrl = (url: string): string => url.replace(/([^:]\/)\/+/g, '$1');
 
 /**
  * Make sure there is slash before and after prefix
@@ -89,26 +81,66 @@ export const joinUrlPath = (basePath: string, pathname: string): string => {
   return addTrailingSlash(basePath) + removeLeadingSlash(pathname);
 };
 
+const DEFAULT_MAX_ROUTES = 10;
+
+const normalizeMaxRoutes = (maxRoutes: number | undefined): number => {
+  if (maxRoutes === undefined) {
+    return DEFAULT_MAX_ROUTES;
+  }
+
+  if (maxRoutes === Number.POSITIVE_INFINITY) {
+    return maxRoutes;
+  }
+
+  return Math.max(0, Math.floor(maxRoutes));
+};
+
+const getPrintUrlsOptions = (printUrls: PrintUrls | undefined): PrintUrlsOptions => {
+  if (printUrls && typeof printUrls === 'object') {
+    return printUrls;
+  }
+
+  return {};
+};
+
+const getMoreEntriesMessage = (moreEntries: number, cliShortcutsEnabled: boolean): string => {
+  if (cliShortcutsEnabled) {
+    return `  ${color.dim(`... ${moreEntries} more entries, press `)}${color.bold(
+      'u + enter',
+    )}${color.dim(' to show all')}\n`;
+  }
+
+  return `  ${color.dim(`... ${moreEntries} more entries, set `)}${color.bold(
+    'server.printUrls.maxRoutes',
+  )}${color.dim(' to show more')}\n`;
+};
+
 export const isUrlPathUnderBase = (pathname: string, base: string): boolean => {
   const basePath = removeTailingSlash(base);
-  return (
-    basePath === '' ||
-    pathname === basePath ||
-    pathname.startsWith(`${basePath}/`)
-  );
+  return basePath === '' || pathname === basePath || pathname.startsWith(`${basePath}/`);
 };
 
 export const removeBasePath = (url: string, base: string): string => {
   const basePath = removeTailingSlash(base);
-  if (basePath === '') {
+  if (basePath === '' || !url.startsWith(basePath)) {
     return url;
   }
 
-  if (url === basePath) {
+  const nextChar = url[basePath.length];
+
+  if (nextChar === undefined) {
     return '/';
   }
 
-  return url.startsWith(`${basePath}/`) ? url.slice(basePath.length) : url;
+  if (nextChar === '/') {
+    return url.slice(basePath.length);
+  }
+
+  if (nextChar === '?' || nextChar === '#') {
+    return `/${url.slice(basePath.length)}`;
+  }
+
+  return url;
 };
 
 export const getRoutes = (context: InternalContext): Routes => {
@@ -119,9 +151,7 @@ export const getRoutes = (context: InternalContext): Routes => {
     return [];
   }
 
-  const commonDistPath = getCommonParentPath(
-    environmentWithHtml.map((item) => item.distPath),
-  );
+  const commonDistPath = getCommonParentPath(environmentWithHtml.map((item) => item.distPath));
 
   return environmentWithHtml.reduce<Routes>((prev, environmentContext) => {
     const { distPath, config } = environmentContext;
@@ -167,25 +197,42 @@ export const formatRoutes = (
 function getURLMessages(
   urls: { url: string; label: string }[],
   routes: Routes,
+  {
+    maxRoutes = DEFAULT_MAX_ROUTES,
+    showAllRoutes,
+    cliShortcutsEnabled,
+  }: {
+    maxRoutes?: number;
+    showAllRoutes?: boolean;
+    cliShortcutsEnabled: boolean;
+  },
 ) {
-  if (routes.length <= 1) {
-    const pathname = routes.length ? routes[0].pathname : '';
-    const maxTrimmedLength = Math.max(
-      ...urls.map((u) => u.label.trimEnd().length),
-    );
+  const routeLimit = showAllRoutes ? Number.POSITIVE_INFINITY : normalizeMaxRoutes(maxRoutes);
+  const printableRoutes = routeLimit === 0 ? [] : routes.slice(0, routeLimit);
+  const moreEntries = routeLimit > 0 ? routes.length - printableRoutes.length : 0;
+
+  if (routes.length <= 1 || printableRoutes.length === 0) {
+    const pathname = printableRoutes.length ? printableRoutes[0].pathname : '';
+    const maxTrimmedLength = Math.max(...urls.map((u) => u.label.trimEnd().length));
     const padWidth = Math.max(maxTrimmedLength + 2, 10);
-    return urls
+    let message = urls
       .map(({ label, url }) => {
         const normalizedPathname = normalizeUrl(`${url}${pathname}`);
         const prefix = `➜  ${color.dim(label.trimEnd().padEnd(padWidth))}`;
         return `  ${prefix}${color.cyan(normalizedPathname)}\n`;
       })
       .join('');
+
+    if (moreEntries > 0) {
+      message += getMoreEntriesMessage(moreEntries, cliShortcutsEnabled);
+    }
+
+    return message;
   }
 
   let message = '';
   let prevLabel = '';
-  const maxNameLength = Math.max(...routes.map((r) => r.entryName.length));
+  const maxNameLength = Math.max(...printableRoutes.map((r) => r.entryName.length));
   urls.forEach(({ label, url }, index) => {
     if (prevLabel !== label) {
       if (index > 0) {
@@ -195,12 +242,16 @@ function getURLMessages(
       prevLabel = label;
     }
 
-    for (const { entryName, pathname } of routes) {
+    for (const { entryName, pathname } of printableRoutes) {
       message += `  ${color.dim('-')}  ${color.dim(
         entryName.padEnd(maxNameLength + 4),
       )}${color.cyan(normalizeUrl(`${url}${pathname}`))}\n`;
     }
   });
+
+  if (moreEntries > 0) {
+    message += getMoreEntriesMessage(moreEntries, cliShortcutsEnabled);
+  }
 
   return message;
 }
@@ -212,7 +263,8 @@ export function printServerURLs({
   protocol,
   printUrls,
   fallbackPathname,
-  trailingLineBreak = true,
+  showAllRoutes,
+  cliShortcutsEnabled,
   originalConfig,
   logger,
 }: {
@@ -222,7 +274,8 @@ export function printServerURLs({
   protocol: string;
   printUrls?: PrintUrls;
   fallbackPathname?: string;
-  trailingLineBreak?: boolean;
+  showAllRoutes?: boolean;
+  cliShortcutsEnabled: boolean;
   originalConfig?: Readonly<RsbuildConfig>;
   logger: Logger;
 }): string | null {
@@ -274,13 +327,18 @@ export function printServerURLs({
     return null;
   }
 
-  let message = getURLMessages(urls, printableRoutes);
+  const printUrlsOptions = getPrintUrlsOptions(printUrls);
+  let message = getURLMessages(urls, printableRoutes, {
+    maxRoutes: useCustomUrl ? Number.POSITIVE_INFINITY : printUrlsOptions.maxRoutes,
+    showAllRoutes,
+    cliShortcutsEnabled,
+  });
 
   if (originalConfig && originalConfig.server?.host === undefined) {
     message += `  ➜  ${color.dim('Network:')}  ${color.dim('use')} ${color.bold('--host')} ${color.dim('to expose')}\n`;
   }
 
-  if (!trailingLineBreak && message.endsWith('\n')) {
+  if (cliShortcutsEnabled === true && message.endsWith('\n')) {
     message = message.slice(0, -1);
   }
 
@@ -393,10 +451,7 @@ const getIpv4Interfaces = () => {
       // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
       const familyV4Value = typeof detail.family === 'string' ? 'IPv4' : 4;
 
-      if (
-        detail.family === familyV4Value &&
-        !ipv4Interfaces.has(detail.address)
-      ) {
+      if (detail.family === familyV4Value && !ipv4Interfaces.has(detail.address)) {
         ipv4Interfaces.set(detail.address, detail);
       }
     }
@@ -436,15 +491,8 @@ export const getHostInUrl = async (host: string): Promise<string> => {
   return host;
 };
 
-const concatUrl = ({
-  host,
-  port,
-  protocol,
-}: {
-  host: string;
-  port: number;
-  protocol: string;
-}) => `${protocol}://${host}:${port}`;
+const concatUrl = ({ host, port, protocol }: { host: string; port: number; protocol: string }) =>
+  `${protocol}://${host}:${port}`;
 
 const LOCAL_LABEL = 'Local:  ';
 const NETWORK_LABEL = 'Network:  ';
@@ -511,9 +559,7 @@ export const getAddressUrls = async ({
   return addressUrls;
 };
 
-export function getServerTerminator(
-  server: Server | Http2SecureServer,
-): () => Promise<void> {
+export function getServerTerminator(server: Server | Http2SecureServer): () => Promise<void> {
   let listened = false;
   const pendingSockets = new Set<Socket>();
 
@@ -592,10 +638,7 @@ export type RsbuildServerBase = {
    * - Will be `Http2SecureServer` if `server.https` config is used.
    * - Will be `null` if `server.middlewareMode` is enabled.
    */
-  httpServer:
-    | import('node:http').Server
-    | import('node:http2').Http2SecureServer
-    | null;
+  httpServer: import('node:http').Server | import('node:http2').Http2SecureServer | null;
   /**
    * The `connect` app instance.
    * Can be used to attach custom middlewares to the server.

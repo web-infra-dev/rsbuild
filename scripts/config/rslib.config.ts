@@ -1,10 +1,7 @@
 import { defineConfig, type LibConfig, type Rsbuild } from '@rslib/core';
 import { pluginAreTheTypesWrong } from 'rsbuild-plugin-arethetypeswrong';
 
-export const commonExternals: Array<string | RegExp> = [
-  'webpack',
-  /[\\/]compiled[\\/]/,
-];
+export const commonExternals: Array<string | RegExp> = ['webpack', /[\\/]compiled[\\/]/];
 
 export const nodeMinifyConfig: Rsbuild.Minify = {
   js: true,
@@ -24,8 +21,7 @@ export const nodeMinifyConfig: Rsbuild.Minify = {
 export const esmConfig: LibConfig = {
   syntax: 'es2023',
   dts: {
-    build: true,
-    tsgo: true,
+    isolated: true,
   },
   output: {
     minify: nodeMinifyConfig,

@@ -7,7 +7,7 @@ const require = createRequire(import.meta.url);
 
 export type SplitVueChunkOptions = {
   /**
-   * Whether to enable split chunking for Vue-related dependencies (e.g., vue, vue-loader).
+   * Whether to enable split chunking for Vue-related dependencies (e.g., vue, rspack-vue-loader).
    * @default true
    */
   vue?: boolean;
@@ -25,7 +25,7 @@ export type PluginVueOptions = {
    */
   test?: Rspack.RuleSetCondition;
   /**
-   * Options passed to `vue-loader`.
+   * Options passed to `rspack-vue-loader`.
    * @see https://vue-loader.vuejs.org/
    */
   vueLoaderOptions?: VueLoaderOptions;
@@ -37,11 +37,21 @@ export type PluginVueOptions = {
 
 export const PLUGIN_VUE_NAME = 'rsbuild:vue';
 
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-vue" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-vue" v1.`,
+    );
+  }
+}
+
 export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
     name: PLUGIN_VUE_NAME,
 
     setup(api) {
+      assertCoreVersion(api.context.version);
+
       const { test = /\.vue$/ } = options;
       const CSS_MODULES_REGEX = /\.modules?\.\w+$/i;
 
@@ -94,8 +104,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         const vueLoaderOptions = {
           // Always treat this as a client build when invoked from Rstest,
           // since tests are executed in a DOM-based environment.
-          isServerBuild:
-            api.context.callerName === 'rstest' ? false : undefined,
+          isServerBuild: api.context.callerName === 'rstest' ? false : undefined,
           // Keep non-emitting targets on the original SFC resource so CSS Modules
           // hashes match the client build during SSR hydration.
           experimentalInlineMatchResource: emitCss,

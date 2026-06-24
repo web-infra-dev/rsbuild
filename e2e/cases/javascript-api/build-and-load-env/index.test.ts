@@ -8,9 +8,7 @@ test('should not load env by default', async ({ build }) => {
   expect(process.env.PUBLIC_BAR).toBe(undefined);
 });
 
-test('should allow to call `build` with `loadEnv` options', async ({
-  build,
-}) => {
+test('should allow to call `build` with `loadEnv` options', async ({ build }) => {
   const result = await build({
     loadEnv: {
       mode: 'prod',

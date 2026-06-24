@@ -24,6 +24,8 @@ type Client = {
   overlay?: boolean | OverlayOptions;
   // Controls the log level for client-side logging in the browser console
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
+  // Path to a browser-side module that resolves the WebSocket URL
+  webSocketUrlResolver?: string;
 };
 ```
 
@@ -42,6 +44,7 @@ const defaultConfig = {
   overlay: true,
   // Inherits from root logLevel, defaults to 'info'
   logLevel: 'info',
+  webSocketUrlResolver: undefined,
 };
 ```
 
@@ -66,11 +69,51 @@ export default {
 };
 ```
 
-### Port placeholder
+## Options
 
-The port number that Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
+### path
 
-To avoid `client.port` becoming invalid due to port changes, you can use one of the following methods:
+- **Type:** `string`
+- **Default:** `'/rsbuild-hmr'`
+
+Sets the path for HMR WebSocket requests.
+
+By default, Rsbuild connects through `/rsbuild-hmr`, generating `ws://<host>:<port>/rsbuild-hmr`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      path: '/custom-hmr',
+    },
+  },
+};
+```
+
+### port
+
+- **Type:** `string | number`
+- **Default:** `''`
+
+Sets the port for HMR WebSocket requests.
+
+Default is an empty string, so the browser uses the current page's `location.port`.
+
+You can set a fixed port:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      port: 3000,
+    },
+  },
+};
+```
+
+The port that the Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
+
+To avoid `client.port` becoming invalid due to port changes, you can:
 
 - Enable [server.strictPort](/config/server/strict-port).
 - Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
@@ -85,13 +128,43 @@ export default {
 };
 ```
 
-## hot-update files
+### host
 
-During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
+- **Type:** `string`
+- **Default:** `''`
 
-Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.
+Sets the host for HMR WebSocket requests.
 
-## Options
+Default is an empty string, so the browser uses the current page's `location.hostname`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      host: '127.0.0.1',
+    },
+  },
+};
+```
+
+### protocol
+
+- **Type:** `'ws' | 'wss'`
+- **Default:** `undefined`
+
+Sets the protocol for HMR WebSocket requests.
+
+By default, Rsbuild uses `wss` for HTTPS pages and `ws` otherwise.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      protocol: 'wss',
+    },
+  },
+};
+```
 
 ### overlay
 
@@ -191,8 +264,7 @@ export default {
   dev: {
     client: {
       overlay: {
-        runtime: (error) =>
-          error.name !== 'AbortError' && error.message.includes('Foo'),
+        runtime: (error) => error.name !== 'AbortError' && error.message.includes('Foo'),
       },
     },
   },
@@ -249,6 +321,50 @@ export default {
 
 Setting this value to `0` disables automatic reconnection. In this case, the connection can only be restored by manually refreshing the page.
 
+### webSocketUrlResolver
+
+- **Type:** `string`
+- **Default:** `undefined`
+
+If the WebSocket URL must be resolved dynamically in the browser, use `dev.client.webSocketUrlResolver` to provide a browser-side module. The value can be a relative or absolute path.
+
+The module should default export a function with the signature `(url: string) => string`. Rsbuild passes in the generated WebSocket URL, and the function should return the final WebSocket URL string.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      webSocketUrlResolver: './src/resolveWebSocketUrl.ts',
+    },
+  },
+};
+```
+
+```ts title="src/resolveWebSocketUrl.ts"
+export default function resolveWebSocketUrl(url: string): string {
+  const resolved = new URL(url);
+  const script = document.currentScript as HTMLScriptElement | null;
+
+  if (script?.src) {
+    const scriptURL = new URL(script.src);
+    resolved.protocol = scriptURL.protocol === 'https:' ? 'wss:' : 'ws:';
+    resolved.host = scriptURL.host;
+  }
+
+  return resolved.toString();
+}
+```
+
+:::tip
+The input URL contains query parameters required by Rsbuild, such as `token`. When rewriting the URL, preserve the existing query string unless you intentionally want to override it.
+:::
+
+## hot-update files
+
+During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
+
+Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.
+
 ## Version history
 
 | Version | Changes                                                 |
@@ -257,3 +373,4 @@ Setting this value to `0` disables automatic reconnection. In this case, the con
 | v1.7.0  | Added `overlay.runtime` option                          |
 | v2.0.3  | Added `overlay.errors` option                           |
 | v2.0.4  | Added support for filter functions in `overlay.runtime` |
+| v2.0.12 | Added `webSocketUrlResolver` option                     |

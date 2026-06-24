@@ -1,9 +1,7 @@
 import { expect, recordPluginHooks, test } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
-test('should run plugin hooks correctly when running build', async ({
-  build,
-}) => {
+test('should run plugin hooks correctly when running build', async ({ build }) => {
   const { plugin, hooks } = recordPluginHooks();
   const rsbuild = await build({
     config: {
@@ -60,9 +58,7 @@ test('should run plugin hooks correctly when running build and mode is developme
   ]);
 });
 
-test('should run plugin hooks correctly when running startDevServer', async ({
-  dev,
-}) => {
+test('should run plugin hooks correctly when running startDevServer', async ({ dev }) => {
   const { plugin, hooks } = recordPluginHooks();
   const rsbuild = await dev({
     config: {

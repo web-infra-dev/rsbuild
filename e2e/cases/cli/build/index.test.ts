@@ -8,7 +8,5 @@ test('should run build command correctly', async ({ execCliSync }) => {
   const outputFiles = Object.keys(outputs);
 
   expect(outputFiles.find((item) => item.includes('index.html'))).toBeTruthy();
-  expect(
-    outputFiles.find((item) => item.includes('static/js/index.')),
-  ).toBeTruthy();
+  expect(outputFiles.find((item) => item.includes('static/js/index.'))).toBeTruthy();
 });

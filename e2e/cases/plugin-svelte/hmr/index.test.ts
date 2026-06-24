@@ -5,10 +5,7 @@ import { expect, test } from '@e2e/helper';
 test('HMR should work properly', async ({ page, dev, editFile }) => {
   const cwd = import.meta.dirname;
   const bPath = path.join(cwd, 'src/test-temp-B.svelte');
-  fs.writeFileSync(
-    bPath,
-    fs.readFileSync(path.join(cwd, 'src/B.svelte'), 'utf-8'),
-  );
+  fs.writeFileSync(bPath, fs.readFileSync(path.join(cwd, 'src/B.svelte'), 'utf-8'));
 
   await dev();
 

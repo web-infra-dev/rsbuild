@@ -1,11 +1,7 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { color } from '../helpers';
-import {
-  getPublicPathFromCompiler,
-  isMultiCompiler,
-} from '../helpers/compiler';
-import { getPathnameFromUrl } from '../helpers/path';
+import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers/compiler';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
   CreateCompiler,
@@ -13,30 +9,18 @@ import type {
   EnvironmentAPI,
   InternalContext,
   NormalizedConfig,
-  Rspack,
 } from '../types';
 import { BuildManager } from './buildManager';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
-import {
-  type GetDevMiddlewaresResult,
-  getDevMiddlewares,
-} from './devMiddlewares';
-import {
-  createCacheableFunction,
-  getTransformedHtml,
-  loadBundle,
-} from './environment';
-import {
-  registerCleanup,
-  removeCleanup,
-  setupGracefulShutdown,
-} from './gracefulShutdown';
+import { createCompileState } from './compileState';
+import { type GetDevMiddlewaresResult, getDevMiddlewares } from './devMiddlewares';
+import { createCacheableFunction, getTransformedHtml, loadBundle } from './environment';
+import { registerCleanup, removeCleanup, setupGracefulShutdown } from './gracefulShutdown';
 import {
   getAddressUrls,
   getRoutes,
   getServerTerminator,
   printServerURLs,
-  removeBasePath,
   type RsbuildServerBase,
   resolvePort,
   type StartDevServerResult,
@@ -44,16 +28,19 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
+import { getPublicPathnames } from './publicPathnames';
 import { applyServerSetup } from './serverSetup';
 import type { ServerMessage } from './socketServer';
 import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 
-type ExtractSocketMessageData<T extends ServerMessage['type']> =
-  'data' extends keyof Extract<ServerMessage, { type: T }>
-    ? Extract<ServerMessage, { type: T }>['data']
-    : undefined;
+type ExtractSocketMessageData<T extends ServerMessage['type']> = 'data' extends keyof Extract<
+  ServerMessage,
+  { type: T }
+>
+  ? Extract<ServerMessage, { type: T }>['data']
+  : undefined;
 
 export type HotSend = <T extends ServerMessage['type']>(
   type: T,
@@ -124,61 +111,43 @@ export async function createDevServer<
     https: isHttps,
   };
 
-  let lastStats: Rspack.Stats[];
-
-  let waitLastCompileDoneResolve: (() => void) | null = null;
-  let waitLastCompileDone = new Promise<void>((resolve) => {
-    waitLastCompileDoneResolve = resolve;
-  });
-
-  const resetWaitLastCompileDone = () => {
-    // No need to reset if lastStats is not set
-    if (!lastStats) {
-      return;
-    }
-
-    // Resolve the previous promise if it exists
-    if (waitLastCompileDoneResolve) {
-      waitLastCompileDoneResolve();
-      waitLastCompileDoneResolve = null;
-    }
-    waitLastCompileDone = new Promise<void>((resolve) => {
-      waitLastCompileDoneResolve = resolve;
-    });
-  };
-
-  // should register onAfterDevCompile hook before startCompile
-  context.hooks.onAfterDevCompile.tap(({ stats }) => {
-    lastStats = 'stats' in stats ? stats.stats : [stats];
-    if (waitLastCompileDoneResolve) {
-      waitLastCompileDoneResolve();
-      waitLastCompileDoneResolve = null;
-    }
-  });
+  const compileState = createCompileState(context.environmentList.length);
 
   const startCompile: () => Promise<BuildManager> = async () => {
     const compiler = await createCompiler();
 
     if (!compiler) {
-      throw new Error(
-        `${color.dim('[rsbuild:server]')} Failed to get compiler instance.`,
-      );
+      throw new Error(`${color.dim('[rsbuild:server]')} Failed to get compiler instance.`);
     }
 
     const publicPaths = isMultiCompiler(compiler)
       ? compiler.compilers.map(getPublicPathFromCompiler)
       : [getPublicPathFromCompiler(compiler)];
 
-    const { base } = config.server;
-    context.publicPathnames = publicPaths
-      .map(getPathnameFromUrl)
-      .map((prefix) =>
-        base && base !== '/' ? removeBasePath(prefix, base) : prefix,
-      );
+    context.publicPathnames = getPublicPathnames(publicPaths, config.server.base);
 
-    compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
-      resetWaitLastCompileDone();
-    });
+    const hookOptions = {
+      name: 'rsbuild:environment-api',
+      // Reset API state before user watchRun hooks can read stale environment stats.
+      stage: -10000,
+    };
+    if (isMultiCompiler(compiler)) {
+      compiler.compilers.forEach((compiler, index) => {
+        compiler.hooks.watchRun.tap(hookOptions, () => {
+          compileState.reset(index);
+        });
+        compiler.hooks.done.tap(hookOptions, (stats) => {
+          compileState.done(index, stats);
+        });
+      });
+    } else {
+      compiler.hooks.watchRun.tap(hookOptions, () => {
+        compileState.reset(0);
+      });
+      compiler.hooks.done.tap(hookOptions, (stats) => {
+        compileState.done(0, stats);
+      });
+    }
 
     const buildManager = new BuildManager({
       context,
@@ -197,7 +166,7 @@ export async function createDevServer<
 
   const cliShortcutsEnabled = isCliShortcutsEnabled(config);
 
-  const printUrls = () =>
+  const printUrls = (options?: { showAllRoutes?: boolean }) =>
     printServerURLs({
       urls,
       port,
@@ -205,7 +174,8 @@ export async function createDevServer<
       protocol,
       printUrls: config.server.printUrls,
       fallbackPathname,
-      trailingLineBreak: !cliShortcutsEnabled,
+      showAllRoutes: options?.showAllRoutes,
+      cliShortcutsEnabled,
       originalConfig: context.originalConfig,
       logger,
     });
@@ -227,9 +197,7 @@ export async function createDevServer<
     buildManager?: BuildManager;
   } = {};
 
-  const cleanupGracefulShutdown = middlewareMode
-    ? null
-    : setupGracefulShutdown();
+  const cleanupGracefulShutdown = middlewareMode ? null : setupGracefulShutdown();
 
   let closingPromise: Promise<void> | null = null;
 
@@ -240,10 +208,7 @@ export async function createDevServer<
         removeCleanup(closeServer);
         cleanupGracefulShutdown?.();
         await context.hooks.onCloseDevServer.callBatch();
-        await Promise.all([
-          state.devMiddlewares?.close(),
-          state.fileWatcher?.close(),
-        ]);
+        await Promise.all([state.devMiddlewares?.close(), state.fileWatcher?.close()]);
       })();
     }
     return closingPromise;
@@ -258,9 +223,7 @@ export async function createDevServer<
 
     if (cliShortcutsEnabled) {
       const shortcutsOptions =
-        typeof config.dev.cliShortcuts === 'boolean'
-          ? {}
-          : config.dev.cliShortcuts;
+        typeof config.dev.cliShortcuts === 'boolean' ? {} : config.dev.cliShortcuts;
 
       const cleanup = await setupCliShortcuts({
         openPage,
@@ -280,8 +243,8 @@ export async function createDevServer<
   };
 
   const cacheableLoadBundle = createCacheableFunction(loadBundle);
-  const cacheableTransformedHtml = createCacheableFunction<string>(
-    (_stats, entryName, utils) => getTransformedHtml(entryName, utils),
+  const cacheableTransformedHtml = createCacheableFunction<string>((_stats, entryName, utils) =>
+    getTransformedHtml(entryName, utils),
   );
 
   const environmentAPI: EnvironmentAPI = {};
@@ -311,15 +274,14 @@ export async function createDevServer<
         if (!state.buildManager) {
           throw new Error(getErrorMsg('getStats'));
         }
-        await waitLastCompileDone;
-        return lastStats[index];
+        return compileState.wait(index);
       },
       loadBundle: async <T>(entryName: string) => {
         if (!state.buildManager) {
           throw new Error(getErrorMsg('loadBundle'));
         }
-        await waitLastCompileDone;
-        return cacheableLoadBundle(lastStats[index], entryName, {
+        const stats = await compileState.wait(index);
+        return cacheableLoadBundle(stats, entryName, {
           readFileSync: state.buildManager.readFileSync,
           environment,
         }) as T;
@@ -328,8 +290,8 @@ export async function createDevServer<
         if (!state.buildManager) {
           throw new Error(getErrorMsg('getTransformedHtml'));
         }
-        await waitLastCompileDone;
-        return cacheableTransformedHtml(lastStats[index], entryName, {
+        const stats = await compileState.wait(index);
+        return cacheableTransformedHtml(stats, entryName, {
           readFileSync: state.buildManager.readFileSync,
           environment,
         });
@@ -337,9 +299,7 @@ export async function createDevServer<
     };
   });
 
-  const { connect } = await import(
-    /* webpackChunkName: "connect-next" */ 'connect-next'
-  );
+  const { connect } = await import(/* rspackChunkName: "connect-next" */ 'connect-next');
   const middlewares = connect();
 
   const httpServer = middlewareMode

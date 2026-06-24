@@ -5,11 +5,6 @@ export default defineConfig({
   plugins: [pluginVue()],
   environments: {
     web: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'web',
         distPath: {
@@ -18,11 +13,6 @@ export default defineConfig({
       },
     },
     node: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
         distPath: {

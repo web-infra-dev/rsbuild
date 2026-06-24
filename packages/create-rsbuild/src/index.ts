@@ -9,6 +9,11 @@ import {
   type RslintTemplateName,
   select,
 } from 'create-rstack';
+import {
+  addPluginsToRsbuildConfig,
+  enableReactCompilerInRsbuildConfig,
+  tailwindcssPlugin,
+} from './rsbuildConfig.js';
 
 const frameworkAlias: Record<string, string> = {
   vue3: 'vue',
@@ -143,15 +148,9 @@ create({
       value: 'react-compiler',
       label: 'React Compiler - optimization',
       order: 'pre',
-      when: ({ templateName }) =>
-        ['react-js', 'react-ts'].includes(templateName),
-      action: ({ templateName, distFolder }) => {
-        const toolFolder = path.join(root, 'template-react-compiler');
-        copyFolder({
-          from: path.join(toolFolder, templateName),
-          to: distFolder,
-          isMergePackageJson: true,
-        });
+      when: ({ templateName }) => ['react-js', 'react-ts'].includes(templateName),
+      action: async ({ distFolder }) => {
+        await enableReactCompilerInRsbuildConfig(distFolder);
       },
     },
     {
@@ -171,13 +170,12 @@ create({
           const filePath = path.join(distFolder, 'src', cssFile);
           if (fs.existsSync(filePath)) {
             const content = await fs.promises.readFile(filePath, 'utf-8');
-            await fs.promises.writeFile(
-              filePath,
-              `@import 'tailwindcss';\n\n${content}`,
-            );
+            await fs.promises.writeFile(filePath, `@import 'tailwindcss';\n\n${content}`);
             break;
           }
         }
+
+        await addPluginsToRsbuildConfig(distFolder, [tailwindcssPlugin]);
       },
     },
     {

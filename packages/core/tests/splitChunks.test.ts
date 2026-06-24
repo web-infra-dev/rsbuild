@@ -1,8 +1,5 @@
 import { createRsbuild } from '../src';
-import {
-  getPackageNameFromModulePath,
-  MODULE_PATH_REGEX,
-} from '../src/plugins/splitChunks';
+import { getPackageNameFromModulePath, MODULE_PATH_REGEX } from '../src/plugins/splitChunks';
 
 describe('plugin-split-chunks', () => {
   it('should set `default` preset by default', async () => {
@@ -118,9 +115,7 @@ describe('getPackageNameFromModulePath', () => {
 
   it('should return the correct package name in npm/yarn', () => {
     let modulePath = '/path/to/node_modules/@scope/package-name/index.js';
-    expect(getPackageNameFromModulePath(modulePath)).toBe(
-      'npm-scope_package-name',
-    );
+    expect(getPackageNameFromModulePath(modulePath)).toBe('npm-scope_package-name');
 
     modulePath = '/path/to/node_modules/package-name/index.js';
     expect(getPackageNameFromModulePath(modulePath)).toBe('npm-package-name');
@@ -129,9 +124,7 @@ describe('getPackageNameFromModulePath', () => {
   it('should return the correct package name in pnpm', () => {
     let modulePath =
       '/path/to/node_modules/.pnpm/@scope+package-name@1.0.0/node_modules/@scope/package-name/index.js';
-    expect(getPackageNameFromModulePath(modulePath)).toBe(
-      'npm-scope_package-name',
-    );
+    expect(getPackageNameFromModulePath(modulePath)).toBe('npm-scope_package-name');
 
     modulePath =
       '/path/to/node_modules/.pnpm/package-name@1.0.0/node_modules/package-name/index.js';

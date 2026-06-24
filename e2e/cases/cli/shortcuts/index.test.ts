@@ -1,9 +1,6 @@
 import { test } from '@e2e/helper';
 
-test('should display shortcuts as expected in dev', async ({
-  exec,
-  logHelper,
-}) => {
+test('should display shortcuts as expected in dev', async ({ exec, logHelper }) => {
   const { childProcess } = exec('node ./dev.js');
   const { expectLog, clearLogs } = logHelper;
 
@@ -24,10 +21,7 @@ test('should display shortcuts as expected in dev', async ({
   await expectLog('➜  Local:    http://localhost:');
 });
 
-test('should display shortcuts as expected in preview', async ({
-  exec,
-  logHelper,
-}) => {
+test('should display shortcuts as expected in preview', async ({ exec, logHelper }) => {
   const { childProcess } = exec('node ./preview.js');
   const { expectLog, clearLogs } = logHelper;
 
@@ -42,6 +36,30 @@ test('should display shortcuts as expected in preview', async ({
   await expectLog('➜  Local:    http://localhost:');
 });
 
+test('should show all collapsed urls through shortcuts in dev', async ({ exec, logHelper }) => {
+  const { childProcess } = exec('node ./devMany.js');
+  const { expectLog, expectNoLog, clearLogs } = logHelper;
+
+  await expectLog('... 2 more entries, press u + enter to show all');
+
+  clearLogs();
+  childProcess.stdin?.write('u\n');
+  await expectLog('route11    http://localhost:');
+  expectNoLog('more entries, press u + enter to show all');
+});
+
+test('should limit urls without shortcut help when shortcuts are disabled', async ({
+  exec,
+  logHelper,
+}) => {
+  exec('node ./devManyNoShortcuts.js');
+  const { expectLog, expectNoLog } = logHelper;
+
+  await expectLog('... 2 more entries, set server.printUrls.maxRoutes to show more');
+  expectNoLog('press h + enter to show shortcuts');
+  expectNoLog('press u + enter to show all');
+});
+
 test('should support custom shortcuts in dev', async ({ exec, logHelper }) => {
   const { childProcess } = exec('node ./devCustom.js');
   const { expectLog, clearLogs } = logHelper;
@@ -53,10 +71,7 @@ test('should support custom shortcuts in dev', async ({ exec, logHelper }) => {
   await expectLog('hello world!');
 });
 
-test('should support custom shortcuts in preview', async ({
-  exec,
-  logHelper,
-}) => {
+test('should support custom shortcuts in preview', async ({ exec, logHelper }) => {
   const { childProcess } = exec('node ./previewCustom.js');
   const { expectLog, clearLogs } = logHelper;
 

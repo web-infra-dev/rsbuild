@@ -43,9 +43,7 @@ test('should not affect other unchanged environments during HMR', async ({
   await expect(button).toHaveText('count: 1');
 
   // edit foo.js
-  await editFile(join(tempSrc, 'foo.js'), (code) =>
-    code.replace('hello world', 'changed'),
-  );
+  await editFile(join(tempSrc, 'foo.js'), (code) => code.replace('hello world', 'changed'));
   await expect(page1.locator('body')).toHaveText('changed');
   await expect(page2.locator('#button')).toHaveText('count: 1');
 });

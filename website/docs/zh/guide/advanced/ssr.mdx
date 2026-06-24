@@ -6,7 +6,14 @@ description: '本章节介绍如何使用 Rsbuild 实现 SSR 功能。'
 
 本章节介绍如何使用 Rsbuild 实现 SSR 功能。
 
-值得注意的是，Rsbuild 自身不提供开箱即用的 SSR 能力，而是提供 low-level 的 API 和配置来允许框架开发者实现 SSR。如果你需要使用开箱即用的 SSR 支持，可以考虑使用基于 Rsbuild 的框架，例如 [Modern.js](https://github.com/web-infra-dev/modern.js)。
+值得注意的是，Rsbuild 自身不提供开箱即用的 SSR 能力，而是提供 low-level 的 API 和配置来允许框架开发者实现 SSR。
+
+## 全栈框架 \{#full-stack-frameworks}
+
+如果你希望直接使用 SSR，推荐使用基于 Rsbuild 的全栈框架，因为这些框架已经实现了 SSR 能力。
+
+- [React 全栈框架](/guide/framework/react#full-stack-frameworks)
+- [Solid 全栈框架](/guide/framework/solid#full-stack-frameworks)
 
 ## 什么是 SSR
 
@@ -70,6 +77,9 @@ export default {
       output: {
         // Node.js 产物的 target 类型为 'node'
         target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
       },
     },
   },
@@ -193,12 +203,8 @@ async function renderHtmlPage(): Promise<string> {
   const { entries } = JSON.parse(manifest);
   const { js, css } = entries['index'].initial;
 
-  const scriptTags = js
-    .map((file) => `<script src="${file}" defer></script>`)
-    .join('\n');
-  const styleTags = css
-    .map((file) => `<link rel="stylesheet" href="${file}">`)
-    .join('\n');
+  const scriptTags = js.map((file) => `<script src="${file}" defer></script>`).join('\n');
+  const styleTags = css.map((file) => `<link rel="stylesheet" href="${file}">`).join('\n');
 
   return `
     <!DOCTYPE html>
@@ -268,4 +274,41 @@ export const myPlugin = () => ({
     });
   },
 });
+```
+
+## 保持资源 URL 一致
+
+在多环境 SSR 中，建议保持服务端和客户端构建的 [output.assetPrefix](/config/output/asset-prefix) 和静态资源的 [output.distPath](/config/output/dist-path) 配置一致。这有助于保障服务端使用 `?url` 等 query 时，拿到与客户端一致的资源路径。
+
+```ts title="rsbuild.config.ts"
+const assetPaths = {
+  css: 'assets/css',
+  image: 'assets/image',
+};
+
+export default {
+  output: {
+    assetPrefix: '/',
+  },
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+        distPath: {
+          root: 'dist/client',
+          ...assetPaths,
+        },
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+          ...assetPaths,
+        },
+      },
+    },
+  },
+};
 ```

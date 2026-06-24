@@ -12,16 +12,11 @@ export type ConfigParams = {
   meta?: Record<string, unknown>;
 };
 
-export type RsbuildConfigAsyncFn = (
-  env: ConfigParams,
-) => Promise<RsbuildConfig>;
+export type RsbuildConfigAsyncFn = (env: ConfigParams) => Promise<RsbuildConfig>;
 
 export type RsbuildConfigSyncFn = (env: ConfigParams) => RsbuildConfig;
 
-export type RsbuildConfigExport =
-  | RsbuildConfig
-  | RsbuildConfigSyncFn
-  | RsbuildConfigAsyncFn;
+export type RsbuildConfigExport = RsbuildConfig | RsbuildConfigSyncFn | RsbuildConfigAsyncFn;
 
 export type LoadConfigOptions = {
   /**
@@ -71,9 +66,7 @@ export type LoadConfigResult = {
  */
 export function defineConfig(config: RsbuildConfig): RsbuildConfig;
 export function defineConfig(config: RsbuildConfigSyncFn): RsbuildConfigSyncFn;
-export function defineConfig(
-  config: RsbuildConfigAsyncFn,
-): RsbuildConfigAsyncFn;
+export function defineConfig(config: RsbuildConfigAsyncFn): RsbuildConfigAsyncFn;
 export function defineConfig(config: RsbuildConfigExport): RsbuildConfigExport;
 export function defineConfig(config: RsbuildConfigExport) {
   return config;
@@ -81,9 +74,7 @@ export function defineConfig(config: RsbuildConfigExport) {
 
 const resolveConfigPath = (root: string, customConfig?: string) => {
   if (customConfig) {
-    const customConfigPath = isAbsolute(customConfig)
-      ? customConfig
-      : join(root, customConfig);
+    const customConfigPath = isAbsolute(customConfig) ? customConfig : join(root, customConfig);
     if (fs.existsSync(customConfigPath)) {
       return customConfigPath;
     }
@@ -144,9 +135,7 @@ export async function loadConfig({
   const useNative = Boolean(
     loader === 'native' ||
     (loader === 'auto' &&
-      (process.features.typescript ||
-        process.versions.bun ||
-        process.versions.deno)),
+      (process.features.typescript || process.versions.bun || process.versions.deno)),
   );
 
   if (useNative || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
@@ -182,9 +171,7 @@ export async function loadConfig({
         default: true,
       });
     } catch (err) {
-      defaultLogger.error(
-        `Failed to load file with jiti: ${color.dim(configFilePath)}`,
-      );
+      defaultLogger.error(`Failed to load file with jiti: ${color.dim(configFilePath)}`);
       throw err;
     }
   }

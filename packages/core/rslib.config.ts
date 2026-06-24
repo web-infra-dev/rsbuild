@@ -92,8 +92,7 @@ const pluginFixDtsTypes: Rsbuild.RsbuildPlugin = {
 const replacePlugin: Rsbuild.RsbuildPlugin = {
   name: 'replace-plugin',
   setup(api) {
-    const RSPACK_INTERCEPT_MODULE_EXECUTION =
-      'RSPACK_INTERCEPT_MODULE_EXECUTION';
+    const RSPACK_INTERCEPT_MODULE_EXECUTION = 'RSPACK_INTERCEPT_MODULE_EXECUTION';
 
     api.processAssets(
       { stage: 'optimize-inline' },
@@ -182,8 +181,7 @@ export default defineConfig({
         },
       },
       dts: {
-        build: true,
-        tsgo: true,
+        isolated: true,
         alias: {
           // alias to pre-bundled types as they are public API
           cors: './compiled/cors',

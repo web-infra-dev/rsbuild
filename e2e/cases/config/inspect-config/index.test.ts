@@ -14,19 +14,13 @@ test.afterAll(() => {
   }
 });
 
-const rsbuildConfig = path.resolve(
-  import.meta.dirname,
-  './dist/.rsbuild/rsbuild.config.mjs',
-);
+const rsbuildConfig = path.resolve(import.meta.dirname, './dist/.rsbuild/rsbuild.config.mjs');
 
 const rsbuildNodeConfig = path.resolve(
   import.meta.dirname,
   './dist/.rsbuild/rsbuild.config.node.mjs',
 );
-const rspackConfig = path.resolve(
-  import.meta.dirname,
-  `./dist/.rsbuild/rspack.config.web.mjs`,
-);
+const rspackConfig = path.resolve(import.meta.dirname, `./dist/.rsbuild/rspack.config.web.mjs`);
 const bundlerNodeConfig = path.resolve(
   import.meta.dirname,
   `./dist/.rsbuild/rspack.config.node.mjs`,
@@ -34,9 +28,7 @@ const bundlerNodeConfig = path.resolve(
 
 const INSPECT_LOG = 'config inspection completed';
 
-test('should generate config files when writeToDisk is true', async ({
-  logHelper,
-}) => {
+test('should generate config files when writeToDisk is true', async ({ logHelper }) => {
   const { expectLog } = logHelper;
 
   const rsbuild = await createRsbuild({
@@ -54,9 +46,7 @@ test('should generate config files when writeToDisk is true', async ({
   await fse.remove(rspackConfig);
 });
 
-test('should generate config files correctly when output is specified', async ({
-  logHelper,
-}) => {
+test('should generate config files correctly when output is specified', async ({ logHelper }) => {
   const { expectLog } = logHelper;
 
   const rsbuild = await createRsbuild({
@@ -67,15 +57,9 @@ test('should generate config files correctly when output is specified', async ({
     outputPath: 'foo',
   });
 
-  const rspackConfig = path.resolve(
-    import.meta.dirname,
-    `./dist/foo/rspack.config.web.mjs`,
-  );
+  const rspackConfig = path.resolve(import.meta.dirname, `./dist/foo/rspack.config.web.mjs`);
 
-  const rsbuildConfig = path.resolve(
-    import.meta.dirname,
-    './dist/foo/rsbuild.config.mjs',
-  );
+  const rsbuildConfig = path.resolve(import.meta.dirname, './dist/foo/rsbuild.config.mjs');
 
   expect(fs.existsSync(rspackConfig)).toBeTruthy();
   expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
@@ -85,9 +69,7 @@ test('should generate config files correctly when output is specified', async ({
   await fse.remove(rspackConfig);
 });
 
-test('should generate bundler config for node when target contains node', async ({
-  logHelper,
-}) => {
+test('should generate bundler config for node when target contains node', async ({ logHelper }) => {
   const { expectLog } = logHelper;
 
   const rsbuild = await createRsbuild({
@@ -145,9 +127,7 @@ test('should allow to specify absolute output path', async ({ logHelper }) => {
 
   await expectLog(INSPECT_LOG);
 
-  expect(
-    fs.existsSync(path.join(outputPath, 'rspack.config.web.mjs')),
-  ).toBeTruthy();
+  expect(fs.existsSync(path.join(outputPath, 'rspack.config.web.mjs'))).toBeTruthy();
 
   await fse.remove(rsbuildConfig);
 });
@@ -167,10 +147,7 @@ test('should generate extra config files', async ({ logHelper }) => {
     },
   });
 
-  const rstestConfig = path.resolve(
-    import.meta.dirname,
-    './dist/.rsbuild/rstest.config.mjs',
-  );
+  const rstestConfig = path.resolve(import.meta.dirname, './dist/.rsbuild/rstest.config.mjs');
 
   expect(fs.existsSync(rstestConfig)).toBeTruthy();
   await expectLog('Rstest Config:');

@@ -50,11 +50,17 @@ export type { SomeType } from './types';
 
 `@rsbuild/core` provides preset type definitions, including CSS files, CSS Modules, static assets, `import.meta`, and other types.
 
-Create a `src/env.d.ts` file to reference these types:
+Add the preset types to `compilerOptions.types` in `tsconfig.json`:
 
-```ts title="src/env.d.ts"
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["@rsbuild/core/types"]
+  }
+}
 ```
+
+If your project already has `compilerOptions.types`, append `@rsbuild/core/types` to the existing list.
 
 > See [types.d.ts](https://github.com/web-infra-dev/rsbuild/blob/main/packages/core/types.d.ts) for the complete preset type definitions that Rsbuild includes.
 
@@ -81,7 +87,7 @@ You can also use [tsc](https://www.typescriptlang.org/docs/handbook/compiler-opt
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^6.0.0"
   }
 }
 ```
@@ -95,7 +101,7 @@ For Vue applications, use [vue-tsc](https://github.com/vuejs/language-tools/tree
     "type-check": "vue-tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
+    "typescript": "^6.0.0",
     "vue-tsc": "^3.0.0"
   }
 }

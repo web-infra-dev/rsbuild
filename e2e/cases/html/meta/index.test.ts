@@ -1,9 +1,6 @@
-import path from 'node:path';
 import { expect, getFileContent, normalizeNewlines, test } from '@e2e/helper';
 
-test('should not inject charset meta if template already contains it', async ({
-  build,
-}) => {
+test('should not inject charset meta if template already contains it', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 
@@ -21,15 +18,13 @@ test('should not inject charset meta if template already contains it', async ({
 `);
 });
 
-test('should generate meta tags via function for each entry', async ({
-  build,
-}) => {
+test('should generate meta tags via function for each entry', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
         entry: {
-          foo: path.resolve(import.meta.dirname, './src/index.js'),
-          bar: path.resolve(import.meta.dirname, './src/index.js'),
+          foo: './src/index.js',
+          bar: './src/index.js',
         },
       },
       html: {

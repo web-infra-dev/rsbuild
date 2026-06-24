@@ -99,7 +99,7 @@ export default {
 type FaviconFunction = (context: {
   value: string;
   entryName: string;
-}) => string | void;
+}) => string | void | Promise<string | void>;
 ```
 
 When `html.favicon` is of type Function, the function receives an object as input, with the following properties:
@@ -127,4 +127,5 @@ export default {
 
 | Version | Changes                                                     |
 | ------- | ----------------------------------------------------------- |
+| v2.0.8  | Added support for async functions in `html.favicon`         |
 | v1.6.0  | Added automatic favicon detection from the public directory |

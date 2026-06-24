@@ -9,6 +9,9 @@ exports[`default bundler > should use Rspack by default 1`] = `
       "./src/index.js",
     ],
   },
+  "experiments": {
+    "sourceImport": true,
+  },
   "infrastructureLogging": {
     "level": "error",
   },

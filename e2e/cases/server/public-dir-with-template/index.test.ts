@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should serve publicDir with template for dev server correctly', async ({
-  page,
-  devOnly,
-}) => {
+test('should serve publicDir with template for dev server correctly', async ({ page, devOnly }) => {
   const rsbuild = await devOnly();
 
   const res = await page.goto(`http://localhost:${rsbuild.port}/aa.txt`);

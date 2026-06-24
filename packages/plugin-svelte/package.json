@@ -1,25 +1,32 @@
 {
   "name": "@rsbuild/plugin-svelte",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Svelte plugin for Rsbuild",
+  "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-svelte"
   },
-  "license": "MIT",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w"
@@ -30,7 +37,6 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "catalog:",
     "@rslib/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "catalog:",
@@ -38,15 +44,12 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^1.4.0 || ^2.0.0-0"
+    "@rsbuild/core": "^2.0.0",
+    "svelte": "^5.0.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
       "optional": true
     }
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }

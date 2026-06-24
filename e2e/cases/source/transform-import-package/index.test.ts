@@ -1,10 +1,7 @@
 import { expect, test } from '@e2e/helper';
-import { copyPkgToNodeModules } from './helper';
 
-test('should support transformImport for CommonJS packages', async ({
-  build,
-}) => {
-  copyPkgToNodeModules();
+test('should support transformImport for CommonJS packages', async ({ build, copyNodeModules }) => {
+  await copyNodeModules();
 
   const rsbuild = await build();
   const content = await rsbuild.getIndexBundle();

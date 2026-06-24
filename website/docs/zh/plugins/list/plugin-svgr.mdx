@@ -101,6 +101,11 @@ type PluginSvgrOptions = {
    */
   query?: RegExp;
   /**
+   * 是否并行将 SVG 模块转换为 React 组件
+   * @default false
+   */
+  parallel?: boolean;
+  /**
    * 排除一部分 SVG 文件，这些文件不会经过 SVGR 处理
    */
   exclude?: Rspack.RuleSetCondition;
@@ -290,6 +295,22 @@ import Logo from './logo.svg?svgr';
 export const App = () => <Logo />;
 ```
 
+### parallel
+
+- **类型：** `boolean`
+- **默认值：** `false`
+- **版本：** 添加于 v2.0.4
+
+是否使用 worker 线程并行将 SVG 模块转换为 React 组件。开启后，SVG 模块会被分配到多个 worker 线程中处理，降低主线程压力，并在编译大量 SVG 模块时提升整体构建性能。
+
+```ts
+pluginSvgr({
+  parallel: true,
+});
+```
+
+> 该功能基于 Rspack 的 parallel loader 实现。传递给 worker 线程的选项必须符合 [HTML 结构化克隆算法](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist) 的要求，否则会传输失败。例如，不能将函数作为选项传递。详见 [Rspack - Rule.use.parallel](https://rspack.rs/zh/config/module-rules#rulesuseparallel)。
+
 ### exclude
 
 - **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
@@ -396,9 +417,7 @@ declare module '*.svg?react' {
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement>
-  >;
+  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 }
 declare module '*.svg?react' {
   const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
@@ -410,9 +429,7 @@ declare module '*.svg?react' {
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement>
-  >;
+  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   const content: string;
   export default content;
 }

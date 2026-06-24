@@ -1,20 +1,12 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should compile nested npm import correctly', async ({ build }) => {
-  fs.cpSync(
-    path.resolve(import.meta.dirname, '_node_modules'),
-    path.resolve(import.meta.dirname, 'node_modules'),
-    { recursive: true },
-  );
+test('should compile nested npm import correctly', async ({ build, copyNodeModules }) => {
+  await copyNodeModules();
 
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const cssContent = getFileContent(files, '.css');
 
-  expect(cssContent).toEqual(
-    '#b{color:#ff0}#c{color:green}#a{font-size:10px}html{font-size:18px}',
-  );
+  expect(cssContent).toEqual('#b{color:#ff0}#c{color:green}#a{font-size:10px}html{font-size:18px}');
 });

@@ -1,16 +1,10 @@
-import { getPathnameFromUrl } from '../helpers/path';
+import fs from 'node:fs';
+import { isWebTarget } from '../helpers';
 import { isVerbose } from '../logger';
-import type {
-  InternalContext,
-  NormalizedConfig,
-  PreviewOptions,
-} from '../types';
+import type { InternalContext, NormalizedConfig, PreviewOptions } from '../types';
+import { createAssetsMiddleware } from './assets-middleware/middleware';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
-import {
-  registerCleanup,
-  removeCleanup,
-  setupGracefulShutdown,
-} from './gracefulShutdown';
+import { registerCleanup, removeCleanup, setupGracefulShutdown } from './gracefulShutdown';
 import { gzipMiddleware } from './gzipMiddleware';
 import {
   getAddressUrls,
@@ -26,15 +20,32 @@ import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
   getBaseUrlMiddleware,
+  getHtmlCompletionMiddleware,
+  getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
   notFoundMiddleware,
   optionsFallbackMiddleware,
 } from './middlewares';
 import { open } from './open';
+import { getPublicPathnames } from './publicPathnames';
 import { createProxyMiddleware } from './proxy';
 import { applyServerSetup } from './serverSetup';
 
 export type RsbuildPreviewServer = RsbuildServerBase;
+
+const getPreviewAssetContext = (context: InternalContext): InternalContext => {
+  const environmentList = context.environmentList.filter((environment) =>
+    isWebTarget(environment.config.output.target),
+  );
+
+  return {
+    ...context,
+    environmentList,
+    publicPathnames: environmentList.map(
+      (environment) => context.publicPathnames[environment.index],
+    ),
+  };
+};
 
 export async function startPreviewServer(
   context: InternalContext,
@@ -42,16 +53,19 @@ export async function startPreviewServer(
   { getPortSilently }: PreviewOptions = {},
 ): Promise<StartPreviewServerResult> {
   const { logger } = context;
-  const { connect } = await import(
-    /* webpackChunkName: "connect-next" */ 'connect-next'
-  );
+  const { connect } = await import(/* rspackChunkName: "connect-next" */ 'connect-next');
   const middlewares = connect();
 
   const { port, portTip } = await resolvePort(config);
 
   const serverConfig = config.server;
-  const { host, headers, proxy, historyApiFallback, compress, base, cors } =
-    serverConfig;
+  const { host, headers, proxy, historyApiFallback, compress, base, cors } = serverConfig;
+
+  const assetPrefixes = context.environmentList.map(
+    (environment) => environment.config.output.assetPrefix,
+  );
+  context.publicPathnames = getPublicPathnames(assetPrefixes, base);
+
   const isHttps = Boolean(serverConfig.https);
   const protocol = isHttps ? 'https' : 'http';
   const routes = getRoutes(context);
@@ -80,14 +94,15 @@ export async function startPreviewServer(
     return closingPromise;
   };
 
-  const printUrls = () =>
+  const printUrls = (options?: { showAllRoutes?: boolean }) =>
     printServerURLs({
       urls,
       port,
       routes,
       protocol,
       printUrls: serverConfig.printUrls,
-      trailingLineBreak: !cliShortcutsEnabled,
+      showAllRoutes: options?.showAllRoutes,
+      cliShortcutsEnabled,
       originalConfig: context.originalConfig,
       logger,
     });
@@ -123,38 +138,12 @@ export async function startPreviewServer(
     environments: context.environments,
   });
 
-  const applyStaticAssetMiddleware = async () => {
-    const { default: sirv } = await import(
-      /* webpackChunkName: "sirv" */ 'sirv'
-    );
-
-    const assetsMiddleware = sirv(context.distPath, {
-      etag: true,
-      dev: true,
-      ignores: ['favicon.ico'],
-      single: serverConfig.htmlFallback === 'index',
-    });
-
-    const assetPrefixes = context.environmentList.map((e) =>
-      getPathnameFromUrl(e.config.output.assetPrefix),
-    );
-
-    middlewares.use(function staticAssetMiddleware(req, res, next) {
-      const { url } = req;
-      const assetPrefix =
-        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
-
-      // handling assetPrefix
-      if (assetPrefix && url?.startsWith(assetPrefix)) {
-        req.url = url.slice(assetPrefix.length);
-        assetsMiddleware(req, res, (...args: unknown[]) => {
-          req.url = url;
-          next(...args);
-        });
-      } else {
-        assetsMiddleware(req, res, next);
-      }
-    });
+  const assetContext = getPreviewAssetContext(context);
+  const assetsMiddleware = createAssetsMiddleware(assetContext, (callback) => callback(), fs);
+  const htmlMiddlewareOptions = {
+    assetsMiddleware,
+    distPaths: assetContext.environmentList.map((environment) => environment.distPath),
+    outputFileSystem: fs,
   };
 
   if (isVerbose(logger)) {
@@ -162,9 +151,7 @@ export async function startPreviewServer(
   }
 
   if (cors) {
-    const { default: corsMiddleware } = await import(
-      /* webpackChunkName: "cors" */ 'cors'
-    );
+    const { default: corsMiddleware } = await import(/* rspackChunkName: "cors" */ 'cors');
     middlewares.use(corsMiddleware(typeof cors === 'boolean' ? {} : cors));
   }
 
@@ -182,8 +169,7 @@ export async function startPreviewServer(
   // Apply proxy middleware
   // each proxy configuration creates its own middleware instance
   if (proxy) {
-    const { middlewares: proxyMiddlewares, upgrade } =
-      await createProxyMiddleware(proxy, logger);
+    const { middlewares: proxyMiddlewares, upgrade } = await createProxyMiddleware(proxy, logger);
 
     for (const middleware of proxyMiddlewares) {
       middlewares.use(middleware);
@@ -209,22 +195,29 @@ export async function startPreviewServer(
     middlewares.use(getBaseUrlMiddleware({ base }));
   }
 
-  await applyStaticAssetMiddleware();
+  middlewares.use(assetsMiddleware);
+  middlewares.use(getHtmlCompletionMiddleware(htmlMiddlewareOptions));
 
   if (historyApiFallback) {
     middlewares.use(
-      historyApiFallbackMiddleware(
-        logger,
-        historyApiFallback === true ? {} : historyApiFallback,
-      ),
+      historyApiFallbackMiddleware(logger, historyApiFallback === true ? {} : historyApiFallback),
     );
 
-    // ensure fallback request can be handled by sirv
-    await applyStaticAssetMiddleware();
+    // ensure fallback request can be handled by the built asset middleware
+    middlewares.use(assetsMiddleware);
   }
 
   for (const callback of postSetupCallbacks) {
     await callback();
+  }
+
+  if (serverConfig.htmlFallback) {
+    middlewares.use(
+      getHtmlFallbackMiddleware({
+        ...htmlMiddlewareOptions,
+        logger,
+      }),
+    );
   }
 
   middlewares.use(faviconFallbackMiddleware);
@@ -249,9 +242,7 @@ export async function startPreviewServer(
 
         if (cliShortcutsEnabled) {
           const shortcutsOptions =
-            typeof config.dev.cliShortcuts === 'boolean'
-              ? {}
-              : config.dev.cliShortcuts;
+            typeof config.dev.cliShortcuts === 'boolean' ? {} : config.dev.cliShortcuts;
 
           await setupCliShortcuts({
             openPage,

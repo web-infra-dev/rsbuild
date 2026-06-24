@@ -57,6 +57,9 @@ export default {
       output: {
         // Use 'node' target for the Node.js outputs
         target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
       },
       resolve: {
         alias: {
@@ -161,6 +164,9 @@ export default {
     node: {
       output: {
         target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
       },
     },
   },

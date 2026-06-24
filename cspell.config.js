@@ -10,6 +10,8 @@ export default {
     '#.*?\\)',
     // ignore custom anchor declarations such as ## createRsbuild \{#creatersbuild}
     '\\\\\\{#[^}]+\\}',
+    // ignore release note author mentions such as "by @chenjiahan"
+    'by\\s+@[A-Za-z0-9_-]+',
   ],
   ignorePaths: [
     'dist',

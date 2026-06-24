@@ -55,9 +55,7 @@ const createPlugin = () => {
       });
       api.onBeforeStartPreviewServer(({ server, environments }) => {
         expect(typeof server.middlewares.use).toBe('function');
-        names.push(
-          `BeforeStartPreviewServer ${Object.keys(environments).sort().join(',')}`,
-        );
+        names.push(`BeforeStartPreviewServer ${Object.keys(environments).sort().join(',')}`);
       });
       api.onCloseDevServer(() => {
         names.push('CloseDevServer');
@@ -132,9 +130,7 @@ test('should run plugin hooks correctly when running build with multiple environ
   ]);
 });
 
-test('should expose server and environments in onBeforeStartPreviewServer', async ({
-  build,
-}) => {
+test('should expose server and environments in onBeforeStartPreviewServer', async ({ build }) => {
   const { plugin, names } = createPlugin();
   const rsbuild = await build({
     runServer: true,
@@ -178,33 +174,27 @@ test('should run plugin hooks correctly when running startDevServer with multipl
   ]);
 
   // compile is async, so the execution order of AfterStartDevServer and the compile hooks is uncertain
-  expect(
-    names.filter(
-      (name) => !name.includes(' node') && name !== 'AfterStartDevServer',
-    ),
-  ).toEqual([
-    'ModifyRsbuildConfig',
-    'ModifyEnvironmentConfig web',
-    'BeforeStartDevServer',
-    'ModifyBundlerChain web',
-    'ModifyBundlerConfig web',
-    'BeforeCreateCompiler',
-    'AfterCreateCompiler',
-    'BeforeDevCompile',
-    'BeforeEnvironmentCompile web',
-    'ModifyHTMLTags web',
-    'ModifyHTML web',
-    'AfterEnvironmentCompile web',
-    'AfterDevCompile',
-    'DevCompileDone',
-    'CloseDevServer',
-  ]);
+  expect(names.filter((name) => !name.includes(' node') && name !== 'AfterStartDevServer')).toEqual(
+    [
+      'ModifyRsbuildConfig',
+      'ModifyEnvironmentConfig web',
+      'BeforeStartDevServer',
+      'ModifyBundlerChain web',
+      'ModifyBundlerConfig web',
+      'BeforeCreateCompiler',
+      'AfterCreateCompiler',
+      'BeforeDevCompile',
+      'BeforeEnvironmentCompile web',
+      'ModifyHTMLTags web',
+      'ModifyHTML web',
+      'AfterEnvironmentCompile web',
+      'AfterDevCompile',
+      'DevCompileDone',
+      'CloseDevServer',
+    ],
+  );
 
-  expect(
-    names.filter(
-      (name) => !name.includes(' web') && name !== 'AfterStartDevServer',
-    ),
-  ).toEqual([
+  expect(names.filter((name) => !name.includes(' web') && name !== 'AfterStartDevServer')).toEqual([
     'ModifyRsbuildConfig',
     'ModifyEnvironmentConfig node',
     'BeforeStartDevServer',

@@ -5,13 +5,7 @@ import { color } from '../helpers';
 import { addTrailingSlash } from '../helpers/url';
 import { isVerbose, type Logger } from '../logger';
 import type { Connect, EnvironmentAPI, RequestHandler, Rspack } from '../types';
-import type { BuildManager } from './buildManager';
-import {
-  HttpCode,
-  isUrlPathUnderBase,
-  joinUrlPath,
-  removeBasePath,
-} from './helper';
+import { HttpCode, isUrlPathUnderBase, joinUrlPath, removeBasePath } from './helper';
 
 export const faviconFallbackMiddleware: RequestHandler = (req, res, next) => {
   if (req.url === '/favicon.ico') {
@@ -38,9 +32,7 @@ const getStatusCodeColor = (status: number) => {
   return (res: number) => res;
 };
 
-export const getRequestLoggerMiddleware = (
-  logger: Logger,
-): Connect.NextHandleFunction => {
+export const getRequestLoggerMiddleware = (logger: Logger): Connect.NextHandleFunction => {
   return (req, res, next) => {
     const _startAt = process.hrtime();
 
@@ -54,14 +46,11 @@ export const getRequestLoggerMiddleware = (
 
       const endAt = process.hrtime();
 
-      const totalTime =
-        (endAt[0] - _startAt[0]) * 1e3 + (endAt[1] - _startAt[1]) * 1e-6;
+      const totalTime = (endAt[0] - _startAt[0]) * 1e3 + (endAt[1] - _startAt[1]) * 1e-6;
 
       // :status :method :url :total-time ms
       logger.debug(
-        `${statusColor(status)} ${method} ${url} ${color.dim(
-          `${totalTime.toFixed(3)} ms`,
-        )}`,
+        `${statusColor(status)} ${method} ${url} ${color.dim(`${totalTime.toFixed(3)} ms`)}`,
       );
     };
 
@@ -91,12 +80,25 @@ export const optionsFallbackMiddleware: RequestHandler = (req, res, next) => {
 const isFileExists = async (
   filePath: string,
   outputFileSystem: Rspack.OutputFileSystem,
-) =>
+): Promise<boolean> =>
   new Promise((resolve) => {
     outputFileSystem.stat(filePath, (_error, stats) => {
-      resolve(stats?.isFile());
+      resolve(Boolean(stats?.isFile()));
     });
   });
+
+const isFileExistsInDistPaths = async (
+  distPaths: string[],
+  filename: string,
+  outputFileSystem: Rspack.OutputFileSystem,
+): Promise<boolean> => {
+  for (const distPath of distPaths) {
+    if (await isFileExists(path.join(distPath, filename), outputFileSystem)) {
+      return true;
+    }
+  }
+  return false;
+};
 
 const maybeHTMLRequest = (req: IncomingMessage) => {
   if (
@@ -111,10 +113,7 @@ const maybeHTMLRequest = (req: IncomingMessage) => {
 
   const { accept } = req.headers;
   // accept should be `text/html` or `*/*`
-  return (
-    typeof accept === 'string' &&
-    (accept.includes('text/html') || accept.includes('*/*'))
-  );
+  return typeof accept === 'string' && (accept.includes('text/html') || accept.includes('*/*'));
 };
 
 const postfixRE = /[?#].*$/;
@@ -123,13 +122,18 @@ const getUrlPathname = (url: string): string => {
   return url.replace(postfixRE, '');
 };
 
+type HtmlAssetsMiddlewareOptions = {
+  distPaths: string[];
+  assetsMiddleware: RequestHandler;
+  outputFileSystem: Rspack.OutputFileSystem;
+};
+
 /**
  * Support access HTML without suffix
  */
-export const getHtmlCompletionMiddleware: (params: {
-  distPath: string;
-  buildManager: BuildManager;
-}) => RequestHandler = ({ distPath, buildManager }) => {
+export const getHtmlCompletionMiddleware: (
+  params: HtmlAssetsMiddlewareOptions,
+) => RequestHandler = ({ distPaths, assetsMiddleware, outputFileSystem }) => {
   return async function htmlCompletionMiddleware(req, res, next) {
     if (!maybeHTMLRequest(req)) {
       next();
@@ -141,7 +145,7 @@ export const getHtmlCompletionMiddleware: (params: {
 
     const rewrite = (newUrl: string) => {
       req.url = newUrl;
-      buildManager.assetsMiddleware(req, res, (...args) => {
+      assetsMiddleware(req, res, (...args) => {
         next(...args);
       });
       return;
@@ -150,9 +154,8 @@ export const getHtmlCompletionMiddleware: (params: {
     // '/' => '/index.html'
     if (pathname.endsWith('/')) {
       const newUrl = `${pathname}index.html`;
-      const filePath = path.join(distPath, newUrl);
 
-      if (await isFileExists(filePath, buildManager.outputFileSystem)) {
+      if (await isFileExistsInDistPaths(distPaths, newUrl, outputFileSystem)) {
         rewrite(newUrl);
         return;
       }
@@ -160,9 +163,8 @@ export const getHtmlCompletionMiddleware: (params: {
     // '/main' => '/main.html'
     else if (!path.extname(pathname)) {
       const newUrl = `${pathname}.html`;
-      const filePath = path.join(distPath, newUrl);
 
-      if (await isFileExists(filePath, buildManager.outputFileSystem)) {
+      if (await isFileExistsInDistPaths(distPaths, newUrl, outputFileSystem)) {
         rewrite(newUrl);
         return;
       }
@@ -175,9 +177,7 @@ export const getHtmlCompletionMiddleware: (params: {
 /**
  * handle `server.base`
  */
-export const getBaseUrlMiddleware: (params: {
-  base: string;
-}) => RequestHandler = ({ base }) => {
+export const getBaseUrlMiddleware: (params: { base: string }) => RequestHandler = ({ base }) => {
   return function baseUrlMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);
@@ -188,8 +188,7 @@ export const getBaseUrlMiddleware: (params: {
       return;
     }
 
-    const redirectPath =
-      addTrailingSlash(url) !== base ? joinUrlPath(base, url) : base;
+    const redirectPath = addTrailingSlash(url) !== base ? joinUrlPath(base, url) : base;
 
     if (pathname === '/' || pathname === '/index.html') {
       // redirect root visit to based url with search and hash
@@ -227,29 +226,24 @@ export const getBaseUrlMiddleware: (params: {
 /**
  * support HTML fallback in some edge cases
  */
-export const getHtmlFallbackMiddleware: (params: {
-  distPath: string;
-  buildManager: BuildManager;
-  logger: Logger;
-}) => RequestHandler = ({ distPath, buildManager, logger }) => {
+export const getHtmlFallbackMiddleware: (
+  params: HtmlAssetsMiddlewareOptions & { logger: Logger },
+) => RequestHandler = ({ distPaths, assetsMiddleware, outputFileSystem, logger }) => {
   return async function htmlFallbackMiddleware(req, res, next) {
     if (!maybeHTMLRequest(req) || '/favicon.ico' === req.url) {
       next();
       return;
     }
 
-    const filePath = path.join(distPath, 'index.html');
-    if (await isFileExists(filePath, buildManager.outputFileSystem)) {
+    if (await isFileExistsInDistPaths(distPaths, 'index.html', outputFileSystem)) {
       const newUrl = '/index.html';
 
       if (isVerbose(logger)) {
-        logger.debug(
-          `    ${req.method} ${req.url} ${color.yellow('fallback to')} ${newUrl}`,
-        );
+        logger.debug(`    ${req.method} ${req.url} ${color.yellow('fallback to')} ${newUrl}`);
       }
 
       req.url = newUrl;
-      buildManager.assetsMiddleware(req, res, (...args) => {
+      assetsMiddleware(req, res, (...args) => {
         next(...args);
       });
       return;

@@ -2,9 +2,7 @@ import path from 'node:path';
 import { expect, readDirContents, test } from '@e2e/helper';
 import { pluginVue } from '@rsbuild/plugin-vue';
 
-test('should register plugins correctly when using JavaScript API', async ({
-  build,
-}) => {
+test('should register plugins correctly when using JavaScript API', async ({ build }) => {
   await build({
     config: {
       plugins: [pluginVue()],
@@ -15,7 +13,5 @@ test('should register plugins correctly when using JavaScript API', async ({
   const outputFiles = Object.keys(outputs);
 
   expect(outputFiles.find((item) => item.includes('index.html'))).toBeTruthy();
-  expect(
-    outputFiles.find((item) => item.includes('static/js/index.')),
-  ).toBeTruthy();
+  expect(outputFiles.find((item) => item.includes('static/js/index.'))).toBeTruthy();
 });

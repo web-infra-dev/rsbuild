@@ -6,13 +6,11 @@ type LessUrlResult = {
   targetColor: string;
 };
 
-test('should return transformed Less URL with `?url`', async ({
-  page,
-  runBothServe,
-}) => {
+test('should return transformed Less URL with `?url`', async ({ page, runBothServe }) => {
   await runBothServe(async ({ mode, result }) => {
-    const { styleContent, styleUrl, targetColor } =
-      await page.evaluate<LessUrlResult>('window.getLessUrlResult()');
+    const { styleContent, styleUrl, targetColor } = await page.evaluate<LessUrlResult>(
+      'window.getLessUrlResult()',
+    );
 
     expect(styleUrl).toMatch(/\/static\/css\/style\.css$/);
     expect(styleContent).toContain('.url-query-less');

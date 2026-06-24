@@ -40,34 +40,18 @@ export type PreviewOptions = CommonOptions;
 const applyCommonOptions = (cli: CAC) => {
   cli
     .option('--base <base>', 'Set the base path of the server')
-    .option(
-      '-c, --config <config>',
-      'Set the configuration file (relative or absolute path)',
-    )
-    .option(
-      '--config-loader <loader>',
-      'Set the config file loader (auto | jiti | native)',
-      {
-        default: 'auto',
-      },
-    )
+    .option('-c, --config <config>', 'Set the configuration file (relative or absolute path)')
+    .option('--config-loader <loader>', 'Set the config file loader (auto | jiti | native)', {
+      default: 'auto',
+    })
     .option('--env-dir <dir>', 'Set the directory for loading `.env` files')
-    .option(
-      '--env-mode <mode>',
-      'Set the env mode to load the `.env.[mode]` file',
-    )
+    .option('--env-mode <mode>', 'Set the env mode to load the `.env.[mode]` file')
     .option('--environment <name>', 'Set the environment name(s) to build', {
       type: [String],
       default: [],
     })
-    .option(
-      '--log-level <level>',
-      'Set the log level (info | warn | error | silent)',
-    )
-    .option(
-      '-m, --mode <mode>',
-      'Set the build mode (development | production | none)',
-    )
+    .option('--log-level <level>', 'Set the log level (info | warn | error | silent)')
+    .option('-m, --mode <mode>', 'Set the build mode (development | production | none)')
     .option(
       '-r, --root <root>',
       'Set the project root directory (absolute path or relative to cwd)',
@@ -93,14 +77,8 @@ export function setupCommands(): void {
   const devDescription = `Start the dev server ${color.dim('(default if no command is given)')}`;
   const devCommand = cli.command('', devDescription).alias('dev');
   const buildCommand = cli.command('build', 'Build the app for production');
-  const previewCommand = cli.command(
-    'preview',
-    'Preview the production build locally',
-  );
-  const inspectCommand = cli.command(
-    'inspect',
-    'Inspect the Rspack and Rsbuild configs',
-  );
+  const previewCommand = cli.command('preview', 'Preview the production build locally');
+  const inspectCommand = cli.command('inspect', 'Inspect the Rspack and Rsbuild configs');
 
   applyServerOptions(devCommand);
   applyServerOptions(previewCommand);
@@ -126,10 +104,7 @@ export function setupCommands(): void {
   });
 
   buildCommand
-    .option(
-      '-w, --watch',
-      'Enable watch mode to automatically rebuild on file changes',
-    )
+    .option('-w, --watch', 'Enable watch mode to automatically rebuild on file changes')
     .action(async (options: BuildOptions) => {
       try {
         if (!options.watch) {
@@ -158,8 +133,7 @@ export function setupCommands(): void {
           }
         }
       } catch (err) {
-        const isRspackError =
-          err instanceof Error && err.message === RSPACK_BUILD_ERROR;
+        const isRspackError = err instanceof Error && err.message === RSPACK_BUILD_ERROR;
         if (!isRspackError) {
           logger.error('Failed to build.');
         }

@@ -5,16 +5,7 @@ import { expect, test as baseTest } from '@e2e/helper';
 // Prefresh does not work as expected on Windows
 const test = process.platform === 'win32' ? baseTest.skip : baseTest;
 
-test('HMR should work properly with `createContext`', async ({
-  page,
-  dev,
-  editFile,
-}) => {
-  // Prefresh does not work as expected on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
+test('HMR should work properly with `createContext`', async ({ page, dev, editFile }) => {
   const root = import.meta.dirname;
   const compFilePath = path.join(root, 'src/test-temp-B.jsx');
   const compSourceCode = `const B = (props) => {

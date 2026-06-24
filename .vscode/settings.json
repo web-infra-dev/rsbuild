@@ -14,7 +14,7 @@
     "**/.DS_Store": true
   },
   "mdx.validate.validateFileLinks": "ignore",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "json.schemas": [
     {
@@ -25,5 +25,14 @@
       "fileMatch": ["**/_nav.json"],
       "url": "./website/node_modules/@rspress/core/nav-json-schema.json"
     }
-  ]
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[mdx]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  }
 }

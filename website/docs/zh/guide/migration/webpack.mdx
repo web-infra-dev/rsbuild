@@ -188,12 +188,7 @@ Rsbuild 默认使用 SWC 编译代码，所以大部分常用的 Babel 插件不
 
 ```js title="babel.config.js"
 module.exports = {
-  plugins: [
-    [
-      'import',
-      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
-    ],
-  ],
+  plugins: [['import', { libraryName: 'some-library', libraryDirectory: 'es', style: true }]],
 };
 ```
 
@@ -202,9 +197,7 @@ module.exports = {
 ```ts title="rsbuild.config.ts"
 export default {
   source: {
-    transformImport: [
-      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
-    ],
+    transformImport: [{ libraryName: 'some-library', libraryDirectory: 'es', style: true }],
   },
 };
 ```

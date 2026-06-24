@@ -83,9 +83,7 @@ test('should use customLogger for build logs', async ({ build }) => {
     },
   });
 
-  expect(
-    rsbuild.logs.find((item) => item.includes('[CUSTOM_READY] built in')),
-  ).toBeTruthy();
+  expect(rsbuild.logs.find((item) => item.includes('[CUSTOM_READY] built in'))).toBeTruthy();
 });
 
 test('should use customLogger for dev server logs', async ({ devOnly }) => {
@@ -103,9 +101,7 @@ test('should use customLogger for dev server logs', async ({ devOnly }) => {
     },
   });
 
-  await rsbuild.expectLog(
-    (log) => log.includes('[CUSTOM_LOG]') && log.includes('Local:'),
-  );
+  await rsbuild.expectLog((log) => log.includes('[CUSTOM_LOG]') && log.includes('Local:'));
 });
 
 test('should use customLogger for preview server logs', async ({ build }) => {
@@ -125,8 +121,6 @@ test('should use customLogger for preview server logs', async ({ build }) => {
   });
 
   expect(
-    rsbuild.logs.find(
-      (item) => item.includes('[CUSTOM_LOG]') && item.includes('Local:'),
-    ),
+    rsbuild.logs.find((item) => item.includes('[CUSTOM_LOG]') && item.includes('Local:')),
   ).toBeTruthy();
 });

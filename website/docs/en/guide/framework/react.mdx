@@ -23,6 +23,30 @@ import { PackageManagerTabs } from '@theme';
 
 Then select `React` when prompted to "Select framework".
 
+## Full-stack frameworks
+
+The following full-stack React frameworks are built on Rsbuild and reuse Rsbuild's plugin ecosystem.
+
+### TanStack Start
+
+[TanStack Start](https://tanstack.com/start/latest) is a full-stack React framework powered by TanStack Router. It provides full-document SSR, streaming, Server Functions, client/server builds, and more.
+
+- [Documentation](https://tanstack.com/start/latest)
+- [Basic example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start)
+- [RSC example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start-rsc)
+
+You can initialize the TanStack Start example project with:
+
+```bash
+npx giget gh:rstackjs/rstack-examples/rsbuild/tanstack-start tanstack-start
+cd tanstack-start
+pnpm i
+```
+
+### Modern.js
+
+[Modern.js](https://github.com/web-infra-dev/modern.js) is a progressive web framework built on Rsbuild that provides out-of-the-box full-stack development capabilities for React applications.
+
 ## Use React in an existing project
 
 To compile React's JSX syntax, register the Rsbuild [React Plugin](/plugins/list/plugin-react). The plugin automatically adds the necessary configuration for building React applications.
@@ -143,10 +167,7 @@ export default defineConfig({
       include: /\.[jt]sx?$/,
       exclude: [/[\\/]node_modules[\\/]/],
       babelLoaderOptions(opts) {
-        opts.plugins?.unshift([
-          'babel-plugin-react-compiler',
-          ReactCompilerConfig,
-        ]);
+        opts.plugins?.unshift(['babel-plugin-react-compiler', ReactCompilerConfig]);
       },
     }),
   ],

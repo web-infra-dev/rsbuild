@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import type { RsbuildPlugin, RspackChain } from '@rsbuild/core';
+import type { Minify, RsbuildPlugin, RspackChain } from '@rsbuild/core';
 
 const require = createRequire(import.meta.url);
 
@@ -9,18 +9,17 @@ export type PluginTailwindcssOptions = {
   /**
    * Enable Tailwind CSS's built-in Lightning CSS optimization.
    *
-   * This overlaps with Rsbuild's built-in Lightning CSS optimization. It is
-   * recommended to enable this option only when Rsbuild's built-in Lightning
-   * CSS optimization is disabled.
+   * By default, this is enabled in production mode and disabled in development
+   * mode. Minification follows Rsbuild's CSS minification config.
    *
-   * @default false
+   * @default true in production mode, false in development mode
    */
   optimize?:
     | boolean
     | {
         /**
          * Enable minification in Tailwind CSS's built-in Lightning CSS optimization.
-         * @default false
+         * @default Follows Rsbuild's CSS minification config.
          */
         minify?: boolean;
       };
@@ -29,10 +28,7 @@ export type PluginTailwindcssOptions = {
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
 
-const incrementCssImportLoaders = (
-  rule: RspackChain.Rule<unknown>,
-  cssUseId: string,
-) => {
+const incrementCssImportLoaders = (rule: RspackChain.Rule<unknown>, cssUseId: string) => {
   if (!rule.uses.has(cssUseId)) {
     return;
   }
@@ -46,26 +42,41 @@ const incrementCssImportLoaders = (
 
   cssLoader.options({
     ...options,
-    importLoaders:
-      typeof options.importLoaders === 'number' ? options.importLoaders + 1 : 1,
+    importLoaders: typeof options.importLoaders === 'number' ? options.importLoaders + 1 : 1,
   });
 };
 
-export const pluginTailwindcss = (
-  options: PluginTailwindcssOptions = {},
-): RsbuildPlugin => ({
+const isCssMinifyEnabled = (minify: Minify | undefined, isProd: boolean) => {
+  if (typeof minify === 'boolean' || minify === undefined) {
+    return (minify ?? true) && isProd;
+  }
+
+  return minify.css !== false && (minify.css === 'always' || isProd);
+};
+
+export const pluginTailwindcss = (options: PluginTailwindcssOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_TAILWINDCSS_NAME,
 
   setup(api) {
-    api.modifyBundlerChain((chain, { CHAIN_ID, environment, target }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment, isProd, target }) => {
       if (!chain.module.rules.has(CHAIN_ID.RULE.CSS)) {
         return;
       }
 
       const { output } = environment.config;
+
+      let { optimize } = options;
+      if (optimize === undefined) {
+        if (isProd) {
+          optimize = { minify: isCssMinifyEnabled(output.minify, isProd) };
+        } else {
+          optimize = false;
+        }
+      }
+
       const tailwindOptions = {
         base: api.context.rootPath,
-        optimize: options.optimize ?? false,
+        optimize,
       };
       const emitCss = output.emitCss ?? target === 'web';
 

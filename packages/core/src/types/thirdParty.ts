@@ -1,7 +1,4 @@
-import type {
-  CssExtractRspackLoaderOptions,
-  CssExtractRspackPluginOptions,
-} from '@rspack/core';
+import type { CssExtractRspackLoaderOptions, CssExtractRspackPluginOptions } from '@rspack/core';
 import type * as Connect from 'connect-next';
 import type HtmlRspackPlugin from 'html-rspack-plugin';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
@@ -49,9 +46,7 @@ export type PostCSSLoaderOptions = {
    * Allows to set PostCSS options and plugins.
    * @default undefined
    */
-  postcssOptions?:
-    | PostCSSOptions
-    | ((loaderContext: Rspack.LoaderContext) => PostCSSOptions);
+  postcssOptions?: PostCSSOptions | ((loaderContext: Rspack.LoaderContext) => PostCSSOptions);
 };
 
 export type PostCSSPlugin = AcceptedPlugin;
@@ -82,11 +77,7 @@ export interface CSSLoaderModulesOptions {
   auto?:
     | boolean
     | RegExp
-    | ((
-        resourcePath: string,
-        resourceQuery: string,
-        resourceFragment: string,
-      ) => boolean);
+    | ((resourcePath: string, resourceQuery: string, resourceFragment: string) => boolean);
   /**
    * Allow `css-loader` to export names from global class or id, so you can use that as local name.
    */

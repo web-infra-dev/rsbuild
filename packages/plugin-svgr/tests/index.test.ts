@@ -83,10 +83,7 @@ describe('svgr', () => {
 
   it('should publish as a pure ESM package', async () => {
     const packageJson = JSON.parse(
-      await fs.readFile(
-        path.join(import.meta.dirname, '../package.json'),
-        'utf8',
-      ),
+      await fs.readFile(path.join(import.meta.dirname, '../package.json'), 'utf8'),
     ) as {
       exports: {
         '.': {

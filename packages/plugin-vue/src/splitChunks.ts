@@ -1,8 +1,4 @@
-import type {
-  NormalizedEnvironmentConfig,
-  RsbuildPluginAPI,
-  Rspack,
-} from '@rsbuild/core';
+import type { NormalizedEnvironmentConfig, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import type { SplitVueChunkOptions } from './index.js';
 
 const isPlainObject = (obj: unknown): obj is Record<string, unknown> =>
@@ -42,10 +38,7 @@ export function applySplitChunksRule(
       return;
     }
 
-    const extraGroups: Record<
-      string,
-      Rspack.OptimizationSplitChunksCacheGroup
-    > = {};
+    const extraGroups: Record<string, Rspack.OptimizationSplitChunksCacheGroup> = {};
 
     if (options.vue) {
       extraGroups.vue = {

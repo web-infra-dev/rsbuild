@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "browserslist": [
-    "extends @e2e/browserslist-config-mock"
-  ],
   "dependencies": {
     "@e2e/browserslist-config-mock": "workspace:*"
-  }
+  },
+  "browserslist": [
+    "extends @e2e/browserslist-config-mock"
+  ]
 }

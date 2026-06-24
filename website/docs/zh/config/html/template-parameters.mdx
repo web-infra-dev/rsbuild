@@ -72,13 +72,13 @@ export default {
 type TemplateParametersFunction = (
   defaultValue: Record<string, unknown>,
   utils: { entryName: string },
-) => Record<string, unknown> | void;
+) => Record<string, unknown> | void | Promise<Record<string, unknown> | void>;
 ```
 
 当 `html.templateParameters` 为 Function 类型时，函数接收两个参数：
 
-- `value`：Rsbuild 的默认 templateParameters 配置。
-- `utils`: 一个对象，其中包含了 `entryName` 字段，对应当前入口的名称。
+- `defaultValue`：Rsbuild 的默认 templateParameters 配置。
+- `utils`：一个对象，其中包含了 `entryName` 字段，对应当前入口的名称。
 
 在 MPA（多页面应用）场景下，你可以基于入口名称设置不同的 `templateParameters` 参数：
 
@@ -102,3 +102,28 @@ export default {
   },
 };
 ```
+
+你也可以使用异步函数加载模板参数：
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs/promises';
+
+export default {
+  html: {
+    async templateParameters(defaultValue) {
+      const version = await fs.readFile('./VERSION', 'utf-8');
+
+      return {
+        ...defaultValue,
+        version: version.trim(),
+      };
+    },
+  },
+};
+```
+
+## 版本历史
+
+| 版本   | 变更内容                                        |
+| ------ | ----------------------------------------------- |
+| v2.0.8 | 新增对 `html.templateParameters` 异步函数的支持 |

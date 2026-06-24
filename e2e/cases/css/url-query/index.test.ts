@@ -18,10 +18,7 @@ type CssUrlResult = {
   targetColor: string;
 };
 
-test('should return transformed CSS URL with `?url`', async ({
-  page,
-  runBothServe,
-}) => {
+test('should return transformed CSS URL with `?url`', async ({ page, runBothServe }) => {
   await runBothServe(async ({ mode, result }) => {
     const {
       aStyleContent,
@@ -51,13 +48,9 @@ test('should return transformed CSS URL with `?url`', async ({
     expect(aStyleUrl).not.toBe(bStyleUrl);
     expect(externalStyleUrl).toMatch(/\/static\/css\/shared\/external\.css$/);
     expect(externalStyleContent).toContain('.external-url-query');
-    expect(urlLeadingQueryUrl).toMatch(
-      /\/static\/css\/url-leading-query\.css$/,
-    );
+    expect(urlLeadingQueryUrl).toMatch(/\/static\/css\/url-leading-query\.css$/);
     expect(urlLeadingQueryContent).toContain('.url-leading-query');
-    expect(urlTrailingQueryUrl).toMatch(
-      /\/static\/css\/url-trailing-query\.css$/,
-    );
+    expect(urlTrailingQueryUrl).toMatch(/\/static\/css\/url-trailing-query\.css$/);
     expect(urlTrailingQueryContent).toContain('.url-trailing-query');
     expect(urlValueQueryUrl).toMatch(/\/static\/css\/url-value-query\.css$/);
     expect(urlValueQueryContent).toContain('.url-value-query');
@@ -70,9 +63,7 @@ test('should return transformed CSS URL with `?url`', async ({
   });
 });
 
-test('should emit hashed CSS files for `?url` in production', async ({
-  build,
-}) => {
+test('should emit hashed CSS files for `?url` in production', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {

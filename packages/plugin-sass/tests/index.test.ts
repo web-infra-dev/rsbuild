@@ -1,5 +1,4 @@
-import { createRsbuild, type Rspack } from '@rsbuild/core';
-import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
+import { createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
 import { pluginSass } from '../src';
 
@@ -13,19 +12,6 @@ describe('plugin-sass', () => {
 
     const rspackConfigs = await rsbuild.initConfigs();
     expect(matchRules(rspackConfigs[0], 'a.scss')).toMatchSnapshot();
-  });
-
-  it('should add sass-loader for Rsbuild v1', async () => {
-    const rsbuild = await createRsbuildV1({
-      config: {
-        plugins: [pluginSass()],
-      },
-    });
-
-    const rspackConfigs = await rsbuild.initConfigs();
-    expect(
-      matchRules(rspackConfigs[0] as Rspack.Configuration, 'a.scss'),
-    ).toMatchSnapshot();
   });
 
   it('should add sass-loader and css-loader when injectStyles', async () => {

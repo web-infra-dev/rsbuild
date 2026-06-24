@@ -1,15 +1,22 @@
 {
   "name": "@rsbuild/plugin-solid",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Solid plugin for Rsbuild",
   "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-solid"
   },
-  "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -17,10 +24,10 @@
       "require": "./dist/index.cjs"
     }
   },
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w"
@@ -38,15 +45,11 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^1.0.0 || ^2.0.0-0"
+    "@rsbuild/core": "^1.0.0 || ^2.0.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
       "optional": true
     }
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -1,10 +1,7 @@
 import { expect, getRandomPort, HMR_CONNECTED_LOG, test } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
-test('should send HMR messages to the matched environment only', async ({
-  page,
-  context,
-}) => {
+test('should send HMR messages to the matched environment only', async ({ page, context }) => {
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
     config: {

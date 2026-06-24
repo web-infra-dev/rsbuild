@@ -11,14 +11,15 @@
  * }
  * ```
  */
-// rslint-disable-next-line @typescript-eslint/no-empty-interface
+// rslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface RsbuildTypeOptions {}
 
 /**
  * import.meta
  */
-type ImportMetaEnvFallbackKey =
-  'strictImportMetaEnv' extends keyof RsbuildTypeOptions ? never : string;
+type ImportMetaEnvFallbackKey = 'strictImportMetaEnv' extends keyof RsbuildTypeOptions
+  ? never
+  : string;
 
 interface ImportMetaEnv extends Record<ImportMetaEnvFallbackKey, any> {
   /**

@@ -150,6 +150,73 @@ Whether to enable [React Fast Refresh](https://npmjs.com/package/react-refresh).
 
 Most of the time, you should use the plugin's [fastRefresh](#fastrefresh) option to enable or disable Fast Refresh.
 
+### reactCompiler
+
+Enable or configure [React Compiler](https://react.dev/learn/react-compiler), which Rsbuild passes to Rspack's [`builtin:swc-loader`](https://rspack.rs/guide/tech/react#using-builtinswc-loader) as the `jsc.transform.reactCompiler` option.
+
+:::tip
+This option is only supported in `@rsbuild/core` v2.1.0 and later.
+:::
+
+- **Type:**
+
+```ts
+type ReactCompiler =
+  | boolean
+  | {
+      compilationMode?: 'infer' | 'syntax' | 'annotation' | 'all';
+      panicThreshold?: 'none' | 'critical_errors' | 'all_errors';
+      target?: '17' | '18' | '19';
+      noEmit?: boolean;
+      outputMode?: 'client' | 'ssr' | 'lint';
+      ignoreUseNoForget?: boolean;
+      flowSuppressions?: boolean;
+      enableReanimated?: boolean;
+      isDev?: boolean;
+      eslintSuppressionRules?: string[];
+      customOptOutDirectives?: string[];
+      gating?: {
+        source: string;
+        importSpecifierName: string;
+      };
+      dynamicGating?: {
+        source: string;
+      };
+    };
+```
+
+- **Default:** `undefined`
+
+Set `reactCompiler` to `true` to enable React Compiler with the default options:
+
+```ts
+pluginReact({
+  reactCompiler: true,
+});
+```
+
+For React 17 and 18 projects, install [`react-compiler-runtime`](https://npmjs.com/package/react-compiler-runtime) and set the compiler target:
+
+```ts
+pluginReact({
+  reactCompiler: {
+    target: '18',
+  },
+});
+```
+
+The `reactCompiler` options are aligned with the React Compiler configuration. For example, you can use [`compilationMode`](https://react.dev/reference/react-compiler/compilationMode) to control which functions are compiled:
+
+```ts
+pluginReact({
+  reactCompiler: {
+    compilationMode: 'annotation',
+  },
+});
+```
+
+For more options, refer to the official [React Compiler configuration documentation](https://react.dev/reference/react-compiler/configuration).
+
 ### splitChunks
 
 When using Rsbuild's [default split chunks preset](/config/split-chunks#default), this plugin splits `react` and `react-router` related packages into separate chunks:

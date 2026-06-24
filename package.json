@@ -1,53 +1,53 @@
 {
   "name": "rsbuild-monorepo",
   "private": true,
-  "type": "module",
   "workspaces": [
     "packages/*",
     "scripts/*"
   ],
+  "type": "module",
   "scripts": {
     "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
-    "format": "prettier --experimental-cli --write . && heading-case --write",
+    "format": "oxfmt . && heading-case --write",
+    "format:check": "oxfmt . --check",
     "lint": "rslint --type-check",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
-    "prepare": "simple-git-hooks && node --run prebundle && node --run build",
+    "prepare": "simple-git-hooks && node --run prebundle",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "rstest",
     "test:watch": "rstest watch"
+  },
+  "devDependencies": {
+    "@rslint/core": "catalog:",
+    "@rstest/adapter-rslib": "catalog:",
+    "@rstest/core": "catalog:",
+    "@scripts/config": "workspace:*",
+    "@scripts/test-helper": "workspace:*",
+    "@types/node": "catalog:",
+    "cross-env": "catalog:",
+    "cspell-ban-words": "catalog:",
+    "heading-case": "catalog:",
+    "nano-staged": "catalog:",
+    "oxfmt": "catalog:",
+    "simple-git-hooks": "catalog:",
+    "typescript": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec nano-staged"
   },
   "nano-staged": {
-    "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
+    "*.{md,mdx,json,css,less,scss}": "oxfmt --no-error-on-unmatched-pattern",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
       "rslint --type-check",
-      "prettier --experimental-cli --write"
+      "oxfmt --no-error-on-unmatched-pattern"
     ]
   },
-  "devDependencies": {
-    "@scripts/config": "workspace:*",
-    "@rslint/core": "catalog:",
-    "@rstest/adapter-rslib": "catalog:",
-    "@rstest/core": "catalog:",
-    "@scripts/test-helper": "workspace:*",
-    "@types/node": "catalog:",
-    "@typescript/native-preview": "catalog:",
-    "cross-env": "catalog:",
-    "cspell-ban-words": "catalog:",
-    "heading-case": "catalog:",
-    "nano-staged": "catalog:",
-    "prettier": "catalog:",
-    "simple-git-hooks": "catalog:",
-    "typescript": "catalog:"
-  },
-  "packageManager": "pnpm@11.3.0",
   "engines": {
     "node": ">=22.18.0",
-    "pnpm": ">=11.3.0"
-  }
+    "pnpm": ">=11.8.0"
+  },
+  "packageManager": "pnpm@11.8.0"
 }

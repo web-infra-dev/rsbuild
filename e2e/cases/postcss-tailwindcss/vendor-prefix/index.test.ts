@@ -1,8 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should generate tailwindcss utilities with vendor prefixes correctly', async ({
-  build,
-}) => {
+test('should generate tailwindcss utilities with vendor prefixes correctly', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   const indexCss = getFileContent(files, 'index.css');

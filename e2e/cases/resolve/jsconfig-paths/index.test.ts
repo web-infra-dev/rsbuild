@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('tsconfig paths should work and override the alias config', async ({
-  page,
-  buildPreview,
-}) => {
+test('tsconfig paths should work and override the alias config', async ({ page, buildPreview }) => {
   await buildPreview({
     config: {
       resolve: {

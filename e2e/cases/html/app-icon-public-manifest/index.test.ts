@@ -1,8 +1,6 @@
 import { expect, getDistFiles, getFileContent, test } from '@e2e/helper';
 
-test('should use public manifest for additional manifest fields', async ({
-  build,
-}) => {
+test('should use public manifest for additional manifest fields', async ({ build }) => {
   const rsbuild = await build();
   const files = await getDistFiles(rsbuild.distPath);
   const html = getFileContent(files, 'index.html');

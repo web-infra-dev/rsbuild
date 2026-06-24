@@ -15,6 +15,18 @@
       "matchPackageNames": ["/babel/"]
     },
     {
+      "description": "Keep Babel 7 packages on v7 until Babel 8 compatibility is handled.",
+      "matchPackageNames": ["/^@babel\\//", "/^@types\\/babel__/"],
+      "allowedVersions": ">=7.0.0 <8.0.0"
+    },
+    {
+      "description": "Keep @rsbuild/plugin-babel on reduce-configs v1 because applyUserBabelConfig is an exported synchronous API.",
+      "matchManagers": ["npm"],
+      "matchFileNames": ["packages/plugin-babel/package.json"],
+      "matchPackageNames": ["reduce-configs"],
+      "enabled": false
+    },
+    {
       "groupName": "Rspress",
       "groupSlug": "rspress",
       "matchPackageNames": ["/rspress/"]
@@ -44,6 +56,12 @@
       "matchManagers": ["npm"],
       "matchDepTypes": ["engines"],
       "matchPackageNames": ["node"],
+      "enabled": false
+    },
+    {
+      "description": "Keep .node-version pinned until Cloudflare Pages can install newer Node.js releases reliably.",
+      "matchManagers": ["nodenv"],
+      "matchFileNames": [".node-version"],
       "enabled": false
     },
     {

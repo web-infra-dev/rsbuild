@@ -87,9 +87,7 @@ describe('plugins/react', () => {
     rsbuild.addPlugins([pluginReact()]);
 
     const config = await rsbuild.initConfigs();
-    expect(
-      matchPlugin(config[0], 'ReactRefreshRspackPlugin'),
-    ).toMatchSnapshot();
+    expect(matchPlugin(config[0], 'ReactRefreshRspackPlugin')).toMatchSnapshot();
   });
 
   it('should not apply react refresh when target is node', async () => {
@@ -162,8 +160,36 @@ describe('plugins/react', () => {
       }),
     ]);
     const config = await rsbuild.initConfigs();
-    expect(JSON.stringify(config[0])).toContain(
-      `"importSource":"@emotion/react"`,
+    expect(JSON.stringify(config[0])).toContain(`"importSource":"@emotion/react"`);
+  });
+
+  it('should allow to enable react compiler', async () => {
+    const rsbuild = await createRsbuild();
+
+    rsbuild.addPlugins([
+      pluginReact({
+        reactCompiler: true,
+      }),
+    ]);
+    const config = await rsbuild.initConfigs();
+
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(`"reactCompiler":true`);
+  });
+
+  it('should allow to configure react compiler', async () => {
+    const rsbuild = await createRsbuild();
+
+    rsbuild.addPlugins([
+      pluginReact({
+        reactCompiler: {
+          target: '18',
+        },
+      }),
+    ]);
+    const config = await rsbuild.initConfigs();
+
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
+      `"reactCompiler":{"target":"18"}`,
     );
   });
 
@@ -189,8 +215,7 @@ describe('plugins/react', () => {
         environment: 'web',
       },
     );
-    const { bundlerConfigs, environmentConfigs } =
-      await rsbuild.inspectConfig();
+    const { bundlerConfigs, environmentConfigs } = await rsbuild.inspectConfig();
 
     expect(bundlerConfigs[0]).toContain('lib-react');
     expect(environmentConfigs[0]).toContain('keep_classnames');

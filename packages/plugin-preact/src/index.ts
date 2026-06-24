@@ -1,5 +1,6 @@
 import { createRequire } from 'node:module';
 import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
+import type { PluginOptions as PreactRefreshOptions } from '@rspack/plugin-preact-refresh';
 
 const require = createRequire(import.meta.url);
 
@@ -15,48 +16,38 @@ export type PluginPreactOptions = {
    */
   prefreshEnabled?: boolean;
   /**
-   * Include files to be processed by the `@rspack/plugin-preact-refresh` plugin.
-   * The value is the same as the `rules[].test` option in Rspack.
-   * @default /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/
+   * Options passed to `@rspack/plugin-preact-refresh`.
+   * @see https://github.com/rstackjs/rspack-plugin-preact-refresh
    */
-  include?: Rspack.RuleSetCondition;
-  /**
-   * Exclude files from being processed by the `@rspack/plugin-preact-refresh` plugin.
-   * The value is the same as the `rules[].exclude` option in Rspack.
-   * @default /[\\/]node_modules[\\/]/
-   */
-  exclude?: Rspack.RuleSetCondition;
+  preactRefreshOptions?: PreactRefreshOptions;
 };
 
 export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
 
-export const pluginPreact = (
-  userOptions: PluginPreactOptions = {},
-): RsbuildPlugin => ({
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-preact" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-preact" v1.`,
+    );
+  }
+}
+
+export const pluginPreact = (userOptions: PluginPreactOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_PREACT_NAME,
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     const options = {
-      include: /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
-      exclude: /[\\/]node_modules[\\/]/,
       prefreshEnabled: true,
       reactAliasesEnabled: true,
       ...userOptions,
     };
 
-    // @rspack/plugin-preact-refresh does not support Windows yet
-    if (process.platform === 'win32') {
-      options.prefreshEnabled = false;
-    }
-
     api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
       const isDev = config.mode === 'development';
-      const isV1 = api.context.version.startsWith('1.');
       const usePrefresh =
-        isDev &&
-        options.prefreshEnabled &&
-        config.dev.hmr &&
-        config.output.target === 'web';
+        isDev && options.prefreshEnabled && config.dev.hmr && config.output.target === 'web';
 
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
         development: config.mode === 'development',
@@ -69,19 +60,8 @@ export const pluginPreact = (
         tools: {
           swc: {
             jsc: {
-              ...(isV1
-                ? {
-                    parser: {
-                      syntax: 'typescript',
-                      // enable supports for JSX/TSX compilation
-                      tsx: true,
-                    },
-                  }
-                : {}),
               experimental: {
-                plugins: usePrefresh
-                  ? [[require.resolve('@swc/plugin-prefresh'), {}]]
-                  : undefined,
+                plugins: usePrefresh ? [[require.resolve('@swc/plugin-prefresh'), {}]] : undefined,
               },
               transform: {
                 react: reactOptions,
@@ -96,9 +76,7 @@ export const pluginPreact = (
 
       if (usePrefresh) {
         // transpile `@prefresh/core` and `@prefresh/utils` to ensure browser compatibility
-        extraConfig.source.include = [
-          /node_modules[\\/]@prefresh[\\/](core|utils)/,
-        ];
+        extraConfig.source.include = [/node_modules[\\/]@prefresh[\\/](core|utils)/];
       }
 
       if (options.reactAliasesEnabled) {
@@ -115,24 +93,21 @@ export const pluginPreact = (
 
     api.modifyBundlerChain(async (chain, { isDev, target }) => {
       const config = api.getNormalizedConfig();
-      const usePrefresh =
-        isDev && options.prefreshEnabled && config.dev.hmr && target === 'web';
+      const usePrefresh = isDev && options.prefreshEnabled && config.dev.hmr && target === 'web';
 
       if (!usePrefresh) {
         return;
       }
 
-      const { default: PreactRefreshPlugin } =
-        await import('@rspack/plugin-preact-refresh');
+      const { PreactRefreshRspackPlugin } = await import('@rspack/plugin-preact-refresh');
 
       const preactPath = require.resolve('preact', {
         paths: [api.context.rootPath],
       });
 
-      chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
+      chain.plugin('preact-refresh').use(PreactRefreshRspackPlugin, [
         {
-          include: options.include,
-          exclude: options.exclude,
+          ...options.preactRefreshOptions,
           preactPath,
         },
       ]);

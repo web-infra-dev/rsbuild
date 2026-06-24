@@ -23,18 +23,13 @@ export const build = async (
   });
 
   if (watch) {
-    const watchOptions: WatchOptions[] = rspackConfigs.map(
-      (options) => options.watchOptions || {},
-    );
+    const watchOptions: WatchOptions[] = rspackConfigs.map((options) => options.watchOptions || {});
 
-    compiler.watch(
-      watchOptions.length > 1 ? watchOptions : watchOptions[0] || {},
-      (err) => {
-        if (err) {
-          logger.error(err);
-        }
-      },
-    );
+    compiler.watch(watchOptions.length > 1 ? watchOptions : watchOptions[0] || {}, (err) => {
+      if (err) {
+        logger.error(err);
+      }
+    });
 
     return {
       close: () =>

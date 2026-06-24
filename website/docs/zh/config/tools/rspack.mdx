@@ -135,10 +135,11 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    rspack: (chain, { isProd }) => {
+    rspack: (config, { isProd }) => {
       if (isProd) {
-        chain.devtool('source-map');
+        config.devtool = 'source-map';
       }
+      return config;
     },
   },
 };
@@ -247,7 +248,7 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    rspack: (chain, { environments }) => {
+    rspack: (config, { environments }) => {
       console.log(environments);
     },
   },

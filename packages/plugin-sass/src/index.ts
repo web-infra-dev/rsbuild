@@ -14,23 +14,28 @@ export const PLUGIN_SASS_NAME = 'rsbuild:sass';
 
 export type { PluginSassOptions };
 
-const getSassLoaderOptions = (
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-sass" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-sass" v1.`,
+    );
+  }
+}
+
+const getSassLoaderOptions = async (
   userOptions: PluginSassOptions['sassLoaderOptions'],
   isUseCssSourceMap: boolean,
-): {
+): Promise<{
   options: SassLoaderOptions;
   excludes: (RegExp | string)[];
-} => {
+}> => {
   const excludes: (RegExp | string)[] = [];
 
   const addExcludes = (items: string | RegExp | (string | RegExp)[]) => {
     excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 
-  const mergeFn = (
-    defaults: SassLoaderOptions,
-    userOptions: SassLoaderOptions,
-  ) => {
+  const mergeFn = (defaults: SassLoaderOptions, userOptions: SassLoaderOptions) => {
     const getSassOptions = () => {
       if (defaults.sassOptions && userOptions.sassOptions) {
         return deepmerge<SassLoaderOptions['sassOptions']>(
@@ -48,7 +53,7 @@ const getSassLoaderOptions = (
     };
   };
 
-  const mergedOptions = reduceConfigsWithContext({
+  const mergedOptions = await reduceConfigsWithContext({
     initial: {
       sourceMap: isUseCssSourceMap,
       api: 'modern-compiler',
@@ -92,12 +97,12 @@ const findRuleId = (chain: RspackChain, defaultId: string) => {
   return id;
 };
 
-export const pluginSass = (
-  pluginOptions: PluginSassOptions = {},
-): RsbuildPlugin => ({
+export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_SASS_NAME,
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     const { rewriteUrls = true, include = /\.s(?:a|c)ss$/ } = pluginOptions;
 
     const CSS_MAIN = 'css';
@@ -107,19 +112,17 @@ export const pluginSass = (
     const SASS_URL = 'sass-url';
     const SASS_INLINE = 'sass-inline';
     const SASS_RAW = 'sass-raw';
-    const isV1 = api.context.version.startsWith('1.');
 
     api.onAfterCreateCompiler(({ compiler }) => {
       patchCompilerGlobalLocation(compiler);
     });
 
-    api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
       const { sourceMap } = config.output;
-      const isUseSourceMap =
-        typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
+      const isUseSourceMap = typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
 
-      const { excludes, options } = getSassLoaderOptions(
+      const { excludes, options } = await getSassLoaderOptions(
         pluginOptions.sassLoaderOptions,
         // If `rewriteUrls` is true, source maps are required for loaders that run before
         // `resolve-url-loader`, otherwise the `resolve-url-loader` will throw an error.
@@ -137,16 +140,7 @@ export const pluginSass = (
       const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
       const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
 
-      if (isV1) {
-        chain.module.rule(SASS_RAW).test(include);
-        chain.module.rule(SASS_INLINE).test(include);
-      }
-
       const getRule = (id: string) => {
-        // Compatibility for Rsbuild v1
-        if (isV1) {
-          return chain.module.rule(id);
-        }
         return (id.startsWith('sass') ? sassRule : cssRule).oneOf(id);
       };
 
@@ -157,9 +151,7 @@ export const pluginSass = (
       const sassInlineRule = getRule(SASS_INLINE);
 
       // Raw Sass for `?raw` imports
-      getRule(SASS_RAW)
-        .type('asset/source')
-        .resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
+      getRule(SASS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
 
       // Main Sass transform
       const sassMainRule = getRule(SASS_MAIN);
@@ -179,15 +171,9 @@ export const pluginSass = (
         callback(sassInlineRule, getRule(CSS_INLINE), 'inline');
       };
 
-      const sassLoaderPath = path.join(
-        __dirname,
-        '../compiled/sass-loader/index.js',
-      );
+      const sassLoaderPath = path.join(__dirname, '../compiled/sass-loader/index.js');
 
-      const resolveUrlLoaderPath = path.join(
-        __dirname,
-        '../compiled/resolve-url-loader/index.js',
-      );
+      const resolveUrlLoaderPath = path.join(__dirname, '../compiled/resolve-url-loader/index.js');
 
       const resolveUrlLoaderOptions = {
         join: getResolveUrlJoinFn(),

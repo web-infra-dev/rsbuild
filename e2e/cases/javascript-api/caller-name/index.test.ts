@@ -1,8 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to set caller name and use it in plugins', async ({
-  build,
-}) => {
+test('should allow to set caller name and use it in plugins', async ({ build }) => {
   let callerName = '';
   await build({
     callerName: 'foo',

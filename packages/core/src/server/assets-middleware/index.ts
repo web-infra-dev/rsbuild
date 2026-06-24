@@ -7,13 +7,8 @@
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
 
-import { join } from 'node:path';
-import {
-  type Compiler,
-  type MultiCompiler,
-  rspack,
-  type Watching,
-} from '@rspack/core';
+import { isAbsolute, join } from 'node:path';
+import { type Compiler, type MultiCompiler, rspack, type Watching } from '@rspack/core';
 import { CLIENT_PATH } from '../../constants';
 import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
@@ -29,7 +24,7 @@ import type {
 } from '../../types';
 import { resolveHostname } from './../hmrFallback';
 import type { SocketServer } from '../socketServer';
-import { createMiddleware } from './middleware';
+import { createAssetsMiddleware } from './middleware';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
 import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
 
@@ -37,9 +32,7 @@ const noop = () => {};
 
 export type MultiWatching = ReturnType<MultiCompiler['watch']>;
 
-export type AssetsMiddlewareClose = (
-  callback: (err?: Error | null) => void,
-) => void;
+export type AssetsMiddlewareClose = (callback: (err?: Error | null) => void) => void;
 
 export type AssetsMiddleware = RequestHandler & {
   watch: () => void;
@@ -147,14 +140,10 @@ export const setupServerHooks = ({
         type: 'errors' | 'warnings',
         sendFn: (issues: Rspack.StatsError[], token: string) => void,
       ) => {
-        const statsIssues = issues.map((item) =>
-          pick(item, ['message', 'file']),
-        );
+        const statsIssues = issues.map((item) => pick(item, ['message', 'file']));
 
         if (statsJson) {
-          statsJson[type] = statsJson[type]
-            ? [...statsJson[type], ...statsIssues]
-            : statsIssues;
+          statsJson[type] = statsJson[type] ? [...statsJson[type], ...statsIssues] : statsIssues;
         }
 
         sendFn(statsIssues, token);
@@ -190,24 +179,25 @@ function applyHMREntry({
   resolvedHost: string;
   resolvedPort: number;
 }) {
-  if (
-    !isClientCompiler(compiler) ||
-    (!config.dev.hmr && !config.dev.liveReload)
-  ) {
+  if (!isClientCompiler(compiler) || (!config.dev.hmr && !config.dev.liveReload)) {
     return;
   }
 
-  const { enabled: liveReloadEnabled } = normalizeLiveReload(
-    config.dev.liveReload,
-  );
+  const { enabled: liveReloadEnabled } = normalizeLiveReload(config.dev.liveReload);
 
-  const clientConfig = { ...config.dev.client };
+  const { webSocketUrlResolver, ...clientConfig } = { ...config.dev.client };
   if (clientConfig.port === '<port>') {
     clientConfig.port = resolvedPort;
   }
 
+  const resolverPath =
+    webSocketUrlResolver && !isAbsolute(webSocketUrlResolver)
+      ? join(compiler.context, webSocketUrlResolver)
+      : webSocketUrlResolver;
+
   const hmrEntry = `import { init } from '${toPosixPath(join(CLIENT_PATH, 'hmr.js'))}';
 ${isOverlayEnabled(config.dev.client.overlay) ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay.js'))}';` : ''}
+${resolverPath ? `import urlResolver from ${JSON.stringify(toPosixPath(resolverPath))};` : ''}
 init(
   '${token}',
   ${JSON.stringify(clientConfig)},
@@ -216,7 +206,7 @@ init(
   ${JSON.stringify(config.server.base)},
   ${liveReloadEnabled},
   ${Boolean(config.dev.browserLogs)},
-  ${JSON.stringify(config.dev.client.logLevel)}
+  ${JSON.stringify(config.dev.client.logLevel)}${resolverPath ? ',\n  urlResolver' : ''}
 )
 `;
 
@@ -295,11 +285,7 @@ export const assetsMiddleware = async ({
     });
   });
 
-  const writeToDisk = resolveWriteToDiskConfig(
-    config.dev,
-    environments,
-    environmentList,
-  );
+  const writeToDisk = resolveWriteToDiskConfig(config.dev, environments, environmentList);
   if (writeToDisk) {
     setupWriteToDisk(compilers, writeToDisk, logger);
   }
@@ -314,11 +300,7 @@ export const assetsMiddleware = async ({
     }
   };
 
-  const instance = createMiddleware(
-    context,
-    ready,
-    outputFileSystem,
-  ) as AssetsMiddleware;
+  const instance = createAssetsMiddleware(context, ready, outputFileSystem) as AssetsMiddleware;
 
   let watching: Watching | MultiWatching | undefined;
 

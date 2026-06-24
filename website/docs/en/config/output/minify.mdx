@@ -10,9 +10,9 @@ description: 'Controls whether code minification is enabled, and provides config
 type Minify =
   | boolean
   | {
-      js?: boolean;
+      js?: boolean | 'always';
       jsOptions?: Rspack.SwcJsMinimizerRspackPluginOptions;
-      css?: boolean;
+      css?: boolean | 'always';
       cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
     };
 ```
@@ -192,17 +192,17 @@ When you configure options in [tools.lightningcssLoader](/config/tools/lightning
 
 If the default SWC minifier doesn't meet your needs, you can switch to other minifiers using the [tools.bundlerChain](/config/tools/bundler-chain) option.
 
-For example, use [terser-webpack-plugin](https://github.com/terser/terser-webpack-plugin) to switch to Terser or esbuild.
+For example, use [minimizer-webpack-plugin](https://github.com/webpack/minimizer-webpack-plugin) to switch to Terser or esbuild.
 
 - Use [terser](https://github.com/terser/terser) to minify JS code:
 
 ```ts title="rsbuild.config.ts"
-import TerserPlugin from 'terser-webpack-plugin';
+import MinimizerPlugin from 'minimizer-webpack-plugin';
 
 export default {
   tools: {
     bundlerChain(chain, { CHAIN_ID }) {
-      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(MinimizerPlugin, [
         {
           // options
         },
@@ -215,14 +215,14 @@ export default {
 - Use [esbuild](https://github.com/evanw/esbuild) to minify JS code, you need to install the `esbuild` package and set `esbuildMinify`:
 
 ```ts title="rsbuild.config.ts"
-import TerserPlugin from 'terser-webpack-plugin';
+import MinimizerPlugin from 'minimizer-webpack-plugin';
 
 export default {
   tools: {
     bundlerChain(chain, { CHAIN_ID }) {
-      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(MinimizerPlugin, [
         {
-          minify: TerserPlugin.esbuildMinify,
+          minify: MinimizerPlugin.esbuildMinify,
         },
       ]);
     },

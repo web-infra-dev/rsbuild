@@ -97,10 +97,7 @@ In most cases, you do not need to use `prefer-alias`, but you can consider using
 export default {
   resolve: {
     alias: {
-      '@common':
-        process.env.NODE_ENV === 'production'
-          ? './src/common-prod'
-          : './src/common-dev',
+      '@common': process.env.NODE_ENV === 'production' ? './src/common-prod' : './src/common-dev',
     },
   },
 };

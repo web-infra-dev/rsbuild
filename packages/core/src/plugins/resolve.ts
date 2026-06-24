@@ -3,13 +3,9 @@ import { reduceConfigs } from 'reduce-configs';
 import { castArray, color, require } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import type { Logger } from '../logger';
-import type {
-  NormalizedEnvironmentConfig,
-  RsbuildPlugin,
-  RspackChain,
-} from '../types';
+import type { NormalizedEnvironmentConfig, RsbuildPlugin, RspackChain } from '../types';
 
-function applyAlias({
+async function applyAlias({
   chain,
   config,
   rootPath,
@@ -20,7 +16,7 @@ function applyAlias({
   rootPath: string;
   logger: Logger;
 }) {
-  const mergedAlias = reduceConfigs({
+  const mergedAlias = await reduceConfigs({
     initial: {},
     config: config.resolve.alias,
   });
@@ -59,10 +55,7 @@ function applyAlias({
 
           // Ensure the package path is `node_modules/@scope/package-name`
           const trailing = ['node_modules', ...pkgName.split('/')].join(sep);
-          while (
-            !pkgPath.endsWith(trailing) &&
-            pkgPath.includes('node_modules')
-          ) {
+          while (!pkgPath.endsWith(trailing) && pkgPath.includes('node_modules')) {
             pkgPath = dirname(pkgPath);
           }
         } catch {
@@ -97,9 +90,7 @@ function applyAlias({
 
     chain.resolve.alias.set(
       name,
-      (formattedValues.length === 1 ? formattedValues[0] : formattedValues) as
-        | string
-        | string[],
+      (formattedValues.length === 1 ? formattedValues[0] : formattedValues) as string | string[],
     );
   }
 }
@@ -110,7 +101,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: (chain, { environment, CHAIN_ID }) => {
+      handler: async (chain, { environment, CHAIN_ID }) => {
         const { config, tsconfigPath } = environment;
         const { extensions, conditionNames, mainFields } = config.resolve;
 
@@ -123,8 +114,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
           chain.resolve.mainFields.merge([...mainFields]);
         }
 
-        const isTsProject =
-          tsconfigPath && !tsconfigPath.endsWith('jsconfig.json');
+        const isTsProject = tsconfigPath && !tsconfigPath.endsWith('jsconfig.json');
         if (isTsProject) {
           // TypeScript allows importing TS files with `.js` extension
           // See: https://github.com/microsoft/TypeScript/blob/c09e2ab4/src/compiler/moduleNameResolver.ts#L2151-L2168
@@ -133,7 +123,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
             .set('.jsx', ['.jsx', '.tsx']);
         }
 
-        applyAlias({
+        await applyAlias({
           chain,
           config,
           rootPath: api.context.rootPath,

@@ -142,12 +142,10 @@ export default {
 const { add } = await import('./add.ts');
 ```
 
-如果你希望为异步模块指定一个固定的名称，可以通过 Rspack 提供的 [magic comments](https://rspack.rs/zh/api/runtime-api/module-methods#magic-comments) 来实现，通过 `webpackChunkName` 指定模块名称：
+如果你希望为异步模块指定一个固定的名称，可以通过 Rspack 提供的 [magic comments](https://rspack.rs/zh/api/runtime-api/module-methods#magic-comments) 来实现，通过 `rspackChunkName` 指定模块名称：
 
 ```js title="src/index.ts"
-const { add } = await import(
-  /* webpackChunkName: "my-chunk-name" */ './add.ts'
-);
+const { add } = await import(/* rspackChunkName: "my-chunk-name" */ './add.ts');
 ```
 
 通过以上写法指定模块名称后，生成的文件会是 `dist/static/js/async/my-chunk-name.js`。

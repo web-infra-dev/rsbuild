@@ -13,9 +13,7 @@ function formatErrorMessage(errors: string[]) {
     return `Build failed. No errors reported since Rspack's "stats.errors" is disabled.`;
   }
 
-  const title = color.bold(
-    color.red(errors.length > 1 ? 'Build errors: ' : 'Build error: '),
-  );
+  const title = color.bold(color.red(errors.length > 1 ? 'Build errors: ' : 'Build error: '));
   const text = ensureTrailingNewline(errors.join('\n\n'));
   return `${title}\n${text}`;
 }
@@ -25,10 +23,7 @@ function formatErrorMessage(errors: string[]) {
  * If stats has no errors, return child errors, as some errors exist in both
  * stats and childCompiler
  */
-export const getStatsErrors = ({
-  errors,
-  children,
-}: RsbuildStats): Rspack.StatsError[] => {
+export const getStatsErrors = ({ errors, children }: RsbuildStats): Rspack.StatsError[] => {
   if (errors !== undefined && errors.length > 0) {
     return errors;
   }
@@ -43,18 +38,14 @@ export const getStatsErrors = ({
   return [];
 };
 
-export const getStatsWarnings = ({
-  warnings,
-  children,
-}: RsbuildStats): Rspack.StatsError[] => {
+export const getStatsWarnings = ({ warnings, children }: RsbuildStats): Rspack.StatsError[] => {
   if (warnings !== undefined && warnings.length > 0) {
     return warnings;
   }
 
   if (children) {
     return children.reduce<Rspack.StatsError[]>(
-      (warnings, ret) =>
-        ret.warnings ? warnings.concat(ret.warnings) : warnings,
+      (warnings, ret) => (ret.warnings ? warnings.concat(ret.warnings) : warnings),
       [],
     );
   }
@@ -132,9 +123,7 @@ export function formatStats(
 } {
   if (hasErrors) {
     const errors = getStatsErrors(stats);
-    const errorMessages = errors.map((item) =>
-      formatStatsError(item, root, 'error', logger),
-    );
+    const errorMessages = errors.map((item) => formatStatsError(item, root, 'error', logger));
     return {
       message: formatErrorMessage(errorMessages),
       level: 'error',
@@ -142,15 +131,11 @@ export function formatStats(
   }
 
   const warnings = getStatsWarnings(stats);
-  const warningMessages = warnings.map((item) =>
-    formatStatsError(item, root, 'warning', logger),
-  );
+  const warningMessages = warnings.map((item) => formatStatsError(item, root, 'warning', logger));
 
   if (warningMessages.length) {
     const title = color.bold(
-      color.yellow(
-        warningMessages.length > 1 ? 'Build warnings: \n' : 'Build warning: \n',
-      ),
+      color.yellow(warningMessages.length > 1 ? 'Build warnings: \n' : 'Build warning: \n'),
     );
 
     return {
@@ -166,10 +151,7 @@ export function formatStats(
  * Remove the loader chain delimiter from the module identifier.
  * @example ./src/index.js!=!/node_modules/my-loader/index.js -> ./src/index.js
  */
-export const removeLoaderChainDelimiter = (
-  moduleId: string,
-  logger: Logger,
-): string => {
+export const removeLoaderChainDelimiter = (moduleId: string, logger: Logger): string => {
   if (isVerbose(logger)) {
     return moduleId;
   }
