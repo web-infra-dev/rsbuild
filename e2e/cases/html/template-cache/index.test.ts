@@ -46,17 +46,13 @@ test('should not re-compile templates when the template is not changed', async (
   expect(count).toEqual(2);
 
   // Re-compile the template when the template is changed
-  await editFile(join(tempSrc, 'index.html'), (code) =>
-    code.replace('foo', 'foo2'),
-  );
+  await editFile(join(tempSrc, 'index.html'), (code) => code.replace('foo', 'foo2'));
   await expect(page.locator('#root')).toHaveText('foo2');
   // The count will be 4 as the childCompiler in html-rspack-plugin
   // will compile all the templates
   expect(count).toEqual(4);
 
-  await editFile(join(tempSrc, 'index.js'), (code) =>
-    code.replace('foo', 'foo3'),
-  );
+  await editFile(join(tempSrc, 'index.js'), (code) => code.replace('foo', 'foo3'));
   await expect(page.locator('#content')).toHaveText('foo3');
   // The count should not change if the templates are not changed
   expect(count).toEqual(4);

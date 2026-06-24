@@ -41,10 +41,7 @@ function makeBox(title: string) {
   };
 }
 
-type EditFile = (
-  filename: string,
-  replacer: (code: string) => string,
-) => Promise<void>;
+type EditFile = (filename: string, replacer: (code: string) => string) => Promise<void>;
 
 type Exec = (
   command: string,
@@ -181,17 +178,11 @@ type Close = DevResult['close'];
 
 type Use<T> = (value: T) => Promise<void>;
 
-type RsbuildFixtureContext<K extends keyof RsbuildFixture> = Omit<
-  RsbuildFixture,
-  K
-> &
+type RsbuildFixtureContext<K extends keyof RsbuildFixture> = Omit<RsbuildFixture, K> &
   PlaywrightFixture &
   TestContext;
 
-const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
-  options: T,
-  cwd: string,
-): T => {
+const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(options: T, cwd: string): T => {
   // inherit process.env from current process
   const { NODE_ENV: _, ...restEnv } = process.env;
   options.env ||= {};
@@ -295,10 +286,7 @@ const rsbuildTest = base.extend<RsbuildFixture>({
     }
   },
 
-  runBoth: async (
-    { devOnly, build }: RsbuildFixtureContext<'runBoth'>,
-    use: Use<RunBoth>,
-  ) => {
+  runBoth: async ({ devOnly, build }: RsbuildFixtureContext<'runBoth'>, use: Use<RunBoth>) => {
     const runBoth: RunBoth = async (assert, options) => {
       const devResult = await devOnly(options);
       await assert({ mode: 'dev', result: devResult });
@@ -321,24 +309,16 @@ const rsbuildTest = base.extend<RsbuildFixture>({
     await use(runBothServe);
   },
 
-  editFile: async (
-    { cwd }: RsbuildFixtureContext<'editFile'>,
-    use: Use<EditFile>,
-  ) => {
+  editFile: async ({ cwd }: RsbuildFixtureContext<'editFile'>, use: Use<EditFile>) => {
     const editFile: EditFile = async (filename, replacer) => {
-      const resolvedFilename = path.isAbsolute(filename)
-        ? filename
-        : path.resolve(cwd, filename);
+      const resolvedFilename = path.isAbsolute(filename) ? filename : path.resolve(cwd, filename);
       const code = await promises.readFile(resolvedFilename, 'utf-8');
       return promises.writeFile(resolvedFilename, replacer(code));
     };
     await use(editFile);
   },
 
-  exec: async (
-    { cwd, logHelper }: RsbuildFixtureContext<'exec'>,
-    use: Use<Exec>,
-  ) => {
+  exec: async ({ cwd, logHelper }: RsbuildFixtureContext<'exec'>, use: Use<Exec>) => {
     let close: (() => void) | undefined;
 
     const exec: Exec = (command, options = {}) => {
@@ -364,20 +344,14 @@ const rsbuildTest = base.extend<RsbuildFixture>({
     close?.();
   },
 
-  execCli: async (
-    { exec }: RsbuildFixtureContext<'execCli'>,
-    use: Use<Exec>,
-  ) => {
+  execCli: async ({ exec }: RsbuildFixtureContext<'execCli'>, use: Use<Exec>) => {
     const execCli: Exec = (command, options = {}) => {
       return exec(`node ${RSBUILD_BIN_PATH} ${command}`, options);
     };
     await use(execCli);
   },
 
-  execCliSync: async (
-    { cwd }: RsbuildFixtureContext<'execCliSync'>,
-    use: Use<ExecSync>,
-  ) => {
+  execCliSync: async ({ cwd }: RsbuildFixtureContext<'execCliSync'>, use: Use<ExecSync>) => {
     const execCliSync: ExecSync = (command, options = {}) => {
       return execSync(
         `node ${RSBUILD_BIN_PATH} ${command}`,
