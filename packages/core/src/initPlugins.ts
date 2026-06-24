@@ -130,12 +130,48 @@ export function initPluginAPI({
     }
   }) as GetRsbuildConfig;
 
-  const exposed = new Map<string | symbol, any>();
-
-  const expose = (id: string | symbol, api: any) => {
-    exposed.set(id, api);
+  type ExposedAPI = {
+    environment?: string;
+    api: unknown;
   };
-  const useExposed = (id: string | symbol) => exposed.get(id);
+
+  const exposed = new Map<string | symbol, ExposedAPI[]>();
+
+  const expose: RsbuildPluginAPI['expose'] = (id, api, options) => {
+    const environment = options?.environment;
+    const exposedAPIs = exposed.get(id) ?? [];
+    const index = exposedAPIs.findIndex((item) => item.environment === environment);
+    const item = { environment, api };
+
+    if (index === -1) {
+      exposedAPIs.push(item);
+    } else {
+      exposedAPIs[index] = item;
+    }
+
+    exposed.set(id, exposedAPIs);
+  };
+
+  const createUseExposed =
+    (currentEnvironment?: string): RsbuildPluginAPI['useExposed'] =>
+    <T>(id: string | symbol) => {
+      const exposedAPIs = exposed.get(id);
+
+      if (!exposedAPIs) {
+        return undefined;
+      }
+
+      if (currentEnvironment) {
+        const matched = exposedAPIs.find((item) => item.environment === currentEnvironment);
+
+        if (matched) {
+          return matched.api as T;
+        }
+      }
+
+      return exposedAPIs.find((item) => isEnvironmentMatch(item.environment, currentEnvironment))
+        ?.api as T | undefined;
+    };
 
   let transformId = 0;
   const transformer: Record<string, TransformHandler<boolean>> = {};
@@ -316,7 +352,7 @@ export function initPluginAPI({
     expose,
     logger: context.logger,
     transform: getTransformHook(environment),
-    useExposed,
+    useExposed: createUseExposed(environment),
     processAssets: setProcessAssets(environment),
     resolve: setResolve(environment),
     getRsbuildConfig,

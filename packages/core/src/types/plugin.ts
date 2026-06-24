@@ -238,6 +238,14 @@ export type GetRsbuildConfig = {
   (type: 'normalized'): NormalizedConfig;
 };
 
+export type ExposeOptions = {
+  /**
+   * Register the exposed API for a specific environment.
+   * If omitted, the API is registered as global.
+   */
+  environment?: string;
+};
+
 type PluginHook<T extends (...args: any[]) => any> = (options: T | HookDescriptor<T>) => void;
 
 type TransformResult =
@@ -497,7 +505,7 @@ export type RsbuildPluginAPI = Readonly<{
    * Explicitly expose some properties or methods of the current plugin,
    * and other plugins can get these APIs through `api.useExposed`.
    */
-  expose: <T = any>(id: string | symbol, api: T) => void;
+  expose: <T = any>(id: string | symbol, api: T, options?: ExposeOptions) => void;
   /**
    * Get the Rsbuild config, this method must be called after the
    * `modifyRsbuildConfig` hook is executed.
@@ -660,6 +668,10 @@ export type RsbuildPluginAPI = Readonly<{
   transform: TransformHook;
   /**
    * Get the properties or methods exposed by other plugins.
+   *
+   * If the current plugin is registered in an environment, Rsbuild will
+   * first resolve the exposed API registered for the same environment,
+   * then fallback to the global exposed API.
    */
   useExposed: <T = any>(id: string | symbol) => T | undefined;
 }>;
