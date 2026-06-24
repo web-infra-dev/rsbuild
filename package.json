@@ -7,7 +7,7 @@
     "scripts/*"
   ],
   "scripts": {
-    "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
+    "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10",
     "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && pnpm dev",
@@ -17,8 +17,8 @@
     "format": "prettier --experimental-cli --write . && heading-case --write",
     "lint": "biome check && pnpm lint:type",
     "lint:type": "rslint",
-    "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
-    "prepare": "simple-git-hooks && node --run prebundle",
+    "prebundle": "nx run-many -t prebundle",
+    "prepare": "simple-git-hooks && pnpm build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "rstest",
     "test:watch": "rstest watch"
@@ -45,6 +45,7 @@
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.7",
     "nano-staged": "^0.9.0",
+    "nx": "^22.3.3",
     "prettier": "^3.7.4",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3"

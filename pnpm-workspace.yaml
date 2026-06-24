@@ -15,6 +15,7 @@ hoistPattern: []
 allowBuilds:
   '@parcel/watcher': false
   core-js: false
+  nx: false
   simple-git-hooks: false
   svelte-preprocess: false
 
