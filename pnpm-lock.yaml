@@ -5,21 +5,11 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  css-loader@7.1.2:
-    hash: f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6
-    path: patches/css-loader@7.1.2.patch
-  file-loader:
-    hash: c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30
-    path: patches/file-loader@6.2.0.patch
-  http-proxy@1.18.1:
-    hash: 424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723
-    path: patches/http-proxy@1.18.1.patch
-  postcss-loader@8.2.0:
-    hash: 7434af0286aadb1ef0e2daed0d97ebc69f717990e106d650e6e515683e89988a
-    path: patches/postcss-loader@8.2.0.patch
-  url-loader:
-    hash: 4ed67f741914e665ed1dcef907caaa2acc85269026674133f7b987661de3591f
-    path: patches/url-loader@4.1.1.patch
+  css-loader@7.1.2: f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6
+  file-loader: c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30
+  http-proxy@1.18.1: 424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723
+  postcss-loader@8.2.0: 7434af0286aadb1ef0e2daed0d97ebc69f717990e106d650e6e515683e89988a
+  url-loader: 4ed67f741914e665ed1dcef907caaa2acc85269026674133f7b987661de3591f
 
 importers:
 
