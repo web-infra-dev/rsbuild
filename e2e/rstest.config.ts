@@ -11,6 +11,7 @@ const isCI = Boolean(process.env.CI);
 export default defineConfig({
   include: ['cases/**/*.test.ts'],
   exclude: ['**/node_modules/**', '**/.*/**', '**/test-temp-*/**'],
+  isolate: false,
   reporters: 'default',
   retry: isCI ? 3 : 0,
   testTimeout: 30_000,

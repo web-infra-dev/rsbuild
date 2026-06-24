@@ -13,19 +13,12 @@ import {
   beforeAll as rstestBeforeAll,
   beforeEach as rstestBeforeEach,
   describe as rstestDescribe,
-  expect as rstestExpect,
+  expect,
   test as base,
-} from '@rstest/core';
-import type { Assertion, ExpectStatic } from '@rstest/core';
+} from '@rstest/playwright';
+import type { PlaywrightFixture } from '@rstest/playwright';
+import type { TestContext } from '@rstest/core';
 import fse from 'fs-extra';
-import { chromium, request as playwrightRequest } from 'playwright';
-import type {
-  APIRequestContext,
-  Browser,
-  BrowserContext,
-  Locator,
-  Page,
-} from 'playwright';
 import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
   type Build,
@@ -38,9 +31,6 @@ import {
   type DevResult,
 } from './jsApi.ts';
 import { type ExtendedLogHelper, proxyConsole } from './logs.ts';
-
-const DEFAULT_EXPECT_TIMEOUT = 5000;
-const EXPECT_POLL_INTERVAL = 50;
 
 function makeBox(title: string) {
   const header = `╭────────────  Logs from: "${title}" ────────────╮`;
@@ -180,331 +170,14 @@ type RsbuildFixture = {
 
 type Close = DevResult['close'];
 
-type BrowserFixture = {
-  browser: Browser;
-  context: BrowserContext;
-  page: Page;
-  request: APIRequestContext;
-};
+type Use<T> = (value: T) => Promise<void>;
 
-type E2EFixture = RsbuildFixture & BrowserFixture;
-
-type TextMatcher = string | RegExp;
-type TextExpectation = TextMatcher | TextMatcher[];
-type MatcherOptions = {
-  timeout?: number;
-};
-
-type LocatorAssertions = {
-  readonly not: LocatorAssertions;
-  toBeAttached: (options?: MatcherOptions) => Promise<void>;
-  toContainText: (
-    expected: TextMatcher,
-    options?: MatcherOptions,
-  ) => Promise<void>;
-  toHaveCSS: (
-    propertyName: string,
-    expected: string,
-    options?: MatcherOptions,
-  ) => Promise<void>;
-  toHaveCount: (expected: number, options?: MatcherOptions) => Promise<void>;
-  toHaveText: (
-    expected: TextExpectation,
-    options?: MatcherOptions,
-  ) => Promise<void>;
-};
-
-type PageAssertions = {
-  readonly not: PageAssertions;
-  toHaveTitle: (
-    expected: TextMatcher,
-    options?: MatcherOptions,
-  ) => Promise<void>;
-};
-
-type E2EAssertion<T> = Assertion<T> & LocatorAssertions & PageAssertions;
-
-type E2EExpectStatic = Omit<ExpectStatic, 'soft'> & {
-  <T>(actual: T, message?: string): E2EAssertion<T>;
-  soft: <T>(actual: T, message?: string) => E2EAssertion<T>;
-};
-
-let browserPromise: Promise<Browser> | undefined;
-
-const getBrowser = () => {
-  browserPromise ??= chromium.launch({
-    // Preserve the previous Playwright CI behavior.
-    channel: process.env.CI ? 'chrome' : undefined,
-  });
-  return browserPromise;
-};
-
-const closeBrowser = async () => {
-  if (!browserPromise) {
-    return;
-  }
-  const browser = await browserPromise;
-  browserPromise = undefined;
-  await browser.close();
-};
-
-rstestAfterAll(closeBrowser);
-
-const sleep = (ms: number) =>
-  new Promise<void>((resolve) => {
-    setTimeout(resolve, ms);
-  });
-
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null;
-
-const hasFunction = <K extends string>(
-  value: unknown,
-  key: K,
-): value is Record<K, (...args: never[]) => unknown> =>
-  isRecord(value) && typeof value[key] === 'function';
-
-const isLocator = (value: unknown): value is Locator =>
-  hasFunction(value, 'count') &&
-  hasFunction(value, 'evaluate') &&
-  hasFunction(value, 'textContent');
-
-const isPage = (value: unknown): value is Page =>
-  hasFunction(value, 'goto') &&
-  hasFunction(value, 'locator') &&
-  hasFunction(value, 'title');
-
-const normalizeText = (text: string) => text.replace(/\s+/g, ' ').trim();
-
-const formatValue = (value: unknown) =>
-  typeof value === 'string' ? JSON.stringify(value) : String(value);
-
-const matchesText = (
-  actual: string,
-  expected: TextMatcher,
-  mode: 'exact' | 'contain',
-) => {
-  if (expected instanceof RegExp) {
-    expected.lastIndex = 0;
-    return expected.test(actual);
-  }
-
-  const normalizedActual = normalizeText(actual);
-  const normalizedExpected = normalizeText(expected);
-
-  return mode === 'exact'
-    ? normalizedActual === normalizedExpected
-    : normalizedActual.includes(normalizedExpected);
-};
-
-const getLocatorTextContent = async (locator: Locator) => {
-  const texts = await getLocatorTextContents(locator);
-  return texts.join('');
-};
-
-const getLocatorTextContents = (locator: Locator) =>
-  locator.evaluateAll((elements) => {
-    const getDeepTextContent = (node: Node): string => {
-      let text = '';
-
-      if (node.nodeType === Node.TEXT_NODE) {
-        return node.textContent ?? '';
-      }
-
-      if (node instanceof Element && node.shadowRoot) {
-        text += getDeepTextContent(node.shadowRoot);
-      }
-
-      for (const child of node.childNodes) {
-        text += getDeepTextContent(child);
-      }
-
-      return text;
-    };
-
-    return elements.map((element) => getDeepTextContent(element));
-  });
-
-const assertExpectation = (
-  pass: boolean,
-  isNot: boolean,
-  defaultMessage: string,
-  customMessage?: string,
-) => {
-  const shouldThrow = isNot ? pass : !pass;
-  if (!shouldThrow) {
-    return;
-  }
-  throw new Error(
-    customMessage ? `${customMessage}\n${defaultMessage}` : defaultMessage,
-  );
-};
-
-const waitForExpectation = async (
-  check: () => Promise<void>,
-  options?: MatcherOptions,
-) => {
-  const timeout = options?.timeout ?? DEFAULT_EXPECT_TIMEOUT;
-  const start = Date.now();
-  let lastError: unknown;
-
-  while (Date.now() - start <= timeout) {
-    try {
-      await check();
-      return;
-    } catch (error) {
-      lastError = error;
-      await sleep(EXPECT_POLL_INTERVAL);
-    }
-  }
-
-  if (lastError instanceof Error) {
-    throw lastError;
-  }
-  throw new Error(String(lastError));
-};
-
-const createLocatorAssertions = (
-  locator: Locator,
-  isNot: boolean,
-  message?: string,
-): LocatorAssertions => ({
-  get not() {
-    return createLocatorAssertions(locator, !isNot, message);
-  },
-
-  async toBeAttached(options) {
-    await waitForExpectation(async () => {
-      const count = await locator.count();
-      const pass = count > 0;
-      assertExpectation(
-        pass,
-        isNot,
-        `Expected locator ${isNot ? 'not ' : ''}to be attached, received count ${count}.`,
-        message,
-      );
-    }, options);
-  },
-
-  async toContainText(expected, options) {
-    await waitForExpectation(async () => {
-      const actual = await getLocatorTextContent(locator);
-      const pass = matchesText(actual, expected, 'contain');
-      assertExpectation(
-        pass,
-        isNot,
-        `Expected locator ${isNot ? 'not ' : ''}to contain text ${formatValue(
-          expected,
-        )}, received ${formatValue(actual)}.`,
-        message,
-      );
-    }, options);
-  },
-
-  async toHaveCSS(propertyName, expected, options) {
-    await waitForExpectation(async () => {
-      const actual = await locator.evaluate(
-        (element, property) =>
-          getComputedStyle(element).getPropertyValue(property),
-        propertyName,
-      );
-      const pass = actual === expected;
-      assertExpectation(
-        pass,
-        isNot,
-        `Expected locator ${isNot ? 'not ' : ''}to have CSS ${propertyName}: ${formatValue(
-          expected,
-        )}, received ${formatValue(actual)}.`,
-        message,
-      );
-    }, options);
-  },
-
-  async toHaveCount(expected, options) {
-    await waitForExpectation(async () => {
-      const actual = await locator.count();
-      const pass = actual === expected;
-      assertExpectation(
-        pass,
-        isNot,
-        `Expected locator ${isNot ? 'not ' : ''}to have count ${expected}, received ${actual}.`,
-        message,
-      );
-    }, options);
-  },
-
-  async toHaveText(expected, options) {
-    await waitForExpectation(async () => {
-      if (Array.isArray(expected)) {
-        const actual = await getLocatorTextContents(locator);
-        const pass =
-          actual.length === expected.length &&
-          actual.every((item, index) =>
-            matchesText(item, expected[index], 'exact'),
-          );
-        assertExpectation(
-          pass,
-          isNot,
-          `Expected locator ${isNot ? 'not ' : ''}to have text ${formatValue(
-            expected,
-          )}, received ${formatValue(actual)}.`,
-          message,
-        );
-        return;
-      }
-
-      const actual = await getLocatorTextContent(locator);
-      const pass = matchesText(actual, expected, 'exact');
-      assertExpectation(
-        pass,
-        isNot,
-        `Expected locator ${isNot ? 'not ' : ''}to have text ${formatValue(
-          expected,
-        )}, received ${formatValue(actual)}.`,
-        message,
-      );
-    }, options);
-  },
-});
-
-const createPageAssertions = (
-  page: Page,
-  isNot: boolean,
-  message?: string,
-): PageAssertions => ({
-  get not() {
-    return createPageAssertions(page, !isNot, message);
-  },
-
-  async toHaveTitle(expected, options) {
-    await waitForExpectation(async () => {
-      const actual = await page.title();
-      const pass = matchesText(actual, expected, 'exact');
-      assertExpectation(
-        pass,
-        isNot,
-        `Expected page ${isNot ? 'not ' : ''}to have title ${formatValue(
-          expected,
-        )}, received ${formatValue(actual)}.`,
-        message,
-      );
-    }, options);
-  },
-});
-
-const expectImpl = (<T>(actual: T, message?: string) => {
-  if (isLocator(actual)) {
-    return createLocatorAssertions(actual, false, message);
-  }
-
-  if (isPage(actual)) {
-    return createPageAssertions(actual, false, message);
-  }
-
-  return rstestExpect(actual, message);
-}) as E2EExpectStatic;
-
-Object.assign(expectImpl, rstestExpect);
+type RsbuildFixtureContext<K extends keyof RsbuildFixture> = Omit<
+  RsbuildFixture,
+  K
+> &
+  PlaywrightFixture &
+  TestContext;
 
 const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
   options: T,
@@ -518,39 +191,7 @@ const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
   return options;
 };
 
-const rsbuildTest = base.extend<E2EFixture>({
-  browser: async (_context, use) => {
-    const browser = await getBrowser();
-    await use(browser);
-  },
-
-  context: async ({ browser }, use) => {
-    const context = await browser.newContext();
-    try {
-      await use(context);
-    } finally {
-      await context.close();
-    }
-  },
-
-  page: async ({ context }, use) => {
-    const page = await context.newPage();
-    try {
-      await use(page);
-    } finally {
-      await page.close();
-    }
-  },
-
-  request: async (_context, use) => {
-    const request = await playwrightRequest.newContext();
-    try {
-      await use(request);
-    } finally {
-      await request.dispose();
-    }
-  },
-
+const rsbuildTest = base.extend<RsbuildFixture>({
   cwd: async ({ expect: currentExpect }, use) => {
     const testPath = currentExpect.getState().testPath;
     if (!testPath) {
@@ -645,25 +286,36 @@ const rsbuildTest = base.extend<E2EFixture>({
     }
   },
 
-  runBoth: async ({ devOnly, build }, use) => {
-    await use(async (assert, options) => {
+  runBoth: async (
+    { devOnly, build }: RsbuildFixtureContext<'runBoth'>,
+    use: Use<RunBoth>,
+  ) => {
+    const runBoth: RunBoth = async (assert, options) => {
       const devResult = await devOnly(options);
       await assert({ mode: 'dev', result: devResult });
       const buildResult = await build(options);
       await assert({ mode: 'build', result: buildResult });
-    });
+    };
+    await use(runBoth);
   },
 
-  runBothServe: async ({ dev, buildPreview }, use) => {
-    await use(async (assert, options) => {
+  runBothServe: async (
+    { dev, buildPreview }: RsbuildFixtureContext<'runBothServe'>,
+    use: Use<RunBoth>,
+  ) => {
+    const runBothServe: RunBoth = async (assert, options) => {
       const devResult = await dev(options);
       await assert({ mode: 'dev', result: devResult });
       const buildResult = await buildPreview(options);
       await assert({ mode: 'build', result: buildResult });
-    });
+    };
+    await use(runBothServe);
   },
 
-  editFile: async ({ cwd }, use) => {
+  editFile: async (
+    { cwd }: RsbuildFixtureContext<'editFile'>,
+    use: Use<EditFile>,
+  ) => {
     const editFile: EditFile = async (filename, replacer) => {
       const resolvedFilename = path.isAbsolute(filename)
         ? filename
@@ -674,7 +326,10 @@ const rsbuildTest = base.extend<E2EFixture>({
     await use(editFile);
   },
 
-  exec: async ({ cwd, logHelper }, use) => {
+  exec: async (
+    { cwd, logHelper }: RsbuildFixtureContext<'exec'>,
+    use: Use<Exec>,
+  ) => {
     let close: (() => void) | undefined;
 
     const exec: Exec = (command, options = {}) => {
@@ -700,14 +355,20 @@ const rsbuildTest = base.extend<E2EFixture>({
     close?.();
   },
 
-  execCli: async ({ exec }, use) => {
+  execCli: async (
+    { exec }: RsbuildFixtureContext<'execCli'>,
+    use: Use<Exec>,
+  ) => {
     const execCli: Exec = (command, options = {}) => {
       return exec(`node ${RSBUILD_BIN_PATH} ${command}`, options);
     };
     await use(execCli);
   },
 
-  execCliSync: async ({ cwd }, use) => {
+  execCliSync: async (
+    { cwd }: RsbuildFixtureContext<'execCliSync'>,
+    use: Use<ExecSync>,
+  ) => {
     const execCliSync: ExecSync = (command, options = {}) => {
       return execSync(
         `node ${RSBUILD_BIN_PATH} ${command}`,
@@ -717,7 +378,10 @@ const rsbuildTest = base.extend<E2EFixture>({
     await use(execCliSync);
   },
 
-  copySrcDir: async ({ cwd }, use) => {
+  copySrcDir: async (
+    { cwd }: RsbuildFixtureContext<'copySrcDir'>,
+    use: Use<() => Promise<string>>,
+  ) => {
     const copySrcDir = async () => {
       const targetDir = path.join(cwd, 'test-temp-src');
       await fse.remove(targetDir);
@@ -761,4 +425,4 @@ export const test = Object.assign(rsbuildTest, {
   fail: rsbuildTest.fails,
 }) as E2ETest;
 
-export const expect = expectImpl;
+export { expect };

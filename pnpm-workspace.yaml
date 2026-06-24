@@ -45,6 +45,7 @@ catalog:
   '@rspress/plugin-sitemap': '^2.0.12'
   '@rstack-dev/doc-ui': '1.14.2'
   '@rstest/adapter-rslib': '^0.10.2'
+  '@rstest/playwright': '^0.10.2'
   '@rstest/core': '^0.10.2'
   '@shikijs/transformers': '^4.1.0'
   '@svgr/core': '8.1.0'
@@ -185,6 +186,17 @@ minimumReleaseAgeExclude:
 patchedDependencies:
   css-loader@7.1.4: patches/css-loader@7.1.4.patch
   postcss-loader@8.2.1: patches/postcss-loader@8.2.1.patch
+
+overrides:
+  '@rstest/adapter-rsbuild': https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rsbuild@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/adapter-rslib': https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rslib@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/adapter-rspack': https://pkg.pr.new/web-infra-dev/rstest/@rstest/adapter-rspack@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/browser': https://pkg.pr.new/web-infra-dev/rstest/@rstest/browser@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/browser-react': https://pkg.pr.new/web-infra-dev/rstest/@rstest/browser-react@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/coverage-istanbul': https://pkg.pr.new/web-infra-dev/rstest/@rstest/coverage-istanbul@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/coverage-v8': https://pkg.pr.new/web-infra-dev/rstest/@rstest/coverage-v8@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/playwright': https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1
 
 # Prevent un-reviewed build scripts
 strictDepBuilds: true
