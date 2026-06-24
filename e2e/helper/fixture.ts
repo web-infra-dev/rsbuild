@@ -16,7 +16,7 @@ import {
   expect,
   test as base,
 } from '@rstest/playwright';
-import type { PlaywrightFixture } from '@rstest/playwright';
+import type { PlaywrightFixture, PlaywrightOptions } from '@rstest/playwright';
 import type { TestContext } from '@rstest/core';
 import fse from 'fs-extra';
 import { RSBUILD_BIN_PATH } from './constants.ts';
@@ -191,7 +191,17 @@ const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(options: T, c
   return options;
 };
 
-const rsbuildTest = base.extend<RsbuildFixture>({
+const rsbuildBase = base.extend({
+  playwright: {
+    browserName: 'chromium',
+    launchOptions: {
+      // Preserve the previous Playwright CI behavior.
+      channel: process.env.CI ? 'chrome' : undefined,
+    },
+  } satisfies PlaywrightOptions,
+});
+
+const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
   cwd: async ({ expect: currentExpect }, use) => {
     const testPath = currentExpect.getState().testPath;
     if (!testPath) {

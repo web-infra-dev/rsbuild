@@ -109,10 +109,6 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: node --run build
 
-      - name: Install Playwright browsers
-        if: steps.changes.outputs.changed == 'true'
-        run: cd ./e2e && node --run setup
-
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
         run: node --run e2e
