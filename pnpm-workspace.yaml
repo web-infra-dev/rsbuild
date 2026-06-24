@@ -12,6 +12,12 @@ packages:
 
 hoistPattern: []
 
+allowBuilds:
+  '@parcel/watcher': false
+  core-js: false
+  simple-git-hooks: false
+  svelte-preprocess: false
+
 patchedDependencies:
   css-loader@7.1.2: patches/css-loader@7.1.2.patch
   file-loader: patches/file-loader@6.2.0.patch
@@ -20,4 +26,5 @@ patchedDependencies:
   url-loader: patches/url-loader@4.1.1.patch
 
 strictPeerDependencies: false
+strictDepBuilds: true
 engineStrict: true
