@@ -11,6 +11,7 @@ import type { CSSLoaderOptions } from '../types';
 type CSSUrlLoaderOptions = {
   filename: string | ((pathData: PathData, assetInfo?: AssetInfo) => string);
   modules: CSSLoaderOptions['modules'];
+  builtinCss?: boolean;
 };
 
 const HASH_PLACEHOLDER_REGEX =
@@ -61,29 +62,29 @@ const getContentHash = (
   return hash.digest(loaderContext._compilation.outputOptions.hashDigest || 'hex');
 };
 
-const cssUrlLoader: LoaderDefinitionFunction<CSSUrlLoaderOptions> = function (source) {
-  return source;
-};
-
-export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> = async function (
-  remainingRequest,
-) {
-  const options = this.getOptions();
-
-  if (isCSSModules(options.modules, this)) {
+const assertNoCssModules = (
+  loaderContext: ThisParameterType<LoaderDefinitionFunction<CSSUrlLoaderOptions>>,
+  modules: CSSLoaderOptions['modules'],
+) => {
+  if (isCSSModules(modules, loaderContext)) {
     throw new Error(
       '[rsbuild:css] CSS Modules do not support the ?url query. Use ?inline to import the compiled CSS content as a string.',
     );
   }
+};
 
-  const moduleExports = await this.importModule(`!!${remainingRequest}`);
-  const content = getCSSContent(moduleExports);
-
-  const ext = path.extname(this.resourcePath);
-  const sourceFilename = normalizePath(path.relative(this.rootContext, this.resourcePath));
-  const nameSource = getCSSUrlNameSource(this.rootContext, this.resourcePath);
+const emitCssUrl = (
+  loaderContext: ThisParameterType<LoaderDefinitionFunction<CSSUrlLoaderOptions>>,
+  options: CSSUrlLoaderOptions,
+  content: string,
+) => {
+  const ext = path.extname(loaderContext.resourcePath);
+  const sourceFilename = normalizePath(
+    path.relative(loaderContext.rootContext, loaderContext.resourcePath),
+  );
+  const nameSource = getCSSUrlNameSource(loaderContext.rootContext, loaderContext.resourcePath);
   const name = getCSSUrlAssetName(nameSource, ext);
-  const contentHash = getContentHash(this, content);
+  const contentHash = getContentHash(loaderContext, content);
   const pathData: PathData = {
     contentHash,
     chunk: {
@@ -101,18 +102,49 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> = async f
     typeof options.filename === 'function'
       ? options.filename(pathData, assetInfo)
       : options.filename;
-  const { path: filename, info } = this._compilation.getAssetPathWithInfo(
+  const { path: filename, info } = loaderContext._compilation.getAssetPathWithInfo(
     filenameTemplate,
     pathData,
   );
 
-  this.emitFile(filename, content, undefined, {
+  loaderContext.emitFile(filename, content, undefined, {
     ...info,
     ...assetInfo,
     immutable: info.immutable || HASH_PLACEHOLDER_REGEX.test(filenameTemplate),
   });
 
   return `export default __webpack_public_path__ + ${JSON.stringify(filename)};`;
+};
+
+const cssUrlLoader: LoaderDefinitionFunction<CSSUrlLoaderOptions> = function (source) {
+  const options = this.getOptions();
+
+  if (!options.builtinCss) {
+    return source;
+  }
+
+  assertNoCssModules(this, options.modules);
+
+  const content = Buffer.isBuffer(source) ? source.toString() : source;
+
+  return emitCssUrl(this, options, content);
+};
+
+export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> = async function (
+  remainingRequest,
+) {
+  const options = this.getOptions();
+
+  if (options.builtinCss) {
+    return;
+  }
+
+  assertNoCssModules(this, options.modules);
+
+  const moduleExports = await this.importModule(`!!${remainingRequest}`);
+  const content = getCSSContent(moduleExports);
+
+  return emitCssUrl(this, options, content);
 };
 
 export default cssUrlLoader;

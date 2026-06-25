@@ -8,14 +8,12 @@ exports[`plugin-css > should use Rspack built-in CSS when experiments.css is tru
     },
     "oneOf": [
       {
-        "resolve": {
-          "preferRelative": true,
-        },
         "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": true,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -26,58 +24,18 @@ exports[`plugin-css > should use Rspack built-in CSS when experiments.css is tru
               },
             },
           },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
-            },
-          },
         ],
       },
       {
+        "parser": {
+          "exportType": "text",
+        },
         "resolve": {
           "preferRelative": true,
         },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
-            },
-          },
-        ],
+        "type": "css",
       },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -104,14 +62,12 @@ exports[`plugin-css > should use built-in style exports when experiments.css and
     },
     "oneOf": [
       {
-        "resolve": {
-          "preferRelative": true,
-        },
         "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": true,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -122,58 +78,18 @@ exports[`plugin-css > should use built-in style exports when experiments.css and
               },
             },
           },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
-            },
-          },
         ],
       },
       {
+        "parser": {
+          "exportType": "text",
+        },
         "resolve": {
           "preferRelative": true,
         },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
-            },
-          },
-        ],
+        "type": "css",
       },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -208,6 +124,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": [Function],
@@ -334,6 +251,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -454,6 +372,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -580,6 +499,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -751,6 +671,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,

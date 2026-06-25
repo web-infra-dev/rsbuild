@@ -244,6 +244,8 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
       const lessLoaderPath = require.resolve('less-loader');
 
       updateRules((rule, cssBranchRule, type) => {
+        const useBuiltinCss = config.experiments?.css;
+
         for (const item of excludes) {
           rule.exclude.add(item);
         }
@@ -257,17 +259,42 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
         }
         rule.resourceQuery(cssBranchRule.get('resourceQuery'));
 
-        for (const id of Object.keys(cssBranchRule.uses.entries())) {
-          const loader = cssBranchRule.uses.get(id);
-          const options = loader.get('options') ?? {};
-          const clonedOptions = deepmerge<Record<string, any>>({}, options);
+        const cssRuleType = cssBranchRule.get('type');
+        if (cssRuleType || (useBuiltinCss && type !== 'url')) {
+          rule.type(cssRuleType || (type === 'inline' ? 'css' : 'css/auto'));
+        }
+        const cssRuleParser = cssBranchRule.get('parser');
+        if (cssRuleParser || (useBuiltinCss && type === 'inline')) {
+          rule.parser(cssRuleParser || { exportType: 'text' });
+        }
 
-          if (id === CHAIN_ID.USE.CSS) {
-            // add less-loader
-            clonedOptions.importLoaders += 1;
+        if (useBuiltinCss) {
+          const cssUrlLoader = cssBranchRule.uses.get(CHAIN_ID.USE.CSS_URL);
+          if (type === 'url' && cssUrlLoader) {
+            const cssUrlLoaderOptions = deepmerge<Record<string, any>>(
+              {},
+              cssUrlLoader.get('options') ?? {},
+            );
+            cssUrlLoaderOptions.builtinCss = true;
+
+            rule
+              .use(CHAIN_ID.USE.CSS_URL)
+              .loader(cssUrlLoader.get('loader'))
+              .options(cssUrlLoaderOptions);
           }
+        } else {
+          for (const id of Object.keys(cssBranchRule.uses.entries())) {
+            const loader = cssBranchRule.uses.get(id);
+            const options = loader.get('options') ?? {};
+            const clonedOptions = deepmerge<Record<string, any>>({}, options);
 
-          rule.use(id).loader(loader.get('loader')).options(clonedOptions);
+            if (id === CHAIN_ID.USE.CSS) {
+              // add less-loader
+              clonedOptions.importLoaders += 1;
+            }
+
+            rule.use(id).loader(loader.get('loader')).options(clonedOptions);
+          }
         }
 
         const loader = rule.use(CHAIN_ID.USE.LESS).loader(lessLoaderPath).options(options);

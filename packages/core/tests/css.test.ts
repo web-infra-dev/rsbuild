@@ -121,8 +121,12 @@ describe('plugin-css', () => {
     });
 
     const rspackConfigs = await rsbuild.initConfigs();
+    const rules = matchRules(rspackConfigs[0], 'a.css');
 
-    expect(matchRules(rspackConfigs[0], 'a.css')).toMatchSnapshot();
+    expect(rules).toMatchSnapshot();
+    expect(JSON.stringify(rules)).not.toContain('css-loader');
+    expect(JSON.stringify(rules)).not.toContain('style-loader');
+    expect(JSON.stringify(rules)).not.toContain('cssExtractLoader');
     expect(matchPlugin(rspackConfigs[0], 'CssExtractRspackPlugin')).toBeFalsy();
     expect(rspackConfigs[0].module?.parser).toMatchObject({
       'css/auto': {
@@ -210,6 +214,8 @@ describe('plugin-css', () => {
     const rspackConfigs = await rsbuild.initConfigs();
 
     expect(matchRules(rspackConfigs[0], 'a.css')).toMatchSnapshot();
+    expect(JSON.stringify(matchRules(rspackConfigs[0], 'a.css'))).not.toContain('css-loader');
+    expect(JSON.stringify(matchRules(rspackConfigs[0], 'a.css'))).not.toContain('style-loader');
     expect(rspackConfigs[0].module?.parser).toMatchObject({
       'css/auto': {
         exportType: 'style',

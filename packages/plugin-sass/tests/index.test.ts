@@ -14,6 +14,29 @@ describe('plugin-sass', () => {
     expect(matchRules(rspackConfigs[0], 'a.scss')).toMatchSnapshot();
   });
 
+  it('should use Rspack built-in CSS when experiments.css is true', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        experiments: {
+          css: true,
+        },
+        plugins: [pluginSass()],
+      },
+    });
+
+    const rspackConfigs = await rsbuild.initConfigs();
+    const rules = matchRules(rspackConfigs[0], 'a.scss');
+    const mainRule = (rules[0] as { oneOf?: Record<string, unknown>[] }).oneOf?.find(
+      (rule) => rule.type === 'css/auto',
+    );
+
+    expect(rules).toMatchSnapshot();
+    expect(mainRule).toBeTruthy();
+    expect(JSON.stringify(rules)).not.toContain('css-loader');
+    expect(JSON.stringify(rules)).not.toContain('style-loader');
+    expect(JSON.stringify(rules)).not.toContain('cssExtractLoader');
+  });
+
   it('should add sass-loader and css-loader when injectStyles', async () => {
     const rsbuild = await createRsbuild({
       config: {

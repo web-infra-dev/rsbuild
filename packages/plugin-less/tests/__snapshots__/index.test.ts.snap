@@ -13,6 +13,7 @@ exports[`plugin-less > should add less-loader 1`] = `
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -169,6 +170,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -328,6 +330,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -490,6 +493,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -646,6 +650,7 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -794,6 +799,97 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
                       "foo": "bar",
                     },
                   },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
+    "resolve": {
+      "preferRelative": true,
+    },
+    "test": /\\\\\\.less\\$/,
+  },
+]
+`;
+
+exports[`plugin-less > should use Rspack built-in CSS when experiments.css is true 1`] = `
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "oneOf": [
+      {
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
+            "options": {
+              "builtinCss": true,
+              "filename": "static/css/[name].css",
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+            },
+          },
+          {
+            "loader": "<PNPM_INNER>/less-loader/dist/cjs.js",
+            "options": {
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "parser": {
+          "exportType": "text",
+        },
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "css",
+        "use": [
+          {
+            "loader": "<PNPM_INNER>/less-loader/dist/cjs.js",
+            "options": {
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "sideEffects": true,
+        "type": "css/auto",
+        "use": [
+          {
+            "loader": "<PNPM_INNER>/less-loader/dist/cjs.js",
+            "options": {
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
                 ],
               },
               "sourceMap": false,

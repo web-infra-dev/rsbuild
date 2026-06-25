@@ -13,6 +13,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -196,6 +197,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -382,6 +384,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -571,6 +574,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
+              "builtinCss": false,
               "filename": "static/css/[name].css",
               "modules": {
                 "auto": true,
@@ -728,6 +732,124 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
                 "silenceDeprecations": [
                   "import",
                   "legacy-js-api",
+                ],
+              },
+              "sourceMap": true,
+            },
+          },
+        ],
+      },
+    ],
+    "resolve": {
+      "preferRelative": true,
+    },
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+  },
+]
+`;
+
+exports[`plugin-sass > should use Rspack built-in CSS when experiments.css is true 1`] = `
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "oneOf": [
+      {
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
+            "options": {
+              "builtinCss": true,
+              "filename": "static/css/[name].css",
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-sass/compiled/resolve-url-loader/index.js",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
+            "options": {
+              "api": "modern-compiler",
+              "implementation": "<PNPM_INNER>/sass-embedded/dist/lib/index.js",
+              "sassOptions": {
+                "quietDeps": true,
+                "silenceDeprecations": [
+                  "import",
+                ],
+              },
+              "sourceMap": true,
+            },
+          },
+        ],
+      },
+      {
+        "parser": {
+          "exportType": "text",
+        },
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "css",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-sass/compiled/resolve-url-loader/index.js",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
+            "options": {
+              "api": "modern-compiler",
+              "implementation": "<PNPM_INNER>/sass-embedded/dist/lib/index.js",
+              "sassOptions": {
+                "quietDeps": true,
+                "silenceDeprecations": [
+                  "import",
+                ],
+              },
+              "sourceMap": true,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "sideEffects": true,
+        "type": "css/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-sass/compiled/resolve-url-loader/index.js",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
+            "options": {
+              "api": "modern-compiler",
+              "implementation": "<PNPM_INNER>/sass-embedded/dist/lib/index.js",
+              "sassOptions": {
+                "quietDeps": true,
+                "silenceDeprecations": [
+                  "import",
                 ],
               },
               "sourceMap": true,

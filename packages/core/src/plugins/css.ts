@@ -451,8 +451,18 @@ export const pluginCss = (): RsbuildPlugin => ({
         const useBuiltinCss = config.experiments.css;
 
         if (useBuiltinCss) {
+          const builtinCssRuleType = getBuiltinCssRuleType(cssLoaderOptions.modules);
+
           mainRule
-            .type(getBuiltinCssRuleType(cssLoaderOptions.modules))
+            .type(builtinCssRuleType)
+            .sideEffects(true)
+            .resolve.preferRelative(true);
+
+          inlineRule
+            .type('css')
+            .parser({
+              exportType: 'text',
+            })
             .sideEffects(true)
             .resolve.preferRelative(true);
 
@@ -514,14 +524,13 @@ export const pluginCss = (): RsbuildPlugin => ({
         };
 
         const cssLoaderPath = getCompiledPath('css-loader');
-        await updateRules(
-          (rule) => {
+        if (!useBuiltinCss) {
+          await updateRules((rule) => {
             rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
-          },
-          { skipMain: useBuiltinCss },
-        );
+          });
+        }
 
-        if (config.tools.lightningcssLoader !== false) {
+        if (!useBuiltinCss && config.tools.lightningcssLoader !== false) {
           if (emitCss) {
             importLoaders.normal++;
           }
@@ -561,7 +570,7 @@ export const pluginCss = (): RsbuildPlugin => ({
                 .options(lightningcssOptions);
             },
             // If emit CSS is disabled, skip lightningcss-loader to reduce performance overhead
-            { skipMain: !emitCss || useBuiltinCss },
+            { skipMain: !emitCss },
           );
         }
 
@@ -583,59 +592,64 @@ export const pluginCss = (): RsbuildPlugin => ({
 
           const postcssLoaderPath = getCompiledPath('postcss-loader');
 
-          await updateRules(
-            (rule) => {
-              rule
-                .use(CHAIN_ID.USE.POSTCSS)
-                .loader(postcssLoaderPath)
-                .options(postcssLoaderOptions);
-            },
-            // If emit CSS is disabled, skip postcss-loader to reduce performance overhead
-            { skipMain: !emitCss || useBuiltinCss },
-          );
+          if (!useBuiltinCss) {
+            await updateRules(
+              (rule) => {
+                rule
+                  .use(CHAIN_ID.USE.POSTCSS)
+                  .loader(postcssLoaderPath)
+                  .options(postcssLoaderOptions);
+              },
+              // If emit CSS is disabled, skip postcss-loader to reduce performance overhead
+              { skipMain: !emitCss },
+            );
+          }
         }
 
-        await updateRules((rule, type) => {
-          let finalOptions = cssLoaderOptions;
+        if (!useBuiltinCss) {
+          await updateRules((rule, type) => {
+            let finalOptions = cssLoaderOptions;
 
-          if (type === 'inline' || type === 'url') {
-            finalOptions = {
-              ...cssLoaderOptions,
-              exportType: 'string',
-              modules: false,
-              importLoaders: importLoaders.inline,
-            };
-          } else {
-            finalOptions = {
-              ...cssLoaderOptions,
-              importLoaders: importLoaders.normal,
-            };
-          }
+            if (type === 'inline' || type === 'url') {
+              finalOptions = {
+                ...cssLoaderOptions,
+                exportType: 'string',
+                modules: false,
+                importLoaders: importLoaders.inline,
+              };
+            } else {
+              finalOptions = {
+                ...cssLoaderOptions,
+                importLoaders: importLoaders.normal,
+              };
+            }
 
-          // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
-          if (!emitCss && type === 'main') {
-            rule.use(CHAIN_ID.USE.IGNORE_CSS).options({
-              modules: finalOptions.modules,
-            });
-          }
+            // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
+            if (!emitCss && type === 'main') {
+              rule.use(CHAIN_ID.USE.IGNORE_CSS).options({
+                modules: finalOptions.modules,
+              });
+            }
 
-          rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
+            rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
 
-          if (type !== 'url') {
-            // CSS imports should always be treated as sideEffects.
-            // CSS ?url only exports a URL string and does not apply styles.
-            rule.sideEffects(true);
-          }
+            if (type !== 'url') {
+              // CSS imports should always be treated as sideEffects.
+              // CSS ?url only exports a URL string and does not apply styles.
+              rule.sideEffects(true);
+            }
 
-          // Enable preferRelative by default, which is consistent with the default behavior of css-loader
-          // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
-          rule.resolve.preferRelative(true);
-        }, { skipMain: useBuiltinCss });
+            // Enable preferRelative by default, which is consistent with the default behavior of css-loader
+            // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
+            rule.resolve.preferRelative(true);
+          });
+        }
 
         const cssUrlFilename = getFilename(config, 'css', isProd);
         const cssUrlPath = config.output.distPath.css;
 
         urlRule.use(CHAIN_ID.USE.CSS_URL).options({
+          builtinCss: useBuiltinCss,
           filename:
             typeof cssUrlFilename === 'function'
               ? (pathData: Rspack.PathData, assetInfo?: Rspack.AssetInfo) =>
