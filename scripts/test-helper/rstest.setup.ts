@@ -9,5 +9,7 @@ beforeAll((suite) => {
 expect.addSnapshotSerializer(
   createSnapshotSerializer({
     workspace: path.join(__dirname, '..'),
+    afterSerialize: (val) =>
+      val.replace(/<HOME>\/rstack\/rspack\/packages\/rspack/g, '<PNPM_INNER>/@rspack/core'),
   }),
 );
