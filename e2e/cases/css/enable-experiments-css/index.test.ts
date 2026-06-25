@@ -2,7 +2,7 @@ import { expect, getFileContent, test } from '@e2e/helper';
 
 const COMPILE_WARNING = 'Compile Warning';
 
-test('should allow to enable Rspack experiments.css', async ({ build }) => {
+test('should allow to enable Rsbuild experiments.css', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, 'index.css');
@@ -12,7 +12,7 @@ test('should allow to enable Rspack experiments.css', async ({ build }) => {
   rsbuild.expectNoLog(COMPILE_WARNING);
 });
 
-test('should allow to enable Rspack experiments.css with style-loader', async ({ build }) => {
+test('should allow to enable Rsbuild experiments.css with injected styles', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {

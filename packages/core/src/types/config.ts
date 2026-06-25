@@ -204,6 +204,23 @@ export type NormalizedToolsConfig = ToolsConfig & {
   cssExtract: Required<CSSExtractOptions>;
 };
 
+export interface ExperimentsConfig {
+  /**
+   * Whether to enable Rspack's built-in CSS support.
+   *
+   * When enabled, Rsbuild will use Rspack's native CSS module type instead of
+   * `css-loader`, `style-loader`, and `CssExtractRspackPlugin`.
+   *
+   * @experimental
+   * @default false
+   */
+  css?: boolean;
+}
+
+export interface NormalizedExperimentsConfig {
+  css: boolean;
+}
+
 export type Alias = Record<string, string | false | (string | false)[]>;
 
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
@@ -2212,6 +2229,10 @@ export interface EnvironmentConfig {
    */
   moduleFederation?: ModuleFederationConfig;
   /**
+   * Options for experimental features.
+   */
+  experiments?: ExperimentsConfig;
+  /**
    * Configure Rsbuild plugins.
    */
   plugins?: RsbuildPlugins;
@@ -2288,6 +2309,7 @@ export type MergedEnvironmentConfig = {
   performance: NormalizedPerformanceConfig;
   splitChunks: NormalizedSplitChunksConfig | false;
   moduleFederation?: ModuleFederationConfig;
+  experiments: NormalizedExperimentsConfig;
 };
 
 /**

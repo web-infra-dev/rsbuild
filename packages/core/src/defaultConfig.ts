@@ -26,6 +26,7 @@ import { mergeRsbuildConfig } from './mergeConfig';
 import type {
   NormalizedConfig,
   NormalizedDevConfig,
+  NormalizedExperimentsConfig,
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
   NormalizedPerformanceConfig,
@@ -143,6 +144,10 @@ const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   removeConsole: false,
 });
 
+const getDefaultExperimentsConfig = (): NormalizedExperimentsConfig => ({
+  css: false,
+});
+
 const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   target: 'web',
   cleanDistPath: 'auto',
@@ -223,6 +228,7 @@ const createDefaultConfig = (): RsbuildConfig => ({
   security: getDefaultSecurityConfig(),
   splitChunks: {},
   performance: getDefaultPerformanceConfig(),
+  experiments: getDefaultExperimentsConfig(),
   environments: {},
   logLevel: 'info',
 });

@@ -1,4 +1,4 @@
-import { matchRules } from '@scripts/test-helper';
+import { matchPlugin, matchRules } from '@scripts/test-helper';
 import { createRsbuild } from '../src';
 import { normalizeCssLoaderOptions } from '../src/plugins/css';
 
@@ -109,6 +109,112 @@ describe('plugin-css', () => {
     });
     const rspackConfigs = await rsbuild.initConfigs();
     expect(matchRules(rspackConfigs[0], 'a.module.css')).toMatchSnapshot();
+  });
+
+  it('should use Rspack built-in CSS when experiments.css is true', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        experiments: {
+          css: true,
+        },
+      },
+    });
+
+    const rspackConfigs = await rsbuild.initConfigs();
+
+    expect(matchRules(rspackConfigs[0], 'a.css')).toMatchSnapshot();
+    expect(matchPlugin(rspackConfigs[0], 'CssExtractRspackPlugin')).toBeFalsy();
+    expect(rspackConfigs[0].module?.parser).toMatchObject({
+      'css/auto': {
+        namedExports: false,
+      },
+    });
+    expect(rspackConfigs[0].module?.generator).toMatchObject({
+      'css/auto': {
+        exportsConvention: 'camel-case',
+        exportsOnly: false,
+      },
+    });
+    expect(rspackConfigs[0].output).toMatchObject({
+      cssFilename: 'static/css/[name].css',
+      cssChunkFilename: 'static/css/async/[name].css',
+    });
+  });
+
+  it('should map CSS Modules options for Rspack built-in CSS', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        experiments: {
+          css: true,
+        },
+        output: {
+          cssModules: {
+            exportLocalsConvention: 'dashesOnly',
+            localIdentName: '[hash]',
+            namedExport: true,
+          },
+        },
+      },
+    });
+
+    const rspackConfigs = await rsbuild.initConfigs();
+
+    expect(rspackConfigs[0].module?.parser).toMatchObject({
+      'css/auto': {
+        namedExports: true,
+      },
+    });
+    expect(rspackConfigs[0].module?.generator).toMatchObject({
+      'css/auto': {
+        exportsConvention: 'dashes-only',
+        localIdentName: '[hash]',
+      },
+    });
+  });
+
+  it('should map export type for Rspack built-in CSS', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        experiments: {
+          css: true,
+        },
+        tools: {
+          cssLoader: {
+            exportType: 'string',
+          },
+        },
+      },
+    });
+
+    const rspackConfigs = await rsbuild.initConfigs();
+
+    expect(rspackConfigs[0].module?.parser).toMatchObject({
+      'css/auto': {
+        exportType: 'text',
+      },
+    });
+  });
+
+  it('should use built-in style exports when experiments.css and injectStyles are true', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        experiments: {
+          css: true,
+        },
+        output: {
+          injectStyles: true,
+        },
+      },
+    });
+
+    const rspackConfigs = await rsbuild.initConfigs();
+
+    expect(matchRules(rspackConfigs[0], 'a.css')).toMatchSnapshot();
+    expect(rspackConfigs[0].module?.parser).toMatchObject({
+      'css/auto': {
+        exportType: 'style',
+      },
+    });
   });
 });
 

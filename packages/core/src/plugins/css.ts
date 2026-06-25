@@ -254,6 +254,159 @@ const getCSSLoaderOptions = async ({
   return cssLoaderOptions;
 };
 
+const getCSSModulesObject = (modules: CSSLoaderOptions['modules']) =>
+  typeof modules === 'object' && modules !== null ? modules : undefined;
+
+type BuiltinCssRuleType = 'css' | 'css/auto' | 'css/global' | 'css/module';
+
+const getBuiltinCssRuleType = (modules: CSSLoaderOptions['modules']): BuiltinCssRuleType => {
+  if (!modules) {
+    return 'css';
+  }
+
+  if (modules === true) {
+    return 'css/module';
+  }
+
+  if (typeof modules === 'string') {
+    return modules === 'global' ? 'css/global' : 'css/module';
+  }
+
+  if (modules.auto === false) {
+    return 'css';
+  }
+
+  if (modules.auto === undefined) {
+    return modules.mode === 'global' ? 'css/global' : 'css/module';
+  }
+
+  return 'css/auto';
+};
+
+const getBuiltinCssExportConvention = (convention: unknown) => {
+  if (typeof convention !== 'string') {
+    return undefined;
+  }
+
+  const conventions = {
+    asIs: 'as-is',
+    camelCase: 'camel-case',
+    camelCaseOnly: 'camel-case-only',
+    dashes: 'dashes',
+    dashesOnly: 'dashes-only',
+  } as const;
+
+  return conventions[convention as keyof typeof conventions];
+};
+
+const getBuiltinCssExportType = ({
+  cssLoaderOptions,
+  injectStyles,
+}: {
+  cssLoaderOptions: CSSLoaderOptions;
+  injectStyles: boolean;
+}) => {
+  if (injectStyles) {
+    return 'style';
+  }
+
+  if (cssLoaderOptions.exportType === 'string') {
+    return 'text';
+  }
+
+  if (cssLoaderOptions.exportType === 'css-style-sheet') {
+    return 'css-style-sheet';
+  }
+
+  return undefined;
+};
+
+const applyBuiltinCssConfig = ({
+  chain,
+  config,
+  cssLoaderOptions,
+  emitCss,
+  isProd,
+}: {
+  chain: RspackChain;
+  config: NormalizedEnvironmentConfig;
+  cssLoaderOptions: CSSLoaderOptions;
+  emitCss: boolean;
+  isProd: boolean;
+}) => {
+  const cssModulesOptions = getCSSModulesObject(cssLoaderOptions.modules);
+  const cssModuleTypes = ['css/auto', 'css/module', 'css/global'] as const;
+  const namedExports = cssModulesOptions?.namedExport ?? config.output.cssModules.namedExport;
+  const exportType = getBuiltinCssExportType({
+    cssLoaderOptions,
+    injectStyles: config.output.injectStyles,
+  });
+
+  const parserOptions: Record<string, unknown> = {
+    namedExports,
+  };
+
+  if (exportType) {
+    parserOptions.exportType = exportType;
+  }
+
+  if (cssModulesOptions?.mode === 'pure') {
+    parserOptions.pure = true;
+  }
+
+  const generatorOptions: Record<string, unknown> = {
+    exportsOnly: !emitCss,
+    exportsConvention:
+      getBuiltinCssExportConvention(cssModulesOptions?.exportLocalsConvention) ?? 'camel-case',
+    localIdentName: cssModulesOptions?.localIdentName || getCSSModulesLocalIdentName(config, isProd),
+  };
+
+  if (cssLoaderOptions.esModule !== undefined) {
+    generatorOptions.esModule = cssLoaderOptions.esModule;
+  }
+
+  chain.module.parser.merge({
+    css: parserOptions,
+    'css/auto': parserOptions,
+    'css/global': parserOptions,
+    'css/module': parserOptions,
+  });
+
+  chain.module.generator.merge({
+    css: {
+      exportsOnly: !emitCss,
+    },
+    ...Object.fromEntries(cssModuleTypes.map((type) => [type, generatorOptions])),
+  });
+
+  if (emitCss && exportType === undefined) {
+    const cssPath = config.output.distPath.css;
+    const cssFilename = getFilename(config, 'css', isProd);
+    const isCssFilenameFn = typeof cssFilename === 'function';
+    const cssAsyncPath = config.output.distPath.cssAsync ?? (cssPath ? `${cssPath}/async` : 'async');
+
+    chain.output
+      .set(
+        'cssFilename',
+        isCssFilenameFn
+          ? (...args: Parameters<typeof cssFilename>) => {
+              const name = cssFilename(...args);
+              return posix.join(cssPath, name);
+            }
+          : posix.join(cssPath, cssFilename),
+      )
+      .set(
+        'cssChunkFilename',
+        isCssFilenameFn
+          ? (...args: Parameters<typeof cssFilename>) => {
+              const name = cssFilename(...args);
+              return posix.join(cssAsyncPath, name);
+            }
+          : posix.join(cssAsyncPath, cssFilename),
+      );
+  }
+};
+
 type PostcssrcCache = Map<string, PostCSSOptions | Promise<PostCSSOptions>>;
 
 export const pluginCss = (): RsbuildPlugin => ({
@@ -289,10 +442,32 @@ export const pluginCss = (): RsbuildPlugin => ({
         const mainRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN);
 
         const emitCss = config.output.emitCss ?? target === 'web';
+        const localIdentName = getCSSModulesLocalIdentName(config, isProd);
+        const cssLoaderOptions = await getCSSLoaderOptions({
+          config,
+          localIdentName,
+          emitCss,
+        });
+        const useBuiltinCss = config.experiments.css;
+
+        if (useBuiltinCss) {
+          mainRule
+            .type(getBuiltinCssRuleType(cssLoaderOptions.modules))
+            .sideEffects(true)
+            .resolve.preferRelative(true);
+
+          applyBuiltinCssConfig({
+            chain,
+            config,
+            cssLoaderOptions,
+            emitCss,
+            isProd,
+          });
+        }
 
         // Create Rspack rule
         // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
-        if (emitCss) {
+        if (!useBuiltinCss && emitCss) {
           // use style-loader
           if (config.output.injectStyles) {
             const styleLoaderOptions = await reduceConfigs({
@@ -311,7 +486,7 @@ export const pluginCss = (): RsbuildPlugin => ({
               .loader(rspack.CssExtractRspackPlugin.loader)
               .options(config.tools.cssExtract.loaderOptions);
           }
-        } else {
+        } else if (!useBuiltinCss) {
           mainRule
             .use(CHAIN_ID.USE.IGNORE_CSS)
             .loader(path.join(LOADER_PATH, 'ignoreCssLoader.mjs'));
@@ -339,9 +514,12 @@ export const pluginCss = (): RsbuildPlugin => ({
         };
 
         const cssLoaderPath = getCompiledPath('css-loader');
-        await updateRules((rule) => {
-          rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
-        });
+        await updateRules(
+          (rule) => {
+            rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
+          },
+          { skipMain: useBuiltinCss },
+        );
 
         if (config.tools.lightningcssLoader !== false) {
           if (emitCss) {
@@ -383,7 +561,7 @@ export const pluginCss = (): RsbuildPlugin => ({
                 .options(lightningcssOptions);
             },
             // If emit CSS is disabled, skip lightningcss-loader to reduce performance overhead
-            { skipMain: !emitCss },
+            { skipMain: !emitCss || useBuiltinCss },
           );
         }
 
@@ -413,16 +591,9 @@ export const pluginCss = (): RsbuildPlugin => ({
                 .options(postcssLoaderOptions);
             },
             // If emit CSS is disabled, skip postcss-loader to reduce performance overhead
-            { skipMain: !emitCss },
+            { skipMain: !emitCss || useBuiltinCss },
           );
         }
-
-        const localIdentName = getCSSModulesLocalIdentName(config, isProd);
-        const cssLoaderOptions = await getCSSLoaderOptions({
-          config,
-          localIdentName,
-          emitCss,
-        });
 
         await updateRules((rule, type) => {
           let finalOptions = cssLoaderOptions;
@@ -459,7 +630,7 @@ export const pluginCss = (): RsbuildPlugin => ({
           // Enable preferRelative by default, which is consistent with the default behavior of css-loader
           // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
           rule.resolve.preferRelative(true);
-        });
+        }, { skipMain: useBuiltinCss });
 
         const cssUrlFilename = getFilename(config, 'css', isProd);
         const cssUrlPath = config.output.distPath.css;
@@ -479,7 +650,7 @@ export const pluginCss = (): RsbuildPlugin => ({
         }
 
         // Apply CSS extract plugin if not using style-loader and emitCss is true
-        if (emitCss && !config.output.injectStyles && !isStringExport) {
+        if (emitCss && !useBuiltinCss && !config.output.injectStyles && !isStringExport) {
           const extractPluginOptions = config.tools.cssExtract.pluginOptions;
 
           const cssPath = config.output.distPath.css;
