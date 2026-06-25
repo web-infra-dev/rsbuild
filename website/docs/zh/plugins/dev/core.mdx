@@ -751,7 +751,7 @@ const pluginParent = () => ({
 
 ### Environment 级别的 API
 
-你可以通过设置 `options.environment` 为指定 environment 注册暴露的 API。
+你可以通过设置 `options.environment`（对应 `config.environments` 的 key）为指定 environment 注册暴露的 API。
 
 当在 environment plugin 中调用 `api.useExposed` 时，Rsbuild 会优先解析同一 environment 注册的 API，如果不存在，则回退到全局 API。
 
