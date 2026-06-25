@@ -191,8 +191,8 @@ patchedDependencies:
   postcss-loader@8.2.1: patches/postcss-loader@8.2.1.patch
 
 overrides:
-  '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1
-  '@rstest/playwright': https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324
+  '@rstest/playwright': https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@72d8bb7c56226f0afdf14e8ade26caf7135e6324
 
 # Prevent un-reviewed build scripts
 strictDepBuilds: true

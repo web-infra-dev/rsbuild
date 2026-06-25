@@ -16,7 +16,12 @@ import {
   expect,
   test as base,
 } from '@rstest/playwright';
-import type { PlaywrightFixture, PlaywrightOptions } from '@rstest/playwright';
+import type {
+  PlaywrightFixture,
+  PlaywrightOptions,
+  PlaywrightTest,
+  PlaywrightUse,
+} from '@rstest/playwright';
 import type { TestContext } from '@rstest/core';
 import fse from 'fs-extra';
 import { RSBUILD_BIN_PATH } from './constants.ts';
@@ -176,7 +181,7 @@ type RsbuildFixture = {
 
 type Close = DevResult['close'];
 
-type Use<T> = (value: T) => Promise<void>;
+type Use<T> = PlaywrightUse<T>;
 
 type RsbuildFixtureContext<K extends keyof RsbuildFixture> = Omit<RsbuildFixture, K> &
   PlaywrightFixture &
@@ -402,26 +407,7 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
   },
 });
 
-type Callable<T> = T extends (...args: infer Args) => infer Return
-  ? (...args: Args) => Return
-  : never;
-
-type E2ETestSkip = Callable<typeof rsbuildTest.skip> &
-  (() => void) &
-  Omit<typeof rsbuildTest.skip, 'skip'> & {
-    skip: E2ETestSkip;
-  };
-
-type E2ETest = Callable<typeof rsbuildTest> &
-  Omit<typeof rsbuildTest, 'skip'> & {
-    afterAll: typeof rstestAfterAll;
-    afterEach: typeof rstestAfterEach;
-    beforeAll: typeof rstestBeforeAll;
-    beforeEach: typeof rstestBeforeEach;
-    describe: typeof rstestDescribe;
-    fail: typeof rsbuildTest.fails;
-    skip: E2ETestSkip;
-  };
+type E2ETest = PlaywrightTest<PlaywrightFixture & RsbuildFixture>;
 
 export const test = Object.assign(rsbuildTest, {
   afterAll: rstestAfterAll,

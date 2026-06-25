@@ -376,8 +376,8 @@ catalogs:
       version: 2.0.4
 
 overrides:
-  '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1
-  '@rstest/playwright': https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1
+  '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324
+  '@rstest/playwright': https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@72d8bb7c56226f0afdf14e8ade26caf7135e6324
 
 patchedDependencies:
   css-loader@7.1.4: b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019
@@ -395,8 +395,8 @@ importers:
         specifier: 'catalog:'
         version: 0.10.6(@rslib/core@0.23.0)(@rstest/core@0.10.6)(typescript@6.0.3)
       '@rstest/core':
-        specifier: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1
-        version: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+        specifier: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324
+        version: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
       '@scripts/config':
         specifier: workspace:*
         version: link:scripts/config
@@ -513,11 +513,11 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-vue
       '@rstest/core':
-        specifier: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1
-        version: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+        specifier: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324
+        version: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
       '@rstest/playwright':
-        specifier: https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1
-        version: https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1(@rstest/core@0.10.6)(playwright@1.61.0)
+        specifier: https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@72d8bb7c56226f0afdf14e8ade26caf7135e6324
+        version: https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@72d8bb7c56226f0afdf14e8ade26caf7135e6324(@rstest/core@0.10.6)(playwright@1.61.0)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../scripts/test-helper
@@ -2878,8 +2878,8 @@ packages:
       typescript:
         optional: true
 
-  '@rstest/core@https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1':
-    resolution: {integrity: sha512-rJU4a4IhIQWPkdDj0nK08LUTpP/x1cdaAI5Uhew8oYKj23IW+TISXaV4nsWvPTnAk5S0VsyYjiZr5BenMTscPA==, tarball: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1}
+  '@rstest/core@https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324':
+    resolution: {integrity: sha512-BAVub6MDaeLZhkvigjUDXI3WYhqdLdDvEX1AiZ9tW9Wty97uCcDEfajIE33P2M2NbNv7MPsG+vKKc8yetPtf8w==, tarball: https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324}
     version: 0.10.6
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
@@ -2892,8 +2892,8 @@ packages:
       jsdom:
         optional: true
 
-  '@rstest/playwright@https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1':
-    resolution: {integrity: sha512-zZ9zZAVBiWfsOB2p7Ms4RtIBNilrrQ4uJOp5aRd0DP/cpSPH0WpXWUs8a/lhUIKHRgRPJUa7metW78gXrb8fNw==, tarball: https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1}
+  '@rstest/playwright@https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@72d8bb7c56226f0afdf14e8ade26caf7135e6324':
+    resolution: {integrity: sha512-x1iYeswW7JNDbJ7XYkx0wsmnzQtgH1JZnyH31hvC/AhWciaCw92KMKkBltqS8qhPBXLlycTRz52cgOu7uvP/MA==, tarball: https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@72d8bb7c56226f0afdf14e8ade26caf7135e6324}
     version: 0.10.5
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
@@ -7020,11 +7020,11 @@ snapshots:
   '@rstest/adapter-rslib@0.10.6(@rslib/core@0.23.0)(@rstest/core@0.10.6)(typescript@6.0.3)':
     dependencies:
       '@rslib/core': 0.23.0(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)(typescript@6.0.3)
-      '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+      '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
     optionalDependencies:
       typescript: 6.0.3
 
-  '@rstest/core@https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)':
+  '@rstest/core@https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)':
     dependencies:
       '@rsbuild/core': 2.1.0-beta.0(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
       '@types/chai': 5.2.3
@@ -7032,9 +7032,9 @@ snapshots:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstest/playwright@https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@07c8abd9f7681590ea991128be26d3caaa3976f1(@rstest/core@0.10.6)(playwright@1.61.0)':
+  '@rstest/playwright@https://pkg.pr.new/web-infra-dev/rstest/@rstest/playwright@72d8bb7c56226f0afdf14e8ade26caf7135e6324(@rstest/core@0.10.6)(playwright@1.61.0)':
     dependencies:
-      '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@07c8abd9f7681590ea991128be26d3caaa3976f1(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
+      '@rstest/core': https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@72d8bb7c56226f0afdf14e8ade26caf7135e6324(@module-federation/runtime-tools@2.5.1)(core-js@3.49.0)
       playwright: 1.61.0
 
   '@shikijs/core@4.0.2':
