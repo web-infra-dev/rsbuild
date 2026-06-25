@@ -45,7 +45,7 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rspack/core": "catalog:",
+    "@rspack/core": "link:../../../rspack/packages/rspack",
     "@swc/helpers": "catalog:"
   },
   "devDependencies": {

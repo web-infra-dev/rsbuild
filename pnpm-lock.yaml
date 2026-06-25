@@ -886,8 +886,8 @@ importers:
   packages/core:
     dependencies:
       '@rspack/core':
-        specifier: 'catalog:'
-        version: 2.1.0-rc.0(@module-federation/runtime-tools@2.6.0)(@swc/helpers@0.5.23)
+        specifier: link:../../../rspack/packages/rspack
+        version: link:../../../rspack/packages/rspack
       '@swc/helpers':
         specifier: 'catalog:'
         version: 0.5.23
