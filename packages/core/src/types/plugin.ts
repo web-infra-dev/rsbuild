@@ -240,7 +240,7 @@ export type GetRsbuildConfig = {
 
 export type ExposeOptions = {
   /**
-   * Register the exposed API for a specific environment.
+   * Register the exposed API for a specific Rsbuild environment name (the key of `config.environments`).
    * If omitted, the API is registered as global.
    */
   environment?: string;
