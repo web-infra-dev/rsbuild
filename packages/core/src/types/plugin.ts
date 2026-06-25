@@ -671,7 +671,7 @@ export type RsbuildPluginAPI = Readonly<{
    *
    * If the current plugin is registered in an environment, Rsbuild will
    * first resolve the exposed API registered for the same environment,
-   * then fallback to the global exposed API.
+   * then fall back to the global exposed API.
    */
   useExposed: <T = any>(id: string | symbol) => T | undefined;
 }>;

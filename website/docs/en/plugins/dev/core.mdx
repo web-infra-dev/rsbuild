@@ -753,11 +753,11 @@ If `api.expose` is called multiple times with the same `id` and environment, the
 
 You can register an exposed API for a specific Rsbuild environment (the key of `config.environments`) by setting `options.environment`.
 
-When `api.useExposed` is called in an environment plugin, Rsbuild will first resolve the exposed API registered for the same environment, then fallback to the global exposed API.
+When `api.useExposed` is called in an environment plugin, Rsbuild will first resolve the exposed API registered for the same environment, then fall back to the global exposed API.
 
 ```ts
-rsbuild.expose('my-api', { name: 'web' }, { environment: 'web' });
-rsbuild.expose('my-api', { name: 'node' }, { environment: 'node' });
+api.expose('my-api', { name: 'web' }, { environment: 'web' });
+api.expose('my-api', { name: 'node' }, { environment: 'node' });
 ```
 
 If `options.environment` is omitted, the API is registered as global and can be used as a fallback by plugins in all environments.
@@ -777,7 +777,7 @@ Used for plugin communication.
  *
  * If the current plugin is registered in an environment, Rsbuild will
  * first resolve the exposed API registered for the same environment,
- * then fallback to the global exposed API.
+ * then fall back to the global exposed API.
  */
 function useExposed<T = any>(id: string | symbol): T | undefined;
 ```

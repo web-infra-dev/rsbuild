@@ -756,8 +756,8 @@ const pluginParent = () => ({
 当在 environment plugin 中调用 `api.useExposed` 时，Rsbuild 会优先解析同一 environment 注册的 API，如果不存在，则回退到全局 API。
 
 ```ts
-rsbuild.expose('my-api', { name: 'web' }, { environment: 'web' });
-rsbuild.expose('my-api', { name: 'node' }, { environment: 'node' });
+api.expose('my-api', { name: 'web' }, { environment: 'web' });
+api.expose('my-api', { name: 'node' }, { environment: 'node' });
 ```
 
 如果未设置 `options.environment`，则 API 会被注册为全局 API，可以作为所有 environment 中插件的 fallback。
