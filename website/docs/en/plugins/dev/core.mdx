@@ -751,7 +751,7 @@ If `api.expose` is called multiple times with the same `id` and environment, the
 
 ### Environment scoped API
 
-You can register an exposed API for a specific environment by setting `options.environment`.
+You can register an exposed API for a specific Rsbuild environment (the key of `config.environments`) by setting `options.environment`.
 
 When `api.useExposed` is called in an environment plugin, Rsbuild will first resolve the exposed API registered for the same environment, then fallback to the global exposed API.
 
