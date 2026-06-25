@@ -161,7 +161,7 @@ export function initPluginAPI({
         return undefined;
       }
 
-      if (currentEnvironment) {
+      if (currentEnvironment !== undefined) {
         const matched = exposedAPIs.find((item) => item.environment === currentEnvironment);
 
         if (matched) {
