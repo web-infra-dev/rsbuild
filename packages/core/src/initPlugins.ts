@@ -7,6 +7,7 @@ import { exitHook } from './helpers/exitHook';
 import { removeLeadingSlash } from './helpers/url';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import type { Logger } from './logger';
+import { isEnvironmentMatch } from './pluginManager';
 import type {
   GetRsbuildConfig,
   InternalContext,
