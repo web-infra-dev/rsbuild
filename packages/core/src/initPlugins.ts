@@ -7,7 +7,6 @@ import { exitHook } from './helpers/exitHook';
 import { removeLeadingSlash } from './helpers/url';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import type { Logger } from './logger';
-import { isEnvironmentMatch } from './pluginManager';
 import type {
   GetRsbuildConfig,
   InternalContext,
@@ -130,25 +129,15 @@ export function initPluginAPI({
     }
   }) as GetRsbuildConfig;
 
-  type ExposedAPI = {
-    environment?: string;
-    api: unknown;
-  };
+  const GLOBAL_EXPOSED_KEY = Symbol('global-exposed');
 
-  const exposed = new Map<string | symbol, ExposedAPI[]>();
+  const exposed = new Map<string | symbol, Map<string | symbol, unknown>>();
 
   const expose: RsbuildPluginAPI['expose'] = (id, api, options) => {
-    const environment = options?.environment;
-    const exposedAPIs = exposed.get(id) ?? [];
-    const index = exposedAPIs.findIndex((item) => item.environment === environment);
-    const item = { environment, api };
+    const exposedAPIs = exposed.get(id) ?? new Map<string | symbol, unknown>();
+    const key = options?.environment ?? GLOBAL_EXPOSED_KEY;
 
-    if (index === -1) {
-      exposedAPIs.push(item);
-    } else {
-      exposedAPIs[index] = item;
-    }
-
+    exposedAPIs.set(key, api);
     exposed.set(id, exposedAPIs);
   };
 
@@ -161,16 +150,11 @@ export function initPluginAPI({
         return undefined;
       }
 
-      if (currentEnvironment !== undefined) {
-        const matched = exposedAPIs.find((item) => item.environment === currentEnvironment);
-
-        if (matched) {
-          return matched.api as T;
-        }
+      if (currentEnvironment !== undefined && exposedAPIs.has(currentEnvironment)) {
+        return exposedAPIs.get(currentEnvironment) as T;
       }
 
-      return exposedAPIs.find((item) => isEnvironmentMatch(item.environment, currentEnvironment))
-        ?.api as T | undefined;
+      return exposedAPIs.get(GLOBAL_EXPOSED_KEY) as T | undefined;
     };
 
   let transformId = 0;
