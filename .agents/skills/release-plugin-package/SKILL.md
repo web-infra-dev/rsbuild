@@ -127,9 +127,10 @@ To collect changelog items:
    pnpm --filter @rsbuild/plugin-<name> run build
    ```
 
-   If `create-rsbuild` templates changed, also run the focused create-rsbuild e2e case when practical:
+   If `create-rsbuild` templates changed, also run `pnpm build` once and then the focused create-rsbuild e2e case when practical:
 
    ```bash
+   pnpm build
    pnpm e2e create-rsbuild
    ```
 

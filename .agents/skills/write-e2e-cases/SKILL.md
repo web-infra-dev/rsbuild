@@ -17,7 +17,7 @@ description: Use when adding or updating Rsbuild end-to-end tests in `e2e/cases`
 
 5. Use short, direct, and stable assertions. Avoid redundant setup and checks.
 
-6. Run `pnpm e2e` to validate.
+6. Run `pnpm build` once, then run `pnpm e2e` to validate.
 
 ## Case Structure
 
