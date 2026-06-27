@@ -31,6 +31,8 @@ pnpm e2e css
 pnpm e2e
 ```
 
+Run `pnpm build` once before any `pnpm e2e` command, including focused cases.
+
 ## Project structure
 
 ```text
