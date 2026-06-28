@@ -10,6 +10,7 @@ import { init } from './init';
 export type CommonOptions = {
   base?: string;
   distPath?: string;
+  sourceMap?: boolean;
   root?: string;
   mode?: RsbuildMode;
   config?: string;
@@ -46,6 +47,7 @@ const applyCommonOptions = (cli: CAC) => {
       default: 'auto',
     })
     .option('--dist-path <dir>', 'Set the root directory of output files')
+    .option('--source-map', 'Enable source map')
     .option('--env-dir <dir>', 'Set the directory for loading `.env` files')
     .option('--env-mode <mode>', 'Set the env mode to load the `.env.[mode]` file')
     .option('--environment <name>', 'Set the environment name(s) to build', {
