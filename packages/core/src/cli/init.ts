@@ -57,6 +57,16 @@ const loadConfig = async (root: string) => {
     config.server.port = commonOpts.port;
   }
 
+  if (commonOpts.distPath !== undefined) {
+    config.output ||= {};
+
+    const { distPath } = config.output;
+    config.output.distPath =
+      distPath && typeof distPath === 'object'
+        ? { ...distPath, root: commonOpts.distPath }
+        : { root: commonOpts.distPath };
+  }
+
   // enable CLI shortcuts by default when using Rsbuild CLI
   if (config.dev.cliShortcuts === undefined) {
     config.dev.cliShortcuts = true;
