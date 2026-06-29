@@ -67,6 +67,17 @@ const loadConfig = async (root: string) => {
         : { root: commonOpts.distPath };
   }
 
+  if (commonOpts.sourceMap !== undefined) {
+    const sourceMap = commonOpts.sourceMap as unknown;
+
+    if (typeof sourceMap !== 'boolean') {
+      throw new Error('The "--source-map" option only accepts a boolean value.');
+    }
+
+    config.output ||= {};
+    config.output.sourceMap = sourceMap;
+  }
+
   // enable CLI shortcuts by default when using Rsbuild CLI
   if (config.dev.cliShortcuts === undefined) {
     config.dev.cliShortcuts = true;
