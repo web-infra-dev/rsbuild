@@ -16,7 +16,7 @@
     "@rsbuild/core": "^2.1.0",
     "@rsbuild/plugin-svelte": "^2.0.0",
     "@types/node": "^24.13.2",
-    "svelte-check": "^4.6.0",
+    "svelte-check": "^4.7.1",
     "typescript": "^6.0.3"
   }
 }
