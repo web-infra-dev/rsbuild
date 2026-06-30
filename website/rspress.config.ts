@@ -156,6 +156,9 @@ export default defineConfig({
   },
   llms: true,
   markdown: {
+    link: {
+      checkAnchors: true,
+    },
     shiki: {
       langs: ['styl', 'html', 'toml'],
       langAlias: {
