@@ -137,8 +137,8 @@ export default defineConfig({
           overlay: 'src/client/overlay.ts',
         },
         define: {
-          // use define to avoid compile time evaluation of __webpack_hash__
-          BUILD_HASH: '__webpack_hash__',
+          // use define to avoid compile time evaluation of import.meta.rspackHash
+          BUILD_HASH: 'import.meta.rspackHash',
         },
       },
       output: {
