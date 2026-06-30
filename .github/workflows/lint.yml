@@ -37,11 +37,12 @@ jobs:
       - name: Build
         run: node --run build
 
-      - name: Lint
-        run: node --run lint
+      - parallel:
+          - name: Lint
+            run: node --run lint
 
-      - name: Check Format
-        run: node --run format:check
+          - name: Check Format
+            run: node --run format:check
 
-      - name: Check Spell
-        run: node --run check-spell
+          - name: Check Spell
+            run: node --run check-spell
