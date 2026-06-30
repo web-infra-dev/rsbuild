@@ -450,6 +450,9 @@ exports[`should apply default plugins correctly 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "devtoolFallbackModuleFilenameTemplate": [Function],
     "devtoolModuleFilenameTemplate": [Function],
+    "environment": {
+      "const": false,
+    },
     "filename": "static/js/[name].js",
     "path": "<ROOT>/dist",
     "publicPath": "/",
@@ -971,6 +974,9 @@ exports[`should apply default plugins correctly in production 1`] = `
     "chunkFilename": "static/js/async/[name].[contenthash:10].js",
     "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
     "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+    "environment": {
+      "const": false,
+    },
     "filename": "static/js/[name].[contenthash:10].js",
     "path": "<ROOT>/dist",
     "publicPath": "/",
@@ -1943,6 +1949,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "devtoolFallbackModuleFilenameTemplate": [Function],
     "devtoolModuleFilenameTemplate": [Function],
+    "environment": {
+      "const": false,
+    },
     "filename": "static/js/[name].js",
     "path": "<ROOT>/dist",
     "publicPath": "/",
