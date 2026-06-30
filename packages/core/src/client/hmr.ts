@@ -207,8 +207,8 @@ export function init(
     );
   }
 
-  // __webpack_hash__ is the hash of the current compilation.
-  // It's a global variable injected by Rspack.
+  // BUILD_HASH is replaced with import.meta.rspackHash when the client is prebuilt,
+  // then resolved to the current compilation hash.
   const shouldUpdate = () => lastHash !== BUILD_HASH;
 
   const handleApplyUpdates = (err: unknown, updatedModules: (string | number)[] | null) => {

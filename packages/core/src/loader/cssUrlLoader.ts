@@ -112,7 +112,7 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> = async f
     immutable: info.immutable || HASH_PLACEHOLDER_REGEX.test(filenameTemplate),
   });
 
-  return `export default __webpack_public_path__ + ${JSON.stringify(filename)};`;
+  return `export default import.meta.rspackPublicPath + ${JSON.stringify(filename)};`;
 };
 
 export default cssUrlLoader;
