@@ -59,7 +59,7 @@ const assetLoader: RawLoaderDefinition<SvgAssetLoaderOptions> = function (conten
       ? JSON.stringify(publicPath(filename, this.resourcePath, this.rootContext))
       : typeof publicPath === 'string'
         ? JSON.stringify(`${publicPath.endsWith('/') ? publicPath : `${publicPath}/`}${filename}`)
-        : `import.meta.rspackPublicPath + ${JSON.stringify(filename)}`;
+        : `__webpack_public_path__ + ${JSON.stringify(filename)}`;
 
   return `export default ${publicPathCode};`;
 };
