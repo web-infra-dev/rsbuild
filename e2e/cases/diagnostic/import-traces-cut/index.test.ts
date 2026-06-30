@@ -3,7 +3,7 @@ import { expect, test } from '@e2e/helper';
 const EXPECTED_LOG = `Import traces (entry → error):
   ./src/index.js
   ./src/child1.js
-  … (3 hidden)
+  ... (3 hidden)
   ./src/child5.js
   ./src/child6.js ×`;
 

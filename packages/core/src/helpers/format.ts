@@ -117,7 +117,7 @@ function formatModuleTrace(
     const TAIL = 2;
     trace = [
       ...trace.slice(0, HEAD),
-      `… (${trace.length - HEAD - TAIL} hidden)`,
+      `... (${trace.length - HEAD - TAIL} hidden)`,
       ...trace.slice(trace.length - TAIL),
     ];
   }
