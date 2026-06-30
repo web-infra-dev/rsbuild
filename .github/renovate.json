@@ -59,6 +59,12 @@
       "enabled": false
     },
     {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["engines"],
+      "matchPackageNames": ["pnpm"],
+      "enabled": false
+    },
+    {
       "description": "Keep .node-version pinned until Cloudflare Pages can install newer Node.js releases reliably.",
       "matchManagers": ["nodenv"],
       "matchFileNames": [".node-version"],
