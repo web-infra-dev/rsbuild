@@ -99,6 +99,15 @@ export const pluginOutput = (): RsbuildPlugin => ({
           )
           .publicPath(publicPath);
 
+        if (target === 'web' || target === 'web-worker') {
+          // Prefer var in Rspack runtime for web-like targets to avoid TDZ checks in browsers.
+          chain.output.merge({
+            environment: {
+              const: false,
+            },
+          });
+        }
+
         const isESM = config.output.module;
 
         if (isServer) {
