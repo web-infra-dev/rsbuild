@@ -95,6 +95,7 @@ export function setupCommands(argv: string[]): void {
     try {
       const rsbuild = await init({
         cliOptions: options,
+        argv,
       });
       if (!rsbuild) {
         return;
@@ -120,6 +121,7 @@ export function setupCommands(argv: string[]): void {
         const rsbuild = await init({
           cliOptions: options,
           isBuildWatch: options.watch,
+          argv,
         });
         if (!rsbuild) {
           return;
@@ -153,6 +155,7 @@ export function setupCommands(argv: string[]): void {
     try {
       const rsbuild = await init({
         cliOptions: options,
+        argv,
       });
 
       if (!rsbuild) {
@@ -175,6 +178,7 @@ export function setupCommands(argv: string[]): void {
       try {
         const rsbuild = await init({
           cliOptions: options,
+          argv,
         });
 
         if (!rsbuild) {

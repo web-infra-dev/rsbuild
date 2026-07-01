@@ -140,6 +140,11 @@ function loadConfig(params?: {
   meta?: Record<string, unknown>;
   envMode?: string;
   /**
+   * 传给配置函数的 command 参数。
+   * @default process.argv[2]
+   */
+  command?: string;
+  /**
    * 指定配置文件加载器，可选值为 `auto`、`jiti` 或 `native`。
    * - `auto`：优先使用 Node.js 原生加载器，若加载失败则回退到 jiti
    * - `jiti`：使用 jiti 作为加载器，开箱即用地支持 TypeScript 和 ESM
@@ -216,6 +221,18 @@ const { content } = await loadConfig({
 export default defineConfig(({ meta }) => {
   console.log(meta.foo); // bar
   return config;
+});
+```
+
+### 传入 command
+
+默认情况下，`loadConfig` 会将 `process.argv[2]` 作为 `command` 传给配置函数。你可以通过 `command` 选项显式设置该值。
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  command: 'build',
 });
 ```
 

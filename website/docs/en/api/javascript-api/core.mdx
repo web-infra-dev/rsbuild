@@ -140,6 +140,11 @@ function loadConfig(params?: {
   meta?: Record<string, unknown>;
   envMode?: string;
   /**
+   * The command passed to the config function.
+   * @default process.argv[2]
+   */
+  command?: string;
+  /**
    * Specify the config loader, can be `auto`, `jiti` or `native`.
    * - 'auto': Use native Node.js loader first, fallback to jiti if failed
    * - 'jiti': Use jiti as loader, which supports TypeScript and ESM out of the box
@@ -216,6 +221,18 @@ In the `defineConfig` configuration function, you can access the `foo` variable 
 export default defineConfig(({ meta }) => {
   console.log(meta.foo); // bar
   return config;
+});
+```
+
+### Passing command
+
+By default, `loadConfig` passes `process.argv[2]` as the `command` value to the config function. Use the `command` option to explicitly set this value.
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  command: 'build',
 });
 ```
 

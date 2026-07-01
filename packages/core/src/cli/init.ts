@@ -8,7 +8,8 @@ import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
-let commonOpts: CommonOptions = {};
+let cliOptions: CommonOptions = {};
+let argv: string[] | undefined;
 
 const getEnvDir = (cwd: string, envDir?: string) => {
   if (envDir) {
@@ -24,59 +25,60 @@ const loadConfig = async (root: string) => {
     dependencies,
   } = await baseLoadConfig({
     cwd: root,
-    path: commonOpts.config,
-    envMode: commonOpts.envMode,
-    loader: commonOpts.configLoader,
+    path: cliOptions.config,
+    envMode: cliOptions.envMode,
+    loader: cliOptions.configLoader,
+    command: argv?.[2],
   });
 
   config.dev ||= {};
   config.source ||= {};
   config.server ||= {};
 
-  if (commonOpts.base) {
-    config.server.base = commonOpts.base;
+  if (cliOptions.base) {
+    config.server.base = cliOptions.base;
   }
 
-  if (commonOpts.root) {
+  if (cliOptions.root) {
     config.root = root;
   }
 
-  if (commonOpts.mode) {
-    config.mode = commonOpts.mode;
+  if (cliOptions.mode) {
+    config.mode = cliOptions.mode;
   }
 
-  if (commonOpts.logLevel) {
-    config.logLevel = commonOpts.logLevel;
+  if (cliOptions.logLevel) {
+    config.logLevel = cliOptions.logLevel;
   }
 
-  if (commonOpts.open && !config.server?.open) {
-    config.server.open = commonOpts.open;
+  if (cliOptions.open && !config.server?.open) {
+    config.server.open = cliOptions.open;
   }
 
-  if (commonOpts.host !== undefined) {
-    config.server.host = commonOpts.host;
+  if (cliOptions.host !== undefined) {
+    config.server.host = cliOptions.host;
   }
 
-  if (commonOpts.port) {
-    config.server.port = commonOpts.port;
+  if (cliOptions.port) {
+    config.server.port = cliOptions.port;
   }
 
-  if (commonOpts.strictPort !== undefined) {
-    config.server.strictPort = commonOpts.strictPort;
+  if (cliOptions.strictPort !== undefined) {
+    config.server.strictPort = cliOptions.strictPort;
   }
 
-  if (commonOpts.distPath !== undefined) {
+  if (cliOptions.distPath !== undefined) {
     config.output ||= {};
 
     const { distPath } = config.output;
     config.output.distPath =
       distPath && typeof distPath === 'object'
-        ? { ...distPath, root: commonOpts.distPath }
-        : { root: commonOpts.distPath };
+        ? { ...distPath, root: cliOptions.distPath }
+        : { root: cliOptions.distPath };
   }
 
-  if (commonOpts.sourceMap !== undefined) {
-    const sourceMap = commonOpts.sourceMap as unknown;
+  if (cliOptions.sourceMap !== undefined) {
+    const sourceMap = cliOptions.sourceMap as unknown;
 
     if (typeof sourceMap !== 'boolean') {
       throw new Error('The "--source-map" option only accepts a boolean value.');
@@ -106,39 +108,45 @@ const loadConfig = async (root: string) => {
 };
 
 export async function init({
-  cliOptions,
+  cliOptions: currentCliOptions,
   isRestart,
   isBuildWatch = false,
+  argv: currentArgv,
 }: {
   cliOptions?: CommonOptions;
   isRestart?: boolean;
   isBuildWatch?: boolean;
+  argv?: string[];
 }): Promise<RsbuildInstance | undefined> {
-  if (cliOptions) {
-    commonOpts = cliOptions;
+  if (currentCliOptions) {
+    cliOptions = currentCliOptions;
+  }
+
+  if (currentArgv) {
+    argv = currentArgv;
   }
 
   // Build multiple environments can be shortened to: --environment name1,name2
-  if (commonOpts.environment?.some((env) => env.includes(','))) {
-    commonOpts.environment = commonOpts.environment.flatMap((env) => env.split(','));
+  if (cliOptions.environment?.some((env) => env.includes(','))) {
+    cliOptions.environment = cliOptions.environment.flatMap((env) => env.split(','));
   }
 
   let logger = defaultLogger;
 
   try {
     const cwd = process.cwd();
-    const root = commonOpts.root ? ensureAbsolutePath(cwd, commonOpts.root) : cwd;
+    const root = cliOptions.root ? ensureAbsolutePath(cwd, cliOptions.root) : cwd;
 
     const rsbuild = await createRsbuild({
       cwd: root,
       config: () => loadConfig(root),
-      environment: commonOpts.environment,
+      environment: cliOptions.environment,
       loadEnv:
-        commonOpts.env === false
+        cliOptions.env === false
           ? false
           : {
-              cwd: getEnvDir(root, commonOpts.envDir),
-              mode: commonOpts.envMode,
+              cwd: getEnvDir(root, cliOptions.envDir),
+              mode: cliOptions.envMode,
             },
     });
     logger = rsbuild.logger;
