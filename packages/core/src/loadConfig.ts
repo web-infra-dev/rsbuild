@@ -126,22 +126,18 @@ const tryFreshImport = async (configFileURL: string) => {
 
 const loadConfigWithNative = async (
   configFilePath: string,
-  collectDependencies: boolean,
 ): Promise<{
   configExport: RsbuildConfigExport;
   dependencies: string[];
 }> => {
   const configFileURL = pathToFileURL(configFilePath).href;
+  const freshImportResult = await tryFreshImport(configFileURL);
 
-  if (collectDependencies) {
-    const freshImportResult = await tryFreshImport(configFileURL);
-
-    if (freshImportResult) {
-      return {
-        configExport: getConfigExport(freshImportResult.result),
-        dependencies: freshImportResult.dependencies.sort(),
-      };
-    }
+  if (freshImportResult) {
+    return {
+      configExport: getConfigExport(freshImportResult.result),
+      dependencies: freshImportResult.dependencies.sort(),
+    };
   }
 
   const exportModule = await import(`${configFileURL}?t=${Date.now()}`);
@@ -187,10 +183,7 @@ export async function loadConfig({
 
   if (useNative || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
     try {
-      ({ configExport, dependencies } = await loadConfigWithNative(
-        configFilePath,
-        loader === 'native',
-      ));
+      ({ configExport, dependencies } = await loadConfigWithNative(configFilePath));
     } catch (err) {
       const errorMessage = `Failed to load file with native loader: ${color.dim(configFilePath)}`;
       if (loader === 'native') {
