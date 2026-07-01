@@ -72,7 +72,7 @@ const applyServerOptions = (command: Command) => {
     .option('--host [host]', 'Set the host that the server listens to');
 };
 
-export function setupCommands(): void {
+export function setupCommands(argv: string[]): void {
   const cli = cac('rsbuild');
 
   cli.version(RSBUILD_VERSION);
@@ -224,5 +224,5 @@ export function setupCommands(): void {
     }
   });
 
-  cli.parse();
+  cli.parse(argv);
 }

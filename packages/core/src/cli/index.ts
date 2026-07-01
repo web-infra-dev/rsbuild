@@ -2,7 +2,13 @@ import { defaultLogger, isDebug } from '../logger';
 import type { LogLevel } from '../types';
 import { setupCommands } from './commands';
 
-const { argv } = process;
+export type RunCLIOptions = {
+  /**
+   * The command line arguments to parse.
+   * @default process.argv
+   */
+  argv?: string[];
+};
 
 function initNodeEnv(command: string | undefined) {
   if (!process.env.NODE_ENV) {
@@ -24,29 +30,29 @@ function showGreeting() {
 }
 
 // ensure log level is set before any log is printed
-function setupLogLevel() {
+function setupLogLevel(argv: string[]) {
   if (argv.length <= 3) {
     return;
   }
 
   const logLevelIndex = argv.findIndex((item) => item === '--log-level' || item === '--logLevel');
   if (logLevelIndex !== -1) {
-    const level = process.argv[logLevelIndex + 1];
+    const level = argv[logLevelIndex + 1];
     if (level && ['warn', 'error', 'silent'].includes(level) && !isDebug()) {
       defaultLogger.level = level as LogLevel;
     }
   }
 }
 
-export function runCLI(): void {
+export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
   const command = argv[2];
 
   initNodeEnv(command);
-  setupLogLevel();
+  setupLogLevel(argv);
   showGreeting();
 
   try {
-    setupCommands();
+    setupCommands(argv);
   } catch (err) {
     defaultLogger.error('Failed to start Rsbuild CLI.');
     defaultLogger.error(err);
