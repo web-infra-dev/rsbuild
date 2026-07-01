@@ -57,6 +57,10 @@ const loadConfig = async (root: string) => {
     config.server.port = commonOpts.port;
   }
 
+  if (commonOpts.strictPort !== undefined) {
+    config.server.strictPort = commonOpts.strictPort;
+  }
+
   if (commonOpts.distPath !== undefined) {
     config.output ||= {};
 
