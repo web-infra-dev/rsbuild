@@ -59,7 +59,8 @@ export type LoadConfigResult = {
    */
   filePath: string | null;
   /**
-   * Files imported by the configuration file.
+   * Absolute file paths of statically imported (relative) dependencies of the
+   * config file.
    */
   dependencies: string[];
 };
@@ -117,7 +118,7 @@ const getConfigExport = (module: unknown): RsbuildConfigExport =>
 const tryFreshImport = async (configFileURL: string) => {
   try {
     const { freshImport } = await import('fresh-import');
-    return freshImport(configFileURL);
+    return await freshImport(configFileURL);
   } catch (err) {
     defaultLogger.debug('failed to initialize fresh-import, fallback to dynamic import.');
     defaultLogger.debug(err);
