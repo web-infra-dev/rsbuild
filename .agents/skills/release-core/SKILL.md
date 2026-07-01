@@ -15,13 +15,14 @@ If the version is missing, ask for it before making changes.
 
 1. Check the worktree with `git status --short`. If there are uncommitted edits, stop and ask the user how to proceed.
 
-2. Update only the `version` field in these files to the target version:
-   - `packages/core/package.json`
-   - `packages/create-rsbuild/package.json`
+2. Update release versions:
+   - `packages/core/package.json`: `version`
+   - `packages/create-rsbuild/package.json`: `version`
+   - `packages/create-rsbuild/template-*/package.json`: `@rsbuild/core` to `^<version>`
 
 3. Create and switch to branch `release/v<version>`. If the branch already exists, stop and ask the user how to proceed.
 
-4. Review the diff and confirm the change is limited to the two version bumps.
+4. Review the diff and confirm it is limited to the fields above. Run `rg -n '"@rsbuild/core":' packages/create-rsbuild/template-*/package.json` and confirm every template uses `^<version>`.
 
 5. Create a commit with this exact message: `release: v<version>`
 
