@@ -21,6 +21,7 @@ export type CommonOptions = {
   open?: boolean | string;
   host?: true | string;
   port?: number;
+  strictPort?: boolean;
   environment?: string[];
   logLevel?: LogLevel;
 };
@@ -67,6 +68,7 @@ const applyServerOptions = (command: Command) => {
   command
     .option('-o, --open [url]', 'Open the page in browser on startup')
     .option('--port <port>', 'Set the port number for the server')
+    .option('--strict-port', 'Exit if the specified port is already in use')
     .option('--host [host]', 'Set the host that the server listens to');
 };
 
