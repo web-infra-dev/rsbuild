@@ -10,16 +10,19 @@ import type { CommonOptions } from './commands';
 
 const cliState = {
   options: {} as CommonOptions,
-  argv: process.argv,
+  command: '',
 };
 
-export const setCliState = (argv: string[], options: CommonOptions): void => {
+export const setCliOptions = (options: CommonOptions): void => {
   // Build multiple environments can be shortened to: --environment name1,name2
   if (options.environment?.some((env) => env.includes(','))) {
     options.environment = options.environment.flatMap((env) => env.split(','));
   }
-  cliState.argv = argv;
   cliState.options = options;
+};
+
+export const setCommand = (command: string): void => {
+  cliState.command = command;
 };
 
 const getEnvDir = (cwd: string, envDir?: string) => {
@@ -30,7 +33,7 @@ const getEnvDir = (cwd: string, envDir?: string) => {
 };
 
 const loadConfig = async (root: string) => {
-  const { options, argv } = cliState;
+  const { options, command } = cliState;
   const {
     content: config,
     filePath,
@@ -40,7 +43,7 @@ const loadConfig = async (root: string) => {
     path: options.config,
     envMode: options.envMode,
     loader: options.configLoader,
-    command: argv[2],
+    command,
   });
 
   config.dev ||= {};
