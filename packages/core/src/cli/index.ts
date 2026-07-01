@@ -4,7 +4,7 @@ import { setupCommands } from './commands';
 
 export type RunCLIOptions = {
   /**
-   * The command line arguments to parse.
+   * The command-line arguments to parse, matching the shape of Node.js `process.argv`
    * @default process.argv
    */
   argv?: string[];
