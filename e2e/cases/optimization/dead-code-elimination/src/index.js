@@ -1,3 +1,4 @@
-import { test } from './lib';
+import { test as testExportedMutator } from './lib';
+import { test as testExportedState } from './exported-state';
 
-console.log(test());
+console.log(testExportedMutator(), testExportedState());

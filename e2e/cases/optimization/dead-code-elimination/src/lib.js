@@ -6,8 +6,8 @@ export function use() {
 
 export function test() {
   if (used) {
-    return 'dce-removed-value';
+    return 'dce-unused-mutator-removed';
   }
 
-  return 'dce-expected-value';
+  return 'dce-unused-mutator-expected';
 }
