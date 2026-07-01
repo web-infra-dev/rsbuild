@@ -1,5 +1,6 @@
 let used = false;
 
+// This unused export is the only possible mutator of the branch guard.
 export function use() {
   used = true;
 }
