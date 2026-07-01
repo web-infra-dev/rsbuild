@@ -44,8 +44,11 @@ Rsbuild CLI 提供了一些公共选项，可以用于所有命令：
 | `--log-level <level>`      | 指定日志级别（`info` \| `warn` \| `error` \| `silent`），详见 [logLevel](/config/log-level)                                   |
 | `-m, --mode <mode>`        | 指定构建模式（`development` \| `production` \| `none`），详见 [mode](/config/mode)                                            |
 | `--no-env`                 | 禁用 `.env` 文件的加载                                                                                                        |
+| `--no-source-map`          | 禁用 source map，详见 [output.sourceMap](/config/output/source-map)                                                           |
 | `-r, --root <root>`        | 指定项目根目录（绝对路径或者相对于 [cwd](https://nodejs.org/api/process.html#processcwd) 的路径）                             |
 | `--source-map`             | 启用 source map，详见 [output.sourceMap](/config/output/source-map)                                                           |
+
+对于布尔类型的选项，可以使用 `--no-` 前缀来显式禁用对应功能，例如 `--no-env` 或 `--no-source-map`。
 
 ## rsbuild
 
