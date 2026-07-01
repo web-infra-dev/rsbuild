@@ -58,6 +58,10 @@ export type LoadConfigResult = {
    * Return `null` if the configuration file is not found.
    */
   filePath: string | null;
+  /**
+   * Files imported by the configuration file.
+   */
+  dependencies: string[];
 };
 
 /**
@@ -105,6 +109,48 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
 
 export type ConfigLoader = 'auto' | 'jiti' | 'native';
 
+const getConfigExport = (module: unknown): RsbuildConfigExport =>
+  (module && typeof module === 'object' && 'default' in module
+    ? module.default
+    : module) as RsbuildConfigExport;
+
+const tryFreshImport = async (configFileURL: string) => {
+  try {
+    const { freshImport } = await import('fresh-import');
+    return freshImport(configFileURL);
+  } catch (err) {
+    defaultLogger.debug('failed to initialize fresh-import, fallback to dynamic import.');
+    defaultLogger.debug(err);
+  }
+};
+
+const loadConfigWithNative = async (
+  configFilePath: string,
+  collectDependencies: boolean,
+): Promise<{
+  configExport: RsbuildConfigExport;
+  dependencies: string[];
+}> => {
+  const configFileURL = pathToFileURL(configFilePath).href;
+
+  if (collectDependencies) {
+    const freshImportResult = await tryFreshImport(configFileURL);
+
+    if (freshImportResult) {
+      return {
+        configExport: getConfigExport(freshImportResult.result),
+        dependencies: freshImportResult.dependencies.sort(),
+      };
+    }
+  }
+
+  const exportModule = await import(`${configFileURL}?t=${Date.now()}`);
+  return {
+    configExport: getConfigExport(exportModule),
+    dependencies: [],
+  };
+};
+
 export async function loadConfig({
   cwd = process.cwd(),
   path,
@@ -119,8 +165,11 @@ export async function loadConfig({
     return {
       content: {},
       filePath: configFilePath,
+      dependencies: [],
     };
   }
+
+  let dependencies: string[] = [];
 
   const applyMetaInfo = (config: RsbuildConfig) => {
     config._privateMeta = { configFilePath };
@@ -138,9 +187,10 @@ export async function loadConfig({
 
   if (useNative || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
     try {
-      const configFileURL = pathToFileURL(configFilePath).href;
-      const exportModule = await import(`${configFileURL}?t=${Date.now()}`);
-      configExport = exportModule.default ? exportModule.default : exportModule;
+      ({ configExport, dependencies } = await loadConfigWithNative(
+        configFilePath,
+        loader === 'native',
+      ));
     } catch (err) {
       const errorMessage = `Failed to load file with native loader: ${color.dim(configFilePath)}`;
       if (loader === 'native') {
@@ -195,6 +245,7 @@ export async function loadConfig({
     return {
       content: applyMetaInfo(result),
       filePath: configFilePath,
+      dependencies,
     };
   }
 
@@ -211,5 +262,6 @@ export async function loadConfig({
   return {
     content: applyMetaInfo(configExport),
     filePath: configFilePath,
+    dependencies,
   };
 }

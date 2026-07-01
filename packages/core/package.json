@@ -66,6 +66,7 @@
     "css-loader": "catalog:",
     "deepmerge": "catalog:",
     "dotenv-expand": "catalog:",
+    "fresh-import": "catalog:",
     "html-rspack-plugin": "catalog:",
     "http-proxy-middleware": "catalog:",
     "jiti": "catalog:",
