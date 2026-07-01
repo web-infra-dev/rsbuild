@@ -202,6 +202,9 @@ catalogs:
     fast-glob:
       specifier: ^3.3.3
       version: 3.3.3
+    fresh-import:
+      specifier: ^0.2.1
+      version: 0.2.1
     fs-extra:
       specifier: ^11.3.5
       version: 11.3.5
@@ -943,6 +946,9 @@ importers:
       dotenv-expand:
         specifier: 'catalog:'
         version: 13.0.0(patch_hash=5ff37847fa487be2db4e4f14c2b21937f4e51cc7a43deea4506d4aaf3fa6149c)
+      fresh-import:
+        specifier: 'catalog:'
+        version: 0.2.1
       html-rspack-plugin:
         specifier: 'catalog:'
         version: 6.1.9(@rspack/core@2.1.2)
@@ -3851,6 +3857,10 @@ packages:
 
   flexsearch@0.8.212:
     resolution: {integrity: sha512-wSyJr1GUWoOOIISRu+X2IXiOcVfg9qqBRyCPRUdLMIGJqPzMo+jMRlvE83t14v1j0dRMEaBbER/adQjp6Du2pw==}
+
+  fresh-import@0.2.1:
+    resolution: {integrity: sha512-fwvkgwvZ60xFe0FQ5nynh9mgayR5HY0e0rzPs2cDiGhrOo7N8ARyMHP0Ew7bUFe7QAaZmouphLnCoJKAe6dTog==}
+    engines: {node: ^20.19.0 || >=22.12.0}
 
   fs-extra@11.3.5:
     resolution: {integrity: sha512-eKpRKAovdpZtR1WopLHxlBWvAgPny3c4gX1G5Jhwmmw4XJj0ifSD5qB5TOo8hmA0wlRKDAOAhEE1yVPgs6Fgcg==}
@@ -7983,6 +7993,8 @@ snapshots:
       path-exists: 4.0.0
 
   flexsearch@0.8.212: {}
+
+  fresh-import@0.2.1: {}
 
   fs-extra@11.3.5:
     dependencies:

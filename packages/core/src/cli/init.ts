@@ -18,7 +18,11 @@ const getEnvDir = (cwd: string, envDir?: string) => {
 };
 
 const loadConfig = async (root: string) => {
-  const { content: config, filePath } = await baseLoadConfig({
+  const {
+    content: config,
+    filePath,
+    dependencies,
+  } = await baseLoadConfig({
     cwd: root,
     path: commonOpts.config,
     envMode: commonOpts.envMode,
@@ -92,7 +96,7 @@ const loadConfig = async (root: string) => {
     config.dev.watchFiles = [
       ...(config.dev.watchFiles ? castArray(config.dev.watchFiles) : []),
       {
-        paths: filePath,
+        paths: [filePath, ...dependencies],
         type: 'reload-server',
       },
     ];
