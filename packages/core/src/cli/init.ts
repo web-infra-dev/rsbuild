@@ -8,8 +8,19 @@ import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
-let cliOptions: CommonOptions = {};
-let argv: string[] | undefined;
+const cliState = {
+  options: {} as CommonOptions,
+  argv: process.argv,
+};
+
+export const setCliState = (argv: string[], options: CommonOptions): void => {
+  // Build multiple environments can be shortened to: --environment name1,name2
+  if (options.environment?.some((env) => env.includes(','))) {
+    options.environment = options.environment.flatMap((env) => env.split(','));
+  }
+  cliState.argv = argv;
+  cliState.options = options;
+};
 
 const getEnvDir = (cwd: string, envDir?: string) => {
   if (envDir) {
@@ -19,66 +30,67 @@ const getEnvDir = (cwd: string, envDir?: string) => {
 };
 
 const loadConfig = async (root: string) => {
+  const { options, argv } = cliState;
   const {
     content: config,
     filePath,
     dependencies,
   } = await baseLoadConfig({
     cwd: root,
-    path: cliOptions.config,
-    envMode: cliOptions.envMode,
-    loader: cliOptions.configLoader,
-    command: argv?.[2],
+    path: options.config,
+    envMode: options.envMode,
+    loader: options.configLoader,
+    command: argv[2],
   });
 
   config.dev ||= {};
   config.source ||= {};
   config.server ||= {};
 
-  if (cliOptions.base) {
-    config.server.base = cliOptions.base;
+  if (options.base) {
+    config.server.base = options.base;
   }
 
-  if (cliOptions.root) {
+  if (options.root) {
     config.root = root;
   }
 
-  if (cliOptions.mode) {
-    config.mode = cliOptions.mode;
+  if (options.mode) {
+    config.mode = options.mode;
   }
 
-  if (cliOptions.logLevel) {
-    config.logLevel = cliOptions.logLevel;
+  if (options.logLevel) {
+    config.logLevel = options.logLevel;
   }
 
-  if (cliOptions.open && !config.server?.open) {
-    config.server.open = cliOptions.open;
+  if (options.open && !config.server?.open) {
+    config.server.open = options.open;
   }
 
-  if (cliOptions.host !== undefined) {
-    config.server.host = cliOptions.host;
+  if (options.host !== undefined) {
+    config.server.host = options.host;
   }
 
-  if (cliOptions.port) {
-    config.server.port = cliOptions.port;
+  if (options.port) {
+    config.server.port = options.port;
   }
 
-  if (cliOptions.strictPort !== undefined) {
-    config.server.strictPort = cliOptions.strictPort;
+  if (options.strictPort !== undefined) {
+    config.server.strictPort = options.strictPort;
   }
 
-  if (cliOptions.distPath !== undefined) {
+  if (options.distPath !== undefined) {
     config.output ||= {};
 
     const { distPath } = config.output;
     config.output.distPath =
       distPath && typeof distPath === 'object'
-        ? { ...distPath, root: cliOptions.distPath }
-        : { root: cliOptions.distPath };
+        ? { ...distPath, root: options.distPath }
+        : { root: options.distPath };
   }
 
-  if (cliOptions.sourceMap !== undefined) {
-    const sourceMap = cliOptions.sourceMap as unknown;
+  if (options.sourceMap !== undefined) {
+    const sourceMap = options.sourceMap as unknown;
 
     if (typeof sourceMap !== 'boolean') {
       throw new Error('The "--source-map" option only accepts a boolean value.');
@@ -108,45 +120,29 @@ const loadConfig = async (root: string) => {
 };
 
 export async function init({
-  cliOptions: currentCliOptions,
   isRestart,
   isBuildWatch = false,
-  argv: currentArgv,
 }: {
-  cliOptions?: CommonOptions;
   isRestart?: boolean;
   isBuildWatch?: boolean;
-  argv?: string[];
-}): Promise<RsbuildInstance | undefined> {
-  if (currentCliOptions) {
-    cliOptions = currentCliOptions;
-  }
-
-  if (currentArgv) {
-    argv = currentArgv;
-  }
-
-  // Build multiple environments can be shortened to: --environment name1,name2
-  if (cliOptions.environment?.some((env) => env.includes(','))) {
-    cliOptions.environment = cliOptions.environment.flatMap((env) => env.split(','));
-  }
-
+} = {}): Promise<RsbuildInstance | undefined> {
   let logger = defaultLogger;
+  const { options } = cliState;
 
   try {
     const cwd = process.cwd();
-    const root = cliOptions.root ? ensureAbsolutePath(cwd, cliOptions.root) : cwd;
+    const root = options.root ? ensureAbsolutePath(cwd, options.root) : cwd;
 
     const rsbuild = await createRsbuild({
       cwd: root,
       config: () => loadConfig(root),
-      environment: cliOptions.environment,
+      environment: options.environment,
       loadEnv:
-        cliOptions.env === false
+        options.env === false
           ? false
           : {
-              cwd: getEnvDir(root, cliOptions.envDir),
-              mode: cliOptions.envMode,
+              cwd: getEnvDir(root, options.envDir),
+              mode: options.envMode,
             },
     });
     logger = rsbuild.logger;
