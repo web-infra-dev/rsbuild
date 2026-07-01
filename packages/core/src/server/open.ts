@@ -17,6 +17,7 @@ const supportedChromiumBrowsers = [
   'Brave Browser',
   'Vivaldi',
   'Chromium',
+  'Helium',
 ];
 
 /**
