@@ -46,6 +46,11 @@ export type LoadConfigOptions = {
    * @default 'auto'
    */
   loader?: ConfigLoader;
+  /**
+   * The command passed to the config function.
+   * @default process.argv[2]
+   */
+  command?: string;
 };
 
 export type LoadConfigResult = {
@@ -154,6 +159,7 @@ export async function loadConfig({
   envMode,
   meta,
   loader = 'auto',
+  command,
 }: LoadConfigOptions = {}): Promise<LoadConfigResult> {
   const configFilePath = resolveConfigPath(cwd, path);
 
@@ -219,11 +225,10 @@ export async function loadConfig({
   }
 
   if (typeof configExport === 'function') {
-    const command = process.argv[2];
     const nodeEnv = getNodeEnv();
     const configParams: ConfigParams = {
       env: nodeEnv,
-      command,
+      command: command ?? process.argv[2],
       envMode: envMode || nodeEnv,
       meta,
     };

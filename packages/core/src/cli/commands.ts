@@ -5,7 +5,7 @@ import type { ConfigLoader } from '../loadConfig';
 import { defaultLogger } from '../logger';
 import { onBeforeRestartServer } from '../restart';
 import type { LogLevel, RsbuildMode } from '../types';
-import { init } from './init';
+import { init, setCliState } from './init';
 
 export type CommonOptions = {
   base?: string;
@@ -92,10 +92,9 @@ export function setupCommands(argv: string[]): void {
   let logger = defaultLogger;
 
   devCommand.action(async (options: DevOptions) => {
+    setCliState(argv, options);
     try {
-      const rsbuild = await init({
-        cliOptions: options,
-      });
+      const rsbuild = await init();
       if (!rsbuild) {
         return;
       }
@@ -112,13 +111,13 @@ export function setupCommands(argv: string[]): void {
   buildCommand
     .option('-w, --watch', 'Enable watch mode to automatically rebuild on file changes')
     .action(async (options: BuildOptions) => {
+      setCliState(argv, options);
       try {
         if (!options.watch) {
           process.env.RSPACK_UNSAFE_FAST_DROP = 'true';
         }
 
         const rsbuild = await init({
-          cliOptions: options,
           isBuildWatch: options.watch,
         });
         if (!rsbuild) {
@@ -150,10 +149,9 @@ export function setupCommands(argv: string[]): void {
     });
 
   previewCommand.action(async (options: PreviewOptions) => {
+    setCliState(argv, options);
     try {
-      const rsbuild = await init({
-        cliOptions: options,
-      });
+      const rsbuild = await init();
 
       if (!rsbuild) {
         return;
@@ -172,10 +170,9 @@ export function setupCommands(argv: string[]): void {
     .option('--output <output>', 'Set the output path for inspection results')
     .option('--verbose', 'Show complete function definitions in output')
     .action(async (options: InspectOptions) => {
+      setCliState(argv, options);
       try {
-        const rsbuild = await init({
-          cliOptions: options,
-        });
+        const rsbuild = await init();
 
         if (!rsbuild) {
           return;
