@@ -5,7 +5,7 @@ import type { ConfigLoader } from '../loadConfig';
 import { defaultLogger } from '../logger';
 import { onBeforeRestartServer } from '../restart';
 import type { LogLevel, RsbuildMode } from '../types';
-import { init, setCliOptions, setCommand } from './init';
+import { init, initCliAction } from './init';
 
 export type CommonOptions = {
   base?: string;
@@ -72,13 +72,6 @@ const applyServerOptions = (command: Command) => {
     .option('--host [host]', 'Set the host that the server listens to');
 };
 
-function initNodeEnv(command: string) {
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV =
-      command === 'build' || command === 'preview' ? 'production' : 'development';
-  }
-}
-
 export function setupCommands(argv: string[]): void {
   const cli = cac('rsbuild');
 
@@ -99,9 +92,7 @@ export function setupCommands(argv: string[]): void {
   let logger = defaultLogger;
 
   devCommand.action(async (options: DevOptions) => {
-    initNodeEnv('dev');
-    setCommand('dev');
-    setCliOptions(options);
+    initCliAction('dev', options);
     try {
       const rsbuild = await init();
       if (!rsbuild) {
@@ -120,9 +111,7 @@ export function setupCommands(argv: string[]): void {
   buildCommand
     .option('-w, --watch', 'Enable watch mode to automatically rebuild on file changes')
     .action(async (options: BuildOptions) => {
-      initNodeEnv('build');
-      setCommand('build');
-      setCliOptions(options);
+      initCliAction('build', options);
       try {
         if (!options.watch) {
           process.env.RSPACK_UNSAFE_FAST_DROP = 'true';
@@ -160,9 +149,7 @@ export function setupCommands(argv: string[]): void {
     });
 
   previewCommand.action(async (options: PreviewOptions) => {
-    initNodeEnv('preview');
-    setCommand('preview');
-    setCliOptions(options);
+    initCliAction('preview', options);
     try {
       const rsbuild = await init();
 
@@ -183,9 +170,7 @@ export function setupCommands(argv: string[]): void {
     .option('--output <output>', 'Set the output path for inspection results')
     .option('--verbose', 'Show complete function definitions in output')
     .action(async (options: InspectOptions) => {
-      initNodeEnv('inspect');
-      setCommand('inspect');
-      setCliOptions(options);
+      initCliAction('inspect', options);
       try {
         const rsbuild = await init();
 

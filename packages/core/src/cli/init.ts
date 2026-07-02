@@ -13,16 +13,21 @@ const cliState = {
   command: '',
 };
 
-export const setCliOptions = (options: CommonOptions): void => {
+type CommandName = 'dev' | 'build' | 'preview' | 'inspect';
+
+export const initCliAction = (command: CommandName, options: CommonOptions): void => {
+  if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV =
+      command === 'build' || command === 'preview' ? 'production' : 'development';
+  }
+
   // Build multiple environments can be shortened to: --environment name1,name2
   if (options.environment?.some((env) => env.includes(','))) {
     options.environment = options.environment.flatMap((env) => env.split(','));
   }
-  cliState.options = options;
-};
 
-export const setCommand = (command: string): void => {
   cliState.command = command;
+  cliState.options = options;
 };
 
 const getEnvDir = (cwd: string, envDir?: string) => {
