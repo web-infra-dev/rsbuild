@@ -16,7 +16,7 @@ export type RsbuildConfigAsyncFn = (env: ConfigParams) => Promise<RsbuildConfig>
 
 export type RsbuildConfigSyncFn = (env: ConfigParams) => RsbuildConfig;
 
-export type RsbuildConfigExport = RsbuildConfig | RsbuildConfigSyncFn | RsbuildConfigAsyncFn;
+export type RsbuildConfigDefinition = RsbuildConfig | RsbuildConfigSyncFn | RsbuildConfigAsyncFn;
 
 export type LoadConfigOptions = {
   /**
@@ -77,8 +77,8 @@ export type LoadConfigResult = {
 export function defineConfig(config: RsbuildConfig): RsbuildConfig;
 export function defineConfig(config: RsbuildConfigSyncFn): RsbuildConfigSyncFn;
 export function defineConfig(config: RsbuildConfigAsyncFn): RsbuildConfigAsyncFn;
-export function defineConfig(config: RsbuildConfigExport): RsbuildConfigExport;
-export function defineConfig(config: RsbuildConfigExport) {
+export function defineConfig(config: RsbuildConfigDefinition): RsbuildConfigDefinition;
+export function defineConfig(config: RsbuildConfigDefinition) {
   return config;
 }
 
@@ -115,10 +115,10 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
 
 export type ConfigLoader = 'auto' | 'jiti' | 'native';
 
-const getConfigExport = (module: unknown): RsbuildConfigExport =>
+const getConfigExport = (module: unknown): RsbuildConfigDefinition =>
   (module && typeof module === 'object' && 'default' in module
     ? module.default
-    : module) as RsbuildConfigExport;
+    : module) as RsbuildConfigDefinition;
 
 const tryFreshImport = async (configFileURL: string) => {
   try {
@@ -133,7 +133,7 @@ const tryFreshImport = async (configFileURL: string) => {
 const loadConfigWithNative = async (
   configFilePath: string,
 ): Promise<{
-  configExport: RsbuildConfigExport;
+  configExport: RsbuildConfigDefinition;
   dependencies: string[];
 }> => {
   const configFileURL = pathToFileURL(configFilePath).href;
@@ -179,7 +179,7 @@ export async function loadConfig({
     return config;
   };
 
-  let configExport: RsbuildConfigExport | undefined;
+  let configExport: RsbuildConfigDefinition | undefined;
 
   // Determine the loading strategy based on the config loader type
   const useNative = Boolean(
@@ -215,7 +215,7 @@ export async function loadConfig({
         nativeModules: ['typescript'],
       });
 
-      configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {
+      configExport = await jiti.import<RsbuildConfigDefinition>(configFilePath, {
         default: true,
       });
     } catch (err) {

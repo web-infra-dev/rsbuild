@@ -13,6 +13,9 @@ export {
   defineConfig,
   type LoadConfigOptions,
   type LoadConfigResult,
+  type RsbuildConfigAsyncFn,
+  type RsbuildConfigDefinition,
+  type RsbuildConfigSyncFn,
   loadConfig,
 } from './loadConfig';
 // Core methods
