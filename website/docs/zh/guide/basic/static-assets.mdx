@@ -159,33 +159,59 @@ console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
 
 ## 导入为字符串
 
-Rsbuild 支持通过 `?raw` 查询参数引用静态资源的原始内容，并将其作为字符串导入到 JavaScript 中。
+### 通过导入属性
+
+Rsbuild 支持通过 `type: 'text'` 导入属性将文件原始内容作为字符串导入到 JavaScript 中。
+
+```ts
+import svgText from './static/logo.svg' with { type: 'text' };
+import imageText from './static/image.png' with { type: 'text' };
+import jsonText from './data.json' with { type: 'text' };
+import componentText from './component.tsx' with { type: 'text' };
+import styleText from './style.css' with { type: 'text' };
+
+console.log(svgText); // 输出 SVG 文件的原始内容
+```
+
+`type: 'text'` 导入属性支持将资源的原始内容作为字符串导入，不会经过默认的资源、脚本或样式处理流程。
+
+导入属性只影响当前导入，普通导入仍会保持默认行为：
+
+```ts
+import { foo } from './foo.js';
+import fooText from './foo.js' with { type: 'text' };
+
+console.log(foo); // foo.js 导出的内容
+console.log(fooText); // foo.js 的原始内容
+```
+
+动态导入也可以通过第二个参数传入导入属性：
+
+```ts
+const { default: fooText } = await import('./foo.js', {
+  with: { type: 'text' },
+});
+
+console.log(fooText); // foo.js 的原始内容
+```
+
+:::tip
+`type: 'text'` 在 Rsbuild >= 2.1.3 中支持，推荐优先使用它，而不是 `?raw` 查询参数。
+:::
+
+### 通过查询参数
+
+Rsbuild 也支持通过 `?raw` 查询参数将文件内容作为字符串导入：
 
 ```ts
 import rawSvg from './static/logo.svg?raw';
+import rawImage from './static/image.png?raw';
+import rawJson from './data.json?raw';
+import rawComponent from './component.tsx?raw';
+import rawStyle from './style.css?raw';
 
 console.log(rawSvg); // 输出 SVG 文件的原始内容
 ```
-
-Rsbuild 还支持通过 `?raw` 查询参数引用 JavaScript、TypeScript 和 JSX 等文件的原始内容。
-
-```ts
-import rawJs from './script1.js?raw';
-import rawTs from './script2.ts?raw';
-import rawJsx from './script3.jsx?raw';
-import rawTsx from './script4.tsx?raw';
-
-console.log(rawJs); // JS 文件的原始内容
-console.log(rawTs); // TS 文件的原始内容
-console.log(rawJsx); // JSX 文件的原始内容
-console.log(rawTsx); // TSX 文件的原始内容
-```
-
-你也可以使用 `?raw` 查询参数来引用 CSS 文件的原始内容，详见 [CSS](/guide/styling/css-usage#raw)。
-
-:::tip
-Rsbuild >= 1.3.0 支持 `?raw` 查询参数，>= 1.4.0 支持引用 JS 和 TS 文件的原始内容。
-:::
 
 ## 构建产物
 
