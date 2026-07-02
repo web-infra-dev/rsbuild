@@ -67,6 +67,7 @@ export const CHAIN_ID = {
     JS_MAIN: 'js',
     JS_WORKER: 'js-worker',
     JS_RAW: 'js-raw',
+    JS_TEXT: 'js-text',
     /** CSS oneOf rules */
     CSS_MAIN: 'css',
     CSS_RAW: 'css-raw',

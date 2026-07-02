@@ -199,6 +199,12 @@ exports[`should apply default plugins correctly 1`] = `
             ],
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
@@ -688,6 +694,12 @@ exports[`should apply default plugins correctly in production 1`] = `
                 "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
               },
             ],
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -1198,6 +1210,12 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             ],
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
@@ -1692,6 +1710,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
               },
             ],
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,

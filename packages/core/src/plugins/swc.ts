@@ -110,6 +110,9 @@ export const pluginSwc = (): RsbuildPlugin => ({
           // the module should be treated as an asset module rather than a JS module.
           .dependency({ not: 'url' });
 
+        // Support for `import source from "a.js" with { type: "text" }`
+        rule.oneOf(CHAIN_ID.ONE_OF.JS_TEXT).with({ type: 'text' }).type('asset/source');
+
         // Support for `import rawJs from "a.js?raw"`
         rule.oneOf(CHAIN_ID.ONE_OF.JS_RAW).resourceQuery(RAW_QUERY_REGEX).type('asset/source');
 

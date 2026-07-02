@@ -29,6 +29,12 @@ exports[`plugin-swc > should allow \`tools.swc\` to be a function 1`] = `
         ],
       },
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -78,6 +84,12 @@ exports[`plugin-swc > should allow using \`tools.swc\` to configure swc-loader o
             "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
           },
         ],
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
       },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -158,6 +170,12 @@ exports[`plugin-swc > should apply decorators version 2023-11 1`] = `
               "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
             },
           ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
         },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -241,6 +259,12 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
             "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
           },
         ],
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
       },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -338,6 +362,12 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
         ],
       },
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -420,6 +450,12 @@ exports[`plugin-swc > should apply overrideBrowserslist 1`] = `
           ],
         },
         {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -496,6 +532,12 @@ exports[`plugin-swc > should apply pluginImport 1`] = `
               "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
             },
           ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
         },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -582,6 +624,12 @@ exports[`plugin-swc > should apply pluginImport correctly with ConfigChain 1`] =
               "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
             },
           ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
         },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -673,6 +721,12 @@ exports[`plugin-swc > should disable pluginImport when it returns undefined 1`] 
           ],
         },
         {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -754,6 +808,12 @@ exports[`plugin-swc > should disable preset-env for non-web targets 1`] = `
           ],
         },
         {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -830,6 +890,12 @@ exports[`plugin-swc > should disable preset-env mode 1`] = `
               "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
             },
           ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
         },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -911,6 +977,12 @@ exports[`plugin-swc > should enable preset-env in entry mode 1`] = `
               "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
             },
           ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
         },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -999,6 +1071,12 @@ exports[`plugin-swc > should enable preset-env in usage mode 1`] = `
               "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
             },
           ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
         },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -1090,6 +1168,12 @@ exports[`plugin-swc > should use the correct core-js version 1`] = `
           ],
         },
         {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -1176,6 +1260,12 @@ exports[`plugin-swc > should use the correct core-js version 2`] = `
               "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
             },
           ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
         },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
