@@ -1,5 +1,11 @@
 # @rsbuild/plugin-vue
 
+## 2.0.1 (2026-07-02)
+
+### New features
+
+- feat(plugin-vue): support text import attributes by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8053
+
 ## 2.0.0 (2026-06-22)
 
 ### Breaking changes
