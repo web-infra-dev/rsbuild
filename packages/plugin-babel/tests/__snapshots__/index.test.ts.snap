@@ -195,6 +195,9 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
     "include": [
       /b\\\\\\.js\\$/,
     ],
+    "resourceQuery": {
+      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "use": [
       {
@@ -231,6 +234,9 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
     "include": [
       /a\\\\\\.js\\$/,
     ],
+    "resourceQuery": {
+      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "use": [
       {
