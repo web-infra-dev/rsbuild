@@ -15,6 +15,12 @@ exports[`svgr > configure SVGR options 1`] = `
       "type": "asset/inline",
     },
     {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\^\\\\\\?raw\\$/,
       "type": "asset/source",
     },
@@ -115,6 +121,12 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
     {
       "resourceQuery": /\\^\\\\\\?inline\\$/,
       "type": "asset/inline",
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
     },
     {
       "resourceQuery": /\\^\\\\\\?raw\\$/,
@@ -288,6 +300,12 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
       "type": "asset/inline",
     },
     {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\^\\\\\\?raw\\$/,
       "type": "asset/source",
     },
@@ -459,6 +477,12 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
       "type": "asset/inline",
     },
     {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\^\\\\\\?raw\\$/,
       "type": "asset/source",
     },
@@ -628,6 +652,12 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
     {
       "resourceQuery": /\\^\\\\\\?inline\\$/,
       "type": "asset/inline",
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
     },
     {
       "resourceQuery": /\\^\\\\\\?raw\\$/,
