@@ -163,6 +163,26 @@ In Sass and Less files, it is also allowed to add the `~` prefix to resolve styl
 @import 'normalize.css';
 ```
 
+## Import attributes
+
+Rsbuild supports importing raw CSS source as a string in JavaScript by using import attributes with `type: 'text'`.
+
+```js title="src/index.js"
+import rawCss from './style.css' with { type: 'text' };
+
+console.log(rawCss); // Output the raw content of the CSS file
+```
+
+Using `import "*.css" with { type: 'text' }` has the following behaviors:
+
+- Get the raw text content of the CSS file, without any preprocessing or compilation
+- The content of the CSS file will be inlined into the final JavaScript bundle
+- No separate CSS file will be generated
+
+:::tip
+`type: 'text'` is supported in Rsbuild >= 2.1.3.
+:::
+
 ## Query parameters
 
 ### inline
@@ -190,9 +210,9 @@ Using `import "*.css?inline"` has the following behaviors:
 
 ### raw
 
-Rsbuild supports importing raw CSS files as strings in JavaScript by using the `?raw` query parameter.
+Rsbuild also supports importing raw CSS files as strings in JavaScript by using the `?raw` query parameter.
 
-```ts title="src/index.js"
+```js title="src/index.js"
 import rawCss from './style.css?raw';
 
 console.log(rawCss); // Output the raw content of the CSS file
