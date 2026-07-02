@@ -8,12 +8,14 @@ import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
-const cliState = {
-  options: {} as CommonOptions,
-  command: '',
-};
+export type CommandName = 'dev' | 'build' | 'preview' | 'inspect';
 
-type CommandName = 'dev' | 'build' | 'preview' | 'inspect';
+const cliState: {
+  options: CommonOptions;
+  command?: CommandName;
+} = {
+  options: {} as CommonOptions,
+};
 
 export const initCliAction = (command: CommandName, options: CommonOptions): void => {
   if (!process.env.NODE_ENV) {
