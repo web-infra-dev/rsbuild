@@ -458,6 +458,12 @@ exports[`should apply default plugins correctly 1`] = `
       {
         "oneOf": [
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
@@ -984,6 +990,12 @@ exports[`should apply default plugins correctly in production 1`] = `
       },
       {
         "oneOf": [
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
@@ -1523,6 +1535,12 @@ exports[`should apply default plugins correctly when target is node 1`] = `
       {
         "oneOf": [
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
@@ -2060,6 +2078,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
       },
       {
         "oneOf": [
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",

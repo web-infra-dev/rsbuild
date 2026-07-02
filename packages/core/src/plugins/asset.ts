@@ -135,8 +135,10 @@ export const pluginAsset = (): RsbuildPlugin => ({
 
       // JSON
       // Rspack has built-in rule for JSON, so we only need to handle imports with query
-      // get raw content: "foo.json?raw"
       const rule = chain.module.rule(CHAIN_ID.RULE.JSON).test(/\.json$/i);
+      // get JSON source: `import source from "foo.json" with { type: "text" }`
+      rule.oneOf('json-asset-text').type('asset/source').with({ type: 'text' });
+      // get raw content: "foo.json?raw"
       rule.oneOf('json-asset-raw').type('asset/source').resourceQuery(RAW_QUERY_REGEX);
 
       // assets
