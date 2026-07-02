@@ -30,6 +30,12 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
         ],
       },
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -163,6 +169,12 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
           },
         ],
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
       },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,

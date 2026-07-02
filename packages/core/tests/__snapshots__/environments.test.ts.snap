@@ -172,6 +172,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               ],
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -652,6 +658,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
                   "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
                 },
               ],
+            },
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
             },
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,

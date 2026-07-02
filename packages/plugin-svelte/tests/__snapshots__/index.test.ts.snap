@@ -33,6 +33,12 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
         ],
       },
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -164,6 +170,12 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
             "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
           },
         ],
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
       },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
