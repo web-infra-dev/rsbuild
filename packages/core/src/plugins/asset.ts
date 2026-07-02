@@ -134,7 +134,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
       createAssetRule(CHAIN_ID.RULE.FONT, FONT_EXTENSIONS, emitAssets);
 
       // JSON
-      // Rspack has built-in rule for JSON, so we only need to handle imports with query
+      // Rspack has built-in rule for JSON, so we only need to handle imports with query or import attributes
       const rule = chain.module.rule(CHAIN_ID.RULE.JSON).test(/\.json$/i);
       // get JSON source: `import source from "foo.json" with { type: "text" }`
       rule.oneOf('json-asset-text').type('asset/source').with({ type: 'text' });
