@@ -1,7 +1,6 @@
 import { defaultLogger, isDebug } from '../logger';
 import type { LogLevel } from '../types';
 import { setupCommands } from './commands';
-import { setCommand } from './init';
 
 export type RunCLIOptions = {
   /**
@@ -10,13 +9,6 @@ export type RunCLIOptions = {
    */
   argv?: string[];
 };
-
-function initNodeEnv(command: string | undefined) {
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV =
-      command === 'build' || command === 'preview' ? 'production' : 'development';
-  }
-}
 
 function showGreeting() {
   // Ensure consistent spacing before the greeting message.
@@ -45,22 +37,7 @@ function setupLogLevel(argv: string[]) {
   }
 }
 
-function parseCommand(argv: string[]): string {
-  const commandNames = ['build', 'preview', 'inspect'];
-  for (let i = 2; i < argv.length; i++) {
-    const command = argv[i];
-    if (command && commandNames.includes(command)) {
-      return command;
-    }
-  }
-  return 'dev';
-}
-
 export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
-  const command = parseCommand(argv);
-
-  initNodeEnv(command);
-  setCommand(command);
   setupLogLevel(argv);
   showGreeting();
 
