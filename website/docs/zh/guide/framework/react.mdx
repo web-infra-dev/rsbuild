@@ -136,25 +136,6 @@ export default defineConfig({
 
 `reactCompiler: true` 选项会通过 Rspack 内置的 SWC loader 启用 Rust 版本的 React Compiler，更多信息请参考 [Rspack React Compiler 指南](https://rspack.rs/zh/guide/tech/react#%E4%BD%BF%E7%94%A8-builtinswc-loader)。
 
-### 配置
-
-将 `pluginReact` 中的 `reactCompiler` 设置为 `true`，即可启用 Rust 版本的 React Compiler：
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-
-export default defineConfig({
-  plugins: [
-    pluginReact({
-      reactCompiler: true,
-    }),
-  ],
-});
-```
-
-该选项通过 Rspack 内置的 SWC loader 启用 React Compiler。请参考[更多详情](/plugins/list/plugin-react#reactcompiler)。
-
 对于 React 17 和 18 的项目，需要安装 [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime)，并指定 `target`：
 
 ```ts title="rsbuild.config.ts"

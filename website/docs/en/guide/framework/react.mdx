@@ -136,25 +136,6 @@ export default defineConfig({
 
 The `reactCompiler: true` option enables the Rust-based React Compiler through Rspack's built-in SWC loader. For details, see the [Rspack React Compiler guide](https://rspack.rs/guide/tech/react#using-builtinswc-loader).
 
-### Configuration
-
-To enable the Rust-based React Compiler, set `reactCompiler` to `true` in `pluginReact`:
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-
-export default defineConfig({
-  plugins: [
-    pluginReact({
-      reactCompiler: true,
-    }),
-  ],
-});
-```
-
-This option enables the React Compiler through Rspack's built-in SWC loader. See [more details](/plugins/list/plugin-react#reactcompiler).
-
 For React 17 and 18 projects, install [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) and specify the `target`:
 
 ```ts title="rsbuild.config.ts"
