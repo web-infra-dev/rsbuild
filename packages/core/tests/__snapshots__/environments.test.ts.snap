@@ -294,14 +294,14 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
-              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-              "type": "asset/source",
-            },
-            {
               "type": "asset/source",
               "with": {
                 "type": "text",
               },
+            },
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -331,14 +331,14 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
-              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-              "type": "asset/source",
-            },
-            {
               "type": "asset/source",
               "with": {
                 "type": "text",
               },
+            },
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -368,14 +368,14 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
-              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-              "type": "asset/source",
-            },
-            {
               "type": "asset/source",
               "with": {
                 "type": "text",
               },
+            },
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -405,14 +405,14 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
-              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-              "type": "asset/source",
-            },
-            {
               "type": "asset/source",
               "with": {
                 "type": "text",
               },
+            },
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -806,14 +806,14 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
-              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-              "type": "asset/source",
-            },
-            {
               "type": "asset/source",
               "with": {
                 "type": "text",
               },
+            },
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -843,14 +843,14 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
-              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-              "type": "asset/source",
-            },
-            {
               "type": "asset/source",
               "with": {
                 "type": "text",
               },
+            },
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -880,14 +880,14 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
-              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-              "type": "asset/source",
-            },
-            {
               "type": "asset/source",
               "with": {
                 "type": "text",
               },
+            },
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -917,14 +917,14 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
-              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-              "type": "asset/source",
-            },
-            {
               "type": "asset/source",
               "with": {
                 "type": "text",
               },
+            },
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
             },
             {
               "generator": {

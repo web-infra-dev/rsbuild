@@ -321,14 +321,14 @@ exports[`should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -358,14 +358,14 @@ exports[`should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -395,14 +395,14 @@ exports[`should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -432,14 +432,14 @@ exports[`should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -848,14 +848,14 @@ exports[`should apply default plugins correctly in production 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -885,14 +885,14 @@ exports[`should apply default plugins correctly in production 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -922,14 +922,14 @@ exports[`should apply default plugins correctly in production 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -959,14 +959,14 @@ exports[`should apply default plugins correctly in production 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1386,14 +1386,14 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1423,14 +1423,14 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1460,14 +1460,14 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1497,14 +1497,14 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1924,14 +1924,14 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1961,14 +1961,14 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1998,14 +1998,14 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -2035,14 +2035,14 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {

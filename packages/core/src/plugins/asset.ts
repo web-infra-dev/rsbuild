@@ -46,11 +46,11 @@ const chainStaticAssetRule = ({
   // get inlined base64 content: "foo.png?inline"
   rule.oneOf(`${assetType}-asset-inline`).type('asset/inline').resourceQuery(INLINE_QUERY_REGEX);
 
-  // get raw content: "foo.png?raw"
-  rule.oneOf(`${assetType}-asset-raw`).type('asset/source').resourceQuery(RAW_QUERY_REGEX);
-
   // get asset source: `import source from "foo.png" with { type: "text" }`
   rule.oneOf(`${assetType}-asset-text`).type('asset/source').with({ type: 'text' });
+
+  // get raw content: "foo.png?raw"
+  rule.oneOf(`${assetType}-asset-raw`).type('asset/source').resourceQuery(RAW_QUERY_REGEX);
 
   rule
     .oneOf(`${assetType}-asset`)

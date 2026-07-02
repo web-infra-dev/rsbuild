@@ -298,14 +298,14 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -335,14 +335,14 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -372,14 +372,14 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -409,14 +409,14 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
             "type": "asset/source",
             "with": {
               "type": "text",
             },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
           },
           {
             "generator": {
