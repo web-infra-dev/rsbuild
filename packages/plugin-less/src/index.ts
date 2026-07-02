@@ -216,13 +216,13 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
       // Inline Less for `?inline` imports
       const lessInlineRule = getRule(LESS_INLINE);
 
-      // Raw Less for `?raw` imports
-      getRule(LESS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
-
       // Less text import with import attributes.
       if (hasCssTextRule) {
         getRule(LESS_TEXT).type('asset/source').with(getRule(cssTextRuleId).get('with'));
       }
+
+      // Raw Less for `?raw` imports
+      getRule(LESS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
 
       // Main Less transform
       const lessMainRule = getRule(LESS_MAIN);

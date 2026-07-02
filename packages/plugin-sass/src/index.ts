@@ -153,13 +153,13 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
       // Inline Sass for `?inline` imports
       const sassInlineRule = getRule(SASS_INLINE);
 
-      // Raw Sass for `?raw` imports
-      getRule(SASS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
-
       // Sass text import with import attributes.
       if (hasCssTextRule) {
         getRule(SASS_TEXT).type('asset/source').with(getRule(cssTextRuleId).get('with'));
       }
+
+      // Raw Sass for `?raw` imports
+      getRule(SASS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
 
       // Main Sass transform
       const sassMainRule = getRule(SASS_MAIN);
