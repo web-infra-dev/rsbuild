@@ -49,6 +49,9 @@ const chainStaticAssetRule = ({
   // get raw content: "foo.png?raw"
   rule.oneOf(`${assetType}-asset-raw`).type('asset/source').resourceQuery(RAW_QUERY_REGEX);
 
+  // get asset source: `import source from "foo.png" with { type: "text" }`
+  rule.oneOf(`${assetType}-asset-text`).type('asset/source').with({ type: 'text' });
+
   rule
     .oneOf(`${assetType}-asset`)
     .type('asset')

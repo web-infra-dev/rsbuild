@@ -325,6 +325,12 @@ exports[`should apply default plugins correctly 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
@@ -354,6 +360,12 @@ exports[`should apply default plugins correctly 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {
@@ -387,6 +399,12 @@ exports[`should apply default plugins correctly 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
@@ -416,6 +434,12 @@ exports[`should apply default plugins correctly 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {
@@ -828,6 +852,12 @@ exports[`should apply default plugins correctly in production 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
@@ -857,6 +887,12 @@ exports[`should apply default plugins correctly in production 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {
@@ -890,6 +926,12 @@ exports[`should apply default plugins correctly in production 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
@@ -919,6 +961,12 @@ exports[`should apply default plugins correctly in production 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {
@@ -1342,6 +1390,12 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
@@ -1371,6 +1425,12 @@ exports[`should apply default plugins correctly when target is node 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {
@@ -1404,6 +1464,12 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
@@ -1433,6 +1499,12 @@ exports[`should apply default plugins correctly when target is node 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {
@@ -1856,6 +1928,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
@@ -1885,6 +1963,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {
@@ -1918,6 +2002,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
@@ -1947,6 +2037,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {

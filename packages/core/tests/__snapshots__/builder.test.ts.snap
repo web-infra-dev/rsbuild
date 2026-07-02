@@ -302,6 +302,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
@@ -331,6 +337,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {
@@ -364,6 +376,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset/source",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
@@ -393,6 +411,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "generator": {

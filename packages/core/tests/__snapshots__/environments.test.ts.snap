@@ -298,6 +298,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/source",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "generator": {
                 "filename": "static/image/[name].[contenthash:10][ext]",
               },
@@ -327,6 +333,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
+            },
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
             },
             {
               "generator": {
@@ -360,6 +372,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/source",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "generator": {
                 "filename": "static/media/[name].[contenthash:10][ext]",
               },
@@ -389,6 +407,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
+            },
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
             },
             {
               "generator": {
@@ -786,6 +810,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/source",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "generator": {
                 "filename": "static/image/[name].[contenthash:10][ext]",
               },
@@ -815,6 +845,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
+            },
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
             },
             {
               "generator": {
@@ -848,6 +884,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/source",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "generator": {
                 "filename": "static/media/[name].[contenthash:10][ext]",
               },
@@ -877,6 +919,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
+            },
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
             },
             {
               "generator": {
