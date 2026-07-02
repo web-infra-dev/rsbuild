@@ -192,6 +192,9 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   },
   {
+    "dependency": {
+      "not": "url",
+    },
     "include": [
       /b\\\\\\.js\\$/,
     ],
@@ -231,6 +234,9 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
     },
   },
   {
+    "dependency": {
+      "not": "url",
+    },
     "include": [
       /a\\\\\\.js\\$/,
     ],
