@@ -112,12 +112,21 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
           compilerOptions,
         };
 
+        // TODO: Use a oneOf-based rule structure in the next major version
         chain.module
           .rule(CHAIN_ID.RULE.VUE)
           .test(test)
+          .with({ type: { not: 'text' } })
           .use(CHAIN_ID.USE.VUE)
           .loader(require.resolve('rspack-vue-loader'))
           .options(vueLoaderOptions);
+
+        chain.module
+          .rule('vue-text')
+          .after(CHAIN_ID.RULE.VUE)
+          .test(test)
+          .with({ type: 'text' })
+          .type('asset/source');
 
         // Support for lang="postcss" and lang="pcss" in SFC
         chain.module.rule(CHAIN_ID.RULE.CSS).test(/\.(?:css|postcss|pcss)$/);

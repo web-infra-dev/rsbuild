@@ -15,6 +15,11 @@ exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 1`] = 
       },
     },
   ],
+  "with": {
+    "type": {
+      "not": "text",
+    },
+  },
 }
 `;
 
@@ -53,6 +58,11 @@ exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
       },
     },
   ],
+  "with": {
+    "type": {
+      "not": "text",
+    },
+  },
 }
 `;
 
@@ -71,6 +81,11 @@ exports[`plugin-vue > should allow to custom test condition 1`] = `
       },
     },
   ],
+  "with": {
+    "type": {
+      "not": "text",
+    },
+  },
 }
 `;
 
