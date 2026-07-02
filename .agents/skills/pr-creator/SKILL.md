@@ -1,6 +1,8 @@
 ---
 name: pr-creator
 description: Use when asked to create a pull request for this repository. It helps the PR follow the repository's branch safety rules, title convention, pull request template, and concise English writing style.
+metadata:
+  internal: true
 ---
 
 # Pull Request Creator
@@ -30,7 +32,7 @@ description: Use when asked to create a pull request for this repository. It hel
    - In `Summary`, explain the change context first: the user-facing problem, maintenance goal, or compatibility constraint that makes the change necessary.
    - Prioritize high-signal information: public API changes, behavior changes, breaking changes, migration notes, and important compatibility implications.
    - Then describe the main implementation change only as much as needed to understand the review.
-   - Keep it short: one compact paragraph or 2-4 bullets is usually enough.
+   - Keep the PR body concise and review-oriented: use 1-4 short standalone sentences for typical changes, covering why it matters, what changed, and any reviewer-important impact.
    - Avoid low-signal sections such as `Test plan` or `Validation`, routine verification commands, generated file lists, or obvious implementation details unless the repository template explicitly requires them or the change has unusual validation risk.
    - Good background examples:
      - `This PR adds support for custom logger injection so CLI output can be isolated per instance.`

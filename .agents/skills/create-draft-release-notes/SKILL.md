@@ -1,6 +1,8 @@
 ---
 name: create-draft-release-notes
 description: Create or update draft GitHub release notes, or output organized Markdown when draft creation is unavailable. Use for release notes, draft releases, release PR checks, npm staged publishing checks, and optional highlights.
+metadata:
+  internal: true
 ---
 
 # Create Draft Release Notes
