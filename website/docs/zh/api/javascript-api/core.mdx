@@ -137,6 +137,8 @@ function loadConfig(params?: {
   cwd?: string;
   // 指定配置文件路径，可以为相对路径或绝对路径
   path?: string;
+  // 未指定 path 时要查找的配置文件名列表
+  configFileNames?: string[];
   meta?: Record<string, unknown>;
   envMode?: string;
   /**
@@ -186,6 +188,18 @@ const rsbuild = await createRsbuild({
 - `rsbuild.config.cjs`
 
 如果同时存在多个配置文件，`loadConfig` 会使用这个列表中第一个匹配到的文件。
+
+### 自定义配置文件名
+
+使用 `configFileNames` 选项可以替换默认的配置文件查找列表。文件名会相对于 `cwd` 解析，且指定 `path` 时会忽略该选项。
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  configFileNames: ['framework.config.ts', 'framework.config.mjs'],
+});
+```
 
 ### 指定配置文件
 
