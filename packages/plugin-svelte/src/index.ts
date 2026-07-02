@@ -115,7 +115,11 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
         const swcUse = jsMainRule.uses.get(CHAIN_ID.USE.SWC);
 
-        const svelteRule = chain.module.rule(CHAIN_ID.RULE.SVELTE).test(/\.svelte$/);
+        // TODO: Use a oneOf-based rule structure in the next major version.
+        const svelteRule = chain.module
+          .rule(CHAIN_ID.RULE.SVELTE)
+          .test(/\.svelte$/)
+          .with({ type: { not: 'text' } });
 
         svelteRule
           .use(CHAIN_ID.USE.SWC)
@@ -124,6 +128,13 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
 
         svelteRule.use(CHAIN_ID.USE.SVELTE).loader(loaderPath).options(svelteLoaderOptions).end();
 
+        chain.module
+          .rule('svelte-text')
+          .after(CHAIN_ID.RULE.SVELTE)
+          .test(/\.svelte$/)
+          .with({ type: 'text' })
+          .type('asset/source');
+
         const regexp = /\.(?:svelte\.js|svelte\.ts)$/;
 
         jsRule.exclude.add(regexp);
@@ -131,6 +142,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         chain.module
           .rule('svelte-js')
           .test(regexp)
+          .with({ type: { not: 'text' } })
           .use(CHAIN_ID.USE.SVELTE)
           .loader(loaderPath)
           .options(svelteLoaderOptions)
@@ -138,6 +150,13 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
           .use(CHAIN_ID.USE.SWC)
           .loader(swcUse.get('loader'))
           .options(swcUse.get('options'));
+
+        chain.module
+          .rule('svelte-js-text')
+          .after('svelte-js')
+          .test(regexp)
+          .with({ type: 'text' })
+          .type('asset/source');
       });
     },
   };
