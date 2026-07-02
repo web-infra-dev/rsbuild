@@ -1,5 +1,16 @@
 # @rsbuild/plugin-less
 
+## 2.0.1 (2026-07-02)
+
+### New features
+
+- feat(core): support CSS text import attributes by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8042
+- feat(core): support asset text import attributes by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8046
+
+### Document
+
+- docs: add plugin changelogs by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/7970
+
 ## 2.0.0 (2026-06-21)
 
 ### Breaking changes
