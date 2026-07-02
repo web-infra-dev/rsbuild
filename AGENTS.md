@@ -31,7 +31,10 @@ pnpm e2e css
 pnpm e2e
 ```
 
-Run `pnpm build` once before any `pnpm e2e` command, including focused cases.
+## Testing
+
+- Prefer adding e2e tests over unit tests, unless testing single-function behavior.
+- Run `pnpm build` once before any `pnpm e2e` command, including focused cases.
 
 ## Project structure
 
