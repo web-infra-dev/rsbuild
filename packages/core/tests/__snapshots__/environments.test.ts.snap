@@ -35,6 +35,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
           },
           "oneOf": [
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resolve": {
                 "preferRelative": true,
               },
@@ -523,6 +529,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
             "not": "url",
           },
           "oneOf": [
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
             {
               "resolve": {
                 "preferRelative": true,
