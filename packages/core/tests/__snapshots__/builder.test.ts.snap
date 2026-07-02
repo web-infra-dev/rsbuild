@@ -39,6 +39,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
         },
         "oneOf": [
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resolve": {
               "preferRelative": true,
             },

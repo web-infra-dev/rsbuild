@@ -273,6 +273,9 @@ export const pluginCss = (): RsbuildPlugin => ({
           // the module should be treated as an asset module rather than a JS module.
           .dependency({ not: 'url' });
 
+        // Support for `import cssText from "a.css" with { type: "text" }`
+        cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_TEXT).with({ type: 'text' }).type('asset/source');
+
         // Support for `import cssUrl from "a.css?url"`
         const urlRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL).resourceQuery(URL_QUERY_REGEX);
         urlRule.use(CHAIN_ID.USE.CSS_URL).loader(path.join(LOADER_PATH, 'cssUrlLoader.mjs'));

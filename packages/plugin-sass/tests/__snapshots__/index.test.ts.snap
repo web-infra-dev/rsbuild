@@ -120,6 +120,12 @@ exports[`plugin-sass > should add sass-loader 1`] = `
         "type": "asset/source",
       },
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "sideEffects": true,
         "use": [
           {
@@ -301,6 +307,12 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
       },
       {
         "sideEffects": true,
@@ -492,6 +504,12 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
         "type": "asset/source",
       },
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "exclude": [
           /node_modules/,
         ],
@@ -678,6 +696,12 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
       },
       {
         "sideEffects": true,

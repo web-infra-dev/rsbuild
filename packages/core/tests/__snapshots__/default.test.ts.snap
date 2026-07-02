@@ -62,6 +62,12 @@ exports[`should apply default plugins correctly 1`] = `
         },
         "oneOf": [
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resolve": {
               "preferRelative": true,
             },
@@ -557,6 +563,12 @@ exports[`should apply default plugins correctly in production 1`] = `
           "not": "url",
         },
         "oneOf": [
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
           {
             "resolve": {
               "preferRelative": true,
@@ -1080,6 +1092,12 @@ exports[`should apply default plugins correctly when target is node 1`] = `
         },
         "oneOf": [
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resolve": {
               "preferRelative": true,
             },
@@ -1574,6 +1592,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
           "not": "url",
         },
         "oneOf": [
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
           {
             "resolve": {
               "preferRelative": true,
