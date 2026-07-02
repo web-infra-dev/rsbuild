@@ -110,7 +110,9 @@ export default MyComponent;
 
 React Compiler is a build-time tool that automatically optimizes your React app. It works with plain JavaScript, and understands the Rules of React, so you don’t need to rewrite any code to use it.
 
+:::tip
 Before using React Compiler, we recommend reading the [React Compiler documentation](https://react.dev/learn/react-compiler) to understand its functionality, current state, and usage.
+:::
 
 Rsbuild supports two ways to enable React Compiler:
 
@@ -134,8 +136,6 @@ export default defineConfig({
 });
 ```
 
-The `reactCompiler: true` option enables the Rust-based React Compiler through Rspack's built-in SWC loader. For details, see the [Rspack React Compiler guide](https://rspack.rs/guide/tech/react#using-builtinswc-loader).
-
 For React 17 and 18 projects, install [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) and specify the `target`:
 
 ```ts title="rsbuild.config.ts"
@@ -145,6 +145,8 @@ pluginReact({
   },
 });
 ```
+
+For more details, see [@rsbuild/plugin-react - reactCompiler](/plugins/list/plugin-react#reactcompiler).
 
 ## Router
 

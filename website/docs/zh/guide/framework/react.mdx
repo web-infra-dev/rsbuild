@@ -110,7 +110,9 @@ export default MyComponent;
 
 React Compiler 是一个构建时工具，它可以自动优化你的 React 应用。它支持纯 JavaScript，并且了解 React 的规则，因此你无需重写任何代码即可使用它。
 
+:::tip
 在开始使用 React Compiler 之前，建议阅读 [React Compiler 文档](https://zh-hans.react.dev/learn/react-compiler)，以了解 React Compiler 的功能、当前状态和使用方法。
+:::
 
 Rsbuild 支持两种方式启用 React Compiler：
 
@@ -134,8 +136,6 @@ export default defineConfig({
 });
 ```
 
-`reactCompiler: true` 选项会通过 Rspack 内置的 SWC loader 启用 Rust 版本的 React Compiler，更多信息请参考 [Rspack React Compiler 指南](https://rspack.rs/zh/guide/tech/react#%E4%BD%BF%E7%94%A8-builtinswc-loader)。
-
 对于 React 17 和 18 的项目，需要安装 [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime)，并指定 `target`：
 
 ```ts title="rsbuild.config.ts"
@@ -145,6 +145,8 @@ pluginReact({
   },
 });
 ```
+
+更多用法参考 [@rsbuild/plugin-react - reactCompiler](/plugins/list/plugin-react#reactcompiler)。
 
 ## 路由
 
