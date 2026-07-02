@@ -10,13 +10,6 @@ export type RunCLIOptions = {
   argv?: string[];
 };
 
-function initNodeEnv(command: string | undefined) {
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV =
-      command === 'build' || command === 'preview' ? 'production' : 'development';
-  }
-}
-
 function showGreeting() {
   // Ensure consistent spacing before the greeting message.
   // Different package managers handle output formatting differently - some automatically
@@ -45,9 +38,6 @@ function setupLogLevel(argv: string[]) {
 }
 
 export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
-  const command = argv[2];
-
-  initNodeEnv(command);
   setupLogLevel(argv);
   showGreeting();
 

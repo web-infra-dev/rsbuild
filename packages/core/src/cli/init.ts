@@ -8,17 +8,27 @@ import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
-const cliState = {
+export type CommandName = 'dev' | 'build' | 'preview' | 'inspect';
+
+const cliState: {
+  options: CommonOptions;
+  command?: CommandName;
+} = {
   options: {} as CommonOptions,
-  argv: process.argv,
 };
 
-export const setCliState = (argv: string[], options: CommonOptions): void => {
+export const initCliAction = (command: CommandName, options: CommonOptions): void => {
+  if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV =
+      command === 'build' || command === 'preview' ? 'production' : 'development';
+  }
+
   // Build multiple environments can be shortened to: --environment name1,name2
   if (options.environment?.some((env) => env.includes(','))) {
     options.environment = options.environment.flatMap((env) => env.split(','));
   }
-  cliState.argv = argv;
+
+  cliState.command = command;
   cliState.options = options;
 };
 
@@ -30,7 +40,7 @@ const getEnvDir = (cwd: string, envDir?: string) => {
 };
 
 const loadConfig = async (root: string) => {
-  const { options, argv } = cliState;
+  const { options, command } = cliState;
   const {
     content: config,
     filePath,
@@ -40,7 +50,7 @@ const loadConfig = async (root: string) => {
     path: options.config,
     envMode: options.envMode,
     loader: options.configLoader,
-    command: argv[2],
+    command,
   });
 
   config.dev ||= {};
