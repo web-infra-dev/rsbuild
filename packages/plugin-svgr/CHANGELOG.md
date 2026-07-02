@@ -1,5 +1,19 @@
 # @rsbuild/plugin-svgr
 
+## 2.0.5 (2026-07-02)
+
+### New features
+
+- feat(plugin-svgr): support SVG text import attributes by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8047
+
+### Document
+
+- docs: update parallel loader docs by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/7920
+
+### Other changes
+
+- chore: add bugs metadata to remaining plugin packages by @killernova in https://github.com/web-infra-dev/rsbuild/pull/7935
+
 ## 2.0.4 (2026-06-16)
 
 ### New features
