@@ -138,13 +138,14 @@ export default defineConfig({
 
 This is the recommended approach for new projects because it provides a simpler setup and better build performance.
 
-:::tip 
-The reactCompiler: true option is passed to Rspack's built-in SWC loader, which enables the Rust-based React Compiler. 
+:::tip
+The reactCompiler: true option is passed to Rspack's built-in SWC loader, which enables the Rust-based React Compiler.
 :::
 
 For more details, see the [Rspack React Compiler guide](https://rspack.rs/guide/tech/react#using-builtinswc-loader).
 
 #### Alternative: Babel plugin
+
 You can also enable React Compiler through the Babel plugin. This approach is useful if you are maintaining an existing Babel-based setup, using an older version of Rsbuild / Rspack, or need Babel-plugin-based customization.
 
 Steps to use React Compiler in Rsbuild:
