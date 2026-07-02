@@ -137,6 +137,8 @@ function loadConfig(params?: {
   cwd?: string;
   // Specify the configuration file (relative or absolute path)
   path?: string;
+  // Config file names to search when path is not specified
+  configFileNames?: string[];
   meta?: Record<string, unknown>;
   envMode?: string;
   /**
@@ -186,6 +188,18 @@ When `path` is not specified, `loadConfig` searches for config files in the foll
 - `rsbuild.config.cjs`
 
 If multiple config files exist at the same time, `loadConfig` uses the first matching file in this list.
+
+### Customize config file names
+
+Use the `configFileNames` option to replace the default lookup list. The file names are resolved relative to `cwd`, and this option is ignored when `path` is specified.
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  configFileNames: ['framework.config.ts', 'framework.config.mjs'],
+});
+```
 
 ### Specify the configuration file
 

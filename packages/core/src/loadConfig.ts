@@ -30,6 +30,11 @@ export type LoadConfigOptions = {
    */
   path?: string;
   /**
+   * Config file names to search in `cwd` when `path` is not provided.
+   * The list replaces the default `rsbuild.config.*` lookup order.
+   */
+  configFileNames?: string[];
+  /**
    * A custom meta object to be passed into the config function of `defineConfig`.
    */
   meta?: Record<string, unknown>;
@@ -82,7 +87,21 @@ export function defineConfig(config: RsbuildConfigDefinition) {
   return config;
 }
 
-const resolveConfigPath = (root: string, customConfig?: string) => {
+// Resolve the most commonly used config file types first to improve lookup performance.
+const DEFAULT_CONFIG_FILE_NAMES = [
+  'rsbuild.config.ts',
+  'rsbuild.config.js',
+  'rsbuild.config.mts',
+  'rsbuild.config.mjs',
+  'rsbuild.config.cts',
+  'rsbuild.config.cjs',
+];
+
+const resolveConfigPath = (
+  root: string,
+  customConfig?: string,
+  configFileNames = DEFAULT_CONFIG_FILE_NAMES,
+) => {
   if (customConfig) {
     const customConfigPath = isAbsolute(customConfig) ? customConfig : join(root, customConfig);
     if (fs.existsSync(customConfigPath)) {
@@ -91,18 +110,7 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
     throw new Error(`Cannot find config file: ${color.dim(customConfigPath)}`);
   }
 
-  // Resolve the most commonly used config file types first
-  // to improve lookup performance.
-  const CONFIG_FILES = [
-    'rsbuild.config.ts',
-    'rsbuild.config.js',
-    'rsbuild.config.mts',
-    'rsbuild.config.mjs',
-    'rsbuild.config.cts',
-    'rsbuild.config.cjs',
-  ];
-
-  for (const file of CONFIG_FILES) {
+  for (const file of configFileNames) {
     const configFile = join(root, file);
 
     if (fs.existsSync(configFile)) {
@@ -156,12 +164,13 @@ const loadConfigWithNative = async (
 export async function loadConfig({
   cwd = process.cwd(),
   path,
+  configFileNames,
   envMode,
   meta,
   loader = 'auto',
   command,
 }: LoadConfigOptions = {}): Promise<LoadConfigResult> {
-  const configFilePath = resolveConfigPath(cwd, path);
+  const configFilePath = resolveConfigPath(cwd, path, configFileNames);
 
   if (!configFilePath) {
     defaultLogger.debug('no config file found.');
