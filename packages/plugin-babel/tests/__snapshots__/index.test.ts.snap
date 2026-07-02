@@ -221,6 +221,11 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
         },
       },
     ],
+    "with": {
+      "type": {
+        "not": "text",
+      },
+    },
   },
   {
     "include": [
@@ -252,6 +257,11 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
         },
       },
     ],
+    "with": {
+      "type": {
+        "not": "text",
+      },
+    },
   },
 ]
 `;
