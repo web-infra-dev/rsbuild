@@ -431,6 +431,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
         {
           "oneOf": [
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -942,6 +948,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
         },
         {
           "oneOf": [
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
