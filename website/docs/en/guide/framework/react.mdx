@@ -112,12 +112,46 @@ React Compiler is a build-time tool that automatically optimizes your React app.
 
 Before using React Compiler, we recommend reading the [React Compiler documentation](https://react.dev/learn/react-compiler) to understand its functionality, current state, and usage.
 
+Rsbuild supports two ways to enable React Compiler:
+
+- Recommended: use the Rust-based React Compiler integrated into Rspack's built-in SWC loader.
+- Alternative: use the Babel plugin integration for older setups or when you need Babel-based customization.
+
 ### How to use
+
+#### Recommended: Rust-based React Compiler
+
+If you are using a version of Rsbuild / Rspack that supports the Rust-based React Compiler, you can enable it directly through @rsbuild/plugin-react:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      reactCompiler: true,
+    }),
+  ],
+});
+```
+
+This is the recommended approach for new projects because it provides a simpler setup and better build performance.
+
+:::tip
+The reactCompiler: true option is passed to Rspack's built-in SWC loader, which enables the Rust-based React Compiler.
+:::
+
+For more details, see the [Rspack React Compiler guide](https://rspack.rs/guide/tech/react#using-builtinswc-loader).
+
+#### Alternative: Babel plugin
+
+You can also enable React Compiler through the Babel plugin. This approach is useful if you are maintaining an existing Babel-based setup, using an older version of Rsbuild / Rspack, or need Babel-plugin-based customization.
 
 Steps to use React Compiler in Rsbuild:
 
 1. Upgrade `react` and `react-dom` to v19. If you can't upgrade, install the [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) package to run the compiled code on earlier versions.
-2. React Compiler currently only provides a Babel plugin. Install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler).
+2. Install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler).
 3. Register the Babel plugin in your Rsbuild config file:
 
 ```ts title="rsbuild.config.ts"
@@ -149,7 +183,28 @@ If you only want to compile JSX/TSX files, you can use `include: /\.(?:jsx|tsx)$
 
 ### Configuration
 
-Set the config for React Compiler as follows:
+#### Rust-based React Compiler
+
+To enable the Rust-based React Compiler, set reactCompiler to true in pluginReact:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      reactCompiler: true,
+    }),
+  ],
+});
+```
+
+This option enables the React Compiler through Rspack's built-in SWC loader. See [more details](https://rsbuild.rs/plugins/list/plugin-react#reactcompiler).
+
+#### Babel plugin
+
+To configure React Compiler through Babel, pass the compiler options to babel-plugin-react-compiler:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
