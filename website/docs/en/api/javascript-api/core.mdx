@@ -132,7 +132,7 @@ Load Rsbuild configuration file.
 - **Type:**
 
 ```ts
-function loadConfig(params?: {
+function loadConfig<Config = RsbuildConfig>(params?: {
   // Default is process.cwd()
   cwd?: string;
   // Specify the configuration file (relative or absolute path)
@@ -156,8 +156,9 @@ function loadConfig(params?: {
    */
   loader?: 'auto' | 'jiti' | 'native';
 }): Promise<{
-  content: RsbuildConfig;
+  content: Config;
   filePath: string | null;
+  dependencies: string[];
 }>;
 ```
 
