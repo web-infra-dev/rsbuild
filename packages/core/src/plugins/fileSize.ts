@@ -97,9 +97,9 @@ async function saveSnapshots(
   }
 }
 
-const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.ts)$/;
+const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.(?:ts|mts|cts))$/;
 
-/** Exclude source map and license files by default */
+/** Exclude source map, license, and type declaration files by default */
 export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
   EXCLUDE_ASSET_REGEX.test(asset.name);
 
@@ -171,7 +171,8 @@ const coloringAssetName = (assetName: string) => {
   return color.magenta(assetName);
 };
 
-const COMPRESSIBLE_REGEX = /\.(?:js|css|html|json|svg|txt|xml|xhtml|wasm|manifest|md)$/i;
+const COMPRESSIBLE_REGEX =
+  /\.(?:js|mjs|cjs|jsx|ts|tsx|mts|cts|css|html|json|svg|txt|xml|xhtml|wasm|manifest|md)$/i;
 
 /** Check if the asset is compressible. */
 const isCompressible = (assetName: string) => COMPRESSIBLE_REGEX.test(assetName);

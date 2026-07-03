@@ -420,4 +420,48 @@ describe('environment config', () => {
     expect(configs[0].lazyCompilation).toBeFalsy();
     expect(configs[1].lazyCompilation).toBeTruthy();
   });
+
+  it('should expose APIs by environment', async () => {
+    const logs: string[] = [];
+    const createConsumerPlugin = (name: string): RsbuildPlugin => ({
+      name: `${name}-consumer`,
+      setup(api) {
+        logs.push(`${name}: ${api.useExposed('test-api')}`);
+      },
+    });
+
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [
+          {
+            name: 'global-provider',
+            setup(api) {
+              api.expose('test-api', 'global');
+            },
+          },
+          createConsumerPlugin('global'),
+        ],
+        environments: {
+          web: {
+            plugins: [
+              {
+                name: 'web-provider',
+                setup(api) {
+                  api.expose('test-api', 'web', { environment: 'web' });
+                },
+              },
+              createConsumerPlugin('web'),
+            ],
+          },
+          node: {
+            plugins: [createConsumerPlugin('node')],
+          },
+        },
+      },
+    });
+
+    await rsbuild.initConfigs();
+
+    expect(logs).toEqual(['global: global', 'web: web', 'node: global']);
+  });
 });

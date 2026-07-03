@@ -16,6 +16,12 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
         "type": "asset/inline",
       },
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -50,6 +56,12 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
       {
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/inline",
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
       },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -88,6 +100,12 @@ exports[`plugin-asset > should allow using distPath.image to modify dist path 1`
         "type": "asset/inline",
       },
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -122,6 +140,12 @@ exports[`plugin-asset > should allow using filename.image to modify filename 1`]
       {
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/inline",
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
       },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,

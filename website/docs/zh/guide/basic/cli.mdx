@@ -36,6 +36,7 @@ Rsbuild CLI 提供了一些公共选项，可以用于所有命令：
 | `--base <base>`            | 指定服务端的基础路径，详见 [server.base](/config/server/base)                                                                 |
 | `-c, --config <config>`    | 指定配置文件路径（相对路径或绝对路径），详见 [指定配置文件](/guide/configuration/rsbuild#specify-config-file)                 |
 | `--config-loader <loader>` | 指定配置文件加载方式（`auto` \| `jiti` \| `native`），详见 [指定加载方式](/guide/configuration/rsbuild#specify-config-loader) |
+| `--dist-path <dir>`        | 指定构建产物的根目录，详见 [output.distPath](/config/output/dist-path)                                                        |
 | `--env-mode <mode>`        | 指定 env 模式来加载 `.env.[mode]` 文件，详见 [Env 模式](/guide/advanced/env-vars#env-mode)                                    |
 | `--env-dir <dir>`          | 指定目录来加载 `.env` 文件，详见 [Env 目录](/guide/advanced/env-vars#env-directory)                                           |
 | `--environment <name>`     | 指定需要构建的 environment 名称，详见 [构建指定环境](/guide/advanced/environments#build-a-specific-environment)               |
@@ -43,7 +44,11 @@ Rsbuild CLI 提供了一些公共选项，可以用于所有命令：
 | `--log-level <level>`      | 指定日志级别（`info` \| `warn` \| `error` \| `silent`），详见 [logLevel](/config/log-level)                                   |
 | `-m, --mode <mode>`        | 指定构建模式（`development` \| `production` \| `none`），详见 [mode](/config/mode)                                            |
 | `--no-env`                 | 禁用 `.env` 文件的加载                                                                                                        |
+| `--no-source-map`          | 禁用 source map，详见 [output.sourceMap](/config/output/source-map)                                                           |
 | `-r, --root <root>`        | 指定项目根目录（绝对路径或者相对于 [cwd](https://nodejs.org/api/process.html#processcwd) 的路径）                             |
+| `--source-map`             | 启用 source map，详见 [output.sourceMap](/config/output/source-map)                                                           |
+
+对于布尔类型的选项，可以使用 `--no-` 前缀来显式禁用对应功能，例如 `--no-env` 或 `--no-source-map`。
 
 ## rsbuild
 
@@ -57,6 +62,7 @@ Usage:
 Options:
   -o, --open [url]      启动时是否在浏览器中打开页面
   --port <port>         设置 Rsbuild server 监听的端口号
+  --strict-port         当指定端口已被占用时退出
   --host [host]         指定 Rsbuild server 启动时监听的 host
 ```
 
@@ -116,6 +122,7 @@ Usage: rsbuild preview [options]
 Options:
   -o, --open [url]      启动时是否在浏览器中打开页面
   --port <port>         设置 Rsbuild server 监听的端口号
+  --strict-port         当指定端口已被占用时退出
   --host [host]         指定 Rsbuild server 启动时监听的 host
 ```
 

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "2.1.0-rc.0",
+  "version": "2.1.4",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
@@ -66,6 +66,7 @@
     "css-loader": "catalog:",
     "deepmerge": "catalog:",
     "dotenv-expand": "catalog:",
+    "fresh-import": "catalog:",
     "html-rspack-plugin": "catalog:",
     "http-proxy-middleware": "catalog:",
     "jiti": "catalog:",

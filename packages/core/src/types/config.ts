@@ -709,7 +709,7 @@ export type PrintFileSizeOptions = {
   /**
    * A filter function to exclude static assets from the total size or detailed size.
    * If both `include` and `exclude` are set, `exclude` will take precedence.
-   * @default (asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)
+   * @default (asset) => /\.(?:map|LICENSE\.txt|d\.(?:ts|mts|cts))$/.test(asset.name)
    */
   exclude?: (asset: PrintFileSizeAsset) => boolean;
   /**

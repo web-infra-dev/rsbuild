@@ -205,6 +205,11 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .type('asset/inline')
         .resourceQuery(/^\?inline$/);
 
+      // get SVG source: `import source from "foo.svg" with { type: "text" }`
+      if (CHAIN_ID.ONE_OF.SVG_TEXT) {
+        rule.oneOf(CHAIN_ID.ONE_OF.SVG_TEXT).type('asset/source').with({ type: 'text' });
+      }
+
       // get raw content: "foo.svg?raw"
       if (CHAIN_ID.ONE_OF.SVG_RAW) {
         rule

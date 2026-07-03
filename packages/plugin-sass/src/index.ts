@@ -109,6 +109,7 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
     const SASS_MAIN = 'sass';
+    const SASS_TEXT = 'sass-text';
     const SASS_URL = 'sass-url';
     const SASS_INLINE = 'sass-inline';
     const SASS_RAW = 'sass-raw';
@@ -137,6 +138,8 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
         .end();
 
       const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+      const cssTextRuleId = CHAIN_ID.ONE_OF.CSS_TEXT;
+      const hasCssTextRule = cssTextRuleId && cssRule.oneOfs.has(cssTextRuleId);
       const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
       const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
 
@@ -149,6 +152,11 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
 
       // Inline Sass for `?inline` imports
       const sassInlineRule = getRule(SASS_INLINE);
+
+      // Sass text import with import attributes.
+      if (hasCssTextRule) {
+        getRule(SASS_TEXT).type('asset/source').with(getRule(cssTextRuleId).get('with'));
+      }
 
       // Raw Sass for `?raw` imports
       getRule(SASS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));

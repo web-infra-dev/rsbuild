@@ -132,13 +132,26 @@ Load Rsbuild configuration file.
 - **Type:**
 
 ```ts
-function loadConfig(params?: {
+function loadConfig<Config = RsbuildConfig>(params?: {
   // Default is process.cwd()
   cwd?: string;
   // Specify the configuration file (relative or absolute path)
   path?: string;
+  // Config file names to search when path is not specified
+  configFileNames?: string[];
+  /**
+   * The export name to read from the config file
+   * Set to `false` to execute the config file without reading exports
+   * @default 'default'
+   */
+  exportName?: string | false;
   meta?: Record<string, unknown>;
   envMode?: string;
+  /**
+   * The command passed to the config function.
+   * @default process.argv[2]
+   */
+  command?: string;
   /**
    * Specify the config loader, can be `auto`, `jiti` or `native`.
    * - 'auto': Use native Node.js loader first, fallback to jiti if failed
@@ -149,8 +162,9 @@ function loadConfig(params?: {
    */
   loader?: 'auto' | 'jiti' | 'native';
 }): Promise<{
-  content: RsbuildConfig;
+  content: Config;
   filePath: string | null;
+  dependencies: string[];
 }>;
 ```
 
@@ -182,6 +196,18 @@ When `path` is not specified, `loadConfig` searches for config files in the foll
 
 If multiple config files exist at the same time, `loadConfig` uses the first matching file in this list.
 
+### Customize config file names
+
+Use the `configFileNames` option to replace the default lookup list. The file names are resolved relative to `cwd`, and this option is ignored when `path` is specified.
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  configFileNames: ['framework.config.ts', 'framework.config.mjs'],
+});
+```
+
 ### Specify the configuration file
 
 Use the `path` option to load the `my-config.ts` configuration file:
@@ -192,6 +218,34 @@ import { loadConfig } from '@rsbuild/core';
 
 const { content } = await loadConfig({
   path: join(__dirname, 'my-config.ts'),
+});
+```
+
+### Specify the export name
+
+By default, `loadConfig` reads the default export from the config file. Use `exportName` to read a named export instead:
+
+```ts title="rsbuild.config.ts"
+export const rsbuildConfig = {
+  // ...
+};
+```
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  exportName: 'rsbuildConfig',
+});
+```
+
+Set `exportName` to `false` when the config file only needs to be executed and no export should be read. In this case, `content` is `{}`.
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  exportName: false,
 });
 ```
 
@@ -216,6 +270,18 @@ In the `defineConfig` configuration function, you can access the `foo` variable 
 export default defineConfig(({ meta }) => {
   console.log(meta.foo); // bar
   return config;
+});
+```
+
+### Passing command
+
+By default, `loadConfig` passes `process.argv[2]` as the `command` value to the config function. Use the `command` option to explicitly set this value.
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  command: 'build',
 });
 ```
 

@@ -716,8 +716,19 @@ Used for plugin communication.
 /**
  * @param id Unique identifier, using Symbol can avoid naming conflicts
  * @param api Properties or methods to be exposed, it is recommended to use object format
+ * @param options Options for exposing the API
  */
-function expose<T = any>(id: string | symbol, api: T): void;
+function expose<T = any>(
+  id: string | symbol,
+  api: T,
+  options?: {
+    /**
+     * Register the exposed API for a specific environment.
+     * If omitted, the API is registered as global.
+     */
+    environment?: string;
+  },
+): void;
 ```
 
 - **Example:**
@@ -735,8 +746,21 @@ const pluginParent = () => ({
 ```
 
 :::tip
-If `api.expose` is called multiple times with the same `id`, the latter call will overwrite the previously exposed API.
+If `api.expose` is called multiple times with the same `id` and `environment`, the latter call will overwrite the previously exposed API.
 :::
+
+### Environment scoped API
+
+You can register an exposed API for a specific Rsbuild environment (the key of `config.environments`) by setting `options.environment`.
+
+When `api.useExposed` is called in an environment plugin, Rsbuild will first resolve the exposed API registered for the same environment, then fall back to the global exposed API.
+
+```ts
+api.expose('my-api', { name: 'web' }, { environment: 'web' });
+api.expose('my-api', { name: 'node' }, { environment: 'node' });
+```
+
+If `options.environment` is omitted, the API is registered as global and can be used as a fallback by plugins in all environments.
 
 ## api.useExposed
 
@@ -750,6 +774,10 @@ Used for plugin communication.
 /**
  * @param id Unique identifier
  * @returns The properties or methods obtained
+ *
+ * If the current plugin is registered in an environment, Rsbuild will
+ * first resolve the exposed API registered for the same environment,
+ * then fall back to the global exposed API.
  */
 function useExposed<T = any>(id: string | symbol): T | undefined;
 ```

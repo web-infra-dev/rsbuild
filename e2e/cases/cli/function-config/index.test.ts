@@ -32,3 +32,11 @@ test('should specify env mode as expected', async ({ execCliSync }) => {
   const content = getFileContent(files, 'index.js');
   expect(content.includes('production-staging-build')).toBeTruthy();
 });
+
+test('should parse build command after global option values', async ({ execCliSync }) => {
+  await fse.remove(distDir);
+  execCliSync('--env-mode inspect build');
+  const files = await readDirContents(distDir);
+  const content = getFileContent(files, 'index.js');
+  expect(content.includes('production-inspect-build')).toBeTruthy();
+});

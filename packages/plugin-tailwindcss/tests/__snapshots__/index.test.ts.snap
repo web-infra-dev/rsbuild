@@ -8,6 +8,12 @@ exports[`plugin-tailwindcss > should add tailwindcss loader to CSS rule 1`] = `
     },
     "oneOf": [
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resolve": {
           "preferRelative": true,
         },

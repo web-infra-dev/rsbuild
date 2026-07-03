@@ -22,6 +22,12 @@ exports[`plugin-solid > should allow deprecated solidPresetOptions alias 1`] = `
       ],
     },
     {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -130,6 +136,12 @@ exports[`plugin-solid > should allow solid options to override ssr defaults 1`] 
       ],
     },
     {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -227,6 +239,12 @@ exports[`plugin-solid > should allow to configure solid options 1`] = `
           "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
     },
     {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -337,6 +355,12 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
       ],
     },
     {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -440,6 +464,12 @@ exports[`plugin-solid > should use hydratable dom output for ssr option on web t
           "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
     },
     {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -548,6 +578,12 @@ exports[`plugin-solid > should use ssr output for ssr option on node target 1`] 
           "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
     },
     {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,

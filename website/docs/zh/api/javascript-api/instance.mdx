@@ -1056,6 +1056,23 @@ rsbuild.expose('my-id', {
 });
 ```
 
+你也可以为指定 environment（对应 `config.environments` 的 key）暴露 API：
+
+```ts
+rsbuild.expose(
+  'my-id',
+  {
+    value: 1,
+    double: (val: number) => val * 2,
+  },
+  {
+    environment: 'web',
+  },
+);
+```
+
+当注册在同一 environment 中的插件调用 `api.useExposed` 时，Rsbuild 会优先解析 environment 级别的 API，如果不存在，则回退到全局 API。
+
 ## rsbuild.modifyRsbuildConfig
 
 > 功能与 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 插件 API 一致。

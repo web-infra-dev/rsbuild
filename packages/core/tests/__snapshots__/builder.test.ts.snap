@@ -39,6 +39,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
         },
         "oneOf": [
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resolve": {
               "preferRelative": true,
             },
@@ -176,6 +182,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
             ],
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
@@ -286,6 +298,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset/inline",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
@@ -315,6 +333,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
           {
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
           },
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -348,6 +372,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset/inline",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
@@ -379,6 +409,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset/inline",
           },
           {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
@@ -398,6 +434,12 @@ exports[`default bundler > should use Rspack by default 1`] = `
       },
       {
         "oneOf": [
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
@@ -427,6 +469,9 @@ exports[`default bundler > should use Rspack by default 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "devtoolFallbackModuleFilenameTemplate": [Function],
     "devtoolModuleFilenameTemplate": [Function],
+    "environment": {
+      "const": false,
+    },
     "filename": "static/js/[name].js",
     "path": "<ROOT>/dist",
     "publicPath": "/",

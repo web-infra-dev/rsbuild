@@ -29,7 +29,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### TanStack Start
 
-[TanStack Start](https://tanstack.com/start/latest) 是一个由 TanStack Router 驱动的全栈 React 框架。它提供 full-document SSR、流式渲染、Server Functions、客户端/服务端构建等能力。
+[TanStack Start](https://tanstack.com/start/latest) 是一个由 TanStack Router 驱动的全栈 React 框架。它提供整页文档 SSR、流式渲染、Server Functions、客户端/服务端构建等能力。
 
 - [文档](https://tanstack.com/start/latest)
 - [基础示例](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start)
@@ -110,77 +110,43 @@ export default MyComponent;
 
 React Compiler 是一个构建时工具，它可以自动优化你的 React 应用。它支持纯 JavaScript，并且了解 React 的规则，因此你无需重写任何代码即可使用它。
 
+:::tip
 在开始使用 React Compiler 之前，建议阅读 [React Compiler 文档](https://zh-hans.react.dev/learn/react-compiler)，以了解 React Compiler 的功能、当前状态和使用方法。
+:::
+
+Rsbuild 支持两种方式启用 React Compiler：
+
+- 推荐：通过 [@rsbuild/plugin-react](/plugins/list/plugin-react#reactcompiler) 启用 Rust 版本的 React Compiler。该方案配置更简单，构建性能更好。
+- 可选：如果你正在维护已有的 Babel 配置、使用较旧版本的 Rsbuild，或需要基于 Babel 插件进行自定义，可以通过 [@rsbuild/plugin-babel 使用 React Compiler](/plugins/list/plugin-babel#use-react-compiler)。
 
 ### 如何使用
 
-在 Rsbuild 中使用 React Compiler 的步骤如下：
-
-1. 升级 `react` 和 `react-dom` 版本到 19。如果你暂时无法升级，可以在 React 17 或 18 项目中安装 [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime)，以允许编译后的代码在 19 之前的版本上运行。
-2. 目前 React Compiler 仅提供了 Babel 插件，你需要安装 [@rsbuild/plugin-babel](/plugins/list/plugin-babel) 和 [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler)。
-3. 在你的 Rsbuild 配置文件中注册 Babel 插件：
+如果你使用 Rsbuild 2.1.0+，可以直接通过 `@rsbuild/plugin-react` 启用 Rust 版本的 React Compiler：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
   plugins: [
-    pluginReact(),
-    pluginBabel({
-      include: /\.[jt]sx?$/,
-      exclude: [/[\\/]node_modules[\\/]/],
-      babelLoaderOptions(opts) {
-        opts.plugins?.unshift('babel-plugin-react-compiler');
-      },
+    pluginReact({
+      reactCompiler: true,
     }),
   ],
 });
 ```
 
-:::tip
-`include` 使用 `/\.[jt]sx?$/` 来匹配 `.js`、`.jsx`、`.ts` 和 `.tsx` 文件。这样可以确保 React Compiler 能够优化组件和[自定义 Hooks](https://zh-hans.react.dev/learn/reusing-logic-with-custom-hooks)，因为自定义 Hooks 通常定义在 `.ts` 文件中。`exclude` 中的 `node_modules` 可以防止编译器处理第三方依赖。
-
-如果你只想编译 JSX/TSX 文件，可以使用 `include: /\.(?:jsx|tsx)$/`，但 `.ts` 文件中的自定义 Hooks 将不会被优化。
-:::
-
-> 你也可以参考 [示例项目](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/react-compiler-babel)。
-
-### 配置
-
-通过以下方式来传入 React Compiler 的配置：
+对于 React 17 和 18 的项目，需要安装 [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime)，并指定 `target`：
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginBabel } from '@rsbuild/plugin-babel';
-import { pluginReact } from '@rsbuild/plugin-react';
-
-const ReactCompilerConfig = {
-  /* ... */
-};
-
-export default defineConfig({
-  plugins: [
-    pluginReact(),
-    pluginBabel({
-      include: /\.[jt]sx?$/,
-      exclude: [/[\\/]node_modules[\\/]/],
-      babelLoaderOptions(opts) {
-        opts.plugins?.unshift(['babel-plugin-react-compiler', ReactCompilerConfig]);
-      },
-    }),
-  ],
+pluginReact({
+  reactCompiler: {
+    target: '18', // '17' | '18' | '19'
+  },
 });
 ```
 
-对于 React 17 和 18 的项目，除了安装 [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime)，还需要指定 `target`：
-
-```ts title="rsbuild.config.ts"
-const ReactCompilerConfig = {
-  target: '18', // '17' | '18' | '19'
-};
-```
+更多用法参考 [@rsbuild/plugin-react - reactCompiler](/plugins/list/plugin-react#reactcompiler)。
 
 ## 路由
 

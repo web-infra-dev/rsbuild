@@ -130,12 +130,33 @@ export function initPluginAPI({
     }
   }) as GetRsbuildConfig;
 
-  const exposed = new Map<string | symbol, any>();
+  const GLOBAL_EXPOSED_KEY = Symbol('global-exposed');
 
-  const expose = (id: string | symbol, api: any) => {
-    exposed.set(id, api);
+  const exposed = new Map<string | symbol, Map<string | symbol, unknown>>();
+
+  const expose: RsbuildPluginAPI['expose'] = (id, api, options) => {
+    const exposedAPIs = exposed.get(id) ?? new Map<string | symbol, unknown>();
+    const key = options?.environment ?? GLOBAL_EXPOSED_KEY;
+
+    exposedAPIs.set(key, api);
+    exposed.set(id, exposedAPIs);
   };
-  const useExposed = (id: string | symbol) => exposed.get(id);
+
+  const createUseExposed =
+    (currentEnvironment?: string): RsbuildPluginAPI['useExposed'] =>
+    <T>(id: string | symbol) => {
+      const exposedAPIs = exposed.get(id);
+
+      if (!exposedAPIs) {
+        return undefined;
+      }
+
+      if (currentEnvironment !== undefined && exposedAPIs.has(currentEnvironment)) {
+        return exposedAPIs.get(currentEnvironment) as T;
+      }
+
+      return exposedAPIs.get(GLOBAL_EXPOSED_KEY) as T | undefined;
+    };
 
   let transformId = 0;
   const transformer: Record<string, TransformHandler<boolean>> = {};
@@ -316,7 +337,7 @@ export function initPluginAPI({
     expose,
     logger: context.logger,
     transform: getTransformHook(environment),
-    useExposed,
+    useExposed: createUseExposed(environment),
     processAssets: setProcessAssets(environment),
     resolve: setResolve(environment),
     getRsbuildConfig,

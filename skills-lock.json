@@ -4,14 +4,20 @@
     "create-draft-release-notes": {
       "source": "rstackjs/agent-skills",
       "sourceType": "github",
-      "skillPath": "skills/create-draft-release-notes/SKILL.md",
-      "computedHash": "ac0fd0bc0eb7abde798501f8915a87905125c67a52cee37fb1913f178dbe517d"
+      "skillPath": ".agents/skills/create-draft-release-notes/SKILL.md",
+      "computedHash": "9fa7807d607c7fb7e02795ddee2560cc190d4af791320537a66ca8b2e429d858"
     },
     "pr-creator": {
       "source": "rstackjs/agent-skills",
       "sourceType": "github",
-      "skillPath": "skills/pr-creator/SKILL.md",
-      "computedHash": "a632c60f135594b5ec098ce6196c85395e448ade27882292bf0b68f9192e8278"
+      "skillPath": ".agents/skills/pr-creator/SKILL.md",
+      "computedHash": "c49fcbba72894d08a34d054a00720610d19a2e87e25942aee05da09e87b268df"
+    },
+    "release-blog-writer": {
+      "source": "rstackjs/agent-skills",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/release-blog-writer/SKILL.md",
+      "computedHash": "982e423497efa0a1266e06e14f880264c791e22b33144ce283fcd38041a7e814"
     },
     "rspress-description-generator": {
       "source": "rstackjs/agent-skills",

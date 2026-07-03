@@ -141,6 +141,9 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
 
           const loader = rule
             .test(SCRIPT_REGEX)
+            .dependency({ not: 'url' })
+            .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
+            .with({ type: { not: 'text' } })
             .use(CHAIN_ID.USE.BABEL)
             .loader(BABEL_LOADER_PATH)
             .options(babelOptions);

@@ -17,7 +17,7 @@ description: Use when adding or updating Rsbuild end-to-end tests in `e2e/cases`
 
 5. Use short, direct, and stable assertions. Avoid redundant setup and checks.
 
-6. Run `pnpm e2e` to validate.
+6. Run `pnpm build` once, then run `pnpm e2e` to validate.
 
 ## Case Structure
 
@@ -25,6 +25,7 @@ description: Use when adding or updating Rsbuild end-to-end tests in `e2e/cases`
 - Prefer putting static Rsbuild configurations in `rsbuild.config.ts` to enable easier debugging via `npx rsbuild`.
 - Use inline config for dynamic values or minor per-test variations.
 - Split into multiple case directories when cases need different `src` code or different Rsbuild configs.
+- When static assets are needed, prefer reusing assets from `@e2e/assets` before adding new files.
 - For package mocks used by one case, place them under that case's `_node_modules` directory and call `copyNodeModules()` before they are resolved.
 
 ## Constraints

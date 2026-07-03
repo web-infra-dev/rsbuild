@@ -185,6 +185,7 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
     const LESS_MAIN = 'less';
+    const LESS_TEXT = 'less-text';
     const LESS_URL = 'less-url';
     const LESS_INLINE = 'less-inline';
     const LESS_RAW = 'less-raw';
@@ -204,6 +205,8 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
       };
 
       const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+      const cssTextRuleId = CHAIN_ID.ONE_OF.CSS_TEXT;
+      const hasCssTextRule = cssTextRuleId && cssRule.oneOfs.has(cssTextRuleId);
       const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
       const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
 
@@ -212,6 +215,11 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
 
       // Inline Less for `?inline` imports
       const lessInlineRule = getRule(LESS_INLINE);
+
+      // Less text import with import attributes.
+      if (hasCssTextRule) {
+        getRule(LESS_TEXT).type('asset/source').with(getRule(cssTextRuleId).get('with'));
+      }
 
       // Raw Less for `?raw` imports
       getRule(LESS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));

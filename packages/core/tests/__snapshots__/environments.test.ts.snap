@@ -35,6 +35,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
           },
           "oneOf": [
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resolve": {
                 "preferRelative": true,
               },
@@ -172,6 +178,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               ],
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -282,6 +294,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -311,6 +329,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
             {
               "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/inline",
+            },
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
             },
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -344,6 +368,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -375,6 +405,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -394,6 +430,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
         },
         {
           "oneOf": [
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
@@ -423,6 +465,9 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
       "chunkFilename": "static/js/async/[name].js",
       "devtoolFallbackModuleFilenameTemplate": [Function],
       "devtoolModuleFilenameTemplate": [Function],
+      "environment": {
+        "const": false,
+      },
       "filename": "static/js/[name].js",
       "path": "<ROOT>/dist",
       "publicPath": "/",
@@ -514,6 +559,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
             "not": "url",
           },
           "oneOf": [
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
             {
               "resolve": {
                 "preferRelative": true,
@@ -651,6 +702,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               ],
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -755,6 +812,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -784,6 +847,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
             {
               "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/inline",
+            },
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
             },
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -817,6 +886,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -848,6 +923,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset/inline",
             },
             {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },
@@ -867,6 +948,12 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
         },
         {
           "oneOf": [
+            {
+              "type": "asset/source",
+              "with": {
+                "type": "text",
+              },
+            },
             {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",

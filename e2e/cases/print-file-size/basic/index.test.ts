@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { extractFileSizeLogs } from '../helper';
 
 test('should print file size after building by default', async ({ build }) => {
@@ -199,6 +200,35 @@ dist/static/js/index.[[hash]].js       X.X kB     X.X kB
 dist/static/image/icon.[[hash]].png    X.X kB
 dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                               Total:   X.X kB   X.X kB`);
+});
+
+test('should calculate gzip size for script-like assets', async ({ build }) => {
+  const emitTsAssetPlugin: RsbuildPlugin = {
+    name: 'emit-ts-asset',
+    setup(api) {
+      api.processAssets({ stage: 'additional' }, ({ compilation, sources }) => {
+        compilation.emitAsset(
+          'static/assets/script.ts',
+          new sources.RawSource("const value = 'ts';\n"),
+        );
+      });
+    },
+  };
+
+  const rsbuild = await build({
+    config: {
+      performance: {
+        printFileSize: {
+          total: false,
+        },
+      },
+      plugins: [emitTsAssetPlugin],
+    },
+  });
+
+  const logs = extractFileSizeLogs(rsbuild.logs);
+
+  expect(logs).toMatch(/dist\/static\/assets\/script\.ts\s+X\.X kB\s+X\.X kB/);
 });
 
 test('should respect a custom total function for printFileSize', async ({ build }) => {

@@ -1,5 +1,17 @@
 # @rsbuild/plugin-babel
 
+## 2.0.1 (2026-07-02)
+
+### Bug fixes
+
+- fix(plugin-babel): skip text import attributes in standalone rule by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8039
+- fix(plugin-babel): skip raw query in standalone rule by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8040
+- fix(plugin-babel): skip URL dependencies in standalone rule by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8041
+
+### Document
+
+- docs: update React Compiler guides by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8038
+
 ## 2.0.0 (2026-06-16)
 
 ### Breaking changes

@@ -163,6 +163,26 @@ body {
 @import '~normalize.css';
 ```
 
+## 导入属性
+
+Rsbuild 支持通过 `type: 'text'` 导入属性引用 CSS 文件的原始内容，并将其作为字符串导入到 JavaScript 中。
+
+```js title="src/index.js"
+import rawCss from './style.css' with { type: 'text' };
+
+console.log(rawCss); // 输出 CSS 文件的原始内容
+```
+
+使用 `import "*.css" with { type: 'text' }` 的行为如下：
+
+- 获取 CSS 文件的原始文本内容，不经过任何预处理或编译
+- 内容会作为字符串内联到最终的 JavaScript 包中
+- 不会生成单独的 CSS 文件
+
+:::tip
+`type: 'text'` 在 Rsbuild >= 2.1.3 中支持。
+:::
+
 ## 查询参数
 
 ### inline
@@ -190,9 +210,9 @@ console.log(inlineCss); // 编译后的 CSS 内容
 
 ### raw
 
-Rsbuild 支持通过 `?raw` 查询参数引用 CSS 文件的原始内容，并将其作为字符串导入到 JavaScript 中。
+Rsbuild 也支持通过 `?raw` 查询参数引用 CSS 文件的原始内容，并将其作为字符串导入到 JavaScript 中。
 
-```ts title="src/index.js"
+```js title="src/index.js"
 import rawCss from './style.css?raw';
 
 console.log(rawCss); // 输出 CSS 文件的原始内容

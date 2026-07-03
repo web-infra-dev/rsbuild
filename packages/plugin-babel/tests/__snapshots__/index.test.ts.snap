@@ -26,6 +26,12 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       ],
     },
     {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -132,6 +138,12 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
         ],
       },
       {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -180,9 +192,15 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   },
   {
+    "dependency": {
+      "not": "url",
+    },
     "include": [
       /b\\\\\\.js\\$/,
     ],
+    "resourceQuery": {
+      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "use": [
       {
@@ -209,11 +227,22 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
         },
       },
     ],
+    "with": {
+      "type": {
+        "not": "text",
+      },
+    },
   },
   {
+    "dependency": {
+      "not": "url",
+    },
     "include": [
       /a\\\\\\.js\\$/,
     ],
+    "resourceQuery": {
+      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "use": [
       {
@@ -240,6 +269,11 @@ exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
         },
       },
     ],
+    "with": {
+      "type": {
+        "not": "text",
+      },
+    },
   },
 ]
 `;
@@ -264,6 +298,12 @@ exports[`plugins/babel > should apply decorators version 2023-11 correctly 1`] =
           "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
     },
     {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -368,6 +408,12 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
       ],
     },
     {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -470,6 +516,12 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
       ],
     },
     {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -566,6 +618,12 @@ exports[`plugins/babel > should set babel-loader 1`] = `
           "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
     },
     {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
@@ -665,6 +723,12 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
           "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
     },
     {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,

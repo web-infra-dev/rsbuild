@@ -5,10 +5,12 @@ import type { ConfigLoader } from '../loadConfig';
 import { defaultLogger } from '../logger';
 import { onBeforeRestartServer } from '../restart';
 import type { LogLevel, RsbuildMode } from '../types';
-import { init } from './init';
+import { init, initCliAction } from './init';
 
 export type CommonOptions = {
   base?: string;
+  distPath?: string;
+  sourceMap?: boolean;
   root?: string;
   mode?: RsbuildMode;
   config?: string;
@@ -19,6 +21,7 @@ export type CommonOptions = {
   open?: boolean | string;
   host?: true | string;
   port?: number;
+  strictPort?: boolean;
   environment?: string[];
   logLevel?: LogLevel;
 };
@@ -44,6 +47,8 @@ const applyCommonOptions = (cli: CAC) => {
     .option('--config-loader <loader>', 'Set the config file loader (auto | jiti | native)', {
       default: 'auto',
     })
+    .option('--dist-path <dir>', 'Set the root directory of output files')
+    .option('--source-map', 'Enable source map')
     .option('--env-dir <dir>', 'Set the directory for loading `.env` files')
     .option('--env-mode <mode>', 'Set the env mode to load the `.env.[mode]` file')
     .option('--environment <name>', 'Set the environment name(s) to build', {
@@ -63,10 +68,11 @@ const applyServerOptions = (command: Command) => {
   command
     .option('-o, --open [url]', 'Open the page in browser on startup')
     .option('--port <port>', 'Set the port number for the server')
+    .option('--strict-port', 'Exit if the specified port is already in use')
     .option('--host [host]', 'Set the host that the server listens to');
 };
 
-export function setupCommands(): void {
+export function setupCommands(argv: string[]): void {
   const cli = cac('rsbuild');
 
   cli.version(RSBUILD_VERSION);
@@ -86,10 +92,9 @@ export function setupCommands(): void {
   let logger = defaultLogger;
 
   devCommand.action(async (options: DevOptions) => {
+    initCliAction('dev', options);
     try {
-      const rsbuild = await init({
-        cliOptions: options,
-      });
+      const rsbuild = await init();
       if (!rsbuild) {
         return;
       }
@@ -106,13 +111,13 @@ export function setupCommands(): void {
   buildCommand
     .option('-w, --watch', 'Enable watch mode to automatically rebuild on file changes')
     .action(async (options: BuildOptions) => {
+      initCliAction('build', options);
       try {
         if (!options.watch) {
           process.env.RSPACK_UNSAFE_FAST_DROP = 'true';
         }
 
         const rsbuild = await init({
-          cliOptions: options,
           isBuildWatch: options.watch,
         });
         if (!rsbuild) {
@@ -144,10 +149,9 @@ export function setupCommands(): void {
     });
 
   previewCommand.action(async (options: PreviewOptions) => {
+    initCliAction('preview', options);
     try {
-      const rsbuild = await init({
-        cliOptions: options,
-      });
+      const rsbuild = await init();
 
       if (!rsbuild) {
         return;
@@ -166,10 +170,9 @@ export function setupCommands(): void {
     .option('--output <output>', 'Set the output path for inspection results')
     .option('--verbose', 'Show complete function definitions in output')
     .action(async (options: InspectOptions) => {
+      initCliAction('inspect', options);
       try {
-        const rsbuild = await init({
-          cliOptions: options,
-        });
+        const rsbuild = await init();
 
         if (!rsbuild) {
           return;
@@ -218,5 +221,5 @@ export function setupCommands(): void {
     }
   });
 
-  cli.parse();
+  cli.parse(argv);
 }
