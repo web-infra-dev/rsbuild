@@ -139,6 +139,12 @@ function loadConfig<Config = RsbuildConfig>(params?: {
   path?: string;
   // 未指定 path 时要查找的配置文件名列表
   configFileNames?: string[];
+  /**
+   * 从配置文件中读取的导出名称
+   * 设置为 `false` 时，只执行配置文件，不读取导出
+   * @default 'default'
+   */
+  exportName?: string | false;
   meta?: Record<string, unknown>;
   envMode?: string;
   /**
@@ -212,6 +218,34 @@ import { loadConfig } from '@rsbuild/core';
 
 const { content } = await loadConfig({
   path: join(__dirname, 'my-config.ts'),
+});
+```
+
+### 指定导出名称
+
+默认情况下，`loadConfig` 会读取配置文件的默认导出。使用 `exportName` 可以读取命名导出：
+
+```ts title="rsbuild.config.ts"
+export const rsbuildConfig = {
+  // ...
+};
+```
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  exportName: 'rsbuildConfig',
+});
+```
+
+当配置文件只需要被执行、不需要读取任何导出时，可以将 `exportName` 设置为 `false`，此时 `content` 为 `{}`。
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  exportName: false,
 });
 ```
 

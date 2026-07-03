@@ -56,6 +56,12 @@ export type LoadConfigOptions = {
    * @default process.argv[2]
    */
   command?: string;
+  /**
+   * The export name to read from the config file.
+   * Set to `false` to execute the config file without reading exports.
+   * @default 'default'
+   */
+  exportName?: string | false;
 };
 
 export type LoadConfigResult<Config = RsbuildConfig> = {
@@ -123,10 +129,37 @@ const resolveConfigPath = (
 
 export type ConfigLoader = 'auto' | 'jiti' | 'native';
 
-const getConfigExport = (module: unknown): RsbuildConfigDefinition =>
-  (module && typeof module === 'object' && 'default' in module
-    ? module.default
-    : module) as RsbuildConfigDefinition;
+const canReadExport = (module: unknown): module is Record<string, unknown> =>
+  module !== null && (typeof module === 'object' || typeof module === 'function');
+
+const getConfigExport = (
+  configModule: unknown,
+  exportName: string | false,
+  configFilePath: string,
+): RsbuildConfigDefinition => {
+  if (exportName === false) {
+    return {};
+  }
+
+  if (exportName === 'default') {
+    return (
+      canReadExport(configModule) && 'default' in configModule ? configModule.default : configModule
+    ) as RsbuildConfigDefinition;
+  }
+
+  if (canReadExport(configModule) && Object.hasOwn(configModule, exportName)) {
+    return configModule[exportName] as RsbuildConfigDefinition;
+  }
+
+  throw new Error(
+    `Cannot find export ${color.yellow(exportName)} in config file: ${color.dim(configFilePath)}`,
+  );
+};
+
+type LoadedConfig = {
+  configExport: RsbuildConfigDefinition;
+  dependencies: string[];
+};
 
 const tryFreshImport = async (configFileURL: string) => {
   try {
@@ -141,7 +174,7 @@ const tryFreshImport = async (configFileURL: string) => {
 const loadConfigWithNative = async (
   configFilePath: string,
 ): Promise<{
-  configExport: RsbuildConfigDefinition;
+  configModule: unknown;
   dependencies: string[];
 }> => {
   const configFileURL = pathToFileURL(configFilePath).href;
@@ -149,14 +182,44 @@ const loadConfigWithNative = async (
 
   if (freshImportResult) {
     return {
-      configExport: getConfigExport(freshImportResult.result),
+      configModule: freshImportResult.result,
       dependencies: freshImportResult.dependencies.sort(),
     };
   }
 
   const exportModule = await import(`${configFileURL}?t=${Date.now()}`);
   return {
-    configExport: getConfigExport(exportModule),
+    configModule: exportModule,
+    dependencies: [],
+  };
+};
+
+const loadConfigWithJiti = async (
+  configFilePath: string,
+  exportName: string | false,
+): Promise<LoadedConfig> => {
+  const { createJiti } = await import('jiti');
+  const jiti = createJiti(import.meta.filename, {
+    // disable require cache to support restart CLI and read the new config
+    moduleCache: false,
+    interopDefault: true,
+    // Always use native `require()` for these packages,
+    // This avoids `typescript` being loaded twice.
+    nativeModules: ['typescript'],
+  });
+
+  if (exportName === 'default') {
+    return {
+      configExport: await jiti.import<RsbuildConfigDefinition>(configFilePath, {
+        default: true,
+      }),
+      dependencies: [],
+    };
+  }
+
+  const configModule = await jiti.import<unknown>(configFilePath);
+  return {
+    configExport: getConfigExport(configModule, exportName, configFilePath),
     dependencies: [],
   };
 };
@@ -169,6 +232,7 @@ export async function loadConfig<Config = RsbuildConfig>({
   meta,
   loader = 'auto',
   command,
+  exportName = 'default',
 }: LoadConfigOptions = {}): Promise<LoadConfigResult<Config>> {
   const configFilePath = resolveConfigPath(cwd, path, configFileNames);
 
@@ -181,14 +245,12 @@ export async function loadConfig<Config = RsbuildConfig>({
     };
   }
 
-  let dependencies: string[] = [];
-
   const applyMetaInfo = (config: RsbuildConfig) => {
     config._privateMeta = { configFilePath };
     return config as Config;
   };
 
-  let configExport: RsbuildConfigDefinition | undefined;
+  let loadedConfig: LoadedConfig | undefined;
 
   // Determine the loading strategy based on the config loader type
   const useNative = Boolean(
@@ -198,8 +260,9 @@ export async function loadConfig<Config = RsbuildConfig>({
   );
 
   if (useNative || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
+    let result: Awaited<ReturnType<typeof loadConfigWithNative>> | undefined;
     try {
-      ({ configExport, dependencies } = await loadConfigWithNative(configFilePath));
+      result = await loadConfigWithNative(configFilePath);
     } catch (err) {
       const errorMessage = `Failed to load file with native loader: ${color.dim(configFilePath)}`;
       if (loader === 'native') {
@@ -210,28 +273,25 @@ export async function loadConfig<Config = RsbuildConfig>({
       defaultLogger.debug(`${errorMessage}, fallback to jiti.`);
       defaultLogger.debug(err);
     }
+
+    if (result) {
+      loadedConfig = {
+        configExport: getConfigExport(result.configModule, exportName, configFilePath),
+        dependencies: result.dependencies,
+      };
+    }
   }
 
-  if (configExport === undefined) {
+  if (!loadedConfig) {
     try {
-      const { createJiti } = await import('jiti');
-      const jiti = createJiti(import.meta.filename, {
-        // disable require cache to support restart CLI and read the new config
-        moduleCache: false,
-        interopDefault: true,
-        // Always use native `require()` for these packages,
-        // This avoids `@rspack/core` being loaded twice.
-        nativeModules: ['typescript'],
-      });
-
-      configExport = await jiti.import<RsbuildConfigDefinition>(configFilePath, {
-        default: true,
-      });
+      loadedConfig = await loadConfigWithJiti(configFilePath, exportName);
     } catch (err) {
       defaultLogger.error(`Failed to load file with jiti: ${color.dim(configFilePath)}`);
       throw err;
     }
   }
+
+  const { configExport, dependencies } = loadedConfig;
 
   if (typeof configExport === 'function') {
     const nodeEnv = getNodeEnv();
@@ -245,9 +305,7 @@ export async function loadConfig<Config = RsbuildConfig>({
     const result = await configExport(configParams);
 
     if (result === undefined) {
-      throw new Error(
-        `${color.dim('[rsbuild:loadConfig]')} The config function must return a config object.`,
-      );
+      throw new Error('The config function must return a config object.');
     }
 
     return {
@@ -259,8 +317,8 @@ export async function loadConfig<Config = RsbuildConfig>({
 
   if (!isObject(configExport)) {
     throw new Error(
-      `${color.dim('[rsbuild:loadConfig]')} The config must be an object or a function that returns an object, get ${color.yellow(
-        configExport,
+      `The config must be an object or a function that returns an object, get ${color.yellow(
+        String(configExport),
       )}`,
     );
   }
