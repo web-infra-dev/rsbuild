@@ -58,11 +58,11 @@ export type LoadConfigOptions = {
   command?: string;
 };
 
-export type LoadConfigResult = {
+export type LoadConfigResult<Config = RsbuildConfig> = {
   /**
    * The loaded configuration object.
    */
-  content: RsbuildConfig;
+  content: Config;
   /**
    * The path to the loaded configuration file.
    * Return `null` if the configuration file is not found.
@@ -161,7 +161,7 @@ const loadConfigWithNative = async (
   };
 };
 
-export async function loadConfig({
+export async function loadConfig<Config = RsbuildConfig>({
   cwd = process.cwd(),
   path,
   configFileNames,
@@ -169,13 +169,13 @@ export async function loadConfig({
   meta,
   loader = 'auto',
   command,
-}: LoadConfigOptions = {}): Promise<LoadConfigResult> {
+}: LoadConfigOptions = {}): Promise<LoadConfigResult<Config>> {
   const configFilePath = resolveConfigPath(cwd, path, configFileNames);
 
   if (!configFilePath) {
     defaultLogger.debug('no config file found.');
     return {
-      content: {},
+      content: {} as Config,
       filePath: configFilePath,
       dependencies: [],
     };
@@ -185,7 +185,7 @@ export async function loadConfig({
 
   const applyMetaInfo = (config: RsbuildConfig) => {
     config._privateMeta = { configFilePath };
-    return config;
+    return config as Config;
   };
 
   let configExport: RsbuildConfigDefinition | undefined;

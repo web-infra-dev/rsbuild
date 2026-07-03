@@ -132,7 +132,7 @@ export const myPlugin = {
 - **类型：**
 
 ```ts
-function loadConfig(params?: {
+function loadConfig<Config = RsbuildConfig>(params?: {
   // 默认为 process.cwd()
   cwd?: string;
   // 指定配置文件路径，可以为相对路径或绝对路径
@@ -156,8 +156,9 @@ function loadConfig(params?: {
    */
   loader?: 'auto' | 'jiti' | 'native';
 }): Promise<{
-  content: RsbuildConfig;
+  content: Config;
   filePath: string | null;
+  dependencies: string[];
 }>;
 ```
 
