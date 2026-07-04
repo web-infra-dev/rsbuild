@@ -684,6 +684,8 @@ importers:
         specifier: 'catalog:'
         version: 0.3.31
 
+  e2e/type-tests/core-types: {}
+
   e2e/type-tests/resolution-bundler: {}
 
   e2e/type-tests/resolution-nodenext: {}
