@@ -82,7 +82,7 @@ export const PLUGIN_CSS_NAME = 'rsbuild:css';
 
 // Extensions
 export const FONT_EXTENSIONS: string[] = ['woff', 'woff2', 'eot', 'ttf', 'otf', 'ttc'];
-export const ASSET_EXTENSIONS: string[] = ['pdf'];
+export const ASSET_EXTENSIONS: string[] = ['pdf', 'txt'];
 export const IMAGE_EXTENSIONS: string[] = [
   'png',
   'jpg',
