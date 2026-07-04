@@ -226,6 +226,14 @@ declare module '*.opus' {
 }
 
 /**
+ * Other assets
+ */
+declare module '*.pdf' {
+  const src: string;
+  export default src;
+}
+
+/**
  * @requires [@rsbuild/plugin-yaml](https://npmjs.com/package/@rsbuild/plugin-yaml)
  */
 declare module '*.yaml' {

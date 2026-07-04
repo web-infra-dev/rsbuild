@@ -63,4 +63,11 @@ describe('plugin-asset', () => {
     const config = (await rsbuild.initConfigs())[0];
     expect(matchRules(config, 'a.png')).toMatchSnapshot();
   });
+
+  test('should add other asset rules correctly', async () => {
+    const rsbuild = await createRsbuild();
+
+    const config = (await rsbuild.initConfigs())[0];
+    expect(matchRules(config, 'a.pdf')).toMatchSnapshot();
+  });
 });

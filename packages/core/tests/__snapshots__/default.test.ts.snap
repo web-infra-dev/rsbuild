@@ -458,6 +458,43 @@ exports[`should apply default plugins correctly 1`] = `
       {
         "oneOf": [
           {
+            "generator": {
+              "filename": "static/assets/[name].[contenthash:10][ext]",
+            },
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/inline",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "generator": {
+              "filename": "static/assets/[name].[contenthash:10][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 4096,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.pdf\\$/i,
+      },
+      {
+        "oneOf": [
+          {
             "type": "asset/source",
             "with": {
               "type": "text",
@@ -987,6 +1024,43 @@ exports[`should apply default plugins correctly in production 1`] = `
           },
         ],
         "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/assets/[name].[contenthash:10][ext]",
+            },
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/inline",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "generator": {
+              "filename": "static/assets/[name].[contenthash:10][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 4096,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.pdf\\$/i,
       },
       {
         "oneOf": [
@@ -1535,6 +1609,43 @@ exports[`should apply default plugins correctly when target is node 1`] = `
       {
         "oneOf": [
           {
+            "generator": {
+              "filename": "static/assets/[name].[contenthash:10][ext]",
+            },
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/inline",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "generator": {
+              "filename": "static/assets/[name].[contenthash:10][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 4096,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.pdf\\$/i,
+      },
+      {
+        "oneOf": [
+          {
             "type": "asset/source",
             "with": {
               "type": "text",
@@ -2075,6 +2186,43 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
         ],
         "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/assets/[name].[contenthash:10][ext]",
+            },
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/inline",
+          },
+          {
+            "type": "asset/source",
+            "with": {
+              "type": "text",
+            },
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "generator": {
+              "filename": "static/assets/[name].[contenthash:10][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 4096,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.pdf\\$/i,
       },
       {
         "oneOf": [
