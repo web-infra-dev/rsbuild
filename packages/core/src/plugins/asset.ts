@@ -3,6 +3,7 @@ import type { AssetModuleFilename, GeneratorOptionsByModuleType } from '@rspack/
 import { CHAIN_ID } from '../configChain';
 import {
   AUDIO_EXTENSIONS,
+  ASSET_EXTENSIONS,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
   INLINE_QUERY_REGEX,
@@ -101,7 +102,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
       };
 
       const createAssetRule = (
-        assetType: 'svg' | 'font' | 'image' | 'media',
+        assetType: 'svg' | 'font' | 'image' | 'media' | 'assets',
         exts: string[],
         emit: boolean,
       ) => {
@@ -132,6 +133,9 @@ export const pluginAsset = (): RsbuildPlugin => ({
 
       // font
       createAssetRule(CHAIN_ID.RULE.FONT, FONT_EXTENSIONS, emitAssets);
+
+      // other built-in assets
+      createAssetRule(CHAIN_ID.RULE.ASSETS, ASSET_EXTENSIONS, emitAssets);
 
       // JSON
       // Rspack has built-in rule for JSON, so we only need to handle imports with query or import attributes
