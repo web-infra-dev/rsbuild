@@ -22,10 +22,12 @@ test('should generate preload link when preload is defined', async ({ build }) =
   const files = rsbuild.getDistFiles();
 
   const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
+  const textFileName = findFile(files, /\/static\/assets\/.+\.txt$/);
   const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
+  expect(content).not.toContain(textFileName.slice(textFileName.indexOf('/static/assets/')));
 
   expect(
     content.includes(

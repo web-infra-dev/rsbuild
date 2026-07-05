@@ -26,7 +26,7 @@ The prefetch keyword for the rel attribute of the `<link>` element provides a hi
 
 ## Enable prefetch
 
-When `performance.prefetch` is set to `true`, Rsbuild will use the following default options to prefetch resources. This means prefetching all async resources on the current page, including async JS and its associated CSS, image, font, and other resources.
+When `performance.prefetch` is set to `true`, Rsbuild will use the following default options to prefetch resources. This means prefetching all async resources on the current page, including async JS and its associated CSS, image, and font resources.
 
 ```js
 const defaultOptions = {
@@ -107,10 +107,12 @@ type ResourceHintsIncludeType = 'async-chunks' | 'initial' | 'all-assets' | 'all
 
 Specify which types of resources will be included. Currently supported values are as follows:
 
-- `async-chunks`: Includes all async resources on the current page, such as async JS chunks, and its associated CSS, images, fonts, and other static resources.
+- `async-chunks`: Includes all async resources on the current page, such as async JS chunks, and its associated CSS, images, and fonts.
 - `initial`: Includes all non-async resources on the current page.
 - `all-chunks`: Includes all async and non-async resources on the current page.
 - `all-assets`: Includes all resources from all pages.
+
+Generic built-in assets such as `.pdf` and `.txt` are excluded from prefetch generation by default. If you need to prefetch them, you can manually add prefetch tags through [html.tags](/config/html/tags).
 
 For example, to include all png images on the current page, configure it as follows:
 

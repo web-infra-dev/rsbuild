@@ -1,4 +1,5 @@
 import { isRegExp } from 'node:util/types';
+import { ASSET_EXTENSIONS } from '../constants';
 import { castArray } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 import { HtmlResourceHintsPlugin } from '../rspack-plugins/resource-hints/HtmlResourceHintsPlugin';
@@ -10,6 +11,7 @@ import type {
   PreloadOptions,
   RsbuildPlugin,
 } from '../types';
+import { getRegExpForExts } from './asset';
 import { getInlineTests } from './inlineChunk';
 
 const generateLinks = (
@@ -95,11 +97,13 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
 
       const HTMLCount = chain.entryPoints.values().length;
       const excludes = getInlineExcludes(config);
+      const assetExclude = getRegExpForExts(ASSET_EXTENSIONS);
+      const resourceHintExcludes = [...excludes, assetExclude];
 
       if (prefetch) {
         const options = appendExcludes<PrefetchOptions>(
           prefetch === true ? {} : prefetch,
-          excludes,
+          resourceHintExcludes,
         );
 
         chain
@@ -114,7 +118,10 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       }
 
       if (preload) {
-        const options = appendExcludes<PreloadOptions>(preload === true ? {} : preload, excludes);
+        const options = appendExcludes<PreloadOptions>(
+          preload === true ? {} : preload,
+          resourceHintExcludes,
+        );
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
