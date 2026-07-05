@@ -38,6 +38,34 @@ test('should generate preload link when preload is defined', async ({ build }) =
   ).toBeTruthy();
 });
 
+test('should allow preload.exclude to override default asset excludes', async ({ build }) => {
+  const rsbuild = await build({
+    config: {
+      plugins: [pluginReact()],
+      source: {
+        entry: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
+      performance: {
+        preload: {
+          exclude: /\.css$/,
+        },
+      },
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+
+  const textFileName = findFile(files, /\/static\/assets\/.+\.txt$/);
+  const content = getFileContent(files, '.html');
+  const textHref = textFileName.slice(textFileName.indexOf('/static/assets/'));
+
+  // test.js, image.png, file.txt
+  expect(content.match(/rel="preload"/g)?.length).toBe(3);
+  expect(content).toContain(textHref);
+});
+
 test('should generate preload link with duplicate', async ({ build }) => {
   const rsbuild = await build({
     config: {

@@ -37,18 +37,23 @@ const getInlineExcludes = (config: NormalizedEnvironmentConfig): RegExp[] => {
   return [...scriptTests, ...styleTests].filter((item) => isRegExp(item));
 };
 
-const appendExcludes = <T extends PrefetchOptions | PreloadOptions>(
+const applyExcludes = <T extends PrefetchOptions | PreloadOptions>(
   options: T | T[],
+  defaultExclude: RegExp,
   excludes: RegExp[],
 ): T | T[] => {
-  if (!excludes.length) {
-    return options;
-  }
+  const optionsList = castArray(options).map((option): T => {
+    const exclude = option.exclude ?? defaultExclude;
 
-  const optionsList = castArray(options).map((option) => ({
-    ...option,
-    exclude: option.exclude ? [...castArray(option.exclude), ...excludes] : excludes,
-  }));
+    if (!excludes.length && option.exclude !== undefined) {
+      return option;
+    }
+
+    return {
+      ...option,
+      exclude: excludes.length ? [...castArray(exclude), ...excludes] : exclude,
+    } as T;
+  });
 
   return Array.isArray(options) ? optionsList : optionsList[0];
 };
@@ -98,12 +103,12 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       const HTMLCount = chain.entryPoints.values().length;
       const excludes = getInlineExcludes(config);
       const assetExclude = getRegExpForExts(ASSET_EXTENSIONS);
-      const resourceHintExcludes = [...excludes, assetExclude];
 
       if (prefetch) {
-        const options = appendExcludes<PrefetchOptions>(
+        const options = applyExcludes<PrefetchOptions>(
           prefetch === true ? {} : prefetch,
-          resourceHintExcludes,
+          assetExclude,
+          excludes,
         );
 
         chain
@@ -118,9 +123,10 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       }
 
       if (preload) {
-        const options = appendExcludes<PreloadOptions>(
+        const options = applyExcludes<PreloadOptions>(
           preload === true ? {} : preload,
-          resourceHintExcludes,
+          assetExclude,
+          excludes,
         );
 
         chain

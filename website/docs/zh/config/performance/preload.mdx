@@ -106,8 +106,6 @@ type ResourceHintsIncludeType = 'async-chunks' | 'initial' | 'all-assets' | 'all
 - `all-chunks`: 包含当前页面的所有异步和非异步资源。
 - `all-assets`: 包含所有页面的所有资源。
 
-`.pdf`、`.txt` 等通用内置资源默认不会生成 preload 标签。如果你需要 preload 这些资源，可以通过 [html.tags](/config/html/tags) 手动添加标签。
-
 例如，为了包含当前页面中所有 png 图片，可以配置为：
 
 ```ts title="rsbuild.config.ts"
@@ -216,7 +214,7 @@ type ResourceHintsFilter =
   | Array<string | RegExp | ((filename: string) => boolean)>;
 ```
 
-- **默认值：** `undefined`
+- **默认值：** `/\.(?:pdf|txt)$/i`
 
 一个额外的过滤器，用于指定哪些资源会被排除，用法与 `include` 类似。
 
@@ -243,4 +241,5 @@ export default {
 
 | 版本    | 变更内容                                |
 | ------- | --------------------------------------- |
+| v2.1.5  | 默认排除 `.pdf` 和 `.txt` 资源          |
 | v2.0.12 | 支持将 `performance.preload` 设置为数组 |

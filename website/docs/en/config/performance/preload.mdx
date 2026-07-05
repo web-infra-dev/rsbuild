@@ -106,8 +106,6 @@ Specify which types of resources will be included. Currently supported values ar
 - `all-chunks`: Includes all async and non-async resources on the current page.
 - `all-assets`: Includes all resources from all pages.
 
-Generic built-in assets such as `.pdf` and `.txt` are excluded from preload generation by default. If you need to preload them, you can manually add preload tags through [html.tags](/config/html/tags).
-
 For example, to include all png images on the current page, configure it as follows:
 
 ```ts title="rsbuild.config.ts"
@@ -216,7 +214,7 @@ type ResourceHintsFilter =
   | Array<string | RegExp | ((filename: string) => boolean)>;
 ```
 
-- **Default:** `undefined`
+- **Default:** `/\.(?:pdf|txt)$/i`
 
 An extra filter to determine which resources to exclude. The usage is similar to `include`.
 
@@ -243,4 +241,5 @@ export default {
 
 | Version | Changes                                                     |
 | ------- | ----------------------------------------------------------- |
+| v2.1.5  | Excluded `.pdf` and `.txt` assets by default                |
 | v2.0.12 | Added support for setting `performance.preload` to an array |

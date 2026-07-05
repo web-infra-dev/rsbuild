@@ -755,11 +755,13 @@ export interface ResourceHintsOptions {
    */
   type?: ResourceHintsIncludeType;
   /**
-   * A extra filter to determine which resources to include.
+   * An extra filter to determine which resources to include.
    */
   include?: ResourceHintsFilter;
   /**
-   * A extra filter to determine which resources to exclude.
+   * An extra filter to determine which resources to exclude.
+   *
+   * @default /\.(?:pdf|txt)$/i
    */
   exclude?: ResourceHintsFilter;
   /**
