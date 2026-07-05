@@ -121,7 +121,7 @@ exports[`plugin-asset > should add other asset rules correctly 1`] = `
         "type": "asset",
       },
     ],
-    "test": /\\\\\\.pdf\\$/i,
+    "test": /\\\\\\.\\(\\?:pdf\\|txt\\)\\$/i,
   },
 ]
 `;

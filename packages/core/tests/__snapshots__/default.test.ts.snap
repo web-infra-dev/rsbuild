@@ -490,7 +490,7 @@ exports[`should apply default plugins correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.pdf\\$/i,
+        "test": /\\\\\\.\\(\\?:pdf\\|txt\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1060,7 +1060,7 @@ exports[`should apply default plugins correctly in production 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.pdf\\$/i,
+        "test": /\\\\\\.\\(\\?:pdf\\|txt\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1641,7 +1641,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.pdf\\$/i,
+        "test": /\\\\\\.\\(\\?:pdf\\|txt\\)\\$/i,
       },
       {
         "oneOf": [
@@ -2222,7 +2222,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.pdf\\$/i,
+        "test": /\\\\\\.\\(\\?:pdf\\|txt\\)\\$/i,
       },
       {
         "oneOf": [
