@@ -126,6 +126,13 @@ export default defineConfig({
   output: {
     externals,
   },
+  tools: {
+    rspack: {
+      experiments: {
+        nativeWatcher: true,
+      },
+    },
+  },
   lib: [
     // Build client modules and copy dependencies to compiled folder
     {
