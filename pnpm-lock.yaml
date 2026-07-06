@@ -221,8 +221,8 @@ catalogs:
       specifier: 6.1.9
       version: 6.1.9
     http-proxy-middleware:
-      specifier: 4.1.1
-      version: 4.1.1
+      specifier: 4.2.0
+      version: 4.2.0
     jiti:
       specifier: ^2.7.0
       version: 2.7.0
@@ -956,7 +956,7 @@ importers:
         version: 6.1.9(@rspack/core@2.1.2)
       http-proxy-middleware:
         specifier: 'catalog:'
-        version: 4.1.1
+        version: 4.2.0
       jiti:
         specifier: 'catalog:'
         version: 2.7.0
@@ -4011,12 +4011,12 @@ packages:
     resolution: {integrity: sha512-Tz7u1i95/g2x2jz81+x0FBVhBhY5aRTvD3tXXdFaljuNdzDLJ8UGNRrTcj2cgQvAg3iW/h77Fz15nLW0L0CrZw==}
     engines: {node: '>=20.19.0'}
 
-  http-proxy-middleware@4.1.1:
-    resolution: {integrity: sha512-KX5ZofGXLFXqFAkQoOWZ+rTtaLTut7m0gyL+QzJrdejtIZ+F4bPPDoe7reISg2+v0CAz5OfVwEJEhty7X+e57g==}
+  http-proxy-middleware@4.2.0:
+    resolution: {integrity: sha512-ZA+oNOoM+GLoFTIzhkJptVQov73Srep2LBqhF8hG8CIPKO3nam1jonXVQ/QUH8RbwsmaaVz2SOJdzBNBHNtKbw==}
     engines: {node: ^22.15.0 || ^24.0.0 || >=26.0.0}
 
-  httpxy@0.5.3:
-    resolution: {integrity: sha512-SMS9V6Sn7VWaS11lYhoAr0ceoaiolTWf4jYdJn0NJhCdKMu9R2H9Fh0LBDWBHQF6HRLI1PmaePYsjanSpE5PEw==}
+  httpxy@0.5.4:
+    resolution: {integrity: sha512-URfeibL0kTH6VuIxxaJDXWQWEk8fKr+9L8MGv6CuAiNy0fGnoVhWbXBvJR1mkdsvCDUxvhX9cW60k2AhtH5s6w==}
 
   hyperdyperid@1.2.0:
     resolution: {integrity: sha512-Y93lCzHYgGWdrJ66yIktxiaGULYc6oGiABxhcO5AufBeOyoIdZF7bIfLaOrbM0iGIOXQQgxxRrFEnb+Y6w1n4A==}
@@ -8243,17 +8243,17 @@ snapshots:
       domutils: 4.0.2
       entities: 8.0.0
 
-  http-proxy-middleware@4.1.1:
+  http-proxy-middleware@4.2.0:
     dependencies:
       debug: 4.4.3
-      httpxy: 0.5.3
+      httpxy: 0.5.4
       is-glob: 4.0.3
       is-plain-obj: 4.1.0
       micromatch: 4.0.8
     transitivePeerDependencies:
       - supports-color
 
-  httpxy@0.5.3: {}
+  httpxy@0.5.4: {}
 
   hyperdyperid@1.2.0: {}
 
