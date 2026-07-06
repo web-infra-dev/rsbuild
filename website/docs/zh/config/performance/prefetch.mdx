@@ -224,13 +224,13 @@ type ResourceHintsFilter =
   | Array<string | RegExp | ((filename: string) => boolean)>;
 ```
 
-- **默认值：** `/\.(?:pdf|txt)$/i`
+- **默认值：** `/\.(?:webmanifest|pdf|txt)$/i`
 
 一个额外的过滤器，用于指定哪些资源会被排除，用法与 `include` 类似。
 
 ## 版本历史
 
-| 版本    | 变更内容                                 |
-| ------- | ---------------------------------------- |
-| v2.1.5  | 默认排除 `.pdf` 和 `.txt` 资源           |
-| v2.0.12 | 支持将 `performance.prefetch` 设置为数组 |
+| 版本    | 变更内容                                       |
+| ------- | ---------------------------------------------- |
+| v2.1.5  | 默认排除 `.webmanifest`、`.pdf` 和 `.txt` 资源 |
+| v2.0.12 | 支持将 `performance.prefetch` 设置为数组       |

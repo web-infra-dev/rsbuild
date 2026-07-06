@@ -224,13 +224,13 @@ type ResourceHintsFilter =
   | Array<string | RegExp | ((filename: string) => boolean)>;
 ```
 
-- **Default:** `/\.(?:pdf|txt)$/i`
+- **Default:** `/\.(?:webmanifest|pdf|txt)$/i`
 
 An extra filter to determine which resources to exclude. The usage is similar to `include`.
 
 ## Version history
 
-| Version | Changes                                                      |
-| ------- | ------------------------------------------------------------ |
-| v2.1.5  | Excluded `.pdf` and `.txt` assets by default                 |
-| v2.0.12 | Added support for setting `performance.prefetch` to an array |
+| Version | Changes                                                       |
+| ------- | ------------------------------------------------------------- |
+| v2.1.5  | Excluded `.webmanifest`, `.pdf`, and `.txt` assets by default |
+| v2.0.12 | Added support for setting `performance.prefetch` to an array  |

@@ -761,7 +761,7 @@ export interface ResourceHintsOptions {
   /**
    * An extra filter to determine which resources to exclude.
    *
-   * @default /\.(?:pdf|txt)$/i
+   * @default /\.(?:webmanifest|pdf|txt)$/i
    */
   exclude?: ResourceHintsFilter;
   /**

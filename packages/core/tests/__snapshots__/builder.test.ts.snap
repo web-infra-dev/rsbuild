@@ -467,7 +467,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:pdf\\|txt\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:webmanifest\\|pdf\\|txt\\)\\$/i,
       },
       {
         "oneOf": [
