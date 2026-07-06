@@ -68,8 +68,9 @@ describe('plugin-asset', () => {
     const rsbuild = await createRsbuild();
 
     const config = (await rsbuild.initConfigs())[0];
-    const rules = matchRules(config, 'a.pdf');
+    const rules = matchRules(config, 'a.webmanifest');
     expect(rules).toMatchSnapshot();
+    expect(matchRules(config, 'a.pdf')).toEqual(rules);
     expect(matchRules(config, 'a.txt')).toEqual(rules);
   });
 });

@@ -463,7 +463,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset",
             },
           ],
-          "test": /\\\\\\.\\(\\?:pdf\\|txt\\)\\$/i,
+          "test": /\\\\\\.\\(\\?:webmanifest\\|pdf\\|txt\\)\\$/i,
         },
         {
           "oneOf": [
@@ -1018,7 +1018,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "type": "asset",
             },
           ],
-          "test": /\\\\\\.\\(\\?:pdf\\|txt\\)\\$/i,
+          "test": /\\\\\\.\\(\\?:webmanifest\\|pdf\\|txt\\)\\$/i,
         },
         {
           "oneOf": [
