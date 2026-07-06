@@ -64,6 +64,15 @@ describe('plugin-asset', () => {
     expect(matchRules(config, 'a.png')).toMatchSnapshot();
   });
 
+  test('should add media rules correctly', async () => {
+    const rsbuild = await createRsbuild();
+
+    const config = (await rsbuild.initConfigs())[0];
+    const rules = matchRules(config, 'a.mp4');
+    expect(rules).toMatchSnapshot();
+    expect(matchRules(config, 'a.vtt')).toEqual(rules);
+  });
+
   test('should add other asset rules correctly', async () => {
     const rsbuild = await createRsbuild();
 

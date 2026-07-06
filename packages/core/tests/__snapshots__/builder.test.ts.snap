@@ -393,7 +393,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\|vtt\\)\\$/i,
       },
       {
         "oneOf": [

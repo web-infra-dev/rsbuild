@@ -84,6 +84,48 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
 ]
 `;
 
+exports[`plugin-asset > should add media rules correctly 1`] = `
+[
+  {
+    "oneOf": [
+      {
+        "generator": {
+          "filename": "static/media/[name].[contenthash:10][ext]",
+        },
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/resource",
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/inline",
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "generator": {
+          "filename": "static/media/[name].[contenthash:10][ext]",
+        },
+        "parser": {
+          "dataUrlCondition": {
+            "maxSize": 4096,
+          },
+        },
+        "type": "asset",
+      },
+    ],
+    "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\|vtt\\)\\$/i,
+  },
+]
+`;
+
 exports[`plugin-asset > should add other asset rules correctly 1`] = `
 [
   {
