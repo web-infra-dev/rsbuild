@@ -99,6 +99,7 @@ export const IMAGE_EXTENSIONS: string[] = [
   'tiff',
   'jfif',
   'cur',
+  'jxl',
 ];
 export const VIDEO_EXTENSIONS: string[] = ['mp4', 'webm', 'ogg', 'mov'];
 export const AUDIO_EXTENSIONS: string[] = ['mp3', 'wav', 'flac', 'aac', 'm4a', 'opus'];

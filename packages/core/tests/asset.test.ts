@@ -16,7 +16,9 @@ describe('plugin-asset', () => {
     const rsbuild = await createRsbuild();
 
     const config = (await rsbuild.initConfigs())[0];
-    expect(matchRules(config, 'a.png')).toMatchSnapshot();
+    const rules = matchRules(config, 'a.png');
+    expect(rules).toMatchSnapshot();
+    expect(matchRules(config, 'a.jxl')).toEqual(rules);
   });
 
   test('should allow using distPath.image to modify dist path', async () => {
