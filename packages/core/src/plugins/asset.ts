@@ -8,6 +8,7 @@ import {
   IMAGE_EXTENSIONS,
   INLINE_QUERY_REGEX,
   RAW_QUERY_REGEX,
+  TRACK_EXTENSIONS,
   URL_QUERY_REGEX,
   VIDEO_EXTENSIONS,
 } from '../constants';
@@ -129,7 +130,11 @@ export const pluginAsset = (): RsbuildPlugin => ({
       createAssetRule(CHAIN_ID.RULE.SVG, ['svg'], emitAssets);
 
       // media
-      createAssetRule(CHAIN_ID.RULE.MEDIA, [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS], emitAssets);
+      createAssetRule(
+        CHAIN_ID.RULE.MEDIA,
+        [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS, ...TRACK_EXTENSIONS],
+        emitAssets,
+      );
 
       // font
       createAssetRule(CHAIN_ID.RULE.FONT, FONT_EXTENSIONS, emitAssets);
