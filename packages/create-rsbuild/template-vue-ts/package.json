@@ -16,6 +16,6 @@
     "@rsbuild/plugin-vue": "^2.0.1",
     "@types/node": "^24.13.2",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.5"
+    "vue-tsc": "^3.3.6"
   }
 }
