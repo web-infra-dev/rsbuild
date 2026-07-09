@@ -116,11 +116,11 @@ catalogs:
       specifier: ^0.5.23
       version: 0.5.23
     '@swc/plugin-prefresh':
-      specifier: ^12.14.1
-      version: 12.14.1
+      specifier: ^12.15.0
+      version: 12.15.0
     '@swc/plugin-remove-console':
-      specifier: ^12.14.1
-      version: 12.14.1
+      specifier: ^12.15.0
+      version: 12.15.0
     '@tailwindcss/postcss':
       specifier: ^4.3.2
       version: 4.3.2
@@ -679,7 +679,7 @@ importers:
     dependencies:
       '@swc/plugin-remove-console':
         specifier: 'catalog:'
-        version: 12.14.1
+        version: 12.15.0
 
   e2e/helper:
     dependencies:
@@ -1154,7 +1154,7 @@ importers:
         version: 2.0.1(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)(@rspack/core@2.1.3)
       '@swc/plugin-prefresh':
         specifier: 'catalog:'
-        version: 12.14.1
+        version: 12.15.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -2935,11 +2935,11 @@ packages:
   '@swc/helpers@0.5.23':
     resolution: {integrity: sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw==}
 
-  '@swc/plugin-prefresh@12.14.1':
-    resolution: {integrity: sha512-x5/zMRBeRSiWF2LqezReYLwHnayzNuWLPqbnaTWne4zCgp5FMkiWUwLcBAuCc8IoKavh1iZzfY4R+elo/cu6hw==}
+  '@swc/plugin-prefresh@12.15.0':
+    resolution: {integrity: sha512-M3SH4w0Up3khuYvGGuNEXBDpKZqBt/04eMobzB8TcIiDcUJY5/qOrGdJVyBMbN0KUiPkN44wzI4tZMHntjZbag==}
 
-  '@swc/plugin-remove-console@12.14.1':
-    resolution: {integrity: sha512-7o2gDFDLbLslqlIIdsCkWC4QtdU9G1irF9ZEvRkuf+QJYwXjxLSbY6jRODNUkWVCD+gdd11aBNDbqW3tzkELNQ==}
+  '@swc/plugin-remove-console@12.15.0':
+    resolution: {integrity: sha512-GlxFDOt8T91N6LtNfuSkLIn2FnJwc0ULI26OFtlSY+VNR4gtM9S5hyssmDRJua2gvFDDKnYhk2St38y7sUwLig==}
 
   '@tailwindcss/node@4.3.2':
     resolution: {integrity: sha512-yWP/sqEcBLaD8JuA6zNwxoYKr75qxTioYwlRwekj5Jr/I5GXnoJfjetH/psLUIv74cYTH2lBUEzBkinthoYcBg==}
@@ -6973,11 +6973,11 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@swc/plugin-prefresh@12.14.1':
+  '@swc/plugin-prefresh@12.15.0':
     dependencies:
       '@swc/counter': 0.1.3
 
-  '@swc/plugin-remove-console@12.14.1':
+  '@swc/plugin-remove-console@12.15.0':
     dependencies:
       '@swc/counter': 0.1.3
 
