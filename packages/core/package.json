@@ -52,6 +52,7 @@
     "@jridgewell/remapping": "catalog:",
     "@jridgewell/trace-mapping": "catalog:",
     "@rslib/core": "catalog:",
+    "@rstackjs/load-config": "catalog:",
     "@types/cors": "catalog:",
     "@types/node": "catalog:",
     "@types/on-finished": "catalog:",
