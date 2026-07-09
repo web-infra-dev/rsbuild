@@ -44,6 +44,7 @@ catalog:
   '@rspress/plugin-rss': '^2.0.16'
   '@rspress/plugin-sitemap': '^2.0.16'
   '@rstack-dev/doc-ui': '1.14.5'
+  '@rstackjs/load-config': '^0.1.1'
   '@rstest/adapter-rslib': '^0.11.0'
   '@rstest/core': '^0.11.0'
   '@shikijs/transformers': '^4.3.1'
@@ -179,12 +180,11 @@ minimumReleaseAgeExclude:
   - '@tailwindcss/*'
   - 'tailwindcss'
   - 'reduce-configs'
-  - '@rstack-dev/doc-ui'
+  - '@rstack-dev/*'
+  - '@rstackjs/*'
   - 'rsbuild-plugin-*'
   - '@swc/*'
   - 'heading-case'
-  # Renovate security update: http-proxy-middleware@4.1.1
-  - http-proxy-middleware@4.1.1
 
 patchedDependencies:
   css-loader@7.1.4: patches/css-loader@7.1.4.patch
