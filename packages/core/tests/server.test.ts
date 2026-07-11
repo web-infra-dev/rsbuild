@@ -9,7 +9,8 @@ import {
   removeBasePath,
 } from '../src/server/helper';
 import { createHttpServer } from '../src/server/httpServer';
-import type { Connect } from '../src/types';
+import { SocketServer } from '../src/server/socketServer';
+import type { Connect, DevConfig, InternalContext, Rspack } from '../src/types';
 import { logger } from '../src';
 
 beforeEach(() => {
@@ -515,6 +516,30 @@ test('should limit printed server routes correctly', () => {
 });
 
 describe('dev server', () => {
+  test('should retain lazy compilation provenance until stats are sent', () => {
+    const socketServer = new SocketServer(
+      { environmentList: [] } as unknown as InternalContext,
+      {} as DevConfig,
+      () => ({}) as Rspack.OutputFileSystem,
+    );
+    const token = 'web';
+    const internals = socketServer as unknown as {
+      lazyCompilationInvalidationTokens: Set<string>;
+      socketsMap: Map<string, Set<never>>;
+      sendStats(options: { token: string }): void;
+    };
+    internals.socketsMap.set(token, new Set());
+    const sendStats = rstest.spyOn(internals, 'sendStats').mockImplementation(() => {
+      expect(internals.lazyCompilationInvalidationTokens.has(token)).toBeTruthy();
+    });
+
+    socketServer.markLazyCompilationInvalidation(token);
+    socketServer.onBuildDone();
+
+    expect(sendStats).toHaveBeenCalledWith({ token });
+    expect(internals.lazyCompilationInvalidationTokens.has(token)).toBeFalsy();
+  });
+
   test('should detect client compilers correctly', () => {
     expect(isClientCompiler(rspack({}))).toBeTruthy();
 

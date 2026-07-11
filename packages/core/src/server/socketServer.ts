@@ -263,17 +263,16 @@ export class SocketServer {
 
   public onBuildDone(): void {
     this.reportedBrowserLogs.clear();
-    this.lazyCompilationInvalidationTokens.clear();
     this.currentHashLazyCompilation.clear();
     this.ensureInitialChunks();
 
-    if (!this.socketsMap.size) {
-      return;
+    if (this.socketsMap.size) {
+      for (const token of this.socketsMap.keys()) {
+        this.sendStats({ token });
+      }
     }
 
-    for (const token of this.socketsMap.keys()) {
-      this.sendStats({ token });
-    }
+    this.lazyCompilationInvalidationTokens.clear();
   }
 
   /**
