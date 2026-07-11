@@ -29,6 +29,8 @@ import { setupOutputFileSystem } from './setupOutputFileSystem';
 import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
 
 const noop = () => {};
+const LAZY_COMPILATION_INVALIDATION = Symbol.for('rspack.lazyCompilationInvalidation');
+const LAZY_COMPILATION_CURRENT = Symbol.for('rspack.lazyCompilationCurrent');
 
 export type MultiWatching = ReturnType<MultiCompiler['watch']>;
 
@@ -95,13 +97,11 @@ export const setupServerHooks = ({
   let errorsCount: number | null = null;
   let warningsCount: number | null = null;
   let sawNormalInvalidation = false;
+  const compilerState = compiler as unknown as Record<PropertyKey, unknown>;
 
   compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
     const isLazyCompilationInvalidation =
-      fileName == null &&
-      (compiler as unknown as Record<PropertyKey, unknown>)[
-        Symbol.for('rspack.lazyCompilationInvalidation')
-      ] === true;
+      fileName == null && compilerState[LAZY_COMPILATION_INVALIDATION] === true;
     sawNormalInvalidation ||= !isLazyCompilationInvalidation;
     errorsCount = null;
     warningsCount = null;
@@ -117,10 +117,7 @@ export const setupServerHooks = ({
   });
 
   compiler.hooks.thisCompilation.tap('rsbuild-dev-server', () => {
-    const hasExplicitLazyCompilationInvalidation =
-      (compiler as unknown as Record<PropertyKey, unknown>)[
-        Symbol.for('rspack.lazyCompilationCurrent')
-      ] === true;
+    const hasExplicitLazyCompilationInvalidation = compilerState[LAZY_COMPILATION_CURRENT] === true;
     const hasFileBackedChanges =
       (compiler.modifiedFiles?.size ?? 0) > 0 || (compiler.removedFiles?.size ?? 0) > 0;
 

@@ -19,6 +19,70 @@ declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((options: {
 }) => void)[];
 declare const RSPACK_MODULE_FACTORIES: Record<PropertyKey, unknown>;
 
+type PreservedModuleFactory = {
+  descriptor: PropertyDescriptor;
+  readableFactory: unknown;
+  assignedFactory: unknown;
+  hasAssignment: boolean;
+};
+
+const createLazyCompilationApplyContext = () => {
+  const preservedFactories = new Map<string | number, PreservedModuleFactory>();
+
+  return {
+    options: {
+      ignoreUnaccepted: true,
+      onDisposed: ({ moduleId }: { moduleId: string | number }) => {
+        const descriptor = Object.getOwnPropertyDescriptor(RSPACK_MODULE_FACTORIES, moduleId);
+        if (
+          !descriptor ||
+          !('value' in descriptor) ||
+          !descriptor.value ||
+          preservedFactories.has(moduleId)
+        ) {
+          return;
+        }
+        if (!descriptor.configurable) {
+          throw new Error('[rsbuild] Cannot preserve a non-configurable lazy HMR factory.');
+        }
+        const preservedFactory: PreservedModuleFactory = {
+          descriptor,
+          readableFactory: descriptor.value,
+          assignedFactory: undefined,
+          hasAssignment: false,
+        };
+        preservedFactories.set(moduleId, preservedFactory);
+        Object.defineProperty(RSPACK_MODULE_FACTORIES, moduleId, {
+          configurable: true,
+          enumerable: descriptor.enumerable,
+          get: () => preservedFactory.readableFactory,
+          set: (factory) => {
+            preservedFactory.hasAssignment = true;
+            preservedFactory.assignedFactory = factory;
+          },
+        });
+      },
+    },
+    restore: (): unknown => {
+      try {
+        for (const [
+          moduleId,
+          { descriptor, readableFactory, assignedFactory, hasAssignment },
+        ] of preservedFactories) {
+          if (Object.prototype.hasOwnProperty.call(RSPACK_MODULE_FACTORIES, moduleId)) {
+            Object.defineProperty(RSPACK_MODULE_FACTORIES, moduleId, {
+              ...descriptor,
+              value: hasAssignment ? assignedFactory : readableFactory,
+            });
+          }
+        }
+      } catch (err) {
+        return err;
+      }
+    },
+  };
+};
+
 const getErrorField = (error: unknown, field: keyof Error): string | undefined => {
   if (error instanceof Error) {
     const value = error[field];
@@ -279,61 +343,11 @@ export function init(
       }
 
       const isLazyCompilationUpdate = pendingHashModes[0]?.lazyCompilation ?? false;
-      const disposedFactories = isLazyCompilationUpdate ? new Map() : null;
-      const applyOptions = isLazyCompilationUpdate
-        ? {
-            ignoreUnaccepted: true,
-            onDisposed: ({ moduleId }: { moduleId: string | number }) => {
-              const descriptor = Object.getOwnPropertyDescriptor(RSPACK_MODULE_FACTORIES, moduleId);
-              if (
-                !descriptor ||
-                !('value' in descriptor) ||
-                !descriptor.value ||
-                disposedFactories!.has(moduleId)
-              ) {
-                return;
-              }
-              if (!descriptor.configurable) {
-                throw new Error('[rsbuild] Cannot preserve a non-configurable lazy HMR factory.');
-              }
-              const preservedFactory = {
-                descriptor,
-                readableFactory: descriptor.value,
-                assignedFactory: undefined as unknown,
-                hasAssignment: false,
-              };
-              disposedFactories!.set(moduleId, preservedFactory);
-              Object.defineProperty(RSPACK_MODULE_FACTORIES, moduleId, {
-                configurable: true,
-                enumerable: descriptor.enumerable,
-                get: () => preservedFactory.readableFactory,
-                set: (factory) => {
-                  preservedFactory.hasAssignment = true;
-                  preservedFactory.assignedFactory = factory;
-                },
-              });
-            },
-          }
-        : true;
-      const restoreDisposedFactories = (): unknown => {
-        try {
-          if (disposedFactories) {
-            for (const [
-              moduleId,
-              { descriptor, readableFactory, assignedFactory, hasAssignment },
-            ] of disposedFactories) {
-              if (Object.prototype.hasOwnProperty.call(RSPACK_MODULE_FACTORIES, moduleId)) {
-                Object.defineProperty(RSPACK_MODULE_FACTORIES, moduleId, {
-                  ...descriptor,
-                  value: hasAssignment ? assignedFactory : readableFactory,
-                });
-              }
-            }
-          }
-        } catch (err) {
-          return err;
-        }
-      };
+      const lazyApplyContext = isLazyCompilationUpdate
+        ? createLazyCompilationApplyContext()
+        : undefined;
+      const applyOptions = lazyApplyContext?.options ?? true;
+      const restoreDisposedFactories = (): unknown => lazyApplyContext?.restore();
       let update: Promise<(string | number)[] | null>;
       try {
         update = import.meta.webpackHot.check(applyOptions);
