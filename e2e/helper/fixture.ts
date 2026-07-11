@@ -1,9 +1,9 @@
 import {
   type ChildProcess,
-  type ExecOptions,
   type ExecSyncOptions,
   execSync,
-  exec as nodeExec,
+  type SpawnOptions,
+  spawn as nodeSpawn,
 } from 'node:child_process';
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
@@ -35,7 +35,7 @@ type EditFile = (filename: string, replacer: (code: string) => string) => Promis
 
 type Exec = (
   command: string,
-  options?: ExecOptions,
+  options?: SpawnOptions,
 ) => {
   childProcess: ChildProcess;
 };
@@ -166,7 +166,7 @@ type RsbuildFixture = {
 
 type Close = DevResult['close'];
 
-const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(options: T, cwd: string): T => {
+const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(options: T, cwd: string): T => {
   // inherit process.env from current process
   const { NODE_ENV: _, ...restEnv } = process.env;
   options.env ||= {};
@@ -296,10 +296,10 @@ export const test = base.extend<RsbuildFixture>({
   },
 
   exec: async ({ cwd, logHelper }, use) => {
-    let close: (() => void) | undefined;
+    const closes: Array<() => void> = [];
 
     const exec: Exec = (command, options = {}) => {
-      const childProcess = nodeExec(command, setupExecOptions(options, cwd));
+      const childProcess = nodeSpawn(command, setupExecOptions({ shell: true, ...options }, cwd));
 
       const onData = (data: Buffer) => {
         logHelper.addLog(data.toString());
@@ -308,22 +308,27 @@ export const test = base.extend<RsbuildFixture>({
       childProcess.stdout?.on('data', onData);
       childProcess.stderr?.on('data', onData);
 
-      close = () => {
+      closes.push(() => {
         childProcess.stdout?.off('data', onData);
         childProcess.stderr?.off('data', onData);
         childProcess.kill();
-      };
+      });
 
       return { childProcess };
     };
 
-    await use(exec);
-    close?.();
+    try {
+      await use(exec);
+    } finally {
+      for (const close of closes) {
+        close();
+      }
+    }
   },
 
   execCli: async ({ exec }, use) => {
     const execCli: Exec = (command, options = {}) => {
-      return exec(`node ${RSBUILD_BIN_PATH} ${command}`, options);
+      return exec(`node "${RSBUILD_BIN_PATH}" ${command}`, options);
     };
     await use(execCli);
   },
