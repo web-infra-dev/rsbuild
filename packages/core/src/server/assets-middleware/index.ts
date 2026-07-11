@@ -94,8 +94,15 @@ export const setupServerHooks = ({
   // Track errors and warnings count to detect if the `done` hook is called multiple times
   let errorsCount: number | null = null;
   let warningsCount: number | null = null;
+  let sawNormalInvalidation = false;
 
   compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
+    const isLazyCompilationInvalidation =
+      fileName == null &&
+      (compiler as unknown as Record<PropertyKey, unknown>)[
+        Symbol.for('rspack.lazyCompilationInvalidation')
+      ] === true;
+    sawNormalInvalidation ||= !isLazyCompilationInvalidation;
     errorsCount = null;
     warningsCount = null;
 
@@ -107,6 +114,22 @@ export const setupServerHooks = ({
     ) {
       socketServer.sendMessage({ type: 'full-reload' }, token);
     }
+  });
+
+  compiler.hooks.thisCompilation.tap('rsbuild-dev-server', () => {
+    const hasExplicitLazyCompilationInvalidation =
+      (compiler as unknown as Record<PropertyKey, unknown>)[
+        Symbol.for('rspack.lazyCompilationCurrent')
+      ] === true;
+    const hasFileBackedChanges =
+      (compiler.modifiedFiles?.size ?? 0) > 0 || (compiler.removedFiles?.size ?? 0) > 0;
+
+    if (hasExplicitLazyCompilationInvalidation && !sawNormalInvalidation && !hasFileBackedChanges) {
+      socketServer.markLazyCompilationInvalidation(token);
+    } else {
+      socketServer.clearLazyCompilationInvalidation(token);
+    }
+    sawNormalInvalidation = false;
   });
 
   compiler.hooks.done.tap('rsbuild-dev-server', (stats) => {

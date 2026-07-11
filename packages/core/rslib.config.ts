@@ -93,6 +93,7 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
   name: 'replace-plugin',
   setup(api) {
     const RSPACK_INTERCEPT_MODULE_EXECUTION = 'RSPACK_INTERCEPT_MODULE_EXECUTION';
+    const RSPACK_MODULE_FACTORIES = 'RSPACK_MODULE_FACTORIES';
 
     api.processAssets(
       { stage: 'optimize-inline' },
@@ -104,14 +105,19 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
           }
 
           const source = asset.source().toString();
-          if (!source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION)) {
+          if (
+            !source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION) &&
+            !source.includes(RSPACK_MODULE_FACTORIES)
+          ) {
             continue;
           }
 
-          const replacedSource = source.replaceAll(
-            RSPACK_INTERCEPT_MODULE_EXECUTION,
-            compiler.rspack.RuntimeGlobals.interceptModuleExecution,
-          );
+          const replacedSource = source
+            .replaceAll(
+              RSPACK_INTERCEPT_MODULE_EXECUTION,
+              compiler.rspack.RuntimeGlobals.interceptModuleExecution,
+            )
+            .replaceAll(RSPACK_MODULE_FACTORIES, compiler.rspack.RuntimeGlobals.moduleFactories);
           compilation.updateAsset(name, new sources.RawSource(replacedSource));
         }
       },

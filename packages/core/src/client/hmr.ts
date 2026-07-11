@@ -17,6 +17,7 @@ type CustomListenersMap = Map<string, ((data: unknown) => void)[]>;
 declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((options: {
   module: { hot: Rspack.Hot };
 }) => void)[];
+declare const RSPACK_MODULE_FACTORIES: Record<PropertyKey, unknown>;
 
 const getErrorField = (error: unknown, field: keyof Error): string | undefined => {
   if (error instanceof Error) {
@@ -99,6 +100,7 @@ export function init(
 
   // Hash of the last successful build
   let lastHash: string | undefined;
+  const pendingHashModes: { hash: string; lazyCompilation: boolean }[] = [];
   let hasBuildErrors = false;
   const base = serverBase.endsWith('/') ? serverBase : `${serverBase}/`;
 
@@ -164,6 +166,8 @@ export function init(
   function handleErrors({ text, html }: ServerMessageErrors['data']) {
     clearBuildErrors();
     hasBuildErrors = true;
+    pendingHashModes.length = 0;
+    lastHash = BUILD_HASH;
 
     // Also log them to the console.
     for (const error of text) {
@@ -207,6 +211,41 @@ export function init(
     );
   }
 
+  const failClosedReload = () => {
+    pendingHashModes.length = 0;
+    lastHash = BUILD_HASH;
+    fullReload();
+  };
+
+  const rememberHash = (hash: string, lazyCompilation: boolean) => {
+    if (hash === 'XXXX') {
+      return;
+    }
+    if (disconnected) {
+      disconnected = false;
+      if (hash !== BUILD_HASH) {
+        failClosedReload();
+        return;
+      }
+    }
+    lastHash = hash;
+    const previous = pendingHashModes[pendingHashModes.length - 1];
+    if (previous?.hash === hash) {
+      previous.lazyCompilation &&= lazyCompilation;
+      return;
+    }
+    pendingHashModes.push({ hash, lazyCompilation });
+  };
+
+  const advancePendingHashModes = () => {
+    const appliedIndex = pendingHashModes.findIndex(({ hash }) => hash === BUILD_HASH);
+    if (appliedIndex !== -1) {
+      pendingHashModes.splice(0, appliedIndex + 1);
+    } else if (lastHash === BUILD_HASH) {
+      pendingHashModes.length = 0;
+    }
+  };
+
   // BUILD_HASH is replaced with import.meta.rspackHash when the client is prebuilt,
   // then resolved to the current compilation hash.
   const shouldUpdate = () => lastHash !== BUILD_HASH;
@@ -217,7 +256,7 @@ export function init(
       if (err) {
         logger.error('[rsbuild] HMR update failed, performing full reload:', err);
       }
-      fullReload();
+      failClosedReload();
       return;
     }
 
@@ -227,6 +266,7 @@ export function init(
 
   // Attempt to update code on the fly, fall back to a hard reload.
   function tryApplyUpdates() {
+    advancePendingHashModes();
     // detect is there a newer version of this code available
     if (!shouldUpdate()) {
       return;
@@ -238,13 +278,81 @@ export function init(
         return;
       }
 
-      // https://rspack.rs/api/runtime-api/module-variables#importmetawebpackhot
-      import.meta.webpackHot.check(true).then(
+      const isLazyCompilationUpdate = pendingHashModes[0]?.lazyCompilation ?? false;
+      const disposedFactories = isLazyCompilationUpdate ? new Map() : null;
+      const applyOptions = isLazyCompilationUpdate
+        ? {
+            ignoreUnaccepted: true,
+            onDisposed: ({ moduleId }: { moduleId: string | number }) => {
+              const descriptor = Object.getOwnPropertyDescriptor(RSPACK_MODULE_FACTORIES, moduleId);
+              if (
+                !descriptor ||
+                !('value' in descriptor) ||
+                !descriptor.value ||
+                disposedFactories!.has(moduleId)
+              ) {
+                return;
+              }
+              if (!descriptor.configurable) {
+                throw new Error('[rsbuild] Cannot preserve a non-configurable lazy HMR factory.');
+              }
+              const preservedFactory = {
+                descriptor,
+                readableFactory: descriptor.value,
+                assignedFactory: undefined as unknown,
+                hasAssignment: false,
+              };
+              disposedFactories!.set(moduleId, preservedFactory);
+              Object.defineProperty(RSPACK_MODULE_FACTORIES, moduleId, {
+                configurable: true,
+                enumerable: descriptor.enumerable,
+                get: () => preservedFactory.readableFactory,
+                set: (factory) => {
+                  preservedFactory.hasAssignment = true;
+                  preservedFactory.assignedFactory = factory;
+                },
+              });
+            },
+          }
+        : true;
+      const restoreDisposedFactories = (): unknown => {
+        try {
+          if (disposedFactories) {
+            for (const [
+              moduleId,
+              { descriptor, readableFactory, assignedFactory, hasAssignment },
+            ] of disposedFactories) {
+              if (Object.prototype.hasOwnProperty.call(RSPACK_MODULE_FACTORIES, moduleId)) {
+                Object.defineProperty(RSPACK_MODULE_FACTORIES, moduleId, {
+                  ...descriptor,
+                  value: hasAssignment ? assignedFactory : readableFactory,
+                });
+              }
+            }
+          }
+        } catch (err) {
+          return err;
+        }
+      };
+      let update: Promise<(string | number)[] | null>;
+      try {
+        update = import.meta.webpackHot.check(applyOptions);
+      } catch (err) {
+        handleApplyUpdates(restoreDisposedFactories() ?? err, null);
+        return;
+      }
+      update.then(
         (updatedModules) => {
+          const restoreError = restoreDisposedFactories();
+          if (restoreError) {
+            handleApplyUpdates(restoreError, null);
+            return;
+          }
+          advancePendingHashModes();
           handleApplyUpdates(null, updatedModules);
         },
         (err: unknown) => {
-          handleApplyUpdates(err, null);
+          handleApplyUpdates(restoreDisposedFactories() ?? err, null);
         },
       );
       return;
@@ -252,11 +360,12 @@ export function init(
 
     // HotModuleReplacementPlugin is not registered in Rspack configuration
     // fallback to reload page
-    fullReload();
+    failClosedReload();
   }
 
   let socket: WebSocket | null = null;
   let reconnectCount = 0;
+  let disconnected = false;
   let pingIntervalId: ReturnType<typeof setInterval>;
 
   const isSocketReady = () => socket && socket.readyState === socket.OPEN;
@@ -290,8 +399,14 @@ export function init(
 
     switch (message.type) {
       case 'hash':
-        // Update the last compilation hash
-        lastHash = message.data;
+        rememberHash(message.data, false);
+
+        if (clearOverlay && shouldUpdate()) {
+          clearOverlay();
+        }
+        break;
+      case 'lazy-compilation-hash':
+        rememberHash(message.data, true);
 
         if (clearOverlay && shouldUpdate()) {
           clearOverlay();
@@ -333,6 +448,7 @@ export function init(
   }
 
   function onClose() {
+    disconnected = true;
     if (reconnectCount >= config.reconnect) {
       if (config.reconnect > 0) {
         logger.warn('[rsbuild] WebSocket connection failed after maximum retry attempts.');

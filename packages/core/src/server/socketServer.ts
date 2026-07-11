@@ -53,6 +53,11 @@ export type ServerMessageHash = {
   data: string;
 };
 
+export type ServerMessageLazyCompilationHash = {
+  type: 'lazy-compilation-hash';
+  data: string;
+};
+
 export type ServerMessageOk = {
   type: 'ok';
 };
@@ -91,6 +96,7 @@ export type ServerMessage =
   | ServerMessageFullReload
   | ServerMessageStaticChanged
   | ServerMessageHash
+  | ServerMessageLazyCompilationHash
   | ServerMessageWarnings
   | ServerMessageErrors
   | ServerMessageResolvedClientError
@@ -160,6 +166,10 @@ export class SocketServer {
 
   private currentHash = new Map<string, string>();
 
+  private lazyCompilationInvalidationTokens = new Set<string>();
+
+  private currentHashLazyCompilation = new Map<string, boolean>();
+
   constructor(
     context: InternalContext,
     options: DevConfig,
@@ -168,6 +178,14 @@ export class SocketServer {
     this.context = context;
     this.options = options;
     this.getOutputFileSystem = getOutputFileSystem;
+  }
+
+  public markLazyCompilationInvalidation(token: string): void {
+    this.lazyCompilationInvalidationTokens.add(token);
+  }
+
+  public clearLazyCompilationInvalidation(token: string): void {
+    this.lazyCompilationInvalidationTokens.delete(token);
   }
 
   // subscribe upgrade event to handle socket
@@ -245,6 +263,8 @@ export class SocketServer {
 
   public onBuildDone(): void {
     this.reportedBrowserLogs.clear();
+    this.lazyCompilationInvalidationTokens.clear();
+    this.currentHashLazyCompilation.clear();
     this.ensureInitialChunks();
 
     if (!this.socketsMap.size) {
@@ -560,7 +580,16 @@ export class SocketServer {
       return null;
     }
 
+    const detectedLazyCompilationUpdate = this.lazyCompilationInvalidationTokens.has(token);
     const { stats, errors, warnings } = result;
+    const previousHash = this.currentHash.get(token);
+    const previousLazyCompilationUpdate = this.currentHashLazyCompilation.get(token);
+    const lazyCompilationUpdate =
+      previousHash === stats.hash && previousLazyCompilationUpdate !== undefined
+        ? force
+          ? previousLazyCompilationUpdate
+          : previousLazyCompilationUpdate && detectedLazyCompilationUpdate
+        : detectedLazyCompilationUpdate;
 
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
@@ -569,7 +598,11 @@ export class SocketServer {
 
     const initialChunks = this.initialChunksMap.get(token);
     const shouldReload =
-      stats.entrypoints && initialChunks && !isEqualSet(initialChunks, newInitialChunks);
+      previousHash !== stats.hash &&
+      !lazyCompilationUpdate &&
+      stats.entrypoints &&
+      initialChunks &&
+      !isEqualSet(initialChunks, newInitialChunks);
 
     this.initialChunksMap.set(token, newInitialChunks);
 
@@ -578,20 +611,20 @@ export class SocketServer {
       return;
     }
 
-    if (stats.hash) {
-      const prevHash = this.currentHash.get(token);
+    if (stats.hash && stats.hash !== 'XXXX') {
       this.currentHash.set(token, stats.hash);
+      this.currentHashLazyCompilation.set(token, lazyCompilationUpdate);
 
       // If build hash is not changed and there is no error or warning,
       // skip the other messages
-      if (!force && errors.length === 0 && warnings.length === 0 && prevHash === stats.hash) {
+      if (!force && errors.length === 0 && warnings.length === 0 && previousHash === stats.hash) {
         this.sendMessage({ type: 'ok' }, token);
         return;
       }
 
       this.sendMessage(
         {
-          type: 'hash',
+          type: lazyCompilationUpdate ? 'lazy-compilation-hash' : 'hash',
           data: stats.hash,
         },
         token,
