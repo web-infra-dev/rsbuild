@@ -59,6 +59,8 @@ type RunBoth = (
 
 type CopyNodeModules = () => Promise<string>;
 
+type PrepareDist = (distFolderName?: string) => Promise<string>;
+
 type RsbuildFixture = {
   /**
    * Absolute working directory of the current test file.
@@ -89,6 +91,15 @@ type RsbuildFixture = {
    * The fixture auto-closes after the test.
    */
   buildPreview: Build;
+  /**
+   * Prepare a dist folder by removing it from the test file's cwd.
+   * @param distFolderName The dist folder name. Defaults to `dist`.
+   * @returns The absolute path of the removed dist folder.
+   * @example
+   * const distPath = await prepareDist();
+   * const distWebPath = await prepareDist('dist-web');
+   */
+  prepareDist: PrepareDist;
   /**
    * Copies the source directory to a temporary directory for testing purposes.
    */
@@ -232,6 +243,15 @@ export const test = base.extend<RsbuildFixture>({
         await close();
       }
     }
+  },
+
+  prepareDist: async ({ cwd }, use) => {
+    const prepareDist: PrepareDist = async (distFolderName = 'dist') => {
+      const distPath = path.join(cwd, distFolderName);
+      await fse.remove(distPath);
+      return distPath;
+    };
+    await use(prepareDist);
   },
 
   dev: async ({ cwd, page, logHelper }, use) => {

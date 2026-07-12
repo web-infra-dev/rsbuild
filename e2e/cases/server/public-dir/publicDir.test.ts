@@ -191,9 +191,10 @@ test('should copy publicDir to the node distDir when copyOnBuild is specified as
 
 test('should copy publicDir to root dist when environment dist path has a parent-child relationship', async ({
   build,
+  prepareDist,
 }) => {
   await fse.outputFile(join(import.meta.dirname, 'public', 'test-temp-file.txt'), 'a');
-  fse.removeSync(join(import.meta.dirname, 'dist-build-web'));
+  await prepareDist('dist-build-web');
 
   const rsbuild = await build({
     config: {

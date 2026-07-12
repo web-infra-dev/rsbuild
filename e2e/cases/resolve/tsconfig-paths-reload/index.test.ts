@@ -4,13 +4,12 @@ import fse from 'fs-extra';
 import { tempConfig } from './rsbuild.config';
 
 test('should watch tsconfig.json and reload the server when it changes', async ({
+  prepareDist,
   page,
   editFile,
   execCli,
 }) => {
-  const dist = join(import.meta.dirname, 'dist');
-
-  await fse.remove(dist);
+  const dist = await prepareDist();
   await fse.remove(tempConfig);
   await fse.copy(join(import.meta.dirname, 'tsconfig.json'), tempConfig);
 
