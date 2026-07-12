@@ -1,16 +1,10 @@
-import { join } from 'node:path';
 import { expect, readDirContents, test } from '@e2e/helper';
-import fse from 'fs-extra';
-
-const distPath = join(import.meta.dirname, 'dist');
-
-test.beforeEach(async () => {
-  await fse.remove(distPath);
-});
 
 test('should only build specified environment when using --environment option', async ({
+  prepareDist,
   execCliSync,
 }) => {
+  const distPath = await prepareDist();
   execCliSync('build --environment web2');
 
   const files = await readDirContents(distPath);
@@ -21,8 +15,10 @@ test('should only build specified environment when using --environment option', 
 });
 
 test('should build specified environments when using --environment shorten option', async ({
+  prepareDist,
   execCliSync,
 }) => {
+  const distPath = await prepareDist();
   execCliSync('build --environment web1,web2');
 
   const files = await readDirContents(distPath);

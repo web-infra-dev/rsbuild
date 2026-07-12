@@ -4,14 +4,13 @@ import { expectFile, getRandomPort, test } from '@e2e/helper';
 import fse from 'fs-extra';
 
 test('should restart dev server and reload config when config file changed', async ({
+  prepareDist,
   execCli,
 }) => {
-  const dist1 = path.join(import.meta.dirname, 'dist');
-  const dist2 = path.join(import.meta.dirname, 'dist-2');
   const configFile = path.join(import.meta.dirname, 'rsbuild.config.mjs');
 
-  await fse.remove(dist1);
-  await fse.remove(dist2);
+  const dist1 = await prepareDist();
+  const dist2 = await prepareDist('dist-2');
   await fse.remove(configFile);
 
   fs.writeFileSync(
