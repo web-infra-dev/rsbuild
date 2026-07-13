@@ -95,7 +95,7 @@ catalog:
   'less-loader': '^12.3.3'
   'lit': '^3.3.3'
   'loader-utils': '^3.3.1'
-  'memfs': '^4.57.8'
+  'memfs': '^4.64.0'
   'mrmime': '^2.0.1'
   'nano-staged': '^1.0.2'
   'on-finished': '2.4.1'
