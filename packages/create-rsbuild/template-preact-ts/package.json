@@ -15,6 +15,6 @@
     "@rsbuild/core": "^2.1.5",
     "@rsbuild/plugin-preact": "^2.0.0",
     "@types/node": "^24.13.3",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }
