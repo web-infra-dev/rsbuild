@@ -342,14 +342,8 @@ export function init(
 
     switch (message.type) {
       case 'hash':
-        rememberHash(message.data, 'normal');
-
-        if (clearOverlay && shouldUpdate()) {
-          clearOverlay();
-        }
-        break;
       case 'lazy-compilation-hash':
-        rememberHash(message.data, 'lazy');
+        rememberHash(message.data, message.type === 'hash' ? 'normal' : 'lazy');
 
         if (clearOverlay && shouldUpdate()) {
           clearOverlay();
