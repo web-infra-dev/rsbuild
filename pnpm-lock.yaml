@@ -95,8 +95,8 @@ catalogs:
       specifier: ^0.1.1
       version: 0.1.1
     '@rstackjs/test-utils':
-      specifier: ^0.1.0
-      version: 0.1.0
+      specifier: ^0.2.0
+      version: 0.2.0
     '@rstest/adapter-rslib':
       specifier: ^0.11.0
       version: 0.11.0
@@ -688,7 +688,7 @@ importers:
         version: 0.3.31
       '@rstackjs/test-utils':
         specifier: 'catalog:'
-        version: 0.1.0
+        version: 0.2.0
 
   e2e/type-tests/core-types: {}
 
@@ -2779,8 +2779,8 @@ packages:
       jiti:
         optional: true
 
-  '@rstackjs/test-utils@0.1.0':
-    resolution: {integrity: sha512-BAV5JKl8ISutP0V7RIziKF5dccnPuQoCus8Kun/2/sv2qW83lJty9vQzhRw4PNSR6VkH2jsTLuIQ8s2/8zwn0w==}
+  '@rstackjs/test-utils@0.2.0':
+    resolution: {integrity: sha512-P+LOo1WE3xYeGkHmEthyq2cIpN69k4LhiB/4UBSceD+nW9hDlhWv8MC0LTLWokZXccWl4ntcfOBjQFllkcBlPA==}
 
   '@rstest/adapter-rslib@0.11.0':
     resolution: {integrity: sha512-xouLiDYOd79jWORVMcyhFcIOtaqgfFGDHNjLab6+Ni6uzXmi47VuB3zgxV2rZHPBtOvTg50DGuc//qZUhs7Dng==}
@@ -6802,7 +6802,7 @@ snapshots:
     optionalDependencies:
       jiti: 2.7.0
 
-  '@rstackjs/test-utils@0.1.0': {}
+  '@rstackjs/test-utils@0.2.0': {}
 
   '@rstest/adapter-rslib@0.11.0(@rslib/core@0.23.2)(@rstest/core@0.11.0)(typescript@6.0.3)':
     dependencies:

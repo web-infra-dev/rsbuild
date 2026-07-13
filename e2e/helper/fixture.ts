@@ -8,6 +8,12 @@ import {
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
 import base, { expect } from '@playwright/test';
+import {
+  copyNodeModules as baseCopyNodeModules,
+  editFile as baseEditFile,
+  type FileEditor,
+  prepareDist as basePrepareDist,
+} from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
@@ -31,7 +37,7 @@ function makeBox(title: string) {
   };
 }
 
-type EditFile = (filename: string, replacer: (code: string) => string) => Promise<void>;
+type EditFile = (filename: string, editor: FileEditor) => Promise<void>;
 
 type Exec = (
   command: string,
@@ -136,7 +142,7 @@ type RsbuildFixture = {
    * Edit a file in the test file's cwd.
    * @param filename The filename. If it is not absolute, it will be resolved
    * relative to the test file's cwd.
-   * @param replacer The replacer function.
+   * @param editor The editor function, which may be sync or async.
    * @example
    * await editFile('src/index.ts', (code) =>
    *   code.replace('Hello', 'Hi'),
@@ -246,11 +252,8 @@ export const test = base.extend<RsbuildFixture>({
   },
 
   prepareDist: async ({ cwd }, use) => {
-    const prepareDist: PrepareDist = async (distFolderName = 'dist') => {
-      const distPath = path.join(cwd, distFolderName);
-      await fse.remove(distPath);
-      return distPath;
-    };
+    const prepareDist: PrepareDist = (distFolderName = 'dist') =>
+      basePrepareDist(path.join(cwd, distFolderName));
     await use(prepareDist);
   },
 
@@ -307,10 +310,9 @@ export const test = base.extend<RsbuildFixture>({
   },
 
   editFile: async ({ cwd }, use) => {
-    const editFile: EditFile = async (filename, replacer) => {
+    const editFile: EditFile = (filename, editor) => {
       const resolvedFilename = path.isAbsolute(filename) ? filename : path.resolve(cwd, filename);
-      const code = await promises.readFile(resolvedFilename, 'utf-8');
-      return promises.writeFile(resolvedFilename, replacer(code));
+      return baseEditFile(resolvedFilename, editor);
     };
     await use(editFile);
   },
@@ -377,14 +379,7 @@ export const test = base.extend<RsbuildFixture>({
   },
 
   copyNodeModules: async ({ cwd }, use) => {
-    const copyNodeModules: CopyNodeModules = async () => {
-      const targetDir = path.join(cwd, 'node_modules');
-      await fse.remove(targetDir);
-      await fse.copy(path.join(cwd, '_node_modules'), targetDir);
-      return targetDir;
-    };
-
-    await use(copyNodeModules);
+    await use(() => baseCopyNodeModules(cwd));
   },
 });
 

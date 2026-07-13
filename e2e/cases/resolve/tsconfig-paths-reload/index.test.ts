@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { expect, expectFile, getRandomPort, gotoPage, test } from '@e2e/helper';
+import { expect, getRandomPort, gotoPage, test, waitForFile } from '@e2e/helper';
 import fse from 'fs-extra';
 import { tempConfig } from './rsbuild.config';
 
@@ -20,7 +20,7 @@ test('should watch tsconfig.json and reload the server when it changes', async (
     },
   });
 
-  await expectFile(dist);
+  await waitForFile(dist);
   await gotoPage(page, { port });
   await expect(page.locator('#content')).toHaveText('foo');
 

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFileWithContent, getRandomPort, test } from '@e2e/helper';
+import { getRandomPort, test, waitForFileContent } from '@e2e/helper';
 
 test('should restart dev server when .env file is changed', async ({ execCli, logHelper }) => {
   const dist = path.join(import.meta.dirname, 'dist');
@@ -26,11 +26,11 @@ test('should restart dev server when .env file is changed', async ({ execCli, lo
   const { clearLogs, expectLog, expectBuildEnd } = logHelper;
 
   await expectBuildEnd();
-  await expectFileWithContent(distIndex, 'jack');
+  await waitForFileContent(distIndex, 'jack');
 
   clearLogs();
   fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
   await expectLog('restarting server');
   await expectBuildEnd();
-  await expectFileWithContent(distIndex, 'rose');
+  await waitForFileContent(distIndex, 'rose');
 });

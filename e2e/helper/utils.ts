@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import { URL } from 'node:url';
 import { originalPositionFor, TraceMap } from '@jridgewell/trace-mapping';
 import { logger, type RsbuildPlugin } from '@rsbuild/core';
@@ -13,8 +12,12 @@ export {
   getFileContent,
   getRandomPort,
   isPortAvailable,
+  normalizeEol,
   readDirContents,
   toPosixPath,
+  waitFor,
+  waitForFile,
+  waitForFileContent,
 } from '@rstackjs/test-utils';
 
 /**
@@ -40,30 +43,6 @@ export const gotoPage = async (
 };
 
 export const noop = async () => {};
-
-/**
- * Expect a file to exist
- */
-export const expectFile = (dir: string) => expectPoll(() => fs.existsSync(dir)).toBeTruthy();
-
-/**
- * Expect a file to exist and include specified content
- */
-export const expectFileWithContent = (filePath: string, expectedContent: string) =>
-  expectPoll(() => {
-    try {
-      if (!fs.existsSync(filePath)) {
-        return false;
-      }
-      const content = fs.readFileSync(filePath, 'utf-8');
-      return content.includes(expectedContent);
-    } catch {
-      return false;
-    }
-  }).toBeTruthy();
-
-// Windows and macOS use different new lines
-export const normalizeNewlines = (str: string) => str.replace(/\r\n/g, '\n');
 
 /**
  * A faster `expect.poll`
