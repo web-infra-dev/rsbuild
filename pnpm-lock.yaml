@@ -580,7 +580,7 @@ importers:
         specifier: 6.1.4
         version: 6.1.4(@rspack/core@1.7.10(@swc/helpers@0.5.20))
       http-proxy-middleware:
-        specifier: ^2.0.10
+        specifier: 2.0.10
         version: 2.0.10
       launch-editor-middleware:
         specifier: ^2.12.0
@@ -4445,8 +4445,8 @@ packages:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
     engines: {node: '>= 0.8'}
 
-  http-proxy-middleware@2.0.9:
-    resolution: {integrity: sha512-c1IyJYLYppU574+YI7R4QyX2ystMtVXZwIdzazUIPIJsHuWNd+mho2j+bKoHftndicGj9yh+xjd+l0yj7VeT1Q==}
+  http-proxy-middleware@2.0.10:
+    resolution: {integrity: sha512-RKzRWNPxUZqbuk3BC5mGVJbBnWgr+diEnjJexIOytFbBzDy88Fbh/YvBr3DsNrl1jYAfjWfpATEv0NO35FDuPQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       '@types/express': ^4.17.13
@@ -10322,7 +10322,7 @@ snapshots:
       statuses: 2.0.1
       toidentifier: 1.0.1
 
-  http-proxy-middleware@2.0.9:
+  http-proxy-middleware@2.0.10:
     dependencies:
       '@types/http-proxy': 1.17.16
       http-proxy: 1.18.1(patch_hash=424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723)
