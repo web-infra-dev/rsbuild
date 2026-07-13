@@ -1,11 +1,11 @@
-import { expect, getFileContent, normalizeNewlines, test } from '@e2e/helper';
+import { expect, getFileContent, normalizeEol, test } from '@e2e/helper';
 
 test('should not inject charset meta if template already contains it', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 
   const html = getFileContent(files, 'index.html');
-  expect(normalizeNewlines(html)).toEqual(`<!doctype html>
+  expect(normalizeEol(html)).toEqual(`<!doctype html>
 <html>
   <head>
     <title>Page Title</title>

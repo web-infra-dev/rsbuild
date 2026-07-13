@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, getRandomPort, test } from '@e2e/helper';
+import { getRandomPort, test, waitForFile } from '@e2e/helper';
 import fse from 'fs-extra';
 
 test('should restart dev server and reload config when config file changed', async ({
@@ -25,7 +25,7 @@ test('should restart dev server and reload config when config file changed', asy
 
   execCli('dev');
 
-  await expectFile(dist1);
+  await waitForFile(dist1);
 
   fs.writeFileSync(
     configFile,
@@ -40,5 +40,5 @@ test('should restart dev server and reload config when config file changed', asy
     };`,
   );
 
-  await expectFile(dist2);
+  await waitForFile(dist2);
 });

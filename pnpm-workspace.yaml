@@ -45,6 +45,7 @@ catalog:
   '@rspress/plugin-sitemap': '^2.0.17'
   '@rstack-dev/doc-ui': '1.14.5'
   '@rstackjs/load-config': '^0.1.2'
+  '@rstackjs/test-utils': '^0.2.0'
   '@rstest/adapter-rslib': '^0.11.1'
   '@rstest/core': '^0.11.1'
   '@shikijs/transformers': '^4.3.1'

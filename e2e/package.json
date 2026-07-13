@@ -46,7 +46,6 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "create-rsbuild": "workspace:*",
-    "fast-glob": "catalog:",
     "fs-extra": "catalog:",
     "hono": "catalog:",
     "playwright": "catalog:",

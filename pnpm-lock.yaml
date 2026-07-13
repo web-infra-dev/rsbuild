@@ -94,6 +94,9 @@ catalogs:
     '@rstackjs/load-config':
       specifier: ^0.1.2
       version: 0.1.2
+    '@rstackjs/test-utils':
+      specifier: ^0.2.0
+      version: 0.2.0
     '@rstest/adapter-rslib':
       specifier: ^0.11.1
       version: 0.11.1
@@ -547,9 +550,6 @@ importers:
       create-rsbuild:
         specifier: workspace:*
         version: link:../packages/create-rsbuild
-      fast-glob:
-        specifier: 'catalog:'
-        version: 3.3.3
       fs-extra:
         specifier: 'catalog:'
         version: 11.3.6
@@ -686,6 +686,9 @@ importers:
       '@jridgewell/trace-mapping':
         specifier: 'catalog:'
         version: 0.3.31
+      '@rstackjs/test-utils':
+        specifier: 'catalog:'
+        version: 0.2.0
 
   e2e/type-tests/core-types: {}
 
@@ -2809,6 +2812,9 @@ packages:
     peerDependenciesMeta:
       jiti:
         optional: true
+
+  '@rstackjs/test-utils@0.2.0':
+    resolution: {integrity: sha512-P+LOo1WE3xYeGkHmEthyq2cIpN69k4LhiB/4UBSceD+nW9hDlhWv8MC0LTLWokZXccWl4ntcfOBjQFllkcBlPA==}
 
   '@rstest/adapter-rslib@0.11.1':
     resolution: {integrity: sha512-w8otl+h128wcgB/Wug8UXd2xDDOkTGcc7iaHWGo//TcNTvFujNcUljukmI13BuA3iUjyDp1u04CWxjljVUxzag==}
@@ -6808,6 +6814,8 @@ snapshots:
   '@rstackjs/load-config@0.1.2(jiti@2.7.0)':
     optionalDependencies:
       jiti: 2.7.0
+
+  '@rstackjs/test-utils@0.2.0': {}
 
   '@rstest/adapter-rslib@0.11.1(@rslib/core@0.23.2)(@rstest/core@0.11.1)(typescript@6.0.3)':
     dependencies:
