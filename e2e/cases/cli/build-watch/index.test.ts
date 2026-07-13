@@ -1,5 +1,6 @@
 import path from 'node:path';
-import { test, waitForFileContent } from '@e2e/helper';
+import { test } from '@e2e/helper';
+import { waitForFileContent } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 
 test('should support watch mode for build command', async ({ execCli, logHelper }) => {

@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, readDirContents, test, waitForFile } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { readDirContents, waitForFile } from '@rstackjs/test-utils';
 
 test('should set output dist path from CLI', async ({ prepareDist, execCliSync }) => {
   const distPath = await prepareDist();

@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { getRandomPort, test, waitForFile } from '@e2e/helper';
+import { test } from '@e2e/helper';
+import { getRandomPort, waitForFile } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 
 test('should restart dev server and reload config when config file changed', async ({

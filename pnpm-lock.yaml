@@ -526,6 +526,9 @@ importers:
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../packages/plugin-vue
+      '@rstackjs/test-utils':
+        specifier: 'catalog:'
+        version: 0.2.0
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../scripts/test-helper

@@ -4,22 +4,6 @@ import { logger, type RsbuildPlugin } from '@rsbuild/core';
 import type { Page } from 'playwright';
 import { expect } from './fixture.ts';
 
-export {
-  type FileMatcher,
-  findFile,
-  type FindFileOptions,
-  getDistFiles,
-  getFileContent,
-  getRandomPort,
-  isPortAvailable,
-  normalizeEol,
-  readDirContents,
-  toPosixPath,
-  waitFor,
-  waitForFile,
-  waitForFileContent,
-} from '@rstackjs/test-utils';
-
 /**
  * Build an URL based on the entry name and port
  */

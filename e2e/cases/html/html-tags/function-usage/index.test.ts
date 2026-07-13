@@ -1,4 +1,5 @@
-import { expect, getFileContent, normalizeEol, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getFileContent, normalizeEol } from '@rstackjs/test-utils';
 
 test('should inject tags with function usage correctly', async ({ build }) => {
   const rsbuild = await build();

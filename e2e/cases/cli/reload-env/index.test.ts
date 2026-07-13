@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { getRandomPort, test, waitForFileContent } from '@e2e/helper';
+import { test } from '@e2e/helper';
+import { getRandomPort, waitForFileContent } from '@rstackjs/test-utils';
 
 test('should restart dev server when .env file is changed', async ({ execCli, logHelper }) => {
   const dist = path.join(import.meta.dirname, 'dist');

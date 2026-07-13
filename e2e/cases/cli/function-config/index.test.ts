@@ -1,4 +1,5 @@
-import { expect, getFileContent, readDirContents, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getFileContent, readDirContents } from '@rstackjs/test-utils';
 
 test('should support exporting a function from the config file', async ({
   prepareDist,
