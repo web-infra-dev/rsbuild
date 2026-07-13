@@ -1,4 +1,5 @@
-import { expect, readDirContents, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { readDirContents } from '@rstackjs/test-utils';
 
 test('should enable source map from CLI', async ({ prepareDist, execCliSync }) => {
   const distPath = await prepareDist();

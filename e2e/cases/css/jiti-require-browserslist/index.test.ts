@@ -1,5 +1,6 @@
 import path from 'node:path';
-import { expect, getFileContent, readDirContents, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getFileContent, readDirContents } from '@rstackjs/test-utils';
 
 test('should normalize browserslist required by jiti config', async ({ execCliSync }) => {
   // Regression for CJS arrays loaded by require() in a jiti config.

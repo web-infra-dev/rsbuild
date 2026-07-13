@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, findFile, mapSourceMapPositions, normalizeEol, test } from '@e2e/helper';
+import { expect, mapSourceMapPositions, test } from '@e2e/helper';
+import { findFile, normalizeEol } from '@rstackjs/test-utils';
 
 const normalizePath = (source: string | null) => source?.replace(/\\/g, '/') ?? '';
 

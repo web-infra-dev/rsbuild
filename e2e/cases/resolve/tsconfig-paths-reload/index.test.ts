@@ -1,5 +1,6 @@
 import { join } from 'node:path';
-import { expect, getRandomPort, gotoPage, test, waitForFile } from '@e2e/helper';
+import { expect, gotoPage, test } from '@e2e/helper';
+import { getRandomPort, waitForFile } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 import { tempConfig } from './rsbuild.config';
 

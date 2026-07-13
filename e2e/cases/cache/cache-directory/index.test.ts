@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, test, waitForFile } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { waitForFile } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 
 const cacheDirectory = path.resolve(import.meta.dirname, './node_modules/.cache');
