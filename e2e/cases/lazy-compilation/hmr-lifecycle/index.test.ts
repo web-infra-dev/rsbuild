@@ -51,7 +51,6 @@ test('reconnects a loaded lazy entry without reloading when the hash matches', a
   copySrcDir,
 }) => {
   const tempSrc = await copySrcDir();
-  const config = createLazyEntryConfig(tempSrc);
   let webSocketCount = 0;
   let resolveSocketClose: (() => void) | undefined;
   const socketClosed = new Promise<void>((resolve) => {
@@ -62,7 +61,7 @@ test('reconnects a loaded lazy entry without reloading when the hash matches', a
     socket.once('close', () => resolveSocketClose?.());
   });
 
-  const rsbuild = await devOnly({ config });
+  const rsbuild = await devOnly({ config: createLazyEntryConfig(tempSrc) });
   rsbuild.clearLogs();
   await gotoPage(page, rsbuild, 'page1');
   await rsbuild.expectLog(BUILD_PAGE1, { posix: true });

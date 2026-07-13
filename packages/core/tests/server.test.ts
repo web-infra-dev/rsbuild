@@ -550,9 +550,9 @@ const createSocketServerHarness = () => {
       send: rstest.fn(),
     };
     const internals = socketServer as unknown as {
-      onConnect(socket: never, token: string): void;
+      onConnect(socket: typeof socket, token: string): void;
     };
-    internals.onConnect(socket as never, token);
+    internals.onConnect(socket, token);
     return socket.send.mock.calls.map(
       ([message]) => JSON.parse(String(message)) as { type: string },
     );

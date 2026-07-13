@@ -288,22 +288,16 @@ export class SocketServer {
 
       const pendingCause = this.pendingBuildCauses.get(webSocketToken);
       const previousRecord = this.completedBuildRecords.get(webSocketToken);
-      const previousCause =
-        pendingCause === undefined && previousRecord?.hash === hash
-          ? previousRecord.cause
-          : 'normal';
 
       this.completedBuildRecords.set(webSocketToken, {
         hash,
-        cause: pendingCause ?? previousCause,
+        cause: pendingCause ?? (previousRecord?.hash === hash ? previousRecord.cause : 'normal'),
       });
     }
     this.pendingBuildCauses.clear();
 
-    if (this.socketsMap.size) {
-      for (const token of this.socketsMap.keys()) {
-        this.sendStats({ token });
-      }
+    for (const token of this.socketsMap.keys()) {
+      this.sendStats({ token });
     }
   }
 
@@ -617,9 +611,7 @@ export class SocketServer {
     const previousHash = this.currentHash.get(token);
     const completedBuild = this.completedBuildRecords.get(token);
     const lazyCompilationUpdate =
-      completedBuild !== undefined &&
-      completedBuild.hash === stats.hash &&
-      completedBuild.cause === 'lazy';
+      completedBuild?.hash === stats.hash && completedBuild?.cause === 'lazy';
 
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
