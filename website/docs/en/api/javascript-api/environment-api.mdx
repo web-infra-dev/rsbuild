@@ -230,6 +230,7 @@ type EnvironmentAPI = {
     getTransformedHtml: (entryName: string) => Promise<string>;
     hot: {
       send: HotSend;
+      waitUntilSettled: (hash: string) => Promise<HmrSettlement>;
     };
   };
 };
@@ -307,6 +308,41 @@ const html = await environments.web.getTransformedHtml('main');
 ```
 
 This method returns the complete HTML string, including all resources and content injected through HTML plugins.
+
+### hot.waitUntilSettled
+
+Wait for the current environment's HMR update to finish in the browser. Get the current compilation hash from `compilation.hash`.
+
+This method is useful when a server integration needs to defer synchronous work that would otherwise block the dev server from delivering HMR assets.
+
+- **Type:**
+
+```ts
+type HmrSettlement = {
+  hash: string;
+  status: 'applied' | 'skipped' | 'timeout';
+};
+
+type WaitUntilSettled = (hash: string) => Promise<HmrSettlement>;
+```
+
+- **Example:**
+
+```ts
+const result = await environments.web.hot.waitUntilSettled(webCompilation.hash);
+
+if (result.status === 'applied') {
+  // The browser has finished applying this HMR update.
+}
+```
+
+The promise also resolves without waiting for a browser acknowledgement when HMR is unnecessary or cannot continue:
+
+| Status    | Meaning                                                                                                       |
+| --------- | ------------------------------------------------------------------------------------------------------------- |
+| `applied` | A browser applied the HMR update.                                                                             |
+| `skipped` | HMR did not need to run or could not continue, such as an unchanged hash, failed build, reload, or no client. |
+| `timeout` | The browser did not settle the update before timeout.                                                         |
 
 ### hot.send
 

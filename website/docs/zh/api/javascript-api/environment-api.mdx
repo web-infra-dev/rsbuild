@@ -231,6 +231,7 @@ type EnvironmentAPI = {
     getTransformedHtml: (entryName: string) => Promise<string>;
     hot: {
       send: HotSend;
+      waitUntilSettled: (hash: string) => Promise<HmrSettlement>;
     };
   };
 };
@@ -308,6 +309,41 @@ const html = await environments.web.getTransformedHtml('main');
 ```
 
 该方法会返回完整的 HTML 字符串，包含了所有通过 HTML 插件注入的资源和内容。
+
+### hot.waitUntilSettled
+
+等待当前 environment 当前的 HMR 更新在浏览器中完成。`hash` 为本次编译的 hash，可以通过 `compilation.hash` 获取。
+
+当服务端集成需要延后可能阻塞 dev server 发送 HMR 资源的同步任务时，可以使用该方法。
+
+- **类型：**
+
+```ts
+type HmrSettlement = {
+  hash: string;
+  status: 'applied' | 'skipped' | 'timeout';
+};
+
+type WaitUntilSettled = (hash: string) => Promise<HmrSettlement>;
+```
+
+- **示例：**
+
+```ts
+const result = await environments.web.hot.waitUntilSettled(webCompilation.hash);
+
+if (result.status === 'applied') {
+  // 浏览器已完成此次 HMR 更新。
+}
+```
+
+当 HMR 无需执行或无法继续时，该 Promise 也会直接返回，无需等待浏览器确认：
+
+| 状态      | 含义                                                                               |
+| --------- | ---------------------------------------------------------------------------------- |
+| `applied` | 浏览器已应用 HMR 更新。                                                            |
+| `skipped` | HMR 无需执行或无法继续，例如 hash 未变化、构建失败、整页刷新或没有已连接的客户端。 |
+| `timeout` | 浏览器未能在超时前完成此次更新。                                                   |
 
 ### hot.send
 

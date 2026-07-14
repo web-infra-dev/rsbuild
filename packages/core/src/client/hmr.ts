@@ -1,6 +1,7 @@
 import type {
   ClientMessage,
   ClientMessageError,
+  ClientMessageHmrSettled,
   ServerMessage,
   ServerMessageErrors,
   ServerMessageFullReload,
@@ -211,15 +212,22 @@ export function init(
   // then resolved to the current compilation hash.
   const shouldUpdate = () => lastHash !== BUILD_HASH;
 
-  const handleApplyUpdates = (err: unknown, updatedModules: (string | number)[] | null) => {
+  const handleApplyUpdates = (
+    hash: string,
+    err: unknown,
+    updatedModules: (string | number)[] | null,
+  ) => {
     const forcedReload = err || !updatedModules;
     if (forcedReload) {
       if (err) {
         logger.error('[rsbuild] HMR update failed, performing full reload:', err);
       }
+      sendHmrSettled(hash, 'skipped');
       fullReload();
       return;
     }
+
+    sendHmrSettled(hash, 'applied');
 
     // While we were updating, there was a new update! Do it again.
     tryApplyUpdates();
@@ -238,20 +246,32 @@ export function init(
         return;
       }
 
+      const hash = lastHash;
+      if (!hash) {
+        return;
+      }
+
       // https://rspack.rs/api/runtime-api/module-variables#importmetawebpackhot
-      import.meta.webpackHot.check(true).then(
-        (updatedModules) => {
-          handleApplyUpdates(null, updatedModules);
-        },
-        (err: unknown) => {
-          handleApplyUpdates(err, null);
-        },
-      );
+      try {
+        import.meta.webpackHot.check(true).then(
+          (updatedModules) => {
+            handleApplyUpdates(hash, null, updatedModules);
+          },
+          (err: unknown) => {
+            handleApplyUpdates(hash, err, null);
+          },
+        );
+      } catch (err) {
+        handleApplyUpdates(hash, err, null);
+      }
       return;
     }
 
     // HotModuleReplacementPlugin is not registered in Rspack configuration
     // fallback to reload page
+    if (lastHash) {
+      sendHmrSettled(lastHash, 'skipped');
+    }
     fullReload();
   }
 
@@ -264,6 +284,13 @@ export function init(
     if (isSocketReady()) {
       socket!.send(JSON.stringify(data));
     }
+  };
+
+  const sendHmrSettled = (hash: string, status: ClientMessageHmrSettled['data']['status']) => {
+    socketSend({
+      type: 'hmr-settled',
+      data: { hash, status },
+    });
   };
 
   function onOpen() {

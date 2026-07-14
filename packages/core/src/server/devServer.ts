@@ -135,6 +135,7 @@ export async function createDevServer<
       compiler.compilers.forEach((compiler, index) => {
         compiler.hooks.watchRun.tap(hookOptions, () => {
           compileState.reset(index);
+          context.socketServer?.onBuildStart(context.environmentList[index].webSocketToken);
         });
         compiler.hooks.done.tap(hookOptions, (stats) => {
           compileState.done(index, stats);
@@ -143,6 +144,7 @@ export async function createDevServer<
     } else {
       compiler.hooks.watchRun.tap(hookOptions, () => {
         compileState.reset(0);
+        context.socketServer?.onBuildStart(context.environmentList[0].webSocketToken);
       });
       compiler.hooks.done.tap(hookOptions, (stats) => {
         compileState.done(0, stats);
@@ -269,6 +271,12 @@ export async function createDevServer<
       context: environment,
       hot: {
         send: createHotSend(environment.webSocketToken),
+        waitUntilSettled: async (hash) => {
+          if (!state.buildManager) {
+            throw new Error(getErrorMsg('hot.waitUntilSettled'));
+          }
+          return state.buildManager.socketServer.waitUntilSettled(environment.webSocketToken, hash);
+        },
       },
       getStats: async () => {
         if (!state.buildManager) {

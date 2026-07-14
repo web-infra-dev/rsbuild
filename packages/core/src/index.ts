@@ -80,6 +80,7 @@ export type {
   FilenameHash,
   HistoryApiFallbackContext,
   HistoryApiFallbackOptions,
+  HmrSettlement,
   HtmlBasicTag,
   HtmlConfig,
   HtmlFallback,

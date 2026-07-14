@@ -7,8 +7,16 @@ import { color, isObject } from '../helpers';
 import { formatStatsError } from '../helpers/format';
 import { isRuntimeOverlayEnabled } from '../helpers/overlayConfig';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
-import type { ClientConfig, DevConfig, InternalContext, RsbuildStatsItem, Rspack } from '../types';
+import type {
+  ClientConfig,
+  DevConfig,
+  HmrSettlement,
+  InternalContext,
+  RsbuildStatsItem,
+  Rspack,
+} from '../types';
 import { type CachedTraceMap, formatBrowserErrorLog } from './browserLogs';
+import { HmrTracker } from './hmrTracker';
 import { renderErrorToHtml } from './overlay';
 
 interface ExtWebSocket extends WebSocket {
@@ -108,7 +116,15 @@ export type ClientMessagePing = {
   type: 'ping';
 };
 
-export type ClientMessage = ClientMessagePing | ClientMessageError;
+export type ClientMessageHmrSettled = {
+  type: 'hmr-settled';
+  data: {
+    hash: string;
+    status: 'applied' | 'skipped';
+  };
+};
+
+export type ClientMessage = ClientMessagePing | ClientMessageError | ClientMessageHmrSettled;
 
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
@@ -159,6 +175,8 @@ export class SocketServer {
   private reportedBrowserLogs = new Set<string>();
 
   private currentHash = new Map<string, string>();
+
+  private readonly hmrTracker = new HmrTracker<WebSocket>();
 
   constructor(
     context: InternalContext,
@@ -256,6 +274,14 @@ export class SocketServer {
     }
   }
 
+  public onBuildStart(token: string): void {
+    this.hmrTracker.onBuildStart(token);
+  }
+
+  public waitUntilSettled(token: string, hash: string): Promise<HmrSettlement> {
+    return this.hmrTracker.waitUntilSettled(token, hash, this.socketsMap.get(token));
+  }
+
   /**
    * Send error messages to the client.
    */
@@ -314,6 +340,10 @@ export class SocketServer {
    * if not provided, the message will be sent to all sockets
    */
   public sendMessage(message: ServerMessage, token?: string): void {
+    if (message.type === 'full-reload' || message.type === 'static-changed') {
+      this.hmrTracker.skipActive(token);
+    }
+
     const messageStr = JSON.stringify(message);
 
     const sendToSockets = (sockets: Set<WebSocket>) => {
@@ -336,6 +366,7 @@ export class SocketServer {
 
   public async close(): Promise<void> {
     this.clearHeartbeatTimer();
+    this.hmrTracker.close();
 
     // Remove all event listeners
     this.wsServer.removeAllListeners();
@@ -390,6 +421,15 @@ export class SocketServer {
 
         const environment = this.getEnvironmentByToken(token);
         if (!environment) {
+          return;
+        }
+
+        if (
+          payload.type === 'hmr-settled' &&
+          typeof payload.data?.hash === 'string' &&
+          (payload.data.status === 'applied' || payload.data.status === 'skipped')
+        ) {
+          this.hmrTracker.onClientSettled(token, socket, payload.data.hash, payload.data.status);
           return;
         }
 
@@ -462,6 +502,8 @@ export class SocketServer {
     sockets.add(socket);
 
     socket.on('close', () => {
+      this.hmrTracker.onDisconnect(token, socket);
+
       const sockets = this.socketsMap.get(token);
       if (!sockets) {
         return;
@@ -574,6 +616,11 @@ export class SocketServer {
     this.initialChunksMap.set(token, newInitialChunks);
 
     if (shouldReload) {
+      if (stats.hash) {
+        this.hmrTracker.skipUpdate(token, stats.hash);
+      } else {
+        this.hmrTracker.skipActive(token);
+      }
       this.sendMessage({ type: 'full-reload' }, token);
       return;
     }
@@ -581,6 +628,16 @@ export class SocketServer {
     if (stats.hash) {
       const prevHash = this.currentHash.get(token);
       this.currentHash.set(token, stats.hash);
+
+      if (!force) {
+        if (errors.length > 0) {
+          this.hmrTracker.skipUpdate(token, stats.hash);
+        } else if (!prevHash || prevHash === stats.hash) {
+          this.hmrTracker.skipUpdate(token, stats.hash);
+        } else {
+          this.hmrTracker.startUpdate(token, stats.hash, this.socketsMap.get(token));
+        }
+      }
 
       // If build hash is not changed and there is no error or warning,
       // skip the other messages
@@ -596,6 +653,8 @@ export class SocketServer {
         },
         token,
       );
+    } else if (!force) {
+      this.hmrTracker.skipActive(token);
     }
 
     if (errors.length > 0) {

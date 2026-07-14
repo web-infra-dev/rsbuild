@@ -1831,6 +1831,11 @@ export type ProgressBarConfig = {
 
 export type RequestHandler = Connect.NextHandleFunction;
 
+export type HmrSettlement = {
+  hash: string;
+  status: 'applied' | 'skipped' | 'timeout';
+};
+
 export type EnvironmentAPI = Record<
   string,
   {
@@ -1857,6 +1862,13 @@ export type EnvironmentAPI = Record<
      */
     hot: {
       send: HotSend;
+      /**
+       * Wait until the matching HMR update is settled by a connected client.
+       *
+       * The promise also resolves when the update does not require HMR, can no
+       * longer settle, or reaches the internal timeout.
+       */
+      waitUntilSettled: (hash: string) => Promise<HmrSettlement>;
     };
 
     /**
