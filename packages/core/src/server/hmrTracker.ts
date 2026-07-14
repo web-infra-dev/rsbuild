@@ -18,6 +18,11 @@ type EnvironmentState<Client> = {
   record?: UpdateRecord<Client>;
 };
 
+type HmrBuildResult<Client> = {
+  clients?: ReadonlySet<Client>;
+  hash?: string;
+};
+
 const HMR_SETTLEMENT_TIMEOUT = 2000;
 
 export class HmrTracker<Client> {
@@ -59,8 +64,13 @@ export class HmrTracker<Client> {
     return this.waitFor(record);
   }
 
-  /** Start tracking the clients that can acknowledge this HMR update. */
-  public startUpdate(token: string, hash: string, clients?: ReadonlySet<Client>): void {
+  /** Track the clients of an HMR update, or skip it when no clients are provided. */
+  public onBuildResult(token: string, { clients, hash }: HmrBuildResult<Client>): void {
+    if (!hash) {
+      this.abortActive(token);
+      return;
+    }
+
     const state = this.getState(token);
     let record = state.record;
 
@@ -75,31 +85,13 @@ export class HmrTracker<Client> {
       record.clients = new Set(clients);
     }
 
-    if (record.status === undefined && record.clients.size === 0) {
+    if (!clients?.size) {
       this.settle(record, 'skipped');
     }
   }
 
-  /** Mark an update as skipped when the build does not require or allow HMR. */
-  public skipUpdate(token: string, hash: string): void {
-    const state = this.getState(token);
-    let record = state.record;
-
-    if (record?.generation !== state.generation || record.hash !== hash) {
-      if (record) {
-        this.settle(record, 'skipped');
-      }
-      record = this.createRecord(state.generation, hash, undefined, true);
-      state.record = record;
-    } else {
-      record.started = true;
-    }
-
-    this.settle(record, 'skipped');
-  }
-
-  /** Settle active updates for one environment, or all environments, as skipped. */
-  public skipActive(token?: string): void {
+  /** Abort active updates interrupted outside the build lifecycle. */
+  public abortActive(token?: string): void {
     if (token) {
       const record = this.states.get(token)?.record;
       if (record) {
@@ -144,7 +136,7 @@ export class HmrTracker<Client> {
   }
 
   public close(): void {
-    this.skipActive();
+    this.abortActive();
     this.states.clear();
   }
 

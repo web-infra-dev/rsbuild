@@ -341,9 +341,14 @@ export class SocketServer {
    */
   public sendMessage(message: ServerMessage, token?: string): void {
     if (message.type === 'full-reload' || message.type === 'static-changed') {
-      this.hmrTracker.skipActive(token);
+      this.hmrTracker.abortActive(token);
     }
 
+    this.broadcastMessage(message, token);
+  }
+
+  /** Broadcast without changing HMR settlement state. */
+  private broadcastMessage(message: ServerMessage, token?: string): void {
     const messageStr = JSON.stringify(message);
 
     const sendToSockets = (sockets: Set<WebSocket>) => {
@@ -615,29 +620,27 @@ export class SocketServer {
 
     this.initialChunksMap.set(token, newInitialChunks);
 
+    const prevHash = stats.hash ? this.currentHash.get(token) : undefined;
+    if (!force) {
+      const clients =
+        stats.hash && !shouldReload && errors.length === 0 && prevHash && prevHash !== stats.hash
+          ? this.socketsMap.get(token)
+          : undefined;
+
+      this.hmrTracker.onBuildResult(token, { clients, hash: stats.hash });
+    }
+
     if (shouldReload) {
-      if (stats.hash) {
-        this.hmrTracker.skipUpdate(token, stats.hash);
+      if (force) {
+        this.sendMessage({ type: 'full-reload' }, token);
       } else {
-        this.hmrTracker.skipActive(token);
+        this.broadcastMessage({ type: 'full-reload' }, token);
       }
-      this.sendMessage({ type: 'full-reload' }, token);
       return;
     }
 
     if (stats.hash) {
-      const prevHash = this.currentHash.get(token);
       this.currentHash.set(token, stats.hash);
-
-      if (!force) {
-        if (errors.length > 0) {
-          this.hmrTracker.skipUpdate(token, stats.hash);
-        } else if (!prevHash || prevHash === stats.hash) {
-          this.hmrTracker.skipUpdate(token, stats.hash);
-        } else {
-          this.hmrTracker.startUpdate(token, stats.hash, this.socketsMap.get(token));
-        }
-      }
 
       // If build hash is not changed and there is no error or warning,
       // skip the other messages
@@ -653,8 +656,6 @@ export class SocketServer {
         },
         token,
       );
-    } else if (!force) {
-      this.hmrTracker.skipActive(token);
     }
 
     if (errors.length > 0) {
