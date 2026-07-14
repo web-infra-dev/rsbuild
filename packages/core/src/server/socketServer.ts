@@ -621,7 +621,6 @@ export class SocketServer {
     const initialChunks = this.initialChunksMap.get(token);
     const shouldReload =
       previousHash !== stats.hash &&
-      !lazyCompilationUpdate &&
       stats.entrypoints &&
       initialChunks &&
       !isEqualSet(initialChunks, newInitialChunks);

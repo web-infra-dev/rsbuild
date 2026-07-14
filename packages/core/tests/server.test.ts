@@ -573,6 +573,23 @@ describe('dev server', () => {
     expect(connect()).toEqual([{ type: 'lazy-compilation-hash', data: 'hash-1' }, { type: 'ok' }]);
   });
 
+  test('should reload when a lazy build adds an initial chunk', () => {
+    const { connect, socketServer, stats, token } = createSocketServerHarness();
+    const sendMessage = rstest.spyOn(socketServer, 'sendMessage');
+
+    socketServer.setBuildInvalidationCause(token, 'lazy');
+    socketServer.onBuildDone();
+    connect();
+    sendMessage.mockClear();
+
+    stats.hash = 'hash-2';
+    stats.entrypoints.index.chunks.push('lib');
+    socketServer.setBuildInvalidationCause(token, 'lazy');
+    socketServer.onBuildDone();
+
+    expect(sendMessage).toHaveBeenCalledWith({ type: 'full-reload' }, token);
+  });
+
   test('should not carry lazy provenance to a new hash', () => {
     const { connect, socketServer, stats, token } = createSocketServerHarness();
 
