@@ -573,6 +573,18 @@ describe('dev server', () => {
     expect(connect()).toEqual([{ type: 'lazy-compilation-hash', data: 'hash-1' }, { type: 'ok' }]);
   });
 
+  test('should not carry lazy provenance to a new hash', () => {
+    const { connect, socketServer, stats, token } = createSocketServerHarness();
+
+    socketServer.setBuildInvalidationCause(token, 'lazy');
+    socketServer.onBuildDone();
+    expect(connect()[0]).toEqual({ type: 'lazy-compilation-hash', data: 'hash-1' });
+
+    stats.hash = 'hash-2';
+    socketServer.onBuildDone();
+    expect(connect()[0]).toEqual({ type: 'hash', data: 'hash-2' });
+  });
+
   test('should let a normal invalidation replace lazy provenance for the same hash', () => {
     const { connect, socketServer, token } = createSocketServerHarness();
 
