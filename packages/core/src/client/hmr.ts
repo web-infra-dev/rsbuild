@@ -24,7 +24,7 @@ type LazyCompilationApplyOptions = Rspack.ApplyOptions & {
   preserveDisposedModuleFactories: boolean;
 };
 
-// TODO(rspack#14753): Use `Rspack.ApplyOptions` directly after the minimum Rspack
+// TODO(rspack#14772): Use `Rspack.ApplyOptions` directly after the minimum Rspack
 // version exposes `preserveDisposedModuleFactories`.
 const lazyCompilationApplyOptions: LazyCompilationApplyOptions = {
   ignoreUnaccepted: true,

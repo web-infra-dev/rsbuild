@@ -31,7 +31,7 @@ import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
 const noop = () => {};
 
 const getWatchInvalidationKind = (compilation: Rspack.Compilation): HmrUpdateCause => {
-  // TODO(rspack#14753): Remove this compatibility type after the minimum Rspack
+  // TODO(rspack#14772): Remove this compatibility type after the minimum Rspack
   // version exposes `Compilation.watchInvalidationKind`.
   const { watchInvalidationKind } = compilation as Rspack.Compilation & {
     watchInvalidationKind?: HmrUpdateCause;
