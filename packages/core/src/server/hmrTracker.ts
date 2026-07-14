@@ -3,13 +3,21 @@ import type { HmrSettlement } from '../types';
 type HmrSettlementStatus = HmrSettlement['status'];
 
 type UpdateRecord<Client> = {
+  /** Connected clients eligible to settle this update. */
   clients: Set<Client>;
+  /** Build generation used to distinguish repeated hashes. */
   generation: number;
+  /** Compilation hash for this update. */
   hash: string;
+  /** Shared settlement promise for all waiters. */
   promise?: Promise<HmrSettlement>;
+  /** Resolver for the shared settlement promise. */
   resolve?: (result: HmrSettlement) => void;
+  /** Whether onBuildResult has reported this update. */
   started: boolean;
+  /** Final status, or undefined while pending. */
   status?: HmrSettlementStatus;
+  /** Timer that settles this update with the timeout status. */
   timeout?: NodeJS.Timeout;
 };
 
@@ -44,7 +52,7 @@ export class HmrTracker<Client> {
     }
 
     const state = this.getState(token);
-    const current = state.record;
+    const { record: current } = state;
 
     if (current?.generation === state.generation) {
       if (current.hash === hash) {
@@ -59,7 +67,12 @@ export class HmrTracker<Client> {
       this.settle(current, 'skipped');
     }
 
-    const record = this.createRecord(state.generation, hash, clients, false);
+    const record: UpdateRecord<Client> = {
+      clients: new Set(clients),
+      generation: state.generation,
+      hash,
+      started: false,
+    };
     state.record = record;
     return this.waitFor(record);
   }
@@ -72,13 +85,18 @@ export class HmrTracker<Client> {
     }
 
     const state = this.getState(token);
-    let record = state.record;
+    let { record } = state;
 
     if (record?.generation !== state.generation || record.hash !== hash) {
       if (record) {
         this.settle(record, 'skipped');
       }
-      record = this.createRecord(state.generation, hash, clients, true);
+      record = {
+        clients: new Set(clients),
+        generation: state.generation,
+        hash,
+        started: true,
+      };
       state.record = record;
     } else if (record.status === undefined) {
       record.started = true;
@@ -138,20 +156,6 @@ export class HmrTracker<Client> {
   public close(): void {
     this.abortActive();
     this.states.clear();
-  }
-
-  private createRecord(
-    generation: number,
-    hash: string,
-    clients: ReadonlySet<Client> | undefined,
-    started: boolean,
-  ): UpdateRecord<Client> {
-    return {
-      clients: new Set(clients),
-      generation,
-      hash,
-      started,
-    };
   }
 
   private getState(token: string): EnvironmentState<Client> {
