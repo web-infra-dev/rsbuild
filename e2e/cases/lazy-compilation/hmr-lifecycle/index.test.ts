@@ -2,6 +2,16 @@ import { join } from 'node:path';
 import { expect, expectPoll, gotoPage, test } from '@e2e/helper';
 
 const BUILD_PAGE1 = 'building test-temp-src/page1/index.jsx';
+
+declare global {
+  interface Window {
+    __rsbuildHmrWebSockets: {
+      generation: number;
+      sockets: WebSocket[];
+    };
+  }
+}
+
 const createLazyEntryConfig = (tempSrc: string) => ({
   dev: { lazyCompilation: true },
   source: {
@@ -51,14 +61,19 @@ test('reconnects a loaded lazy entry without reloading when the hash matches', a
   copySrcDir,
 }) => {
   const tempSrc = await copySrcDir();
-  let webSocketCount = 0;
-  let resolveSocketClose: (() => void) | undefined;
-  const socketClosed = new Promise<void>((resolve) => {
-    resolveSocketClose = resolve;
-  });
-  page.on('websocket', (socket) => {
-    webSocketCount += 1;
-    socket.once('close', () => resolveSocketClose?.());
+  await page.addInitScript(() => {
+    const NativeWebSocket = window.WebSocket;
+    const state = { generation: 0, sockets: [] as WebSocket[] };
+
+    window.__rsbuildHmrWebSockets = state;
+    window.WebSocket = new Proxy(NativeWebSocket, {
+      construct(target, args) {
+        const socket = Reflect.construct(target, args) as WebSocket;
+        state.generation += 1;
+        state.sockets.push(socket);
+        return socket;
+      },
+    });
   });
 
   const rsbuild = await devOnly({ config: createLazyEntryConfig(tempSrc) });
@@ -68,12 +83,21 @@ test('reconnects a loaded lazy entry without reloading when the hash matches', a
   await rsbuild.expectBuildEnd();
   await expect(page.locator('#test')).toHaveText('Lazy source');
   const documentId = await page.evaluate<string>('window.__lazyHmrDocumentId');
-  const initialWebSocketCount = webSocketCount;
 
-  await page.context().setOffline(true);
-  await socketClosed;
-  await page.context().setOffline(false);
-  await expectPoll(() => webSocketCount).toBeGreaterThan(initialWebSocketCount);
+  const initialGeneration = await page.evaluate(() => {
+    window.__rsbuildHmrWebSockets.sockets.at(-1)?.close();
+    return window.__rsbuildHmrWebSockets.generation;
+  });
+
+  await expectPoll(() =>
+    page.evaluate(() => window.__rsbuildHmrWebSockets.generation),
+  ).toBeGreaterThan(initialGeneration);
+  await expectPoll(() =>
+    page.evaluate(
+      () => window.__rsbuildHmrWebSockets.sockets.at(-1)?.readyState === window.WebSocket.OPEN,
+    ),
+  ).toBe(true);
+
   expect(await page.evaluate<string>('window.__lazyHmrDocumentId')).toBe(documentId);
 
   await editFile(join(tempSrc, 'page1/App.jsx'), (code) =>
