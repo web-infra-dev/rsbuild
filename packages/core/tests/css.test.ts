@@ -164,6 +164,73 @@ describe('plugin-rspack-builtin-css', () => {
     expect(rspackConfig.module?.generator?.['css/auto']).not.toHaveProperty('localIdentName');
   });
 
+  it('should apply parser and generator options not covered by output.cssModules', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [
+          pluginRspackBuiltinCss({
+            parser: {
+              animation: false,
+              container: false,
+              customIdents: false,
+              dashedIdents: false,
+              exportType: 'css-style-sheet',
+              function: false,
+              grid: false,
+              import: false,
+              resolveImport: false,
+              url: false,
+            },
+            generator: {
+              esModule: false,
+              localIdentHashDigest: 'hex',
+              localIdentHashDigestLength: 8,
+              localIdentHashFunction: 'xxhash64',
+              localIdentHashSalt: 'salt',
+            },
+          }),
+        ],
+      },
+    });
+    rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+
+    expect(rspackConfig.module?.parser?.css).toEqual({
+      exportType: 'css-style-sheet',
+      import: false,
+      namedExports: false,
+      resolveImport: false,
+      url: false,
+    });
+    expect(rspackConfig.module?.parser?.['css/auto']).toMatchObject({
+      animation: false,
+      container: false,
+      customIdents: false,
+      dashedIdents: false,
+      exportType: 'css-style-sheet',
+      function: false,
+      grid: false,
+      import: false,
+      namedExports: false,
+      resolveImport: false,
+      url: false,
+    });
+    expect(rspackConfig.module?.generator?.css).toEqual({
+      esModule: false,
+      exportsOnly: false,
+    });
+    expect(rspackConfig.module?.generator?.['css/auto']).toMatchObject({
+      esModule: false,
+      exportsConvention: 'camel-case',
+      exportsOnly: false,
+      localIdentHashDigest: 'hex',
+      localIdentHashDigestLength: 8,
+      localIdentHashFunction: 'xxhash64',
+      localIdentHashSalt: 'salt',
+    });
+  });
+
   it('should translate pure CSS Modules mode', async () => {
     const rsbuild = await createRsbuild({
       config: {

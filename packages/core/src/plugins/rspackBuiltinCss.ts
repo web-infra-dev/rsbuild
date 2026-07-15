@@ -8,6 +8,34 @@ export const PLUGIN_RSPACK_BUILTIN_CSS_NAME = 'rsbuild:rspack-builtin-css';
 
 type CssRuleType = 'css' | 'css/auto' | 'css/global' | 'css/module';
 
+/**
+ * Options for Rspack's built-in CSS parser that are not covered by
+ * `output.cssModules`.
+ * @experimental
+ */
+export type RspackBuiltinCssParserOptions = Omit<
+  Rspack.CssAutoOrModuleParserOptions,
+  'namedExports' | 'pure'
+>;
+
+/**
+ * Options for Rspack's built-in CSS generator that are not covered by
+ * `output.cssModules` or `output.emitCss`.
+ * @experimental
+ */
+export type RspackBuiltinCssGeneratorOptions = Omit<
+  Rspack.CssModuleGeneratorOptions,
+  'exportsConvention' | 'exportsOnly' | 'localIdentName'
+>;
+
+/** @experimental */
+export type RspackBuiltinCssPluginOptions = {
+  /** Options for Rspack's built-in CSS parser. */
+  parser?: RspackBuiltinCssParserOptions;
+  /** Options for Rspack's built-in CSS generator. */
+  generator?: RspackBuiltinCssGeneratorOptions;
+};
+
 const getCssModuleType = (
   modules: NormalizedEnvironmentConfig['output']['cssModules'],
 ): CssRuleType => (modules.mode === 'global' ? 'css/global' : 'css/module');
@@ -59,24 +87,30 @@ const applyCssModuleConfig = ({
   config,
   emitCss,
   isProd,
+  options,
 }: {
   chain: RspackChain;
   config: NormalizedEnvironmentConfig;
   emitCss: boolean;
   isProd: boolean;
+  options: RspackBuiltinCssPluginOptions;
 }) => {
   const { cssModules } = config.output;
-  const exportType = config.output.injectStyles ? ('style' as const) : undefined;
   const parserOptions: Rspack.CssAutoOrModuleParserOptions = {
+    ...options.parser,
     namedExports: cssModules.namedExport,
-    ...(exportType ? { exportType } : {}),
+    ...(config.output.injectStyles ? { exportType: 'style' as const } : {}),
     ...(cssModules.mode === 'pure' ? { pure: true } : {}),
   };
   const cssParserOptions: Rspack.CssParserOptions = {
+    exportType: parserOptions.exportType,
+    import: parserOptions.import,
     namedExports: parserOptions.namedExports,
-    ...(exportType ? { exportType } : {}),
+    resolveImport: parserOptions.resolveImport,
+    url: parserOptions.url,
   };
   const generatorOptions: Rspack.CssModuleGeneratorOptions = {
+    ...options.generator,
     exportsOnly: !emitCss,
     exportsConvention: getExportsConvention(cssModules.exportLocalsConvention),
     ...(cssModules.localIdentName === undefined
@@ -93,13 +127,14 @@ const applyCssModuleConfig = ({
   chain.module.generator.merge({
     css: {
       exportsOnly: generatorOptions.exportsOnly,
+      esModule: generatorOptions.esModule,
     },
     'css/auto': generatorOptions,
     'css/global': generatorOptions,
     'css/module': generatorOptions,
   });
 
-  if (emitCss && !exportType) {
+  if (emitCss && (!parserOptions.exportType || parserOptions.exportType === 'link')) {
     const cssPath = config.output.distPath.css;
     const cssFilename = getFilename(config, 'css', isProd);
     const cssAsyncPath =
@@ -129,7 +164,9 @@ const applyCssModuleConfig = ({
  * style-loader and CssExtractRspackPlugin.
  * @experimental
  */
-export const pluginRspackBuiltinCss = (): RsbuildPlugin => ({
+export const pluginRspackBuiltinCss = (
+  options: RspackBuiltinCssPluginOptions = {},
+): RsbuildPlugin => ({
   name: PLUGIN_RSPACK_BUILTIN_CSS_NAME,
   enforce: 'post',
   setup(api) {
@@ -180,6 +217,7 @@ export const pluginRspackBuiltinCss = (): RsbuildPlugin => ({
           config,
           emitCss,
           isProd,
+          options,
         });
         const mainRuleType: CssRuleType = auto === false ? 'css' : 'css/auto';
         const moduleRuleType = getCssModuleType(config.output.cssModules);

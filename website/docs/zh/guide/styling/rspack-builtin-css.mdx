@@ -32,4 +32,28 @@ export default {
 - `exportGlobals`
 - `mode` 的 `icss` 和函数值
 
+对于 `output.cssModules` 未覆盖的 Rspack parser 和 generator 配置，可以通过插件参数设置：
+
+```ts title="rsbuild.config.ts"
+import { pluginRspackBuiltinCss } from '@rsbuild/core';
+
+export default {
+  plugins: [
+    pluginRspackBuiltinCss({
+      parser: {
+        url: false,
+        import: false,
+      },
+      generator: {
+        localIdentHashSalt: 'custom-salt',
+      },
+    }),
+  ],
+};
+```
+
+`parser` 支持 `exportType`、`url`、`import`、`resolveImport`、`animation`、`container`、`customIdents`、`dashedIdents`、`function` 和 `grid`。
+
+`generator` 支持 `esModule`、`localIdentHashDigest`、`localIdentHashDigestLength`、`localIdentHashFunction` 和 `localIdentHashSalt`。
+
 暂不支持 CSS `?url` 导入和 Vue SFC CSS Modules（`<style module>`）。

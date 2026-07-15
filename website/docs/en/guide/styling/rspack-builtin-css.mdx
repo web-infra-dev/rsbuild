@@ -32,4 +32,28 @@ The following values are not supported and emit warnings:
 - `exportGlobals`
 - `icss` and function values for `mode`
 
+Use the plugin options to configure Rspack parser and generator fields that are not covered by `output.cssModules`:
+
+```ts title="rsbuild.config.ts"
+import { pluginRspackBuiltinCss } from '@rsbuild/core';
+
+export default {
+  plugins: [
+    pluginRspackBuiltinCss({
+      parser: {
+        url: false,
+        import: false,
+      },
+      generator: {
+        localIdentHashSalt: 'custom-salt',
+      },
+    }),
+  ],
+};
+```
+
+The `parser` option supports `exportType`, `url`, `import`, `resolveImport`, `animation`, `container`, `customIdents`, `dashedIdents`, `function`, and `grid`.
+
+The `generator` option supports `esModule`, `localIdentHashDigest`, `localIdentHashDigestLength`, `localIdentHashFunction`, and `localIdentHashSalt`.
+
 CSS `?url` imports and Vue SFC CSS Modules (`<style module>`) are also not supported.
