@@ -1,1 +1,9 @@
-["css-usage", "css-modules", "css-in-js", "tailwindcss", "tailwindcss-v3", "unocss"]
+[
+  "css-usage",
+  "css-modules",
+  "rspack-builtin-css",
+  "css-in-js",
+  "tailwindcss",
+  "tailwindcss-v3",
+  "unocss"
+]

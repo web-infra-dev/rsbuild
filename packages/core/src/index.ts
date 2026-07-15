@@ -36,6 +36,7 @@ export { ensureAssetPrefix } from './helpers/url';
 // Helpers
 export { createLogger, type Logger, defaultLogger as logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
+export { PLUGIN_RSPACK_BUILTIN_CSS_NAME, pluginRspackBuiltinCss } from './plugins/rspackBuiltinCss';
 export type { RsbuildDevServer } from './server/devServer';
 export type {
   RsbuildServerBase,

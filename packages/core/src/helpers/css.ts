@@ -1,7 +1,7 @@
 import type { LoaderContext, NormalModule } from '@rspack/core';
 import type { CSSLoaderOptions } from '../types';
 
-const CSS_MODULE_REGEX = /\.module(s)?\.\w+$/i;
+export const CSS_MODULE_REGEX: RegExp = /\.module(s)?\.\w+$/i;
 const CSS_ICSS_REGEX = /\.icss\.\w+$/i;
 
 export const isCSSModules = (

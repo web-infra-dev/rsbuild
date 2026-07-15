@@ -1,0 +1,35 @@
+---
+description: 'Use Rspack built-in CSS module types in Rsbuild.'
+---
+
+# Rspack built-in CSS
+
+`pluginRspackBuiltinCss` is an experimental plugin that replaces `css-loader`, `style-loader`, and `CssExtractRspackPlugin` with Rspack's built-in `css/*` module types.
+
+```ts title="rsbuild.config.ts"
+import { pluginRspackBuiltinCss } from '@rsbuild/core';
+
+export default {
+  plugins: [pluginRspackBuiltinCss()],
+};
+```
+
+The plugin preserves loaders added by PostCSS, Lightning CSS, Sass, Less, and other plugins.
+
+## CSS Modules
+
+Configure CSS Modules through [output.cssModules](/config/output/css-modules). The plugin supports:
+
+- `auto`: boolean values
+- `exportLocalsConvention`
+- `localIdentName`
+- `mode`: `local`, `global`, and `pure`
+- `namedExport`
+
+The following values are not supported and emit warnings:
+
+- RegExp and function values for `auto`
+- `exportGlobals`
+- `icss` and function values for `mode`
+
+CSS `?url` imports and Vue SFC CSS Modules (`<style module>`) are also not supported.

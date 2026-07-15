@@ -3,17 +3,21 @@ import { getFileContent } from '@rstackjs/test-utils';
 
 const COMPILE_WARNING = 'Compile Warning';
 
-test('should allow to enable Rspack experiments.css', async ({ build }) => {
+test('should use Rspack built-in CSS', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, 'index.css');
 
-  expect(content).toEqual('body{color:red}');
+  expect(content).toContain('body{color:red}');
+  expect(content).toContain('.less{color:green}');
+  expect(content).toContain('.sass{color:#00f}');
+  expect(content).toContain('color:#010203');
+  expect(content).toContain('color:#040506');
   // should have no warnings
   rsbuild.expectNoLog(COMPILE_WARNING);
 });
 
-test('should allow to enable Rspack experiments.css with style-loader', async ({ build }) => {
+test('should use built-in style injection', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {

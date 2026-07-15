@@ -1,5 +1,5 @@
-import { matchRules } from '@scripts/test-helper';
-import { createRsbuild } from '../src';
+import { matchPlugin, matchRules } from '@scripts/test-helper';
+import { createRsbuild, pluginRspackBuiltinCss, type Rspack } from '../src';
 import { normalizeCssLoaderOptions } from '../src/plugins/css';
 
 describe('normalizeCssLoaderOptions', () => {
@@ -105,6 +105,192 @@ describe('plugin-css', () => {
     });
     const rspackConfigs = await rsbuild.initConfigs();
     expect(matchRules(rspackConfigs[0], 'a.module.css')).toMatchSnapshot();
+  });
+});
+
+describe('plugin-rspack-builtin-css', () => {
+  it('should replace the default CSS pipeline and translate CSS Modules options', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          cssModules: {
+            exportLocalsConvention: 'dashesOnly',
+            localIdentName: 'custom__[local]',
+            mode: 'global',
+            namedExport: true,
+          },
+        },
+        plugins: [pluginRspackBuiltinCss()],
+      },
+    });
+    const warn = rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+
+    expect(matchRules(rspackConfig, 'a.module.css')).toMatchSnapshot();
+    expect(matchPlugin(rspackConfig, 'CssExtractRspackPlugin')).toBeFalsy();
+    expect(rspackConfig.experiments?.css).toBe(true);
+    expect(rspackConfig.module?.parser).toMatchObject({
+      'css/auto': {
+        namedExports: true,
+      },
+    });
+    expect(rspackConfig.module?.generator).toMatchObject({
+      'css/auto': {
+        exportsConvention: 'dashes-only',
+        exportsOnly: false,
+        localIdentName: 'custom__[local]',
+      },
+    });
+    expect(rspackConfig.output).toMatchObject({
+      cssChunkFilename: 'static/css/async/[name].css',
+      cssFilename: 'static/css/[name].css',
+    });
+    expect(warn).toHaveBeenCalledWith(
+      'CSS `?url` imports are not supported by `pluginRspackBuiltinCss`. The `?url` query will be ignored.',
+    );
+  });
+
+  it('should preserve Rspack defaults when optional CSS Modules settings are not configured', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [pluginRspackBuiltinCss()],
+      },
+    });
+    rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+
+    expect(rspackConfig.module?.generator?.['css/auto']).not.toHaveProperty('localIdentName');
+  });
+
+  it('should translate pure CSS Modules mode', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          cssModules: {
+            mode: 'pure',
+          },
+        },
+        plugins: [pluginRspackBuiltinCss()],
+      },
+    });
+    rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+
+    expect(rspackConfig.module?.parser?.['css/auto']).toMatchObject({ pure: true });
+  });
+
+  it('should disable CSS Modules when output.cssModules.auto is false', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          cssModules: {
+            auto: false,
+          },
+        },
+        plugins: [pluginRspackBuiltinCss()],
+      },
+    });
+    rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+    const rules = matchRules(rspackConfig, 'a.module.css');
+    const oneOf = (rules[0] as { oneOf?: Rspack.RuleSetRule[] }).oneOf;
+
+    expect(oneOf?.some((rule) => rule.type === 'css')).toBe(true);
+    expect(oneOf?.some((rule) => rule.type === 'css/module')).toBe(false);
+  });
+
+  it('should preserve loaders added to existing CSS rules', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [
+          {
+            name: 'test:extend-css-rule',
+            setup(api) {
+              api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+                chain.module
+                  .rule(CHAIN_ID.RULE.CSS)
+                  .oneOf(CHAIN_ID.ONE_OF.CSS_MAIN)
+                  .use('custom-css-loader')
+                  .loader('custom-css-loader');
+              });
+            },
+          },
+          pluginRspackBuiltinCss(),
+        ],
+      },
+    });
+    rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+    const rules = matchRules(rspackConfig, 'a.module.css');
+    const oneOf = (rules[0] as { oneOf?: Rspack.RuleSetRule[] }).oneOf;
+    const styleRules = oneOf?.filter(
+      (rule) =>
+        rule.type === 'css/module' ||
+        (rule.type === 'css/auto' && rule.parser?.exportType !== 'text'),
+    );
+
+    expect(styleRules).toHaveLength(2);
+    expect(
+      styleRules?.every((rule) =>
+        rule.use?.some((use) =>
+          typeof use === 'object' ? use.loader === 'custom-css-loader' : false,
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  it('should warn about unsupported CSS Modules options', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          cssModules: {
+            auto: /\.custom\.css$/,
+            exportGlobals: true,
+            mode: 'icss',
+          },
+        },
+        plugins: [pluginRspackBuiltinCss()],
+      },
+    });
+    const warn = rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    await rsbuild.initConfigs();
+
+    expect(warn).toHaveBeenCalledWith(
+      "RegExp and function values for `output.cssModules.auto` are not supported by `pluginRspackBuiltinCss`. Rspack's default CSS Modules matching will be used instead.",
+    );
+    expect(warn).toHaveBeenCalledWith(
+      "The 'icss' and function values for `output.cssModules.mode` are not supported by `pluginRspackBuiltinCss`. The value will be ignored and local mode will be used instead.",
+    );
+    expect(warn).toHaveBeenCalledWith(
+      '`output.cssModules.exportGlobals` is not supported by `pluginRspackBuiltinCss`. The value will be ignored.',
+    );
+  });
+
+  it('should warn when used with the Vue plugin', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [
+          {
+            name: 'rsbuild:vue',
+            setup() {},
+          },
+          pluginRspackBuiltinCss(),
+        ],
+      },
+    });
+    const warn = rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    await rsbuild.initConfigs();
+
+    expect(warn).toHaveBeenCalledWith(
+      'Vue SFC CSS Modules (`<style module>`) are not supported by `pluginRspackBuiltinCss`.',
+    );
   });
 });
 
