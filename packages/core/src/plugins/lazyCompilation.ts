@@ -1,3 +1,4 @@
+import { isURL } from '../helpers/url';
 import { getHostInUrl } from '../server/helper';
 import { replacePortPlaceholder } from '../server/open';
 import type { NormalizedEnvironmentConfig, RsbuildContext, RsbuildPlugin } from '../types';
@@ -6,6 +7,16 @@ const getServerUrlFromClientConfig = async (
   config: NormalizedEnvironmentConfig,
   context: RsbuildContext,
 ): Promise<string | undefined> => {
+  const { assetPrefix } = config.dev;
+  const hasAbsoluteAssetPrefix =
+    assetPrefix === true || (typeof assetPrefix === 'string' && isURL(assetPrefix));
+
+  // A relative asset prefix indicates that page requests are routed through the
+  // current origin, so the lazy compilation endpoint should follow the same route.
+  if (!hasAbsoluteAssetPrefix) {
+    return;
+  }
+
   const { devServer } = context;
   if (!devServer) {
     return;
