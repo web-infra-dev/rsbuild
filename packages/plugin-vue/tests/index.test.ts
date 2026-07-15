@@ -55,4 +55,23 @@ describe('plugin-vue', () => {
     const config = await rsbuild.initConfigs();
     expect(matchRules(config[0], 'a.md')[0]).toMatchSnapshot();
   });
+
+  it('should warn when builtin CSS is used with Vue SFC CSS Modules', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        experiments: {
+          css: true,
+        },
+        plugins: [pluginVue()],
+      },
+    });
+    const warn = rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    await rsbuild.initConfigs();
+
+    expect(rsbuild.getNormalizedConfig().output.cssModules.auto).toBe(true);
+    expect(warn).toHaveBeenCalledWith(
+      'Vue SFC CSS Modules (`<style module>`) are not supported when `experiments.css` is enabled.',
+    );
+  });
 });

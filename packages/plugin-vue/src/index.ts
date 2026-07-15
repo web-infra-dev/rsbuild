@@ -54,6 +54,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
 
       const { test = /\.vue$/ } = options;
       const CSS_MODULES_REGEX = /\.modules?\.\w+$/i;
+      let hasWarnedBuiltinCssModules = false;
 
       api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
         const extraConfig: EnvironmentConfig = {
@@ -71,8 +72,19 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
 
         const merged = mergeEnvironmentConfig(extraConfig, config);
 
+        if (
+          merged.experiments.css &&
+          merged.output.cssModules.auto !== false &&
+          !hasWarnedBuiltinCssModules
+        ) {
+          hasWarnedBuiltinCssModules = true;
+          api.logger.warn(
+            'Vue SFC CSS Modules (`<style module>`) are not supported when `experiments.css` is enabled.',
+          );
+        }
+
         // Support `<style module>`, `<style module="customName">` in Vue SFC
-        if (merged.output.cssModules.auto === true) {
+        if (!merged.experiments.css && merged.output.cssModules.auto === true) {
           merged.output.cssModules.auto = (path, query) => {
             // For Vue style block, the path might be like:
             // 1. `/path/to/Foo.vue`

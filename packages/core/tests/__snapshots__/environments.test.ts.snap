@@ -1152,6 +1152,9 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "watchFiles": [],
     "writeToDisk": false,
   },
+  "experiments": {
+    "css": false,
+  },
   "html": {
     "crossorigin": false,
     "implementation": "js",
@@ -1308,6 +1311,9 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "liveReload": true,
     "watchFiles": [],
     "writeToDisk": false,
+  },
+  "experiments": {
+    "css": false,
   },
   "html": {
     "crossorigin": false,
@@ -1470,6 +1476,9 @@ exports[`environment config > should print environment config when inspecting co
       "watchFiles": [],
       "writeToDisk": false,
     },
+    "experiments": {
+      "css": false,
+    },
     "html": {
       "crossorigin": false,
       "implementation": "js",
@@ -1626,6 +1635,9 @@ exports[`environment config > should print environment config when inspecting co
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
+    },
+    "experiments": {
+      "css": false,
     },
     "html": {
       "crossorigin": false,
@@ -1804,6 +1816,9 @@ exports[`environment config > should support modifying environment config by api
       "watchFiles": [],
       "writeToDisk": false,
     },
+    "experiments": {
+      "css": false,
+    },
     "html": {
       "crossorigin": false,
       "implementation": "js",
@@ -1960,6 +1975,9 @@ exports[`environment config > should support modifying environment config by api
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
+    },
+    "experiments": {
+      "css": false,
     },
     "html": {
       "crossorigin": false,
@@ -2118,6 +2136,9 @@ exports[`environment config > should support modifying environment config by api
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
+    },
+    "experiments": {
+      "css": false,
     },
     "html": {
       "crossorigin": false,
@@ -2280,6 +2301,9 @@ exports[`environment config > should support modifying single environment config
       "watchFiles": [],
       "writeToDisk": false,
     },
+    "experiments": {
+      "css": false,
+    },
     "html": {
       "crossorigin": false,
       "implementation": "js",
@@ -2436,6 +2460,9 @@ exports[`environment config > should support modifying single environment config
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
+    },
+    "experiments": {
+      "css": false,
     },
     "html": {
       "crossorigin": false,
