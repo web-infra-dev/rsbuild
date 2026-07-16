@@ -54,6 +54,37 @@ const getExportsConvention = (
   return conventionMap[convention] ?? 'camel-case';
 };
 
+const LOCAL_IDENT_HASH_REGEX =
+  /\[(?:([^:\]]+):)?(?:(hash|contenthash|fullhash))(?::([a-z]+\d*))?(?::(\d+))?\]/i;
+const LOCAL_IDENT_HASH_REGEX_GLOBAL =
+  /\[(?:([^:\]]+):)?(?:hash|contenthash|fullhash)(?::([a-z]+\d*))?(?::(\d+))?\]/gi;
+
+const getLocalIdentOptions = (
+  localIdentName: string | undefined,
+): Partial<Rspack.CssModuleGeneratorOptions> => {
+  if (localIdentName === undefined) {
+    return {};
+  }
+
+  const match = localIdentName.match(LOCAL_IDENT_HASH_REGEX);
+  if (!match) {
+    return { localIdentName };
+  }
+
+  const [, hashFunction, , hashDigest, hashDigestLength] = match;
+
+  return {
+    localIdentName: localIdentName.replace(
+      LOCAL_IDENT_HASH_REGEX_GLOBAL,
+      (_match, _hashFunction, currentHashName) =>
+        currentHashName === 'fullhash' ? '[fullhash]' : '[hash]',
+    ),
+    ...(hashFunction ? { localIdentHashFunction: hashFunction } : {}),
+    ...(hashDigest ? { localIdentHashDigest: hashDigest } : {}),
+    ...(hashDigestLength ? { localIdentHashDigestLength: Number(hashDigestLength) } : {}),
+  };
+};
+
 const getResolveConfig = (rule: RspackChain.Rule<unknown>) =>
   (
     rule.resolve as RspackChain.Rule<unknown>['resolve'] & {
@@ -111,11 +142,17 @@ const applyCssModuleConfig = ({
   };
   const generatorOptions: Rspack.CssModuleGeneratorOptions = {
     ...options.generator,
+    // Rspack currently generates an invalid `exports` reference when style exports
+    // with default CSS Module exports are concatenated. CommonJS output prevents
+    // concatenation for these modules while preserving Rsbuild's default exports.
+    ...(config.output.injectStyles &&
+    !cssModules.namedExport &&
+    options.generator?.esModule === undefined
+      ? { esModule: false }
+      : {}),
     exportsOnly: !emitCss,
     exportsConvention: getExportsConvention(cssModules.exportLocalsConvention),
-    ...(cssModules.localIdentName === undefined
-      ? {}
-      : { localIdentName: cssModules.localIdentName }),
+    ...getLocalIdentOptions(cssModules.localIdentName),
   };
 
   chain.module.parser.merge({

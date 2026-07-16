@@ -164,6 +164,51 @@ describe('plugin-rspack-builtin-css', () => {
     expect(rspackConfig.module?.generator?.['css/auto']).not.toHaveProperty('localIdentName');
   });
 
+  it('should preserve default CSS Module exports when injecting styles', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          injectStyles: true,
+        },
+        plugins: [pluginRspackBuiltinCss()],
+      },
+    });
+    rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+
+    expect(rspackConfig.module?.parser?.['css/auto']).toMatchObject({
+      exportType: 'style',
+      namedExports: false,
+    });
+    expect(rspackConfig.module?.generator?.['css/auto']).toMatchObject({
+      esModule: false,
+    });
+  });
+
+  it('should translate hash options from cssModules.localIdentName', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          cssModules: {
+            localIdentName: '[name]__[local]--[sha256:hash:hex:4]',
+          },
+        },
+        plugins: [pluginRspackBuiltinCss()],
+      },
+    });
+    rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+
+    expect(rspackConfig.module?.generator?.['css/auto']).toMatchObject({
+      localIdentHashDigest: 'hex',
+      localIdentHashDigestLength: 4,
+      localIdentHashFunction: 'sha256',
+      localIdentName: '[name]__[local]--[hash]',
+    });
+  });
+
   it('should warn when CSS ?url imports are unsupported', async () => {
     const rsbuild = await createRsbuild({
       config: {

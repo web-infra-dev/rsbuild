@@ -17,8 +17,8 @@ test('should use Rspack built-in CSS', async ({ build }) => {
   rsbuild.expectNoLog(COMPILE_WARNING);
 });
 
-test('should use built-in style injection', async ({ build }) => {
-  const rsbuild = await build({
+test('should use built-in style injection', async ({ page, buildPreview }) => {
+  const rsbuild = await buildPreview({
     config: {
       output: {
         injectStyles: true,
@@ -29,6 +29,18 @@ test('should use built-in style injection', async ({ build }) => {
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, 'index.js');
   expect(content).toContain('color:red');
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () =>
+          (
+            globalThis as typeof globalThis & {
+              testStyles: { less: string; sass: string };
+            }
+          ).testStyles,
+      ),
+    )
+    .toMatchObject({ less: expect.any(String), sass: expect.any(String) });
 
   // should have no warnings
   rsbuild.expectNoLog(COMPILE_WARNING);

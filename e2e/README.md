@@ -17,6 +17,9 @@ pnpm e2e
 
 # Run specific test case, such as "css"
 pnpm e2e css
+
+# Run CSS cases with pluginRspackBuiltinCss
+pnpm e2e:css-builtin
 ```
 
 ## Debugging
