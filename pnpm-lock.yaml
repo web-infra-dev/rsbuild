@@ -314,8 +314,8 @@ catalogs:
       specifier: ^1.1.3
       version: 1.1.3
     rslog:
-      specifier: ^2.2.0
-      version: 2.2.0
+      specifier: ^2.3.0
+      version: 2.3.0
     rspack-chain:
       specifier: ^2.1.1
       version: 2.1.1
@@ -1007,7 +1007,7 @@ importers:
         version: 2.0.1
       rslog:
         specifier: 'catalog:'
-        version: 2.2.0
+        version: 2.3.0
       rspack-chain:
         specifier: 'catalog:'
         version: 2.1.1(@rspack/core@2.1.4)
@@ -4898,8 +4898,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rslog@2.2.0:
-    resolution: {integrity: sha512-aTYPzpoq1NrQYB8uK3mXEZgXoLva5lqMfnFNrPLZALsIx7vD1Q+HTp+fuu2aRHV3PJTg63ARDZ8MT0Lth4SoNg==}
+  rslog@2.3.0:
+    resolution: {integrity: sha512-g2wW/ermwzGTLlzGdJBDRc4YKz2/yPBjf57w9g5CvhtpZ91Xq95OaWku0oNHYi+XsuV6v8QrCo2oJJR/pCUR8g==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
   rspack-chain@2.1.1:
@@ -9237,7 +9237,7 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  rslog@2.2.0: {}
+  rslog@2.3.0: {}
 
   rspack-chain@2.1.1(@rspack/core@2.1.4):
     optionalDependencies:
