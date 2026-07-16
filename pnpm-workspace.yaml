@@ -33,7 +33,7 @@ catalog:
   '@rsbuild/plugin-check-syntax': '^2.0.0'
   '@rsbuild/plugin-rem': '^1.0.6'
   '@rsbuild/plugin-type-check': '^1.5.0'
-  '@rslib/core': '0.23.2'
+  '@rslib/core': '1.0.0-beta.0'
   '@rslint/core': '^0.6.5'
   '@rspack/core': '~2.1.4'
   '@rspack/plugin-preact-refresh': '^2.0.1'
