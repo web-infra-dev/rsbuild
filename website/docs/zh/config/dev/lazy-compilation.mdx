@@ -142,7 +142,12 @@ export default {
 
 通过 [lazyCompilation.serverUrl](https://rspack.rs/zh/config/lazy-compilation#lazycompilationserverurl) 可以指定 client 需要请求的 server URL。
 
-如果未配置 `lazyCompilation.serverUrl`，并且设置了 `dev.client.host` 或 `dev.client.port`，Rsbuild 会将 `dev.client` 对应的 URL 作为默认的 `serverUrl`。
+如果未配置 `lazyCompilation.serverUrl`，并且同时满足以下条件，Rsbuild 会将 `dev.client` 对应的 URL 作为默认的 `serverUrl`：
+
+- `dev.assetPrefix` 为 `true` 或绝对 URL。
+- 设置了 `dev.client.host` 或 `dev.client.port`。
+
+当 `dev.assetPrefix` 为相对 URL 时，懒编译请求会保持相对于当前页面，以便由代理服务器转发。
 
 如果显式配置了 `lazyCompilation.serverUrl`，该配置始终优先于从 `dev.client` 推导出的默认值。
 
