@@ -142,12 +142,12 @@ export default {
 
 通过 [lazyCompilation.serverUrl](https://rspack.rs/zh/config/lazy-compilation#lazycompilationserverurl) 可以指定 client 需要请求的 server URL。
 
-如果未配置 `lazyCompilation.serverUrl`，并且同时满足以下条件，Rsbuild 会将 `dev.client` 对应的 URL 作为默认的 `serverUrl`：
+如果未显式配置 `lazyCompilation.serverUrl`，Rsbuild 会在同时满足以下条件时，根据 [dev.client](/config/dev/client) 推导默认的 `serverUrl`：
 
-- `dev.assetPrefix` 为 `true` 或绝对 URL。
-- 设置了 `dev.client.host` 或 `dev.client.port`。
+- [dev.assetPrefix](/config/dev/asset-prefix) 为 `true` 或绝对 URL。
+- 配置了 [dev.client.host](/config/dev/client#host) 或 [dev.client.port](/config/dev/client#port)。
 
-当 `dev.assetPrefix` 为相对 URL 时，懒编译请求会保持相对于当前页面，以便由代理服务器转发。
+当 `dev.assetPrefix` 为相对 URL 时，Rsbuild 不会根据 `dev.client` 推导 `serverUrl`。懒编译请求会发送到当前页面所在的源（origin）。
 
 如果显式配置了 `lazyCompilation.serverUrl`，该配置始终优先于从 `dev.client` 推导出的默认值。
 
@@ -169,7 +169,9 @@ Rsbuild 会自动将 `<port>` 占位符替换为 server 实际监听的端口号
 
 ## 版本历史
 
-| 版本   | 变更内容                                                  |
-| ------ | --------------------------------------------------------- |
-| v1.3.0 | 新增该选项                                                |
-| v1.5.0 | 默认值由 `false` 改为 `{ imports: true, entries: false }` |
+| 版本    | 变更内容                                                                             |
+| ------- | ------------------------------------------------------------------------------------ |
+| v1.3.0  | 新增该选项                                                                           |
+| v1.5.0  | 默认值由 `false` 改为 `{ imports: true, entries: false }`                            |
+| v2.0.13 | 根据 `dev.client` 推导默认的 `serverUrl`                                             |
+| v2.1.7  | 仅当 `dev.assetPrefix` 为 `true` 或绝对 URL 时，才根据 `dev.client` 推导 `serverUrl` |
