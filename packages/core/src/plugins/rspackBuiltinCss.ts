@@ -210,6 +210,12 @@ export const pluginRspackBuiltinCss = (
             'Vue SFC CSS Modules (`<style module>`) are not supported by `pluginRspackBuiltinCss`.',
           );
         }
+        if (!hasWarnedUrl) {
+          hasWarnedUrl = true;
+          api.logger.warn(
+            'CSS `?url` imports are not supported by `pluginRspackBuiltinCss`. The `?url` query will be ignored.',
+          );
+        }
 
         const emitCss = config.output.emitCss ?? target === 'web';
         const parserOptions = applyCssModuleConfig({
@@ -227,13 +233,11 @@ export const pluginRspackBuiltinCss = (
           CHAIN_ID.USE.MINI_CSS_EXTRACT,
           CHAIN_ID.USE.STYLE,
         ]);
-        let removedUrlRule = false;
 
         for (const rule of chain.module.rules.values()) {
           for (const [name, branch] of Object.entries(rule.oneOfs.entries() ?? {})) {
             if (branch.uses.has(CHAIN_ID.USE.CSS_URL)) {
               rule.oneOfs.delete(name);
-              removedUrlRule = true;
               continue;
             }
 
@@ -268,13 +272,6 @@ export const pluginRspackBuiltinCss = (
               branch.type(mainRuleType);
             }
           }
-        }
-
-        if (removedUrlRule && !hasWarnedUrl) {
-          hasWarnedUrl = true;
-          api.logger.warn(
-            'CSS `?url` imports are not supported by `pluginRspackBuiltinCss`. The `?url` query will be ignored.',
-          );
         }
 
         chain.plugins.delete(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT);

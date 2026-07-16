@@ -164,6 +164,26 @@ describe('plugin-rspack-builtin-css', () => {
     expect(rspackConfig.module?.generator?.['css/auto']).not.toHaveProperty('localIdentName');
   });
 
+  it('should warn when CSS ?url imports are unsupported', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        environments: {
+          web: {},
+          web2: {},
+        },
+        plugins: [pluginRspackBuiltinCss()],
+      },
+    });
+    const warn = rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    await rsbuild.initConfigs();
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn).toHaveBeenCalledWith(
+      'CSS `?url` imports are not supported by `pluginRspackBuiltinCss`. The `?url` query will be ignored.',
+    );
+  });
+
   it('should apply parser and generator options not covered by output.cssModules', async () => {
     const rsbuild = await createRsbuild({
       config: {
