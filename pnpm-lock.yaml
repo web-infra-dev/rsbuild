@@ -326,8 +326,8 @@ catalogs:
       specifier: 1.0.1
       version: 1.0.1
     rspack-vue-loader:
-      specifier: ^17.5.1
-      version: 17.5.1
+      specifier: ^17.6.1
+      version: 17.6.1
     rspress-plugin-font-open-sans:
       specifier: ^1.0.4
       version: 1.0.4
@@ -1377,7 +1377,7 @@ importers:
     dependencies:
       rspack-vue-loader:
         specifier: 'catalog:'
-        version: 17.5.1(@rspack/core@2.1.4)(vue@3.5.39)
+        version: 17.6.1(@rspack/core@2.1.4)(vue@3.5.39)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -4921,10 +4921,10 @@ packages:
   rspack-merge@1.0.1:
     resolution: {integrity: sha512-W/mzCdxfV+EXOdpfwcLWc2TZ9EYa2LYumAMgpTn27bSEOO0BQz/SA8qfnJRCMkJyNST2URxmwqBmQbh5tLFwsg==}
 
-  rspack-vue-loader@17.5.1:
-    resolution: {integrity: sha512-1pXdeqYM95P0T8DO2ZcOCBnfMp62W5IG2c0RICn1rFYjHcja41IYSQLzcdc1uePEq0n4JZwvfR2lVs8wRZuwzA==}
+  rspack-vue-loader@17.6.1:
+    resolution: {integrity: sha512-jeeqh2wLcJLTd6AwYJjiEv62Bo6A7+OH4c7kGi4S2BF3E996cLtdY6ybAu8lG82EyUcr2lgV3kHoRnfD5QPUgA==}
     peerDependencies:
-      '@rspack/core': ^1.0.0 || ^2.0.0-0
+      '@rspack/core': ^1.0.0 || ^2.0.0
       '@vue/compiler-sfc': '*'
       vue: '*'
     peerDependenciesMeta:
@@ -6504,7 +6504,6 @@ snapshots:
       core-js: 3.49.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
-    optional: true
 
   '@rsbuild/plugin-check-syntax@2.0.0(@rsbuild/core@packages+core)':
     dependencies:
@@ -6546,8 +6545,8 @@ snapshots:
 
   '@rslib/core@1.0.0-beta.0(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)(typescript@6.0.3)':
     dependencies:
-      '@rsbuild/core': 2.1.5(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
-      rsbuild-plugin-dts: 1.0.0-beta.0(@rsbuild/core@2.1.5)(typescript@6.0.3)
+      '@rsbuild/core': 2.1.6(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
+      rsbuild-plugin-dts: 1.0.0-beta.0(@rsbuild/core@2.1.6)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -9223,10 +9222,10 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 2.1.6(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
 
-  rsbuild-plugin-dts@1.0.0-beta.0(@rsbuild/core@2.1.5)(typescript@6.0.3):
+  rsbuild-plugin-dts@1.0.0-beta.0(@rsbuild/core@2.1.6)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.1.5(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.6(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
     optionalDependencies:
       typescript: 6.0.3
 
@@ -9252,7 +9251,7 @@ snapshots:
 
   rspack-merge@1.0.1: {}
 
-  rspack-vue-loader@17.5.1(@rspack/core@2.1.4)(vue@3.5.39):
+  rspack-vue-loader@17.6.1(@rspack/core@2.1.4)(vue@3.5.39):
     dependencies:
       '@rspack/lite-tapable': 1.1.2
       chalk: 4.1.2
