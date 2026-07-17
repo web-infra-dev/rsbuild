@@ -1,5 +1,5 @@
 ---
-description: '监听指定文件和目录的变化。当文件发生变化时，可以触发页面的重新加载，或者触发 dev server 重新启动。'
+description: '监听指定文件和目录的变化。当文件发生变化时，可以触发页面重新加载，也可以重启 dev server 或监听构建。'
 ---
 
 # dev.watchFiles
@@ -9,7 +9,7 @@ description: '监听指定文件和目录的变化。当文件发生变化时，
 ```ts
 type WatchFilesOptions = {
   paths: string | string[];
-  type?: 'reload-page' | 'reload-server';
+  type?: 'reload-page' | 'restart' | 'reload-server';
   //  chokidar 选项
   options?: ChokidarOptions;
 };
@@ -19,7 +19,7 @@ type WatchFilesConfig = WatchFiles | WatchFiles[];
 
 - **默认值：** `undefined`
 
-监听指定文件和目录的变化。当文件发生变化时，可以触发页面的重新加载，或者触发 dev server 重新启动。
+监听指定文件和目录的变化。当文件发生变化时，可以触发页面重新加载，也可以重启 dev server 或监听构建。
 
 ## paths
 
@@ -66,10 +66,10 @@ export default {
 
 ## type
 
-- **类型：** `'reload-page' | 'reload-server'`
+- **类型：** `'reload-page' | 'restart' | 'reload-server'`
 - **默认值：** `'reload-page'`
 
-指定当文件发生变化时，是触发页面重新加载，还是触发 dev server 重新启动。
+指定当文件发生变化时，是触发页面重新加载，还是重启 dev server 或监听构建。
 
 ### reload-page
 
@@ -90,11 +90,13 @@ export default {
 
 > 如果 [dev.hmr](/config/dev/hmr) 和 [dev.liveReload](/config/dev/live-reload) 都设置为 `false`，则页面将不会自动重新加载。
 
-### reload-server
+### restart
 
-reload-server 表示当文件发生变化时，dev server 会自动重新启动。这可以用于监听一些配置文件的变化，例如被 `rsbuild.config.ts` 文件 import 的模块。
+`restart` 会在执行 `rsbuild dev` 时重启 dev server，在执行 `rsbuild build --watch` 时重启监听构建。
 
-例如，你在 `config` 目录下维护了一些公共配置文件，例如 `common.ts`，你希望当这些文件发生变化时，dev server 可以自动重新启动。示例配置：
+这可以用于监听一些变更后需要重新初始化 Rsbuild 的配置文件。
+
+例如，你在 `config` 目录下维护了一些公共配置文件，例如 `common.ts`，你希望这些文件发生变化时重启 dev server 或监听构建：
 
 ```ts title="rsbuild.config.ts"
 import { commonConfig } from './config/common';
@@ -103,14 +105,18 @@ export default {
   ...commonConfig,
   dev: {
     watchFiles: {
-      type: 'reload-server',
+      type: 'restart',
       paths: ['./config/*.ts'],
     },
   },
 };
 ```
 
-需要注意的是，reload-server 功能由 Rsbuild CLI 提供。如果你使用的是自定义 server 或基于 Rsbuild 封装的上层框架，目前暂不支持此配置。
+`restart` 功能由 Rsbuild CLI 提供。如果你使用自定义 server，或者上层框架通过 JavaScript API 调用 Rsbuild，目前暂不支持此配置。
+
+### reload-server
+
+`reload-server` 是 `restart` 的废弃别名，为保证向后兼容，目前仍然支持。
 
 ## options
 
@@ -145,7 +151,7 @@ export default {
         paths: 'public/**/*',
       },
       {
-        type: 'reload-server',
+        type: 'restart',
         paths: ['./config/*.ts'],
       },
     ],
@@ -160,3 +166,9 @@ export default {
 如果你希望当某些文件变化时，不触发重新构建，可以使用 Rspack 的 [watchOptions.ignored](https://rspack.rs/zh/config/watch#watchoptionsignored) 配置项。
 
 > 详见 [模块热更新 - 文件监听](/guide/advanced/hmr#file-watching)。
+
+## 版本历史
+
+| 版本   | 变更内容                                  |
+| ------ | ----------------------------------------- |
+| v2.1.7 | 新增 `restart` 类型，废弃 `reload-server` |
