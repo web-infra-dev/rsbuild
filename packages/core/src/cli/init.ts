@@ -121,7 +121,7 @@ const loadConfig = async (root: string) => {
       ...(config.dev.watchFiles ? castArray(config.dev.watchFiles) : []),
       {
         paths: [filePath, ...dependencies],
-        type: 'reload-server',
+        type: 'restart',
       },
     ];
   }
@@ -168,7 +168,7 @@ export async function init({
 
       if (config.dev.watchFiles) {
         for (const watchConfig of config.dev.watchFiles) {
-          if (watchConfig.type !== 'reload-server') {
+          if (watchConfig.type !== 'restart' && watchConfig.type !== 'reload-server') {
             continue;
           }
 

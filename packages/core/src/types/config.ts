@@ -1955,10 +1955,13 @@ export type WatchFiles = {
    */
   options?: ChokidarOptions;
   /**
-   * Specifies whether to reload the page or restart the dev server when files change.
+   * Specifies the action to take when files change.
+   * - `reload-page`: Reload the page.
+   * - `restart`: Restart the dev server or watch build.
+   * - `reload-server`: Deprecated alias for `restart`.
    * @default 'reload-page'
    */
-  type?: 'reload-page' | 'reload-server';
+  type?: 'reload-page' | 'restart' | 'reload-server';
 };
 
 export type CliShortcut = {
@@ -2072,7 +2075,7 @@ export interface DevConfig {
   writeToDisk?: WriteToDisk;
   /**
    * Watch specified files and directories for changes. When a file change is detected,
-   * it can trigger a page reload or restart the dev server.
+   * it can trigger a page reload or restart the dev server or watch build.
    * @default undefined
    */
   watchFiles?: WatchFiles | WatchFiles[];

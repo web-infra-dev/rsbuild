@@ -275,12 +275,12 @@ export async function initRsbuildConfig({
     environments[name] = normalizedEnvironmentConfig;
   }
 
-  // watch tsconfig files and restart server when tsconfig files changed
-  // to ensure `paths` alias can be updated
+  // Watch tsconfig files and restart the dev server or watch build when they change
+  // to ensure that `paths` aliases can be updated.
   if (tsconfigPaths.size && normalizedBaseConfig.resolve.aliasStrategy === 'prefer-tsconfig') {
     normalizedBaseConfig.dev.watchFiles.push({
       paths: Array.from(tsconfigPaths),
-      type: 'reload-server',
+      type: 'restart',
     });
   }
 
