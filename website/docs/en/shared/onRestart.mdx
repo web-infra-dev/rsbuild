@@ -1,0 +1,11 @@
+Called before Rsbuild CLI restarts the dev server or watch build.
+
+This hook is only available through the plugin API. It is not triggered for regular rebuilds.
+
+- **Type:**
+
+```ts
+function OnRestart(callback: () => Promise<void> | void): void;
+```
+
+- **Version:** Added in v2.1.7

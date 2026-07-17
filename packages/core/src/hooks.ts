@@ -26,6 +26,7 @@ import type {
   OnCloseBuildFn,
   OnCloseDevServerFn,
   OnExitFn,
+  OnRestartFn,
   Rspack,
 } from './types';
 
@@ -187,6 +188,7 @@ export function createAsyncHook<Callback extends (...args: any[]) => any>(): Asy
 export function initHooks(): {
   /** The following hooks are global hooks */
   onExit: AsyncHook<OnExitFn>;
+  onRestart: AsyncHook<OnRestartFn>;
   onAfterBuild: AsyncHook<OnAfterBuildFn>;
   onCloseBuild: AsyncHook<OnCloseBuildFn>;
   onBeforeBuild: AsyncHook<OnBeforeBuildFn>;
@@ -211,6 +213,7 @@ export function initHooks(): {
 } {
   return {
     onExit: createAsyncHook<OnExitFn>(),
+    onRestart: createAsyncHook<OnRestartFn>(),
     onCloseBuild: createAsyncHook<OnCloseBuildFn>(),
     onAfterBuild: createAsyncHook<OnAfterBuildFn>(),
     onBeforeBuild: createAsyncHook<OnBeforeBuildFn>(),

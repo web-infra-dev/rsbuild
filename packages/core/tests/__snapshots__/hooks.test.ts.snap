@@ -3,6 +3,7 @@
 exports[`initHooks > should initialize hooks correctly 1`] = `
 [
   "onExit",
+  "onRestart",
   "onCloseBuild",
   "onAfterBuild",
   "onBeforeBuild",

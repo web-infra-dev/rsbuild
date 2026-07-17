@@ -1,9 +1,9 @@
 import cac, { type CAC, type Command } from 'cac';
 import { RSPACK_BUILD_ERROR } from '../build';
 import { color } from '../helpers';
+import { restartHook } from '../helpers/restartHook';
 import type { ConfigLoader } from '../loadConfig';
 import { defaultLogger } from '../logger';
-import { onBeforeRestartServer } from '../restart';
 import type { LogLevel, RsbuildMode } from '../types';
 import { init, initCliAction } from './init';
 
@@ -132,7 +132,7 @@ export function setupCommands(argv: string[]): void {
 
         if (buildResult) {
           if (options.watch) {
-            onBeforeRestartServer(buildResult.close);
+            restartHook(buildResult.close);
           } else {
             await buildResult.close();
           }

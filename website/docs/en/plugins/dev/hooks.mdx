@@ -20,6 +20,7 @@ This page outlines the plugin hooks available for Rsbuild plugins.
 - [onAfterCreateCompiler](#onaftercreatecompiler): Called after creating a compiler instance and before building.
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile): Called before the compilation of a single environment.
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile): Called after the compilation of a single environment. You can get the build result information.
+- [onRestart](#onrestart): Called before Rsbuild CLI restarts the dev server or watch build.
 - [onExit](#onexit): Called when the process is about to exit.
 
 ### Dev hooks
@@ -141,6 +142,7 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [onCloseBuild](#onclosebuild)
 - [onBeforeStartPreviewServer](#onbeforestartpreviewserver)
 - [onAfterStartPreviewServer](#onafterstartpreviewserver)
+- [onRestart](#onrestart)
 - [onExit](#onexit)
 
 ### Environment hooks
@@ -961,6 +963,24 @@ const myPlugin = () => ({
 ```
 
 ## Other hooks
+
+### onRestart
+
+import OnRestart from '@en/shared/onRestart.mdx';
+
+<OnRestart />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onRestart(async () => {
+      console.log('restart!');
+    });
+  },
+});
+```
 
 ### onExit
 

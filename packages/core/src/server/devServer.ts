@@ -2,7 +2,8 @@ import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { color } from '../helpers';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers/compiler';
-import { onBeforeRestartServer, restartDevServer } from '../restart';
+import { restartHook } from '../helpers/restartHook';
+import { restartDevServer } from '../restart';
 import type {
   CreateCompiler,
   CreateDevServerOptions,
@@ -357,7 +358,7 @@ export async function createDevServer<
 
             await devServer.afterListen();
 
-            onBeforeRestartServer(devServer.close);
+            restartHook(devServer.close);
 
             resolve({
               port,

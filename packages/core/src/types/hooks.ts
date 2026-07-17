@@ -149,6 +149,8 @@ export type OnAfterCreateCompilerFn<Compiler = Rspack.Compiler | Rspack.MultiCom
 
 export type OnExitFn = (context: { exitCode: number }) => void;
 
+export type OnRestartFn = () => MaybePromise<void>;
+
 export type ModifyHTMLContext = {
   /**
    * The Compilation object of Rspack.
