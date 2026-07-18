@@ -5,6 +5,7 @@ import { createCompiler as baseCreateCompiler } from './createCompiler';
 import { createContext } from './createContext';
 import { castArray, color, getNodeEnv, isFunction, pick, setNodeEnv } from './helpers';
 import { isEmptyDir } from './helpers/fs';
+import { setRestartManager } from './helpers/restartManager';
 import { initConfigs as baseInitConfigs, initRsbuildConfig } from './initConfigs';
 import { initPluginAPI } from './initPlugins';
 import { inspectConfig as baseInspectConfig } from './inspectConfig';
@@ -247,12 +248,22 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
       { context, pluginManager, rsbuildOptions: resolvedOptions },
       options,
     );
+
+    let unregisterRestart: (() => void) | undefined;
+    const close = async () => {
+      unregisterRestart?.();
+      unregisterRestart = undefined;
+      await context.hooks.onCloseBuild.callBatch();
+      await buildInstance.close();
+    };
+
+    if (options?.watch) {
+      unregisterRestart = context.restartManager.register(close);
+    }
+
     return {
       ...buildInstance,
-      close: async () => {
-        await context.hooks.onCloseBuild.callBatch();
-        await buildInstance.close();
-      },
+      close,
     };
   };
 
@@ -373,6 +384,8 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
       'onRestart',
     ]),
   };
+
+  setRestartManager(rsbuild, context.restartManager);
 
   if (envs) {
     rsbuild.onCloseBuild(envs.cleanup);

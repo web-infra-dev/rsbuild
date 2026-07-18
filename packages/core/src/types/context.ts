@@ -2,7 +2,7 @@ import type { Hooks } from '../hooks';
 import type { Logger } from '../logger';
 import type { SocketServer } from '../server/socketServer';
 import type { NormalizedConfig, RsbuildConfig } from './config';
-import type { EnvironmentContext } from './hooks';
+import type { EnvironmentContext, OnRestartFn, RestartContext } from './hooks';
 import type { RsbuildPluginAPI } from './plugin';
 import type { RsbuildStats } from './rsbuild';
 
@@ -84,12 +84,21 @@ export type BuildState = {
   time: Record<string, number>;
 };
 
+export type RestartManager = {
+  /** Register a restart callback and return a function that unregisters it. */
+  register(callback: OnRestartFn): () => void;
+  /** Invoke and clear all currently registered restart callbacks. */
+  call(context: RestartContext): Promise<void>;
+};
+
 /** The inner context. */
 export type InternalContext = RsbuildContext & {
   /** The logger associated with current Rsbuild instance. */
   logger: Logger;
   /** All hooks. */
   hooks: Readonly<Hooks>;
+  /** Manage callbacks for restarting the current Rsbuild instance. */
+  restartManager: RestartManager;
   /** Current Rsbuild config. */
   config: Readonly<RsbuildConfig>;
   /** The original Rsbuild config passed from the createRsbuild method. */

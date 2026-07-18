@@ -1,7 +1,6 @@
 import cac, { type CAC, type Command } from 'cac';
 import { RSPACK_BUILD_ERROR } from '../build';
 import { color } from '../helpers';
-import { restartHook } from '../helpers/restartHook';
 import type { ConfigLoader } from '../loadConfig';
 import { defaultLogger } from '../logger';
 import type { LogLevel, RsbuildMode } from '../types';
@@ -130,12 +129,8 @@ export function setupCommands(argv: string[]): void {
           watch: options.watch,
         });
 
-        if (buildResult) {
-          if (options.watch) {
-            restartHook(buildResult.close);
-          } else {
-            await buildResult.close();
-          }
+        if (!options.watch) {
+          await buildResult.close();
         }
       } catch (err) {
         const isRspackError = err instanceof Error && err.message === RSPACK_BUILD_ERROR;

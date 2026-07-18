@@ -2,10 +2,10 @@ import path from 'node:path';
 import type { ChokidarOptions } from 'chokidar';
 import { init } from './cli/init';
 import { color, isTTY } from './helpers';
-import { callRestartHook, restartHook } from './helpers/restartHook';
+import { getRestartManager } from './helpers/restartManager';
 import type { Logger } from './logger';
 import { createChokidar } from './server/watchFiles';
-import type { RestartContext, RsbuildInstance } from './types';
+import type { RestartContext, RestartManager, RsbuildInstance } from './types';
 
 const clearConsole = () => {
   if (isTTY() && !process.env.DEBUG) {
@@ -18,9 +18,11 @@ const beforeRestart = async ({
   clear = true,
   action,
   logger,
+  restartManager,
 }: RestartContext & {
   clear?: boolean;
   logger: Logger;
+  restartManager: RestartManager;
 }): Promise<void> => {
   if (clear) {
     clearConsole();
@@ -35,19 +37,21 @@ const beforeRestart = async ({
     logger.info(`restarting ${id}...\n`);
   }
 
-  await callRestartHook({ action, filePath });
+  await restartManager.call({ action, filePath });
 };
 
 export const restartDevServer = async ({
   filePath,
   clear = true,
   logger,
+  restartManager,
 }: {
   filePath?: string;
   clear?: boolean;
   logger: Logger;
+  restartManager: RestartManager;
 }): Promise<boolean> => {
-  await beforeRestart({ action: 'dev', filePath, clear, logger });
+  await beforeRestart({ action: 'dev', filePath, clear, logger, restartManager });
 
   const rsbuild = await init({ isRestart: true });
 
@@ -65,12 +69,14 @@ const restartBuild = async ({
   filePath,
   clear = true,
   logger,
+  restartManager,
 }: {
   filePath?: string;
   clear?: boolean;
   logger: Logger;
+  restartManager: RestartManager;
 }): Promise<boolean> => {
-  await beforeRestart({ action: 'build', filePath, clear, logger });
+  await beforeRestart({ action: 'build', filePath, clear, logger, restartManager });
 
   const rsbuild = await init({ isRestart: true, isBuildWatch: true });
 
@@ -80,8 +86,7 @@ const restartBuild = async ({
     return false;
   }
 
-  const buildInstance = await rsbuild.build({ watch: true });
-  restartHook(buildInstance.close);
+  await rsbuild.build({ watch: true });
   return true;
 };
 
@@ -101,6 +106,7 @@ export async function watchFilesForRestart({
   }
 
   const root = rsbuild.context.rootPath;
+  const restartManager = getRestartManager(rsbuild);
   // Chokidar reports event paths relative to `cwd` when it is configured.
   const watchCwd = watchOptions?.cwd || root;
   const watcher = await createChokidar(files, root, {
@@ -122,8 +128,12 @@ export async function watchFilesForRestart({
     const absoluteFilePath = path.resolve(watchCwd, filePath);
 
     const restarted = isBuildWatch
-      ? await restartBuild({ filePath: absoluteFilePath, logger: rsbuild.logger })
-      : await restartDevServer({ filePath: absoluteFilePath, logger: rsbuild.logger });
+      ? await restartBuild({ filePath: absoluteFilePath, logger: rsbuild.logger, restartManager })
+      : await restartDevServer({
+          filePath: absoluteFilePath,
+          logger: rsbuild.logger,
+          restartManager,
+        });
 
     if (restarted) {
       await watcher.close();
