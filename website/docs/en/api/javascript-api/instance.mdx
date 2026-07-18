@@ -1003,8 +1003,8 @@ import OnRestart from '@en/shared/onRestart.mdx';
 - **Example:**
 
 ```ts
-rsbuild.onRestart(async () => {
-  console.log('restart!');
+rsbuild.onRestart(async ({ action, filePath }) => {
+  console.log('restart!', action, filePath);
 });
 ```
 

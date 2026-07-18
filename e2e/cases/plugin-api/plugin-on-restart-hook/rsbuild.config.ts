@@ -1,4 +1,4 @@
-import { defineConfig } from '@rsbuild/core';
+import { defineConfig, type RestartContext } from '@rsbuild/core';
 
 export default defineConfig({
   dev: {
@@ -11,9 +11,9 @@ export default defineConfig({
     {
       name: 'test-on-restart',
       setup(api) {
-        api.onRestart(async () => {
+        api.onRestart(async ({ action, filePath }: RestartContext) => {
           await Promise.resolve();
-          api.logger.info('onRestart hook called');
+          api.logger.info(`onRestart hook called: ${action}, ${filePath}`);
         });
       },
     },
