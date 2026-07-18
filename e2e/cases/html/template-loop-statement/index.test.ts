@@ -6,8 +6,7 @@ test('should render loop statements correctly', async ({ build }) => {
   const files = rsbuild.getDistFiles();
 
   const indexHtml = getFileContent(files, 'index.html');
-  const body = normalizeEol(indexHtml)
-    .match(/<body>[\s\S]*<\/body>/)?.[0]
+  const body = (normalizeEol(indexHtml).match(/<body>[\s\S]*<\/body>/)?.[0] ?? '')
     .split('\n')
     .map((line) => line.trim())
     .filter(Boolean)

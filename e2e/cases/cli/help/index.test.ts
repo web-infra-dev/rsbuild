@@ -4,10 +4,10 @@ import { normalizeEol } from '@rstackjs/test-utils';
 
 const normalizeHelpOutput = (output: string) =>
   normalizeEol(stripAnsi(output))
-    // Package versions and terminal padding are unrelated to the help contract.
+    // Package versions and terminal whitespace are unrelated to the help contract.
     .replace(/^Rsbuild v.+$/m, 'Rsbuild v<version>')
     .replace(/[ \t]+$/gm, '')
-    .trimEnd();
+    .trim();
 
 test('should show the root help', ({ execCliSync }) => {
   expect(normalizeHelpOutput(execCliSync('-h'))).toMatchSnapshot();
