@@ -114,6 +114,8 @@ export default {
 
 `restart` 功能由 Rsbuild CLI 提供。如果你使用自定义 server，或者上层框架通过 JavaScript API 调用 Rsbuild，目前暂不支持此配置。
 
+> 重启前，Rsbuild 会调用 [onRestart hook](/plugins/dev/hooks#onrestart)，你可以通过该 hook 在 dev server 或监听构建重启前执行自定义逻辑。
+
 ### reload-server
 
 `reload-server` 是 `restart` 的废弃别名，为保证向后兼容，目前仍然支持。
