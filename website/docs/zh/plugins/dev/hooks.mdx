@@ -20,6 +20,7 @@ description: '本章节介绍 Rsbuild 插件可用的 hooks。'
 - [onAfterCreateCompiler](#onaftercreatecompiler)：在创建 compiler 实例后、执行构建前调用。
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile): 在每次执行单个 environment 的构建前调用。
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile): 在每次单个 environment 的构建结束后调用。
+- [onRestart](#onrestart)：在 Rsbuild CLI 重启 dev server 或监听构建前调用。
 - [onExit](#onexit)：在进程即将退出时调用。
 
 ### Dev hooks
@@ -141,6 +142,7 @@ description: '本章节介绍 Rsbuild 插件可用的 hooks。'
 - [onCloseBuild](#onclosebuild)
 - [onBeforeStartPreviewServer](#onbeforestartpreviewserver)
 - [onAfterStartPreviewServer](#onafterstartpreviewserver)
+- [onRestart](#onrestart)
 - [onExit](#onexit)
 
 ### Environment hooks
@@ -957,6 +959,24 @@ const myPlugin = () => ({
 ```
 
 ## Other hooks
+
+### onRestart
+
+import OnRestart from '@zh/shared/onRestart.mdx';
+
+<OnRestart />
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onRestart(async () => {
+      console.log('restart!');
+    });
+  },
+});
+```
 
 ### onExit
 

@@ -1,9 +1,9 @@
 import cac, { type CAC, type Command } from 'cac';
 import { RSPACK_BUILD_ERROR } from '../build';
 import { color } from '../helpers';
+import { restartHook } from '../helpers/restartHook';
 import type { ConfigLoader } from '../loadConfig';
 import { defaultLogger } from '../logger';
-import { onBeforeRestartServer } from '../restart';
 import type { LogLevel, RsbuildMode } from '../types';
 import { init, initCliAction } from './init';
 
@@ -132,7 +132,7 @@ export function setupCommands(argv: string[]): void {
 
         if (buildResult) {
           if (options.watch) {
-            onBeforeRestartServer(buildResult.close);
+            restartHook(buildResult.close);
           } else {
             await buildResult.close();
           }
@@ -195,12 +195,14 @@ export function setupCommands(argv: string[]): void {
     // remove the default version log as we already log it in greeting
     sections.shift();
 
+    const commandName = cli.matchedCommandName;
+    sections = sections.filter(
+      ({ title }) => !commandName || (title !== 'Commands' && !title?.startsWith('For more info')),
+    );
+
     for (const section of sections) {
       if (section.title === 'Usage') {
-        section.body = section.body.replace(
-          '$ rsbuild',
-          color.yellow(`$ rsbuild [command] [options]`),
-        );
+        section.body = `  ${color.yellow(`$ rsbuild ${commandName || '[command]'} [options]`)}`;
       }
 
       // Fix the dev command name
@@ -211,7 +213,7 @@ export function setupCommands(argv: string[]): void {
         );
       }
 
-      // Simplify the help output for sub-commands
+      // Simplify the root help instructions for sub-commands
       if (section.title?.startsWith('For more info')) {
         section.title = color.dim('  For details on a sub-command, run');
         section.body = color.dim('  $ rsbuild <command> -h');
@@ -219,6 +221,8 @@ export function setupCommands(argv: string[]): void {
         section.title = color.cyan(section.title);
       }
     }
+
+    return sections;
   });
 
   cli.parse(argv);

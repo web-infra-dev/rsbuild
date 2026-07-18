@@ -4,6 +4,7 @@ import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
 import { color, getFilename } from './helpers';
 import { exitHook } from './helpers/exitHook';
+import { restartHook } from './helpers/restartHook';
 import { removeLeadingSlash } from './helpers/url';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import type { Logger } from './logger';
@@ -331,6 +332,16 @@ export function initPluginAPI({
     hooks.onExit.tap(cb);
   };
 
+  let onRestartListened = false;
+
+  const onRestart: typeof hooks.onRestart.tap = (cb) => {
+    if (!onRestartListened) {
+      restartHook(() => hooks.onRestart.callBatch());
+      onRestartListened = true;
+    }
+    hooks.onRestart.tap(cb);
+  };
+
   // Each plugin returns different APIs depending on the registered environment info.
   return (environment?: string) => ({
     context: publicContext,
@@ -346,6 +357,7 @@ export function initPluginAPI({
 
     // Hooks
     onExit,
+    onRestart,
     onAfterBuild: hooks.onAfterBuild.tap,
     onCloseBuild: hooks.onCloseBuild.tap,
     onBeforeBuild: hooks.onBeforeBuild.tap,

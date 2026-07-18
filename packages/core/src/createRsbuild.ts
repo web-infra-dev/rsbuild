@@ -125,7 +125,7 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
     ...(config.dev.watchFiles ? castArray(config.dev.watchFiles) : []),
     {
       paths: envs.filePaths,
-      type: 'reload-server',
+      type: 'restart',
     },
   ];
 

@@ -142,7 +142,12 @@ When the `imports` option is enabled, all async modules will only be compiled wh
 
 Use [lazyCompilation.serverUrl](https://rspack.rs/config/lazy-compilation#lazycompilationserverurl) to tell the client the server URL that needs to be requested.
 
-If `lazyCompilation.serverUrl` is not configured and `dev.client.host` or `dev.client.port` is specified, Rsbuild will use the `dev.client` URL as the default `serverUrl`.
+If `lazyCompilation.serverUrl` is not explicitly configured, Rsbuild derives the default `serverUrl` from [dev.client](/config/dev/client) when both of the following conditions are met:
+
+- [dev.assetPrefix](/config/dev/asset-prefix) is `true` or an absolute URL.
+- [dev.client.host](/config/dev/client#host) or [dev.client.port](/config/dev/client#port) is configured.
+
+When `dev.assetPrefix` is a relative URL, Rsbuild does not infer `serverUrl` from `dev.client`. Lazy compilation requests use the current page origin.
 
 An explicitly configured `lazyCompilation.serverUrl` always takes priority over the default value inferred from `dev.client`.
 
@@ -164,7 +169,9 @@ Rsbuild will replace the `<port>` placeholder with the actual port number the se
 
 ## Version history
 
-| Version | Changes                                                                   |
-| ------- | ------------------------------------------------------------------------- |
-| v1.3.0  | Added this option                                                         |
-| v1.5.0  | Changed default value from `false` to `{ imports: true, entries: false }` |
+| Version | Changes                                                                      |
+| ------- | ---------------------------------------------------------------------------- |
+| v1.3.0  | Added this option                                                            |
+| v1.5.0  | Changed default value from `false` to `{ imports: true, entries: false }`    |
+| v2.0.13 | Derived the default `serverUrl` from `dev.client`                            |
+| v2.1.7  | Limited `dev.client` inference to `dev.assetPrefix: true` or an absolute URL |

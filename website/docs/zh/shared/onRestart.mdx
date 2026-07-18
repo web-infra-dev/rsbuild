@@ -1,0 +1,11 @@
+在 Rsbuild CLI 重启 dev server 或监听构建前调用。
+
+该 hook 仅在插件 API 中提供，普通的重新构建不会触发该 hook。
+
+- **类型：**
+
+```ts
+function OnRestart(callback: () => Promise<void> | void): void;
+```
+
+- **版本：** 新增于 v2.1.7
