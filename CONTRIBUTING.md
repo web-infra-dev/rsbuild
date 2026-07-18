@@ -78,7 +78,7 @@ pnpm test core
 
 ### Run E2E tests
 
-Run end-to-end tests powered by [Playwright](https://github.com/microsoft/playwright):
+Run end-to-end tests with [Rstest](https://rstest.rs/) as the test runner and [Playwright](https://github.com/microsoft/playwright) for browser automation:
 
 ```sh
 pnpm run e2e

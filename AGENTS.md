@@ -5,7 +5,7 @@
 - Use repo Node.js/pnpm versions (`package.json`, `.node-version`)
 - `pnpm` workspace; shared deps in `pnpm-workspace.yaml` catalogs
 - TypeScript strict, Rspack/Rsbuild
-- Tests: Rstest; e2e: Playwright
+- Unit tests: Rstest; e2e: Rstest with Playwright browser automation
 
 ## Commands
 

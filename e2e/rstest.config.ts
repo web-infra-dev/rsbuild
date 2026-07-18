@@ -18,9 +18,6 @@ export default defineConfig({
   retry: isCI ? 3 : 0,
   testTimeout: 30_000,
   hookTimeout: 30_000,
-  source: {
-    tsconfigPath: './tsconfig.json',
-  },
   output: {
     externals: ['@rsbuild/core'],
   },
