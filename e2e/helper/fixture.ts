@@ -8,8 +8,7 @@ import {
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
 import { expect, test as base } from '@rstest/playwright';
-import type { PlaywrightFixture, PlaywrightOptions, PlaywrightTest } from '@rstest/playwright';
-import type { TestContext, TestOptions } from '@rstest/core';
+import type { PlaywrightOptions } from '@rstest/playwright';
 import {
   copyNodeModules as baseCopyNodeModules,
   editFile as baseEditFile,
@@ -183,6 +182,12 @@ type RsbuildFixture = {
   execCliSync: ExecSync;
 };
 
+// Make custom fixtures available to Rstest hook callbacks.
+declare module '@rstest/core' {
+  // rslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface TestContext extends RsbuildFixture {}
+}
+
 type Close = DevResult['close'];
 
 const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(options: T, cwd: string): T => {
@@ -197,7 +202,7 @@ const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(options: T, 
 const rsbuildBase = base.extend({
   playwright: {
     launchOptions: {
-      // Preserve the previous Playwright CI behavior.
+      // Use the built-in Chrome browser to speed up CI tests
       channel: process.env.CI ? 'chrome' : undefined,
     },
   } satisfies PlaywrightOptions,
@@ -209,7 +214,7 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     if (!testPath) {
       throw new Error('Failed to resolve current test file path.');
     }
-    const cwd = path.normalize(path.dirname(testPath));
+    const cwd = path.dirname(testPath);
     await use(cwd);
   },
 
@@ -400,24 +405,6 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
   },
 });
 
-type E2EContext = PlaywrightFixture & RsbuildFixture & TestContext;
-
-type E2ETestCallback = (context: E2EContext) => Promise<void> | void;
-
-type E2ETestCall = {
-  (description: string, callback?: E2ETestCallback, timeout?: number): void;
-  (description: string, options: TestOptions, callback?: E2ETestCallback): void;
-};
-
-type E2EEachHook = (callback: E2ETestCallback, timeout?: number) => void;
-
-// PlaywrightTest keeps the base hook context, so override it with the extended fixtures.
-type E2ETest = E2ETestCall &
-  Omit<PlaywrightTest<PlaywrightFixture & RsbuildFixture>, 'afterEach' | 'beforeEach'> & {
-    afterEach: E2EEachHook;
-    beforeEach: E2EEachHook;
-  };
-
-export const test = rsbuildTest as E2ETest;
+export const test = rsbuildTest;
 
 export { expect };
