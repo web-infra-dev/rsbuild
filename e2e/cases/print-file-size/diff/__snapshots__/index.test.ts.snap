@@ -1,0 +1,36 @@
+// Rstest Snapshot v1
+
+exports[`should not print gzip total diff when change is below threshold 1`] = `
+"
+File (web)                         Size      Gzip
+dist/static/js/index.[[hash]].js   X.X kB   X.X kB
+dist/index.html                    X.X kB   X.X kB
+                          Total:   X.X kB   X.X kB"
+`;
+
+exports[`should print file size diff as expected 1`] = `
+"
+File (web)                         Size      Gzip
+dist/static/js/index.[[hash]].js   X.X kB   X.X kB
+dist/index.html                    X.X kB   X.X kB
+                          Total:   X.X kB   X.X kB"
+`;
+
+exports[`should print file size diff as expected 2`] = `
+"
+File (web)                           Size                 Gzip
+dist/static/css/index.[[hash]].css   X.X kB (+X.X kB)   X.X kB (+X.X kB)
+dist/index.html                      X.X kB (+X.X kB)   X.X kB (+X.X kB)
+dist/static/js/index.[[hash]].js     X.X kB (+X.X kB)   X.X kB (+X.X kB)
+dist/static/js/vendor.[[hash]].js    X.X kB (+X.X kB)   X.X kB (+X.X kB)
+                            Total:   X.X kB (+X.X kB)   X.X kB (+X.X kB)"
+`;
+
+exports[`should print file size diff as expected 3`] = `
+"
+File (web)                           Size                 Gzip
+dist/static/js/index.[[hash]].js     X.X kB (-X.X kB)   X.X kB (-X.X kB)
+dist/static/css/index.[[hash]].css   X.X kB              X.X kB
+dist/index.html                      X.X kB (-X.X kB)   X.X kB (-X.X kB)
+                            Total:   X.X kB (-X.X kB)   X.X kB (-X.X kB)"
+`;
