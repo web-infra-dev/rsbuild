@@ -992,6 +992,22 @@ rsbuild.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
 });
 ```
 
+## rsbuild.onRestart
+
+> Provides the same functionality as the [onRestart](/plugins/dev/hooks#onrestart) plugin hook.
+
+import OnRestart from '@en/shared/onRestart.mdx';
+
+<OnRestart />
+
+- **Example:**
+
+```ts
+rsbuild.onRestart(async () => {
+  console.log('restart!');
+});
+```
+
 ## rsbuild.onExit
 
 > Provides the same functionality as the [onExit](/plugins/dev/hooks#onexit) plugin hook.
