@@ -114,6 +114,8 @@ export default {
 
 The `restart` functionality is provided by Rsbuild CLI. It is currently not supported by custom servers or frameworks that invoke Rsbuild through the JavaScript API.
 
+> Before the restart, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart), which you can use to run custom logic before the dev server or watch build restarts.
+
 ### reload-server
 
 `reload-server` is a deprecated alias for `restart`. It remains supported for backward compatibility.
