@@ -50,6 +50,56 @@ Options:
   -h, --help                Display this message"
 `;
 
+exports[`should show the inspect command help 1`] = `
+"Rsbuild v<version>
+
+Usage:
+  $ rsbuild inspect [options]
+
+Options:
+  --output <output>         Set the output path for inspection results
+  --verbose                 Show complete function definitions in output
+  --base <base>             Set the base path of the server
+  -c, --config <config>     Set the configuration file (relative or absolute path)
+  --config-loader <loader>  Set the config file loader (auto | jiti | native) (default: auto)
+  --dist-path <dir>         Set the root directory of output files
+  --source-map              Enable source map
+  --env-dir <dir>           Set the directory for loading \`.env\` files
+  --env-mode <mode>         Set the env mode to load the \`.env.[mode]\` file
+  --environment <name>      Set the environment name(s) to build (default: )
+  --log-level <level>       Set the log level (info | warn | error | silent)
+  -m, --mode <mode>         Set the build mode (development | production | none)
+  -r, --root <root>         Set the project root directory (absolute path or relative to cwd)
+  --no-env                  Disable loading of \`.env\` files (default: true)
+  -h, --help                Display this message"
+`;
+
+exports[`should show the preview command help 1`] = `
+"Rsbuild v<version>
+
+Usage:
+  $ rsbuild preview [options]
+
+Options:
+  -o, --open [url]          Open the page in browser on startup
+  --port <port>             Set the port number for the server
+  --strict-port             Exit if the specified port is already in use
+  --host [host]             Set the host that the server listens to
+  --base <base>             Set the base path of the server
+  -c, --config <config>     Set the configuration file (relative or absolute path)
+  --config-loader <loader>  Set the config file loader (auto | jiti | native) (default: auto)
+  --dist-path <dir>         Set the root directory of output files
+  --source-map              Enable source map
+  --env-dir <dir>           Set the directory for loading \`.env\` files
+  --env-mode <mode>         Set the env mode to load the \`.env.[mode]\` file
+  --environment <name>      Set the environment name(s) to build (default: )
+  --log-level <level>       Set the log level (info | warn | error | silent)
+  -m, --mode <mode>         Set the build mode (development | production | none)
+  -r, --root <root>         Set the project root directory (absolute path or relative to cwd)
+  --no-env                  Disable loading of \`.env\` files (default: true)
+  -h, --help                Display this message"
+`;
+
 exports[`should show the root help 1`] = `
 "Rsbuild v<version>
 
