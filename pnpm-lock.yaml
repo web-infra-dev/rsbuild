@@ -37,9 +37,6 @@ catalogs:
     '@module-federation/runtime-tools':
       specifier: 2.7.0
       version: 2.7.0
-    '@playwright/test':
-      specifier: 1.61.1
-      version: 1.61.1
     '@prefresh/core':
       specifier: ^1.5.10
       version: 1.5.10
@@ -98,11 +95,14 @@ catalogs:
       specifier: ^0.2.0
       version: 0.2.0
     '@rstest/adapter-rslib':
-      specifier: ^0.11.1
-      version: 0.11.1
+      specifier: ^0.11.2
+      version: 0.11.2
     '@rstest/core':
-      specifier: ^0.11.1
-      version: 0.11.1
+      specifier: ^0.11.2
+      version: 0.11.2
+    '@rstest/playwright':
+      specifier: ^0.11.2
+      version: 0.11.2
     '@shikijs/transformers':
       specifier: ^4.3.1
       version: 4.3.1
@@ -404,10 +404,10 @@ importers:
         version: 0.7.0(jiti@2.7.0)
       '@rstest/adapter-rslib':
         specifier: 'catalog:'
-        version: 0.11.1(@rslib/core@1.0.0-beta.0)(@rstest/core@0.11.1)(typescript@6.0.3)
+        version: 0.11.2(@rslib/core@1.0.0-beta.0)(@rstest/core@0.11.2)(typescript@6.0.3)
       '@rstest/core':
         specifier: 'catalog:'
-        version: 0.11.1(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
+        version: 0.11.2(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
       '@scripts/config':
         specifier: workspace:*
         version: link:scripts/config
@@ -481,9 +481,6 @@ importers:
       '@module-federation/rsbuild-plugin':
         specifier: 'catalog:'
         version: 2.7.0(@rsbuild/core@packages+core)(@rspack/core@2.1.4)(typescript@6.0.3)
-      '@playwright/test':
-        specifier: 'catalog:'
-        version: 1.61.1
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../packages/core
@@ -529,6 +526,12 @@ importers:
       '@rstackjs/test-utils':
         specifier: 'catalog:'
         version: 0.2.0
+      '@rstest/core':
+        specifier: 'catalog:'
+        version: 0.11.2(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
+      '@rstest/playwright':
+        specifier: 'catalog:'
+        version: 0.11.2(@rstest/core@0.11.2)(playwright@1.61.1)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../scripts/test-helper
@@ -2320,11 +2323,6 @@ packages:
     resolution: {integrity: sha512-tmmZ3lQxAe/k/+rNnXQRawJ4NjxO2hqiOLTHvWchtGZULp4RyFeh6aU4XdOYBFe2KE1oShQTv4AblOs2iOrNnQ==}
     engines: {node: '>= 10.0.0'}
 
-  '@playwright/test@1.61.1':
-    resolution: {integrity: sha512-8nKv6+0RJSL9FE4jYOEGXnPeM/Hg12qZpmqzZjRh3qM0Y7c3z1mrOTfFLids72RDQYVh9WpLEfR5WdpNX4fkig==}
-    engines: {node: '>=18'}
-    hasBin: true
-
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
 
@@ -2823,18 +2821,18 @@ packages:
   '@rstackjs/test-utils@0.2.0':
     resolution: {integrity: sha512-P+LOo1WE3xYeGkHmEthyq2cIpN69k4LhiB/4UBSceD+nW9hDlhWv8MC0LTLWokZXccWl4ntcfOBjQFllkcBlPA==}
 
-  '@rstest/adapter-rslib@0.11.1':
-    resolution: {integrity: sha512-w8otl+h128wcgB/Wug8UXd2xDDOkTGcc7iaHWGo//TcNTvFujNcUljukmI13BuA3iUjyDp1u04CWxjljVUxzag==}
+  '@rstest/adapter-rslib@0.11.2':
+    resolution: {integrity: sha512-S3IIkVWZNdzFIOnRHUzED9eTtjBUab5RPxYehf10c7QQL15xpDWtb6Ipr/tSfNbiiVawvazmUoI2dR3QT+k2AA==}
     peerDependencies:
       '@rslib/core': '>=0.18.6'
-      '@rstest/core': ^0.11.1
+      '@rstest/core': ^0.11.2
       typescript: ^5.0.0 || ^6.0.0 || ^7.0.0
     peerDependenciesMeta:
       typescript:
         optional: true
 
-  '@rstest/core@0.11.1':
-    resolution: {integrity: sha512-9iJnDrM/zYuHyk1//CMr/Jer2XughgN3fYagGb1YWpMLUke+E+WXlUPgACwf7OkmIB47/TttbLFK+4zwGDNOFg==}
+  '@rstest/core@0.11.2':
+    resolution: {integrity: sha512-/CTLkvogDGozY+bCYsc+sKJDDsU/LvDdEZC545+QO1Iv9ds+6vgSWuA+Q2iQF3cReeSkOI9ySARfFemcCoSKpQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -2845,6 +2843,13 @@ packages:
         optional: true
       jsdom:
         optional: true
+
+  '@rstest/playwright@0.11.2':
+    resolution: {integrity: sha512-Jm464bw45XIgXbkURjJCldvj91IZKfGRgALEbwMtaWJW62N/+5AJgn00pW7h1l7dX+qxmGVb/rr4+XMVb3auDA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      '@rstest/core': ^0.11.2
+      playwright: ^1.49.1
 
   '@shikijs/core@4.3.0':
     resolution: {integrity: sha512-EooU3i9F6IAE8kEu+AnGf9DFZWkQBZ+hJn3tLVbsH+61mtQiva5biai66fAA6nvFPXkLgvrh7BrR7YcJU83xQQ==}
@@ -6392,10 +6397,6 @@ snapshots:
       '@parcel/watcher-win32-x64': 2.5.6
     optional: true
 
-  '@playwright/test@1.61.1':
-    dependencies:
-      playwright: 1.61.1
-
   '@polka/url@1.0.0-next.29': {}
 
   '@prefresh/core@1.5.10(preact@10.29.7)':
@@ -6818,20 +6819,25 @@ snapshots:
 
   '@rstackjs/test-utils@0.2.0': {}
 
-  '@rstest/adapter-rslib@0.11.1(@rslib/core@1.0.0-beta.0)(@rstest/core@0.11.1)(typescript@6.0.3)':
+  '@rstest/adapter-rslib@0.11.2(@rslib/core@1.0.0-beta.0)(@rstest/core@0.11.2)(typescript@6.0.3)':
     dependencies:
       '@rslib/core': 1.0.0-beta.0(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)(typescript@6.0.3)
-      '@rstest/core': 0.11.1(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
+      '@rstest/core': 0.11.2(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
     optionalDependencies:
       typescript: 6.0.3
 
-  '@rstest/core@0.11.1(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)':
+  '@rstest/core@0.11.2(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)':
     dependencies:
-      '@rsbuild/core': 2.1.5(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.6(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
       '@types/chai': 5.2.3
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
       - core-js
+
+  '@rstest/playwright@0.11.2(@rstest/core@0.11.2)(playwright@1.61.1)':
+    dependencies:
+      '@rstest/core': 0.11.2(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
+      playwright: 1.61.1
 
   '@shikijs/core@4.3.0':
     dependencies:

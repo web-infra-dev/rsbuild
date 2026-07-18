@@ -33,7 +33,7 @@ export const noop = async () => {};
  */
 export const expectPoll: typeof expect.poll = (fn) => {
   return expect.poll(fn, {
-    intervals: [20, 30, 40, 50, 60, 70, 80, 90, 100],
+    interval: 20,
   });
 };
 

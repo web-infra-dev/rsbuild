@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "setup": "pnpm exec playwright install chromium --with-deps",
-    "e2e": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" playwright test"
+    "e2e": "rstest"
   },
   "dependencies": {
     "@module-federation/runtime-tools": "catalog:",
@@ -23,7 +23,6 @@
     "@hono/node-server": "catalog:",
     "@module-federation/enhanced": "catalog:",
     "@module-federation/rsbuild-plugin": "catalog:",
-    "@playwright/test": "catalog:",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-check-syntax": "catalog:",
@@ -39,6 +38,8 @@
     "@rsbuild/plugin-type-check": "catalog:",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rstackjs/test-utils": "catalog:",
+    "@rstest/core": "catalog:",
+    "@rstest/playwright": "catalog:",
     "@scripts/test-helper": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@tailwindcss/webpack": "catalog:",

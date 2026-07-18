@@ -7,7 +7,8 @@ import {
 } from 'node:child_process';
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
-import base, { expect } from '@playwright/test';
+import { expect, test as base } from '@rstest/playwright';
+import type { PlaywrightOptions } from '@rstest/playwright';
 import {
   copyNodeModules as baseCopyNodeModules,
   editFile as baseEditFile,
@@ -181,6 +182,12 @@ type RsbuildFixture = {
   execCliSync: ExecSync;
 };
 
+// Make custom fixtures available to Rstest hook callbacks.
+declare module '@rstest/core' {
+  // rslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface TestContext extends RsbuildFixture {}
+}
+
 type Close = DevResult['close'];
 
 const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(options: T, cwd: string): T => {
@@ -192,23 +199,34 @@ const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(options: T, 
   return options;
 };
 
-export const test = base.extend<RsbuildFixture>({
-  // rslint-disable-next-line no-empty-pattern
-  cwd: async ({}, use, { file }) => {
-    const cwd = path.dirname(file);
+const rsbuildBase = base.extend({
+  playwright: {
+    launchOptions: {
+      // Use the built-in Chrome browser to speed up CI tests
+      channel: process.env.CI ? 'chrome' : undefined,
+    },
+  } satisfies PlaywrightOptions,
+});
+
+const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
+  cwd: async ({ task }, use) => {
+    const testPath = task.filepath;
+    if (!testPath) {
+      throw new Error('Failed to resolve current test file path.');
+    }
+    const cwd = path.dirname(testPath);
     await use(cwd);
   },
 
   logHelper: [
-    // rslint-disable-next-line no-empty-pattern
-    async ({}, use, testInfo) => {
+    async ({ task }, use) => {
       const logHelper = proxyConsole();
       await use(logHelper);
       logHelper.restore();
 
       // If the test failed, log the console output for debugging
-      if (testInfo.status !== testInfo.expectedStatus && logHelper.logs.length) {
-        const { header, footer } = makeBox(testInfo.title);
+      if (task.result?.status === 'fail' && logHelper.logs.length) {
+        const { header, footer } = makeBox(task.name);
         console.log(header);
         logHelper.printCapturedLogs();
         console.log(footer);
@@ -251,11 +269,15 @@ export const test = base.extend<RsbuildFixture>({
     }
   },
 
-  prepareDist: async ({ cwd }, use) => {
-    const prepareDist: PrepareDist = (distFolderName = 'dist') =>
-      basePrepareDist(path.join(cwd, distFolderName));
-    await use(prepareDist);
-  },
+  prepareDist: [
+    async ({ cwd }, use) => {
+      const prepareDist: PrepareDist = (distFolderName = 'dist') =>
+        basePrepareDist(path.join(cwd, distFolderName));
+      await use(prepareDist);
+    },
+    // Keep prepareDist available in beforeEach and afterEach hooks.
+    { auto: true },
+  ],
 
   dev: async ({ cwd, page, logHelper }, use) => {
     const closes: Close[] = [];
@@ -382,5 +404,7 @@ export const test = base.extend<RsbuildFixture>({
     await use(() => baseCopyNodeModules(cwd));
   },
 });
+
+export const test = rsbuildTest;
 
 export { expect };
