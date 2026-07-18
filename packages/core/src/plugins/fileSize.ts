@@ -218,6 +218,7 @@ async function printFileSizes(
   }
 
   const relativeDistPath = path.relative(rootPath, distPath);
+  const rootFolderLabel = `${relativeDistPath || '.'}${path.sep}`;
   const snapshot: SizeSnapshot | null = saveSnapshot
     ? {
         files: {},
@@ -270,11 +271,10 @@ async function printFileSizes(
     }
 
     const separatorIndex = filePath.lastIndexOf('/');
-    const folder =
+    const folderLabel =
       separatorIndex === -1
-        ? path.join(relativeDistPath, '.')
-        : path.join(relativeDistPath, filePath.slice(0, separatorIndex));
-    const folderLabel = folder + path.sep;
+        ? rootFolderLabel
+        : `${path.join(relativeDistPath, filePath.slice(0, separatorIndex))}${path.sep}`;
     const filename = separatorIndex === -1 ? filePath : filePath.slice(separatorIndex + 1);
     const filenameLabel = color.dim(folderLabel) + coloringAssetName(filename);
     const filenameLength = folderLabel.length + filename.length;
