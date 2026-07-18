@@ -29,6 +29,7 @@ import type {
   OnCloseBuildFn,
   OnCloseDevServerFn,
   OnExitFn,
+  OnRestartFn,
 } from './hooks';
 import type { AddPluginsOptions, RsbuildInstance, RsbuildTarget } from './rsbuild';
 import type { Rspack } from './rspack';
@@ -649,6 +650,10 @@ export type RsbuildPluginAPI = Readonly<{
    * synchronous code.
    */
   onExit: PluginHook<OnExitFn>;
+  /**
+   * Called before Rsbuild CLI restarts the dev server or watch build.
+   */
+  onRestart: PluginHook<OnRestartFn>;
   /**
    * Modify assets before emitting, the same as Rspack's
    * [compilation.hooks.processAssets](https://rspack.rs/api/plugin-api/compilation-hooks#processassets) hook.

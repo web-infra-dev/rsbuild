@@ -147,6 +147,7 @@ export type {
   OnCloseDevServerFn,
   OnDevCompileDoneFn,
   OnExitFn,
+  OnRestartFn,
   OutputConfig,
   OverlayOptions,
   OutputStructure,

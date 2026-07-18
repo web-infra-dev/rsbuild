@@ -2,20 +2,10 @@ import path from 'node:path';
 import type { ChokidarOptions } from 'chokidar';
 import { init } from './cli/init';
 import { color, isTTY } from './helpers';
+import { callRestartHook, restartHook } from './helpers/restartHook';
 import type { Logger } from './logger';
 import { createChokidar } from './server/watchFiles';
 import type { RsbuildInstance } from './types';
-
-type Cleaner = () => unknown;
-
-let cleaners: Cleaner[] = [];
-
-/**
- * Add a cleaner to handle side effects
- */
-export const onBeforeRestartServer = (cleaner: Cleaner): void => {
-  cleaners.push(cleaner);
-};
 
 const clearConsole = () => {
   if (isTTY() && !process.env.DEBUG) {
@@ -45,10 +35,7 @@ const beforeRestart = async ({
     logger.info(`restarting ${id}...\n`);
   }
 
-  for (const cleaner of cleaners) {
-    await cleaner();
-  }
-  cleaners = [];
+  await callRestartHook();
 };
 
 export const restartDevServer = async ({
@@ -94,7 +81,7 @@ const restartBuild = async ({
   }
 
   const buildInstance = await rsbuild.build({ watch: true });
-  onBeforeRestartServer(buildInstance.close);
+  restartHook(buildInstance.close);
   return true;
 };
 
