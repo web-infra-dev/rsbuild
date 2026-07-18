@@ -23,3 +23,11 @@ test('should show the dev command help', ({ execCliSync }) => {
 test('should show the build command help', ({ execCliSync }) => {
   expect(normalizeHelpOutput(execCliSync('build -h'))).toMatchSnapshot();
 });
+
+test('should show the preview command help', ({ execCliSync }) => {
+  expect(normalizeHelpOutput(execCliSync('preview -h'))).toMatchSnapshot();
+});
+
+test('should show the inspect command help', ({ execCliSync }) => {
+  expect(normalizeHelpOutput(execCliSync('inspect -h'))).toMatchSnapshot();
+});
