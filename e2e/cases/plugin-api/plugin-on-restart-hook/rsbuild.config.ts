@@ -3,8 +3,11 @@ import { defineConfig, type RestartContext } from '@rsbuild/core';
 export default defineConfig({
   dev: {
     watchFiles: {
-      paths: './test-temp-watch.txt',
+      paths: './plugin-on-restart-hook/test-temp-watch.txt',
       type: 'restart',
+      options: {
+        cwd: '..',
+      },
     },
   },
   plugins: [
