@@ -1,0 +1,30 @@
+// Rstest Snapshot v1
+
+exports[`should render loop statements correctly 1`] = `
+"<body>
+<!-- for loop -->
+<div id="for">
+<ul>
+<li>for: Item 1</li>
+<li>for: Item 2</li>
+<li>for: Item 3</li>
+</ul>
+</div>
+<!-- forEach loop -->
+<div id="for-each">
+<ul>
+<li>for each: Item 1 0</li>
+<li>for each: Item 2 1</li>
+<li>for each: Item 3 2</li>
+</ul>
+</div>
+<!-- for...of loop -->
+<div id="for-of">
+<ul>
+<li>for of: Item 1</li>
+<li>for of: Item 2</li>
+<li>for of: Item 3</li>
+</ul>
+</div>
+</body>"
+`;

@@ -1,0 +1,87 @@
+// Rstest Snapshot v1
+
+exports[`should show the build command help 1`] = `
+"Rsbuild v<version>
+
+Usage:
+  $ rsbuild build [options]
+
+Options:
+  -w, --watch               Enable watch mode to automatically rebuild on file changes
+  --base <base>             Set the base path of the server
+  -c, --config <config>     Set the configuration file (relative or absolute path)
+  --config-loader <loader>  Set the config file loader (auto | jiti | native) (default: auto)
+  --dist-path <dir>         Set the root directory of output files
+  --source-map              Enable source map
+  --env-dir <dir>           Set the directory for loading \`.env\` files
+  --env-mode <mode>         Set the env mode to load the \`.env.[mode]\` file
+  --environment <name>      Set the environment name(s) to build (default: )
+  --log-level <level>       Set the log level (info | warn | error | silent)
+  -m, --mode <mode>         Set the build mode (development | production | none)
+  -r, --root <root>         Set the project root directory (absolute path or relative to cwd)
+  --no-env                  Disable loading of \`.env\` files (default: true)
+  -h, --help                Display this message"
+`;
+
+exports[`should show the dev command help 1`] = `
+"Rsbuild v<version>
+
+Usage:
+  $ rsbuild dev [options]
+
+Options:
+  -o, --open [url]          Open the page in browser on startup
+  --port <port>             Set the port number for the server
+  --strict-port             Exit if the specified port is already in use
+  --host [host]             Set the host that the server listens to
+  -v, --version             Display version number
+  --base <base>             Set the base path of the server
+  -c, --config <config>     Set the configuration file (relative or absolute path)
+  --config-loader <loader>  Set the config file loader (auto | jiti | native) (default: auto)
+  --dist-path <dir>         Set the root directory of output files
+  --source-map              Enable source map
+  --env-dir <dir>           Set the directory for loading \`.env\` files
+  --env-mode <mode>         Set the env mode to load the \`.env.[mode]\` file
+  --environment <name>      Set the environment name(s) to build (default: )
+  --log-level <level>       Set the log level (info | warn | error | silent)
+  -m, --mode <mode>         Set the build mode (development | production | none)
+  -r, --root <root>         Set the project root directory (absolute path or relative to cwd)
+  --no-env                  Disable loading of \`.env\` files (default: true)
+  -h, --help                Display this message"
+`;
+
+exports[`should show the root help 1`] = `
+"Rsbuild v<version>
+
+Usage:
+  $ rsbuild [command] [options]
+
+Commands:
+  dev      Start the dev server (default if no command is given)
+  build    Build the app for production
+  preview  Preview the production build locally
+  inspect  Inspect the Rspack and Rsbuild configs
+
+  For details on a sub-command, run:
+  $ rsbuild <command> -h
+
+Options:
+  -o, --open [url]          Open the page in browser on startup
+  --port <port>             Set the port number for the server
+  --strict-port             Exit if the specified port is already in use
+  --host [host]             Set the host that the server listens to
+  -v, --version             Display version number
+  --base <base>             Set the base path of the server
+  -c, --config <config>     Set the configuration file (relative or absolute path)
+  --config-loader <loader>  Set the config file loader (auto | jiti | native) (default: auto)
+  --dist-path <dir>         Set the root directory of output files
+  --source-map              Enable source map
+  --env-dir <dir>           Set the directory for loading \`.env\` files
+  --env-mode <mode>         Set the env mode to load the \`.env.[mode]\` file
+  --environment <name>      Set the environment name(s) to build (default: )
+  --log-level <level>       Set the log level (info | warn | error | silent)
+  -m, --mode <mode>         Set the build mode (development | production | none)
+  -r, --root <root>         Set the project root directory (absolute path or relative to cwd)
+  --no-env                  Disable loading of \`.env\` files (default: true)
+  -h, --help                Display this message"
+`;

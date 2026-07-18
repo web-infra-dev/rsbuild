@@ -74,16 +74,11 @@ test('should not modify process.env if processEnv is provided', () => {
 test('should throw when prefixes contains empty string', () => {
   const message = stripAnsi(getLoadEnvError(['PUBLIC_', '']).message);
 
-  expect(message).toContain('Invalid prefixes option');
-  expect(message).toContain('received ""');
-  expect(message).toContain('An empty string matches every key in processEnv');
-  expect(message).toContain('process.env.* and import.meta.env.* replacements');
+  expect(message).toMatchSnapshot();
 });
 
 test('should throw when prefixes contains whitespace-only string', () => {
   const message = stripAnsi(getLoadEnvError(['PUBLIC_', '  ']).message);
 
-  expect(message).toContain('Invalid prefixes option');
-  expect(message).toContain('received "  "');
-  expect(message).toContain('A whitespace-only string is not a valid public');
+  expect(message).toMatchSnapshot();
 });

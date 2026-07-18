@@ -1,28 +1,25 @@
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, test } from '@e2e/helper';
+import { normalizeEol } from '@rstackjs/test-utils';
+
+const normalizeHelpOutput = (output: string) =>
+  normalizeEol(stripAnsi(output))
+    // Package versions and terminal padding are unrelated to the help contract.
+    .replace(/^Rsbuild v.+$/m, 'Rsbuild v<version>')
+    .replace(/[ \t]+$/gm, '')
+    .trimEnd();
 
 test('should show the root help', ({ execCliSync }) => {
-  const output = stripAnsi(execCliSync('-h'));
-
-  expect(output).toContain('Usage:\n  $ rsbuild [command] [options]');
-  expect(output).toContain('Commands:');
-  expect(output).toContain('For details on a sub-command, run:');
+  expect(normalizeHelpOutput(execCliSync('-h'))).toMatchSnapshot();
 });
 
 test('should show the dev command help', ({ execCliSync }) => {
-  for (const args of ['dev -h', '-h dev']) {
-    const output = stripAnsi(execCliSync(args));
+  const output = normalizeHelpOutput(execCliSync('dev -h'));
 
-    expect(output).toContain('Usage:\n  $ rsbuild dev [options]');
-    expect(output).not.toContain('Commands:');
-    expect(output).not.toContain('For details on a sub-command, run:');
-  }
+  expect(output).toMatchSnapshot();
+  expect(normalizeHelpOutput(execCliSync('-h dev'))).toBe(output);
 });
 
 test('should show the build command help', ({ execCliSync }) => {
-  const output = stripAnsi(execCliSync('build -h'));
-
-  expect(output).toContain('Usage:\n  $ rsbuild build [options]');
-  expect(output).not.toContain('Commands:');
-  expect(output).not.toContain('For details on a sub-command, run:');
+  expect(normalizeHelpOutput(execCliSync('build -h'))).toMatchSnapshot();
 });
