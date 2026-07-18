@@ -270,6 +270,7 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
         basePrepareDist(path.join(cwd, distFolderName));
       await use(prepareDist);
     },
+    // Keep prepareDist available in beforeEach and afterEach hooks.
     { auto: true },
   ],
 
@@ -410,6 +411,7 @@ type E2ETestCall = {
 
 type E2EEachHook = (callback: E2ETestCallback, timeout?: number) => void;
 
+// PlaywrightTest keeps the base hook context, so override it with the extended fixtures.
 type E2ETest = E2ETestCall &
   Omit<PlaywrightTest<PlaywrightFixture & RsbuildFixture>, 'afterEach' | 'beforeEach'> & {
     afterEach: E2EEachHook;

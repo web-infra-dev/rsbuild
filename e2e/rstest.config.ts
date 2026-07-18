@@ -13,6 +13,7 @@ export default defineConfig({
   exclude: ['**/node_modules/**', '**/.*/**', '**/test-temp-*/**'],
   reporters: ['default', ['github-actions', { annotations: false }]],
   isolate: false,
+  // Existing e2e helpers capture build logs synchronously; interception delays them.
   disableConsoleIntercept: true,
   retry: isCI ? 3 : 0,
   testTimeout: 30_000,
