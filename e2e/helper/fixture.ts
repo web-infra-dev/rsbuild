@@ -22,7 +22,7 @@ import type {
   PlaywrightTest,
   PlaywrightUse,
 } from '@rstest/playwright';
-import type { TestContext } from '@rstest/core';
+import type { TestContext, TestOptions } from '@rstest/core';
 import {
   copyNodeModules as baseCopyNodeModules,
   editFile as baseEditFile,
@@ -284,11 +284,14 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     }
   },
 
-  prepareDist: async ({ cwd }, use) => {
-    const prepareDist: PrepareDist = (distFolderName = 'dist') =>
-      basePrepareDist(path.join(cwd, distFolderName));
-    await use(prepareDist);
-  },
+  prepareDist: [
+    async ({ cwd }, use) => {
+      const prepareDist: PrepareDist = (distFolderName = 'dist') =>
+        basePrepareDist(path.join(cwd, distFolderName));
+      await use(prepareDist);
+    },
+    { auto: true },
+  ],
 
   dev: async ({ cwd, page, logHelper }, use) => {
     const closes: Close[] = [];
@@ -427,7 +430,22 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
   },
 });
 
-type E2ETest = PlaywrightTest<PlaywrightFixture & RsbuildFixture>;
+type E2EContext = PlaywrightFixture & RsbuildFixture & TestContext;
+
+type E2ETestCallback = (context: E2EContext) => Promise<void> | void;
+
+type E2ETestCall = {
+  (description: string, callback?: E2ETestCallback, timeout?: number): void;
+  (description: string, options: TestOptions, callback?: E2ETestCallback): void;
+};
+
+type E2EEachHook = (callback: E2ETestCallback, timeout?: number) => void;
+
+type E2ETest = E2ETestCall &
+  Omit<PlaywrightTest<PlaywrightFixture & RsbuildFixture>, 'afterEach' | 'beforeEach'> & {
+    afterEach: E2EEachHook;
+    beforeEach: E2EEachHook;
+  };
 
 export const test = Object.assign(rsbuildTest, {
   afterAll: rstestAfterAll,
@@ -436,6 +454,6 @@ export const test = Object.assign(rsbuildTest, {
   beforeEach: rstestBeforeEach,
   describe: rstestDescribe,
   fail: rsbuildTest.fails,
-}) as E2ETest;
+}) as unknown as E2ETest;
 
 export { expect };

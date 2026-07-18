@@ -1,15 +1,12 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
-import { prepareDist } from '@rstackjs/test-utils';
 
 const cwd = import.meta.dirname;
 
-test.beforeEach(async () => {
+test.beforeEach(async ({ prepareDist }) => {
   const distFolderNames = ['dist', 'dist-1', 'dist-2', 'dist-same', 'dist-same-1'];
-  await Promise.all(
-    distFolderNames.map((distFolderName) => prepareDist(join(cwd, distFolderName))),
-  );
+  await Promise.all(distFolderNames.map((distFolderName) => prepareDist(distFolderName)));
 });
 
 test('should handle writeToDisk correctly across multiple environments', async ({ page, dev }) => {

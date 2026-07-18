@@ -3,11 +3,10 @@ import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { createRsbuild } from '@rsbuild/core';
-import { prepareDist } from '@rstackjs/test-utils';
 
-test.afterEach(async () => {
-  await prepareDist(path.join(import.meta.dirname, 'dist'));
-  await prepareDist(path.join(import.meta.dirname, 'test-temp-output'));
+test.afterEach(async ({ prepareDist }) => {
+  await prepareDist();
+  await prepareDist('test-temp-output');
 });
 
 const rsbuildConfig = path.resolve(import.meta.dirname, './dist/.rsbuild/rsbuild.config.mjs');

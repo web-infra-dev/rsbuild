@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { expect, gotoPage, test } from '@e2e/helper';
-import { getRandomPort, prepareDist } from '@rstackjs/test-utils';
+import { getRandomPort } from '@rstackjs/test-utils';
 
 const tempConfig = path.join(import.meta.dirname, 'test-temp.config.mjs');
 const tempConfigDep = path.join(import.meta.dirname, 'test-temp-dep.mjs');
 
-test.afterEach(async () => {
-  await prepareDist(path.join(import.meta.dirname, 'dist'));
+test.afterEach(async ({ prepareDist }) => {
+  await prepareDist();
   fs.rmSync(tempConfig, { force: true });
   fs.rmSync(tempConfigDep, { force: true });
 });
