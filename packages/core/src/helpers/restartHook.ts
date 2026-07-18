@@ -1,4 +1,6 @@
-type Callback = () => unknown;
+import type { RestartContext } from '../types/hooks';
+
+type Callback = (context: RestartContext) => unknown;
 
 let callbacks: Callback[] = [];
 
@@ -6,7 +8,7 @@ export const restartHook = (callback: Callback): void => {
   callbacks.push(callback);
 };
 
-export const callRestartHook = async (): Promise<void> => {
+export const callRestartHook = async (context: RestartContext): Promise<void> => {
   const currentCallbacks = callbacks;
   callbacks = [];
 
@@ -15,7 +17,7 @@ export const callRestartHook = async (): Promise<void> => {
 
   for (const callback of currentCallbacks) {
     try {
-      await callback();
+      await callback(context);
     } catch (error) {
       if (!hasError) {
         hasError = true;

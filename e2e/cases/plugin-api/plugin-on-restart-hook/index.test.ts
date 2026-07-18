@@ -16,6 +16,6 @@ test('should call onRestart before restarting a watch build', async ({ execCli, 
 
   clearLogs();
   fs.writeFileSync(watchedFile, '2');
-  await expectLog('onRestart hook called');
+  await expectLog(`onRestart hook called: build, ${watchedFile}`);
   await expectBuildEnd();
 });

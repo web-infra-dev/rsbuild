@@ -5,7 +5,7 @@ import { color, isTTY } from './helpers';
 import { callRestartHook, restartHook } from './helpers/restartHook';
 import type { Logger } from './logger';
 import { createChokidar } from './server/watchFiles';
-import type { RsbuildInstance } from './types';
+import type { RestartContext, RsbuildInstance } from './types';
 
 const clearConsole = () => {
   if (isTTY() && !process.env.DEBUG) {
@@ -16,17 +16,17 @@ const clearConsole = () => {
 const beforeRestart = async ({
   filePath,
   clear = true,
-  id,
+  action,
   logger,
-}: {
-  filePath?: string;
+}: RestartContext & {
   clear?: boolean;
-  id: string;
   logger: Logger;
 }): Promise<void> => {
   if (clear) {
     clearConsole();
   }
+
+  const id = action === 'dev' ? 'server' : 'build';
 
   if (filePath) {
     const filename = path.basename(filePath);
@@ -35,7 +35,7 @@ const beforeRestart = async ({
     logger.info(`restarting ${id}...\n`);
   }
 
-  await callRestartHook();
+  await callRestartHook({ action, filePath });
 };
 
 export const restartDevServer = async ({
@@ -47,7 +47,7 @@ export const restartDevServer = async ({
   clear?: boolean;
   logger: Logger;
 }): Promise<boolean> => {
-  await beforeRestart({ filePath, clear, id: 'server', logger });
+  await beforeRestart({ action: 'dev', filePath, clear, logger });
 
   const rsbuild = await init({ isRestart: true });
 
@@ -70,7 +70,7 @@ const restartBuild = async ({
   clear?: boolean;
   logger: Logger;
 }): Promise<boolean> => {
-  await beforeRestart({ filePath, clear, id: 'build', logger });
+  await beforeRestart({ action: 'build', filePath, clear, logger });
 
   const rsbuild = await init({ isRestart: true, isBuildWatch: true });
 
@@ -117,9 +117,11 @@ export async function watchFilesForRestart({
     }
     restarting = true;
 
+    const absoluteFilePath = path.resolve(root, filePath);
+
     const restarted = isBuildWatch
-      ? await restartBuild({ filePath, logger: rsbuild.logger })
-      : await restartDevServer({ filePath, logger: rsbuild.logger });
+      ? await restartBuild({ filePath: absoluteFilePath, logger: rsbuild.logger })
+      : await restartDevServer({ filePath: absoluteFilePath, logger: rsbuild.logger });
 
     if (restarted) {
       await watcher.close();

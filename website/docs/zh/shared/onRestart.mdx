@@ -5,7 +5,15 @@
 - **类型：**
 
 ```ts
-function OnRestart(callback: () => Promise<void> | void): void;
+type RestartContext = {
+  action: 'dev' | 'build';
+  filePath?: string;
+};
+
+function OnRestart(callback: (context: RestartContext) => Promise<void> | void): void;
 ```
+
+- `action`：当前正在重启的 Rsbuild 操作类型。
+- `filePath`：触发重启的文件绝对路径，手动触发重启时为 `undefined`。
 
 - **版本：** 新增于 v2.1.7

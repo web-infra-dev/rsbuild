@@ -149,7 +149,19 @@ export type OnAfterCreateCompilerFn<Compiler = Rspack.Compiler | Rspack.MultiCom
 
 export type OnExitFn = (context: { exitCode: number }) => void;
 
-export type OnRestartFn = () => MaybePromise<void>;
+export type RestartContext = {
+  /**
+   * The current Rsbuild action being restarted.
+   */
+  action: 'dev' | 'build';
+  /**
+   * The absolute path of the file that triggered the restart.
+   * It is undefined when the restart is manually triggered.
+   */
+  filePath?: string;
+};
+
+export type OnRestartFn = (context: RestartContext) => MaybePromise<void>;
 
 export type ModifyHTMLContext = {
   /**
