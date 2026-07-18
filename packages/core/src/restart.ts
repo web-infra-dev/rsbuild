@@ -101,6 +101,8 @@ export async function watchFilesForRestart({
   }
 
   const root = rsbuild.context.rootPath;
+  // Chokidar reports event paths relative to `cwd` when it is configured.
+  const watchCwd = watchOptions?.cwd || root;
   const watcher = await createChokidar(files, root, {
     // do not trigger add for initial files
     ignoreInitial: true,
@@ -117,7 +119,7 @@ export async function watchFilesForRestart({
     }
     restarting = true;
 
-    const absoluteFilePath = path.resolve(root, filePath);
+    const absoluteFilePath = path.resolve(watchCwd, filePath);
 
     const restarted = isBuildWatch
       ? await restartBuild({ filePath: absoluteFilePath, logger: rsbuild.logger })
