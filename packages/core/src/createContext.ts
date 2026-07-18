@@ -4,6 +4,7 @@ import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
 import { withDefaultConfig } from './defaultConfig';
 import { hash } from './helpers';
 import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
+import { createRestartManager } from './helpers/restartManager';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import type { Logger } from './logger';
@@ -197,6 +198,7 @@ export async function createContext(
     environmentList: [],
     publicPathnames: [],
     hooks: initHooks(),
+    restartManager: createRestartManager(),
     config: { ...rsbuildConfig },
     originalConfig: userConfig,
     specifiedEnvironments,

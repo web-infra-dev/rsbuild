@@ -2,7 +2,6 @@ import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { color } from '../helpers';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers/compiler';
-import { restartHook } from '../helpers/restartHook';
 import { restartDevServer } from '../restart';
 import type {
   CreateCompiler,
@@ -201,9 +200,12 @@ export async function createDevServer<
   const cleanupGracefulShutdown = middlewareMode ? null : setupGracefulShutdown();
 
   let closingPromise: Promise<void> | null = null;
+  let unregisterRestart: (() => void) | undefined;
 
   const closeServer = async () => {
     if (!closingPromise) {
+      unregisterRestart?.();
+      unregisterRestart = undefined;
       closingPromise = (async () => {
         // ensure closeServer is only called once
         removeCleanup(closeServer);
@@ -230,7 +232,8 @@ export async function createDevServer<
         openPage,
         closeServer,
         printUrls,
-        restartServer: () => restartDevServer({ clear: false, logger }),
+        restartServer: () =>
+          restartDevServer({ clear: false, logger, restartManager: context.restartManager }),
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
         logger,
@@ -358,7 +361,7 @@ export async function createDevServer<
 
             await devServer.afterListen();
 
-            restartHook(devServer.close);
+            unregisterRestart = context.restartManager.register(closeServer);
 
             resolve({
               port,
