@@ -336,7 +336,7 @@ export function initPluginAPI({
 
   const onRestart: typeof hooks.onRestart.tap = (cb) => {
     if (!onRestartListened) {
-      restartHook(() => hooks.onRestart.callBatch());
+      restartHook((context) => hooks.onRestart.callBatch(context));
       onRestartListened = true;
     }
     hooks.onRestart.tap(cb);
