@@ -4,11 +4,8 @@ import { test } from '@e2e/helper';
 
 const watchedFile = path.join(import.meta.dirname, 'test-temp-watch.txt');
 
-test.beforeEach(() => {
-  fs.writeFileSync(watchedFile, '1');
-});
-
 test('should resolve restart file path from custom watch cwd', async ({ execCli, logHelper }) => {
+  fs.writeFileSync(watchedFile, '1');
   execCli('build --watch');
 
   const { clearLogs, expectBuildEnd, expectLog } = logHelper;
