@@ -296,6 +296,7 @@ export type RsbuildInstance = {
   | 'onCloseDevServer'
   | 'onDevCompileDone'
   | 'onExit'
+  | 'onRestart'
 >;
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker';

@@ -370,6 +370,7 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
       'onCloseDevServer',
       'onDevCompileDone',
       'onExit',
+      'onRestart',
     ]),
   };
 

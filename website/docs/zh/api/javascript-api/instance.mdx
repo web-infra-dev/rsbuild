@@ -992,6 +992,22 @@ rsbuild.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
 });
 ```
 
+## rsbuild.onRestart
+
+> 功能与 [onRestart](/plugins/dev/hooks#onrestart) 插件 hook 一致。
+
+import OnRestart from '@zh/shared/onRestart.mdx';
+
+<OnRestart />
+
+- **示例：**
+
+```ts
+rsbuild.onRestart(async () => {
+  console.log('restart!');
+});
+```
+
 ## rsbuild.onExit
 
 > 功能与 [onExit](/plugins/dev/hooks#onexit) 插件 hook 一致。
