@@ -7,7 +7,6 @@ atrule
 atrules
 attributify
 biomejs
-birpc
 blackmore
 brotli
 browserslistrc
@@ -156,7 +155,6 @@ tsdoc
 tsgo
 twoslash
 TYPELESS
-unawaited
 uncompiled
 unjs
 unminified

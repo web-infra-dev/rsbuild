@@ -1,8 +1,5 @@
 import { join } from 'node:path';
-import { expect, test as baseTest } from '@e2e/helper';
-
-// Failed to run this case on Windows
-const test = process.platform === 'win32' ? baseTest.skip : baseTest;
+import { expect, test } from '@e2e/helper';
 
 test('should reload page when HTML template changed', async ({
   page,

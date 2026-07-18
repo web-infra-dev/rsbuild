@@ -7,21 +7,8 @@ import {
 } from 'node:child_process';
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
-import {
-  afterAll as rstestAfterAll,
-  afterEach as rstestAfterEach,
-  beforeAll as rstestBeforeAll,
-  beforeEach as rstestBeforeEach,
-  describe as rstestDescribe,
-  expect,
-  test as base,
-} from '@rstest/playwright';
-import type {
-  PlaywrightFixture,
-  PlaywrightOptions,
-  PlaywrightTest,
-  PlaywrightUse,
-} from '@rstest/playwright';
+import { expect, test as base } from '@rstest/playwright';
+import type { PlaywrightFixture, PlaywrightOptions, PlaywrightTest } from '@rstest/playwright';
 import type { TestContext, TestOptions } from '@rstest/core';
 import {
   copyNodeModules as baseCopyNodeModules,
@@ -198,12 +185,6 @@ type RsbuildFixture = {
 
 type Close = DevResult['close'];
 
-type Use<T> = PlaywrightUse<T>;
-
-type RsbuildFixtureContext<K extends keyof RsbuildFixture> = Omit<RsbuildFixture, K> &
-  PlaywrightFixture &
-  TestContext;
-
 const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(options: T, cwd: string): T => {
   // inherit process.env from current process
   const { NODE_ENV: _, ...restEnv } = process.env;
@@ -215,7 +196,6 @@ const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(options: T, 
 
 const rsbuildBase = base.extend({
   playwright: {
-    browserName: 'chromium',
     launchOptions: {
       // Preserve the previous Playwright CI behavior.
       channel: process.env.CI ? 'chrome' : undefined,
@@ -224,8 +204,8 @@ const rsbuildBase = base.extend({
 });
 
 const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
-  cwd: async ({ expect: currentExpect }, use) => {
-    const testPath = currentExpect.getState().testPath;
+  cwd: async ({ task }, use) => {
+    const testPath = task.filepath;
     if (!testPath) {
       throw new Error('Failed to resolve current test file path.');
     }
@@ -327,30 +307,25 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     }
   },
 
-  runBoth: async ({ devOnly, build }: RsbuildFixtureContext<'runBoth'>, use: Use<RunBoth>) => {
-    const runBoth: RunBoth = async (assert, options) => {
+  runBoth: async ({ devOnly, build }, use) => {
+    await use(async (assert, options) => {
       const devResult = await devOnly(options);
       await assert({ mode: 'dev', result: devResult });
       const buildResult = await build(options);
       await assert({ mode: 'build', result: buildResult });
-    };
-    await use(runBoth);
+    });
   },
 
-  runBothServe: async (
-    { dev, buildPreview }: RsbuildFixtureContext<'runBothServe'>,
-    use: Use<RunBoth>,
-  ) => {
-    const runBothServe: RunBoth = async (assert, options) => {
+  runBothServe: async ({ dev, buildPreview }, use) => {
+    await use(async (assert, options) => {
       const devResult = await dev(options);
       await assert({ mode: 'dev', result: devResult });
       const buildResult = await buildPreview(options);
       await assert({ mode: 'build', result: buildResult });
-    };
-    await use(runBothServe);
+    });
   },
 
-  editFile: async ({ cwd }: RsbuildFixtureContext<'editFile'>, use: Use<EditFile>) => {
+  editFile: async ({ cwd }, use) => {
     const editFile: EditFile = (filename, editor) => {
       const resolvedFilename = path.isAbsolute(filename) ? filename : path.resolve(cwd, filename);
       return baseEditFile(resolvedFilename, editor);
@@ -358,7 +333,7 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     await use(editFile);
   },
 
-  exec: async ({ cwd, logHelper }: RsbuildFixtureContext<'exec'>, use: Use<Exec>) => {
+  exec: async ({ cwd, logHelper }, use) => {
     const closes: Array<() => void> = [];
 
     const exec: Exec = (command, options = {}) => {
@@ -389,14 +364,14 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     }
   },
 
-  execCli: async ({ exec }: RsbuildFixtureContext<'execCli'>, use: Use<Exec>) => {
+  execCli: async ({ exec }, use) => {
     const execCli: Exec = (command, options = {}) => {
       return exec(`node "${RSBUILD_BIN_PATH}" ${command}`, options);
     };
     await use(execCli);
   },
 
-  execCliSync: async ({ cwd }: RsbuildFixtureContext<'execCliSync'>, use: Use<ExecSync>) => {
+  execCliSync: async ({ cwd }, use) => {
     const execCliSync: ExecSync = (command, options = {}) => {
       return execSync(
         `node ${RSBUILD_BIN_PATH} ${command}`,
@@ -406,10 +381,7 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     await use(execCliSync);
   },
 
-  copySrcDir: async (
-    { cwd }: RsbuildFixtureContext<'copySrcDir'>,
-    use: Use<() => Promise<string>>,
-  ) => {
+  copySrcDir: async ({ cwd }, use) => {
     const copySrcDir = async () => {
       const targetDir = path.join(cwd, 'test-temp-src');
       await fse.remove(targetDir);
@@ -422,10 +394,7 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     await use(copySrcDir);
   },
 
-  copyNodeModules: async (
-    { cwd }: RsbuildFixtureContext<'copyNodeModules'>,
-    use: Use<CopyNodeModules>,
-  ) => {
+  copyNodeModules: async ({ cwd }, use) => {
     await use(() => baseCopyNodeModules(cwd));
   },
 });
@@ -447,13 +416,6 @@ type E2ETest = E2ETestCall &
     beforeEach: E2EEachHook;
   };
 
-export const test = Object.assign(rsbuildTest, {
-  afterAll: rstestAfterAll,
-  afterEach: rstestAfterEach,
-  beforeAll: rstestBeforeAll,
-  beforeEach: rstestBeforeEach,
-  describe: rstestDescribe,
-  fail: rsbuildTest.fails,
-}) as unknown as E2ETest;
+export const test = rsbuildTest as E2ETest;
 
 export { expect };

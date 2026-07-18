@@ -6802,7 +6802,7 @@ snapshots:
 
   '@rspress/shared@2.0.17(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)':
     dependencies:
-      '@rsbuild/core': 2.1.6(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.5(@module-federation/runtime-tools@2.7.0)(core-js@3.49.0)
       '@shikijs/rehype': 4.3.0
       unified: 11.0.5
     transitivePeerDependencies:

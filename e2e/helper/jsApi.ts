@@ -199,15 +199,7 @@ export async function build({
     buildResult = await rsbuild.build({ watch });
   } catch (error) {
     buildError = error as Error;
-    const message = stripAnsi(buildError.message);
-
-    try {
-      buildError.message = message;
-    } catch {
-      const normalizedError = new Error(message);
-      normalizedError.stack = buildError.stack;
-      buildError = normalizedError;
-    }
+    buildError.message = stripAnsi(buildError.message);
 
     if (!catchBuildError) {
       throw buildError;
