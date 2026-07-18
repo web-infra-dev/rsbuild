@@ -43,7 +43,7 @@ function getCacheDirectory(context: RsbuildContext, cacheDirectory?: string) {
   if (cacheDirectory) {
     return isAbsolute(cacheDirectory) ? cacheDirectory : join(context.rootPath, cacheDirectory);
   }
-  return join(context.cachePath);
+  return context.cachePath;
 }
 
 async function getCacheIdentifier(options: BabelLoaderOptions) {
