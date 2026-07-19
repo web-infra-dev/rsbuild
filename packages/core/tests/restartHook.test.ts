@@ -1,5 +1,4 @@
-import { createRsbuild } from '../src';
-import { createRestartManager, getRestartManager } from '../src/helpers/restartManager';
+import { createRestartManager } from '../src/helpers/restartManager';
 
 describe('restartManager', () => {
   test('should execute all callbacks and clear the registry when one throws', async () => {
@@ -36,24 +35,5 @@ describe('restartManager', () => {
     await manager.requestRestart({ action: 'dev' });
 
     expect(callback).not.toHaveBeenCalled();
-  });
-
-  test('should isolate callbacks between Rsbuild instances', async () => {
-    const firstCallback = rstest.fn();
-    const secondCallback = rstest.fn();
-    const first = await createRsbuild();
-    const second = await createRsbuild();
-    const context = { action: 'dev' } as const;
-
-    first.onRestart(firstCallback);
-    second.onRestart(secondCallback);
-    await getRestartManager(first).requestRestart(context);
-
-    expect(firstCallback).toHaveBeenCalledWith(context);
-    expect(secondCallback).not.toHaveBeenCalled();
-
-    await getRestartManager(second).requestRestart(context);
-
-    expect(secondCallback).toHaveBeenCalledWith(context);
   });
 });

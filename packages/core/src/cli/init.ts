@@ -4,7 +4,6 @@ import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { loadConfig as baseLoadConfig } from '../loadConfig';
 import { defaultLogger } from '../logger';
-import { watchFilesForRestart } from '../restart';
 import type { RestartContext, RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
@@ -130,10 +129,7 @@ const loadConfig = async (root: string) => {
 };
 
 const restart = async ({ action }: RestartContext): Promise<boolean> => {
-  const rsbuild = await init({
-    isRestart: true,
-    isBuildWatch: action === 'build',
-  });
+  const rsbuild = await init({ isRestart: true });
 
   // Skip restarting if the config cannot be loaded, for example while the
   // config file contains incomplete edits.
@@ -149,13 +145,9 @@ const restart = async ({ action }: RestartContext): Promise<boolean> => {
   return true;
 };
 
-export async function init({
-  isRestart,
-  isBuildWatch = false,
-}: {
-  isRestart?: boolean;
-  isBuildWatch?: boolean;
-} = {}): Promise<RsbuildInstance | undefined> {
+export async function init({ isRestart }: { isRestart?: boolean } = {}): Promise<
+  RsbuildInstance | undefined
+> {
   let logger = defaultLogger;
   const { options } = cliState;
 
@@ -179,24 +171,6 @@ export async function init({
       { restart },
     );
     logger = rsbuild.logger;
-
-    rsbuild.onBeforeCreateCompiler(() => {
-      // Skip watching files when not in dev mode or not in build watch mode
-      if (rsbuild.context.action !== 'dev' && !isBuildWatch) {
-        return;
-      }
-
-      const config = rsbuild.getNormalizedConfig();
-      const watchFiles = config.dev.watchFiles.filter(
-        ({ type }) => type === 'restart' || type === 'reload-server',
-      );
-
-      watchFilesForRestart({
-        watchFiles,
-        rsbuild,
-        isBuildWatch,
-      });
-    });
 
     return rsbuild;
   } catch (err) {

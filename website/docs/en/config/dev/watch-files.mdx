@@ -92,7 +92,7 @@ export default {
 
 ### restart
 
-`restart` restarts the dev server when running `rsbuild dev`, or restarts the watch build when running `rsbuild build --watch`.
+`restart` requests a dev server restart when running `rsbuild dev`, or a watch build restart when running `rsbuild build --watch`.
 
 This can be used to watch configuration files whose changes require Rsbuild to be reinitialized.
 
@@ -112,9 +112,7 @@ export default {
 };
 ```
 
-The `restart` functionality is provided by Rsbuild CLI. It is currently not supported by custom servers or frameworks that invoke Rsbuild through the JavaScript API.
-
-> Before the restart, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart), which you can use to run custom logic before the dev server or watch build restarts.
+When using the JavaScript API, `rsbuild.startDevServer()`, `rsbuild.createDevServer()`, and `rsbuild.build({ watch: true })` install restart watchers, while regular builds and preview servers do not. When a watched file changes, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart) but does not automatically close or restart the active dev server or watch build. You can use this hook to run custom logic.
 
 ### reload-server
 

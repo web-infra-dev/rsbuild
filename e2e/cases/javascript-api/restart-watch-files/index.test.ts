@@ -1,0 +1,91 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { expect, test } from '@e2e/helper';
+import {
+  createRsbuild,
+  type RestartContext,
+  type RsbuildConfig,
+  type RsbuildInstance,
+} from '@rsbuild/core';
+import { getRandomPort } from '@rstackjs/test-utils';
+
+const watchedFile = path.join(import.meta.dirname, 'test-temp-watch.txt');
+
+const createConfig = (): RsbuildConfig => ({
+  dev: {
+    watchFiles: {
+      paths: watchedFile,
+      type: 'restart',
+    },
+  },
+});
+
+const expectRestart = (rsbuild: RsbuildInstance, action: RestartContext['action']) => {
+  const restart = new Promise<RestartContext>((resolve) => {
+    rsbuild.onRestart(resolve);
+  });
+
+  fs.writeFileSync(watchedFile, '2');
+  return expect(restart).resolves.toEqual({
+    action,
+    filePath: watchedFile,
+  });
+};
+
+test.beforeEach(() => {
+  fs.writeFileSync(watchedFile, '1');
+});
+
+test.afterAll(() => {
+  fs.rmSync(watchedFile, { force: true });
+});
+
+test('build({ watch: true }) should watch restart files', async ({ build, copySrcDir }) => {
+  const sourcePath = await copySrcDir();
+  const result = await build({
+    watch: true,
+    config: {
+      ...createConfig(),
+      source: {
+        entry: {
+          index: path.join(sourcePath, 'index.js'),
+        },
+      },
+    },
+  });
+  await result.expectBuildEnd();
+
+  await expectRestart(result.instance, 'build');
+
+  // Without a restart executor, the current watch build should remain active.
+  result.clearLogs();
+  fs.writeFileSync(path.join(sourcePath, 'index.js'), "console.log('updated');");
+  await result.expectBuildEnd();
+});
+
+test('startDevServer() should watch restart files', async ({ devOnly }) => {
+  const result = await devOnly({ config: createConfig() });
+
+  await expectRestart(result.instance, 'dev');
+
+  // Without a restart executor, the current server should remain available.
+  const response = await fetch(result.urls[0]);
+  expect(response.ok).toBeTruthy();
+});
+
+test('createDevServer() should watch restart files', async () => {
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+    config: {
+      ...createConfig(),
+      server: {
+        port: await getRandomPort(),
+      },
+    },
+  });
+  const server = await rsbuild.createDevServer({ runCompile: false });
+
+  await expectRestart(rsbuild, 'dev');
+
+  await server.close();
+});

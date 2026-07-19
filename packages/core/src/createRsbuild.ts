@@ -5,7 +5,7 @@ import { createCompiler as baseCreateCompiler } from './createCompiler';
 import { createContext } from './createContext';
 import { castArray, color, getNodeEnv, isFunction, pick, setNodeEnv } from './helpers';
 import { isEmptyDir } from './helpers/fs';
-import { setRestartManager, type RestartExecutor } from './helpers/restartManager';
+import type { RestartExecutor } from './helpers/restartManager';
 import { initConfigs as baseInitConfigs, initRsbuildConfig } from './initConfigs';
 import { initPluginAPI } from './initPlugins';
 import { inspectConfig as baseInspectConfig } from './inspectConfig';
@@ -251,27 +251,7 @@ export async function createRsbuildInternal(
       setNodeEnv('production');
     }
 
-    const buildInstance = await baseBuild(
-      { context, pluginManager, rsbuildOptions: resolvedOptions },
-      options,
-    );
-
-    let unregisterRestart: (() => void) | undefined;
-    const close = async () => {
-      unregisterRestart?.();
-      unregisterRestart = undefined;
-      await context.hooks.onCloseBuild.callBatch();
-      await buildInstance.close();
-    };
-
-    if (options?.watch) {
-      unregisterRestart = context.restartManager.registerCleanup(close);
-    }
-
-    return {
-      ...buildInstance,
-      close,
-    };
+    return baseBuild({ context, pluginManager, rsbuildOptions: resolvedOptions }, options);
   };
 
   const startDevServer: StartDevServer = async (options?: StartDevServerOptions) => {
@@ -391,8 +371,6 @@ export async function createRsbuildInternal(
       'onRestart',
     ]),
   };
-
-  setRestartManager(rsbuild, context.restartManager);
 
   if (envs) {
     rsbuild.onCloseBuild(envs.cleanup);

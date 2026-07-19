@@ -2,7 +2,7 @@ import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { color } from '../helpers';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers/compiler';
-import { requestRestart } from '../restart';
+import { requestRestart, watchFilesForRestart } from '../restart';
 import type {
   CreateCompiler,
   CreateDevServerOptions,
@@ -193,21 +193,21 @@ export async function createDevServer<
 
   const state: {
     fileWatcher?: WatchFilesResult;
+    restartWatcher?: WatchFilesResult;
     devMiddlewares?: GetDevMiddlewaresResult;
     buildManager?: BuildManager;
   } = {};
 
   const cleanupGracefulShutdown = middlewareMode ? null : setupGracefulShutdown();
 
-  let closingPromise: Promise<void> | null = null;
+  let closingPromise: Promise<void> | undefined;
   let unregisterRestart: (() => void) | undefined;
 
-  const closeServer = async () => {
+  const closeServerResources = () => {
     if (!closingPromise) {
       unregisterRestart?.();
       unregisterRestart = undefined;
       closingPromise = (async () => {
-        // ensure closeServer is only called once
         removeCleanup(closeServer);
         cleanupGracefulShutdown?.();
         await context.hooks.onCloseDevServer.callBatch();
@@ -215,6 +215,11 @@ export async function createDevServer<
       })();
     }
     return closingPromise;
+  };
+
+  const closeServer = async () => {
+    await state.restartWatcher?.close();
+    await closeServerResources();
   };
 
   if (!middlewareMode) {
@@ -368,8 +373,6 @@ export async function createDevServer<
 
             await devServer.afterListen();
 
-            unregisterRestart = context.restartManager.registerCleanup(closeServer);
-
             resolve({
               port,
               urls: urls.map((item) => item.url),
@@ -436,6 +439,19 @@ export async function createDevServer<
 
   // start watching
   state.buildManager?.watch();
+
+  // Only close server resources before restart; keep the watcher alive for retries.
+  unregisterRestart = context.restartManager.registerCleanup(closeServerResources);
+  try {
+    state.restartWatcher = await watchFilesForRestart({
+      watchFiles: config.dev.watchFiles,
+      context,
+      action: 'dev',
+    });
+  } catch (error) {
+    await closeServerResources();
+    throw error;
+  }
 
   logger.debug('create dev server done');
 

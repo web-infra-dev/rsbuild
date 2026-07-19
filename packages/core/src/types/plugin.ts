@@ -651,7 +651,7 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onExit: PluginHook<OnExitFn>;
   /**
-   * Called before Rsbuild CLI restarts the dev server or watch build.
+   * Called when a restart is requested for the dev server or watch build.
    */
   onRestart: PluginHook<OnRestartFn>;
   /**
