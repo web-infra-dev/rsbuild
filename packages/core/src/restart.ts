@@ -36,7 +36,7 @@ export const requestRestart = ({
     logger.info(`restarting ${id}...\n`);
   }
 
-  return restartManager.request({ action, filePath });
+  return restartManager.requestRestart({ action, filePath });
 };
 
 export async function watchFilesForRestart({

@@ -265,7 +265,7 @@ export async function createRsbuildInternal(
     };
 
     if (options?.watch) {
-      unregisterRestart = context.restartManager.register(close);
+      unregisterRestart = context.restartManager.registerCleanup(close);
     }
 
     return {

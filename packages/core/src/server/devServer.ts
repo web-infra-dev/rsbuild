@@ -366,7 +366,7 @@ export async function createDevServer<
 
             await devServer.afterListen();
 
-            unregisterRestart = context.restartManager.register(closeServer);
+            unregisterRestart = context.restartManager.registerCleanup(closeServer);
 
             resolve({
               port,

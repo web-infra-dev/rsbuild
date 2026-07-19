@@ -2,15 +2,15 @@ import type { RestartContext } from '../types/hooks';
 import type { RsbuildInstance } from '../types/rsbuild';
 import type { MaybePromise } from '../types/utils';
 
-type Entry = { callback: () => MaybePromise<void> };
+type Cleanup = () => MaybePromise<void>;
 
 export type RestartExecutor = (context: RestartContext) => MaybePromise<boolean>;
 
 export type RestartManager = {
   /** Register a cleanup callback and return a function that unregisters it. */
-  register(callback: () => MaybePromise<void>): () => void;
+  registerCleanup(cleanup: Cleanup): () => void;
   /** Handle a restart request and return whether the restart succeeded. */
-  request(context: RestartContext): Promise<boolean>;
+  requestRestart(context: RestartContext): Promise<boolean>;
 };
 
 const restartManagers = new WeakMap<RsbuildInstance, RestartManager>();
@@ -22,25 +22,24 @@ export const createRestartManager = ({
   onRestart: (context: RestartContext) => MaybePromise<unknown>;
   restart?: RestartExecutor;
 }): RestartManager => {
-  let entries = new Set<Entry>();
+  let cleanups = new Set<Cleanup>();
 
   return {
-    register(callback) {
-      const entry = { callback };
-      entries.add(entry);
+    registerCleanup(cleanup) {
+      cleanups.add(cleanup);
 
       return () => {
-        entries.delete(entry);
+        cleanups.delete(cleanup);
       };
     },
-    async request(context) {
+    async requestRestart(context) {
       if (!restart) {
         await onRestart(context);
         return false;
       }
 
-      const currentEntries = entries;
-      entries = new Set();
+      const currentCleanups = cleanups;
+      cleanups = new Set();
 
       let hasError = false;
       let firstError: unknown;
@@ -52,9 +51,9 @@ export const createRestartManager = ({
         firstError = error;
       }
 
-      for (const entry of currentEntries) {
+      for (const cleanup of currentCleanups) {
         try {
-          await entry.callback();
+          await cleanup();
         } catch (error) {
           if (!hasError) {
             hasError = true;
