@@ -75,20 +75,15 @@ export const build = async (
     return closingPromise;
   };
 
-  let restartWatcher: Awaited<ReturnType<typeof watchFilesForRestart>>;
+  let restartWatcher: ReturnType<typeof watchFilesForRestart>;
   if (watch) {
     // Only close build resources before restart; keep the watcher alive for retries.
     unregisterRestart = context.restartManager.registerCleanup(closeBuild);
-    try {
-      restartWatcher = await watchFilesForRestart({
-        watchFiles: context.normalizedConfig!.dev.watchFiles,
-        context,
-        action: 'build',
-      });
-    } catch (error) {
-      await closeBuild();
-      throw error;
-    }
+    restartWatcher = watchFilesForRestart({
+      watchFiles: context.normalizedConfig!.dev.watchFiles,
+      context,
+      action: 'build',
+    });
   }
 
   const close = async () => {

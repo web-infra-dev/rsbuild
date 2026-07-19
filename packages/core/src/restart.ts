@@ -41,7 +41,7 @@ export const requestRestart = ({
   return restartManager.requestRestart({ action, filePath });
 };
 
-export async function watchFilesForRestart({
+export function watchFilesForRestart({
   watchFiles,
   context,
   action,
@@ -49,7 +49,7 @@ export async function watchFilesForRestart({
   watchFiles: WatchFiles[];
   context: InternalContext;
   action: RestartContext['action'];
-}): Promise<WatchFilesResult | undefined> {
+}): WatchFilesResult | undefined {
   if (!watchFiles.length) {
     return;
   }
@@ -83,29 +83,8 @@ export async function watchFilesForRestart({
   }
 
   const { logger, restartManager, rootPath: root } = context;
-  const watchers = await Promise.all(
-    watchGroups.map(async ({ files, options }) => ({
-      // Chokidar reports event paths relative to `cwd` when it is configured.
-      cwd: options?.cwd || root,
-      watcher: await createChokidar(files, root, {
-        // Avoid initial add events.
-        ignoreInitial: true,
-        // Ignore file permission errors.
-        ignorePermissionErrors: true,
-        ...options,
-      }),
-    })),
-  );
-
   let restarting = false;
   let closePromise: Promise<void> | undefined;
-
-  const close = () => {
-    if (!closePromise) {
-      closePromise = Promise.all(watchers.map(({ watcher }) => watcher.close())).then(() => {});
-    }
-    return closePromise;
-  };
 
   const onChange = async (filePath: string, cwd: string) => {
     if (restarting || closePromise) {
@@ -136,12 +115,38 @@ export async function watchFilesForRestart({
     }
   };
 
-  for (const { cwd, watcher } of watchers) {
-    const handleChange = (filePath: string) => void onChange(filePath, cwd);
-    watcher.on('add', handleChange);
-    watcher.on('change', handleChange);
-    watcher.on('unlink', handleChange);
-  }
+  // Initialize watchers in the background so task startup is not delayed.
+  const watchersPromise = Promise.all(
+    watchGroups.map(async ({ files, options }) => {
+      try {
+        const watcher = await createChokidar(files, root, {
+          // Avoid initial add events.
+          ignoreInitial: true,
+          // Ignore file permission errors.
+          ignorePermissionErrors: true,
+          ...options,
+        });
+        // Chokidar reports event paths relative to `cwd` when it is configured.
+        const cwd = options?.cwd || root;
+        const handleChange = (filePath: string) => void onChange(filePath, cwd);
+        watcher.on('add', handleChange);
+        watcher.on('change', handleChange);
+        watcher.on('unlink', handleChange);
+        return watcher;
+      } catch (error) {
+        logger.error(error);
+      }
+    }),
+  );
+
+  const close = () => {
+    if (!closePromise) {
+      closePromise = watchersPromise
+        .then((watchers) => Promise.all(watchers.map((watcher) => watcher?.close())))
+        .then(() => {});
+    }
+    return closePromise;
+  };
 
   return { close };
 }

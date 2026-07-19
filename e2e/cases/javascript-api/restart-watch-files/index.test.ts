@@ -20,16 +20,28 @@ const createConfig = (): RsbuildConfig => ({
   },
 });
 
-const expectRestart = (rsbuild: RsbuildInstance, action: RestartContext['action']) => {
-  const restart = new Promise<RestartContext>((resolve) => {
-    rsbuild.onRestart(resolve);
+const expectRestart = async (rsbuild: RsbuildInstance, action: RestartContext['action']) => {
+  let restartContext: RestartContext | undefined;
+  let version = 1;
+
+  rsbuild.onRestart((context) => {
+    restartContext = context;
   });
 
-  fs.writeFileSync(watchedFile, '2');
-  return expect(restart).resolves.toEqual({
-    action,
-    filePath: watchedFile,
-  });
+  await expect
+    .poll(
+      () => {
+        if (!restartContext) {
+          fs.writeFileSync(watchedFile, String(++version));
+        }
+        return restartContext;
+      },
+      { timeout: 5_000 },
+    )
+    .toEqual({
+      action,
+      filePath: watchedFile,
+    });
 };
 
 test.beforeEach(() => {

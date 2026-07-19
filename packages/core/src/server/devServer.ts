@@ -442,16 +442,11 @@ export async function createDevServer<
 
   // Only close server resources before restart; keep the watcher alive for retries.
   unregisterRestart = context.restartManager.registerCleanup(closeServerResources);
-  try {
-    state.restartWatcher = await watchFilesForRestart({
-      watchFiles: config.dev.watchFiles,
-      context,
-      action: 'dev',
-    });
-  } catch (error) {
-    await closeServerResources();
-    throw error;
-  }
+  state.restartWatcher = watchFilesForRestart({
+    watchFiles: config.dev.watchFiles,
+    context,
+    action: 'dev',
+  });
 
   logger.debug('create dev server done');
 
