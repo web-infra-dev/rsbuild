@@ -1,33 +1,59 @@
-import type { RestartManager } from '../types/context';
-import type { OnRestartFn } from '../types/hooks';
+import type { RestartContext } from '../types/hooks';
 import type { RsbuildInstance } from '../types/rsbuild';
+import type { MaybePromise } from '../types/utils';
 
-type Entry = { callback: OnRestartFn };
+type Cleanup = () => MaybePromise<void>;
+
+export type RestartExecutor = (context: RestartContext) => MaybePromise<boolean>;
+
+export type RestartManager = {
+  /** Register a cleanup callback and return a function that unregisters it. */
+  registerCleanup(cleanup: Cleanup): () => void;
+  /** Handle a restart request and return whether the restart succeeded. */
+  requestRestart(context: RestartContext): Promise<boolean>;
+};
 
 const restartManagers = new WeakMap<RsbuildInstance, RestartManager>();
 
-export const createRestartManager = (): RestartManager => {
-  let entries = new Set<Entry>();
+export const createRestartManager = ({
+  onRestart,
+  restart,
+}: {
+  onRestart: (context: RestartContext) => MaybePromise<unknown>;
+  restart?: RestartExecutor;
+}): RestartManager => {
+  let cleanups = new Set<Cleanup>();
 
   return {
-    register(callback) {
-      const entry = { callback };
-      entries.add(entry);
+    registerCleanup(cleanup) {
+      cleanups.add(cleanup);
 
       return () => {
-        entries.delete(entry);
+        cleanups.delete(cleanup);
       };
     },
-    async call(context) {
-      const currentEntries = entries;
-      entries = new Set();
+    async requestRestart(context) {
+      if (!restart) {
+        await onRestart(context);
+        return false;
+      }
+
+      const currentCleanups = cleanups;
+      cleanups = new Set();
 
       let hasError = false;
       let firstError: unknown;
 
-      for (const entry of currentEntries) {
+      try {
+        await onRestart(context);
+      } catch (error) {
+        hasError = true;
+        firstError = error;
+      }
+
+      for (const cleanup of currentCleanups) {
         try {
-          await entry.callback(context);
+          await cleanup();
         } catch (error) {
           if (!hasError) {
             hasError = true;
@@ -39,6 +65,8 @@ export const createRestartManager = (): RestartManager => {
       if (hasError) {
         throw firstError;
       }
+
+      return restart(context);
     },
   };
 };

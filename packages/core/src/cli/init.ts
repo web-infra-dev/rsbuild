@@ -1,11 +1,11 @@
 import path from 'node:path';
-import { createRsbuild } from '../createRsbuild';
+import { createRsbuildInternal } from '../createRsbuild';
 import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { loadConfig as baseLoadConfig } from '../loadConfig';
 import { defaultLogger } from '../logger';
 import { watchFilesForRestart } from '../restart';
-import type { RsbuildInstance } from '../types';
+import type { RestartContext, RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
 export type CommandName = 'dev' | 'build' | 'preview' | 'inspect';
@@ -129,6 +129,26 @@ const loadConfig = async (root: string) => {
   return config;
 };
 
+const restart = async ({ action }: RestartContext): Promise<boolean> => {
+  const rsbuild = await init({
+    isRestart: true,
+    isBuildWatch: action === 'build',
+  });
+
+  // Skip restarting if the config cannot be loaded, for example while the
+  // config file contains incomplete edits.
+  if (!rsbuild) {
+    return false;
+  }
+
+  if (action === 'build') {
+    await rsbuild.build({ watch: true });
+  } else {
+    await rsbuild.startDevServer();
+  }
+  return true;
+};
+
 export async function init({
   isRestart,
   isBuildWatch = false,
@@ -143,18 +163,21 @@ export async function init({
     const cwd = process.cwd();
     const root = options.root ? ensureAbsolutePath(cwd, options.root) : cwd;
 
-    const rsbuild = await createRsbuild({
-      cwd: root,
-      config: () => loadConfig(root),
-      environment: options.environment,
-      loadEnv:
-        options.env === false
-          ? false
-          : {
-              cwd: getEnvDir(root, options.envDir),
-              mode: options.envMode,
-            },
-    });
+    const rsbuild = await createRsbuildInternal(
+      {
+        cwd: root,
+        config: () => loadConfig(root),
+        environment: options.environment,
+        loadEnv:
+          options.env === false
+            ? false
+            : {
+                cwd: getEnvDir(root, options.envDir),
+                mode: options.envMode,
+              },
+      },
+      { restart },
+    );
     logger = rsbuild.logger;
 
     rsbuild.onBeforeCreateCompiler(() => {

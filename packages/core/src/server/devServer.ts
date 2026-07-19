@@ -2,7 +2,7 @@ import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { color } from '../helpers';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers/compiler';
-import { restartDevServer } from '../restart';
+import { requestRestart } from '../restart';
 import type {
   CreateCompiler,
   CreateDevServerOptions,
@@ -233,7 +233,12 @@ export async function createDevServer<
         closeServer,
         printUrls,
         restartServer: () =>
-          restartDevServer({ clear: false, logger, restartManager: context.restartManager }),
+          requestRestart({
+            action: 'dev',
+            clear: false,
+            logger,
+            restartManager: context.restartManager,
+          }),
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
         logger,
@@ -361,7 +366,7 @@ export async function createDevServer<
 
             await devServer.afterListen();
 
-            unregisterRestart = context.restartManager.register(closeServer);
+            unregisterRestart = context.restartManager.registerCleanup(closeServer);
 
             resolve({
               port,

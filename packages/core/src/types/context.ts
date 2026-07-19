@@ -1,8 +1,9 @@
 import type { Hooks } from '../hooks';
+import type { RestartManager } from '../helpers/restartManager';
 import type { Logger } from '../logger';
 import type { SocketServer } from '../server/socketServer';
 import type { NormalizedConfig, RsbuildConfig } from './config';
-import type { EnvironmentContext, OnRestartFn, RestartContext } from './hooks';
+import type { EnvironmentContext } from './hooks';
 import type { RsbuildPluginAPI } from './plugin';
 import type { RsbuildStats } from './rsbuild';
 
@@ -82,13 +83,6 @@ export type BuildState = {
   hasErrors: boolean;
   /** The build time of each environment */
   time: Record<string, number>;
-};
-
-export type RestartManager = {
-  /** Register a restart callback and return a function that unregisters it. */
-  register(callback: OnRestartFn): () => void;
-  /** Invoke and clear all currently registered restart callbacks. */
-  call(context: RestartContext): Promise<void>;
 };
 
 /** The inner context. */
