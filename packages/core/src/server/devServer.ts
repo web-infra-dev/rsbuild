@@ -232,13 +232,15 @@ export async function createDevServer<
         openPage,
         closeServer,
         printUrls,
-        restartServer: () =>
-          requestRestart({
-            action: 'dev',
-            clear: false,
-            logger,
-            restartManager: context.restartManager,
-          }),
+        restartServer: context.restartManager.canRestart
+          ? () =>
+              requestRestart({
+                action: 'dev',
+                clear: false,
+                logger,
+                restartManager: context.restartManager,
+              })
+          : undefined,
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
         logger,
