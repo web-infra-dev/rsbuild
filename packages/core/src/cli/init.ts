@@ -163,31 +163,13 @@ export async function init({
         return;
       }
 
-      const files: string[] = [];
       const config = rsbuild.getNormalizedConfig();
-
-      if (config.dev.watchFiles) {
-        for (const watchConfig of config.dev.watchFiles) {
-          if (watchConfig.type !== 'restart' && watchConfig.type !== 'reload-server') {
-            continue;
-          }
-
-          const paths = castArray(watchConfig.paths);
-          if (watchConfig.options) {
-            watchFilesForRestart({
-              files: paths,
-              rsbuild,
-              isBuildWatch,
-              watchOptions: watchConfig.options,
-            });
-          } else {
-            files.push(...paths);
-          }
-        }
-      }
+      const watchFiles = config.dev.watchFiles.filter(
+        ({ type }) => type === 'restart' || type === 'reload-server',
+      );
 
       watchFilesForRestart({
-        files,
+        watchFiles,
         rsbuild,
         isBuildWatch,
       });
