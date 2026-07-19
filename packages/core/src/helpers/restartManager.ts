@@ -7,6 +7,8 @@ type Cleanup = () => MaybePromise<void>;
 export type RestartExecutor = (context: RestartContext) => MaybePromise<boolean>;
 
 export type RestartManager = {
+  /** Whether a restart executor is available. */
+  readonly canRestart: boolean;
   /** Register a cleanup callback and return a function that unregisters it. */
   registerCleanup(cleanup: Cleanup): () => void;
   /** Handle a restart request and return whether the restart succeeded. */
@@ -25,6 +27,7 @@ export const createRestartManager = ({
   let cleanups = new Set<Cleanup>();
 
   return {
+    canRestart: Boolean(restart),
     registerCleanup(cleanup) {
       cleanups.add(cleanup);
 

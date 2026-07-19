@@ -21,6 +21,19 @@ test('should display shortcuts as expected in dev', async ({ exec, logHelper }) 
   await expectLog('➜  Local:    http://localhost:');
 });
 
+test('should not display restart shortcut without a restart executor', async ({
+  exec,
+  logHelper,
+}) => {
+  const { childProcess } = exec('node ./devJsApi.js');
+  const { expectLog, expectNoLog } = logHelper;
+
+  await expectLog('press h + enter to show shortcuts');
+  childProcess.stdin?.write('h\n');
+  await expectLog('u + enter  show urls');
+  expectNoLog('r + enter  restart server');
+});
+
 test('should display shortcuts as expected in preview', async ({ exec, logHelper }) => {
   const { childProcess } = exec('node ./preview.js');
   const { expectLog, clearLogs } = logHelper;
