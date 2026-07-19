@@ -331,10 +331,6 @@ export function initPluginAPI({
     hooks.onExit.tap(cb);
   };
 
-  context.restartManager.register(async (restartContext) => {
-    await hooks.onRestart.callBatch(restartContext);
-  });
-
   // Each plugin returns different APIs depending on the registered environment info.
   return (environment?: string) => ({
     context: publicContext,

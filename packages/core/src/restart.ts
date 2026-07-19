@@ -1,11 +1,10 @@
 import path from 'node:path';
 import type { ChokidarOptions } from 'chokidar';
-import { init } from './cli/init';
 import { castArray, color, isTTY } from './helpers';
-import { getRestartManager } from './helpers/restartManager';
+import { getRestartManager, type RestartManager } from './helpers/restartManager';
 import type { Logger } from './logger';
 import { createChokidar } from './server/watchFiles';
-import type { RestartContext, RestartManager, RsbuildInstance, WatchFiles } from './types';
+import type { RestartContext, RsbuildInstance, WatchFiles } from './types';
 
 const clearConsole = () => {
   if (isTTY() && !process.env.DEBUG) {
@@ -13,7 +12,7 @@ const clearConsole = () => {
   }
 };
 
-const beforeRestart = async ({
+export const requestRestart = ({
   filePath,
   clear = true,
   action,
@@ -23,7 +22,7 @@ const beforeRestart = async ({
   clear?: boolean;
   logger: Logger;
   restartManager: RestartManager;
-}): Promise<void> => {
+}): Promise<boolean> => {
   if (clear) {
     clearConsole();
   }
@@ -37,57 +36,7 @@ const beforeRestart = async ({
     logger.info(`restarting ${id}...\n`);
   }
 
-  await restartManager.call({ action, filePath });
-};
-
-export const restartDevServer = async ({
-  filePath,
-  clear = true,
-  logger,
-  restartManager,
-}: {
-  filePath?: string;
-  clear?: boolean;
-  logger: Logger;
-  restartManager: RestartManager;
-}): Promise<boolean> => {
-  await beforeRestart({ action: 'dev', filePath, clear, logger, restartManager });
-
-  const rsbuild = await init({ isRestart: true });
-
-  // Skip the following logic if restart failed,
-  // maybe user is editing config file and write some invalid config
-  if (!rsbuild) {
-    return false;
-  }
-
-  await rsbuild.startDevServer();
-  return true;
-};
-
-const restartBuild = async ({
-  filePath,
-  clear = true,
-  logger,
-  restartManager,
-}: {
-  filePath?: string;
-  clear?: boolean;
-  logger: Logger;
-  restartManager: RestartManager;
-}): Promise<boolean> => {
-  await beforeRestart({ action: 'build', filePath, clear, logger, restartManager });
-
-  const rsbuild = await init({ isRestart: true, isBuildWatch: true });
-
-  // Skip the following logic if restart failed,
-  // maybe user is editing config file and write some invalid config
-  if (!rsbuild) {
-    return false;
-  }
-
-  await rsbuild.build({ watch: true });
-  return true;
+  return restartManager.request({ action, filePath });
 };
 
 export async function watchFilesForRestart({
@@ -149,13 +98,12 @@ export async function watchFilesForRestart({
 
     const absoluteFilePath = path.resolve(cwd, filePath);
 
-    const restarted = isBuildWatch
-      ? await restartBuild({ filePath: absoluteFilePath, logger: rsbuild.logger, restartManager })
-      : await restartDevServer({
-          filePath: absoluteFilePath,
-          logger: rsbuild.logger,
-          restartManager,
-        });
+    const restarted = await requestRestart({
+      action: isBuildWatch ? 'build' : 'dev',
+      filePath: absoluteFilePath,
+      logger: rsbuild.logger,
+      restartManager,
+    });
 
     if (restarted) {
       await Promise.all(watchers.map(({ watcher }) => watcher.close()));
