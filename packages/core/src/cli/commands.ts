@@ -116,9 +116,7 @@ export function setupCommands(argv: string[]): void {
           process.env.RSPACK_UNSAFE_FAST_DROP = 'true';
         }
 
-        const rsbuild = await init({
-          isBuildWatch: options.watch,
-        });
+        const rsbuild = await init();
         if (!rsbuild) {
           return;
         }

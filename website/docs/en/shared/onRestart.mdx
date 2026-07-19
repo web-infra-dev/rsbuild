@@ -1,12 +1,14 @@
-Called before Rsbuild CLI restarts the dev server or watch build.
+Called when a restart is requested for the dev server or watch build.
 
 The hook is triggered in the following cases:
 
-- The contents of the Rsbuild config file or one of its dependencies change.
+- The Rsbuild CLI detects changes to the config file or one of its dependencies.
 - A file watched by [`dev.watchFiles`](/config/dev/watch-files) with `type: 'restart'` changes.
 - The dev server is manually restarted through a [CLI shortcut](/config/dev/cli-shortcuts).
 
 > This hook is not triggered for regular rebuilds.
+
+When using the JavaScript API, restart watchers are installed by `rsbuild.startDevServer()`, `rsbuild.createDevServer()`, and `rsbuild.build({ watch: true })`. The hook is called when a watched file changes, but Rsbuild does not automatically close or restart the active dev server or watch build.
 
 - **Type:**
 

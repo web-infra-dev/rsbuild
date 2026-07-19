@@ -1957,7 +1957,7 @@ export type WatchFiles = {
   /**
    * Specifies the action to take when files change.
    * - `reload-page`: Reload the page.
-   * - `restart`: Restart the dev server or watch build.
+   * - `restart`: Trigger a restart request for the dev server or watch build.
    * - `reload-server`: Deprecated alias for `restart`.
    * @default 'reload-page'
    */
@@ -2075,7 +2075,7 @@ export interface DevConfig {
   writeToDisk?: WriteToDisk;
   /**
    * Watch specified files and directories for changes. When a file change is detected,
-   * it can trigger a page reload or restart the dev server or watch build.
+   * it can trigger a page reload or a restart request for the dev server or watch build.
    * @default undefined
    */
   watchFiles?: WatchFiles | WatchFiles[];

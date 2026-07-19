@@ -1,5 +1,4 @@
 import type { RestartContext } from '../types/hooks';
-import type { RsbuildInstance } from '../types/rsbuild';
 import type { MaybePromise } from '../types/utils';
 
 type Cleanup = () => MaybePromise<void>;
@@ -14,8 +13,6 @@ export type RestartManager = {
   /** Handle a restart request and return whether the restart succeeded. */
   requestRestart(context: RestartContext): Promise<boolean>;
 };
-
-const restartManagers = new WeakMap<RsbuildInstance, RestartManager>();
 
 export const createRestartManager = ({
   onRestart,
@@ -72,16 +69,4 @@ export const createRestartManager = ({
       return restart(context);
     },
   };
-};
-
-export const setRestartManager = (instance: RsbuildInstance, manager: RestartManager): void => {
-  restartManagers.set(instance, manager);
-};
-
-export const getRestartManager = (instance: RsbuildInstance): RestartManager => {
-  const manager = restartManagers.get(instance);
-  if (!manager) {
-    throw new Error('Restart manager is not initialized.');
-  }
-  return manager;
 };

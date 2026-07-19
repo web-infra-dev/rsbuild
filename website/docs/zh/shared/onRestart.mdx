@@ -1,12 +1,14 @@
-在 Rsbuild CLI 重启 dev server 或监听构建前调用。
+当 dev server 或监听构建被请求重启时调用。
 
 该 hook 会在以下情况中触发：
 
-- Rsbuild 配置文件或其依赖的内容发生变化。
+- Rsbuild CLI 检测到配置文件或其依赖发生变化。
 - [`dev.watchFiles`](/config/dev/watch-files) 中 `type` 为 `'restart'` 的文件发生变化。
 - 通过 [CLI 快捷键](/config/dev/cli-shortcuts) 手动重启 dev server。
 
 > 普通的重新构建不会触发该 hook。
+
+使用 JavaScript API 时，`rsbuild.startDevServer()`、`rsbuild.createDevServer()` 和 `rsbuild.build({ watch: true })` 会安装 restart watcher。被监听的文件发生变化时会调用该 hook，但 Rsbuild 不会自动关闭或重启当前 dev server 或监听构建。
 
 - **类型：**
 

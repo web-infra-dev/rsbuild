@@ -1,10 +1,10 @@
 import path from 'node:path';
 import type { ChokidarOptions } from 'chokidar';
 import { castArray, color, isTTY } from './helpers';
-import { getRestartManager, type RestartManager } from './helpers/restartManager';
+import type { RestartManager } from './helpers/restartManager';
 import type { Logger } from './logger';
-import { createChokidar } from './server/watchFiles';
-import type { RestartContext, RsbuildInstance, WatchFiles } from './types';
+import { createChokidar, type WatchFilesResult } from './server/watchFiles';
+import type { InternalContext, RestartContext, WatchFiles } from './types';
 
 const clearConsole = () => {
   if (isTTY() && !process.env.DEBUG) {
@@ -23,35 +23,45 @@ export const requestRestart = ({
   logger: Logger;
   restartManager: RestartManager;
 }): Promise<boolean> => {
-  if (clear) {
-    clearConsole();
-  }
+  if (restartManager.canRestart) {
+    if (clear) {
+      clearConsole();
+    }
 
-  const id = action === 'dev' ? 'server' : 'build';
+    const id = action === 'dev' ? 'server' : 'build';
 
-  if (filePath) {
-    const filename = path.basename(filePath);
-    logger.info(`restarting ${id} as ${color.yellow(filename)} changed\n`);
-  } else {
-    logger.info(`restarting ${id}...\n`);
+    if (filePath) {
+      const filename = path.basename(filePath);
+      logger.info(`restarting ${id} as ${color.yellow(filename)} changed\n`);
+    } else {
+      logger.info(`restarting ${id}...\n`);
+    }
   }
 
   return restartManager.requestRestart({ action, filePath });
 };
 
-export async function watchFilesForRestart({
+export function watchFilesForRestart({
   watchFiles,
-  rsbuild,
-  isBuildWatch,
+  context,
+  action,
 }: {
   watchFiles: WatchFiles[];
-  rsbuild: RsbuildInstance;
-  isBuildWatch: boolean;
-}): Promise<void> {
+  context: InternalContext;
+  action: RestartContext['action'];
+}): WatchFilesResult | undefined {
+  if (!watchFiles.length) {
+    return;
+  }
+
   const watchGroups: { files: string[]; options?: ChokidarOptions }[] = [];
   const defaultFiles: string[] = [];
 
-  for (const { paths, options } of watchFiles) {
+  for (const { paths, options, type } of watchFiles) {
+    if (type !== 'restart' && type !== 'reload-server') {
+      continue;
+    }
+
     const files = castArray(paths);
     if (!files.length) {
       continue;
@@ -72,52 +82,71 @@ export async function watchFilesForRestart({
     return;
   }
 
-  const root = rsbuild.context.rootPath;
-  const restartManager = getRestartManager(rsbuild);
-  const watchers = await Promise.all(
-    watchGroups.map(async ({ files, options }) => ({
-      // Chokidar reports event paths relative to `cwd` when it is configured.
-      cwd: options?.cwd || root,
-      watcher: await createChokidar(files, root, {
-        // do not trigger add for initial files
-        ignoreInitial: true,
-        // If watching fails due to read permissions, the errors will be suppressed silently.
-        ignorePermissionErrors: true,
-        ...options,
-      }),
-    })),
-  );
-
+  const { logger, restartManager, rootPath: root } = context;
   let restarting = false;
+  let closePromise: Promise<void> | undefined;
 
   const onChange = async (filePath: string, cwd: string) => {
-    if (restarting) {
+    if (restarting || closePromise) {
       return;
     }
     restarting = true;
 
     const absoluteFilePath = path.resolve(cwd, filePath);
 
-    const restarted = await requestRestart({
-      action: isBuildWatch ? 'build' : 'dev',
-      filePath: absoluteFilePath,
-      logger: rsbuild.logger,
-      restartManager,
-    });
+    try {
+      const restarted = await requestRestart({
+        action,
+        filePath: absoluteFilePath,
+        logger,
+        restartManager,
+      });
 
-    if (restarted) {
-      await Promise.all(watchers.map(({ watcher }) => watcher.close()));
-      return;
+      // Close only after success; otherwise keep watching for a retry.
+      if (restarted) {
+        await close();
+      } else if (restartManager.canRestart) {
+        logger.error(action === 'build' ? 'Restart build failed.' : 'Restart server failed.');
+      }
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      restarting = false;
     }
-
-    rsbuild.logger.error(isBuildWatch ? 'Restart build failed.' : 'Restart server failed.');
-    restarting = false;
   };
 
-  for (const { cwd, watcher } of watchers) {
-    const handleChange = (filePath: string) => onChange(filePath, cwd);
-    watcher.on('add', handleChange);
-    watcher.on('change', handleChange);
-    watcher.on('unlink', handleChange);
-  }
+  // Initialize watchers in the background so task startup is not delayed.
+  const watchersPromise = Promise.all(
+    watchGroups.map(async ({ files, options }) => {
+      try {
+        const watcher = await createChokidar(files, root, {
+          // Avoid initial add events.
+          ignoreInitial: true,
+          // Ignore file permission errors.
+          ignorePermissionErrors: true,
+          ...options,
+        });
+        // Chokidar reports event paths relative to `cwd` when it is configured.
+        const cwd = options?.cwd || root;
+        const handleChange = (filePath: string) => void onChange(filePath, cwd);
+        watcher.on('add', handleChange);
+        watcher.on('change', handleChange);
+        watcher.on('unlink', handleChange);
+        return watcher;
+      } catch (error) {
+        logger.error(error);
+      }
+    }),
+  );
+
+  const close = () => {
+    if (!closePromise) {
+      closePromise = watchersPromise
+        .then((watchers) => Promise.all(watchers.map((watcher) => watcher?.close())))
+        .then(() => {});
+    }
+    return closePromise;
+  };
+
+  return { close };
 }
