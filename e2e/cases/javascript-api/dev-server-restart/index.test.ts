@@ -4,22 +4,31 @@ import { expect, test } from '@e2e/helper';
 import { createRsbuild, loadConfig, type RestartContext } from '@rsbuild/core';
 import { getRandomPort } from '@rstackjs/test-utils';
 
-const configDependency = path.join(import.meta.dirname, 'sharedConfig.mjs');
-const originalConfig = fs.readFileSync(configDependency, 'utf-8');
+const configDep = path.join(import.meta.dirname, 'test-temp-config-dep.mjs');
+const configDepContent = 'export const sharedConfig = {};\n';
+
+test.beforeAll(() => {
+  fs.writeFileSync(configDep, configDepContent);
+});
 
 test.afterAll(() => {
-  fs.writeFileSync(configDependency, originalConfig);
+  fs.rmSync(configDep, { force: true });
 });
 
 test('should watch loaded config dependencies for restart', async () => {
   const result = await loadConfig({ cwd: import.meta.dirname });
-  result.content.server = { port: await getRandomPort() };
+
+  result.content.server = {
+    port: await getRandomPort(),
+  };
 
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
     config: result,
   });
+
   let restartContext: RestartContext | undefined;
+
   rsbuild.onRestart((context) => {
     restartContext = context;
   });
@@ -29,18 +38,15 @@ test('should watch loaded config dependencies for restart', async () => {
 
   try {
     await expect
-      .poll(
-        () => {
-          if (!restartContext) {
-            fs.writeFileSync(configDependency, `${originalConfig}\n// ${++version}\n`);
-          }
-          return restartContext;
-        },
-        { timeout: 5_000 },
-      )
+      .poll(() => {
+        if (!restartContext) {
+          fs.writeFileSync(configDep, `${configDepContent}// ${++version}\n`);
+        }
+        return restartContext;
+      })
       .toEqual({
         action: 'dev',
-        filePath: configDependency,
+        filePath: configDep,
       });
   } finally {
     await server.close();
