@@ -37,7 +37,7 @@ test('should disable Tailwind optimization by default in development mode', asyn
   });
 
   const css = getFileContent(rsbuild.getDistFiles(), 'index.css');
-  expect(css).toContain('& .title');
+  expect(css).toContain('color: blue;');
 });
 
 test('should disable Tailwind optimization when optimize is false', async ({ build }) => {
@@ -49,7 +49,7 @@ test('should disable Tailwind optimization when optimize is false', async ({ bui
   });
 
   const css = getFileContent(rsbuild.getDistFiles(), 'index.css');
-  expect(css).toContain('& .title');
+  expect(css).toContain('color: blue;');
 });
 
 test('should enable Tailwind minify when optimize is true', async ({ build }) => {
