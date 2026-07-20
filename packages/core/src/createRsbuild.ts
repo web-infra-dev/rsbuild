@@ -146,7 +146,13 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
 }
 
 function isLoadConfigResult(result: unknown): result is LoadConfigResult {
-  return typeof result === 'object' && result !== null && 'content' in result;
+  return (
+    typeof result === 'object' &&
+    result !== null &&
+    'content' in result &&
+    'filePath' in result &&
+    'dependencies' in result
+  );
 }
 
 /**
