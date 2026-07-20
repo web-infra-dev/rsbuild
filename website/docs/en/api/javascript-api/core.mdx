@@ -38,7 +38,7 @@ type CreateRsbuildOptions = {
   callerName?: string;
   environment?: string[];
   loadEnv?: boolean | LoadEnvOptions;
-  config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  config?: RsbuildConfig | LoadConfigResult | (() => Promise<RsbuildConfig | LoadConfigResult>);
   restart?: RestartFn;
 };
 ```
@@ -47,7 +47,7 @@ type CreateRsbuildOptions = {
 - `callerName`: The name of the framework or tool currently invoking Rsbuild, defaults to `'rsbuild'`, see [Specify caller name](#specify-caller-name).
 - `environment`: Build only specified [environments](/guide/advanced/environments). If not specified or an empty array is passed, all environments will be built.
 - `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load environment variables and define them as global variables via [source.define](/config/source/define).
-- `config`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
+- `config`: Rsbuild configuration object or the result returned by [`loadConfig`](#loadconfig). Refer to [Configuration Overview](/config/) for all available configuration options.
 - `restart`: A function that handles restart requests for the current dev server or watch build. See [restart](#restart).
 
 :::tip
@@ -63,12 +63,14 @@ import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
   config: async () => {
-    const { content } = await loadConfig();
-    someFunctionToUpdateConfig(content);
-    return content;
+    const result = await loadConfig();
+    someFunctionToUpdateConfig(result.content);
+    return result;
   },
 });
 ```
+
+When the complete `loadConfig` result is passed, the absolute paths of the config file and its imported dependencies are stored in [`rsbuild.context.configFile`](/api/javascript-api/instance#contextconfigfile) and [`rsbuild.context.configFileDependencies`](/api/javascript-api/instance#contextconfigfiledependencies), respectively, and used as build dependencies when persistent build cache is enabled.
 
 ### Load environment variables
 
@@ -211,12 +213,12 @@ function loadConfig<Config = RsbuildConfig>(params?: {
 import { loadConfig } from '@rsbuild/core';
 
 // Load `rsbuild.config.*` from cwd using the default lookup order
-const { content } = await loadConfig();
+const result = await loadConfig();
 
-console.log(content); // -> Rsbuild config object
+console.log(result.content); // -> Rsbuild config object
 
 const rsbuild = await createRsbuild({
-  config: content,
+  config: result,
 });
 ```
 

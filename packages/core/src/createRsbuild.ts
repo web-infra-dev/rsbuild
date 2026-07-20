@@ -8,6 +8,7 @@ import { isEmptyDir } from './helpers/fs';
 import { initConfigs as baseInitConfigs, initRsbuildConfig } from './initConfigs';
 import { initPluginAPI } from './initPlugins';
 import { inspectConfig as baseInspectConfig } from './inspectConfig';
+import type { LoadConfigResult } from './loadConfig';
 import { type LoadEnvResult, loadEnv } from './loadEnv';
 import { createLogger, defaultLogger, isDebug } from './logger';
 import { createPluginManager } from './pluginManager';
@@ -144,6 +145,10 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
   }
 }
 
+function isLoadConfigResult(result: unknown): result is LoadConfigResult {
+  return typeof result === 'object' && result !== null && 'content' in result;
+}
+
 /**
  * Create an Rsbuild instance.
  */
@@ -156,7 +161,13 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
     : null;
 
   const configOrFactory = options.config ?? options.rsbuildConfig;
-  const config = isFunction(configOrFactory) ? await configOrFactory() : configOrFactory || {};
+  let config = isFunction(configOrFactory) ? await configOrFactory() : configOrFactory;
+  let loadConfigResult: LoadConfigResult | undefined;
+  if (isLoadConfigResult(config)) {
+    loadConfigResult = config;
+    config = config.content;
+  }
+  config ||= {};
 
   const logger =
     config.customLogger ??
@@ -184,7 +195,7 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
 
   const pluginManager = createPluginManager(logger);
 
-  const context = await createContext(resolvedOptions, config, logger);
+  const context = await createContext(resolvedOptions, config, logger, loadConfigResult);
 
   const getPluginAPI = initPluginAPI({ context, pluginManager });
   context.getPluginAPI = getPluginAPI;
