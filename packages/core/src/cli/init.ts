@@ -1,6 +1,5 @@
 import path from 'node:path';
 import { createRsbuild } from '../createRsbuild';
-import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { loadConfig as baseLoadConfig } from '../loadConfig';
 import { defaultLogger } from '../logger';
@@ -47,7 +46,7 @@ const loadConfig = async (root: string) => {
     loader: options.configLoader,
     command,
   });
-  const { content: config, filePath, dependencies } = result;
+  const { content: config } = result;
 
   config.dev ||= {};
   config.source ||= {};
@@ -109,17 +108,6 @@ const loadConfig = async (root: string) => {
   // enable CLI shortcuts by default when using Rsbuild CLI
   if (config.dev.cliShortcuts === undefined) {
     config.dev.cliShortcuts = true;
-  }
-
-  // watch the config file
-  if (filePath) {
-    config.dev.watchFiles = [
-      ...(config.dev.watchFiles ? castArray(config.dev.watchFiles) : []),
-      {
-        paths: [filePath, ...dependencies],
-        type: 'restart',
-      },
-    ];
   }
 
   return result;

@@ -50,12 +50,15 @@ export function watchFilesForRestart({
   context: InternalContext;
   action: RestartContext['action'];
 }): WatchFilesResult | undefined {
-  if (!watchFiles.length) {
+  const defaultFiles = context.configFile
+    ? [context.configFile, ...context.configFileDependencies]
+    : [];
+
+  if (!watchFiles.length && !defaultFiles.length) {
     return;
   }
 
   const watchGroups: { files: string[]; options?: ChokidarOptions }[] = [];
-  const defaultFiles: string[] = [];
 
   for (const { paths, options, type } of watchFiles) {
     if (type !== 'restart' && type !== 'reload-server') {
