@@ -3,6 +3,8 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 
+// `.mts` is intentional because Rspack cannot recursively detect its imports
+// as build dependencies, so Rsbuild must add them explicitly.
 test('should add config files to build dependencies', async () => {
   const { content } = await loadConfig({ cwd: import.meta.dirname });
   const rsbuild = await createRsbuild({
