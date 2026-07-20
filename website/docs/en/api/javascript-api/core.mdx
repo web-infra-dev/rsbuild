@@ -39,6 +39,7 @@ type CreateRsbuildOptions = {
   environment?: string[];
   loadEnv?: boolean | LoadEnvOptions;
   config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  restart?: RestartFn;
 };
 ```
 
@@ -47,6 +48,7 @@ type CreateRsbuildOptions = {
 - `environment`: Build only specified [environments](/guide/advanced/environments). If not specified or an empty array is passed, all environments will be built.
 - `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load environment variables and define them as global variables via [source.define](/config/source/define).
 - `config`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
+- `restart`: A function that handles restart requests for the current dev server or watch build. See [restart](#restart).
 
 :::tip
 `config` was introduced in Rsbuild 1.6. In earlier versions, use `rsbuildConfig` as an alternative.
@@ -93,6 +95,41 @@ const rsbuild = await createRsbuild({
     prefixes: ['PUBLIC_', 'REACT_APP_'],
   },
 });
+```
+
+### restart
+
+- **Version:** Added in v2.1.7
+
+The `restart` option allows the caller to control how Rsbuild restarts the current dev server or watch build. This is useful when the restart flow needs to be managed outside Rsbuild.
+
+When a restart is requested, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart), closes the current task resources, and then calls `restart`.
+
+The function should return `true` when the replacement task starts successfully. If it returns `false` or throws an error, the restart watcher remains active so later file changes can retry the restart.
+
+```ts
+import { createRsbuild, type RestartFn } from '@rsbuild/core';
+
+async function createInstance() {
+  return createRsbuild({
+    restart,
+  });
+}
+
+const restart: RestartFn = async ({ action }) => {
+  const rsbuild = await createInstance();
+
+  if (action === 'build') {
+    await rsbuild.build({ watch: true });
+  } else {
+    await rsbuild.startDevServer();
+  }
+
+  return true;
+};
+
+const rsbuild = await createInstance();
+await rsbuild.startDevServer();
 ```
 
 ### Specify caller name

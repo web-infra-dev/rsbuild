@@ -4,7 +4,7 @@ import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
 import { withDefaultConfig } from './defaultConfig';
 import { hash } from './helpers';
 import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
-import { createRestartManager, type RestartExecutor } from './helpers/restartManager';
+import { createRestartManager } from './helpers/restartManager';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import type { Logger } from './logger';
@@ -177,7 +177,6 @@ export async function createContext(
   options: ResolvedCreateRsbuildOptions,
   userConfig: RsbuildConfig,
   logger: Logger,
-  restart?: RestartExecutor,
 ): Promise<InternalContext> {
   const { cwd } = options;
   const rootPath = userConfig.root ? ensureAbsolutePath(cwd, userConfig.root) : cwd;
@@ -202,7 +201,7 @@ export async function createContext(
     hooks,
     restartManager: createRestartManager({
       onRestart: hooks.onRestart.callBatch,
-      restart,
+      restart: options.restart,
     }),
     config: { ...rsbuildConfig },
     originalConfig: userConfig,

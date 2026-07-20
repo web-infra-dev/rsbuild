@@ -39,6 +39,7 @@ type CreateRsbuildOptions = {
   environment?: string[];
   loadEnv?: boolean | LoadEnvOptions;
   config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  restart?: RestartFn;
 };
 ```
 
@@ -47,6 +48,7 @@ type CreateRsbuildOptions = {
 - `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
 - `loadEnv`：是否调用 [loadEnv](/api/javascript-api/core#loadenv) 方法来加载环境变量，并通过 [source.define](/config/source/define) 定义为全局变量。
 - `config`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
+- `restart`：处理当前 dev server 或监听构建重启请求的函数，详见 [restart](#restart)。
 
 :::tip
 `config` 是 Rsbuild 1.6 新增的选项。在旧版本中，可使用 `rsbuildConfig` 作为替代。
@@ -93,6 +95,41 @@ const rsbuild = await createRsbuild({
     prefixes: ['PUBLIC_', 'REACT_APP_'],
   },
 });
+```
+
+### restart
+
+- **版本：** v2.1.7 新增
+
+`restart` 选项允许调用方控制 Rsbuild 如何重启当前 dev server 或监听构建，适用于需要在 Rsbuild 外部管理重启流程的场景。
+
+当请求重启时，Rsbuild 会调用 [onRestart hook](/plugins/dev/hooks#onrestart)，关闭当前任务的资源，然后调用 `restart`。
+
+新任务成功启动时，该函数应返回 `true`。如果返回 `false` 或抛出错误，restart watcher 会保持运行，以便后续文件变化时再次尝试重启。
+
+```ts
+import { createRsbuild, type RestartFn } from '@rsbuild/core';
+
+async function createInstance() {
+  return createRsbuild({
+    restart,
+  });
+}
+
+const restart: RestartFn = async ({ action }) => {
+  const rsbuild = await createInstance();
+
+  if (action === 'build') {
+    await rsbuild.build({ watch: true });
+  } else {
+    await rsbuild.startDevServer();
+  }
+
+  return true;
+};
+
+const rsbuild = await createInstance();
+await rsbuild.startDevServer();
 ```
 
 ### 指定调用者名称 \{#specify-caller-name}

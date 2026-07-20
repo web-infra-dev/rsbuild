@@ -1,9 +1,7 @@
-import type { RestartContext } from '../types/hooks';
+import type { RestartContext, RestartFn } from '../types/hooks';
 import type { MaybePromise } from '../types/utils';
 
 type Cleanup = () => MaybePromise<void>;
-
-export type RestartExecutor = (context: RestartContext) => MaybePromise<boolean>;
 
 export type RestartManager = {
   /** Whether a restart executor is available. */
@@ -19,7 +17,7 @@ export const createRestartManager = ({
   restart,
 }: {
   onRestart: (context: RestartContext) => MaybePromise<unknown>;
-  restart?: RestartExecutor;
+  restart?: RestartFn;
 }): RestartManager => {
   let cleanups = new Set<Cleanup>();
 

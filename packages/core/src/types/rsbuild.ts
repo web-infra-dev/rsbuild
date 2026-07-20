@@ -5,6 +5,7 @@ import type { RsbuildDevServer } from '../server/devServer';
 import type { StartDevServerResult, StartPreviewServerResult } from '../server/helper';
 import type { NormalizedConfig, NormalizedEnvironmentConfig, RsbuildConfig } from './config';
 import type { RsbuildContext } from './context';
+import type { RestartFn } from './hooks';
 import type { RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';
 import type { Falsy } from './utils';
@@ -148,12 +149,16 @@ export type CreateRsbuildOptions = {
    * @default false
    */
   loadEnv?: boolean | LoadEnvOptions;
+  /**
+   * Function used to restart the current dev server or watch build.
+   */
+  restart?: RestartFn;
 };
 
 export type ResolvedCreateRsbuildOptions = Required<
   Pick<CreateRsbuildOptions, 'cwd' | 'callerName'>
 > &
-  Pick<CreateRsbuildOptions, 'loadEnv' | 'environment'> & {
+  Pick<CreateRsbuildOptions, 'loadEnv' | 'environment' | 'restart'> & {
     rsbuildConfig: RsbuildConfig;
   };
 
