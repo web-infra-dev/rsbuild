@@ -40,17 +40,14 @@ const getEnvDir = (cwd: string, envDir?: string) => {
 
 const loadConfig = async (root: string) => {
   const { options, command } = cliState;
-  const {
-    content: config,
-    filePath,
-    dependencies,
-  } = await baseLoadConfig({
+  const result = await baseLoadConfig({
     cwd: root,
     path: options.config,
     envMode: options.envMode,
     loader: options.configLoader,
     command,
   });
+  const { content: config, filePath, dependencies } = result;
 
   config.dev ||= {};
   config.source ||= {};
@@ -125,7 +122,7 @@ const loadConfig = async (root: string) => {
     ];
   }
 
-  return config;
+  return result;
 };
 
 const restart = async ({ action }: RestartContext): Promise<boolean> => {
