@@ -17,6 +17,10 @@ export type RsbuildContext = {
   version: string;
   /** The root path of current project. */
   rootPath: string;
+  /** Absolute path to the loaded configuration file. */
+  configFile?: string;
+  /** Absolute paths of files imported by the configuration file. */
+  configFileDependencies: readonly string[];
   /** Absolute path of output files. */
   distPath: string;
   /** Absolute path of cache files. */

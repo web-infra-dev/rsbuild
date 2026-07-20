@@ -2157,6 +2157,10 @@ export type RsbuildConfigMeta = {
    * Path to the rsbuild config file.
    */
   configFilePath: string;
+  /**
+   * Paths to files imported by the rsbuild config file.
+   */
+  configFileDependencies?: string[];
 };
 
 /**
