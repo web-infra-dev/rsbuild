@@ -112,6 +112,7 @@ export async function loadConfig<Config = RsbuildConfig>({
 
   (result.content as RsbuildConfig)._privateMeta = {
     configFilePath: result.filePath,
+    configFileDependencies: result.dependencies,
   };
 
   defaultLogger.debug('configuration loaded from:', result.filePath);

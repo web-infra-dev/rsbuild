@@ -53,6 +53,19 @@ type Version = string;
 type RootPath = string;
 ```
 
+### context.configFile
+
+通过 [loadConfig](/api/javascript-api/core#loadconfig) 加载的配置文件绝对路径。未加载配置文件时为 `undefined`。
+
+- **类型：** `string | undefined`
+
+### context.configFileDependencies
+
+配置文件所导入文件的绝对路径，由 [loadConfig](/api/javascript-api/core#loadconfig) 收集。
+
+- **类型：** `readonly string[]`
+- **默认值：** `[]`
+
 ### context.distPath
 
 构建产物输出目录的绝对路径，对应 `RsbuildConfig` 中的 [output.distPath.root](/config/output/dist-path) 配置项。

@@ -53,6 +53,19 @@ The root path of the current build, corresponding to the `cwd` option of the [cr
 type RootPath = string;
 ```
 
+### context.configFile
+
+The absolute path to the configuration file loaded by [loadConfig](/api/javascript-api/core#loadconfig). It is `undefined` when no configuration file is loaded.
+
+- **Type:** `string | undefined`
+
+### context.configFileDependencies
+
+The absolute paths of files imported by the configuration file. The dependencies are collected by [loadConfig](/api/javascript-api/core#loadconfig).
+
+- **Type:** `readonly string[]`
+- **Default:** `[]`
+
 ### context.distPath
 
 The absolute path of the output directory, corresponding to the [output.distPath.root](/config/output/dist-path) config in `RsbuildConfig`.

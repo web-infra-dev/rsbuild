@@ -147,6 +147,8 @@ export function createPublicContext(context: InternalContext): Readonly<RsbuildC
     'action',
     'version',
     'rootPath',
+    'configFile',
+    'configFileDependencies',
     'distPath',
     'devServer',
     'cachePath',
@@ -186,10 +188,13 @@ export async function createContext(
   const specifiedEnvironments =
     options.environment && options.environment.length > 0 ? options.environment : undefined;
   const hooks = initHooks();
+  const configMeta = userConfig._privateMeta;
 
   return {
     version: RSBUILD_VERSION,
     rootPath,
+    configFile: configMeta?.configFilePath,
+    configFileDependencies: configMeta?.configFileDependencies ?? [],
     distPath: '',
     cachePath,
     logger,
