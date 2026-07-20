@@ -540,10 +540,10 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
         return typeof printFileSize === 'object' && Boolean(printFileSize.diff);
       });
 
-      // If `configFilePath` is provided, use it to generate a unique snapshot path
+      // If `configFile` is provided, use it to generate a unique snapshot path
       // to avoid collision when using multiple Rsbuild config files
-      const { configFilePath } = api.getNormalizedConfig()._privateMeta || {};
-      const snapshotHash = showDiff && configFilePath ? await hash(configFilePath) : '';
+      const { configFile } = api.context;
+      const snapshotHash = showDiff && configFile ? await hash(configFile) : '';
       const snapshotPath = showDiff ? getSnapshotPath(api.context.cachePath, snapshotHash) : '';
 
       // Load previous build sizes for comparison (only if diff is enabled)
