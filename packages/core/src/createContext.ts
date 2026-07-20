@@ -7,6 +7,7 @@ import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
 import { createRestartManager } from './helpers/restartManager';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
+import type { LoadConfigResult } from './loadConfig';
 import type { Logger } from './logger';
 import type {
   EnvironmentContext,
@@ -179,6 +180,7 @@ export async function createContext(
   options: ResolvedCreateRsbuildOptions,
   userConfig: RsbuildConfig,
   logger: Logger,
+  loadConfigResult?: LoadConfigResult,
 ): Promise<InternalContext> {
   const { cwd } = options;
   const rootPath = userConfig.root ? ensureAbsolutePath(cwd, userConfig.root) : cwd;
@@ -188,13 +190,15 @@ export async function createContext(
   const specifiedEnvironments =
     options.environment && options.environment.length > 0 ? options.environment : undefined;
   const hooks = initHooks();
-  const configMeta = userConfig._privateMeta;
+  const configFile = loadConfigResult?.filePath ?? userConfig._privateMeta?.configFilePath;
+  const configFileDependencies =
+    loadConfigResult?.dependencies ?? userConfig._privateMeta?.configFileDependencies ?? [];
 
   return {
     version: RSBUILD_VERSION,
     rootPath,
-    configFile: configMeta?.configFilePath,
-    configFileDependencies: configMeta?.configFileDependencies ?? [],
+    configFile,
+    configFileDependencies,
     distPath: '',
     cachePath,
     logger,

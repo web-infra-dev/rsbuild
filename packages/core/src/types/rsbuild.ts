@@ -1,4 +1,5 @@
 import type { Compiler, MultiCompiler } from '@rspack/core';
+import type { LoadConfigResult } from '../loadConfig';
 import type { LoadEnvOptions } from '../loadEnv';
 import type { Logger } from '../logger';
 import type { RsbuildDevServer } from '../server/devServer';
@@ -114,6 +115,8 @@ export type InspectConfigResult = {
 
 export type CreateCompiler = () => Promise<Compiler | MultiCompiler>;
 
+type RsbuildConfigInput = RsbuildConfig | LoadConfigResult;
+
 export type CreateRsbuildOptions = {
   /**
    * The root path of current project.
@@ -137,12 +140,12 @@ export type CreateRsbuildOptions = {
    * Alias for `config`.
    * This option will be deprecated in the future.
    */
-  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  rsbuildConfig?: RsbuildConfigInput | (() => Promise<RsbuildConfigInput>);
   /**
-   * Rsbuild configurations.
+   * Rsbuild configuration or the result returned by `loadConfig`.
    * Passing a function to load the config asynchronously with custom logic.
    */
-  config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  config?: RsbuildConfigInput | (() => Promise<RsbuildConfigInput>);
   /**
    * Whether to call `loadEnv` to load environment variables and define them
    * as global variables via `source.define`.
