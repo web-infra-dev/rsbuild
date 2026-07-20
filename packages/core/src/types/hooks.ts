@@ -161,6 +161,9 @@ export type RestartContext = {
   filePath?: string;
 };
 
+/** Restart the current Rsbuild task and return whether the restart succeeded. */
+export type RestartFn = (context: RestartContext) => MaybePromise<boolean>;
+
 export type OnRestartFn = (context: RestartContext) => MaybePromise<void>;
 
 export type ModifyHTMLContext = {

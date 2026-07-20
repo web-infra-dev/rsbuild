@@ -8,7 +8,7 @@
 
 > 普通的重新构建不会触发该 hook。
 
-使用 JavaScript API 时，`rsbuild.startDevServer()`、`rsbuild.createDevServer()` 和 `rsbuild.build({ watch: true })` 会安装 restart watcher。被监听的文件发生变化时会调用该 hook，但 Rsbuild 不会自动关闭或重启当前 dev server 或监听构建。
+使用 JavaScript API 时，`rsbuild.startDevServer()`、`rsbuild.createDevServer()` 和 `rsbuild.build({ watch: true })` 会安装 restart watcher。被监听的文件发生变化时会调用该 hook。默认情况下，Rsbuild 不会关闭或重启当前任务；你可以传入 [`restart` 选项](/api/javascript-api/core#restart) 来处理重启请求。
 
 - **类型：**
 

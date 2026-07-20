@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { createRsbuildInternal } from '../createRsbuild';
+import { createRsbuild } from '../createRsbuild';
 import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { loadConfig as baseLoadConfig } from '../loadConfig';
@@ -155,21 +155,19 @@ export async function init({ isRestart }: { isRestart?: boolean } = {}): Promise
     const cwd = process.cwd();
     const root = options.root ? ensureAbsolutePath(cwd, options.root) : cwd;
 
-    const rsbuild = await createRsbuildInternal(
-      {
-        cwd: root,
-        config: () => loadConfig(root),
-        environment: options.environment,
-        loadEnv:
-          options.env === false
-            ? false
-            : {
-                cwd: getEnvDir(root, options.envDir),
-                mode: options.envMode,
-              },
-      },
-      { restart },
-    );
+    const rsbuild = await createRsbuild({
+      cwd: root,
+      config: () => loadConfig(root),
+      environment: options.environment,
+      loadEnv:
+        options.env === false
+          ? false
+          : {
+              cwd: getEnvDir(root, options.envDir),
+              mode: options.envMode,
+            },
+      restart,
+    });
     logger = rsbuild.logger;
 
     return rsbuild;

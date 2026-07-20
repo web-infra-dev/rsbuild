@@ -177,6 +177,7 @@ export type {
   ResolveHook,
   ResourceHintsIncludeType,
   RestartContext,
+  RestartFn,
   RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,

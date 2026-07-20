@@ -5,7 +5,6 @@ import { createCompiler as baseCreateCompiler } from './createCompiler';
 import { createContext } from './createContext';
 import { castArray, color, getNodeEnv, isFunction, pick, setNodeEnv } from './helpers';
 import { isEmptyDir } from './helpers/fs';
-import type { RestartExecutor } from './helpers/restartManager';
 import { initConfigs as baseInitConfigs, initRsbuildConfig } from './initConfigs';
 import { initPluginAPI } from './initPlugins';
 import { inspectConfig as baseInspectConfig } from './inspectConfig';
@@ -148,14 +147,7 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
 /**
  * Create an Rsbuild instance.
  */
-export function createRsbuild(options: CreateRsbuildOptions = {}): Promise<RsbuildInstance> {
-  return createRsbuildInternal(options);
-}
-
-export async function createRsbuildInternal(
-  options: CreateRsbuildOptions = {},
-  internalOptions?: { restart?: RestartExecutor },
-): Promise<RsbuildInstance> {
+export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise<RsbuildInstance> {
   const envs = options.loadEnv
     ? loadEnv({
         cwd: options.cwd,
@@ -192,7 +184,7 @@ export async function createRsbuildInternal(
 
   const pluginManager = createPluginManager(logger);
 
-  const context = await createContext(resolvedOptions, config, logger, internalOptions?.restart);
+  const context = await createContext(resolvedOptions, config, logger);
 
   const getPluginAPI = initPluginAPI({ context, pluginManager });
   context.getPluginAPI = getPluginAPI;
