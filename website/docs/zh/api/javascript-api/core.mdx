@@ -99,6 +99,8 @@ const rsbuild = await createRsbuild({
 
 ### restart
 
+- **版本：** v2.1.7 新增
+
 `restart` 选项允许调用方控制 Rsbuild 如何重启当前 dev server 或监听构建，适用于需要在 Rsbuild 外部管理重启流程的场景。
 
 当请求重启时，Rsbuild 会调用 [onRestart hook](/plugins/dev/hooks#onrestart)，关闭当前任务的资源，然后调用 `restart`。
@@ -129,8 +131,6 @@ const restart: RestartFn = async ({ action }) => {
 const rsbuild = await createInstance();
 await rsbuild.startDevServer();
 ```
-
-- **版本：** v2.1.7 新增
 
 ### 指定调用者名称 \{#specify-caller-name}
 

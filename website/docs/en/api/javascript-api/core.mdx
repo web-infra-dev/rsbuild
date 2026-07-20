@@ -99,6 +99,8 @@ const rsbuild = await createRsbuild({
 
 ### restart
 
+- **Version:** Added in v2.1.7
+
 The `restart` option allows the caller to control how Rsbuild restarts the current dev server or watch build. This is useful when the restart flow needs to be managed outside Rsbuild.
 
 When a restart is requested, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart), closes the current task resources, and then calls `restart`.
@@ -129,8 +131,6 @@ const restart: RestartFn = async ({ action }) => {
 const rsbuild = await createInstance();
 await rsbuild.startDevServer();
 ```
-
-- **Version:** Added in v2.1.7
 
 ### Specify caller name
 
