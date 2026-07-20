@@ -112,7 +112,7 @@ export default {
 };
 ```
 
-使用 JavaScript API 时，`rsbuild.startDevServer()`、`rsbuild.createDevServer()` 和 `rsbuild.build({ watch: true })` 会安装 restart watcher，普通构建和预览服务器则不会安装。被监听的文件发生变化时，Rsbuild 会调用 [onRestart hook](/plugins/dev/hooks#onrestart)。默认情况下，Rsbuild 不会关闭或重启当前任务；你可以传入 [`restart` 选项](/api/javascript-api/core#restart) 来处理重启请求。
+> 关于配置文件自动监听及重启行为，详见[配置文件监听](/guide/configuration/rsbuild#configuration-file-watching)。
 
 ### reload-server
 

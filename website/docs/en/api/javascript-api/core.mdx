@@ -70,7 +70,7 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-When the complete `loadConfig` result is passed, the absolute paths of the config file and its imported dependencies are stored in [`rsbuild.context.configFile`](/api/javascript-api/instance#contextconfigfile) and [`rsbuild.context.configFileDependencies`](/api/javascript-api/instance#contextconfigfiledependencies), respectively, and used as build dependencies when persistent build cache is enabled.
+When the complete `loadConfig` result is passed, the absolute paths of the config file and its imported dependencies are stored in [`rsbuild.context.configFile`](/api/javascript-api/instance#contextconfigfile) and [`rsbuild.context.configFileDependencies`](/api/javascript-api/instance#contextconfigfiledependencies), respectively. When persistent build cache is enabled, these files are also used as build dependencies. See [Configuration file watching](/guide/configuration/rsbuild#configuration-file-watching) for how Rsbuild watches them for restart requests.
 
 ### Load environment variables
 
@@ -104,6 +104,8 @@ const rsbuild = await createRsbuild({
 - **Version:** Added in v2.1.7
 
 The `restart` option allows the caller to control how Rsbuild restarts the current dev server or watch build. This is useful when the restart flow needs to be managed outside Rsbuild.
+
+> See [Configuration file watching](/guide/configuration/rsbuild#configuration-file-watching) to learn what triggers a restart.
 
 When a restart is requested, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart), closes the current task resources, and then calls `restart`.
 
