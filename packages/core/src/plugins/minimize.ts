@@ -121,10 +121,10 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       chain.optimization.minimize(minifyJs || minifyCss);
 
       if (minifyJs) {
-        const configuredOptions = castArray<SwcJsMinimizerRspackPluginOptions>(jsOptions);
-        const jsOptionsList = configuredOptions.length > 0 ? configuredOptions : [undefined];
-
-        jsOptionsList.forEach((jsOptionsItem, index) => {
+        const registerJsMinimizer = (
+          jsOptionsItem?: SwcJsMinimizerRspackPluginOptions,
+          index = 0,
+        ) => {
           const minimizerId =
             index === 0 ? CHAIN_ID.MINIMIZER.JS : `${CHAIN_ID.MINIMIZER.JS}-${index}`;
 
@@ -132,7 +132,15 @@ export const pluginMinimize = (): RsbuildPlugin => ({
             .minimizer(minimizerId)
             .use(rspack.SwcJsMinimizerRspackPlugin, [getSwcMinimizerOptions(config, jsOptionsItem)])
             .end();
-        });
+        };
+
+        const jsOptionsList = castArray<SwcJsMinimizerRspackPluginOptions>(jsOptions);
+
+        if (jsOptionsList.length > 0) {
+          jsOptionsList.forEach(registerJsMinimizer);
+        } else {
+          registerJsMinimizer();
+        }
       }
 
       if (minifyCss) {
