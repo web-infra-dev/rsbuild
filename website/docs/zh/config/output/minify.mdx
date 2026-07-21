@@ -11,10 +11,10 @@ type Minify =
   | boolean
   | {
       js?: boolean | 'always';
-      jsOptions?:
-        Rspack.SwcJsMinimizerRspackPluginOptions | Rspack.SwcJsMinimizerRspackPluginOptions[];
+      jsOptions?: SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[];
       css?: boolean | 'always';
-      cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
+      cssOptions?:
+        LightningcssMinimizerRspackPluginOptions | LightningcssMinimizerRspackPluginOptions[];
     };
 ```
 
@@ -102,7 +102,7 @@ export default {
 
 ### minify.jsOptions
 
-- **类型：** `Rspack.SwcJsMinimizerRspackPluginOptions | Rspack.SwcJsMinimizerRspackPluginOptions[]`
+- **类型：** `SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[]`
 - **默认值：** `{}`
 
 `output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SwcJsMinimizerRspackPlugin 文档](https://rspack.rs/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)。
@@ -189,7 +189,7 @@ export default {
 
 ### minify.cssOptions
 
-- **类型：** `Rspack.LightningcssMinimizerRspackPluginOptions`
+- **类型：** `LightningcssMinimizerRspackPluginOptions | LightningcssMinimizerRspackPluginOptions[]`
 - **默认值：** 继承 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 的值
 
 `output.minify.cssOptions` 用于配置 Lightning CSS 的压缩选项，具体配置项请参考 [LightningCssMinimizerRspackPlugin 文档](https://rspack.rs/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin)。
@@ -213,6 +213,33 @@ export default {
 :::tip
 当你在 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 中配置了一些选项时，`output.minify.cssOptions` 会自动继承这些选项，这样可以确保开发环境和生产环境的 CSS 代码转换行为保持一致。
 :::
+
+你可以传入一个选项数组，为不同文件设置不同的压缩配置。每一项都会注册一个独立的 `LightningCssMinimizerRspackPlugin` 实例：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      cssOptions: [
+        {
+          include: /foo\.css$/,
+          minimizerOptions: {
+            unusedSymbols: ['foo-unused'],
+          },
+        },
+        {
+          include: /bar\.css$/,
+          minimizerOptions: {
+            unusedSymbols: ['bar-unused'],
+          },
+        },
+      ],
+    },
+  },
+};
+```
+
+每个 CSS 产物只会被压缩一次。如果一个产物匹配了多个配置项，则第一个匹配项生效，因此建议使用互斥的 `test`、`include` 或 `exclude` 条件。
 
 ## 切换压缩器 \{#switching-minifier}
 
@@ -264,7 +291,8 @@ export default {
 
 ## 版本历史
 
-| 版本   | 变更内容                             |
-| ------ | ------------------------------------ |
-| v2.1.7 | 支持将 `minify.jsOptions` 设置为数组 |
-| v2.0.0 | `node` 产物的默认值改为 `false`      |
+| 版本   | 变更内容                              |
+| ------ | ------------------------------------- |
+| v2.1.8 | 支持将 `minify.cssOptions` 设置为数组 |
+| v2.1.7 | 支持将 `minify.jsOptions` 设置为数组  |
+| v2.0.0 | `node` 产物的默认值改为 `false`       |

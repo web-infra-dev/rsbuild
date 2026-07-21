@@ -1,0 +1,7 @@
+.foo-unused {
+  color: red;
+}
+
+.foo-keep {
+  color: green;
+}

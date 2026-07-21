@@ -162,6 +162,58 @@ describe('plugin-minimize', () => {
     });
   });
 
+  it('should accept an array of options for CSS minimizers', async () => {
+    rs.stubEnv('NODE_ENV', 'production');
+
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          minify: {
+            js: false,
+            cssOptions: [
+              {
+                include: 'foo.css',
+                minimizerOptions: {
+                  unusedSymbols: ['foo-unused'],
+                },
+              },
+              {
+                include: 'bar.css',
+                minimizerOptions: {
+                  unusedSymbols: ['bar-unused'],
+                },
+              },
+            ],
+          },
+        },
+      },
+    });
+
+    const rspackConfigs = await rsbuild.initConfigs();
+
+    expect(rspackConfigs[0].optimization?.minimizer).toHaveLength(2);
+    expect(rspackConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
+      _args: [
+        {
+          include: 'foo.css',
+          minimizerOptions: {
+            unusedSymbols: ['foo-unused'],
+          },
+        },
+      ],
+    });
+    expect(rspackConfigs[0].optimization?.minimizer?.[1]).toMatchObject({
+      _args: [
+        {
+          include: 'bar.css',
+          minimizerOptions: {
+            unusedSymbols: ['bar-unused'],
+          },
+        },
+      ],
+    });
+  });
+
   it('should dropConsole when performance.removeConsole is true', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 

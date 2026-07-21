@@ -1191,9 +1191,11 @@ export type Minify =
       css?: boolean | 'always';
       /**
        * Minimizer options of CSS, which will be passed to LightningCSS.
+       * When using an array, each item registers a separate minimizer and the first matching item
+       * applies to each CSS asset.
        * @default inherit from `tools.lightningcssLoader` config
        */
-      cssOptions?: LightningCssMinimizerRspackPluginOptions;
+      cssOptions?: OneOrMany<LightningCssMinimizerRspackPluginOptions>;
     };
 
 export type InlineChunkTestFunction = (params: { size: number; name: string }) => boolean;
