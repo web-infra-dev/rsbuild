@@ -1,0 +1,41 @@
+packages/core/src/plugins/rspackBuiltinCss.ts
+  s_8f124456772f6a::t_24223a4351b5bb 11-12,279-286
+packages/core/tests/__snapshots__/css.test.ts.snap
+  s_8f788ad5dc483e::t_0ea7dae8d17b47 436-457
+packages/core/tests/css.test.ts
+  s_8f788ad5dc483e::t_62db5adc4beaf5 369,379-417
+packages/plugin-vue/src/index.ts
+  s_8f124456772f6a::t_fa20257370cf11 2-7,63,80-83
+packages/plugin-vue/tests/index.test.ts
+  s_8f124456772f6a::t_ca9eb368c3de82 1,45-67
+website/docs/en/guide/styling/rspack-builtin-css.mdx
+  s_8f124456772f6a::t_770834386a722c 59
+website/docs/zh/guide/styling/rspack-builtin-css.mdx
+  s_8f124456772f6a::t_62e23ae7e55630 59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e133bd97309603516ac5fe8ca6844796436c893d",
+  "prompts": {},
+  "sessions": {
+    "s_8f124456772f6a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f59a5-b55e-7fc2-8105-43059a28a4dd",
+        "model": "unknown"
+      },
+      "human_author": "intellild <intellild@outlook.com>"
+    },
+    "s_8f788ad5dc483e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f82c8-d196-7d52-b3a4-cbb8298a6b9e",
+        "model": "unknown"
+      },
+      "human_author": "intellild <intellild@outlook.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
