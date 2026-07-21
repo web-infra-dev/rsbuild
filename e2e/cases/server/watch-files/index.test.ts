@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { test } from '@e2e/helper';
-import { toPosixPath } from '@rstackjs/test-utils';
 
 const watchedDir1 = path.join(import.meta.dirname, 'test-temp-1');
 const watchedDir2 = path.join(import.meta.dirname, 'test-temp-2');
@@ -69,7 +68,7 @@ test('should work with string and glob', async ({ dev, page }) => {
     config: {
       dev: {
         watchFiles: {
-          paths: toPosixPath(path.join(watchedDir1, '**/*')),
+          paths: 'test-temp-1/**/*',
         },
       },
     },
