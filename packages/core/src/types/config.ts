@@ -1176,9 +1176,11 @@ export type Minify =
       js?: boolean | 'always';
       /**
        * Minimizer options of JavaScript, which will be passed to SWC.
+       * When using an array, each item registers a separate minimizer and the first matching item
+       * applies to each JavaScript asset.
        * @default {}
        */
-      jsOptions?: SwcJsMinimizerRspackPluginOptions;
+      jsOptions?: OneOrMany<SwcJsMinimizerRspackPluginOptions>;
       /**
        * Whether to enable minification for CSS bundles.
        * - `true`: Enabled in production mode.
