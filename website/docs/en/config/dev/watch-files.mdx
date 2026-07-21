@@ -64,6 +64,12 @@ export default {
 };
 ```
 
+:::tip
+Glob patterns should use forward slashes (`/`) as path separators on all platforms. Avoid using `path.join()` to construct glob patterns because it produces backslashes on Windows, where backslashes are interpreted as escape characters in glob syntax.
+
+Use a string literal or `path.posix.join()` to construct relative glob patterns.
+:::
+
 ## type
 
 - **Type:** `'reload-page' | 'restart' | 'reload-server'`

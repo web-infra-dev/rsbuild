@@ -64,6 +64,12 @@ export default {
 };
 ```
 
+:::tip
+在所有平台上，glob 模式都应使用正斜杠（`/`）作为路径分隔符。请勿使用 `path.join()` 构造 glob 模式，因为它在 Windows 上会生成反斜杠，而反斜杠在 glob 语法中会被解释为转义符。
+
+请使用字符串字面量或 `path.posix.join()` 构造相对 glob 模式。
+:::
+
 ## type
 
 - **类型：** `'reload-page' | 'restart' | 'reload-server'`
