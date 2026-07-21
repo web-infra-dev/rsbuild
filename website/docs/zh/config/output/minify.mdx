@@ -11,7 +11,8 @@ type Minify =
   | boolean
   | {
       js?: boolean | 'always';
-      jsOptions?: Rspack.SwcJsMinimizerRspackPluginOptions;
+      jsOptions?:
+        Rspack.SwcJsMinimizerRspackPluginOptions | Rspack.SwcJsMinimizerRspackPluginOptions[];
       css?: boolean | 'always';
       cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
     };
@@ -101,7 +102,7 @@ export default {
 
 ### minify.jsOptions
 
-- **类型：** `Rspack.SwcJsMinimizerRspackPluginOptions`
+- **类型：** `Rspack.SwcJsMinimizerRspackPluginOptions | Rspack.SwcJsMinimizerRspackPluginOptions[]`
 - **默认值：** `{}`
 
 `output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SwcJsMinimizerRspackPlugin 文档](https://rspack.rs/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)。
@@ -123,6 +124,33 @@ export default {
 ```
 
 > 参考 [配置 SWC](/guide/configuration/swc) 了解更多。
+
+你可以传入一个选项数组，为不同文件设置不同的压缩配置。每一项都会注册一个独立的 `SwcJsMinimizerRspackPlugin` 实例：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      jsOptions: [
+        {
+          include: /vendor\.js$/,
+          minimizerOptions: {
+            mangle: true,
+          },
+        },
+        {
+          exclude: /vendor\.js$/,
+          minimizerOptions: {
+            mangle: false,
+          },
+        },
+      ],
+    },
+  },
+};
+```
+
+每个 JavaScript 产物只会被压缩一次。如果一个产物匹配了多个配置项，则第一个匹配项生效，因此建议使用互斥的 `test`、`include` 或 `exclude` 条件。
 
 ### minify.css
 

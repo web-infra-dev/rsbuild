@@ -110,6 +110,58 @@ describe('plugin-minimize', () => {
     });
   });
 
+  it('should accept an array of options for JS minimizers', async () => {
+    rs.stubEnv('NODE_ENV', 'production');
+
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          minify: {
+            css: false,
+            jsOptions: [
+              {
+                include: 'vendor.js',
+                minimizerOptions: {
+                  mangle: true,
+                },
+              },
+              {
+                exclude: 'vendor.js',
+                minimizerOptions: {
+                  mangle: false,
+                },
+              },
+            ],
+          },
+        },
+      },
+    });
+
+    const rspackConfigs = await rsbuild.initConfigs();
+
+    expect(rspackConfigs[0].optimization?.minimizer).toHaveLength(2);
+    expect(rspackConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
+      _args: [
+        {
+          include: 'vendor.js',
+          minimizerOptions: {
+            mangle: true,
+          },
+        },
+      ],
+    });
+    expect(rspackConfigs[0].optimization?.minimizer?.[1]).toMatchObject({
+      _args: [
+        {
+          exclude: 'vendor.js',
+          minimizerOptions: {
+            mangle: false,
+          },
+        },
+      ],
+    });
+  });
+
   it('should dropConsole when performance.removeConsole is true', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 

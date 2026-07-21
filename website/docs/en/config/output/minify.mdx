@@ -11,7 +11,8 @@ type Minify =
   | boolean
   | {
       js?: boolean | 'always';
-      jsOptions?: Rspack.SwcJsMinimizerRspackPluginOptions;
+      jsOptions?:
+        Rspack.SwcJsMinimizerRspackPluginOptions | Rspack.SwcJsMinimizerRspackPluginOptions[];
       css?: boolean | 'always';
       cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
     };
@@ -101,7 +102,7 @@ export default {
 
 ### minify.jsOptions
 
-- **Type:** `Rspack.SwcJsMinimizerRspackPluginOptions`
+- **Type:** `Rspack.SwcJsMinimizerRspackPluginOptions | Rspack.SwcJsMinimizerRspackPluginOptions[]`
 - **Default:** `{}`
 
 `output.minify.jsOptions` configures SWC's minification options. See [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin) for detailed configuration options.
@@ -123,6 +124,33 @@ export default {
 ```
 
 > Refer to [Configure SWC](/guide/configuration/swc) for more details.
+
+You can pass an array of options to apply different minification settings to different files. Each item registers a separate `SwcJsMinimizerRspackPlugin` instance:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      jsOptions: [
+        {
+          include: /vendor\.js$/,
+          minimizerOptions: {
+            mangle: true,
+          },
+        },
+        {
+          exclude: /vendor\.js$/,
+          minimizerOptions: {
+            mangle: false,
+          },
+        },
+      ],
+    },
+  },
+};
+```
+
+Each JavaScript asset is minimized only once. If an asset matches multiple items, the first matching item takes effect, so we recommend using mutually exclusive `test`, `include`, or `exclude` conditions.
 
 ### minify.css
 

@@ -3,8 +3,8 @@ import type {
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
 import deepmerge from 'deepmerge';
-import { isPlainObject, pick } from '../helpers';
-import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
+import { castArray, isPlainObject, pick } from '../helpers';
+import type { NormalizedEnvironmentConfig, OneOrMany, RsbuildPlugin } from '../types';
 import { getLightningCSSLoaderOptions } from './css';
 
 const CONSOLE_METHODS = [
@@ -88,7 +88,7 @@ export function getSwcMinimizerOptions(
 export function parseMinifyOptions(config: NormalizedEnvironmentConfig): {
   minifyJs: boolean;
   minifyCss: boolean;
-  jsOptions?: SwcJsMinimizerRspackPluginOptions;
+  jsOptions?: OneOrMany<SwcJsMinimizerRspackPluginOptions>;
   cssOptions?: LightningCssMinimizerRspackPluginOptions;
 } {
   const isProd = config.mode === 'production';
@@ -121,10 +121,26 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       chain.optimization.minimize(minifyJs || minifyCss);
 
       if (minifyJs) {
-        chain.optimization
-          .minimizer(CHAIN_ID.MINIMIZER.JS)
-          .use(rspack.SwcJsMinimizerRspackPlugin, [getSwcMinimizerOptions(config, jsOptions)])
-          .end();
+        const registerJsMinimizer = (
+          jsOptionsItem?: SwcJsMinimizerRspackPluginOptions,
+          index = 0,
+        ) => {
+          const minimizerId =
+            index === 0 ? CHAIN_ID.MINIMIZER.JS : `${CHAIN_ID.MINIMIZER.JS}-${index}`;
+
+          chain.optimization
+            .minimizer(minimizerId)
+            .use(rspack.SwcJsMinimizerRspackPlugin, [getSwcMinimizerOptions(config, jsOptionsItem)])
+            .end();
+        };
+
+        const jsOptionsList = castArray<SwcJsMinimizerRspackPluginOptions>(jsOptions);
+
+        if (jsOptionsList.length > 0) {
+          jsOptionsList.forEach(registerJsMinimizer);
+        } else {
+          registerJsMinimizer();
+        }
       }
 
       if (minifyCss) {
