@@ -164,14 +164,6 @@ When using Node.js's native loader, note the following limitations:
 
 > See [Node.js - Running TypeScript Natively](https://nodejs.org/en/learn/typescript/run-natively#running-typescript-natively) for more details.
 
-## Configuration file watching
-
-When using the Rsbuild CLI, `rsbuild dev` and `rsbuild build --watch` automatically watch the loaded configuration file and its imported dependencies. When one of these files changes, Rsbuild reloads the configuration and restarts the current dev server or watch build.
-
-When using the JavaScript API, pass the complete [`loadConfig`](/api/javascript-api/core#loadconfig) result to `createRsbuild` so Rsbuild can track and automatically watch these files.
-
-`rsbuild.startDevServer()`, `rsbuild.createDevServer()`, and `rsbuild.build({ watch: true })` install restart watchers, while regular builds and preview servers do not. When a watched file changes, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart). By default, Rsbuild does not close or restart the current task; you can pass the [`restart` option](/api/javascript-api/core#restart) to handle restart requests.
-
 ## Using environment variables
 
 In the configuration file, you can use Node.js environment variables such as `process.env.NODE_ENV` to dynamically set different configurations:
@@ -271,6 +263,22 @@ const config2 = defineConfig({
 // { dev: { port: '3001' }
 export default mergeRsbuildConfig(config1, config2);
 ```
+
+## Configuration file watching
+
+### Rsbuild CLI
+
+When using the Rsbuild CLI, `rsbuild dev` and `rsbuild build --watch` automatically watch the loaded configuration file and its imported dependencies.
+
+When one of these files changes, Rsbuild reloads the configuration and restarts the current dev server or watch build.
+
+### JavaScript API
+
+When using the JavaScript API, pass the complete result returned by [`loadConfig`](/api/javascript-api/core#loadconfig) to `createRsbuild`. This allows Rsbuild to track the configuration file and its imported dependencies.
+
+When calling `rsbuild.startDevServer()`, `rsbuild.createDevServer()`, or `rsbuild.build({ watch: true })`, Rsbuild installs a restart watcher and automatically watches these files. Regular builds and preview servers do not install a watcher. When a watched file changes, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart).
+
+By default, Rsbuild only calls this hook and does not automatically restart the current task. To run the restart process, pass the [`restart` option](/api/javascript-api/core#restart).
 
 ## Debug the config
 
