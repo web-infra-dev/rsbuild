@@ -65,6 +65,9 @@ export const build = async (
 
   let closingPromise: Promise<void> | undefined;
   let unregisterRestart: (() => void) | undefined;
+
+  // Keep the restart watcher active when closing build resources,
+  // so failed restarts can be retried.
   const closeBuild = () => {
     closingPromise ||= (async () => {
       unregisterRestart?.();
@@ -77,7 +80,6 @@ export const build = async (
 
   let restartWatcher: ReturnType<typeof watchFilesForRestart>;
   if (watch) {
-    // Only close build resources before restart; keep the watcher alive for retries.
     unregisterRestart = context.restartManager.registerCleanup(closeBuild);
     restartWatcher = watchFilesForRestart({
       watchFiles: context.normalizedConfig!.dev.watchFiles,
@@ -86,6 +88,7 @@ export const build = async (
     });
   }
 
+  // Fully close the build and its restart watcher.
   const close = async () => {
     await restartWatcher?.close();
     await closeBuild();

@@ -203,6 +203,8 @@ export async function createDevServer<
   let closingPromise: Promise<void> | undefined;
   let unregisterRestart: (() => void) | undefined;
 
+  // Keep the restart watcher active when closing server resources,
+  // so failed restarts can be retried.
   const closeServerResources = () => {
     if (!closingPromise) {
       unregisterRestart?.();
@@ -217,9 +219,26 @@ export async function createDevServer<
     return closingPromise;
   };
 
+  // Fully close the server and its restart watcher.
   const closeServer = async () => {
     await state.restartWatcher?.close();
     await closeServerResources();
+  };
+
+  // Request a manual restart and close the old watcher only after it succeeds.
+  const restartServer = async () => {
+    const restarted = await requestRestart({
+      action: 'dev',
+      clear: false,
+      logger,
+      restartManager: context.restartManager,
+    });
+
+    if (restarted) {
+      await state.restartWatcher?.close();
+    }
+
+    return restarted;
   };
 
   if (!middlewareMode) {
@@ -237,15 +256,7 @@ export async function createDevServer<
         openPage,
         closeServer,
         printUrls,
-        restartServer: context.restartManager.canRestart
-          ? () =>
-              requestRestart({
-                action: 'dev',
-                clear: false,
-                logger,
-                restartManager: context.restartManager,
-              })
-          : undefined,
+        restartServer: context.restartManager.canRestart ? restartServer : undefined,
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
         logger,
@@ -440,7 +451,6 @@ export async function createDevServer<
   // start watching
   state.buildManager?.watch();
 
-  // Only close server resources before restart; keep the watcher alive for retries.
   unregisterRestart = context.restartManager.registerCleanup(closeServerResources);
   state.restartWatcher = watchFilesForRestart({
     watchFiles: config.dev.watchFiles,
