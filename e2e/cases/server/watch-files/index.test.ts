@@ -77,6 +77,20 @@ test('should work with string and glob', async ({ dev, page }) => {
   await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(watchedFile1, 'test')]);
 });
 
+test('should work with glob created by path.join', async ({ dev, page }) => {
+  await dev({
+    config: {
+      dev: {
+        watchFiles: {
+          paths: path.join(watchedDir1, '**/*'),
+        },
+      },
+    },
+  });
+
+  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(watchedFile1, 'test')]);
+});
+
 test('should work with options', async ({ dev, page }) => {
   await dev({
     config: {
