@@ -1,6 +1,5 @@
 import type { FSWatcher } from 'chokidar';
 import { castArray } from '../helpers';
-import { toPosixPath } from '../helpers/path';
 import type {
   ChokidarOptions,
   DevConfig,
@@ -119,10 +118,6 @@ export async function createChokidar(
   });
 
   if (globPatterns.length) {
-    for (let index = 0; index < globPatterns.length; index++) {
-      globPatterns[index] = toPosixPath(globPatterns[index]);
-    }
-
     const { glob } = await import(/* rspackChunkName: "tinyglobby" */ 'tinyglobby');
     // interop default to make both CJS and ESM work
     const files = await glob(globPatterns, {
