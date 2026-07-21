@@ -1,0 +1,23 @@
+pnpm-lock.yaml
+  s_8f124456772f6a::t_cb5ce12d5394b4 329-330,4921-4923,4925,5125-5129,9272,9425-9426
+pnpm-workspace.yaml
+  s_8f124456772f6a::t_52e654202ff416 125,153
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "633d24bb66f1d4b98a737994b462bfffe6af9efe",
+  "prompts": {},
+  "sessions": {
+    "s_8f124456772f6a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f59a5-b55e-7fc2-8105-43059a28a4dd",
+        "model": "unknown"
+      },
+      "human_author": "intellild <intellild@outlook.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
