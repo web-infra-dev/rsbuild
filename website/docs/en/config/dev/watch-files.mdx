@@ -28,12 +28,6 @@ Watch specified files and directories for changes. When a change is detected, it
 
 Paths of the files or directories to watch, supports glob syntax. It can be a single path or an array of multiple paths.
 
-:::tip
-Glob patterns should use forward slashes (`/`) as path separators on all platforms. Avoid using `path.join()` to construct glob patterns because it produces backslashes on Windows, where backslashes are interpreted as escape characters in glob syntax.
-
-Use a string literal or `path.posix.join()` to construct relative glob patterns.
-:::
-
 - Watching a single file:
 
 ```ts title="rsbuild.config.ts"
@@ -57,6 +51,12 @@ export default {
   },
 };
 ```
+
+:::tip
+Glob patterns should use forward slashes (`/`) as path separators on all platforms. Avoid using `path.join()` to construct glob patterns because it produces backslashes on Windows, where backslashes are interpreted as escape characters in glob syntax.
+
+Use a string literal or `path.posix.join()` to construct relative glob patterns.
+:::
 
 - Watching multiple file paths:
 

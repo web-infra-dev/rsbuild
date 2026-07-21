@@ -28,12 +28,6 @@ type WatchFilesConfig = WatchFiles | WatchFiles[];
 
 监视的文件或目录的路径，支持 glob 语法。可以是单个路径，也可以是多个路径组成的数组。
 
-:::tip
-在所有平台上，glob 模式都应使用正斜杠（`/`）作为路径分隔符。请勿使用 `path.join()` 构造 glob 模式，因为它在 Windows 上会生成反斜杠，而反斜杠在 glob 语法中会被解释为转义符。
-
-请使用字符串字面量或 `path.posix.join()` 构造相对 glob 模式。
-:::
-
 - 监听单个文件：
 
 ```ts title="rsbuild.config.ts"
@@ -57,6 +51,12 @@ export default {
   },
 };
 ```
+
+:::tip
+在所有平台上，glob 模式都应使用正斜杠（`/`）作为路径分隔符。请勿使用 `path.join()` 构造 glob 模式，因为它在 Windows 上会生成反斜杠，而反斜杠在 glob 语法中会被解释为转义符。
+
+请使用字符串字面量或 `path.posix.join()` 构造相对 glob 模式。
+:::
 
 - 监听多个文件路径：
 
