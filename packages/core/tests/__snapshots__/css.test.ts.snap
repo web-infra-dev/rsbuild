@@ -390,6 +390,120 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
 ]
 `;
 
+exports[`plugin-rspack-builtin-css > should replace the default CSS pipeline and translate CSS Modules options 1`] = `
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "oneOf": [
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
+        "parser": {
+          "exportType": "text",
+          "namedExports": true,
+        },
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "css/auto",
+        "use": [
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /\\[\\?&\\]module\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "css/global",
+        "use": [
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.module\\(s\\)\\?\\\\\\.\\\\w\\+\\$/i,
+        "type": "css/global",
+        "use": [
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "type": "css/auto",
+        "use": [
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+    "test": /\\\\\\.css\\$/,
+  },
+]
+`;
+
 exports[`should ensure isolation of PostCSS config objects between different builds 1`] = `
 [
   {

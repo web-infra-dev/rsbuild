@@ -1,0 +1,59 @@
+---
+description: '在 Rsbuild 中使用 Rspack 内置的 CSS 模块类型。'
+---
+
+# Rspack 内置 CSS
+
+`pluginRspackBuiltinCss` 是一个实验性插件，用 Rspack 内置的 `css/*` 模块类型替代 `css-loader`、`style-loader` 和 `CssExtractRspackPlugin`。
+
+```ts title="rsbuild.config.ts"
+import { pluginRspackBuiltinCss } from '@rsbuild/core';
+
+export default {
+  plugins: [pluginRspackBuiltinCss()],
+};
+```
+
+插件会保留 PostCSS、Lightning CSS、Sass、Less 等插件添加的 loader。
+
+## CSS Modules
+
+通过 [output.cssModules](/config/output/css-modules) 配置 CSS Modules。插件支持：
+
+- `auto`：布尔值
+- `exportLocalsConvention`
+- `localIdentName`
+- `mode`：`local`、`global` 和 `pure`
+- `namedExport`
+
+以下配置暂不支持，并会输出警告：
+
+- `auto` 的正则和函数值
+- `exportGlobals`
+- `mode` 的 `icss` 和函数值
+
+对于 `output.cssModules` 未覆盖的 Rspack parser 和 generator 配置，可以通过插件参数设置：
+
+```ts title="rsbuild.config.ts"
+import { pluginRspackBuiltinCss } from '@rsbuild/core';
+
+export default {
+  plugins: [
+    pluginRspackBuiltinCss({
+      parser: {
+        url: false,
+        import: false,
+      },
+      generator: {
+        localIdentHashSalt: 'custom-salt',
+      },
+    }),
+  ],
+};
+```
+
+`parser` 支持 `exportType`、`url`、`import`、`resolveImport`、`animation`、`container`、`customIdents`、`dashedIdents`、`function` 和 `grid`。
+
+`generator` 支持 `esModule`、`localIdentHashDigest`、`localIdentHashDigestLength`、`localIdentHashFunction` 和 `localIdentHashSalt`。
+
+暂不支持 CSS `?url` 导入。

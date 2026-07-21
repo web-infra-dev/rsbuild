@@ -11,6 +11,7 @@
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
+    "e2e:css-builtin": "cross-env RSBUILD_E2E_RSPACK_BUILTIN_CSS=1 pnpm e2e css",
     "format": "oxfmt . && heading-case --write",
     "format:check": "oxfmt . --check",
     "lint": "rslint --type-check",

@@ -1,0 +1,59 @@
+---
+description: 'Use Rspack built-in CSS module types in Rsbuild.'
+---
+
+# Rspack built-in CSS
+
+`pluginRspackBuiltinCss` is an experimental plugin that replaces `css-loader`, `style-loader`, and `CssExtractRspackPlugin` with Rspack's built-in `css/*` module types.
+
+```ts title="rsbuild.config.ts"
+import { pluginRspackBuiltinCss } from '@rsbuild/core';
+
+export default {
+  plugins: [pluginRspackBuiltinCss()],
+};
+```
+
+The plugin preserves loaders added by PostCSS, Lightning CSS, Sass, Less, and other plugins.
+
+## CSS Modules
+
+Configure CSS Modules through [output.cssModules](/config/output/css-modules). The plugin supports:
+
+- `auto`: boolean values
+- `exportLocalsConvention`
+- `localIdentName`
+- `mode`: `local`, `global`, and `pure`
+- `namedExport`
+
+The following values are not supported and emit warnings:
+
+- RegExp and function values for `auto`
+- `exportGlobals`
+- `icss` and function values for `mode`
+
+Use the plugin options to configure Rspack parser and generator fields that are not covered by `output.cssModules`:
+
+```ts title="rsbuild.config.ts"
+import { pluginRspackBuiltinCss } from '@rsbuild/core';
+
+export default {
+  plugins: [
+    pluginRspackBuiltinCss({
+      parser: {
+        url: false,
+        import: false,
+      },
+      generator: {
+        localIdentHashSalt: 'custom-salt',
+      },
+    }),
+  ],
+};
+```
+
+The `parser` option supports `exportType`, `url`, `import`, `resolveImport`, `animation`, `container`, `customIdents`, `dashedIdents`, `function`, and `grid`.
+
+The `generator` option supports `esModule`, `localIdentHashDigest`, `localIdentHashDigestLength`, `localIdentHashFunction`, and `localIdentHashSalt`.
+
+CSS `?url` imports are not supported.

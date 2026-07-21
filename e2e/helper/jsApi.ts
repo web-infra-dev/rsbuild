@@ -5,6 +5,7 @@ import {
   type CreateRsbuildOptions,
   createRsbuild,
   type BuildResult as RsbuildBuildResult,
+  pluginRspackBuiltinCss,
   type RsbuildConfig,
   type RsbuildDevServer,
   type RsbuildInstance,
@@ -19,8 +20,14 @@ const updateConfigForTest = async (originalConfig: RsbuildConfig, cwd: string = 
   const { content: loadedConfig } = await loadConfig({
     cwd,
   });
+  const cwdPath = toPosixPath(cwd);
+  const useRspackBuiltinCss =
+    process.env.RSBUILD_E2E_RSPACK_BUILTIN_CSS === '1' &&
+    cwdPath.includes('/e2e/cases/css/') &&
+    !cwdPath.endsWith('/rspack-builtin-css');
 
   const baseConfig: RsbuildConfig = {
+    ...(useRspackBuiltinCss ? { plugins: [pluginRspackBuiltinCss()] } : {}),
     server: {
       // make port random to avoid conflict
       port: await getRandomPort(),

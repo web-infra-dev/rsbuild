@@ -326,7 +326,7 @@ catalogs:
       specifier: 1.0.1
       version: 1.0.1
     rspack-vue-loader:
-      specifier: ^17.6.1
+      specifier: github:rstackjs/rspack-vue-loader#d7f4101a8bdc60eb301547840868e94d2f2e9a1d
       version: 17.6.1
     rspress-plugin-font-open-sans:
       specifier: ^1.0.4
@@ -1380,7 +1380,7 @@ importers:
     dependencies:
       rspack-vue-loader:
         specifier: 'catalog:'
-        version: 17.6.1(@rspack/core@2.1.4)(@vue/compiler-sfc@3.5.40)(vue@3.5.40)
+        version: https://codeload.github.com/rstackjs/rspack-vue-loader/tar.gz/d7f4101a8bdc60eb301547840868e94d2f2e9a1d(@rspack/core@2.1.4)(@vue/compiler-sfc@3.5.40)(vue@3.5.40)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -4918,8 +4918,9 @@ packages:
   rspack-merge@1.0.1:
     resolution: {integrity: sha512-W/mzCdxfV+EXOdpfwcLWc2TZ9EYa2LYumAMgpTn27bSEOO0BQz/SA8qfnJRCMkJyNST2URxmwqBmQbh5tLFwsg==}
 
-  rspack-vue-loader@17.6.1:
-    resolution: {integrity: sha512-jeeqh2wLcJLTd6AwYJjiEv62Bo6A7+OH4c7kGi4S2BF3E996cLtdY6ybAu8lG82EyUcr2lgV3kHoRnfD5QPUgA==}
+  rspack-vue-loader@https://codeload.github.com/rstackjs/rspack-vue-loader/tar.gz/d7f4101a8bdc60eb301547840868e94d2f2e9a1d:
+    resolution: {gitHosted: true, integrity: sha512-fEdLK5Sbj6kFFPzytoML0Cxc1DVb842nrp0q3KozoRT6aS5mwHJEq9tw1CtCHs9sh6MimkfgvC7dYXe0mdLq/w==, tarball: https://codeload.github.com/rstackjs/rspack-vue-loader/tar.gz/d7f4101a8bdc60eb301547840868e94d2f2e9a1d}
+    version: 17.6.1
     peerDependencies:
       '@rspack/core': ^1.0.0 || ^2.0.0
       '@vue/compiler-sfc': '*'
@@ -5118,6 +5119,11 @@ packages:
 
   semver@7.7.4:
     resolution: {integrity: sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  semver@7.8.5:
+    resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -9259,10 +9265,11 @@ snapshots:
 
   rspack-merge@1.0.1: {}
 
-  rspack-vue-loader@17.6.1(@rspack/core@2.1.4)(@vue/compiler-sfc@3.5.40)(vue@3.5.40):
+  rspack-vue-loader@https://codeload.github.com/rstackjs/rspack-vue-loader/tar.gz/d7f4101a8bdc60eb301547840868e94d2f2e9a1d(@rspack/core@2.1.4)(@vue/compiler-sfc@3.5.40)(vue@3.5.40):
     dependencies:
       '@rspack/lite-tapable': 1.1.2
       chalk: 4.1.2
+      semver: 7.8.5
     optionalDependencies:
       '@rspack/core': 2.1.4(@module-federation/runtime-tools@2.8.0)(@swc/helpers@0.5.23)
       '@vue/compiler-sfc': 3.5.40
@@ -9414,6 +9421,8 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.7.4: {}
+
+  semver@7.8.5: {}
 
   seroval-plugins@1.5.4(seroval@1.5.4):
     dependencies:
