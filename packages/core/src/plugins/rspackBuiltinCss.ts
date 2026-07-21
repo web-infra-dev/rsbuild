@@ -8,6 +8,8 @@ export const PLUGIN_RSPACK_BUILTIN_CSS_NAME = 'rsbuild:rspack-builtin-css';
 
 type CssRuleType = 'css' | 'css/auto' | 'css/global' | 'css/module';
 
+const CSS_MODULE_QUERY_REGEX = /[?&]module(?:&|=|$)/;
+
 /**
  * Options for Rspack's built-in CSS parser that are not covered by
  * `output.cssModules`.
@@ -211,7 +213,6 @@ export const pluginRspackBuiltinCss = (
     let hasWarnedExportGlobals = false;
     let hasWarnedMode = false;
     let hasWarnedUrl = false;
-    let hasWarnedVue = false;
 
     api.modifyBundlerChain({
       order: 'post',
@@ -235,16 +236,6 @@ export const pluginRspackBuiltinCss = (
           hasWarnedExportGlobals = true;
           api.logger.warn(
             '`output.cssModules.exportGlobals` is not supported by `pluginRspackBuiltinCss`. The value will be ignored.',
-          );
-        }
-        if (
-          !hasWarnedVue &&
-          auto !== false &&
-          api.isPluginExists('rsbuild:vue', { environment: environment.name })
-        ) {
-          hasWarnedVue = true;
-          api.logger.warn(
-            'Vue SFC CSS Modules (`<style module>`) are not supported by `pluginRspackBuiltinCss`.',
           );
         }
         if (!hasWarnedUrl) {
@@ -285,6 +276,14 @@ export const pluginRspackBuiltinCss = (
             const isInline = String(branch.get('resourceQuery')) === String(INLINE_QUERY_REGEX);
 
             if (!isInline && auto !== false) {
+              const queryModuleRule = rule.oneOf(`${name}-query-module`).before(name);
+              cloneRule({
+                source: branch,
+                target: queryModuleRule,
+                legacyUseIds,
+              });
+              queryModuleRule.resourceQuery(CSS_MODULE_QUERY_REGEX).type(moduleRuleType);
+
               const moduleRule = rule.oneOf(`${name}-module`).before(name);
               cloneRule({
                 source: branch,

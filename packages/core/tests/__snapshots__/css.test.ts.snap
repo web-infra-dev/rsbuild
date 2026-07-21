@@ -437,6 +437,28 @@ exports[`plugin-rspack-builtin-css > should replace the default CSS pipeline and
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": /\\[\\?&\\]module\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "css/global",
+        "use": [
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
         "sideEffects": true,
         "test": /\\\\\\.module\\(s\\)\\?\\\\\\.\\\\w\\+\\$/i,
         "type": "css/global",

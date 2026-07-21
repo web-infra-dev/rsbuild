@@ -1,4 +1,4 @@
-import { createRsbuild } from '@rsbuild/core';
+import { createRsbuild, pluginRspackBuiltinCss, type Rspack } from '@rsbuild/core';
 import { matchPlugin, matchRules } from '@scripts/test-helper';
 import { pluginVue } from '../src';
 
@@ -40,6 +40,29 @@ describe('plugin-vue', () => {
     });
     const config = await rsbuild.initConfigs();
     expect(matchPlugin(config[0], 'DefinePlugin')).toMatchSnapshot();
+  });
+
+  it('should support Rspack built-in CSS rules', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [pluginVue(), pluginRspackBuiltinCss()],
+      },
+    });
+    const warn = rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [config] = await rsbuild.initConfigs();
+    const cssRule = matchRules(config, 'a.vue.css')[0] as {
+      oneOf?: Rspack.RuleSetRule[];
+    };
+
+    expect(
+      cssRule.oneOf?.some(
+        (rule) =>
+          rule.type === 'css/module' &&
+          String(rule.resourceQuery) === String(/[?&]module(?:&|=|$)/),
+      ),
+    ).toBe(true);
+    expect(warn).not.toHaveBeenCalledWith(expect.stringContaining('output.cssModules.auto'));
   });
 
   it('should allow to custom test condition', async () => {

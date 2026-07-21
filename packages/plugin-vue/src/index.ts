@@ -1,5 +1,10 @@
 import { createRequire } from 'node:module';
-import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
+import {
+  type EnvironmentConfig,
+  PLUGIN_RSPACK_BUILTIN_CSS_NAME,
+  type RsbuildPlugin,
+  type Rspack,
+} from '@rsbuild/core';
 import { type VueLoaderOptions, VueLoaderPlugin } from 'rspack-vue-loader';
 import { applySplitChunksRule } from './splitChunks.js';
 
@@ -55,7 +60,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
       const { test = /\.vue$/ } = options;
       const CSS_MODULES_REGEX = /\.modules?\.\w+$/i;
 
-      api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+      api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig, name }) => {
         const extraConfig: EnvironmentConfig = {
           source: {
             define: {
@@ -72,7 +77,10 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         const merged = mergeEnvironmentConfig(extraConfig, config);
 
         // Support `<style module>`, `<style module="customName">` in Vue SFC
-        if (merged.output.cssModules.auto === true) {
+        if (
+          merged.output.cssModules.auto === true &&
+          !api.isPluginExists(PLUGIN_RSPACK_BUILTIN_CSS_NAME, { environment: name })
+        ) {
           merged.output.cssModules.auto = (path, query) => {
             // For Vue style block, the path might be like:
             // 1. `/path/to/Foo.vue`

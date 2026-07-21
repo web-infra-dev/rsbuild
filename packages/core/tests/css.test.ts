@@ -366,7 +366,7 @@ describe('plugin-rspack-builtin-css', () => {
         (rule.type === 'css/auto' && rule.parser?.exportType !== 'text'),
     );
 
-    expect(styleRules).toHaveLength(2);
+    expect(styleRules).toHaveLength(3);
     expect(
       styleRules?.every((rule) =>
         rule.use?.some((use) =>
@@ -374,6 +374,45 @@ describe('plugin-rspack-builtin-css', () => {
         ),
       ),
     ).toBe(true);
+  });
+
+  it('should add a CSS Modules oneOf rule for resource queries', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [pluginRspackBuiltinCss()],
+      },
+    });
+    rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+    const rules = matchRules(rspackConfig, 'a.vue.css');
+    const oneOf = (rules[0] as { oneOf?: Rspack.RuleSetRule[] }).oneOf;
+    const inlineRuleIndex = oneOf?.findIndex(
+      (rule) => String(rule.resourceQuery) === String(/[?&]inline(?:&|=|$)/),
+    );
+    const queryModuleRuleIndex = oneOf?.findIndex(
+      (rule) => String(rule.resourceQuery) === String(/[?&]module(?:&|=|$)/),
+    );
+    const fallbackRuleIndex = oneOf?.findIndex(
+      (rule) => rule.type === 'css/auto' && !rule.resourceQuery && !rule.test,
+    );
+    const queryModuleRule = oneOf?.[queryModuleRuleIndex ?? -1];
+
+    expect(oneOf?.[inlineRuleIndex ?? -1]).toMatchObject({
+      parser: {
+        exportType: 'text',
+      },
+      type: 'css/auto',
+    });
+    expect(queryModuleRule).toMatchObject({
+      sideEffects: true,
+      type: 'css/module',
+    });
+    expect(
+      (queryModuleRule?.resourceQuery as RegExp).test('?vue&type=style&module=&lang=css'),
+    ).toBe(true);
+    expect(inlineRuleIndex).toBeLessThan(queryModuleRuleIndex!);
+    expect(queryModuleRuleIndex).toBeLessThan(fallbackRuleIndex!);
   });
 
   it('should warn about unsupported CSS Modules options', async () => {
@@ -401,27 +440,6 @@ describe('plugin-rspack-builtin-css', () => {
     );
     expect(warn).toHaveBeenCalledWith(
       '`output.cssModules.exportGlobals` is not supported by `pluginRspackBuiltinCss`. The value will be ignored.',
-    );
-  });
-
-  it('should warn when used with the Vue plugin', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        plugins: [
-          {
-            name: 'rsbuild:vue',
-            setup() {},
-          },
-          pluginRspackBuiltinCss(),
-        ],
-      },
-    });
-    const warn = rstest.spyOn(rsbuild.logger, 'warn').mockImplementation(() => {});
-
-    await rsbuild.initConfigs();
-
-    expect(warn).toHaveBeenCalledWith(
-      'Vue SFC CSS Modules (`<style module>`) are not supported by `pluginRspackBuiltinCss`.',
     );
   });
 });
