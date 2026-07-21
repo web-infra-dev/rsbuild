@@ -23,8 +23,9 @@ export default defineConfig({
         {
           include: /bar\.js$/,
           minimizerOptions: {
-            compress: false,
-            mangle: false,
+            compress: {
+              pure_funcs: ['console.info'],
+            },
           },
         },
       ],

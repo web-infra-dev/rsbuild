@@ -1,1 +1,2 @@
-console.log('bar-console');
+console.info('bar-remove');
+console.log('bar-keep');

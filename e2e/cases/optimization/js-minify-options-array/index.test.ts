@@ -9,5 +9,6 @@ test('should apply different JS minify options to different assets', async ({ bu
 
   expect(foo).not.toContain('foo-console');
   expect(foo).toContain('foo-result');
-  expect(bar).toContain('bar-console');
+  expect(bar).not.toContain('bar-remove');
+  expect(bar).toContain('bar-keep');
 });
