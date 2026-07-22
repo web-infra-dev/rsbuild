@@ -1,5 +1,28 @@
 import { define } from 'rstack';
 
+define.test(async () => {
+  // Disable color in test.
+  process.env.NO_COLOR = '1';
+
+  const { withRslibConfig } = await import('@rstest/adapter-rslib');
+
+  return {
+    extends: withRslibConfig({
+      configPath: './packages/core/rslib.config.ts',
+    }),
+    output: {
+      externals: ['@rsbuild/core'],
+    },
+    name: 'node',
+    globals: true,
+    restoreMocks: true,
+    unstubEnvs: true,
+    include: ['packages/**/*.test.ts'],
+    exclude: ['packages/create-rsbuild/template-rstest'],
+    setupFiles: ['./scripts/test-helper/rstest.setup.ts'],
+  };
+});
+
 define.lint(async () => {
   const { globalIgnores, js, ts } = await import('rstack/lint');
 

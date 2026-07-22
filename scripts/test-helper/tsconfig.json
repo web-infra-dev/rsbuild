@@ -4,7 +4,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "composite": true,
-    "types": ["@rstest/core/globals"]
+    "types": ["rstack/test/globals"]
   },
   "references": [
     {

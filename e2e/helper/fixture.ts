@@ -8,7 +8,7 @@ import {
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
 import { expect, test as base } from '@rstest/playwright';
-import type { PlaywrightOptions } from '@rstest/playwright';
+import type { PlaywrightFixture, PlaywrightOptions } from '@rstest/playwright';
 import {
   copyNodeModules as baseCopyNodeModules,
   editFile as baseEditFile,
@@ -16,6 +16,7 @@ import {
   prepareDist as basePrepareDist,
 } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
+import type { TestContext, TestOptions } from 'rstack/test';
 import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
   type Build,
@@ -181,12 +182,6 @@ type RsbuildFixture = {
    */
   execCliSync: ExecSync;
 };
-
-// Make custom fixtures available to Rstest hook callbacks.
-declare module '@rstest/core' {
-  // rslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface TestContext extends RsbuildFixture {}
-}
 
 type Close = DevResult['close'];
 
@@ -405,6 +400,19 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
   },
 });
 
-export const test = rsbuildTest;
+// TODO: Remove these hook type overrides after https://github.com/web-infra-dev/rstest/pull/1604 is released.
+type MaybePromise<T> = T | Promise<T>;
+type RsbuildTestContext = TestContext & PlaywrightFixture & RsbuildFixture;
+type TestCallback = (context: RsbuildTestContext) => MaybePromise<void>;
+type AfterEachCallback = (context: RsbuildTestContext) => MaybePromise<void>;
+type BeforeEachCallback = (context: RsbuildTestContext) => MaybePromise<void | AfterEachCallback>;
+type RsbuildTest = Omit<typeof rsbuildTest, 'afterEach' | 'beforeEach'> & {
+  (description: string, callback?: TestCallback, timeout?: number): void;
+  (description: string, options: TestOptions, callback?: TestCallback): void;
+  afterEach: (callback: AfterEachCallback, timeout?: number) => void;
+  beforeEach: (callback: BeforeEachCallback, timeout?: number) => void;
+};
+
+export const test = rsbuildTest as unknown as RsbuildTest;
 
 export { expect };
