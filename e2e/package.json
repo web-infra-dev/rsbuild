@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "setup": "pnpm exec playwright install chromium --with-deps",
-    "e2e": "rstest"
+    "e2e": "rs test"
   },
   "dependencies": {
     "@module-federation/runtime-tools": "catalog:",
@@ -38,7 +38,6 @@
     "@rsbuild/plugin-type-check": "catalog:",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rstackjs/test-utils": "catalog:",
-    "@rstest/core": "catalog:",
     "@rstest/playwright": "catalog:",
     "@scripts/test-helper": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
