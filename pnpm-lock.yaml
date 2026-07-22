@@ -298,9 +298,6 @@ catalogs:
     resolve-url-loader:
       specifier: ^5.0.0
       version: 5.0.0
-    rsbuild-plugin-arethetypeswrong:
-      specifier: 0.3.1
-      version: 0.3.1
     rsbuild-plugin-google-analytics:
       specifier: ^1.0.6
       version: 1.0.6
@@ -1400,9 +1397,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.3
-      rsbuild-plugin-arethetypeswrong:
-        specifier: 'catalog:'
-        version: 0.3.1(@rsbuild/core@2.1.7)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -4846,16 +4840,6 @@ packages:
     resolution: {integrity: sha512-WHeFSbZYsPu3+bLoNRUuAO+wavNlocOPf3wSHTP7hcFKVnJeWsYlCDbr3mTS14FCizf9ccIxXA8sGL8zKeQN3g==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
-
-  rsbuild-plugin-arethetypeswrong@0.3.1:
-    resolution: {integrity: sha512-083Kpz7qFWOPUrwnfAw7414VTSJnch+BKmrR/eu90IJOTe6c8lCW8be7BzI6Fs9synDWdvwLbTvxMHmR4nFVZw==}
-    engines: {node: '>=20.12.0'}
-    peerDependencies:
-      '@rsbuild/core': ^1.0.0 || ^2.0.0-0
-      typescript: '*'
-    peerDependenciesMeta:
-      '@rsbuild/core':
-        optional: true
 
   rsbuild-plugin-dts@1.0.0-beta.0:
     resolution: {integrity: sha512-+WOBPjcADvQPdjQuIiNI6LLQgDFnwSDo7tl1Yn/sXmUH8YISp5PveSEU08B7ABPeiTgBUdevUnVrb8f/deYaxw==}
@@ -9224,12 +9208,6 @@ snapshots:
       '@rollup/rollup-win32-x64-gnu': 4.60.4
       '@rollup/rollup-win32-x64-msvc': 4.60.4
       fsevents: 2.3.3
-
-  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.1.7)(typescript@6.0.3):
-    dependencies:
-      typescript: 6.0.3
-    optionalDependencies:
-      '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
 
   rsbuild-plugin-dts@1.0.0-beta.0(@rsbuild/core@2.1.7)(typescript@6.0.3):
     dependencies:
