@@ -6,7 +6,6 @@
   "devDependencies": {
     "@rslib/core": "catalog:",
     "@types/node": "catalog:",
-    "rsbuild-plugin-arethetypeswrong": "catalog:",
     "typescript": "catalog:"
   }
 }
