@@ -1,5 +1,4 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
-import { defineConfig } from '@rspress/core';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginRss } from '@rspress/plugin-rss';
@@ -12,12 +11,13 @@ import {
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
-import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
+import { define } from 'rstack';
+import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview.ts';
 
 const siteUrl = 'https://rsbuild.rs';
 const description = 'The Rspack-based build tool';
 
-export default defineConfig({
+define.doc({
   plugins: [
     pluginAlgolia(),
     pluginSitemap({

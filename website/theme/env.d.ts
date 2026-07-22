@@ -1,1 +1,1 @@
-/// <reference types="@rsbuild/core/types" />
+/// <reference types="rstack/types" />

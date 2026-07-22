@@ -1,8 +1,9 @@
 {
   "extends": "@scripts/config/tsconfig",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
-    "outDir": "dist",
+    "noEmit": true,
     "paths": {
       "@theme": ["./theme"],
       "@components/*": ["./theme/components/*"],
@@ -14,5 +15,5 @@
   "mdx": {
     "checkMdx": true
   },
-  "include": ["docs", "rspress.config.ts", "theme", "env.d.ts"]
+  "include": ["docs", "rstack.config.ts", "theme", "env.d.ts"]
 }
