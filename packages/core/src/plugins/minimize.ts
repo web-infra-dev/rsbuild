@@ -3,7 +3,7 @@ import type {
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
 import deepmerge from 'deepmerge';
-import { castArray, isPlainObject, pick } from '../helpers';
+import { isPlainObject, pick } from '../helpers';
 import type { NormalizedEnvironmentConfig, OneOrMany, RsbuildPlugin } from '../types';
 import { getLightningCSSLoaderOptions } from './css';
 
@@ -134,12 +134,12 @@ export const pluginMinimize = (): RsbuildPlugin => ({
             .end();
         };
 
-        const jsOptionsList = castArray<SwcJsMinimizerRspackPluginOptions>(jsOptions);
-
-        if (jsOptionsList.length > 0) {
-          jsOptionsList.forEach(registerJsMinimizer);
-        } else {
+        if (!Array.isArray(jsOptions)) {
+          registerJsMinimizer(jsOptions);
+        } else if (jsOptions.length === 0) {
           registerJsMinimizer();
+        } else {
+          jsOptions.forEach(registerJsMinimizer);
         }
       }
 
@@ -186,12 +186,12 @@ export const pluginMinimize = (): RsbuildPlugin => ({
             .end();
         };
 
-        const cssOptionsList = castArray<LightningCssMinimizerRspackPluginOptions>(cssOptions);
-
-        if (cssOptionsList.length > 0) {
-          cssOptionsList.forEach(registerCssMinimizer);
-        } else {
+        if (!Array.isArray(cssOptions)) {
+          registerCssMinimizer(cssOptions);
+        } else if (cssOptions.length === 0) {
           registerCssMinimizer();
+        } else {
+          cssOptions.forEach(registerCssMinimizer);
         }
       }
     });
