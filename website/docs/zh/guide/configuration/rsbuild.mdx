@@ -278,7 +278,7 @@ export default mergeRsbuildConfig(config1, config2);
 
 调用 `rsbuild.startDevServer()`、`rsbuild.createDevServer()` 或 `rsbuild.build({ watch: true })` 时，Rsbuild 会安装 restart 监听器，并自动监听上述文件；普通构建和预览服务器不会安装监听器。被监听的文件发生变化时，Rsbuild 会调用 [onRestart hook](/plugins/dev/hooks#onrestart)。
 
-默认情况下，Rsbuild 仅调用该 hook，不会自动重启当前任务。如需执行重启流程，可以传入 [`restart` 选项](/api/javascript-api/core#restart)。
+默认情况下，Rsbuild 仅调用该 hook，不会自动重启当前任务。如需执行重启流程，可以传入 [`restart` 选项](/api/javascript-api/core#restart-handling)。
 
 ## 调试配置
 

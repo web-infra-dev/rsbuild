@@ -8,7 +8,7 @@ The hook is triggered in the following cases:
 
 > This hook is not triggered for regular rebuilds.
 
-When using the JavaScript API, restart watchers are installed by `rsbuild.startDevServer()`, `rsbuild.createDevServer()`, and `rsbuild.build({ watch: true })`. The hook is called when a watched file changes. By default, Rsbuild does not close or restart the current task; you can pass the [`restart` option](/api/javascript-api/core#restart) to handle restart requests.
+When using the JavaScript API, restart watchers are installed by `rsbuild.startDevServer()`, `rsbuild.createDevServer()`, and `rsbuild.build({ watch: true })`. The hook is called when a watched file changes. By default, Rsbuild does not close or restart the current task; you can pass the [`restart` option](/api/javascript-api/core#restart-handling) to handle restart requests.
 
 - **Type:**
 

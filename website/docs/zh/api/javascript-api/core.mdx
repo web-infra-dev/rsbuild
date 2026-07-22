@@ -48,7 +48,7 @@ type CreateRsbuildOptions = {
 - `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
 - `loadEnv`：是否调用 [loadEnv](/api/javascript-api/core#loadenv) 方法来加载环境变量，并通过 [source.define](/config/source/define) 定义为全局变量。
 - `config`：Rsbuild 配置对象或 [`loadConfig`](#loadconfig) 返回的结果。参考 [配置总览](/config/) 查看所有可用的配置项。
-- `restart`：处理当前 dev server 或监听构建重启请求的函数，详见 [restart](#restart)。
+- `restart`：处理当前 dev server 或监听构建重启请求的函数，详见 [restart](#restart-handling)。
 
 :::tip
 `config` 是 Rsbuild 1.6 新增的选项。在旧版本中，可使用 `rsbuildConfig` 作为替代。
@@ -99,7 +99,7 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-### restart
+### 重启处理 \{#restart-handling}
 
 - **版本：** v2.1.7 新增
 
