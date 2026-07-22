@@ -3,7 +3,7 @@ import { pluginAreTheTypesWrong } from 'rsbuild-plugin-arethetypeswrong';
 
 export const commonExternals: Array<string | RegExp> = ['webpack', /[\\/]compiled[\\/]/];
 
-export const nodeMinifyConfig: Rsbuild.Minify = {
+export const nodeMinifyConfig = {
   js: true,
   css: false,
   jsOptions: {
@@ -16,7 +16,7 @@ export const nodeMinifyConfig: Rsbuild.Minify = {
       },
     },
   },
-};
+} satisfies Rsbuild.Minify;
 
 export const esmConfig: LibConfig = {
   syntax: 'es2023',

@@ -12,6 +12,9 @@ export const define = {
   'process.env.WS_NO_UTF_8_VALIDATE': true,
 };
 
+const fullyMinifiedChunks =
+  /^(?:chokidar|connect-next|http-proxy-middleware|launch-editor-middleware|manifest-plugin|memfs|open|tinyglobby|ws)\.js$/;
+
 const regexpMap: Record<string, RegExp> = {};
 
 for (const item of prebundleConfig.dependencies) {
@@ -204,7 +207,18 @@ export default defineConfig({
         },
       },
       output: {
-        minify: nodeMinifyConfig,
+        minify: {
+          jsOptions: [
+            {
+              // Fully minify large chunks composed primarily of third-party code.
+              include: fullyMinifiedChunks,
+            },
+            {
+              ...nodeMinifyConfig.jsOptions,
+              exclude: fullyMinifiedChunks,
+            },
+          ],
+        },
         filename: {
           js: ({ chunk }) => {
             // Use `.mjs` for Rspack loaders
