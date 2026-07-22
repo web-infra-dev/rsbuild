@@ -4,12 +4,11 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "rspress build",
-    "dev": "rspress dev",
-    "preview": "rspress preview"
+    "build": "rs doc build",
+    "dev": "rs doc",
+    "preview": "rs doc preview"
   },
   "devDependencies": {
-    "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-sass": "workspace:*",
     "@rspress/core": "catalog:",
     "@rspress/plugin-algolia": "catalog:",
@@ -27,6 +26,7 @@
     "rsbuild-plugin-google-analytics": "catalog:",
     "rsbuild-plugin-open-graph": "catalog:",
     "rspress-plugin-font-open-sans": "catalog:",
+    "rstack": "catalog:",
     "typescript": "catalog:"
   }
 }
