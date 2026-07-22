@@ -29,7 +29,8 @@
   },
   "scripts": {
     "build": "rslib",
-    "dev": "rslib -w"
+    "dev": "rslib -w",
+    "test": "rstest"
   },
   "dependencies": {
     "@tailwindcss/webpack": "catalog:"

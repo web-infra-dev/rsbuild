@@ -31,7 +31,8 @@
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w",
-    "prebundle": "prebundle"
+    "prebundle": "prebundle",
+    "test": "rstest"
   },
   "dependencies": {
     "deepmerge": "catalog:",

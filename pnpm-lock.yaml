@@ -1397,6 +1397,12 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.3
+      path-serializer:
+        specifier: 'catalog:'
+        version: 0.6.0
+      rstack:
+        specifier: 'catalog:'
+        version: 0.1.0(@module-federation/runtime-tools@2.8.0)(@rspress/core@2.0.18)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1409,9 +1415,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.3
-      path-serializer:
-        specifier: 'catalog:'
-        version: 0.6.0
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
