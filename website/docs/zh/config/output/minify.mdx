@@ -14,7 +14,7 @@ type Minify =
       jsOptions?: SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[];
       css?: boolean | 'always';
       cssOptions?:
-        LightningcssMinimizerRspackPluginOptions | LightningcssMinimizerRspackPluginOptions[];
+        LightningCssMinimizerRspackPluginOptions | LightningCssMinimizerRspackPluginOptions[];
     };
 ```
 
@@ -189,7 +189,7 @@ export default {
 
 ### minify.cssOptions
 
-- **类型：** `LightningcssMinimizerRspackPluginOptions | LightningcssMinimizerRspackPluginOptions[]`
+- **类型：** `LightningCssMinimizerRspackPluginOptions | LightningCssMinimizerRspackPluginOptions[]`
 - **默认值：** 继承 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 的值
 
 `output.minify.cssOptions` 用于配置 Lightning CSS 的压缩选项，具体配置项请参考 [LightningCssMinimizerRspackPlugin 文档](https://rspack.rs/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin)。

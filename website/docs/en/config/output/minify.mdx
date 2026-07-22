@@ -14,7 +14,7 @@ type Minify =
       jsOptions?: SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[];
       css?: boolean | 'always';
       cssOptions?:
-        LightningcssMinimizerRspackPluginOptions | LightningcssMinimizerRspackPluginOptions[];
+        LightningCssMinimizerRspackPluginOptions | LightningCssMinimizerRspackPluginOptions[];
     };
 ```
 
@@ -189,7 +189,7 @@ export default {
 
 ### minify.cssOptions
 
-- **Type:** `LightningcssMinimizerRspackPluginOptions | LightningcssMinimizerRspackPluginOptions[]`
+- **Type:** `LightningCssMinimizerRspackPluginOptions | LightningCssMinimizerRspackPluginOptions[]`
 - **Default:** inherit from [tools.lightningcssLoader](/config/tools/lightningcss-loader)
 
 `output.minify.cssOptions` configures Lightning CSS's minification options. See [LightningCssMinimizerRspackPlugin Documentation](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin) for detailed configuration options.
