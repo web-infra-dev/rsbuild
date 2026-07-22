@@ -48,7 +48,7 @@ type CreateRsbuildOptions = {
 - `environment`: Build only specified [environments](/guide/advanced/environments). If not specified or an empty array is passed, all environments will be built.
 - `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load environment variables and define them as global variables via [source.define](/config/source/define).
 - `config`: Rsbuild configuration object or the result returned by [`loadConfig`](#loadconfig). Refer to [Configuration Overview](/config/) for all available configuration options.
-- `restart`: A function that handles restart requests for the current dev server or watch build. See [restart](#restart).
+- `restart`: A function that handles restart requests for the current dev server or watch build. See [restart](#restart-handling).
 
 :::tip
 `config` was introduced in Rsbuild 1.6. In earlier versions, use `rsbuildConfig` as an alternative.
@@ -99,7 +99,7 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-### restart
+### Restart handling
 
 - **Version:** Added in v2.1.7
 
