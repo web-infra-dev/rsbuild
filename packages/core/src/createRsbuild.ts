@@ -63,7 +63,6 @@ import type {
   RsbuildPlugin,
   RsbuildPlugins,
   StartDevServer,
-  StartDevServerOptions,
 } from './types';
 
 function applyDefaultPlugins(pluginManager: PluginManager, context: InternalContext) {
@@ -253,17 +252,24 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
     return startPreviewServer(context, config, options);
   };
 
-  const build: Build = async (options) => {
+  const build: Build = async (options = {}) => {
     context.action = 'build';
 
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
 
-    return baseBuild({ context, pluginManager, rsbuildOptions: resolvedOptions }, options);
+    return baseBuild(
+      {
+        context,
+        pluginManager,
+        rsbuildOptions: resolvedOptions,
+      },
+      { ...options },
+    );
   };
 
-  const startDevServer: StartDevServer = async (options?: StartDevServerOptions) => {
+  const startDevServer: StartDevServer = async (options = {}) => {
     context.action = 'dev';
 
     if (!getNodeEnv()) {
@@ -272,10 +278,14 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
 
     const config = await initRsbuildConfig({ context, pluginManager });
     const server = await baseCreateDevServer(
-      { context, pluginManager, rsbuildOptions: resolvedOptions },
+      {
+        context,
+        pluginManager,
+        rsbuildOptions: resolvedOptions,
+      },
       createCompiler,
       config,
-      options,
+      { ...options },
     );
 
     return server.listen();

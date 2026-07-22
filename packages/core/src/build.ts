@@ -9,8 +9,9 @@ export const RSPACK_BUILD_ERROR = 'Rspack build failed.';
 
 export const build = async (
   initOptions: InitConfigsOptions,
-  { watch }: BuildOptions = {},
+  buildOptions: BuildOptions = {},
 ): Promise<ReturnType<Build>> => {
+  const { watch } = buildOptions;
   const { context } = initOptions;
   const { logger } = context;
   const { compiler, rspackConfigs } = await createCompiler(initOptions);
@@ -84,7 +85,10 @@ export const build = async (
     restartWatcher = watchFilesForRestart({
       watchFiles: context.normalizedConfig!.dev.watchFiles,
       context,
-      action: 'build',
+      restartContext: {
+        action: 'build',
+        options: buildOptions,
+      },
     });
   }
 

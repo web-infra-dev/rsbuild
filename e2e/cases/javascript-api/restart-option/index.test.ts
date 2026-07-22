@@ -68,6 +68,7 @@ test('createRsbuild should support a restart function', async () => {
       context: {
         action: 'dev',
         filePath: watchedFile,
+        options: {},
       },
       calls: ['onRestart', 'onCloseDevServer'],
     });

@@ -107,7 +107,7 @@ The `restart` option allows the caller to control how Rsbuild restarts the curre
 
 > See [Configuration file watching](/guide/configuration/rsbuild#configuration-file-watching) to learn what triggers a restart.
 
-When a restart is requested, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart), closes the current task resources, and then calls `restart`.
+When a restart is requested, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart), closes the current task resources, and then calls `restart`. The `restart` callback receives the options passed to the current `rsbuild.build()` or `rsbuild.startDevServer()` call.
 
 The function should return `true` when the replacement task starts successfully. If it returns `false` or throws an error, the restart watcher remains active so later file changes can retry the restart.
 
@@ -120,13 +120,13 @@ async function createInstance() {
   });
 }
 
-const restart: RestartFn = async ({ action }) => {
+const restart: RestartFn = async (context) => {
   const rsbuild = await createInstance();
 
-  if (action === 'build') {
-    await rsbuild.build({ watch: true });
+  if (context.action === 'build') {
+    await rsbuild.build(context.options);
   } else {
-    await rsbuild.startDevServer();
+    await rsbuild.startDevServer(context.options);
   }
 
   return true;

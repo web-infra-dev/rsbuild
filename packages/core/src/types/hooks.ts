@@ -10,7 +10,7 @@ import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
-import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
+import type { BuildOptions, RsbuildEntry, RsbuildTarget, StartDevServerOptions } from './rsbuild';
 import type { Rspack } from './rspack';
 import type { HtmlRspackPlugin } from './thirdParty';
 import type { MaybePromise } from './utils';
@@ -151,15 +151,32 @@ export type OnExitFn = (context: { exitCode: number }) => void;
 
 export type RestartContext = {
   /**
-   * The current Rsbuild action being restarted.
-   */
-  action: 'dev' | 'build';
-  /**
    * The absolute path of the file that triggered the restart.
    * It is undefined when the restart is manually triggered.
    */
   filePath?: string;
-};
+} & (
+  | {
+      /**
+       * The current Rsbuild action being restarted.
+       */
+      action: 'build';
+      /**
+       * The options passed to `rsbuild.build()`.
+       */
+      options: BuildOptions;
+    }
+  | {
+      /**
+       * The current Rsbuild action being restarted.
+       */
+      action: 'dev';
+      /**
+       * The options passed to `rsbuild.startDevServer()`.
+       */
+      options: StartDevServerOptions;
+    }
+);
 
 /** Restart the current Rsbuild task and return whether the restart succeeded. */
 export type RestartFn = (context: RestartContext) => MaybePromise<boolean>;

@@ -13,16 +13,18 @@ const clearConsole = () => {
 };
 
 export const requestRestart = ({
-  filePath,
   clear = true,
-  action,
   logger,
+  restartContext,
   restartManager,
-}: RestartContext & {
+}: {
   clear?: boolean;
   logger: Logger;
+  restartContext: RestartContext;
   restartManager: RestartManager;
 }): Promise<boolean> => {
+  const { action, filePath } = restartContext;
+
   if (restartManager.canRestart) {
     if (clear) {
       clearConsole();
@@ -38,17 +40,17 @@ export const requestRestart = ({
     }
   }
 
-  return restartManager.requestRestart({ action, filePath });
+  return restartManager.requestRestart(restartContext);
 };
 
 export function watchFilesForRestart({
   watchFiles,
   context,
-  action,
+  restartContext,
 }: {
   watchFiles: WatchFiles[];
   context: InternalContext;
-  action: RestartContext['action'];
+  restartContext: RestartContext;
 }): WatchFilesResult | undefined {
   const defaultFiles = context.configFile
     ? [context.configFile, ...context.configFileDependencies]
@@ -99,8 +101,10 @@ export function watchFilesForRestart({
 
     try {
       const restarted = await requestRestart({
-        action,
-        filePath: absoluteFilePath,
+        restartContext: {
+          ...restartContext,
+          filePath: absoluteFilePath,
+        },
         logger,
         restartManager,
       });
@@ -109,7 +113,9 @@ export function watchFilesForRestart({
       if (restarted) {
         await close();
       } else if (restartManager.canRestart) {
-        logger.error(action === 'build' ? 'Restart build failed.' : 'Restart server failed.');
+        logger.error(
+          restartContext.action === 'build' ? 'Restart build failed.' : 'Restart server failed.',
+        );
       }
     } catch (error) {
       logger.error(error);

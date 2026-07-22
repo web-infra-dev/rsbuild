@@ -3,7 +3,7 @@ import { createRsbuild } from '../createRsbuild';
 import { ensureAbsolutePath } from '../helpers/path';
 import { loadConfig as baseLoadConfig } from '../loadConfig';
 import { defaultLogger } from '../logger';
-import type { RestartContext, RsbuildInstance } from '../types';
+import type { RestartFn, RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
 export type CommandName = 'dev' | 'build' | 'preview' | 'inspect';
@@ -113,7 +113,7 @@ const loadConfig = async (root: string) => {
   return result;
 };
 
-const restart = async ({ action }: RestartContext): Promise<boolean> => {
+const restart: RestartFn = async (context) => {
   const rsbuild = await init({ isRestart: true });
 
   // Skip restarting if the config cannot be loaded, for example while the
@@ -122,10 +122,10 @@ const restart = async ({ action }: RestartContext): Promise<boolean> => {
     return false;
   }
 
-  if (action === 'build') {
-    await rsbuild.build({ watch: true });
+  if (context.action === 'build') {
+    await rsbuild.build(context.options);
   } else {
-    await rsbuild.startDevServer();
+    await rsbuild.startDevServer(context.options);
   }
   return true;
 };
