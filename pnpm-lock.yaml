@@ -1411,7 +1411,7 @@ importers:
         version: 24.13.3
       rsbuild-plugin-arethetypeswrong:
         specifier: 'catalog:'
-        version: 0.3.1(@rsbuild/core@2.1.6)(typescript@6.0.3)
+        version: 0.3.1(@rsbuild/core@2.1.7)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -2479,6 +2479,16 @@ packages:
 
   '@rsbuild/core@2.1.6':
     resolution: {integrity: sha512-w2WxblstOgHnDElkqJZVO/jM/EqPaEhg7zqQhON3Xu3Mj9FlVOJx+SgimOtghFzxLt8x7atX4oMUtMTNSZGf0Q==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
+  '@rsbuild/core@2.1.7':
+    resolution: {integrity: sha512-Xhs8DkLw2Vk5ydwjNG3GMJe1h03lqlCO4dV9EOG9HSR6vDfh07K48aq3KJ8/ncEL/YuFBaCIJrVc7rMFoR1y7Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -6484,6 +6494,15 @@ snapshots:
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
+  '@rsbuild/core@2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)':
+    dependencies:
+      '@rspack/core': 2.1.5(@module-federation/runtime-tools@2.8.0)(@swc/helpers@0.5.23)
+      '@swc/helpers': 0.5.23
+    optionalDependencies:
+      core-js: 3.49.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+
   '@rsbuild/plugin-check-syntax@2.0.0(@rsbuild/core@packages+core)':
     dependencies:
       acorn: 8.17.0
@@ -6524,8 +6543,8 @@ snapshots:
 
   '@rslib/core@1.0.0-beta.0(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)(typescript@6.0.3)':
     dependencies:
-      '@rsbuild/core': 2.1.6(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
-      rsbuild-plugin-dts: 1.0.0-beta.0(@rsbuild/core@2.1.6)(typescript@6.0.3)
+      '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      rsbuild-plugin-dts: 1.0.0-beta.0(@rsbuild/core@2.1.7)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -6780,7 +6799,7 @@ snapshots:
 
   '@rspress/shared@2.0.18(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)':
     dependencies:
-      '@rsbuild/core': 2.1.6(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
       '@shikijs/rehype': 4.3.0
       unified: 11.0.5
     transitivePeerDependencies:
@@ -9224,16 +9243,16 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.4
       fsevents: 2.3.3
 
-  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.1.6)(typescript@6.0.3):
+  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.1.7)(typescript@6.0.3):
     dependencies:
       typescript: 6.0.3
     optionalDependencies:
-      '@rsbuild/core': 2.1.6(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
 
-  rsbuild-plugin-dts@1.0.0-beta.0(@rsbuild/core@2.1.6)(typescript@6.0.3):
+  rsbuild-plugin-dts@1.0.0-beta.0(@rsbuild/core@2.1.7)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.1.6(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
     optionalDependencies:
       typescript: 6.0.3
 
