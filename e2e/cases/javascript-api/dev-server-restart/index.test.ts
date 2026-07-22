@@ -47,6 +47,7 @@ test('should watch loaded config dependencies for restart', async () => {
       .toEqual({
         action: 'dev',
         filePath: configDep,
+        options: {},
       });
   } finally {
     await server.close();

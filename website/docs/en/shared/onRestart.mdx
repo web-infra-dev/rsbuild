@@ -14,14 +14,23 @@ When using the JavaScript API, restart watchers are installed by `rsbuild.startD
 
 ```ts
 type RestartContext = {
-  action: 'dev' | 'build';
   filePath?: string;
-};
+} & (
+  | {
+      action: 'build';
+      options: BuildOptions;
+    }
+  | {
+      action: 'dev';
+      options: StartDevServerOptions;
+    }
+);
 
 function OnRestart(callback: (context: RestartContext) => Promise<void> | void): void;
 ```
 
 - `action`: The current Rsbuild action being restarted.
 - `filePath`: The absolute path of the file that triggered the restart. It is `undefined` when the restart is manually triggered.
+- `options`: The options passed to the current `rsbuild.build()` or `rsbuild.startDevServer()` call.
 
 - **Version:** Added in v2.1.7

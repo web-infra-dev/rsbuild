@@ -3,7 +3,7 @@ import { createRestartManager } from '../src/helpers/restartManager';
 describe('restartManager', () => {
   test('should execute all callbacks and clear the registry when one throws', async () => {
     const calls: string[] = [];
-    const context = { action: 'build' } as const;
+    const context = { action: 'build', options: { watch: true } } as const;
     const restart = rstest.fn(() => true);
     const manager = createRestartManager({ onRestart: () => {}, restart });
 
@@ -32,7 +32,7 @@ describe('restartManager', () => {
     const unregister = manager.registerCleanup(callback);
 
     unregister();
-    await manager.requestRestart({ action: 'dev' });
+    await manager.requestRestart({ action: 'dev', options: {} });
 
     expect(callback).not.toHaveBeenCalled();
   });

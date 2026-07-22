@@ -107,7 +107,7 @@ const rsbuild = await createRsbuild({
 
 > 查看 [配置文件监听](/guide/configuration/rsbuild#configuration-file-watching) 了解重启的触发方式。
 
-当请求重启时，Rsbuild 会调用 [onRestart hook](/plugins/dev/hooks#onrestart)，关闭当前任务的资源，然后调用 `restart`。
+当请求重启时，Rsbuild 会调用 [onRestart hook](/plugins/dev/hooks#onrestart)，关闭当前任务的资源，然后调用 `restart`。`restart` 回调会接收到当前调用 `rsbuild.build()` 或 `rsbuild.startDevServer()` 时传入的选项。
 
 新任务成功启动时，该函数应返回 `true`。如果返回 `false` 或抛出错误，restart watcher 会保持运行，以便后续文件变化时再次尝试重启。
 
@@ -120,13 +120,13 @@ async function createInstance() {
   });
 }
 
-const restart: RestartFn = async ({ action }) => {
+const restart: RestartFn = async (context) => {
   const rsbuild = await createInstance();
 
-  if (action === 'build') {
-    await rsbuild.build({ watch: true });
+  if (context.action === 'build') {
+    await rsbuild.build(context.options);
   } else {
-    await rsbuild.startDevServer();
+    await rsbuild.startDevServer(context.options);
   }
 
   return true;

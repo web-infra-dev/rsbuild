@@ -41,6 +41,7 @@ const expectRestart = async (rsbuild: RsbuildInstance, action: RestartContext['a
     .toEqual({
       action,
       filePath: watchedFile,
+      options: action === 'build' ? { watch: true } : {},
     });
 };
 

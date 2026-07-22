@@ -1,6 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import { color } from '../helpers';
+import { color, pick } from '../helpers';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers/compiler';
 import { requestRestart, watchFilesForRestart } from '../restart';
 import type {
@@ -85,8 +85,13 @@ export async function createDevServer<
   options: Options,
   createCompiler: CreateCompiler,
   config: NormalizedConfig,
-  { getPortSilently, runCompile = true }: CreateDevServerOptions = {},
+  devServerOptions: CreateDevServerOptions = {},
 ): Promise<RsbuildDevServer> {
+  const { getPortSilently, runCompile = true } = devServerOptions;
+  const restartContext = {
+    action: 'dev' as const,
+    options: pick(devServerOptions, ['getPortSilently']),
+  };
   const { context } = options;
   const { logger } = context;
   logger.debug('create dev server');
@@ -228,7 +233,7 @@ export async function createDevServer<
   // Request a manual restart and close the old watcher only after it succeeds.
   const restartServer = async () => {
     const restarted = await requestRestart({
-      action: 'dev',
+      restartContext,
       clear: false,
       logger,
       restartManager: context.restartManager,
@@ -455,7 +460,7 @@ export async function createDevServer<
   state.restartWatcher = watchFilesForRestart({
     watchFiles: config.dev.watchFiles,
     context,
-    action: 'dev',
+    restartContext,
   });
 
   logger.debug('create dev server done');
