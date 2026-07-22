@@ -11,10 +11,10 @@ type Minify =
   | boolean
   | {
       js?: boolean | 'always';
-      jsOptions?:
-        Rspack.SwcJsMinimizerRspackPluginOptions | Rspack.SwcJsMinimizerRspackPluginOptions[];
+      jsOptions?: SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[];
       css?: boolean | 'always';
-      cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
+      cssOptions?:
+        LightningCssMinimizerRspackPluginOptions | LightningCssMinimizerRspackPluginOptions[];
     };
 ```
 
@@ -102,7 +102,7 @@ export default {
 
 ### minify.jsOptions
 
-- **Type:** `Rspack.SwcJsMinimizerRspackPluginOptions | Rspack.SwcJsMinimizerRspackPluginOptions[]`
+- **Type:** `SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[]`
 - **Default:** `{}`
 
 `output.minify.jsOptions` configures SWC's minification options. See [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin) for detailed configuration options.
@@ -189,7 +189,7 @@ export default {
 
 ### minify.cssOptions
 
-- **Type:** `Rspack.LightningcssMinimizerRspackPluginOptions`
+- **Type:** `LightningCssMinimizerRspackPluginOptions | LightningCssMinimizerRspackPluginOptions[]`
 - **Default:** inherit from [tools.lightningcssLoader](/config/tools/lightningcss-loader)
 
 `output.minify.cssOptions` configures Lightning CSS's minification options. See [LightningCssMinimizerRspackPlugin Documentation](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin) for detailed configuration options.
@@ -213,6 +213,33 @@ export default {
 :::tip
 When you configure options in [tools.lightningcssLoader](/config/tools/lightningcss-loader), `output.minify.cssOptions` will automatically inherit these options, ensuring that CSS code transformation behavior in the development build is consistent with the production build.
 :::
+
+You can pass an array of options to apply different minification settings to different files. Each item registers a separate `LightningCssMinimizerRspackPlugin` instance:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      cssOptions: [
+        {
+          include: /foo\.css$/,
+          minimizerOptions: {
+            unusedSymbols: ['foo-unused'],
+          },
+        },
+        {
+          include: /bar\.css$/,
+          minimizerOptions: {
+            unusedSymbols: ['bar-unused'],
+          },
+        },
+      ],
+    },
+  },
+};
+```
+
+Each CSS asset is minimized only once. If an asset matches multiple items, the first matching item takes effect, so we recommend using mutually exclusive `test`, `include`, or `exclude` conditions.
 
 ## Switching minifier
 
@@ -264,7 +291,8 @@ When using a custom JS minifier, the `minify.jsOptions` option will no longer ta
 
 ## Version history
 
-| Version | Changes                                                  |
-| ------- | -------------------------------------------------------- |
-| v2.1.7  | Added support for setting `minify.jsOptions` to an array |
-| v2.0.0  | Defaults to `false` for `node` target                    |
+| Version | Changes                                                   |
+| ------- | --------------------------------------------------------- |
+| v2.1.8  | Added support for setting `minify.cssOptions` to an array |
+| v2.1.7  | Added support for setting `minify.jsOptions` to an array  |
+| v2.0.0  | Defaults to `false` for `node` target                     |
