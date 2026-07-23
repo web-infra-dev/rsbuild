@@ -2,7 +2,7 @@ import { createRequire } from 'node:module';
 import { COMPILED_PATH } from '../constants';
 
 type CompiledPackages = {
-  'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
+  'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin');
 };
 
 export const require: NodeJS.Require = createRequire(import.meta.url);
