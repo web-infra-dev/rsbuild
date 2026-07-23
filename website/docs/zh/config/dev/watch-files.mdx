@@ -65,6 +65,8 @@ export default {
 ```
 
 :::tip
+Glob 模式会在 watcher 启动时展开，因此不会包含之后新建的匹配路径。如需监听启动后可能新增的文件，请改为监听其父目录。
+
 在所有平台上，glob 模式都应使用正斜杠（`/`）作为路径分隔符。请勿使用 `path.join()` 构造 glob 模式，因为它在 Windows 上会生成反斜杠，而反斜杠在 glob 语法中会被解释为转义符。
 
 请使用字符串字面量或 `path.posix.join()` 构造相对 glob 模式。
@@ -79,7 +81,7 @@ export default {
 
 ### reload-page
 
-reload-page 表示当文件发生变化时，浏览器打开的页面会自动重新加载。如果未明确指定 type，Rsbuild 会默认采用 reload-page 行为。
+reload-page 表示当被监听的文件新增、修改或删除时，浏览器打开的页面会自动重新加载。如果未明确指定 type，Rsbuild 会默认采用 reload-page 行为。
 
 这可以用于监听一些静态资源文件的变化，例如 [public 目录](/config/server/public-dir) 下的文件。
 
@@ -88,7 +90,7 @@ export default {
   dev: {
     watchFiles: {
       type: 'reload-page',
-      paths: 'public/**/*',
+      paths: 'public',
     },
   },
 };
@@ -177,4 +179,5 @@ export default {
 
 | 版本   | 变更内容                                  |
 | ------ | ----------------------------------------- |
+| v2.1.8 | `reload-page` 现在会响应文件新增和删除    |
 | v2.1.7 | 新增 `restart` 类型，废弃 `reload-server` |

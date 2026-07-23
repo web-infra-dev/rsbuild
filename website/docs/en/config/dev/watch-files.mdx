@@ -65,6 +65,8 @@ export default {
 ```
 
 :::tip
+Glob patterns are expanded when the watcher starts and do not include new matching paths created later. To observe files that may be added after startup, watch their parent directory instead.
+
 Glob patterns should use forward slashes (`/`) as path separators on all platforms. Avoid using `path.join()` to construct glob patterns because it produces backslashes on Windows, where backslashes are interpreted as escape characters in glob syntax.
 
 Use a string literal or `path.posix.join()` to construct relative glob patterns.
@@ -79,7 +81,7 @@ Specifies whether to trigger a page reload or restart the dev server or watch bu
 
 ### reload-page
 
-`reload-page` means that when a file changes, the page in the browser will automatically reload. If the type is not explicitly specified, Rsbuild defaults to the `reload-page` behavior.
+`reload-page` means that when a watched file is added, changed, or removed, the page in the browser will automatically reload. If the type is not explicitly specified, Rsbuild defaults to the `reload-page` behavior.
 
 This can be used to watch changes to static assets, such as files in the [public directory](/config/server/public-dir).
 
@@ -88,7 +90,7 @@ export default {
   dev: {
     watchFiles: {
       type: 'reload-page',
-      paths: 'public/**/*',
+      paths: 'public',
     },
   },
 };
@@ -154,6 +156,7 @@ If you want to prevent some files from triggering a rebuild when they change, yo
 
 ## Version history
 
-| Version | Changes                                              |
-| ------- | ---------------------------------------------------- |
-| v2.1.7  | Added the `restart` type; deprecated `reload-server` |
+| Version | Changes                                               |
+| ------- | ----------------------------------------------------- |
+| v2.1.8  | `reload-page` now responds to added and removed files |
+| v2.1.7  | Added the `restart` type; deprecated `reload-server`  |
