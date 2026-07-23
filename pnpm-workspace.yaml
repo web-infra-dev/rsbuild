@@ -45,6 +45,7 @@ catalog:
   '@rstackjs/load-config': '^0.1.2'
   '@rstackjs/test-utils': '^0.2.0'
   '@rstest/adapter-rslib': '^0.11.2'
+  '@rstest/core': '^0.11.2'
   '@rstest/playwright': '^0.11.2'
   '@shikijs/transformers': '^4.3.1'
   '@svgr/core': '8.1.0'

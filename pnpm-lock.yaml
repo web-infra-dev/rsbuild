@@ -94,6 +94,9 @@ catalogs:
     '@rstest/adapter-rslib':
       specifier: ^0.11.2
       version: 0.11.2
+    '@rstest/core':
+      specifier: ^0.11.2
+      version: 0.11.3
     '@rstest/playwright':
       specifier: ^0.11.2
       version: 0.11.2
@@ -396,6 +399,9 @@ importers:
       '@rstest/adapter-rslib':
         specifier: 'catalog:'
         version: 0.11.2(@rslib/core@1.0.0-beta.0)(@rstest/core@0.11.3)(typescript@6.0.3)
+      '@rstest/core':
+        specifier: 'catalog:'
+        version: 0.11.3(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
       '@scripts/config':
         specifier: workspace:*
         version: link:scripts/config

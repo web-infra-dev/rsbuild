@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@rstest/adapter-rslib": "catalog:",
+    "@rstest/core": "catalog:",
     "@scripts/config": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "catalog:",
