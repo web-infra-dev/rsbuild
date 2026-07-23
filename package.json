@@ -20,7 +20,6 @@
     "test": "pnpm --parallel --filter \"./packages/*\" test"
   },
   "devDependencies": {
-    "@rstest/adapter-rslib": "catalog:",
     "@scripts/config": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "catalog:",
