@@ -12,24 +12,12 @@ Rsbuild uses [SWC](/guide/configuration/swc) by default for transforming TypeScr
 
 ### Isolated modules
 
-Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or value. When using TypeScript in Rsbuild, enable the [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) or [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option in `tsconfig.json`:
-
-- For TypeScript >= 5.0.0, use the `verbatimModuleSyntax` option, which enables the `isolatedModules` option by default:
+Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or value. When using TypeScript in Rsbuild, enable the [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) option in `tsconfig.json`, which enables the [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option by default:
 
 ```json title="tsconfig.json"
 {
   "compilerOptions": {
     "verbatimModuleSyntax": true
-  }
-}
-```
-
-- For TypeScript < 5.0.0, use the `isolatedModules` option:
-
-```json title="tsconfig.json"
-{
-  "compilerOptions": {
-    "isolatedModules": true
   }
 }
 ```
@@ -161,3 +149,7 @@ export default {
   },
 };
 ```
+
+## TypeScript version compatibility
+
+Rsbuild supports TypeScript 5.0 and later. Because Rsbuild uses SWC by default to transform TypeScript source code, it can still transform `.ts` and `.tsx` files in projects using earlier TypeScript versions. However, TypeScript versions earlier than 5.0 may fail to parse Rsbuild's type declarations, which can affect type checking and editor type hints.
