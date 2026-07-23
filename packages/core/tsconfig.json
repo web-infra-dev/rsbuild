@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "declarationDir": "dist-types",
     "composite": true,
     "isolatedDeclarations": true,
     "types": ["@rspack/core/module"]

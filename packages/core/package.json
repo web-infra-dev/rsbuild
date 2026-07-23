@@ -18,16 +18,15 @@
   "files": [
     "bin",
     "dist",
-    "dist-types",
     "static",
     "compiled",
     "types.d.ts"
   ],
   "type": "module",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist-types/index.d.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./types": {
