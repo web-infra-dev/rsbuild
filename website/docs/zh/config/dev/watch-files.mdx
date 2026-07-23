@@ -79,7 +79,7 @@ export default {
 
 ### reload-page
 
-reload-page 表示当文件发生变化时，浏览器打开的页面会自动重新加载。如果未明确指定 type，Rsbuild 会默认采用 reload-page 行为。
+reload-page 表示当被监听的文件新增、修改或删除时，浏览器打开的页面会自动重新加载。如果未明确指定 type，Rsbuild 会默认采用 reload-page 行为。
 
 这可以用于监听一些静态资源文件的变化，例如 [public 目录](/config/server/public-dir) 下的文件。
 
@@ -177,4 +177,5 @@ export default {
 
 | 版本   | 变更内容                                  |
 | ------ | ----------------------------------------- |
+| v2.1.8 | `reload-page` 现在会响应文件新增和删除    |
 | v2.1.7 | 新增 `restart` 类型，废弃 `reload-server` |

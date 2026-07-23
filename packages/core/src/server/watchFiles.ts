@@ -141,13 +141,21 @@ async function startWatchFiles(
     return;
   }
 
-  const watcher = await createChokidar(paths, root, options);
+  const watcher = await createChokidar(paths, root, {
+    // Avoid triggering page reloads for files that already exist.
+    ignoreInitial: true,
+    ...options,
+  });
 
-  watcher.on('change', () => {
+  const reloadPage = () => {
     buildManager.socketServer.sendMessage({
       type: 'full-reload',
     });
-  });
+  };
+
+  watcher.on('add', reloadPage);
+  watcher.on('change', reloadPage);
+  watcher.on('unlink', reloadPage);
 
   return watcher;
 }
