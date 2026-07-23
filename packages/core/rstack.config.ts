@@ -1,10 +1,8 @@
 import { define } from 'rstack';
 
 define.test(async () => {
-  const [{ baseConfig }, { withRslibConfig }] = await Promise.all([
-    import('@scripts/config/rstest.config.ts'),
-    import('@rstest/adapter-rslib'),
-  ]);
+  const { baseConfig } = await import('@scripts/config/rstest.config.ts');
+  const { withRslibConfig } = await import('@rstest/adapter-rslib');
 
   return {
     ...baseConfig,
