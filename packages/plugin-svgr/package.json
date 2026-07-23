@@ -30,7 +30,7 @@
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w",
-    "test": "rstest"
+    "test": "rs test"
   },
   "dependencies": {
     "@rsbuild/plugin-react": "workspace:^2.0.0",

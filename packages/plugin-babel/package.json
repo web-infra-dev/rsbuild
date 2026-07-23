@@ -30,7 +30,7 @@
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w",
-    "test": "rstest"
+    "test": "rs test"
   },
   "dependencies": {
     "@babel/core": "catalog:",

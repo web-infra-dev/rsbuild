@@ -43,7 +43,7 @@
     "build": "rslib",
     "dev": "rslib -w",
     "prebundle": "prebundle",
-    "test": "rstest"
+    "test": "rs test"
   },
   "dependencies": {
     "@rspack/core": "catalog:",
