@@ -40,8 +40,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "rslib",
-    "dev": "rslib -w",
+    "build": "rs lib",
+    "dev": "rs lib -w",
     "prebundle": "prebundle",
     "test": "rs test"
   },
@@ -52,7 +52,6 @@
   "devDependencies": {
     "@jridgewell/remapping": "catalog:",
     "@jridgewell/trace-mapping": "catalog:",
-    "@rslib/core": "catalog:",
     "@rstackjs/load-config": "catalog:",
     "@types/cors": "catalog:",
     "@types/node": "catalog:",

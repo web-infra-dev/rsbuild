@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    "./lib": "./lib.ts",
+    "./test": "./test.ts",
+    "./tsconfig": "./tsconfig.json",
+    "./tsconfig-nodenext": "./tsconfig-nodenext.json"
+  },
   "devDependencies": {
-    "@rslib/core": "catalog:",
     "@types/node": "catalog:",
     "path-serializer": "catalog:",
     "rstack": "catalog:",

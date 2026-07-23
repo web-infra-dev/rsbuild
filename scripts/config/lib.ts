@@ -1,4 +1,4 @@
-import { defineConfig, type LibConfig, type Rsbuild } from '@rslib/core';
+import type { LibConfig, Rsbuild } from 'rstack/lib';
 
 export const nodeMinifyConfig = {
   jsOptions: {
@@ -22,7 +22,3 @@ export const esmConfig: LibConfig = {
     minify: nodeMinifyConfig,
   },
 };
-
-export const pureEsmPackage = defineConfig({
-  lib: [esmConfig],
-});

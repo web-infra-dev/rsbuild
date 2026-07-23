@@ -28,8 +28,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "rslib",
-    "dev": "rslib -w",
+    "build": "rs lib",
+    "dev": "rs lib -w",
     "test": "rs test"
   },
   "dependencies": {
@@ -43,7 +43,6 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/core-v1": "catalog:",
-    "@rslib/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "catalog:",
     "svgo": "catalog:",
