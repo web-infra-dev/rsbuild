@@ -33,6 +33,7 @@ metadata:
    - Prioritize high-signal information: public API changes, behavior changes, breaking changes, migration notes, and important compatibility implications.
    - Then describe the main implementation change only as much as needed to understand the review.
    - Keep the PR body concise and review-oriented: use 1-4 short standalone sentences for typical changes, covering why it matters, what changed, and any reviewer-important impact.
+   - Omit incidental updates to tests, documentation, and supporting artifacts from the PR description; mention them only when they are the PR's primary purpose or carry reviewer-relevant risk.
    - Avoid low-signal sections such as `Test plan` or `Validation`, routine verification commands, generated file lists, or obvious implementation details unless the repository template explicitly requires them or the change has unusual validation risk.
    - Good background examples:
      - `This PR adds support for custom logger injection so CLI output can be isolated per instance.`

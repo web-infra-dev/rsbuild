@@ -11,7 +11,7 @@
       "source": "rstackjs/agent-skills",
       "sourceType": "github",
       "skillPath": ".agents/skills/pr-creator/SKILL.md",
-      "computedHash": "c49fcbba72894d08a34d054a00720610d19a2e87e25942aee05da09e87b268df"
+      "computedHash": "c115b708a4c627af4b6dbaca0cfa0ae0fb0153f122bd2229f7803c803fa97c67"
     },
     "release-blog-writer": {
       "source": "rstackjs/agent-skills",
@@ -24,6 +24,12 @@
       "sourceType": "github",
       "skillPath": "skills/rspress-description-generator/SKILL.md",
       "computedHash": "ca2693ca055d1b4e5903bdfacab522f46ca0e13cbc5db59e6c9589fdc8efc6ad"
+    },
+    "rstack-cli-best-practices": {
+      "source": "rstackjs/rstack-cli",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/rstack-cli-best-practices/SKILL.md",
+      "computedHash": "428df66995c4ff446d2ab04f58654a31b4dee440590e1929fc7d4a7ea8e53fa0"
     }
   }
 }
