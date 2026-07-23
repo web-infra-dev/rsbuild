@@ -97,3 +97,19 @@ test('should work with options', async ({ dev, page }) => {
 
   await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(watchedFile1, 'test')]);
 });
+
+test('should reload the page for selected events', async ({ dev, page }) => {
+  await dev({
+    config: {
+      dev: {
+        watchFiles: {
+          paths: watchedDir1,
+          events: ['add', 'unlink'],
+        },
+      },
+    },
+  });
+
+  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(addedFile, 'test')]);
+  await Promise.all([page.waitForEvent('load'), fs.promises.rm(addedFile)]);
+});

@@ -25,6 +25,7 @@ import type {
   ModifyBundlerChainUtils,
   ModifyChainUtils,
   Routes,
+  WatchFileEvent,
 } from './hooks';
 import type { RsbuildPlugins } from './plugin';
 import type { RsbuildEntry, RsbuildMode, RsbuildTarget } from './rsbuild';
@@ -1954,6 +1955,14 @@ export type WatchFiles = {
    * Paths of the files or directories to watch, supports glob syntax.
    */
   paths: string | string[];
+  /**
+   * File events that trigger the configured action.
+   * - `add`: A file is created.
+   * - `change`: A file is modified.
+   * - `unlink`: A file is deleted.
+   * @default ['add', 'change', 'unlink']
+   */
+  events?: WatchFileEvent[];
   /**
    * Watch options passed to [chokidar](https://github.com/paulmillr/chokidar).
    */

@@ -971,8 +971,8 @@ import OnRestart from '@zh/shared/onRestart.mdx';
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onRestart(async ({ action, filePath }) => {
-      console.log('restart!', action, filePath);
+    api.onRestart(async ({ action, event, filePath }) => {
+      console.log('restart!', action, event, filePath);
     });
   },
 });

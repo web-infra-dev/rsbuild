@@ -149,12 +149,19 @@ export type OnAfterCreateCompilerFn<Compiler = Rspack.Compiler | Rspack.MultiCom
 
 export type OnExitFn = (context: { exitCode: number }) => void;
 
+export type WatchFileEvent = 'add' | 'change' | 'unlink';
+
 export type RestartContext = {
   /**
    * The absolute path of the file that triggered the restart.
    * It is undefined when the restart is manually triggered.
    */
   filePath?: string;
+  /**
+   * The file event that triggered the restart.
+   * It is undefined when the restart is manually triggered.
+   */
+  event?: WatchFileEvent;
 } & (
   | {
       /**

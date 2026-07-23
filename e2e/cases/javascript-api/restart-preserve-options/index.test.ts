@@ -51,6 +51,7 @@ test('should preserve startDevServer options after restart', async () => {
       )
       .toEqual({
         action: 'dev',
+        event: 'change',
         filePath: watchedFile,
         options: {
           getPortSilently: true,
@@ -99,6 +100,7 @@ test('should preserve build options after restart', async () => {
       )
       .toEqual({
         action: 'build',
+        event: 'change',
         filePath: watchedFile,
         options: {
           watch: true,

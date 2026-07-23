@@ -3,8 +3,12 @@ import type { ChokidarOptions } from 'chokidar';
 import { castArray, color, isTTY } from './helpers';
 import type { RestartManager } from './helpers/restartManager';
 import type { Logger } from './logger';
-import { createChokidar, type WatchFilesResult } from './server/watchFiles';
-import type { InternalContext, RestartContext, WatchFiles } from './types';
+import {
+  createChokidar,
+  DEFAULT_WATCH_FILE_EVENTS,
+  type WatchFilesResult,
+} from './server/watchFiles';
+import type { InternalContext, RestartContext, WatchFileEvent, WatchFiles } from './types';
 
 const clearConsole = () => {
   if (isTTY() && !process.env.DEBUG) {
@@ -60,10 +64,18 @@ export function watchFilesForRestart({
     return;
   }
 
-  const watchGroups: { files: string[]; options?: ChokidarOptions }[] = [];
+  const watchGroups: {
+    files: string[];
+    events?: WatchFileEvent[];
+    options?: ChokidarOptions;
+  }[] = [];
 
-  for (const { paths, options, type } of watchFiles) {
+  for (const { paths, events, options, type } of watchFiles) {
     if (type !== 'restart' && type !== 'reload-server') {
+      continue;
+    }
+
+    if (events?.length === 0) {
       continue;
     }
 
@@ -72,8 +84,8 @@ export function watchFilesForRestart({
       continue;
     }
 
-    if (options) {
-      watchGroups.push({ files, options });
+    if (options || events) {
+      watchGroups.push({ files, events, options });
     } else {
       defaultFiles.push(...files);
     }
@@ -91,7 +103,7 @@ export function watchFilesForRestart({
   let restarting = false;
   let closePromise: Promise<void> | undefined;
 
-  const onChange = async (filePath: string, cwd: string) => {
+  const onWatchEvent = async (event: WatchFileEvent, filePath: string, cwd: string) => {
     if (restarting || closePromise) {
       return;
     }
@@ -103,6 +115,7 @@ export function watchFilesForRestart({
       const restarted = await requestRestart({
         restartContext: {
           ...restartContext,
+          event,
           filePath: absoluteFilePath,
         },
         logger,
@@ -126,7 +139,7 @@ export function watchFilesForRestart({
 
   // Initialize watchers in the background so task startup is not delayed.
   const watchersPromise = Promise.all(
-    watchGroups.map(async ({ files, options }) => {
+    watchGroups.map(async ({ files, events, options }) => {
       try {
         const watcher = await createChokidar(files, root, {
           // Avoid initial add events.
@@ -136,11 +149,11 @@ export function watchFilesForRestart({
           ...options,
         });
         // Chokidar reports event paths relative to `cwd` when it is configured.
-        const cwd = options?.cwd || root;
-        const handleChange = (filePath: string) => void onChange(filePath, cwd);
-        watcher.on('add', handleChange);
-        watcher.on('change', handleChange);
-        watcher.on('unlink', handleChange);
+        const cwd = options?.cwd ?? root;
+        const watchEvents = events ? new Set(events) : DEFAULT_WATCH_FILE_EVENTS;
+        for (const event of watchEvents) {
+          watcher.on(event, (filePath) => onWatchEvent(event, filePath, cwd));
+        }
         return watcher;
       } catch (error) {
         logger.error(error);

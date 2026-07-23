@@ -67,6 +67,7 @@ test('createRsbuild should support a restart function', async () => {
     .toEqual({
       context: {
         action: 'dev',
+        event: 'change',
         filePath: watchedFile,
         options: {},
       },
