@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import path from 'node:path';
 import { define as rstack } from 'rstack';
 import type { Rsbuild, Rspack } from 'rstack/lib';
@@ -61,27 +60,6 @@ const externals: Rspack.Configuration['externals'] = [
     callback();
   },
 ];
-
-const pluginFixDtsTypes: Rsbuild.RsbuildPlugin = {
-  name: 'fix-dts-types',
-  setup(api) {
-    api.onAfterBuild(() => {
-      const typesDir = path.join(process.cwd(), 'dist-types');
-      const pkgPath = path.join(typesDir, 'package.json');
-      if (!fs.existsSync(typesDir)) {
-        fs.mkdirSync(typesDir);
-      }
-      fs.writeFileSync(
-        pkgPath,
-        JSON.stringify({
-          '//': 'This file is for making TypeScript work with moduleResolution nodenext.',
-          version: '1.0.0',
-        }),
-        'utf8',
-      );
-    });
-  },
-};
 
 // Rslib currently doesn't provide a way to preserve `__webpack_require__.*`
 // references in the emitted bundle.
@@ -182,7 +160,6 @@ rstack.lib(async () => {
       {
         id: 'node',
         syntax: 'es2023',
-        plugins: [pluginFixDtsTypes],
         source: {
           entry: {
             index: './src/index.ts',
@@ -199,7 +176,7 @@ rstack.lib(async () => {
             // alias to pre-bundled types as they are public API
             cors: './compiled/cors',
             rslog: './compiled/rslog',
-            postcss: './compiled/postcss',
+            postcss: './compiled/postcss/lib/postcss',
             chokidar: './compiled/chokidar',
             'connect-next': './compiled/connect-next',
             '@rstackjs/load-config': './compiled/@rstackjs/load-config',

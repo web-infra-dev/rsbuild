@@ -2462,8 +2462,8 @@ packages:
       '@typescript/native-preview':
         optional: true
 
-  '@rslib/core@1.0.0-beta.0':
-    resolution: {integrity: sha512-l+NKLyVBnNPZ2WQoyVM8KoKhi4/mwo96A2fYqcPBXWg0nBJUdaIyJ5sJKAMxa39LR2a15ItShDHKYrQ48aUTbw==}
+  '@rslib/core@1.0.0-beta.1':
+    resolution: {integrity: sha512-HHPZ+wTUKT/3bEhw2y0JB0O62wMuljkSHVZelLbSGhBflCaUt+D3LohBcIxYW6bhzPbUp4gkJXo1pdTpxiuNLQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -4786,8 +4786,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsbuild-plugin-dts@1.0.0-beta.0:
-    resolution: {integrity: sha512-+WOBPjcADvQPdjQuIiNI6LLQgDFnwSDo7tl1Yn/sXmUH8YISp5PveSEU08B7ABPeiTgBUdevUnVrb8f/deYaxw==}
+  rsbuild-plugin-dts@1.0.0-beta.1:
+    resolution: {integrity: sha512-hAEjOXhfIHR4erqjsqjRvA9Yqzc6Thry06tHheXDJUVwmR3VbN8BSMDC8kBZzyKdypDF0IJ98FmLQRiC194sMA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -6452,10 +6452,10 @@ snapshots:
       - '@rspack/core'
       - typescript
 
-  '@rslib/core@1.0.0-beta.0(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)(typescript@6.0.3)':
+  '@rslib/core@1.0.0-beta.1(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)(typescript@6.0.3)':
     dependencies:
       '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
-      rsbuild-plugin-dts: 1.0.0-beta.0(@rsbuild/core@2.1.7)(typescript@6.0.3)
+      rsbuild-plugin-dts: 1.0.0-beta.1(@rsbuild/core@2.1.7)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -9147,7 +9147,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.4
       fsevents: 2.3.3
 
-  rsbuild-plugin-dts@1.0.0-beta.0(@rsbuild/core@2.1.7)(typescript@6.0.3):
+  rsbuild-plugin-dts@1.0.0-beta.1(@rsbuild/core@2.1.7)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
@@ -9192,7 +9192,7 @@ snapshots:
   rstack@0.1.0(@module-federation/runtime-tools@2.8.0)(@rspress/core@2.0.18)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3):
     dependencies:
       '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
-      '@rslib/core': 1.0.0-beta.0(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)(typescript@6.0.3)
+      '@rslib/core': 1.0.0-beta.1(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)(typescript@6.0.3)
       '@rslint/core': 0.7.0(jiti@2.7.0)
       '@rstest/core': 0.11.3(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
     optionalDependencies:
