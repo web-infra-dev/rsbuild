@@ -50,6 +50,33 @@ type CreateRsbuildOptions = {
 - `config`: Rsbuild configuration object or the result returned by [`loadConfig`](#loadconfig). Refer to [Configuration Overview](/config/) for all available configuration options.
 - `restart`: A function that handles restart requests for the current dev server or watch build. See [restart](#restart-handling).
 
+### Pass configuration
+
+You can pass an Rsbuild configuration object to the `config` option:
+
+```ts
+import { createRsbuild, type RsbuildConfig } from '@rsbuild/core';
+
+const config: RsbuildConfig = {
+  // Rsbuild configuration
+};
+
+const rsbuild = await createRsbuild({ config });
+```
+
+You can also pass the complete result returned by [`loadConfig`](#loadconfig) to `config`:
+
+```ts
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const result = await loadConfig();
+const rsbuild = await createRsbuild({
+  config: result,
+});
+```
+
+When the complete `loadConfig` result is passed, the absolute paths of the config file and its imported dependencies are stored in [`rsbuild.context.configFile`](/api/javascript-api/instance#contextconfigfile) and [`rsbuild.context.configFileDependencies`](/api/javascript-api/instance#contextconfigfiledependencies), respectively. When persistent build cache is enabled, these files are also used as build dependencies. See [Configuration file watching](/guide/configuration/rsbuild#configuration-file-watching) for how Rsbuild watches them for restart requests.
+
 :::tip
 `config` was introduced in Rsbuild 1.6. In earlier versions, use `rsbuildConfig` as an alternative.
 :::
@@ -69,8 +96,6 @@ const rsbuild = await createRsbuild({
   },
 });
 ```
-
-When the complete `loadConfig` result is passed, the absolute paths of the config file and its imported dependencies are stored in [`rsbuild.context.configFile`](/api/javascript-api/instance#contextconfigfile) and [`rsbuild.context.configFileDependencies`](/api/javascript-api/instance#contextconfigfiledependencies), respectively. When persistent build cache is enabled, these files are also used as build dependencies. See [Configuration file watching](/guide/configuration/rsbuild#configuration-file-watching) for how Rsbuild watches them for restart requests.
 
 ### Load environment variables
 

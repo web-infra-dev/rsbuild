@@ -50,6 +50,33 @@ type CreateRsbuildOptions = {
 - `config`：Rsbuild 配置对象或 [`loadConfig`](#loadconfig) 返回的结果。参考 [配置总览](/config/) 查看所有可用的配置项。
 - `restart`：处理当前 dev server 或监听构建重启请求的函数，详见 [restart](#restart-handling)。
 
+### 传入配置
+
+你可以将 Rsbuild 配置对象传入 `config` 选项：
+
+```ts
+import { createRsbuild, type RsbuildConfig } from '@rsbuild/core';
+
+const config: RsbuildConfig = {
+  // Rsbuild configuration
+};
+
+const rsbuild = await createRsbuild({ config });
+```
+
+也可以将 [`loadConfig`](#loadconfig) 的完整返回结果传入 `config`：
+
+```ts
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const result = await loadConfig();
+const rsbuild = await createRsbuild({
+  config: result,
+});
+```
+
+传入完整的 `loadConfig` 返回结果后，配置文件及其导入依赖的绝对路径会分别记录在 [`rsbuild.context.configFile`](/api/javascript-api/instance#contextconfigfile) 和 [`rsbuild.context.configFileDependencies`](/api/javascript-api/instance#contextconfigfiledependencies) 中。启用持久化构建缓存时，这些文件也会作为构建依赖。关于 Rsbuild 如何监听这些文件，并在文件变化时请求重启，详见[配置文件监听](/guide/configuration/rsbuild#configuration-file-watching)。
+
 :::tip
 `config` 是 Rsbuild 1.6 新增的选项。在旧版本中，可使用 `rsbuildConfig` 作为替代。
 :::
@@ -69,8 +96,6 @@ const rsbuild = await createRsbuild({
   },
 });
 ```
-
-传入完整的 `loadConfig` 返回结果后，配置文件及其导入依赖的绝对路径会分别记录在 [`rsbuild.context.configFile`](/api/javascript-api/instance#contextconfigfile) 和 [`rsbuild.context.configFileDependencies`](/api/javascript-api/instance#contextconfigfiledependencies) 中。启用持久化构建缓存时，这些文件也会作为构建依赖。关于 Rsbuild 如何监听这些文件，并在文件变化时请求重启，详见[配置文件监听](/guide/configuration/rsbuild#configuration-file-watching)。
 
 ### 加载环境变量
 
