@@ -5,5 +5,5 @@
     "moduleResolution": "NodeNext",
     "skipLibCheck": false
   },
-  "include": ["index.ts"]
+  "include": ["defineConfig.ts", "index.ts"]
 }

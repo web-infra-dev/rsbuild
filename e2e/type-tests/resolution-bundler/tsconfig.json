@@ -5,5 +5,5 @@
     "moduleResolution": "bundler",
     "skipLibCheck": false
   },
-  "include": ["index.ts", "rsbuild.config.ts"]
+  "include": ["defineConfig.ts", "index.ts"]
 }
