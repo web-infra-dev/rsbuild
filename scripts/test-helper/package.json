@@ -21,7 +21,6 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@types/node": "catalog:",
-    "path-serializer": "catalog:",
     "typescript": "catalog:"
   }
 }

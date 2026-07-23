@@ -42,7 +42,8 @@
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w",
-    "prebundle": "prebundle"
+    "prebundle": "prebundle",
+    "test": "rs test"
   },
   "dependencies": {
     "@rspack/core": "catalog:",

@@ -6,6 +6,8 @@
   "devDependencies": {
     "@rslib/core": "catalog:",
     "@types/node": "catalog:",
+    "path-serializer": "catalog:",
+    "rstack": "catalog:",
     "typescript": "catalog:"
   }
 }
