@@ -12,24 +12,12 @@ Rsbuild 默认使用 [SWC](/guide/configuration/swc) 来转换 TypeScript 代码
 
 ### 模块隔离
 
-与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) 或 [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) 选项：
-
-- 如果 `typescript` >= 5.0.0，使用 `verbatimModuleSyntax` 选项，它会默认启用 `isolatedModules` 选项：
+与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) 选项，该选项会默认启用 [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) 选项：
 
 ```json title="tsconfig.json"
 {
   "compilerOptions": {
     "verbatimModuleSyntax": true
-  }
-}
-```
-
-- 如果 `typescript` < 5.0.0，使用 `isolatedModules` 选项：
-
-```json title="tsconfig.json"
-{
-  "compilerOptions": {
-    "isolatedModules": true
   }
 }
 ```
@@ -161,3 +149,7 @@ export default {
   },
 };
 ```
+
+## TypeScript 版本兼容性 \{#typescript-version-compatibility}
+
+Rsbuild 支持 TypeScript 5.0 及以上版本。由于 Rsbuild 默认使用 SWC 转换 TypeScript 源代码，即使项目使用更早的 TypeScript 版本，仍可正常转换 `.ts` 和 `.tsx` 文件。不过，TypeScript 5.0 以下版本可能无法解析 Rsbuild 的类型声明，从而影响类型检查和编辑器类型提示。
