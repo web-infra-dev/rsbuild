@@ -51,9 +51,13 @@ export type LoadConfigResult<Config = RsbuildConfig> = Pick<
  * This function helps you to autocomplete configuration types.
  * It accepts a Rsbuild config object, or a function that returns a config.
  */
+export function defineConfig<const Config extends RsbuildConfig>(
+  config: (env: ConfigParams) => Config,
+): RsbuildConfigSyncFn;
+export function defineConfig<const Config extends RsbuildConfig>(
+  config: (env: ConfigParams) => Promise<Config>,
+): RsbuildConfigAsyncFn;
 export function defineConfig(config: RsbuildConfig): RsbuildConfig;
-export function defineConfig(config: RsbuildConfigSyncFn): RsbuildConfigSyncFn;
-export function defineConfig(config: RsbuildConfigAsyncFn): RsbuildConfigAsyncFn;
 export function defineConfig(config: RsbuildConfigDefinition): RsbuildConfigDefinition;
 export function defineConfig(config: RsbuildConfigDefinition) {
   return config;
