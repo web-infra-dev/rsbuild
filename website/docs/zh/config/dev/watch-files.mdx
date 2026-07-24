@@ -86,8 +86,6 @@ Glob 模式会在 watcher 启动时展开，因此不会包含之后新建的匹
 - `change`：监听范围内的文件发生变更。
 - `unlink`：监听范围内的文件被删除。
 
-这些事件描述的是 watcher 观察到的结果。例如，重命名文件可能会对旧路径产生 `unlink`，对新路径产生 `add`；原子写入则可能被报告为 `change`。
-
 例如，只在目录中新增或移除文件时触发重启：
 
 ```ts title="rsbuild.config.ts"
@@ -111,7 +109,7 @@ export default {
 
 ### reload-page
 
-reload-page 表示当被监听的文件新增、修改或删除时，浏览器打开的页面会自动重新加载。如果未明确指定 type，Rsbuild 会默认采用 reload-page 行为。
+`reload-page` 表示当监听文件发生 [`events`](#events) 指定的事件时，浏览器中的页面会自动重新加载。默认情况下，新增、修改和删除都会触发重新加载。如果未明确指定 `type`，Rsbuild 默认采用 `reload-page`。
 
 这可以用于监听一些静态资源文件的变化，例如 [public 目录](/config/server/public-dir) 下的文件。
 

@@ -86,8 +86,6 @@ Specifies the file events that trigger the configured action:
 - `change`: A watched file changes.
 - `unlink`: A watched file disappears.
 
-These events describe what the watcher observes. For example, renaming a file may produce `unlink` for the old path and `add` for the new path, while an atomic write may be reported as `change`.
-
 For example, to restart only when files are added to or removed from a directory:
 
 ```ts title="rsbuild.config.ts"
@@ -111,7 +109,7 @@ Specifies whether to trigger a page reload or restart the dev server or watch bu
 
 ### reload-page
 
-`reload-page` means that when a watched file is added, changed, or removed, the page in the browser will automatically reload. If the type is not explicitly specified, Rsbuild defaults to the `reload-page` behavior.
+`reload-page` means that when a watched file event specified by [`events`](#events) occurs, the page in the browser automatically reloads. By default, additions, changes, and removals all trigger a reload. If `type` is not explicitly specified, Rsbuild uses `reload-page`.
 
 This can be used to watch changes to static assets, such as files in the [public directory](/config/server/public-dir).
 
