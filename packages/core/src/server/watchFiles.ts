@@ -5,9 +5,12 @@ import type {
   DevConfig,
   NormalizedConfig,
   NormalizedServerConfig,
+  WatchFileEvent,
   WatchFiles,
 } from '../types';
 import type { BuildManager } from './buildManager';
+
+export const DEFAULT_WATCH_FILE_EVENTS: readonly WatchFileEvent[] = ['add', 'change', 'unlink'];
 
 type WatchFilesOptions = {
   root: string;
@@ -47,8 +50,8 @@ async function watchDevFiles(devConfig: DevConfig, buildManager: BuildManager, r
 
   const watchers: FSWatcher[] = [];
 
-  for (const { paths, options, type } of castArray(watchFiles)) {
-    const watchOptions = prepareWatchOptions(paths, options, type);
+  for (const { paths, events, options, type } of castArray(watchFiles)) {
+    const watchOptions = prepareWatchOptions(paths, options, type, events);
     const watcher = await startWatchFiles(watchOptions, buildManager, root);
     if (watcher) {
       watchers.push(watcher);
@@ -85,9 +88,11 @@ function prepareWatchOptions(
   paths: string | string[],
   options: ChokidarOptions = {},
   type?: WatchFiles['type'],
+  events?: WatchFileEvent[],
 ) {
   return {
     paths: typeof paths === 'string' ? [paths] : paths,
+    events,
     options,
     type,
   };
@@ -133,11 +138,15 @@ export async function createChokidar(
 }
 
 async function startWatchFiles(
-  { paths, options, type = 'reload-page' }: ReturnType<typeof prepareWatchOptions>,
+  { paths, events, options, type = 'reload-page' }: ReturnType<typeof prepareWatchOptions>,
   buildManager: BuildManager,
   root: string,
 ) {
   if (type !== 'reload-page') {
+    return;
+  }
+
+  if (events?.length === 0) {
     return;
   }
 
@@ -153,9 +162,10 @@ async function startWatchFiles(
     });
   };
 
-  watcher.on('add', reloadPage);
-  watcher.on('change', reloadPage);
-  watcher.on('unlink', reloadPage);
+  const watchEvents = events ? new Set(events) : DEFAULT_WATCH_FILE_EVENTS;
+  for (const event of watchEvents) {
+    watcher.on(event, reloadPage);
+  }
 
   return watcher;
 }

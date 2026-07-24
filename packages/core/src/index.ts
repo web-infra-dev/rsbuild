@@ -214,6 +214,7 @@ export type {
   TransformHandler,
   TransformHook,
   TransformImport,
+  WatchFileEvent,
   WatchFiles,
   WebSocketUrlResolver,
 } from './types';
