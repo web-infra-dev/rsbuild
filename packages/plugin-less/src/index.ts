@@ -12,6 +12,8 @@ export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
 
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
+const LESS_MODULE_REGEX = /\.module(s)?\.less$/i;
+
 function assertCoreVersion(version: string): void {
   if (version.split('.')[0] === '1') {
     throw new Error(
@@ -185,6 +187,7 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
     const LESS_MAIN = 'less';
+    const LESS_MODULE = 'less-module';
     const LESS_TEXT = 'less-text';
     const LESS_URL = 'less-url';
     const LESS_INLINE = 'less-inline';
@@ -209,6 +212,8 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
       const hasCssTextRule = cssTextRuleId && cssRule.oneOfs.has(cssTextRuleId);
       const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
       const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
+      const cssModuleRuleId = CHAIN_ID.ONE_OF.CSS_MODULE;
+      const hasCssModuleRule = cssModuleRuleId && cssRule.oneOfs.has(cssModuleRuleId);
 
       // Less URL for `?url` imports.
       const lessUrlRule = hasCssUrlRule && getRule(LESS_URL);
@@ -223,6 +228,10 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
 
       // Raw Less for `?raw` imports
       getRule(LESS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
+
+      const lessModuleRule = hasCssModuleRule
+        ? getRule(LESS_MODULE).test(LESS_MODULE_REGEX)
+        : undefined;
 
       // Main Less transform
       const lessMainRule = getRule(LESS_MAIN);
@@ -245,6 +254,9 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
         if (lessUrlRule) {
           callback(lessUrlRule, getRule(cssUrlRuleId), 'url');
         }
+        if (lessModuleRule) {
+          callback(lessModuleRule, getRule(cssModuleRuleId), 'main');
+        }
         callback(lessMainRule, getRule(CSS_MAIN), 'main');
         callback(lessInlineRule, getRule(CSS_INLINE), 'inline');
       };
@@ -264,6 +276,19 @@ export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin
           rule.sideEffects(true);
         }
         rule.resourceQuery(cssBranchRule.get('resourceQuery'));
+
+        const cssRuleType = cssBranchRule.get('type');
+        if (cssRuleType) {
+          rule.type(cssRuleType);
+        }
+        const cssRuleParser = cssBranchRule.get('parser');
+        if (cssRuleParser) {
+          rule.parser(cssRuleParser);
+        }
+        const cssRuleGenerator = cssBranchRule.get('generator');
+        if (cssRuleGenerator) {
+          rule.generator(cssRuleGenerator);
+        }
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
           const loader = cssBranchRule.uses.get(id);

@@ -161,6 +161,24 @@ export type ToolsRspackConfig = OneOrMany<
     ) => MaybePromise<Rspack.Configuration | void>)
 >;
 
+/**
+ * Configure Rspack's built-in CSS parser and generator.
+ * Only takes effect when `experiments.css` is enabled.
+ * @experimental
+ */
+export interface ToolsCSSConfig {
+  /**
+   * Options for Rspack's built-in CSS parser.
+   * @experimental
+   */
+  parser?: Rspack.CssAutoOrModuleParserOptions;
+  /**
+   * Options for Rspack's built-in CSS generator.
+   * @experimental
+   */
+  generator?: Rspack.CssModuleGeneratorOptions;
+}
+
 export interface ToolsConfig {
   /**
    * Configure bundler config base on [rspack-chain](https://github.com/rstackjs/rspack-chain)
@@ -170,6 +188,12 @@ export interface ToolsConfig {
    * Modify the options of [css-loader](https://github.com/webpack/css-loader).
    */
   cssLoader?: ToolsCSSLoaderConfig;
+  /**
+   * Configure Rspack's built-in CSS parser and generator.
+   * Only takes effect when `experiments.css` is enabled.
+   * @experimental
+   */
+  css?: ToolsCSSConfig;
   /**
    * Modify the options of [postcss-loader](https://github.com/webpack/postcss-loader).
    */
@@ -203,6 +227,18 @@ export interface ToolsConfig {
 export type NormalizedToolsConfig = ToolsConfig & {
   cssExtract: Required<CSSExtractOptions>;
 };
+
+export interface ExperimentsConfig {
+  /**
+   * Whether to use Rspack's built-in CSS module types.
+   * When enabled, Rsbuild will not use `css-loader`, `style-loader`, or `CssExtractRspackPlugin`.
+   * @default false
+   * @experimental
+   */
+  css?: boolean;
+}
+
+export type NormalizedExperimentsConfig = Required<ExperimentsConfig>;
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 
@@ -2189,6 +2225,10 @@ export interface EnvironmentConfig {
    */
   dev?: Pick<DevConfig, AllowedEnvironmentDevKeys>;
   /**
+   * Options for experimental features.
+   */
+  experiments?: ExperimentsConfig;
+  /**
    * Options for HTML generation.
    */
   html?: HtmlConfig;
@@ -2289,6 +2329,7 @@ export type MergedEnvironmentConfig = {
   mode: RsbuildMode;
   root: string;
   dev: Pick<NormalizedDevConfig, AllowedEnvironmentDevKeys>;
+  experiments: NormalizedExperimentsConfig;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
   resolve: NormalizedResolveConfig;
