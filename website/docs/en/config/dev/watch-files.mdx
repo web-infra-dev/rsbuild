@@ -7,8 +7,11 @@ description: 'Watch specified files and directories for changes. When a change i
 - **Type:**
 
 ```ts
+type WatchFileEvent = 'add' | 'change' | 'unlink';
+
 type WatchFiles = {
   paths: string | string[];
+  events?: WatchFileEvent[];
   type?: 'reload-page' | 'restart' | 'reload-server';
   // watch options for chokidar
   options?: ChokidarOptions;
@@ -71,6 +74,33 @@ Glob patterns should use forward slashes (`/`) as path separators on all platfor
 
 Use a string literal or `path.posix.join()` to construct relative glob patterns.
 :::
+
+## events
+
+- **Type:** `('add' | 'change' | 'unlink')[]`
+- **Default:** `['add', 'change', 'unlink']`
+
+Specifies the file events that trigger the configured action:
+
+- `add`: A watched file appears after the watcher starts.
+- `change`: A watched file changes.
+- `unlink`: A watched file disappears.
+
+These events describe what the watcher observes. For example, renaming a file may produce `unlink` for the old path and `add` for the new path, while an atomic write may be reported as `change`.
+
+For example, to restart only when files are added to or removed from a directory:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    watchFiles: {
+      paths: './config',
+      type: 'restart',
+      events: ['add', 'unlink'],
+    },
+  },
+};
+```
 
 ## type
 
@@ -156,7 +186,7 @@ If you want to prevent some files from triggering a rebuild when they change, yo
 
 ## Version history
 
-| Version | Changes                                               |
-| ------- | ----------------------------------------------------- |
-| v2.1.8  | `reload-page` now responds to added and removed files |
-| v2.1.7  | Added the `restart` type; deprecated `reload-server`  |
+| Version | Changes                                                                          |
+| ------- | -------------------------------------------------------------------------------- |
+| v2.1.8  | Added the `events` option; `reload-page` now responds to added and removed files |
+| v2.1.7  | Added the `restart` type; deprecated `reload-server`                             |
