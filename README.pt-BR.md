@@ -40,7 +40,7 @@ O Rsbuild tem os seguintes recursos:
 
 ## 🦀 Rstack
 
-Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do Rspack, com alto desempenho e arquitetura consistente.
+O Rsbuild faz parte do Rstack, a cadeia de ferramentas JavaScript rápida e unificada para desenvolvedores e agentes.
 
 | Nome                                                  | Descrição                | Versão                                                                                                                                                                           |
 | ----------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
