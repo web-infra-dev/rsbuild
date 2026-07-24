@@ -1,12 +1,14 @@
 import type {
   ClientMessage,
   ClientMessageError,
+  HmrUpdateCause,
   ServerMessage,
   ServerMessageErrors,
   ServerMessageFullReload,
   ServerMessageResolvedClientError,
 } from '../server/socketServer';
 import type { LogLevel, NormalizedClientConfig, WebSocketUrlResolver } from '../types';
+import { createHmrHashState, reduceHmrHashState } from './hmrHashState';
 import { logger } from './log';
 
 let createOverlay: undefined | ((title: string, content: string) => void);
@@ -17,6 +19,17 @@ type CustomListenersMap = Map<string, ((data: unknown) => void)[]>;
 declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((options: {
   module: { hot: Rspack.Hot };
 }) => void)[];
+
+type LazyCompilationApplyOptions = Rspack.ApplyOptions & {
+  preserveDisposedModuleFactories: boolean;
+};
+
+// TODO(rspack#14772): Use `Rspack.ApplyOptions` directly after the minimum Rspack
+// version exposes `preserveDisposedModuleFactories`.
+const lazyCompilationApplyOptions: LazyCompilationApplyOptions = {
+  ignoreUnaccepted: true,
+  preserveDisposedModuleFactories: true,
+};
 
 const getErrorField = (error: unknown, field: keyof Error): string | undefined => {
   if (error instanceof Error) {
@@ -98,7 +111,7 @@ export function init(
   const customListenersMap: CustomListenersMap = new Map();
 
   // Hash of the last successful build
-  let lastHash: string | undefined;
+  let hashState = createHmrHashState();
   let hasBuildErrors = false;
   const base = serverBase.endsWith('/') ? serverBase : `${serverBase}/`;
 
@@ -164,6 +177,10 @@ export function init(
   function handleErrors({ text, html }: ServerMessageErrors['data']) {
     clearBuildErrors();
     hasBuildErrors = true;
+    hashState = reduceHmrHashState(hashState, {
+      type: 'reset',
+      appliedHash: BUILD_HASH,
+    }).state;
 
     // Also log them to the console.
     for (const error of text) {
@@ -207,9 +224,34 @@ export function init(
     );
   }
 
+  const failClosedReload = () => {
+    hashState = reduceHmrHashState(hashState, {
+      type: 'reset',
+      appliedHash: BUILD_HASH,
+    }).state;
+    fullReload();
+  };
+
+  const rememberHash = (hash: string, cause: HmrUpdateCause) => {
+    const transition = reduceHmrHashState(hashState, {
+      type: 'hash',
+      hash,
+      cause,
+      appliedHash: BUILD_HASH,
+    });
+    hashState = transition.state;
+    if (transition.reload) {
+      failClosedReload();
+    }
+  };
+
+  const advancePendingHashModes = () => {
+    hashState = reduceHmrHashState(hashState, { type: 'applied', hash: BUILD_HASH }).state;
+  };
+
   // BUILD_HASH is replaced with import.meta.rspackHash when the client is prebuilt,
   // then resolved to the current compilation hash.
-  const shouldUpdate = () => lastHash !== BUILD_HASH;
+  const shouldUpdate = () => hashState.lastHash !== BUILD_HASH;
 
   const handleApplyUpdates = (err: unknown, updatedModules: (string | number)[] | null) => {
     const forcedReload = err || !updatedModules;
@@ -217,7 +259,7 @@ export function init(
       if (err) {
         logger.error('[rsbuild] HMR update failed, performing full reload:', err);
       }
-      fullReload();
+      failClosedReload();
       return;
     }
 
@@ -227,6 +269,7 @@ export function init(
 
   // Attempt to update code on the fly, fall back to a hard reload.
   function tryApplyUpdates() {
+    advancePendingHashModes();
     // detect is there a newer version of this code available
     if (!shouldUpdate()) {
       return;
@@ -238,9 +281,18 @@ export function init(
         return;
       }
 
-      // https://rspack.rs/api/runtime-api/module-variables#importmetawebpackhot
-      import.meta.webpackHot.check(true).then(
+      const applyOptions =
+        hashState.pending[0]?.cause === 'lazy' ? lazyCompilationApplyOptions : true;
+      let update: Promise<(string | number)[] | null>;
+      try {
+        update = import.meta.webpackHot.check(applyOptions);
+      } catch (err) {
+        handleApplyUpdates(err, null);
+        return;
+      }
+      update.then(
         (updatedModules) => {
+          advancePendingHashModes();
           handleApplyUpdates(null, updatedModules);
         },
         (err: unknown) => {
@@ -252,7 +304,7 @@ export function init(
 
     // HotModuleReplacementPlugin is not registered in Rspack configuration
     // fallback to reload page
-    fullReload();
+    failClosedReload();
   }
 
   let socket: WebSocket | null = null;
@@ -290,8 +342,8 @@ export function init(
 
     switch (message.type) {
       case 'hash':
-        // Update the last compilation hash
-        lastHash = message.data;
+      case 'lazy-compilation-hash':
+        rememberHash(message.data, message.type === 'hash' ? 'normal' : 'lazy');
 
         if (clearOverlay && shouldUpdate()) {
           clearOverlay();
@@ -333,6 +385,7 @@ export function init(
   }
 
   function onClose() {
+    hashState = reduceHmrHashState(hashState, { type: 'disconnect' }).state;
     if (reconnectCount >= config.reconnect) {
       if (config.reconnect > 0) {
         logger.warn('[rsbuild] WebSocket connection failed after maximum retry attempts.');

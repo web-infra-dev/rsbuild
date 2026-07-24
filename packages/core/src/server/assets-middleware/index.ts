@@ -23,12 +23,21 @@ import type {
   Rspack,
 } from '../../types';
 import { resolveHostname } from './../hmrFallback';
-import type { SocketServer } from '../socketServer';
+import type { HmrUpdateCause, SocketServer } from '../socketServer';
 import { createAssetsMiddleware } from './middleware';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
 import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
 
 const noop = () => {};
+
+const getWatchInvalidationKind = (compilation: Rspack.Compilation): HmrUpdateCause => {
+  // TODO(rspack#14772): Remove this compatibility type after the minimum Rspack
+  // version exposes `Compilation.watchInvalidationKind`.
+  const { watchInvalidationKind } = compilation as Rspack.Compilation & {
+    watchInvalidationKind?: HmrUpdateCause;
+  };
+  return watchInvalidationKind === 'lazy' ? 'lazy' : 'normal';
+};
 
 export type MultiWatching = ReturnType<MultiCompiler['watch']>;
 
@@ -107,6 +116,10 @@ export const setupServerHooks = ({
     ) {
       socketServer.sendMessage({ type: 'full-reload' }, token);
     }
+  });
+
+  compiler.hooks.thisCompilation.tap('rsbuild-dev-server', (compilation) => {
+    socketServer.setBuildInvalidationCause(token, getWatchInvalidationKind(compilation));
   });
 
   compiler.hooks.done.tap('rsbuild-dev-server', (stats) => {

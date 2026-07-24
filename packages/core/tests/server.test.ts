@@ -9,7 +9,8 @@ import {
   removeBasePath,
 } from '../src/server/helper';
 import { createHttpServer } from '../src/server/httpServer';
-import type { Connect } from '../src/types';
+import { SocketServer } from '../src/server/socketServer';
+import type { Connect, DevConfig, InternalContext, Rspack } from '../src/types';
 import { logger } from '../src';
 
 beforeEach(() => {
@@ -514,7 +515,123 @@ test('should limit printed server routes correctly', () => {
   `);
 });
 
+const createSocketServerHarness = () => {
+  const token = 'web';
+  const stats = {
+    hash: 'hash-1',
+    errors: [] as { message: string }[],
+    warnings: [],
+    entrypoints: {
+      index: { chunks: ['index'] },
+    },
+  };
+  const socketServer = new SocketServer(
+    {
+      rootPath: process.cwd(),
+      logger,
+      environmentList: [
+        {
+          webSocketToken: token,
+          index: 0,
+          config: { dev: { client: { overlay: false } } },
+        },
+      ],
+      buildState: { stats },
+    } as unknown as InternalContext,
+    {} as DevConfig,
+    () => ({}) as Rspack.OutputFileSystem,
+  );
+  const connect = () => {
+    const socket = {
+      isAlive: false,
+      OPEN: 1,
+      readyState: 1,
+      on: rstest.fn(),
+      send: rstest.fn(),
+    };
+    const internals = socketServer as unknown as {
+      onConnect(socket: typeof socket, token: string): void;
+    };
+    internals.onConnect(socket, token);
+    return socket.send.mock.calls.map(
+      ([message]) => JSON.parse(String(message)) as { type: string },
+    );
+  };
+
+  return { connect, socketServer, stats, token };
+};
+
 describe('dev server', () => {
+  test('should retain lazy compilation provenance for delayed clients and duplicate stats', () => {
+    const { connect, socketServer, token } = createSocketServerHarness();
+
+    socketServer.setBuildInvalidationCause(token, 'lazy');
+    socketServer.onBuildDone();
+    expect(connect()).toEqual([{ type: 'lazy-compilation-hash', data: 'hash-1' }, { type: 'ok' }]);
+
+    socketServer.onBuildDone();
+    expect(connect()).toEqual([{ type: 'lazy-compilation-hash', data: 'hash-1' }, { type: 'ok' }]);
+  });
+
+  test('should reload when a lazy build adds an initial chunk', () => {
+    const { connect, socketServer, stats, token } = createSocketServerHarness();
+    const sendMessage = rstest.spyOn(socketServer, 'sendMessage');
+
+    socketServer.setBuildInvalidationCause(token, 'lazy');
+    socketServer.onBuildDone();
+    connect();
+    sendMessage.mockClear();
+
+    stats.hash = 'hash-2';
+    stats.entrypoints.index.chunks.push('lib');
+    socketServer.setBuildInvalidationCause(token, 'lazy');
+    socketServer.onBuildDone();
+
+    expect(sendMessage).toHaveBeenCalledWith({ type: 'full-reload' }, token);
+  });
+
+  test('should not carry lazy provenance to a new hash', () => {
+    const { connect, socketServer, stats, token } = createSocketServerHarness();
+
+    socketServer.setBuildInvalidationCause(token, 'lazy');
+    socketServer.onBuildDone();
+    expect(connect()[0]).toEqual({ type: 'lazy-compilation-hash', data: 'hash-1' });
+
+    stats.hash = 'hash-2';
+    socketServer.onBuildDone();
+    expect(connect()[0]).toEqual({ type: 'hash', data: 'hash-2' });
+  });
+
+  test('should let a normal invalidation replace lazy provenance for the same hash', () => {
+    const { connect, socketServer, token } = createSocketServerHarness();
+
+    socketServer.setBuildInvalidationCause(token, 'lazy');
+    socketServer.onBuildDone();
+    expect(connect()[0]).toEqual({ type: 'lazy-compilation-hash', data: 'hash-1' });
+
+    socketServer.setBuildInvalidationCause(token, 'normal');
+    socketServer.onBuildDone();
+    expect(connect()[0]).toEqual({ type: 'hash', data: 'hash-1' });
+  });
+
+  test('should use normal HMR messages for mixed or failed builds', () => {
+    const unknown = createSocketServerHarness();
+    unknown.socketServer.onBuildDone();
+    expect(unknown.connect()[0]).toEqual({ type: 'hash', data: 'hash-1' });
+
+    const mixed = createSocketServerHarness();
+    mixed.socketServer.setBuildInvalidationCause(mixed.token, 'normal');
+    mixed.socketServer.setBuildInvalidationCause(mixed.token, 'lazy');
+    mixed.socketServer.onBuildDone();
+    expect(mixed.connect()[0]).toEqual({ type: 'hash', data: 'hash-1' });
+
+    const failed = createSocketServerHarness();
+    failed.stats.errors.push({ message: 'failed' });
+    failed.socketServer.setBuildInvalidationCause(failed.token, 'lazy');
+    failed.socketServer.onBuildDone();
+    expect(failed.connect().map(({ type }) => type)).toEqual(['hash', 'errors']);
+  });
+
   test('should detect client compilers correctly', () => {
     expect(isClientCompiler(rspack({}))).toBeTruthy();
 
