@@ -7,8 +7,11 @@ description: '监听指定文件和目录的变化。当文件发生变化时，
 - **类型：**
 
 ```ts
-type WatchFilesOptions = {
+type WatchFileEvent = 'add' | 'change' | 'unlink';
+
+type WatchFiles = {
   paths: string | string[];
+  events?: WatchFileEvent[];
   type?: 'reload-page' | 'restart' | 'reload-server';
   //  chokidar 选项
   options?: ChokidarOptions;
@@ -72,6 +75,31 @@ Glob 模式会在 watcher 启动时展开，因此不会包含之后新建的匹
 请使用字符串字面量或 `path.posix.join()` 构造相对 glob 模式。
 :::
 
+## events
+
+- **类型：** `('add' | 'change' | 'unlink')[]`
+- **默认值：** `['add', 'change', 'unlink']`
+
+指定触发对应操作的文件事件：
+
+- `add`：监听范围内检测到文件。默认仅对 watcher 启动后新增的文件触发；将 [`options.ignoreInitial`](#options) 设为 `false` 时，启动时已存在的文件也会触发该事件。
+- `change`：监听范围内的文件发生变更。
+- `unlink`：监听范围内的文件被删除。
+
+例如，只在目录中新增或移除文件时触发重启：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    watchFiles: {
+      paths: './config',
+      type: 'restart',
+      events: ['add', 'unlink'],
+    },
+  },
+};
+```
+
 ## type
 
 - **类型：** `'reload-page' | 'restart' | 'reload-server'`
@@ -81,7 +109,7 @@ Glob 模式会在 watcher 启动时展开，因此不会包含之后新建的匹
 
 ### reload-page
 
-reload-page 表示当被监听的文件新增、修改或删除时，浏览器打开的页面会自动重新加载。如果未明确指定 type，Rsbuild 会默认采用 reload-page 行为。
+`reload-page` 表示当监听文件发生 [`events`](#events) 指定的事件时，浏览器中的页面会自动重新加载。默认情况下，新增、修改和删除都会触发重新加载。如果未明确指定 `type`，Rsbuild 默认采用 `reload-page`。
 
 这可以用于监听一些静态资源文件的变化，例如 [public 目录](/config/server/public-dir) 下的文件。
 
@@ -156,7 +184,7 @@ export default {
     watchFiles: [
       {
         type: 'reload-page',
-        paths: 'public/**/*',
+        paths: 'public',
       },
       {
         type: 'restart',
@@ -177,7 +205,7 @@ export default {
 
 ## 版本历史
 
-| 版本   | 变更内容                                  |
-| ------ | ----------------------------------------- |
-| v2.1.8 | `reload-page` 现在会响应文件新增和删除    |
-| v2.1.7 | 新增 `restart` 类型，废弃 `reload-server` |
+| 版本   | 变更内容                                                   |
+| ------ | ---------------------------------------------------------- |
+| v2.1.8 | 新增 `events` 选项；`reload-page` 现在会响应文件新增和删除 |
+| v2.1.7 | 新增 `restart` 类型，废弃 `reload-server`                  |

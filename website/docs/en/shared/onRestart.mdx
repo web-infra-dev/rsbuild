@@ -3,18 +3,21 @@ Called when a restart is requested for the dev server or watch build.
 The hook is triggered in the following cases:
 
 - The Rsbuild CLI detects changes to the config file or one of its dependencies.
-- A file watched by [`dev.watchFiles`](/config/dev/watch-files) with `type: 'restart'` changes.
+- A configured file event occurs for a file watched by [`dev.watchFiles`](/config/dev/watch-files) with `type: 'restart'`.
 - The dev server is manually restarted through a [CLI shortcut](/config/dev/cli-shortcuts).
 
 > This hook is not triggered for regular rebuilds.
 
-When using the JavaScript API, restart watchers are installed by `rsbuild.startDevServer()`, `rsbuild.createDevServer()`, and `rsbuild.build({ watch: true })`. The hook is called when a watched file changes. By default, Rsbuild does not close or restart the current task; you can pass the [`restart` option](/api/javascript-api/core#restart-handling) to handle restart requests.
+When using the JavaScript API, restart watchers are installed by `rsbuild.startDevServer()`, `rsbuild.createDevServer()`, and `rsbuild.build({ watch: true })`. The hook is called when a configured file event occurs. By default, Rsbuild does not close or restart the current task; you can pass the [`restart` option](/api/javascript-api/core#restart-handling) to handle restart requests.
 
 - **Type:**
 
 ```ts
+type WatchFileEvent = 'add' | 'change' | 'unlink';
+
 type RestartContext = {
   filePath?: string;
+  event?: WatchFileEvent;
 } & (
   | {
       action: 'build';
@@ -31,6 +34,7 @@ function OnRestart(callback: (context: RestartContext) => Promise<void> | void):
 
 - `action`: The current Rsbuild action being restarted.
 - `filePath`: The absolute path of the file that triggered the restart. It is `undefined` when the restart is manually triggered.
+- `event`: The file event that triggered the restart. It is `undefined` when the restart is manually triggered. Available in v2.1.8 or later.
 - `options`: The options passed to the current `rsbuild.build()` or `rsbuild.startDevServer()` call.
 
 - **Version:** Added in v2.1.7

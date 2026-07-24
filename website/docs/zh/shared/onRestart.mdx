@@ -3,18 +3,21 @@
 该 hook 会在以下情况中触发：
 
 - Rsbuild CLI 检测到配置文件或其依赖发生变化。
-- [`dev.watchFiles`](/config/dev/watch-files) 中 `type` 为 `'restart'` 的文件发生变化。
+- [`dev.watchFiles`](/config/dev/watch-files) 中 `type` 为 `'restart'` 的监听项检测到 `events` 中指定的文件事件。
 - 通过 [CLI 快捷键](/config/dev/cli-shortcuts) 手动重启 dev server。
 
 > 普通的重新构建不会触发该 hook。
 
-使用 JavaScript API 时，`rsbuild.startDevServer()`、`rsbuild.createDevServer()` 和 `rsbuild.build({ watch: true })` 会安装 restart watcher。被监听的文件发生变化时会调用该 hook。默认情况下，Rsbuild 不会关闭或重启当前任务；你可以传入 [`restart` 选项](/api/javascript-api/core#restart-handling) 来处理重启请求。
+使用 JavaScript API 时，`rsbuild.startDevServer()`、`rsbuild.createDevServer()` 和 `rsbuild.build({ watch: true })` 会安装 restart watcher。只有检测到 `events` 中指定的文件事件时才会调用该 hook。默认情况下，Rsbuild 不会关闭或重启当前任务；你可以传入 [`restart` 选项](/api/javascript-api/core#restart-handling) 来处理重启请求。
 
 - **类型：**
 
 ```ts
+type WatchFileEvent = 'add' | 'change' | 'unlink';
+
 type RestartContext = {
   filePath?: string;
+  event?: WatchFileEvent;
 } & (
   | {
       action: 'build';
@@ -31,6 +34,7 @@ function OnRestart(callback: (context: RestartContext) => Promise<void> | void):
 
 - `action`：当前正在重启的 Rsbuild 操作类型。
 - `filePath`：触发重启的文件绝对路径，手动触发重启时为 `undefined`。
+- `event`：触发重启的文件事件，手动触发重启时为 `undefined`。该属性自 v2.1.8 起可用。
 - `options`：当前调用 `rsbuild.build()` 或 `rsbuild.startDevServer()` 时传入的选项。
 
 - **版本：** 新增于 v2.1.7
