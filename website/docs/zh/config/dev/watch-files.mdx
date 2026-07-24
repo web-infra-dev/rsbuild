@@ -82,7 +82,7 @@ Glob 模式会在 watcher 启动时展开，因此不会包含之后新建的匹
 
 指定触发对应操作的文件事件：
 
-- `add`：watcher 启动后，监听范围内新增文件。
+- `add`：监听范围内检测到文件。默认仅对 watcher 启动后新增的文件触发；将 [`options.ignoreInitial`](#options) 设为 `false` 时，启动时已存在的文件也会触发该事件。
 - `change`：监听范围内的文件发生变更。
 - `unlink`：监听范围内的文件被删除。
 

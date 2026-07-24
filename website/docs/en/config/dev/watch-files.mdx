@@ -82,7 +82,7 @@ Use a string literal or `path.posix.join()` to construct relative glob patterns.
 
 Specifies the file events that trigger the configured action:
 
-- `add`: A watched file appears after the watcher starts.
+- `add`: A watched file is detected. By default, only files that appear after the watcher starts trigger this event. If [`options.ignoreInitial`](#options) is `false`, existing files also trigger it during startup.
 - `change`: A watched file changes.
 - `unlink`: A watched file disappears.
 
