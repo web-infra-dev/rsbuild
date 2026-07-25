@@ -10,7 +10,7 @@ description: 'source.entry is an object where the key is the entry name and the 
 type Entry = Record<string, string | string[] | (Rspack.EntryDescription & { html?: boolean })>;
 ```
 
-- **Default:** Rsbuild uses the first existing file in the following order as the `index` entry:
+- **Default:** The first existing `./src/index.*` file in this order:
 
 ```ts
 [
