@@ -313,13 +313,7 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
     }
   };
 
-  const inspectConfig: InspectConfig = async (inspectOptions = {}) => {
-    if (inspectOptions.mode) {
-      setNodeEnv(inspectOptions.mode);
-    } else if (!getNodeEnv()) {
-      setNodeEnv('development');
-    }
-
+  const inspectConfig: InspectConfig = async (inspectOptions) => {
     initAction();
 
     const { rspackConfigs } = await baseInitConfigs({

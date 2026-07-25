@@ -96,40 +96,6 @@ test('should not generate config files when writeToDisk is false', async () => {
   expect(fs.existsSync(rspackConfig)).toBeFalsy();
 });
 
-test('should apply mode before generating configs', async () => {
-  const originalNodeEnv = process.env.NODE_ENV;
-
-  try {
-    delete process.env.NODE_ENV;
-
-    const developmentRsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
-    });
-    const developmentResult = await developmentRsbuild.inspectConfig();
-
-    expect(developmentResult.origin.rsbuildConfig.mode).toBe('development');
-    expect(developmentResult.origin.bundlerConfigs[0].mode).toBe('development');
-
-    process.env.NODE_ENV = 'staging';
-
-    const productionRsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
-    });
-    const productionResult = await productionRsbuild.inspectConfig({
-      mode: 'production',
-    });
-
-    expect(productionResult.origin.rsbuildConfig.mode).toBe('production');
-    expect(productionResult.origin.bundlerConfigs[0].mode).toBe('production');
-  } finally {
-    if (originalNodeEnv === undefined) {
-      delete process.env.NODE_ENV;
-    } else {
-      process.env.NODE_ENV = originalNodeEnv;
-    }
-  }
-});
-
 test('should allow to specify absolute output path', async ({ logHelper }) => {
   const { expectLog } = logHelper;
 

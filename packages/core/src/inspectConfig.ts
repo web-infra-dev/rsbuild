@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { RSBUILD_OUTPUTS_PATH } from './constants';
-import { color, RspackChain, upperFirst } from './helpers';
+import { color, getNodeEnv, RspackChain, setNodeEnv, upperFirst } from './helpers';
 import type { InitConfigsOptions } from './initConfigs';
 import type { Logger } from './logger';
 import type {
@@ -121,6 +121,12 @@ export async function inspectConfig({
   inspectOptions?: InspectConfigOptions;
   bundlerConfigs: Rspack.Configuration[];
 }): Promise<InspectConfigResult> {
+  if (inspectOptions.mode) {
+    setNodeEnv(inspectOptions.mode);
+  } else if (!getNodeEnv()) {
+    setNodeEnv('development');
+  }
+
   const stringifiedBundlerConfigs = bundlerConfigs.map((config, index) => ({
     name: config.name || String(index),
     content: stringifyConfig(config, inspectOptions.verbose),
