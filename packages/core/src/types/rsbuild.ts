@@ -67,8 +67,9 @@ export type InitConfigsOptions = Pick<RsbuildContext, 'action'>;
 export type InspectConfigOptions = {
   /**
    * Inspect the config in the specified mode.
-   * Available options: 'development' or 'production'.
-   * @default 'development'
+   * Available options: 'development', 'production', or 'none'.
+   * @default Inferred from `process.env.NODE_ENV`: 'development' when unset,
+   * 'development' or 'production' when matching, otherwise 'none'.
    */
   mode?: RsbuildMode;
   /**
