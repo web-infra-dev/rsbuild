@@ -67,8 +67,8 @@ export type InitConfigsOptions = Pick<RsbuildContext, 'action'>;
 export type InspectConfigOptions = {
   /**
    * Inspect the config in the specified mode.
-   * Available options: 'development' or 'production'.
-   * @default 'development'
+   * Available options: 'development', 'production', or 'none'.
+   * @default process.env.NODE_ENV || 'development'
    */
   mode?: RsbuildMode;
   /**
@@ -79,7 +79,7 @@ export type InspectConfigOptions = {
   verbose?: boolean;
   /**
    * Specify the output path for inspection results.
-   * @default 'output.distPath.root'
+   * @default '<context.distPath>/.rsbuild'
    */
   outputPath?: string;
   /**

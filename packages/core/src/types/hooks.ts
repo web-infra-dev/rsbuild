@@ -306,8 +306,8 @@ export type EnvironmentContext = {
   manifest?: Record<string, unknown> | ManifestData;
   /**
    * WebSocket authentication token, used to authenticate WebSocket connections and
-   * prevent unauthorized access. Only available in the development mode, and is
-   * an empty string in the production mode.
+   * prevent unauthorized access. It contains a token when running the `dev` action
+   * and is an empty string for other actions.
    */
   webSocketToken: string;
 };

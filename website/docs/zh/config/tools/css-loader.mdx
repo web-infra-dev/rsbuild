@@ -8,9 +8,20 @@ description: 'Rsbuild 默认使用 css-loader 来处理 CSS 资源。你可以�
 - **默认值：**
 
 ```js
+const { cssModules, sourceMap } = rsbuildConfig.output;
+const useCssSourceMap = typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
+const localIdentName =
+  cssModules.localIdentName ||
+  (rsbuildConfig.mode === 'production'
+    ? '[local]-[hash:base64:6]'
+    : '[path][name]__[local]-[hash:base64:6]');
+
 const defaultOptions = {
-  modules: rsbuildConfig.output.cssModules,
-  sourceMap: rsbuildConfig.output.sourceMap.css,
+  modules: {
+    ...cssModules,
+    localIdentName,
+  },
+  sourceMap: useCssSourceMap,
 };
 ```
 

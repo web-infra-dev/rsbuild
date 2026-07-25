@@ -8,11 +8,14 @@ description: 'Rsbuild integrates PostCSS by default. You can configure postcss-l
 - **Default:**
 
 ```js
+const sourceMap = rsbuildConfig.output.sourceMap;
+const useCssSourceMap = typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
+
 const defaultOptions = {
   postcssOptions: {
     config: false,
-    sourceMap: rsbuildConfig.output.sourceMap.css,
   },
+  sourceMap: useCssSourceMap,
 };
 ```
 

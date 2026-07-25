@@ -35,9 +35,9 @@ Please refer to: [RspackChain examples](/guide/configuration/rspack#use-bundler-
 
 ### env
 
-- **Type:** `'development' | 'production' | 'test'`
+- **Type:** `string`
 
-The `env` parameter can be used to determine whether the current environment is development, production or test. For example:
+The `env` parameter is the current value of `process.env.NODE_ENV`, or an empty string when it is unset. It may also contain a custom value such as `'staging'`. For example:
 
 ```ts title="rsbuild.config.ts"
 export default {

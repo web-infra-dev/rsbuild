@@ -34,7 +34,7 @@ export type RsbuildContext = {
    * import { createRsbuild } from '@rsbuild/core';
    *
    * async function main() {
-   *   const rsbuild = createRsbuild({
+   *   const rsbuild = await createRsbuild({
    *     // ...
    *   });
    *   await rsbuild.startDevServer();

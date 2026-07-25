@@ -10,14 +10,22 @@ description: 'source.entry 的值是一个对象，key 是入口名称，value �
 type Entry = Record<string, string | string[] | (Rspack.EntryDescription & { html?: boolean })>;
 ```
 
-- **默认值：**
+- **默认值：** Rsbuild 会按照以下顺序查找文件，并将第一个存在的文件作为 `index` 入口：
 
 ```ts
-const defaultEntry = {
-  // Rsbuild 默认也支持其他后缀名，如 ts、tsx、jsx、mts、cts、mjs、cjs
-  index: './src/index.js',
-};
+[
+  './src/index.ts',
+  './src/index.js',
+  './src/index.tsx',
+  './src/index.jsx',
+  './src/index.mts',
+  './src/index.cts',
+  './src/index.mjs',
+  './src/index.cjs',
+];
 ```
+
+如果这些文件均不存在，默认值为 `{}`。
 
 用于设置构建的入口模块。
 

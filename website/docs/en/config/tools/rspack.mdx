@@ -90,9 +90,9 @@ The second parameter of this function is an object, which contains some utility 
 
 ### env
 
-- **Type:** `'development' | 'production' | 'test'`
+- **Type:** `string`
 
-The `env` parameter determines whether the current environment is development, production or test. For example:
+The `env` parameter is the current value of `process.env.NODE_ENV`, or an empty string when it is unset. It may also contain a custom value such as `'staging'`. For example:
 
 ```ts title="rsbuild.config.ts"
 export default {
