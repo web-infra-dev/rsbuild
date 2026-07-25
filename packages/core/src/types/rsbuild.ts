@@ -79,7 +79,7 @@ export type InspectConfigOptions = {
   verbose?: boolean;
   /**
    * Specify the output path for inspection results.
-   * @default '<context.distPath>/.rsbuild'
+   * @default 'output.distPath.root'
    */
   outputPath?: string;
   /**

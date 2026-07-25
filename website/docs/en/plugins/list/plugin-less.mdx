@@ -46,15 +46,12 @@ You can modify the config of [less-loader](https://github.com/webpack/less-loade
 - **Default:**
 
 ```js
-const sourceMap = rsbuildConfig.output.sourceMap;
-const useCssSourceMap = typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
-
 const defaultOptions = {
   lessOptions: {
     javascriptEnabled: true,
     paths: [path.join(rootPath, 'node_modules')],
   },
-  sourceMap: useCssSourceMap,
+  sourceMap: rsbuildConfig.output.sourceMap.css,
 };
 ```
 

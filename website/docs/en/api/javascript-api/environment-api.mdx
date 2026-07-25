@@ -16,7 +16,6 @@ Environment context is a read-only object that provides context information abou
 
 ```ts
 type EnvironmentContext = {
-  index: number;
   name: string;
   browserslist: string[];
   config: NormalizedEnvironmentConfig;
@@ -25,20 +24,13 @@ type EnvironmentContext = {
   htmlPaths: Record<string, string>;
   tsconfigPath?: string;
   manifest?: Record<string, unknown> | ManifestData;
-  webSocketToken: string;
 };
 ```
 
 You can get the environment context in the following ways:
 
 1. In Rsbuild's [Plugin hooks](/plugins/dev/hooks#plugin-hooks), you can get the environment context object through the `environment` or `environments` parameter.
-2. In the [Environment API](#environment-api-1), it is available via `environments[name].context`.
-
-### index
-
-The zero-based index of the current environment.
-
-- **Type:** `number`
+2. In the [Environment API](#environment-api-1), it is available via `environments.context`.
 
 ### name
 
@@ -77,20 +69,16 @@ The normalized Rsbuild config for the current environment.
 - **Type:**
 
 ```ts
-type NormalizedEnvironmentConfig = TwoLevelReadonly<{
-  mode: RsbuildMode;
-  root: string;
+type NormalizedEnvironmentConfig = DeepReadonly<{
   dev: NormalizedDevConfig;
-  server: NormalizedServerConfig;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
-  resolve: NormalizedResolveConfig;
   source: NormalizedSourceConfig;
+  server: NormalizedServerConfig;
   output: NormalizedOutputConfig;
   plugins?: RsbuildPlugins;
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
-  splitChunks: NormalizedSplitChunksConfig | false;
   moduleFederation?: ModuleFederationConfig;
 }>;
 ```
@@ -127,7 +115,7 @@ The entry object from the [source.entry](/config/source/entry) option.
 - **Type:**
 
 ```ts
-type RsbuildEntry = Record<string, string | string[] | RsbuildEntryDescription>;
+type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
 
 - **Example:**
@@ -214,7 +202,7 @@ The manifest data is only available after the build has completed, you can acces
 
 WebSocket authentication token, used to authenticate WebSocket connections and prevent unauthorized access.
 
-It contains a token when Rsbuild runs the `dev` action and is an empty string for other actions.
+Only available in development mode, and is an empty string in production mode.
 
 - **Type:** `string`
 - **Version:** Added in v1.4.4

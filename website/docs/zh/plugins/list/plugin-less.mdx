@@ -46,15 +46,12 @@ export default {
 - **默认值：**
 
 ```js
-const sourceMap = rsbuildConfig.output.sourceMap;
-const useCssSourceMap = typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
-
 const defaultOptions = {
   lessOptions: {
     javascriptEnabled: true,
     paths: [path.join(rootPath, 'node_modules')],
   },
-  sourceMap: useCssSourceMap,
+  sourceMap: rsbuildConfig.output.sourceMap.css,
 };
 ```
 

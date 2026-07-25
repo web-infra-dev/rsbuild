@@ -342,8 +342,6 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
-  /** @deprecated Use `order` instead. */
-  enforce?: 'pre' | 'post';
   order?: 'pre' | 'post' | 'default';
 };
 ```
@@ -431,18 +429,15 @@ api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
 });
 ```
 
-- `order`: Specifies the execution order of the transform function, corresponding to Rspack's [rules[].enforce](https://rspack.rs/config/module-rules#rulesenforce).
-  - When `order` is `pre`, the transform function will be executed before other transform functions (or Rspack loaders).
-  - When `order` is `post`, the transform function will be executed after other transform functions (or Rspack loaders).
-  - When `order` is `default`, the transform function will use the default loader order.
+- `enforce`: Specifies the execution order of the transform function, the same as Rspack's [rules[].enforce](https://rspack.rs/config/module-rules#rulesenforce).
+  - When `enforce` is `pre`, the transform function will be executed before other transform functions (or Rspack loaders).
+  - When `enforce` is `post`, the transform function will be executed after other transform functions (or Rspack loaders).
 
 ```js
-api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
+api.transform({ test: /\.md$/, enforce: 'pre' }, ({ code }) => {
   // ...
 });
 ```
-
-- `enforce`: Deprecated. Use `order` instead.
 
 ### Handler param
 
@@ -697,7 +692,6 @@ Here's the list of supported stages. Rspack will execute these stages sequential
 - `pre-process` — basic preprocessing of the assets.
 - `derived` — derive new assets from the existing assets.
 - `additions` — add additional sections to the existing assets, e.g., banner or initialization code.
-- `none` — run at `PROCESS_ASSETS_STAGE_NONE`, without selecting a specialized processing stage.
 - `optimize` — optimize existing assets in a general way.
 - `optimize-count` — optimize the count of existing assets, e.g., by merging them.
 - `optimize-compatibility` — optimize the compatibility of existing assets, e.g., add polyfills or vendor prefixes.

@@ -5,10 +5,8 @@ You can access the [Compiler instance](https://rspack.rs/api/javascript-api/comp
 - **Type:**
 
 ```ts
-function OnAfterCreateCompiler(
-  callback: (params: {
-    compiler: Compiler | MultiCompiler;
-    environments: Record<string, EnvironmentContext>;
-  }) => Promise<void> | void,
-): void;
+function OnAfterCreateCompiler(callback: (params: {
+  compiler: Compiler | MultiCompiler;
+  environments: Record<string, EnvironmentContext>;
+}) => Promise<void> | void;): void;
 ```

@@ -63,13 +63,10 @@ interface ReactConfig {
 - **Default:**
 
 ```ts
-const isDev = config.mode === 'development';
-const usingHMR = isDev && config.dev.hmr && config.output.target === 'web';
-const fastRefresh = pluginOptions.fastRefresh ?? true;
-
+const isDev = process.env.NODE_ENV === 'development';
 const defaultOptions = {
   development: isDev,
-  refresh: usingHMR && fastRefresh,
+  refresh: isDev,
   runtime: 'automatic',
 };
 ```
@@ -147,7 +144,7 @@ pluginReact({
 ### swcReactOptions.refresh
 
 - **Type:** `boolean`
-- **Default:** enabled for development web builds when [fastRefresh](#fastrefresh) and [dev.hmr](/config/dev/hmr) are enabled
+- **Default:** based on [fastRefresh](#fastrefresh) and [dev.hmr](/config/dev/hmr)
 
 Whether to enable [React Fast Refresh](https://npmjs.com/package/react-refresh).
 
@@ -304,19 +301,26 @@ As Windows does not support the above usage, you can also use [cross-env](https:
 - **Type:**
 
 ```ts
-type ReactRefreshOptions = import('@rspack/plugin-react-refresh').PluginOptions;
+type ReactRefreshOptions = {
+  // @link https://rspack.rs/config/module-rules#condition
+  test?: Rspack.RuleSetCondition;
+  include?: Rspack.RuleSetCondition;
+  exclude?: Rspack.RuleSetCondition;
+  library?: string;
+  forceEnable?: boolean;
+};
 ```
 
 - **Default:**
 
 ```js
 const defaultOptions = {
-  test: /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
+  test: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
   include: [
-    // Same as the built-in JavaScript rule
+    // Same as Rsbuild's `source.include` configuration
   ],
   exclude: [
-    // Same as the built-in JavaScript rule
+    // Same as Rsbuild's `source.exclude` configuration
   ],
   resourceQuery: { not: /^\?raw$/ },
 };
@@ -341,7 +345,7 @@ pluginReact({
 
 Whether to enable [React Fast Refresh](https://npmjs.com/package/react-refresh) in development mode.
 
-If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) plugin for development web builds with HMR enabled.
+If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) plugin.
 
 To disable Fast Refresh, set it to `false`:
 

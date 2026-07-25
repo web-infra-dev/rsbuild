@@ -15,7 +15,7 @@ This section describes all the properties and methods on the Rsbuild instance ob
 ```ts
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = await createRsbuild({
+const rsbuild = createRsbuild({
   // ...
 });
 
@@ -145,7 +145,7 @@ type DevServer = {
 import { createRsbuild } from '@rsbuild/core';
 
 async function main() {
-  const rsbuild = await createRsbuild({
+  const rsbuild = createRsbuild({
     // ...
   });
   await rsbuild.startDevServer();
@@ -617,7 +617,7 @@ const pluginFoo = {
   },
 };
 
-const rsbuild = await createRsbuild({
+const rsbuild = createRsbuild({
   config: {
     plugins: [pluginFoo],
   },
@@ -629,7 +629,7 @@ rsbuild.isPluginExists(pluginFoo.name); // true
 Or check if a plugin exists in a specified environment:
 
 ```ts
-const rsbuild = await createRsbuild({
+const rsbuild = createRsbuild({
   config: {
     environments: {
       web: {
@@ -663,7 +663,9 @@ type InitConfigsOptions = {
   action?: 'dev' | 'build' | 'preview';
 };
 
-function InitConfigs(options?: InitConfigsOptions): Promise<Rspack.Configuration[]>;
+function InitConfigs(options?: InitConfigsOptions): Promise<{
+  rspackConfigs: Rspack.Configuration[];
+}>;
 ```
 
 - **Example:**
@@ -708,7 +710,7 @@ type InspectConfigOptions = {
   verbose?: boolean;
   /**
    * Specify the output path for inspection results.
-   * @default '<context.distPath>/.rsbuild'
+   * @default 'output.distPath.root'
    */
   outputPath?: string;
   /**
@@ -729,15 +731,15 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
   bundlerConfigs: string[];
   environmentConfigs: string[];
   origin: {
-    rsbuildConfig: Omit<NormalizedConfig, 'environments'>;
-    environmentConfigs: Record<string, NormalizedEnvironmentConfig>;
-    bundlerConfigs: Rspack.Configuration[];
+    rsbuildConfig: RsbuildConfig;
+    environmentConfigs: Record<string, EnvironmentConfig>;
+    bundlerConfigs: BundlerConfigs[];
   };
 }>;
 ```
 
 :::tip
-To view the Rsbuild and Rspack configurations during the build process, use [debug mode](/guide/debug/debug-mode), or obtain them through hooks such as [onBeforeBuild](#rsbuildonbeforebuild), [onBeforeCreateCompiler](#rsbuildonbeforecreatecompiler).
+To view the Rsbuild and Rspack configurations during the build process, use [debug mode](/guide/debug/debug-mode), or obtain them through hooks such as [onBeforeBuild](#rsbuildonbeforebuild), [onBeforeCreateCompile](#rsbuildonbeforecreatecompiler).
 :::
 
 ### Example
@@ -760,9 +762,9 @@ await rsbuild.inspectConfig({
 
 ### Output path
 
-You can set the output path using `outputPath`. By default, the files are written to the `.rsbuild` directory under [context.distPath](#contextdistpath).
+You can set the output path using `outputPath`. The default value is [output.distPath.root](/config/output/dist-path).
 
-If `outputPath` is a relative path, it will be resolved relative to `context.distPath`. You can also set `outputPath` to an absolute path, in which case the files will be written directly to that path. For example:
+If `outputPath` is a relative path, it will be concatenated relative to the value of `output.distPath.root`. You can also set `outputPath` to an absolute path, in which case the files will be written directly to that path. For example:
 
 ```ts
 import path from 'node:path';
