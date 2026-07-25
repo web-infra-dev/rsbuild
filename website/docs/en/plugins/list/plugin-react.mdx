@@ -65,10 +65,11 @@ interface ReactConfig {
 ```ts
 const isDev = config.mode === 'development';
 const usingHMR = isDev && config.dev.hmr && config.output.target === 'web';
+const fastRefresh = pluginOptions.fastRefresh ?? true;
 
 const defaultOptions = {
   development: isDev,
-  refresh: usingHMR,
+  refresh: usingHMR && fastRefresh,
   runtime: 'automatic',
 };
 ```

@@ -698,7 +698,8 @@ type InspectConfigOptions = {
   /**
    * 检查指定 mode 下的配置
    * 可选值：'development'、'production' 或 'none'
-   * @default process.env.NODE_ENV || 'development'
+   * @default 根据 `process.env.NODE_ENV` 推断：未设置时为 'development'，
+   * 匹配 'development' 或 'production' 时使用对应值，否则为 'none'
    */
   mode?: RsbuildMode;
   /**
