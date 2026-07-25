@@ -263,15 +263,11 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     }
   },
 
-  prepareDist: [
-    async ({ cwd }, use) => {
-      const prepareDist: PrepareDist = (distFolderName = 'dist') =>
-        basePrepareDist(path.join(cwd, distFolderName));
-      await use(prepareDist);
-    },
-    // Keep prepareDist available in beforeEach and afterEach hooks.
-    { auto: true },
-  ],
+  prepareDist: async ({ cwd }, use) => {
+    const prepareDist: PrepareDist = (distFolderName = 'dist') =>
+      basePrepareDist(path.join(cwd, distFolderName));
+    await use(prepareDist);
+  },
 
   dev: async ({ cwd, page, logHelper }, use) => {
     const closes: Close[] = [];
