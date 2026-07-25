@@ -47,7 +47,7 @@ type CreateRsbuildOptions = {
 - `callerName`: The name of the framework or tool currently invoking Rsbuild, defaults to `'rsbuild'`, see [Specify caller name](#specify-caller-name).
 - `environment`: Build only specified [environments](/guide/advanced/environments). If not specified or an empty array is passed, all environments will be built.
 - `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load environment variables and define them as global variables via [source.define](/config/source/define).
-- `config`: Rsbuild configuration object or the result returned by [`loadConfig`](#loadconfig). Refer to [Configuration Overview](/config/) for all available configuration options.
+- `config`: Rsbuild configuration object or the result returned by [`loadConfig`](#loadconfig). Refer to [Config overview](/config/) for all available configuration options.
 - `restart`: A function that handles restart requests for the current dev server or watch build. See [restart](#restart-handling).
 
 ### Pass configuration
@@ -437,7 +437,7 @@ const mergedConfig = mergeRsbuildConfig(
 );
 ```
 
-This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
+This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment variables](/guide/advanced/env-vars) for details.
 
 :::tip
 
