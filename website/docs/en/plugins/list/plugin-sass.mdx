@@ -53,16 +53,22 @@ Modify the config of [sass-loader](https://github.com/webpack/sass-loader).
 - **Default:**
 
 ```js
+const rewriteUrls = pluginOptions.rewriteUrls ?? true;
+const sourceMap = rsbuildConfig.output.sourceMap;
+const useCssSourceMap = typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
+
 const defaultOptions = {
   api: 'modern-compiler',
   implementation: require.resolve('sass-embedded'),
-  sourceMap: rsbuildConfig.output.sourceMap.css,
+  sourceMap: rewriteUrls ? true : useCssSourceMap,
   sassOptions: {
     quietDeps: true,
-    silenceDeprecations: ['legacy-js-api', 'import'],
+    silenceDeprecations: ['import'],
   },
 };
 ```
+
+When `api` is set to `'legacy'` and `silenceDeprecations` is not customized, the plugin also adds `'legacy-js-api'` to `silenceDeprecations`.
 
 - **Example:**
 

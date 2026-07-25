@@ -15,7 +15,7 @@ description: 'Rsbuild JavaScript API 参考，涵盖 rsbuild.context、rsbuild.b
 ```ts
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = createRsbuild({
+const rsbuild = await createRsbuild({
   // ...
 });
 
@@ -145,7 +145,7 @@ type DevServer = {
 import { createRsbuild } from '@rsbuild/core';
 
 async function main() {
-  const rsbuild = createRsbuild({
+  const rsbuild = await createRsbuild({
     // ...
   });
   await rsbuild.startDevServer();
@@ -618,7 +618,7 @@ const pluginFoo = {
   },
 };
 
-const rsbuild = createRsbuild({
+const rsbuild = await createRsbuild({
   config: {
     plugins: [pluginFoo],
   },
@@ -630,7 +630,7 @@ rsbuild.isPluginExists(pluginFoo.name); // true
 或者检查指定环境中是否存在插件：
 
 ```ts
-const rsbuild = createRsbuild({
+const rsbuild = await createRsbuild({
   config: {
     environments: {
       web: {
@@ -664,9 +664,7 @@ type InitConfigsOptions = {
   action?: 'dev' | 'build' | 'preview';
 };
 
-function InitConfigs(options?: InitConfigsOptions): Promise<{
-  rspackConfigs: Rspack.Configuration[];
-}>;
+function InitConfigs(options?: InitConfigsOptions): Promise<Rspack.Configuration[]>;
 ```
 
 - **示例：**
@@ -710,7 +708,7 @@ type InspectConfigOptions = {
   verbose?: boolean;
   /**
    * 指定检查结果的输出路径
-   * @default 'output.distPath.root'
+   * @default '<context.distPath>/.rsbuild'
    */
   outputPath?: string;
   /**
@@ -731,15 +729,15 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
   bundlerConfigs: string[];
   environmentConfigs: string[];
   origin: {
-    rsbuildConfig: RsbuildConfig;
-    environmentConfigs: Record<string, EnvironmentConfig>;
-    bundlerConfigs: BundlerConfigs[];
+    rsbuildConfig: Omit<NormalizedConfig, 'environments'>;
+    environmentConfigs: Record<string, NormalizedEnvironmentConfig>;
+    bundlerConfigs: Rspack.Configuration[];
   };
 }>;
 ```
 
 :::tip
-如果你需要在构建过程中查看 Rsbuild 和 Rspack 配置，可以使用 [调试模式](/guide/debug/debug-mode)，也可以通过 [onBeforeBuild](#rsbuildonbeforebuild)、[onBeforeCreateCompile](#rsbuildonbeforecreatecompiler) 等 hooks 来获取。
+如果你需要在构建过程中查看 Rsbuild 和 Rspack 配置，可以使用 [调试模式](/guide/debug/debug-mode)，也可以通过 [onBeforeBuild](#rsbuildonbeforebuild)、[onBeforeCreateCompiler](#rsbuildonbeforecreatecompiler) 等 hooks 来获取。
 :::
 
 ### 示例
@@ -762,9 +760,9 @@ await rsbuild.inspectConfig({
 
 ### 输出路径
 
-你可以通过 `outputPath` 来设置输出目录，默认为 [output.distPath.root](/config/output/dist-path) 的值。
+你可以通过 `outputPath` 来设置输出目录。默认情况下，文件会写入 [context.distPath](#contextdistpath) 下的 `.rsbuild` 目录。
 
-当 `outputPath` 是一个相对路径时，会相对于 `output.distPath.root` 的值进行拼接。你也可以将 `outputPath` 设置为一个绝对路径，此时会直接将文件写入到该路径下。比如：
+当 `outputPath` 是一个相对路径时，会相对于 `context.distPath` 进行解析。你也可以将 `outputPath` 设置为一个绝对路径，此时会直接将文件写入到该路径下。比如：
 
 ```ts
 import path from 'node:path';

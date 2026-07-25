@@ -53,16 +53,22 @@ export default {
 - **默认值：**
 
 ```js
+const rewriteUrls = pluginOptions.rewriteUrls ?? true;
+const sourceMap = rsbuildConfig.output.sourceMap;
+const useCssSourceMap = typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
+
 const defaultOptions = {
   api: 'modern-compiler',
   implementation: require.resolve('sass-embedded'),
-  sourceMap: rsbuildConfig.output.sourceMap.css,
+  sourceMap: rewriteUrls ? true : useCssSourceMap,
   sassOptions: {
     quietDeps: true,
-    silenceDeprecations: ['legacy-js-api', 'import'],
+    silenceDeprecations: ['import'],
   },
 };
 ```
+
+当 `api` 设置为 `'legacy'` 且未自定义 `silenceDeprecations` 时，插件还会将 `'legacy-js-api'` 添加到 `silenceDeprecations`。
 
 - **示例：**
 
