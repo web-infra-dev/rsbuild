@@ -89,8 +89,8 @@ catalogs:
       specifier: ^0.2.0
       version: 0.2.0
     '@rstest/playwright':
-      specifier: ^0.11.2
-      version: 0.11.2
+      specifier: ^0.11.4
+      version: 0.11.4
     '@shikijs/transformers':
       specifier: ^4.3.1
       version: 4.3.1
@@ -510,7 +510,7 @@ importers:
         version: 0.2.0
       '@rstest/playwright':
         specifier: 'catalog:'
-        version: 0.11.2(@rstest/core@0.11.3)(playwright@1.61.1)
+        version: 0.11.4(@rstest/core@0.11.4)(playwright@1.61.1)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../scripts/test-helper
@@ -2751,8 +2751,8 @@ packages:
   '@rstackjs/test-utils@0.2.0':
     resolution: {integrity: sha512-P+LOo1WE3xYeGkHmEthyq2cIpN69k4LhiB/4UBSceD+nW9hDlhWv8MC0LTLWokZXccWl4ntcfOBjQFllkcBlPA==}
 
-  '@rstest/core@0.11.3':
-    resolution: {integrity: sha512-TXBvW8snHQntxRRYX71a3vTkhQ9SVvbG1PlqmiyxkSwcVxBXdwghJCpYEHu75L6Ay61eQtsc0R8MIq+Qd3aicA==}
+  '@rstest/core@0.11.4':
+    resolution: {integrity: sha512-HfBP4mmvLVq2vpyRvHHaeu1+K2e9XSjDCHbj15s+NExnniS2b+y/ABXyjJldpRSoiirKnfIqY7BVGOaO+G+W0w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -2764,11 +2764,11 @@ packages:
       jsdom:
         optional: true
 
-  '@rstest/playwright@0.11.2':
-    resolution: {integrity: sha512-Jm464bw45XIgXbkURjJCldvj91IZKfGRgALEbwMtaWJW62N/+5AJgn00pW7h1l7dX+qxmGVb/rr4+XMVb3auDA==}
+  '@rstest/playwright@0.11.4':
+    resolution: {integrity: sha512-N7xG7yzJb4d7iNjQOrNMDesvcN3nVAf7vgn17pBRIMce83QCkZIyNS+Dfit0XNAOPp3zJiGsVkby3MorPg5DJg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      '@rstest/core': ^0.11.2
+      '@rstest/core': ^0.11.4
       playwright: ^1.49.1
 
   '@shikijs/core@4.3.0':
@@ -6727,7 +6727,7 @@ snapshots:
 
   '@rstackjs/test-utils@0.2.0': {}
 
-  '@rstest/core@0.11.3(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)':
+  '@rstest/core@0.11.4(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)':
     dependencies:
       '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
       '@types/chai': 5.2.3
@@ -6735,9 +6735,9 @@ snapshots:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstest/playwright@0.11.2(@rstest/core@0.11.3)(playwright@1.61.1)':
+  '@rstest/playwright@0.11.4(@rstest/core@0.11.4)(playwright@1.61.1)':
     dependencies:
-      '@rstest/core': 0.11.3(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      '@rstest/core': 0.11.4(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
       playwright: 1.61.1
 
   '@shikijs/core@4.3.0':
@@ -9194,7 +9194,7 @@ snapshots:
       '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
       '@rslib/core': 1.0.0-beta.1(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)(typescript@6.0.3)
       '@rslint/core': 0.7.0(jiti@2.7.0)
-      '@rstest/core': 0.11.3(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      '@rstest/core': 0.11.4(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
     optionalDependencies:
       '@rspress/core': 2.0.18(@module-federation/runtime-tools@2.8.0)(@rspack/core@2.1.5)(@types/mdast@4.0.4)(@types/react@19.2.17)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)(supports-color@8.1.1)
     transitivePeerDependencies:

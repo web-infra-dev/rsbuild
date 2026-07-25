@@ -43,7 +43,7 @@ catalog:
   '@rstack-dev/doc-ui': '1.14.7'
   '@rstackjs/load-config': '^0.1.2'
   '@rstackjs/test-utils': '^0.2.0'
-  '@rstest/playwright': '^0.11.2'
+  '@rstest/playwright': '^0.11.4'
   '@shikijs/transformers': '^4.3.1'
   '@svgr/core': '8.1.0'
   '@svgr/plugin-jsx': '8.1.0'
