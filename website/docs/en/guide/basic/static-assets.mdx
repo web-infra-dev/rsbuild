@@ -23,7 +23,7 @@ Rsbuild supports these formats by default:
 To import assets in other formats, refer to [Extend Asset Types](#extend-asset-types).
 
 :::tip SVG images
-SVG images are a special case. Rsbuild supports converting SVG to React components, so SVG files are processed separately. For details, see [SVGR Plugin](/plugins/list/plugin-svgr).
+SVG images are a special case. Rsbuild supports converting SVG to React components, so SVG files are processed separately. For details, see [SVGR plugin](/plugins/list/plugin-svgr).
 :::
 
 ## Importing assets in JavaScript files
@@ -156,7 +156,7 @@ import image from './static/image.png?inline';
 console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-For a more detailed introduction to asset inlining, refer to the [Static Asset Inlining](/guide/optimization/inline-assets) section.
+For a more detailed introduction to asset inlining, refer to the [Inline static assets](/guide/optimization/inline-assets) section.
 
 ## Importing as string
 
@@ -221,7 +221,7 @@ When static assets are imported, they will be output to the dist directory. You 
 - Use [output.filename](/config/output/filename) to modify the output filename.
 - Use [output.distPath](/config/output/dist-path) to modify the output path.
 
-Read [Output Files](/guide/basic/output-files) for details.
+Read [Output files](/guide/basic/output-files) for details.
 
 ## URL prefix
 
