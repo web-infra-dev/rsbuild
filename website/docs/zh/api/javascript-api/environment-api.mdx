@@ -16,6 +16,7 @@ Environment context 是一个只读对象，提供一些和当前 environment �
 
 ```ts
 type EnvironmentContext = {
+  index: number;
   name: string;
   browserslist: string[];
   config: NormalizedEnvironmentConfig;
@@ -24,13 +25,20 @@ type EnvironmentContext = {
   htmlPaths: Record<string, string>;
   tsconfigPath?: string;
   manifest?: Record<string, unknown> | ManifestData;
+  webSocketToken: string;
 };
 ```
 
 Environment context 可以通过以下方式获取：
 
 1. 在 Rsbuild 的 [插件 hooks](/plugins/dev/hooks#plugin-hooks) 中，你可以通过 `environment` 或 `environments` 入参获取 environment context 对象。
-2. 在 [Environment API](#environment-api-1) 中，可以通过 `environments.context` 获取。
+2. 在 [Environment API](#environment-api-1) 中，可以通过 `environments[name].context` 获取。
+
+### index
+
+当前 environment 从零开始的索引。
+
+- **类型：** `number`
 
 ### name
 
@@ -69,16 +77,20 @@ api.modifyRspackConfig((config, { environment }) => {
 - **类型：**
 
 ```ts
-type NormalizedEnvironmentConfig = DeepReadonly<{
+type NormalizedEnvironmentConfig = TwoLevelReadonly<{
+  mode: RsbuildMode;
+  root: string;
   dev: NormalizedDevConfig;
+  server: NormalizedServerConfig;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
+  resolve: NormalizedResolveConfig;
   source: NormalizedSourceConfig;
-  server: NormalizedServerConfig;
   output: NormalizedOutputConfig;
   plugins?: RsbuildPlugins;
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
+  splitChunks: NormalizedSplitChunksConfig | false;
   moduleFederation?: ModuleFederationConfig;
 }>;
 ```
@@ -116,7 +128,7 @@ api.modifyRspackConfig((config, { environment }) => {
 - **类型：**
 
 ```ts
-type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
+type RsbuildEntry = Record<string, string | string[] | RsbuildEntryDescription>;
 ```
 
 - **示例：**
@@ -203,7 +215,7 @@ manifest 数据仅在构建完成后才能被访问，你可以在以下 hooks �
 
 WebSocket 认证 token，用于认证 WebSocket 连接，防止未授权访问。
 
-仅在开发模式下可用，生产模式下为空字符串。
+当 Rsbuild 执行 `dev` action 时，该字段包含一个 token；执行其他 action 时为空字符串。
 
 - **类型：** `string`
 - **版本：** 添加于 v1.4.4
