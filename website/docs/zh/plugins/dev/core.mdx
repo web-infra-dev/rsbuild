@@ -342,6 +342,8 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
+  /** @deprecated 请使用 `order` */
+  enforce?: 'pre' | 'post';
   order?: 'pre' | 'post' | 'default';
 };
 ```
@@ -429,15 +431,18 @@ api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
 });
 ```
 
-- `enforce`：指定 transform 函数的执行顺序，等同于 Rspack 的 [rules[].enforce](https://rspack.rs/zh/config/module-rules#rulesenforce)。
-  - 当 `enforce` 为 `pre` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之前执行。
-  - 当 `enforce` 为 `post` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之后执行。
+- `order`：指定 transform 函数的执行顺序，对应 Rspack 的 [rules[].enforce](https://rspack.rs/zh/config/module-rules#rulesenforce)。
+  - 当 `order` 为 `pre` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之前执行。
+  - 当 `order` 为 `post` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之后执行。
+  - 当 `order` 为 `default` 时，transform 函数会使用默认的 loader 顺序。
 
 ```js
-api.transform({ test: /\.md$/, enforce: 'pre' }, ({ code }) => {
+api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
   // ...
 });
 ```
+
+- `enforce`：已废弃，请使用 `order` 代替。
 
 ### handler 参数
 
@@ -692,6 +697,7 @@ handler 函数提供以下参数：
 - `pre-process` — asset 进行了基础的预处理。
 - `derived` — 从现有 asset 中派生新的 asset。
 - `additions` — 为现有的 asset 添加额外的内容，例如 banner 或初始代码。
+- `none` — 在 `PROCESS_ASSETS_STAGE_NONE` 阶段运行，不指定专门的处理阶段。
 - `optimize` — 以通用的方式优化现有 asset。
 - `optimize-count` — 优化现有 asset 的数量，例如，进行合并操作。
 - `optimize-compatibility` — 优化现有 asset 的兼容性，例如添加 polyfills 或者 vendor prefixes。
