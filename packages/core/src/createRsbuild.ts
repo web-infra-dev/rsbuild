@@ -307,9 +307,9 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
     );
   };
 
-  const initAction = () => {
+  const initAction = (mode: string | undefined = config.mode) => {
     if (!context.action) {
-      context.action = config.mode === 'development' ? 'dev' : 'build';
+      context.action = mode === 'development' ? 'dev' : 'build';
     }
   };
 
@@ -320,7 +320,7 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
       setNodeEnv('development');
     }
 
-    initAction();
+    initAction(config.mode ?? getNodeEnv());
 
     const { rspackConfigs } = await baseInitConfigs({
       context,

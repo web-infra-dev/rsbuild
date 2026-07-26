@@ -112,6 +112,24 @@ test('should apply mode before generating configs', async () => {
 
     process.env.NODE_ENV = 'staging';
 
+    const unknownEnvRsbuild = await createRsbuild({
+      cwd: import.meta.dirname,
+    });
+    const unknownEnvResult = await unknownEnvRsbuild.inspectConfig();
+
+    expect(unknownEnvResult.origin.rsbuildConfig.mode).toBe('none');
+    expect(unknownEnvResult.origin.bundlerConfigs[0].mode).toBe('none');
+
+    const noneRsbuild = await createRsbuild({
+      cwd: import.meta.dirname,
+    });
+    const noneResult = await noneRsbuild.inspectConfig({
+      mode: 'none',
+    });
+
+    expect(noneResult.origin.rsbuildConfig.mode).toBe('none');
+    expect(noneResult.origin.bundlerConfigs[0].mode).toBe('none');
+
     const productionRsbuild = await createRsbuild({
       cwd: import.meta.dirname,
     });
@@ -170,6 +188,7 @@ test('should generate extra config files', async ({ logHelper }) => {
 });
 
 test('should apply plugin correctly', async () => {
+  const originalNodeEnv = process.env.NODE_ENV;
   let servePluginApplied = false;
   let buildPluginApplied = false;
 
@@ -189,29 +208,38 @@ test('should apply plugin correctly', async () => {
     },
   };
 
-  const rsbuild1 = await createRsbuild({
-    cwd: import.meta.dirname,
-    config: {
-      mode: 'development',
-      plugins: [servePlugin, buildPlugin],
-    },
-  });
-  await rsbuild1.inspectConfig();
+  try {
+    delete process.env.NODE_ENV;
 
-  expect(servePluginApplied).toBe(true);
-  expect(buildPluginApplied).toBe(false);
+    const rsbuild1 = await createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        plugins: [servePlugin, buildPlugin],
+      },
+    });
+    await rsbuild1.inspectConfig();
 
-  servePluginApplied = false;
+    expect(servePluginApplied).toBe(true);
+    expect(buildPluginApplied).toBe(false);
 
-  const rsbuild2 = await createRsbuild({
-    cwd: import.meta.dirname,
-    config: {
-      mode: 'production',
-      plugins: [servePlugin, buildPlugin],
-    },
-  });
-  await rsbuild2.inspectConfig();
+    servePluginApplied = false;
 
-  expect(servePluginApplied).toBe(false);
-  expect(buildPluginApplied).toBe(true);
+    const rsbuild2 = await createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        mode: 'production',
+        plugins: [servePlugin, buildPlugin],
+      },
+    });
+    await rsbuild2.inspectConfig();
+
+    expect(servePluginApplied).toBe(false);
+    expect(buildPluginApplied).toBe(true);
+  } finally {
+    if (originalNodeEnv === undefined) {
+      delete process.env.NODE_ENV;
+    } else {
+      process.env.NODE_ENV = originalNodeEnv;
+    }
+  }
 });
