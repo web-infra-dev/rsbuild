@@ -52,8 +52,6 @@ Modify the config of [sass-loader](https://github.com/webpack/sass-loader).
 - **Type:** `Object | Function`
 - **Default:** Uses `sass-embedded` with the modern compiler API, enables URL rewriting, and suppresses dependency and import deprecation warnings.
 
-When `api` is set to `'legacy'` and `silenceDeprecations` is not customized, the plugin also adds `'legacy-js-api'` to `silenceDeprecations`.
-
 - **Example:**
 
 If `sassLoaderOptions` is an object, it is merged with the default config through `Object.assign`. It should be noted that `sassOptions` is merged through deepMerge in a deep way.
