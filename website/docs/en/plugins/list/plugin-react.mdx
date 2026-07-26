@@ -294,7 +294,19 @@ As Windows does not support the above usage, you can also use [cross-env](https:
 - **Type:**
 
 ```ts
-type ReactRefreshOptions = import('@rspack/plugin-react-refresh').PluginOptions;
+type ReactRefreshOptions = {
+  // @link https://rspack.rs/config/module-rules#condition
+  test?: Rspack.RuleSetCondition;
+  include?: Rspack.RuleSetCondition | null;
+  exclude?: Rspack.RuleSetCondition | null;
+  resourceQuery?: Rspack.RuleSetCondition;
+  library?: string;
+  forceEnable?: boolean;
+  injectLoader?: boolean;
+  injectEntry?: boolean;
+  reloadOnRuntimeErrors?: boolean;
+  reactRefreshLoader?: string;
+};
 ```
 
 - **Default:** Matches the built-in JavaScript rule and excludes `?raw` requests.
