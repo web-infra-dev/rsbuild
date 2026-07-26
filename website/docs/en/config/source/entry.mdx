@@ -10,7 +10,7 @@ description: 'source.entry is an object where the key is the entry name and the 
 type Entry = Record<string, string | string[] | (Rspack.EntryDescription & { html?: boolean })>;
 ```
 
-- **Default:** The first existing `./src/index.*` file in this order:
+- **Default:** The first existing `./src/index.*` file in this order, or `{}` if none exist:
 
 ```ts
 [
@@ -24,8 +24,6 @@ type Entry = Record<string, string | string[] | (Rspack.EntryDescription & { htm
   './src/index.cjs',
 ];
 ```
-
-If none of these files exist, the default value is `{}`.
 
 Set the entry modules for building.
 
