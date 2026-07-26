@@ -35,9 +35,9 @@ Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不�
 
 ### env
 
-- **类型：** `'development' | 'production' | 'test'`
+- **类型：** `string`
 
-通过 env 参数可以判断当前环境为 development、production 还是 test，比如：
+`env` 参数是 `process.env.NODE_ENV` 的当前值，未设置时为空字符串，也可能包含 `'staging'` 等自定义值。比如：
 
 ```ts title="rsbuild.config.ts"
 export default {

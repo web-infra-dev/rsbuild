@@ -5,13 +5,7 @@ description: 'Rsbuild uses css-loader by default to handle CSS resources. You ca
 # tools.cssLoader
 
 - **Type:** `Object | Function`
-
-```js
-const defaultOptions = {
-  modules: rsbuildConfig.output.cssModules,
-  sourceMap: rsbuildConfig.output.sourceMap.css,
-};
-```
+- **Default:** Generated from [output.cssModules](/config/output/css-modules) and [output.sourceMap](/config/output/source-map).
 
 Rsbuild uses [css-loader](https://github.com/webpack/css-loader) by default to handle CSS resources. You can modify the options of css-loader through `tools.cssLoader`.
 

@@ -5,16 +5,7 @@ description: 'Rsbuild integrates PostCSS by default. You can configure postcss-l
 # tools.postcss
 
 - **Type:** `Object | Function`
-- **Default:**
-
-```js
-const defaultOptions = {
-  postcssOptions: {
-    config: false,
-    sourceMap: rsbuildConfig.output.sourceMap.css,
-  },
-};
-```
+- **Default:** Loads the project's PostCSS config when available, while source maps follow [output.sourceMap](/config/output/source-map).
 
 Rsbuild integrates PostCSS by default. You can configure [postcss-loader](https://github.com/webpack/postcss-loader) through `tools.postcss`.
 
