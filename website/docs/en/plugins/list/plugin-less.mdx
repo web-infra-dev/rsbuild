@@ -43,17 +43,7 @@ To customize the compilation behavior of Less, use the following options.
 You can modify the config of [less-loader](https://github.com/webpack/less-loader) via `lessLoaderOptions`.
 
 - **Type:** `Object | Function`
-- **Default:**
-
-```js
-const defaultOptions = {
-  lessOptions: {
-    javascriptEnabled: true,
-    paths: [path.join(rootPath, 'node_modules')],
-  },
-  sourceMap: rsbuildConfig.output.sourceMap.css,
-};
-```
+- **Default:** Enables Less JavaScript, resolves imports from `node_modules`, and follows [output.sourceMap](/config/output/source-map) for source maps.
 
 - **Example:**
 

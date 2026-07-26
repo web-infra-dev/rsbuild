@@ -50,19 +50,9 @@ To customize the compilation behavior of Sass, use the following options.
 Modify the config of [sass-loader](https://github.com/webpack/sass-loader).
 
 - **Type:** `Object | Function`
-- **Default:**
+- **Default:** Uses `sass-embedded` with the modern compiler API, enables URL rewriting, and suppresses dependency and import deprecation warnings.
 
-```js
-const defaultOptions = {
-  api: 'modern-compiler',
-  implementation: require.resolve('sass-embedded'),
-  sourceMap: rsbuildConfig.output.sourceMap.css,
-  sassOptions: {
-    quietDeps: true,
-    silenceDeprecations: ['legacy-js-api', 'import'],
-  },
-};
-```
+When `api` is set to `'legacy'` and `silenceDeprecations` is not customized, the plugin also adds `'legacy-js-api'` to `silenceDeprecations`.
 
 - **Example:**
 

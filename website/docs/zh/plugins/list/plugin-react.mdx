@@ -62,14 +62,7 @@ interface ReactConfig {
 
 - **默认值：**
 
-```ts
-const isDev = process.env.NODE_ENV === 'development';
-const defaultOptions = {
-  development: isDev,
-  refresh: isDev,
-  runtime: 'automatic',
-};
-```
+使用 automatic JSX runtime，并在适用时启用开发模式转换和 Fast Refresh。
 
 ### swcReactOptions.runtime
 
@@ -144,7 +137,7 @@ pluginReact({
 ### swcReactOptions.refresh
 
 - **类型：** `boolean`
-- **默认值：** 基于 [fastRefresh](#fastrefresh) 和 [dev.hmr](/config/dev/hmr)
+- **默认值：** 当 [fastRefresh](#fastrefresh) 和 [dev.hmr](/config/dev/hmr) 启用时，在开发模式的 web 构建中启用
 
 是否启用 [React Fast Refresh](https://npmjs.com/package/react-refresh)。
 
@@ -301,30 +294,10 @@ pluginReact({
 - **类型：**
 
 ```ts
-type ReactRefreshOptions = {
-  // @link https://rspack.rs/zh/config/module-rules#condition
-  test?: Rspack.RuleSetCondition;
-  include?: Rspack.RuleSetCondition;
-  exclude?: Rspack.RuleSetCondition;
-  library?: string;
-  forceEnable?: boolean;
-};
+type ReactRefreshOptions = import('@rspack/plugin-react-refresh').PluginOptions;
 ```
 
-- **默认值：**
-
-```js
-const defaultOptions = {
-  test: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
-  include: [
-    // Same as Rsbuild's `source.include` configuration
-  ],
-  exclude: [
-    // Same as Rsbuild's `source.exclude` configuration
-  ],
-  resourceQuery: { not: /^\?raw$/ },
-};
-```
+- **默认值：** 匹配内置 JavaScript rule，并排除 `?raw` 请求。
 
 设置 [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) 的选项，传入的值会与默认值进行浅合并。
 
@@ -345,7 +318,7 @@ pluginReact({
 
 是否在开发模式下启用 [React Fast Refresh](https://npmjs.com/package/react-refresh)。
 
-当 `fastRefresh` 设置为 `true` 时，`@rsbuild/plugin-react` 会自动注册 [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) 插件。
+当 `fastRefresh` 设置为 `true` 时，`@rsbuild/plugin-react` 会在启用 HMR 的开发模式 web 构建中自动注册 [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) 插件。
 
 如果你需要禁用 Fast Refresh，可以将其设置为 `false`：
 

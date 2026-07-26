@@ -43,17 +43,7 @@ export default {
 修改 [less-loader](https://github.com/webpack/less-loader) 的配置。
 
 - **类型：** `Object | Function`
-- **默认值：**
-
-```js
-const defaultOptions = {
-  lessOptions: {
-    javascriptEnabled: true,
-    paths: [path.join(rootPath, 'node_modules')],
-  },
-  sourceMap: rsbuildConfig.output.sourceMap.css,
-};
-```
+- **默认值：** 启用 Less JavaScript，支持从 `node_modules` 解析导入，source map 设置跟随 [output.sourceMap](/config/output/source-map)。
 
 - **示例：**
 

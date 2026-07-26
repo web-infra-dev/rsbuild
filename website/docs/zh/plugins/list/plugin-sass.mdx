@@ -50,19 +50,9 @@ export default {
 修改 [sass-loader](https://github.com/webpack/sass-loader) 的配置。
 
 - **类型：** `Object | Function`
-- **默认值：**
+- **默认值：** 使用 `sass-embedded` 的 modern compiler API，启用 URL 重写，并抑制依赖项警告和 import 弃用警告。
 
-```js
-const defaultOptions = {
-  api: 'modern-compiler',
-  implementation: require.resolve('sass-embedded'),
-  sourceMap: rsbuildConfig.output.sourceMap.css,
-  sassOptions: {
-    quietDeps: true,
-    silenceDeprecations: ['legacy-js-api', 'import'],
-  },
-};
-```
+当 `api` 设置为 `'legacy'` 且未自定义 `silenceDeprecations` 时，插件还会将 `'legacy-js-api'` 添加到 `silenceDeprecations`。
 
 - **示例：**
 

@@ -294,14 +294,14 @@ type ModifyEnvironmentConfigUtils = {
   name: string;
   mergeEnvironmentConfig: (
     ...configs: ArrayAtLeastOne<MergedEnvironmentConfig, EnvironmentConfig>
-  ) => EnvironmentConfig;
+  ) => MergedEnvironmentConfig;
 };
 
 function ModifyEnvironmentConfig(
   callback: (
-    config: EnvironmentConfig,
+    config: MergedEnvironmentConfig,
     utils: ModifyEnvironmentConfigUtils,
-  ) => MaybePromise<EnvironmentConfig | void>,
+  ) => MaybePromise<MergedEnvironmentConfig | void>,
 ): void;
 ```
 
@@ -358,13 +358,15 @@ const myPlugin = () => ({
 ```ts
 type ModifyRspackConfigUtils = {
   environment: EnvironmentContext;
+  environments: Record<string, EnvironmentContext>;
   env: string;
   isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;
   isWebWorker: boolean;
-  rspack: Rspack;
+  CHAIN_ID: ChainIdentifier;
+  rspack: typeof import('@rspack/core').rspack;
   HtmlPlugin: typeof import('html-rspack-plugin');
   // more...
 };
@@ -373,7 +375,7 @@ function ModifyRspackConfig(
   callback: (
     config: Rspack.Configuration,
     utils: ModifyRspackConfigUtils,
-  ) => Promise<RspackConfig | void> | Rspack.Configuration | void,
+  ) => MaybePromise<Rspack.Configuration | void>,
 ): void;
 ```
 
@@ -406,6 +408,7 @@ import RspackChain from '@zh/shared/rspackChain.mdx';
 ```ts
 type ModifyBundlerChainUtils = {
   environment: EnvironmentContext;
+  environments: Record<string, EnvironmentContext>;
   env: string;
   isDev: boolean;
   isProd: boolean;
@@ -413,10 +416,10 @@ type ModifyBundlerChainUtils = {
   isServer: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
+  rspack: typeof import('@rspack/core').rspack;
   HtmlPlugin: typeof import('html-rspack-plugin');
-  bundler: {
-    // some Rspack built-in plugins
-  };
+  /** @deprecated 请使用 `rspack` */
+  bundler: typeof import('@rspack/core').rspack;
 };
 
 function ModifyBundlerChain(
@@ -619,9 +622,9 @@ const tagsPlugin = () => ({
 
 当同时使用 `modifyHTML`，`modifyHTMLTags` 和 `html.tags` 选项时，执行顺序如下：
 
-1. [modifyHTML](#modifyhtml)
-2. [modifyHTMLTags](#modifyhtmltags)
-3. [html.tags](/config/html/tags)
+1. [modifyHTMLTags](#modifyhtmltags)
+2. [html.tags](/config/html/tags)
+3. [modifyHTML](#modifyhtml)
 
 :::
 
