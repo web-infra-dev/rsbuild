@@ -309,7 +309,7 @@ type ReactRefreshOptions = {
 };
 ```
 
-- **Default:** Matches the built-in JavaScript rule and excludes `?raw` requests.
+- **Default:** React Fast Refresh applies to files handled by Rsbuild's built-in JavaScript rule, except files imported with `?raw`.
 
 Set the options for [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh). The passed value will be shallowly merged with the default value.
 

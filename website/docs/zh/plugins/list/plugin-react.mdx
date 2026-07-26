@@ -309,7 +309,7 @@ type ReactRefreshOptions = {
 };
 ```
 
-- **默认值：** 匹配内置 JavaScript rule，并排除 `?raw` 请求。
+- **默认值：** Rsbuild 会对内置 JavaScript 规则处理的文件应用 React Fast Refresh，但通过 `?raw` 导入的文件除外。
 
 设置 [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) 的选项，传入的值会与默认值进行浅合并。
 
