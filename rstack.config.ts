@@ -1,5 +1,10 @@
 import { define } from 'rstack';
 
+define.staged({
+  '*.{md,mdx,json,css,less,scss}': 'oxfmt --no-error-on-unmatched-pattern',
+  '*.{js,jsx,ts,tsx,mjs,cjs}': ['rs lint --type-check', 'oxfmt --no-error-on-unmatched-pattern'],
+});
+
 define.lint(async () => {
   const { globalIgnores, js, ts } = await import('rstack/lint');
 
