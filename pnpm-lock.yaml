@@ -224,8 +224,8 @@ catalogs:
       specifier: ^2.14.1
       version: 2.14.1
     less:
-      specifier: ^4.7.0
-      version: 4.7.0
+      specifier: ^4.8.0
+      version: 4.8.0
     less-loader:
       specifier: ^12.3.3
       version: 12.3.3
@@ -622,7 +622,7 @@ importers:
     devDependencies:
       less:
         specifier: 'catalog:'
-        version: 4.7.0(supports-color@8.1.1)
+        version: 4.8.0(supports-color@8.1.1)
       sass:
         specifier: 'catalog:'
         version: 1.101.0
@@ -1093,10 +1093,10 @@ importers:
         version: 4.3.1
       less:
         specifier: 'catalog:'
-        version: 4.7.0(supports-color@8.1.1)
+        version: 4.8.0(supports-color@8.1.1)
       less-loader:
         specifier: 'catalog:'
-        version: 12.3.3(@rspack/core@2.1.5)(less@4.7.0)
+        version: 12.3.3(@rspack/core@2.1.5)(less@4.8.0)
       reduce-configs:
         specifier: 'catalog:'
         version: 2.0.1
@@ -1245,7 +1245,7 @@ importers:
         version: 3.2.4(svelte@5.56.8)
       svelte-preprocess:
         specifier: 'catalog:'
-        version: 6.0.5(@babel/core@7.29.7)(less@4.7.0)(postcss-load-config@6.0.1)(postcss@8.5.23)(sass@1.101.0)(svelte@5.56.8)(typescript@6.0.3)
+        version: 6.0.5(@babel/core@7.29.7)(less@4.8.0)(postcss-load-config@6.0.1)(postcss@8.5.23)(sass@1.101.0)(svelte@5.56.8)(typescript@6.0.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -4005,8 +4005,8 @@ packages:
       webpack:
         optional: true
 
-  less@4.7.0:
-    resolution: {integrity: sha512-i7dAlT3+boO0mMh1G4cex0vz1lLAScmBbikm1VEDNv+cy0ore1CUo2UtX8m3N9QLE5WYDr4ISbiCRzHNGyFkrA==}
+  less@4.8.0:
+    resolution: {integrity: sha512-7Y7DJBMbsW29UGjOG6NGvxQEx71AaDcrryBwYCMaFwn0kj8FkSueKN9r9WexVOetKEhXh38kL++WJncfkEpS+g==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4636,11 +4636,6 @@ packages:
     resolution: {integrity: sha512-hek2mFQpPuI4E1BBKrSto+BU3e3x4xuarsbiwr3+lf7p44juvFMV0XFWQAP3xUyqXA4RrXLIoaSUGbSt056ZMw==}
     engines: {node: '>= 0.6'}
 
-  react-dom@19.2.7:
-    resolution: {integrity: sha512-t0BRVXvbiE/o20Hfw669rLbMCDWtYZLvmJigy2f0MxsXF+71pxhR3xOkspmsO8h3ZlNzyibAmtCa3l4lYKk6gQ==}
-    peerDependencies:
-      react: ^19.2.7
-
   react-dom@19.2.8:
     resolution: {integrity: sha512-rVprimfGBG3DR+Tq0IQG2DT5PxKth1WIGDmj5yPmlzr4YBe7uyE+Du4oVqTDXZSHGGGXRtTJEGSSePyQCMBglQ==}
     peerDependencies:
@@ -4680,10 +4675,6 @@ packages:
     peerDependenciesMeta:
       react-dom:
         optional: true
-
-  react@19.2.7:
-    resolution: {integrity: sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ==}
-    engines: {node: '>=0.10.0'}
 
   react@19.2.8:
     resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
@@ -6012,11 +6003,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.17)(react@19.2.7)':
+  '@mdx-js/react@3.1.1(@types/react@19.2.17)(react@19.2.8)':
     dependencies:
       '@types/mdx': 2.0.13
       '@types/react': 19.2.17
-      react: 19.2.7
+      react: 19.2.8
 
   '@module-federation/bridge-react-webpack-plugin@2.8.0':
     dependencies:
@@ -6441,7 +6432,6 @@ snapshots:
       core-js: 3.49.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
-    optional: true
 
   '@rsbuild/plugin-check-syntax@2.0.0(@rsbuild/core@packages+core)':
     dependencies:
@@ -6453,12 +6443,12 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  '@rsbuild/plugin-react@2.1.0(@rsbuild/core@2.1.7)(@rspack/core@2.1.5)':
+  '@rsbuild/plugin-react@2.1.0(@rsbuild/core@2.1.8)(@rspack/core@2.1.5)':
     dependencies:
       '@rspack/plugin-react-refresh': 2.0.2(@rspack/core@2.1.5)(react-refresh@0.18.0)
       react-refresh: 0.18.0
     optionalDependencies:
-      '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.8(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
     transitivePeerDependencies:
       - '@rspack/core'
 
@@ -6664,13 +6654,13 @@ snapshots:
   '@rspress/core@2.0.18(@module-federation/runtime-tools@2.8.0)(@rspack/core@2.1.5)(@types/mdast@4.0.4)(@types/react@19.2.17)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)(supports-color@8.1.1)':
     dependencies:
       '@mdx-js/mdx': 3.1.1(supports-color@8.1.1)
-      '@mdx-js/react': 3.1.1(@types/react@19.2.17)(react@19.2.7)
-      '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
-      '@rsbuild/plugin-react': 2.1.0(@rsbuild/core@2.1.7)(@rspack/core@2.1.5)
+      '@mdx-js/react': 3.1.1(@types/react@19.2.17)(react@19.2.8)
+      '@rsbuild/core': 2.1.8(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      '@rsbuild/plugin-react': 2.1.0(@rsbuild/core@2.1.8)(@rspack/core@2.1.5)
       '@rspress/shared': 2.0.18(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
       '@shikijs/rehype': 4.3.0
       '@types/unist': 3.0.3
-      '@unhead/react': 2.1.15(react@19.2.7)
+      '@unhead/react': 2.1.15(react@19.2.8)
       body-scroll-lock: 4.0.0-beta.0
       clsx: 2.1.1
       copy-to-clipboard: 3.3.3
@@ -6681,12 +6671,12 @@ snapshots:
       mdast-util-mdxjs-esm: 2.0.1(supports-color@8.1.1)
       medium-zoom: 1.1.0
       nprogress: 0.2.0
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
       react-lazy-with-preload: 2.2.1
-      react-reconciler: 0.33.0(react@19.2.7)
-      react-render-to-markdown: 19.1.0(react@19.2.7)
-      react-router-dom: 7.18.1(react-dom@19.2.7)(react@19.2.7)
+      react-reconciler: 0.33.0(react@19.2.8)
+      react-render-to-markdown: 19.1.0(react@19.2.8)
+      react-router-dom: 7.18.1(react-dom@19.2.8)(react@19.2.8)
       rehype-external-links: 3.0.0
       rehype-raw: 7.0.0
       remark-cjk-friendly: 2.3.1(@types/mdast@4.0.4)(micromark-util-types@2.0.2)(micromark@4.0.2)(unified@11.0.5)
@@ -6739,7 +6729,7 @@ snapshots:
 
   '@rspress/shared@2.0.18(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)':
     dependencies:
-      '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.8(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
       '@shikijs/rehype': 4.3.0
       unified: 11.0.5
     transitivePeerDependencies:
@@ -6758,7 +6748,7 @@ snapshots:
 
   '@rstest/core@0.11.4(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)':
     dependencies:
-      '@rsbuild/core': 2.1.7(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.8(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
       '@types/chai': 5.2.3
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
@@ -7155,9 +7145,9 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@unhead/react@2.1.15(react@19.2.7)':
+  '@unhead/react@2.1.15(react@19.2.8)':
     dependencies:
-      react: 19.2.7
+      react: 19.2.8
       unhead: 2.1.15
 
   '@vercel/ncc@0.38.4': {}
@@ -7184,7 +7174,7 @@ snapshots:
       '@vue/shared': 3.5.40
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.22
+      postcss: 8.5.23
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.40':
@@ -8026,13 +8016,13 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.10.0
 
-  less-loader@12.3.3(@rspack/core@2.1.5)(less@4.7.0):
+  less-loader@12.3.3(@rspack/core@2.1.5)(less@4.8.0):
     dependencies:
-      less: 4.7.0(supports-color@8.1.1)
+      less: 4.8.0(supports-color@8.1.1)
     optionalDependencies:
       '@rspack/core': 2.1.5(@module-federation/runtime-tools@2.8.0)(@swc/helpers@0.5.23)
 
-  less@4.7.0(supports-color@8.1.1):
+  less@4.8.0(supports-color@8.1.1):
     dependencies:
       copy-anything: 3.0.5
       parse-node-version: 1.0.1
@@ -8945,11 +8935,6 @@ snapshots:
 
   range-parser@1.3.0: {}
 
-  react-dom@19.2.7(react@19.2.7):
-    dependencies:
-      react: 19.2.7
-      scheduler: 0.27.0
-
   react-dom@19.2.8(react@19.2.8):
     dependencies:
       react: 19.2.8
@@ -8957,33 +8942,31 @@ snapshots:
 
   react-lazy-with-preload@2.2.1: {}
 
-  react-reconciler@0.33.0(react@19.2.7):
+  react-reconciler@0.33.0(react@19.2.8):
     dependencies:
-      react: 19.2.7
+      react: 19.2.8
       scheduler: 0.27.0
 
   react-refresh@0.18.0: {}
 
-  react-render-to-markdown@19.1.0(react@19.2.7):
+  react-render-to-markdown@19.1.0(react@19.2.8):
     dependencies:
-      react: 19.2.7
-      react-reconciler: 0.33.0(react@19.2.7)
+      react: 19.2.8
+      react-reconciler: 0.33.0(react@19.2.8)
 
-  react-router-dom@7.18.1(react-dom@19.2.7)(react@19.2.7):
+  react-router-dom@7.18.1(react-dom@19.2.8)(react@19.2.8):
     dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-      react-router: 7.18.1(react-dom@19.2.7)(react@19.2.7)
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
+      react-router: 7.18.1(react-dom@19.2.8)(react@19.2.8)
 
-  react-router@7.18.1(react-dom@19.2.7)(react@19.2.7):
+  react-router@7.18.1(react-dom@19.2.8)(react@19.2.8):
     dependencies:
       cookie: 1.1.1
-      react: 19.2.7
+      react: 19.2.8
       set-cookie-parser: 2.7.2
     optionalDependencies:
-      react-dom: 19.2.7(react@19.2.7)
-
-  react@19.2.7: {}
+      react-dom: 19.2.8(react@19.2.8)
 
   react@19.2.8: {}
 
@@ -9500,12 +9483,12 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@5.56.8)
 
-  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.7.0)(postcss-load-config@6.0.1)(postcss@8.5.23)(sass@1.101.0)(svelte@5.56.8)(typescript@6.0.3):
+  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.8.0)(postcss-load-config@6.0.1)(postcss@8.5.23)(sass@1.101.0)(svelte@5.56.8)(typescript@6.0.3):
     dependencies:
       svelte: 5.56.8
     optionalDependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
-      less: 4.7.0(supports-color@8.1.1)
+      less: 4.8.0(supports-color@8.1.1)
       postcss: 8.5.23
       postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.23)
       sass: 1.101.0
