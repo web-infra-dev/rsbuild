@@ -307,14 +307,20 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
     );
   };
 
-  const initAction = () => {
+  const initAction = (mode: string | undefined = config.mode) => {
     if (!context.action) {
-      context.action = config.mode === 'development' ? 'dev' : 'build';
+      context.action = mode === 'development' ? 'dev' : 'build';
     }
   };
 
-  const inspectConfig: InspectConfig = async (inspectOptions) => {
-    initAction();
+  const inspectConfig: InspectConfig = async (inspectOptions = {}) => {
+    if (inspectOptions.mode) {
+      setNodeEnv(inspectOptions.mode);
+    } else if (!getNodeEnv()) {
+      setNodeEnv('development');
+    }
+
+    initAction(config.mode ?? getNodeEnv());
 
     const { rspackConfigs } = await baseInitConfigs({
       context,

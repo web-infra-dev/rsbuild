@@ -3,6 +3,7 @@ import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { createRsbuild } from '@rsbuild/core';
+import { rs } from 'rstack/test';
 
 test.afterEach(async ({ prepareDist }) => {
   await prepareDist();
@@ -96,6 +97,48 @@ test('should not generate config files when writeToDisk is false', async () => {
   expect(fs.existsSync(rspackConfig)).toBeFalsy();
 });
 
+test('should apply mode before generating configs', async () => {
+  using env = rs.stubEnv('NODE_ENV', undefined);
+
+  const developmentRsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  const developmentResult = await developmentRsbuild.inspectConfig();
+
+  expect(developmentResult.origin.rsbuildConfig.mode).toBe('development');
+  expect(developmentResult.origin.bundlerConfigs[0].mode).toBe('development');
+
+  env.stubEnv('NODE_ENV', 'staging');
+
+  const unknownEnvRsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  const unknownEnvResult = await unknownEnvRsbuild.inspectConfig();
+
+  expect(unknownEnvResult.origin.rsbuildConfig.mode).toBe('none');
+  expect(unknownEnvResult.origin.bundlerConfigs[0].mode).toBe('none');
+
+  const noneRsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  const noneResult = await noneRsbuild.inspectConfig({
+    mode: 'none',
+  });
+
+  expect(noneResult.origin.rsbuildConfig.mode).toBe('none');
+  expect(noneResult.origin.bundlerConfigs[0].mode).toBe('none');
+
+  const productionRsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  const productionResult = await productionRsbuild.inspectConfig({
+    mode: 'production',
+  });
+
+  expect(productionResult.origin.rsbuildConfig.mode).toBe('production');
+  expect(productionResult.origin.bundlerConfigs[0].mode).toBe('production');
+});
+
 test('should allow to specify absolute output path', async ({ logHelper }) => {
   const { expectLog } = logHelper;
 
@@ -136,6 +179,7 @@ test('should generate extra config files', async ({ logHelper }) => {
 });
 
 test('should apply plugin correctly', async () => {
+  using env = rs.stubEnv('NODE_ENV', undefined);
   let servePluginApplied = false;
   let buildPluginApplied = false;
 
@@ -158,7 +202,6 @@ test('should apply plugin correctly', async () => {
   const rsbuild1 = await createRsbuild({
     cwd: import.meta.dirname,
     config: {
-      mode: 'development',
       plugins: [servePlugin, buildPlugin],
     },
   });
@@ -168,6 +211,7 @@ test('should apply plugin correctly', async () => {
   expect(buildPluginApplied).toBe(false);
 
   servePluginApplied = false;
+  env.stubEnv('NODE_ENV', 'development');
 
   const rsbuild2 = await createRsbuild({
     cwd: import.meta.dirname,
