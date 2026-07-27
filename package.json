@@ -26,21 +26,13 @@
     "cross-env": "catalog:",
     "cspell-ban-words": "catalog:",
     "heading-case": "catalog:",
-    "nano-staged": "catalog:",
     "oxfmt": "catalog:",
     "rstack": "catalog:",
     "simple-git-hooks": "catalog:",
     "typescript": "catalog:"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm exec nano-staged"
-  },
-  "nano-staged": {
-    "*.{md,mdx,json,css,less,scss}": "oxfmt --no-error-on-unmatched-pattern",
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "rs lint --type-check",
-      "oxfmt --no-error-on-unmatched-pattern"
-    ]
+    "pre-commit": "pnpm exec rs staged"
   },
   "engines": {
     "node": ">=22.18.0",
