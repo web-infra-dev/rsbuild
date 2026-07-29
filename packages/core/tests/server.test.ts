@@ -1,8 +1,10 @@
+import os from 'node:os';
 import { rspack } from '@rspack/core';
 import { defaultAllowedOrigins } from '../src/defaultConfig';
 import { isClientCompiler } from '../src/server/assets-middleware';
 import {
   formatRoutes,
+  getAddressUrls,
   isUrlPathUnderBase,
   joinUrlPath,
   printServerURLs,
@@ -16,6 +18,33 @@ beforeEach(() => {
   const consoleLogSpy = rstest.spyOn(console, 'log');
   consoleLogSpy.mockImplementation(() => {});
 });
+
+const createIpv4 = (address: string, internal = false): os.NetworkInterfaceInfo => ({
+  address,
+  cidr: `${address}/24`,
+  family: 'IPv4',
+  internal,
+  mac: '00:00:00:00:00:00',
+  netmask: '255.255.255.0',
+});
+
+const localUrl = {
+  label: 'Local:  ',
+  url: 'http://localhost:3000',
+};
+
+const networkUrls = [
+  {
+    label: 'Network:  ',
+    name: 'xray_tun',
+    url: 'http://192.0.2.10:3000',
+  },
+  {
+    label: 'Network:  ',
+    name: 'Wi-Fi',
+    url: 'http://198.51.100.20:3000',
+  },
+];
 
 test('should format routes correctly', () => {
   expect(
@@ -300,6 +329,136 @@ test('should print server URLs correctly', () => {
     "  ➜  local     http://localhost:3000/foo/
       ➜  network   http://192.168.0.1:3000/foo/"
   `);
+});
+
+test('should resolve network interface names for server URLs', async () => {
+  rstest.spyOn(os, 'networkInterfaces').mockReturnValue({
+    lo: [createIpv4('127.0.0.1', true)],
+    xray_tun: [createIpv4('192.0.2.10')],
+    'Wi-Fi': [createIpv4('198.51.100.20')],
+    duplicate: [createIpv4('198.51.100.20')],
+  });
+
+  await expect(
+    getAddressUrls({
+      host: '0.0.0.0',
+      port: 3000,
+      protocol: 'http',
+    }),
+  ).resolves.toEqual([localUrl, ...networkUrls]);
+
+  await expect(
+    getAddressUrls({
+      host: 'example.com',
+      port: 3000,
+      protocol: 'http',
+    }),
+  ).resolves.toEqual([
+    {
+      label: 'Network:  ',
+      url: 'http://example.com:3000',
+    },
+  ]);
+});
+
+test('should print network interface names for server URLs', () => {
+  const message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      localUrl,
+      ...networkUrls,
+      {
+        url: 'http://203.0.113.1:3000',
+        label: 'Network:  ',
+        name: 'vEthernet (WSL (Hyper-V firewall))',
+      },
+    ],
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+    ],
+    cliShortcutsEnabled: true,
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  Local:    http://localhost:3000/
+      ➜  Network:  http://192.0.2.10:3000/     (xray_tun)
+      ➜  Network:  http://198.51.100.20:3000/  (Wi-Fi)
+      ➜  Network:  http://203.0.113.1:3000/    (vEthernet (WSL (Hyp…)"
+  `);
+});
+
+test('should omit a single network interface name', () => {
+  const message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [localUrl, networkUrls[0]],
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+    ],
+    cliShortcutsEnabled: true,
+  });
+
+  expect(message).toBe(
+    '  ➜  Local:    http://localhost:3000/\n  ➜  Network:  http://192.0.2.10:3000/',
+  );
+});
+
+test('should group multiple routes by network interface name', () => {
+  const message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: networkUrls,
+    routes: [
+      {
+        entryName: 'index',
+        pathname: '/',
+      },
+      {
+        entryName: 'foo',
+        pathname: '/foo',
+      },
+    ],
+    cliShortcutsEnabled: true,
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  Network (xray_tun):
+      -  index    http://192.0.2.10:3000/
+      -  foo      http://192.0.2.10:3000/foo
+
+      ➜  Network (Wi-Fi):
+      -  index    http://198.51.100.20:3000/
+      -  foo      http://198.51.100.20:3000/foo"
+  `);
+});
+
+test('should omit network interface names for custom server URLs', () => {
+  const printUrls = rstest.fn(({ urls }: { urls: string[] }) => urls);
+  const message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: networkUrls,
+    routes: [],
+    printUrls,
+    cliShortcutsEnabled: true,
+  });
+
+  expect(message).toBe(
+    '  ➜  Network:  http://192.0.2.10:3000\n  ➜  Network:  http://198.51.100.20:3000',
+  );
+  expect(message).not.toContain('xray_tun');
+  expect(message).not.toContain('Wi-Fi');
 });
 
 test('should limit printed server routes correctly', () => {
