@@ -13,7 +13,7 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
   setup(api) {
     api.transform(
       { test: /\.node$/, targets: ['node'], raw: true },
-      ({ code, emitFile, resourcePath }) => {
+      ({ code, emitFile, environment, resourcePath }) => {
         const filename = getFilename(resourcePath);
 
         if (filename === null) {
@@ -24,13 +24,11 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
 
         emitFile(filename, code);
 
-        const config = api.getNormalizedConfig();
-
         const handleErrorSnippet = `throw new Error('Failed to load Node.js addon: "${filename}"', {
     cause: error,
   });`;
 
-        if (config.output.module) {
+        if (environment.config.output.module) {
           // ESM output
           return `
 import path from "node:path";
