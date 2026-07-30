@@ -29,8 +29,7 @@ const chainStaticAssetRule = ({
   assetType: string;
 }) => {
   const generatorOptions:
-    | GeneratorOptionsByModuleType['asset']
-    | GeneratorOptionsByModuleType['asset/resource'] = {
+    GeneratorOptionsByModuleType['asset'] | GeneratorOptionsByModuleType['asset/resource'] = {
     filename,
   };
 

@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild",
-    "build": "rsbuild build"
+    "build": "rsbuild build",
+    "dev": "rsbuild"
   },
   "dependencies": {
     "@module-federation/runtime-tools": "catalog:",

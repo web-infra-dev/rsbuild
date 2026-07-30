@@ -6,27 +6,23 @@
   "bugs": {
     "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-vue"
   },
-  "files": [
-    "dist"
-  ],
+  "license": "MIT",
   "type": "module",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rs lib",
     "dev": "rs lib -w",
@@ -49,5 +45,9 @@
     "@rsbuild/core": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -1,18 +1,18 @@
 {
   "name": "rsbuild-monorepo",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*",
     "scripts/*"
   ],
-  "type": "module",
   "scripts": {
     "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
-    "format": "oxfmt . && heading-case --write",
-    "format:check": "oxfmt . --check",
+    "format": "prettier . --write --experimental-cli && heading-case --write",
+    "format:check": "prettier . --check --experimental-cli",
     "lint": "rs lint --type-check",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
     "prepare": "rs setup && node --run prebundle",
@@ -26,13 +26,14 @@
     "cross-env": "catalog:",
     "cspell-ban-words": "catalog:",
     "heading-case": "catalog:",
-    "oxfmt": "catalog:",
+    "prettier": "catalog:",
+    "prettier-plugin-packagejson": "catalog:",
     "rstack": "catalog:",
     "typescript": "catalog:"
   },
+  "packageManager": "pnpm@11.15.0",
   "engines": {
     "node": ">=22.18.0",
     "pnpm": ">=11.0.0"
-  },
-  "packageManager": "pnpm@11.15.0"
+  }
 }

@@ -1,8 +1,12 @@
 import { define } from 'rstack';
 
 define.staged({
-  '*.{md,mdx,json,css,less,scss}': 'oxfmt --no-error-on-unmatched-pattern',
-  '*.{js,jsx,ts,tsx,mjs,cjs}': ['rs lint --type-check', 'oxfmt --no-error-on-unmatched-pattern'],
+  '*.{md,mdx,json,css,less,scss}':
+    'prettier --write --experimental-cli --no-error-on-unmatched-pattern',
+  '*.{js,jsx,ts,tsx,mjs,cjs}': [
+    'rs lint --type-check',
+    'prettier --write --experimental-cli --no-error-on-unmatched-pattern',
+  ],
 });
 
 define.lint(async () => {

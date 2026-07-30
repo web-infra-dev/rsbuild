@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "setup": "pnpm exec playwright install chromium --with-deps",
-    "e2e": "rs test"
+    "e2e": "rs test",
+    "setup": "pnpm exec playwright install chromium --with-deps"
   },
   "dependencies": {
     "@module-federation/runtime-tools": "catalog:",

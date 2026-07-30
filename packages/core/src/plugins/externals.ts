@@ -5,10 +5,7 @@ import { readPackageJsonByPath, type PackageJson } from '../helpers/packageJson'
 import type { AutoExternal, RsbuildPlugin } from '../types';
 
 type DependencyType =
-  | 'dependencies'
-  | 'optionalDependencies'
-  | 'peerDependencies'
-  | 'devDependencies';
+  'dependencies' | 'optionalDependencies' | 'peerDependencies' | 'devDependencies';
 
 const dependencyTypes: DependencyType[] = [
   'dependencies',

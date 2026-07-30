@@ -16,8 +16,7 @@ export type SassLoaderOptions = Omit<LoaderOptions, 'api' | 'sassOptions' | 'add
     // Use `Rspack.LoaderContext` instead of `webpack.LoaderContext`
     // see https://github.com/web-infra-dev/rsbuild/pull/2708
     additionalData?:
-      | string
-      | ((content: string | Buffer, loaderContext: Rspack.LoaderContext) => string);
+      string | ((content: string | Buffer, loaderContext: Rspack.LoaderContext) => string);
   };
 
 export type PluginSassOptions = {

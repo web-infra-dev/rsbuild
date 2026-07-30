@@ -150,15 +150,11 @@ export async function inspectConfig({
   const outputPath = getInspectOutputPath(context, inspectOptions);
 
   const stringifiedExtraConfigs = inspectOptions.extraConfigs
-    ? Object.entries(inspectOptions.extraConfigs).map(
-        ([name, content]): ConfigItem => ({
-          name,
-          content:
-            typeof content === 'string'
-              ? content
-              : stringifyConfig(content, inspectOptions.verbose),
-        }),
-      )
+    ? Object.entries(inspectOptions.extraConfigs).map(([name, content]): ConfigItem => ({
+        name,
+        content:
+          typeof content === 'string' ? content : stringifyConfig(content, inspectOptions.verbose),
+      }))
     : undefined;
 
   if (inspectOptions.writeToDisk) {

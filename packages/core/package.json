@@ -6,24 +6,13 @@
   "bugs": {
     "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/core"
   },
-  "bin": {
-    "rsbuild": "./bin/rsbuild.js"
-  },
-  "files": [
-    "bin",
-    "dist",
-    "static",
-    "compiled",
-    "types.d.ts"
-  ],
+  "license": "MIT",
   "type": "module",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -34,10 +23,17 @@
     },
     "./package.json": "./package.json"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "rsbuild": "./bin/rsbuild.js"
   },
+  "files": [
+    "bin",
+    "dist",
+    "static",
+    "compiled",
+    "types.d.ts"
+  ],
   "scripts": {
     "build": "rs lib",
     "dev": "rs lib -w",
@@ -102,5 +98,9 @@
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
