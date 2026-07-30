@@ -45,8 +45,7 @@ export interface ClassicRuntimePresetReactOptions extends SharedBabelPresetReact
 }
 
 export type PresetReactOptions =
-  | AutomaticRuntimePresetReactOptions
-  | ClassicRuntimePresetReactOptions;
+  AutomaticRuntimePresetReactOptions | ClassicRuntimePresetReactOptions;
 
 export type RuleCondition = string | RegExp | (string | RegExp)[];
 

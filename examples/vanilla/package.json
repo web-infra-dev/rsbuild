@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild --open",
     "build": "rsbuild build",
+    "dev": "rsbuild --open",
     "preview": "rsbuild preview"
   },
   "devDependencies": {

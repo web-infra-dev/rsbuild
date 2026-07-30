@@ -1125,11 +1125,7 @@ export type SourceMap = {
 };
 
 export type CSSModulesLocalsConvention =
-  | 'asIs'
-  | 'camelCase'
-  | 'camelCaseOnly'
-  | 'dashes'
-  | 'dashesOnly';
+  'asIs' | 'camelCase' | 'camelCaseOnly' | 'dashes' | 'dashesOnly';
 
 export type CSSModules = {
   /**
@@ -1204,9 +1200,7 @@ export type InlineChunkTestFunction = (params: { size: number; name: string }) =
 export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
 export type InlineChunkConfig =
-  | boolean
-  | InlineChunkTest
-  | { enable?: boolean | 'auto'; test: InlineChunkTest };
+  boolean | InlineChunkTest | { enable?: boolean | 'auto'; test: InlineChunkTest };
 
 export type ManifestByEntry = {
   /**

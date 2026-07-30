@@ -171,9 +171,7 @@ export interface CSSLoaderOptions {
    * Allows to enable/disable CSS Modules or ICSS and setup configuration:
    */
   modules?:
-    | boolean
-    | LiteralUnion<'local' | 'global' | 'pure' | 'icss', string>
-    | CSSLoaderModulesOptions;
+    boolean | LiteralUnion<'local' | 'global' | 'pure' | 'icss', string> | CSSLoaderModulesOptions;
   /**
    * By default generation of source maps depends on the devtool option.
    */
@@ -198,11 +196,7 @@ export interface CSSLoaderOptions {
 }
 
 export type StyleLoaderInjectType =
-  | 'styleTag'
-  | 'singletonStyleTag'
-  | 'lazyStyleTag'
-  | 'lazySingletonStyleTag'
-  | 'linkTag';
+  'styleTag' | 'singletonStyleTag' | 'lazyStyleTag' | 'lazySingletonStyleTag' | 'linkTag';
 
 export interface StyleLoaderOptions {
   /**

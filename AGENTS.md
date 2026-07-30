@@ -55,5 +55,5 @@ Use matching `.agents/skills/*/SKILL.md` for release, Rspack upgrade, e2e, docs 
 
 ## Code style
 
-- Oxfmt; single quotes
+- Prettier; single quotes
 - camelCase functions/files; PascalCase types/classes

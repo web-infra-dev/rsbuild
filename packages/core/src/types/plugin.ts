@@ -227,10 +227,7 @@ type LooseRsbuildPlugin = Omit<RsbuildPlugin, 'setup' | 'apply'> & {
 };
 
 export type RsbuildPlugins = (
-  | LooseRsbuildPlugin
-  | Falsy
-  | Promise<LooseRsbuildPlugin | Falsy | RsbuildPlugins>
-  | RsbuildPlugins
+  LooseRsbuildPlugin | Falsy | Promise<LooseRsbuildPlugin | Falsy | RsbuildPlugins> | RsbuildPlugins
 )[];
 
 export type GetRsbuildConfig = {
