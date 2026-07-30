@@ -91,8 +91,8 @@ export const pluginPreact = (userOptions: PluginPreactOptions = {}): RsbuildPlug
       return mergeEnvironmentConfig(extraConfig, config);
     });
 
-    api.modifyBundlerChain(async (chain, { isDev, target }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { environment, isDev, target }) => {
+      const { config } = environment;
       const usePrefresh = isDev && options.prefreshEnabled && config.dev.hmr && target === 'web';
 
       if (!usePrefresh) {
