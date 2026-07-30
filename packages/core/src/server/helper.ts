@@ -194,8 +194,19 @@ export const formatRoutes = (
   );
 };
 
+type AddressUrl = {
+  label: string;
+  name?: string;
+  url: string;
+};
+
+// Keep long interface names from making startup logs excessively wide.
+const MAX_NAME_LEN = 20;
+const formatName = (name?: string) =>
+  name ? `(${name.length > MAX_NAME_LEN ? `${name.slice(0, MAX_NAME_LEN - 1)}…` : name})` : name;
+
 function getURLMessages(
-  urls: { url: string; label: string }[],
+  urls: AddressUrl[],
   routes: Routes,
   {
     maxRoutes = DEFAULT_MAX_ROUTES,
@@ -211,15 +222,29 @@ function getURLMessages(
   const printableRoutes = routeLimit === 0 ? [] : routes.slice(0, routeLimit);
   const moreEntries = routeLimit > 0 ? routes.length - printableRoutes.length : 0;
 
+  // Interface names are only useful for distinguishing multiple network URLs.
+  let nameCount = 0;
+  for (const { name } of urls) {
+    if (name && ++nameCount > 1) {
+      break;
+    }
+  }
+  const showNames = nameCount > 1;
+
   if (routes.length <= 1 || printableRoutes.length === 0) {
-    const pathname = printableRoutes.length ? printableRoutes[0].pathname : '';
-    const maxTrimmedLength = Math.max(...urls.map((u) => u.label.trimEnd().length));
-    const padWidth = Math.max(maxTrimmedLength + 2, 10);
-    let message = urls
-      .map(({ label, url }) => {
-        const normalizedPathname = normalizeUrl(`${url}${pathname}`);
-        const prefix = `➜  ${color.dim(label.trimEnd().padEnd(padWidth))}`;
-        return `  ${prefix}${color.cyan(normalizedPathname)}\n`;
+    const pathname = printableRoutes[0]?.pathname ?? '';
+    const items = urls.map(({ label, name, url }) => ({
+      label,
+      name: showNames ? formatName(name) : undefined,
+      url: normalizeUrl(`${url}${pathname}`),
+    }));
+    const labelWidth = Math.max(10, ...items.map((item) => item.label.trimEnd().length + 2));
+    const urlWidth = Math.max(0, ...items.map((item) => (item.name ? item.url.length : 0)));
+    let message = items
+      .map(({ label, name, url }) => {
+        const prefix = `➜  ${color.dim(label.trimEnd().padEnd(labelWidth))}`;
+        const suffix = name ? `${' '.repeat(urlWidth - url.length + 2)}${color.dim(name)}` : '';
+        return `  ${prefix}${color.cyan(url)}${suffix}\n`;
       })
       .join('');
 
@@ -232,19 +257,24 @@ function getURLMessages(
 
   let message = '';
   let prevLabel = '';
-  const maxNameLength = Math.max(...printableRoutes.map((r) => r.entryName.length));
-  urls.forEach(({ label, url }, index) => {
-    if (prevLabel !== label) {
+  let prevName: string | undefined;
+  const entryWidth = Math.max(...printableRoutes.map((route) => route.entryName.length));
+  urls.forEach(({ label, name, url }, index) => {
+    const shortName = showNames ? formatName(name) : undefined;
+    if (prevLabel !== label || prevName !== shortName) {
       if (index > 0) {
         message += '\n';
       }
-      message += `  ➜  ${label}\n`;
+      // Move the trailing colon after the interface name: `Network (Wi-Fi):`.
+      const title = shortName ? `${label.trimEnd().slice(0, -1)} ${color.dim(shortName)}:` : label;
+      message += `  ➜  ${title}\n`;
       prevLabel = label;
+      prevName = shortName;
     }
 
     for (const { entryName, pathname } of printableRoutes) {
       message += `  ${color.dim('-')}  ${color.dim(
-        entryName.padEnd(maxNameLength + 4),
+        entryName.padEnd(entryWidth + 4),
       )}${color.cyan(normalizeUrl(`${url}${pathname}`))}\n`;
     }
   });
@@ -268,7 +298,7 @@ export function printServerURLs({
   originalConfig,
   logger,
 }: {
-  urls: { url: string; label: string }[];
+  urls: AddressUrl[];
   port: number;
   routes: Routes;
   protocol: string;
@@ -442,42 +472,22 @@ export const resolvePort = async (
   };
 };
 
-const getIpv4Interfaces = () => {
-  const interfaces = os.networkInterfaces();
-  const ipv4Interfaces = new Map<string, os.NetworkInterfaceInfo>();
+const WILDCARD_HOSTS = new Set([
+  ALL_INTERFACES_IPV4,
+  '::',
+  '0000:0000:0000:0000:0000:0000:0000:0000',
+]);
 
-  for (const key of Object.keys(interfaces)) {
-    for (const detail of interfaces[key]!) {
-      // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
-      const familyV4Value = typeof detail.family === 'string' ? 'IPv4' : 4;
+const LOOPBACK_HOSTS = new Set([
+  LOCALHOST,
+  '127.0.0.1',
+  '::1',
+  '0000:0000:0000:0000:0000:0000:0000:0001',
+]);
 
-      if (detail.family === familyV4Value && !ipv4Interfaces.has(detail.address)) {
-        ipv4Interfaces.set(detail.address, detail);
-      }
-    }
-  }
+export const isWildcardHost = (host: string): boolean => WILDCARD_HOSTS.has(host);
 
-  return Array.from(ipv4Interfaces.values());
-};
-
-export const isWildcardHost = (host: string): boolean => {
-  const wildcardHosts = new Set([
-    ALL_INTERFACES_IPV4,
-    '::',
-    '0000:0000:0000:0000:0000:0000:0000:0000',
-  ]);
-  return wildcardHosts.has(host);
-};
-
-const isLoopbackHost = (host: string) => {
-  const loopbackHosts = new Set([
-    LOCALHOST,
-    '127.0.0.1',
-    '::1',
-    '0000:0000:0000:0000:0000:0000:0000:0001',
-  ]);
-  return loopbackHosts.has(host);
-};
+const isLoopbackHost = (host: string) => LOOPBACK_HOSTS.has(host);
 
 export const getHostInUrl = async (host: string): Promise<string> => {
   if (host === ALL_INTERFACES_IPV4 || host === LOCALHOST) {
@@ -506,8 +516,6 @@ const getUrlLabel = (url: string) => {
   }
 };
 
-type AddressUrl = { label: string; url: string };
-
 export const getAddressUrls = async ({
   protocol,
   port,
@@ -531,32 +539,41 @@ export const getAddressUrls = async ({
     ];
   }
 
-  const ipv4Interfaces = getIpv4Interfaces();
-  const addressUrls: AddressUrl[] = [];
-  let hasLocalUrl = false;
+  const urls: AddressUrl[] = [];
+  // The same address may be reported by multiple network interfaces.
+  const seen = new Set<string>();
+  let hasLocal = false;
 
-  for (const detail of ipv4Interfaces) {
-    if (isLoopbackHost(detail.address) || detail.internal) {
-      // avoid multiple prints of localhost
-      // https://github.com/web-infra-dev/rsbuild/discussions/1543
-      if (hasLocalUrl) {
+  for (const [name, infos] of Object.entries(os.networkInterfaces())) {
+    for (const info of infos ?? []) {
+      // `family` is a string in Node <= 17 and a number in newer versions.
+      const family = info.family as string | number;
+      if ((family !== 'IPv4' && family !== 4) || seen.has(info.address)) {
         continue;
       }
+      seen.add(info.address);
 
-      addressUrls.push({
-        label: LOCAL_LABEL,
-        url: concatUrl({ host: LOCALHOST, port, protocol }),
-      });
-      hasLocalUrl = true;
-    } else {
-      addressUrls.push({
-        label: NETWORK_LABEL,
-        url: concatUrl({ host: detail.address, port, protocol }),
-      });
+      if (isLoopbackHost(info.address) || info.internal) {
+        // Avoid printing localhost more than once.
+        // https://github.com/web-infra-dev/rsbuild/discussions/1543
+        if (!hasLocal) {
+          urls.push({
+            label: LOCAL_LABEL,
+            url: concatUrl({ host: LOCALHOST, port, protocol }),
+          });
+          hasLocal = true;
+        }
+      } else {
+        urls.push({
+          label: NETWORK_LABEL,
+          name,
+          url: concatUrl({ host: info.address, port, protocol }),
+        });
+      }
     }
   }
 
-  return addressUrls;
+  return urls;
 };
 
 export function getServerTerminator(server: Server | Http2SecureServer): () => Promise<void> {
