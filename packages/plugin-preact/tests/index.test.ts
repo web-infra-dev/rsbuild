@@ -1,4 +1,5 @@
 import { createRsbuild } from '@rsbuild/core';
+import { matchPlugin } from '@scripts/test-helper';
 import { pluginPreact } from '../src';
 
 describe('plugins/preact', () => {
@@ -35,5 +36,36 @@ describe('plugins/preact', () => {
 
     const configs = await rsbuild.initConfigs();
     expect(configs[0].resolve?.alias).not.toMatchObject(preactAlias);
+  });
+
+  it('should respect the HMR config of each environment', async () => {
+    for (const hmr of [true, false]) {
+      const rsbuild = await createRsbuild({
+        cwd: __dirname,
+        config: {
+          mode: 'development',
+          dev: {
+            hmr,
+          },
+          environments: {
+            hmrEnabled: {
+              dev: {
+                hmr: true,
+              },
+            },
+            hmrDisabled: {
+              dev: {
+                hmr: false,
+              },
+            },
+          },
+          plugins: [pluginPreact()],
+        },
+      });
+
+      const configs = await rsbuild.initConfigs();
+      expect(matchPlugin(configs[0], 'PreactRefreshRspackPlugin')).toBeTruthy();
+      expect(matchPlugin(configs[1], 'PreactRefreshRspackPlugin')).toBeFalsy();
+    }
   });
 });
