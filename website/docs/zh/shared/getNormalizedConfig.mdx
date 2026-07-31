@@ -1,6 +1,6 @@
-获取归一化后的完整 Rsbuild 配置（包含所有环境），或指定环境的归一化配置。该方法只能在 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 钩子执行完毕后调用。
+获取规范化后的完整 Rsbuild 配置（包含所有环境），或指定环境的规范化配置。该方法只能在 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 钩子执行完毕后调用。
 
-与 [`getRsbuildConfig`](/plugins/dev/core#apigetrsbuildconfig) 相比，该方法返回经过归一化处理、类型更明确的配置。例如，`config.html` 的类型不再包含 `undefined`。
+与 [`getRsbuildConfig`](/plugins/dev/core#apigetrsbuildconfig) 相比，该方法返回经过规范化处理、类型更明确的配置。例如，`config.html` 的类型不再包含 `undefined`。
 
 使用 `getNormalizedConfig()` 获取包含所有环境的完整配置。如需获取指定环境的配置，则使用 `getNormalizedConfig({ environment: name })`。
 
@@ -8,9 +8,9 @@
 
 ```ts
 type GetNormalizedConfig = {
-  /** 获取包含所有环境的完整归一化配置 */
+  /** 获取包含所有环境的完整规范化配置 */
   (): NormalizedConfig;
-  /** 获取指定环境的归一化 Rsbuild 配置 */
+  /** 获取指定环境的规范化 Rsbuild 配置 */
   (options: { environment: string }): NormalizedEnvironmentConfig;
 };
 ```
