@@ -244,6 +244,19 @@ const pluginFoo = () => ({
 });
 ```
 
+当插件钩子的回调参数中包含 [`environment`](/api/javascript-api/environment-api#environment-context) 时，建议通过 `environment.config` 获取当前环境的归一化配置。该配置由基础配置与[当前环境的配置](/guide/advanced/environments)合并后归一化得到。
+
+```ts
+const pluginFoo = () => ({
+  setup(api) {
+    api.onBeforeEnvironmentCompile(({ environment }) => {
+      const { config } = environment;
+      console.log(config.output.target);
+    });
+  },
+});
+```
+
 ## api.logger
 
 提供统一日志输出格式的实例，可以用于输出与 Rsbuild 一致的日志格式。

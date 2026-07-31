@@ -1,16 +1,16 @@
-Get the normalized Rsbuild config for all environments or a specific one. Call this method only after the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) hook has executed.
+Returns either the complete normalized Rsbuild config, including all environments, or the normalized config for a specific environment. You can call this method only after the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) hook has completed.
 
-Compared with the `api.getRsbuildConfig` method, the config returned by this method has been normalized, and the type definition of the config will be narrowed. For example, the `undefined` type of `config.html` will be removed.
+Unlike [`getRsbuildConfig`](/plugins/dev/core#apigetrsbuildconfig), this method returns a normalized config with narrower types. For example, the type of `config.html` no longer includes `undefined`.
 
-We recommend using this method to get the Rsbuild config.
+Use `getNormalizedConfig()` to get the complete config, including all environments. To get the config for a specific environment, use `getNormalizedConfig({ environment: name })`.
 
 - **Type:**
 
 ```ts
 type GetNormalizedConfig = {
-  /** Get all normalized Rsbuild configurations */
+  /** Get the complete normalized config, including all environments */
   (): NormalizedConfig;
-  /** Get the normalized Rsbuild configuration of the specified environment */
+  /** Get the normalized config for a specific environment */
   (options: { environment: string }): NormalizedEnvironmentConfig;
 };
 ```

@@ -244,6 +244,19 @@ const pluginFoo = () => ({
 });
 ```
 
+When a plugin hook provides [`environment`](/api/javascript-api/environment-api#environment-context) in its callback arguments, we recommend using `environment.config` to access the normalized config for the current environment. This config is created by merging the base config with the [config for the current environment](/guide/advanced/environments) and then normalizing the result.
+
+```ts
+const pluginFoo = () => ({
+  setup(api) {
+    api.onBeforeEnvironmentCompile(({ environment }) => {
+      const { config } = environment;
+      console.log(config.output.target);
+    });
+  },
+});
+```
+
 ## api.logger
 
 A logger instance that can be used to output logs in a format consistent with Rsbuild.
