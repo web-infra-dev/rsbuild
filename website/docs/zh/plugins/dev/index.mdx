@@ -210,9 +210,9 @@ api.modifyRsbuildConfig((config) => {
 
 `modifyRsbuildConfig` 是全局 hook。如果修改仅针对部分 environment，或需要根据当前 environment 调整配置，建议改用 [api.modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig)。详细说明请参考[全局 hooks 与 environment hooks](/plugins/dev/hooks#global-hooks-vs-environment-hooks)。
 
-### 读取归一化配置 \{#read-the-normalized-config}
+### 读取规范化后的配置 \{#read-the-normalized-config}
 
-配置修改 hooks 执行完毕后，可以无参数调用 [api.getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)，获取包含所有 environment 的完整归一化配置。该配置包含默认值，类型也比 [api.getRsbuildConfig](/plugins/dev/core#apigetrsbuildconfig) 的返回值更明确。
+配置修改 hooks 执行完毕后，可以无参数调用 [api.getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)，获取包含所有 environment 的完整配置。该配置已经过规范化处理并包含默认值，类型也比 [api.getRsbuildConfig](/plugins/dev/core#apigetrsbuildconfig) 的返回值更明确。
 
 ```ts
 api.onBeforeBuild(() => {
@@ -234,7 +234,7 @@ api.onBeforeBuild(() => {
 
 ### 读取当前环境的配置 \{#current-environment-config}
 
-当 hook 的回调参数中包含 [environment context](/api/javascript-api/environment-api#environment-context) 时，建议通过 `environment.config` 获取配置。该配置由基础配置与[当前 environment 的配置](/guide/advanced/environments)合并后归一化得到。
+当 hook 的回调参数中包含 [environment context](/api/javascript-api/environment-api#environment-context) 时，建议通过 `environment.config` 获取配置。该配置由基础配置与[当前 environment 的配置](/guide/advanced/environments)合并并经过规范化处理后得到。
 
 ```ts
 api.onBeforeEnvironmentCompile(({ environment }) => {

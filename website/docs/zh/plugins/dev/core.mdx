@@ -244,7 +244,7 @@ const pluginFoo = () => ({
 });
 ```
 
-当插件钩子的回调参数中包含 [`environment`](/api/javascript-api/environment-api#environment-context) 时，建议通过 `environment.config` 获取当前环境的归一化配置。该配置由基础配置与[当前环境的配置](/guide/advanced/environments)合并后归一化得到。
+当插件钩子的回调参数中包含 [`environment`](/api/javascript-api/environment-api#environment-context) 时，建议通过 `environment.config` 获取当前环境的规范化配置。该配置由基础配置与[当前环境的配置](/guide/advanced/environments)合并并经过规范化处理后得到。
 
 ```ts
 const pluginFoo = () => ({

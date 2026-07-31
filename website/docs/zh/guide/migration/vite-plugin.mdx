@@ -147,9 +147,9 @@ const rsbuildPlugin = {
 
 Rsbuild 提供了 [api.getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 方法来获取已解析的配置。这个方法与 Vite 的 `configResolved` 钩子的使用场景类似。
 
-当插件钩子提供 [environment context](/api/javascript-api/environment-api#environment-context) 时，建议通过 `environment.config` 获取当前环境的归一化配置。
+当插件钩子提供 [environment context](/api/javascript-api/environment-api#environment-context) 时，建议通过 `environment.config` 获取当前环境的规范化配置。
 
-以下示例在转换 `.foo` 文件时读取归一化配置：
+以下示例在转换 `.foo` 文件时读取规范化后的配置：
 
 - Vite 插件：
 
