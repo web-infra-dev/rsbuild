@@ -251,8 +251,8 @@ catalogs:
       specifier: 0.6.0
       version: 0.6.0
     playwright:
-      specifier: 1.61.1
-      version: 1.61.1
+      specifier: 1.62.1
+      version: 1.62.1
     postcss:
       specifier: ^8.5.23
       version: 8.5.23
@@ -504,7 +504,7 @@ importers:
         version: 0.2.0
       '@rstest/playwright':
         specifier: 'catalog:'
-        version: 0.11.4(@rstest/core@0.11.4)(playwright@1.61.1)
+        version: 0.11.4(@rstest/core@0.11.4)(playwright@1.62.1)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../scripts/test-helper
@@ -537,7 +537,7 @@ importers:
         version: 4.12.32
       playwright:
         specifier: 'catalog:'
-        version: 1.61.1
+        version: 1.62.1
       tailwindcss:
         specifier: 'catalog:'
         version: 4.3.3
@@ -4333,14 +4333,14 @@ packages:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
 
-  playwright-core@1.61.1:
-    resolution: {integrity: sha512-h7Qlt6m4REp25qvIdvbDtVmD4LqVXfpRxhORv9L0jzETM05p4fuPJ3dKyuSXQxDSbXnmS79HAgi9589lGSpLkg==}
-    engines: {node: '>=18'}
+  playwright-core@1.62.1:
+    resolution: {integrity: sha512-wPYSwEBJY9GHraISXqyqtx0na0LpO3XEX7jNDhntbex7tzUS7kLnZsOlFruFJB4Hi/rhDMjXGqHewDZ68nYZVw==}
+    engines: {node: '>=20'}
     hasBin: true
 
-  playwright@1.61.1:
-    resolution: {integrity: sha512-DWnY5o3YbLWK4GovuAVwpqL+1VwGNdUGrRr++8j8PtQQzvAVZUIMjKQ90fY689sEJZJBbZVw1rXaOKSTitkzPQ==}
-    engines: {node: '>=18'}
+  playwright@1.62.1:
+    resolution: {integrity: sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg==}
+    engines: {node: '>=20'}
     hasBin: true
 
   postcss-load-config@6.0.1:
@@ -6473,10 +6473,10 @@ snapshots:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstest/playwright@0.11.4(@rstest/core@0.11.4)(playwright@1.61.1)':
+  '@rstest/playwright@0.11.4(@rstest/core@0.11.4)(playwright@1.62.1)':
     dependencies:
       '@rstest/core': 0.11.4(@module-federation/runtime-tools@2.8.0)(core-js@3.49.0)
-      playwright: 1.61.1
+      playwright: 1.62.1
 
   '@shikijs/core@4.3.0':
     dependencies:
@@ -8515,11 +8515,11 @@ snapshots:
 
   picomatch@4.0.4: {}
 
-  playwright-core@1.61.1: {}
+  playwright-core@1.62.1: {}
 
-  playwright@1.61.1:
+  playwright@1.62.1:
     dependencies:
-      playwright-core: 1.61.1
+      playwright-core: 1.62.1
     optionalDependencies:
       fsevents: 2.3.2
 
