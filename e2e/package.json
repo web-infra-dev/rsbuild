@@ -38,6 +38,7 @@
     "@rsbuild/plugin-type-check": "catalog:",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rstackjs/test-utils": "catalog:",
+    "@rstest/core": "catalog:",
     "@rstest/playwright": "catalog:",
     "@scripts/test-helper": "workspace:*",
     "@tailwindcss/postcss": "catalog:",

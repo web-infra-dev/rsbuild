@@ -196,7 +196,7 @@ export const modifyBabelLoaderOptions = ({
 
   for (const rule of rules) {
     if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
-      rule.use(CHAIN_ID.USE.BABEL).tap(modifier);
+      rule.use(CHAIN_ID.USE.BABEL).tap((options) => modifier(options as BabelTransformOptions));
     }
   }
 };
