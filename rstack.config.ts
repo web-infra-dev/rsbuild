@@ -1,12 +1,24 @@
 import { define } from 'rstack';
 
-define.staged({
-  '*.{md,mdx,json,css,less,scss}':
-    'prettier --write --experimental-cli --no-error-on-unmatched-pattern',
-  '*.{js,jsx,ts,tsx,mjs,cjs}': [
-    'rs lint --type-check',
-    'prettier --write --experimental-cli --no-error-on-unmatched-pattern',
+define.fmt({
+  printWidth: 100,
+  singleQuote: true,
+  sortPackageJson: true,
+  ignorePatterns: [
+    // Avoid parser errors in intentionally invalid or unsupported fixtures.
+    'e2e/cases/plugin-less/inline-js/src/*.less',
+    'e2e/cases/browser-logs/skip-build-error/src/**',
+    'e2e/cases/syntax-es/using-declaration/src/index.ts',
+    // Preserve uppercase DOCTYPE in create-rsbuild templates.
+    'packages/create-rsbuild/**/*.html',
+    // Keep the package-manager-generated layout stable.
+    'pnpm-lock.yaml',
   ],
+});
+
+define.staged({
+  '*.{md,mdx,json,css,less,scss}': 'rs fmt',
+  '*.{js,jsx,ts,tsx,mjs,cjs}': ['rs lint --type-check', 'rs fmt'],
 });
 
 define.lint(async () => {
