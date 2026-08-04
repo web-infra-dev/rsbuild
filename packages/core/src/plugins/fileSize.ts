@@ -297,13 +297,15 @@ async function printFileSizes(
     const compilationAssets = stats.compilation.assets;
 
     for (const assetName of Object.keys(compilationAssets)) {
-      const value = compilationAssets[assetName];
       const filePath = getFilePath(assetName);
 
       if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
         continue;
       }
 
+      // Accessing an asset retrieves its Source through the Rust-JS bridge,
+      // so filter by filename before reading it.
+      const value = compilationAssets[assetName];
       const content = options.compressed && isCompressible(filePath) ? value.source() : undefined;
       const size = content === undefined ? value.size() : Buffer.byteLength(content);
 
