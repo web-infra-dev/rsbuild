@@ -255,16 +255,21 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
 
         const hasSourceMap = devtool !== 'hidden-source-map' && devtool !== false;
         for (const name of inlinedAssets) {
-          const asset = compilation.assets[name];
-          if (!asset) {
-            continue;
-          }
-          // Preserve source maps of inlined assets. Setting `related.sourceMap` to `null` prevents
-          // `deleteAsset` from removing the source map file.
           if (hasSourceMap) {
+            const asset = compilation.assets[name];
+            if (!asset) {
+              continue;
+            }
+            // Preserve source maps of inlined assets. Setting `related.sourceMap` to `null` prevents
+            // `deleteAsset` from removing the source map file.
             compilation.updateAsset(name, asset, {
               related: { sourceMap: null },
             });
+          } else {
+            // Check existence without retrieving the Source through the Rust-JS bridge.
+            if (!(name in compilation.assets)) {
+              continue;
+            }
           }
           compilation.deleteAsset(name);
         }
