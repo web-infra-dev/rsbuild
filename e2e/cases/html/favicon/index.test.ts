@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { findFile, getFileContent } from '@rstackjs/test-utils';
+import type { Rspack } from '@rsbuild/core';
 import fse from 'fs-extra';
 
 test('should emit local favicon to dist path', async ({ build }) => {
@@ -125,6 +126,41 @@ test('should allow to custom favicon dist path with a relative path', async ({ b
       output: {
         distPath: {
           favicon: 'static/favicon',
+        },
+      },
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+  const faviconFile = findFile(files, 'static/favicon/icon.png');
+  expect(faviconFile.endsWith('/static/favicon/icon.png')).toBeTruthy();
+
+  const html = getFileContent(files, 'index.html');
+  expect(html).toContain('<link rel="icon" href="/static/favicon/icon.png">');
+});
+
+test('should distinguish favicon output path from assets with the same basename', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      html: {
+        favicon: '../../../assets/icon.png',
+      },
+      output: {
+        distPath: {
+          favicon: 'static/favicon',
+        },
+      },
+      tools: {
+        rspack(_config, { appendPlugins, rspack }) {
+          appendPlugins({
+            apply(compiler: Rspack.Compiler) {
+              compiler.hooks.thisCompilation.tap('test-favicon-output-path', (compilation) => {
+                compilation.emitAsset('icon.png', new rspack.sources.RawSource('root icon'));
+              });
+            },
+          });
         },
       },
     },
