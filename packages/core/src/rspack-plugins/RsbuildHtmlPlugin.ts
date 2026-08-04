@@ -251,9 +251,11 @@ export class RsbuildHtmlPlugin {
       logger: Logger;
     }) => {
       const name = path.basename(favicon);
+      const outputFilename = path.posix.join(faviconDistPath, name);
 
-      if (compilation.assets[name]) {
-        return name;
+      // Check existence without retrieving the Source through the Rust-JS bridge.
+      if (outputFilename in compilation.assets) {
+        return outputFilename;
       }
 
       const inputFs = compilation.inputFileSystem;
@@ -288,7 +290,6 @@ export class RsbuildHtmlPlugin {
       }
 
       const source = new rspack.sources.RawSource(fileContent, false);
-      const outputFilename = path.posix.join(faviconDistPath, name);
       compilation.emitAsset(outputFilename, source);
 
       return outputFilename;
