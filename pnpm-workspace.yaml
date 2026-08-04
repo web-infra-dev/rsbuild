@@ -181,6 +181,8 @@ minimumReleaseAgeExclude:
   - 'rsbuild-plugin-*'
   - '@swc/*'
   - 'heading-case'
+  # Renovate security update: hono@4.12.34
+  - hono@4.12.34
 
 patchedDependencies:
   css-loader@7.1.4: patches/css-loader@7.1.4.patch

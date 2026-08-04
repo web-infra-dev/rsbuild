@@ -208,9 +208,6 @@ catalogs:
     heading-case:
       specifier: ^1.1.4
       version: 1.1.4
-    hono:
-      specifier: ^4.12.33
-      version: 4.12.33
     html-loader:
       specifier: ^5.1.0
       version: 5.1.0
@@ -441,7 +438,7 @@ importers:
         version: link:helper
       '@hono/node-server':
         specifier: 'catalog:'
-        version: 2.0.12(hono@4.12.33)
+        version: 2.0.12(hono@4.12.34)
       '@module-federation/enhanced':
         specifier: 'catalog:'
         version: 2.8.1(@rspack/core@2.1.7)(typescript@6.0.3)
@@ -528,7 +525,7 @@ importers:
         version: 11.4.0
       hono:
         specifier: 'catalog:'
-        version: 4.12.33
+        version: 4.12.34
       playwright:
         specifier: 'catalog:'
         version: 1.61.1
@@ -3686,8 +3683,8 @@ packages:
     resolution: {integrity: sha512-UwPg0xcqLrmd6kSW93kxjy4FMqcb0o97IoTUy+TMvjCF8mJvi6X0h733DEaJO/Ch9h9dOyv0I0ckGoSsuUp9KA==}
     hasBin: true
 
-  hono@4.12.33:
-    resolution: {integrity: sha512-+SwvkaiJtxsiPjhy9LivY/1m7UsNqCJetM1BrZl9A5DkQhlbHQDU730mMiDPWjnoCYOM8Chf3WrCJw27kNTPFQ==}
+  hono@4.12.34:
+    resolution: {integrity: sha512-GqXJqY/xJkJmuloTrnV1ZEXG3fqte+VjkUqoRNZXcrUidiUOP4fMSIHHY4tsqZBK++kVyWmt/AAfSUuy57/eSA==}
     engines: {node: '>=16.9.0'}
 
   hookable@6.1.1:
@@ -5621,9 +5618,9 @@ snapshots:
 
   '@epic-web/invariant@1.0.0': {}
 
-  '@hono/node-server@2.0.12(hono@4.12.33)':
+  '@hono/node-server@2.0.12(hono@4.12.34)':
     dependencies:
-      hono: 4.12.33
+      hono: 4.12.34
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -7640,7 +7637,7 @@ snapshots:
 
   heading-case@1.1.4: {}
 
-  hono@4.12.33: {}
+  hono@4.12.34: {}
 
   hookable@6.1.1: {}
 
