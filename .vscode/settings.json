@@ -14,7 +14,9 @@
     "**/.DS_Store": true
   },
   "mdx.validate.validateFileLinks": "ignore",
-  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Temporary workaround until we switch to the Rstack VS Code extension.
+  "prettier.singleQuote": true,
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "json.schemas": [
     {
@@ -27,12 +29,12 @@
     }
   ],
   "[typescript]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[mdx]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
