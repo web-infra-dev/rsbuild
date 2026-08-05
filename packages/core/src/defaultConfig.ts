@@ -214,6 +214,9 @@ const getDefaultResolveConfig = (): NormalizedResolveConfig => {
 
 const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
+  experiments: {
+    css: false,
+  },
   server: getDefaultServerConfig(),
   html: getDefaultHtmlConfig(),
   resolve: getDefaultResolveConfig(),

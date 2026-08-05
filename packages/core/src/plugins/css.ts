@@ -11,7 +11,7 @@ import {
   RAW_QUERY_REGEX,
   URL_QUERY_REGEX,
 } from '../constants';
-import { castArray, color, getFilename } from '../helpers';
+import { camelCase, castArray, color, getFilename } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import type {
   CSSLoaderModulesMode,
@@ -254,18 +254,132 @@ const getCSSLoaderOptions = async ({
   return cssLoaderOptions;
 };
 
+type BuiltinCssRuleType = 'css' | 'css/auto' | 'css/global' | 'css/module';
+
+const CSS_MODULE_REGEX = /\.module(s)?\.css$/i;
+
+const getBuiltinCssRuleType = (
+  modules: NormalizedEnvironmentConfig['output']['cssModules'],
+): BuiltinCssRuleType => {
+  if (modules.auto === false) {
+    return 'css';
+  }
+
+  return 'css/auto';
+};
+
+const builtinCssExportConventions = [
+  'as-is',
+  'camel-case',
+  'camel-case-only',
+  'dashes',
+  'dashes-only',
+] as const;
+
+const builtinCssExportConventionMap = Object.fromEntries(
+  builtinCssExportConventions.flatMap((convention) => [
+    [convention, convention],
+    [camelCase(convention), convention],
+  ]),
+);
+
+const getBuiltinCssExportConvention = (convention: unknown) =>
+  typeof convention === 'string' ? builtinCssExportConventionMap[convention] : undefined;
+
+const applyBuiltinCssConfig = ({
+  chain,
+  config,
+  emitCss,
+  isProd,
+}: {
+  chain: RspackChain;
+  config: NormalizedEnvironmentConfig;
+  emitCss: boolean;
+  isProd: boolean;
+}) => {
+  const { cssModules } = config.output;
+  const cssModuleTypes = ['css/auto', 'css/module', 'css/global'] as const;
+
+  const parserOptions: Rspack.CssAutoOrModuleParserOptions = {
+    namedExports: cssModules.namedExport,
+    ...(config.output.injectStyles ? { exportType: 'style' as const } : {}),
+    ...(cssModules.mode === 'pure' ? { pure: true } : {}),
+    ...config.tools.css?.parser,
+  };
+
+  const generatorOptions: Rspack.CssModuleGeneratorOptions = {
+    exportsOnly: !emitCss,
+    exportsConvention:
+      getBuiltinCssExportConvention(cssModules.exportLocalsConvention) ?? 'camel-case',
+    ...(cssModules.localIdentName !== undefined
+      ? { localIdentName: cssModules.localIdentName }
+      : {}),
+    ...config.tools.css?.generator,
+  };
+
+  const cssGeneratorOptions: Rspack.CssGeneratorOptions = {
+    exportsOnly: generatorOptions.exportsOnly,
+    ...(generatorOptions.esModule === undefined ? {} : { esModule: generatorOptions.esModule }),
+  };
+
+  chain.module.parser.merge({
+    css: parserOptions,
+    'css/auto': parserOptions,
+    'css/global': parserOptions,
+    'css/module': parserOptions,
+  });
+
+  chain.module.generator.merge({
+    css: cssGeneratorOptions,
+    ...Object.fromEntries(cssModuleTypes.map((type) => [type, generatorOptions])),
+  });
+
+  if (emitCss && (!parserOptions.exportType || parserOptions.exportType === 'link')) {
+    const cssPath = config.output.distPath.css;
+    const cssFilename = getFilename(config, 'css', isProd);
+    const isCssFilenameFn = typeof cssFilename === 'function';
+    const cssAsyncPath =
+      config.output.distPath.cssAsync ?? (cssPath ? `${cssPath}/async` : 'async');
+
+    chain.output
+      .set(
+        'cssFilename',
+        isCssFilenameFn
+          ? (...args: Parameters<typeof cssFilename>) => {
+              const name = cssFilename(...args);
+              return posix.join(cssPath, name);
+            }
+          : posix.join(cssPath, cssFilename),
+      )
+      .set(
+        'cssChunkFilename',
+        isCssFilenameFn
+          ? (...args: Parameters<typeof cssFilename>) => {
+              const name = cssFilename(...args);
+              return posix.join(cssAsyncPath, name);
+            }
+          : posix.join(cssAsyncPath, cssFilename),
+      );
+  }
+};
+
 type PostcssrcCache = Map<string, PostCSSOptions | Promise<PostCSSOptions>>;
 
 export const pluginCss = (): RsbuildPlugin => ({
   name: 'rsbuild:css',
   setup(api) {
     const postcssrcCache: PostcssrcCache = new Map();
+    let hasWarnedUnsupportedCssModulesAuto = false;
+    let hasWarnedUnsupportedCssModulesExportGlobals = false;
+    let hasWarnedUnsupportedCssModulesMode = false;
+    let hasWarnedUnsupportedUrl = false;
 
     api.modifyBundlerChain({
       order: 'pre',
       handler: async (chain, { target, isProd, CHAIN_ID, environment, environments }) => {
         const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
         const { config } = environment;
+        const useBuiltinCss = config.experiments.css;
 
         cssRule
           .test(CSS_REGEX)
@@ -277,8 +391,10 @@ export const pluginCss = (): RsbuildPlugin => ({
         cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_TEXT).with({ type: 'text' }).type('asset/source');
 
         // Support for `import cssUrl from "a.css?url"`
-        const urlRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL).resourceQuery(URL_QUERY_REGEX);
-        urlRule.use(CHAIN_ID.USE.CSS_URL).loader(path.join(LOADER_PATH, 'cssUrlLoader.mjs'));
+        const urlRule = useBuiltinCss
+          ? undefined
+          : cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL).resourceQuery(URL_QUERY_REGEX);
+        urlRule?.use(CHAIN_ID.USE.CSS_URL).loader(path.join(LOADER_PATH, 'cssUrlLoader.mjs'));
 
         // Support for `import inlineCss from "a.css?inline"`
         const inlineRule = cssRule
@@ -288,14 +404,94 @@ export const pluginCss = (): RsbuildPlugin => ({
         // Support for `import rawCss from "a.css?raw"`
         cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_RAW).type('asset/source').resourceQuery(RAW_QUERY_REGEX);
 
+        const cssModulesRule =
+          useBuiltinCss && config.output.cssModules.auto !== false
+            ? cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MODULE).test(CSS_MODULE_REGEX)
+            : undefined;
+
         // Default CSS handling
         const mainRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN);
 
         const emitCss = config.output.emitCss ?? target === 'web';
+        const cssLoaderOptions = useBuiltinCss
+          ? undefined
+          : await getCSSLoaderOptions({
+              config,
+              localIdentName: getCSSModulesLocalIdentName(config, isProd),
+              emitCss,
+            });
+        if (useBuiltinCss) {
+          const { auto, mode } = config.output.cssModules;
+          if (
+            !hasWarnedUnsupportedCssModulesAuto &&
+            (typeof auto === 'function' || auto instanceof RegExp)
+          ) {
+            hasWarnedUnsupportedCssModulesAuto = true;
+            api.logger.warn(
+              "RegExp and function values for `output.cssModules.auto` are not supported when `experiments.css` is enabled. Rspack's default CSS Modules matching will be used instead.",
+            );
+          }
+          if (
+            !hasWarnedUnsupportedCssModulesMode &&
+            (mode === 'icss' || typeof mode === 'function')
+          ) {
+            hasWarnedUnsupportedCssModulesMode = true;
+            api.logger.warn(
+              "The 'icss' and function values for `output.cssModules.mode` are not supported when `experiments.css` is enabled. The value will be ignored and local mode will be used instead.",
+            );
+          }
+          if (
+            !hasWarnedUnsupportedCssModulesExportGlobals &&
+            config.output.cssModules.exportGlobals
+          ) {
+            hasWarnedUnsupportedCssModulesExportGlobals = true;
+            api.logger.warn(
+              '`output.cssModules.exportGlobals` is not supported when `experiments.css` is enabled. The value will be ignored.',
+            );
+          }
+
+          if (!hasWarnedUnsupportedUrl) {
+            hasWarnedUnsupportedUrl = true;
+            api.logger.warn(
+              'CSS `?url` imports are not supported when `experiments.css` is enabled. The `?url` query will be ignored.',
+            );
+          }
+
+          chain.experiments({
+            ...chain.get('experiments'),
+            css: true,
+          });
+
+          mainRule
+            .type(getBuiltinCssRuleType(config.output.cssModules))
+            .sideEffects(true)
+            .resolve.preferRelative(true);
+
+          cssModulesRule
+            ?.type(config.output.cssModules.mode === 'global' ? 'css/global' : 'css/module')
+            .sideEffects(true)
+            .resolve.preferRelative(true);
+
+          inlineRule
+            .type('css/auto')
+            .parser({
+              exportType: 'text',
+              namedExports: true,
+            })
+            .sideEffects(true)
+            .resolve.preferRelative(true);
+
+          applyBuiltinCssConfig({
+            chain,
+            config,
+            emitCss,
+            isProd,
+          });
+        }
 
         // Create Rspack rule
         // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
-        if (emitCss) {
+        if (cssLoaderOptions && emitCss) {
           // use style-loader
           if (config.output.injectStyles) {
             const styleLoaderOptions = await reduceConfigs({
@@ -314,7 +510,7 @@ export const pluginCss = (): RsbuildPlugin => ({
               .loader(rspack.CssExtractRspackPlugin.loader)
               .options(config.tools.cssExtract.loaderOptions);
           }
-        } else {
+        } else if (cssLoaderOptions) {
           mainRule
             .use(CHAIN_ID.USE.IGNORE_CSS)
             .loader(path.join(LOADER_PATH, 'ignoreCssLoader.mjs'));
@@ -335,16 +531,23 @@ export const pluginCss = (): RsbuildPlugin => ({
           options: { skipMain?: boolean } = {},
         ) => {
           if (!options.skipMain) {
+            if (cssModulesRule) {
+              await callback(cssModulesRule, 'main');
+            }
             await callback(mainRule, 'main');
           }
           await callback(inlineRule, 'inline');
-          await callback(urlRule, 'url');
+          if (urlRule) {
+            await callback(urlRule, 'url');
+          }
         };
 
         const cssLoaderPath = getCompiledPath('css-loader');
-        await updateRules((rule) => {
-          rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
-        });
+        if (cssLoaderOptions) {
+          await updateRules((rule) => {
+            rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
+          });
+        }
 
         if (config.tools.lightningcssLoader !== false) {
           if (emitCss) {
@@ -420,69 +623,66 @@ export const pluginCss = (): RsbuildPlugin => ({
           );
         }
 
-        const localIdentName = getCSSModulesLocalIdentName(config, isProd);
-        const cssLoaderOptions = await getCSSLoaderOptions({
-          config,
-          localIdentName,
-          emitCss,
-        });
+        if (cssLoaderOptions) {
+          await updateRules((rule, type) => {
+            let finalOptions = cssLoaderOptions;
 
-        await updateRules((rule, type) => {
-          let finalOptions = cssLoaderOptions;
+            if (type === 'inline' || type === 'url') {
+              finalOptions = {
+                ...cssLoaderOptions,
+                exportType: 'string',
+                modules: false,
+                importLoaders: importLoaders.inline,
+              };
+            } else {
+              finalOptions = {
+                ...cssLoaderOptions,
+                importLoaders: importLoaders.normal,
+              };
+            }
 
-          if (type === 'inline' || type === 'url') {
-            finalOptions = {
-              ...cssLoaderOptions,
-              exportType: 'string',
-              modules: false,
-              importLoaders: importLoaders.inline,
-            };
-          } else {
-            finalOptions = {
-              ...cssLoaderOptions,
-              importLoaders: importLoaders.normal,
-            };
-          }
+            // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
+            if (!emitCss && type === 'main') {
+              rule.use(CHAIN_ID.USE.IGNORE_CSS).options({
+                modules: finalOptions.modules,
+              });
+            }
 
-          // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
-          if (!emitCss && type === 'main') {
-            rule.use(CHAIN_ID.USE.IGNORE_CSS).options({
-              modules: finalOptions.modules,
-            });
-          }
+            rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
 
-          rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
+            if (type !== 'url') {
+              // CSS imports should always be treated as sideEffects.
+              // CSS ?url only exports a URL string and does not apply styles.
+              rule.sideEffects(true);
+            }
 
-          if (type !== 'url') {
-            // CSS imports should always be treated as sideEffects.
-            // CSS ?url only exports a URL string and does not apply styles.
-            rule.sideEffects(true);
-          }
+            // Enable preferRelative by default, which is consistent with the default behavior of css-loader
+            // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
+            rule.resolve.preferRelative(true);
+          });
+        }
 
-          // Enable preferRelative by default, which is consistent with the default behavior of css-loader
-          // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
-          rule.resolve.preferRelative(true);
-        });
+        if (urlRule && cssLoaderOptions) {
+          const cssUrlFilename = getFilename(config, 'css', isProd);
+          const cssUrlPath = config.output.distPath.css;
 
-        const cssUrlFilename = getFilename(config, 'css', isProd);
-        const cssUrlPath = config.output.distPath.css;
+          urlRule.use(CHAIN_ID.USE.CSS_URL).options({
+            filename:
+              typeof cssUrlFilename === 'function'
+                ? (pathData: Rspack.PathData, assetInfo?: Rspack.AssetInfo) =>
+                    posix.join(cssUrlPath, cssUrlFilename(pathData, assetInfo))
+                : posix.join(cssUrlPath, cssUrlFilename),
+            modules: cssLoaderOptions.modules,
+          });
+        }
 
-        urlRule.use(CHAIN_ID.USE.CSS_URL).options({
-          filename:
-            typeof cssUrlFilename === 'function'
-              ? (pathData: Rspack.PathData, assetInfo?: Rspack.AssetInfo) =>
-                  posix.join(cssUrlPath, cssUrlFilename(pathData, assetInfo))
-              : posix.join(cssUrlPath, cssUrlFilename),
-          modules: cssLoaderOptions.modules,
-        });
-
-        const isStringExport = cssLoaderOptions.exportType === 'string';
+        const isStringExport = cssLoaderOptions?.exportType === 'string';
         if (isStringExport && mainRule.uses.has(CHAIN_ID.USE.MINI_CSS_EXTRACT)) {
           mainRule.uses.delete(CHAIN_ID.USE.MINI_CSS_EXTRACT);
         }
 
         // Apply CSS extract plugin if not using style-loader and emitCss is true
-        if (emitCss && !config.output.injectStyles && !isStringExport) {
+        if (emitCss && cssLoaderOptions && !config.output.injectStyles && !isStringExport) {
           const extractPluginOptions = config.tools.cssExtract.pluginOptions;
 
           const cssPath = config.output.distPath.css;

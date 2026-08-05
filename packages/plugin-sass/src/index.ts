@@ -12,6 +12,8 @@ const require = createRequire(import.meta.url);
 
 export const PLUGIN_SASS_NAME = 'rsbuild:sass';
 
+const SASS_MODULE_REGEX = /\.module(s)?\.s(?:a|c)ss$/i;
+
 export type { PluginSassOptions };
 
 function assertCoreVersion(version: string): void {
@@ -109,6 +111,7 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
     const SASS_MAIN = 'sass';
+    const SASS_MODULE = 'sass-module';
     const SASS_TEXT = 'sass-text';
     const SASS_URL = 'sass-url';
     const SASS_INLINE = 'sass-inline';
@@ -142,6 +145,8 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
       const hasCssTextRule = cssTextRuleId && cssRule.oneOfs.has(cssTextRuleId);
       const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
       const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
+      const cssModuleRuleId = CHAIN_ID.ONE_OF.CSS_MODULE;
+      const hasCssModuleRule = cssModuleRuleId && cssRule.oneOfs.has(cssModuleRuleId);
 
       const getRule = (id: string) => {
         return (id.startsWith('sass') ? sassRule : cssRule).oneOf(id);
@@ -161,6 +166,10 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
       // Raw Sass for `?raw` imports
       getRule(SASS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
 
+      const sassModuleRule = hasCssModuleRule
+        ? getRule(SASS_MODULE).test(SASS_MODULE_REGEX)
+        : undefined;
+
       // Main Sass transform
       const sassMainRule = getRule(SASS_MAIN);
 
@@ -174,6 +183,9 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
       ) => {
         if (sassUrlRule) {
           callback(sassUrlRule, getRule(cssUrlRuleId), 'url');
+        }
+        if (sassModuleRule) {
+          callback(sassModuleRule, getRule(cssModuleRuleId), 'main');
         }
         callback(sassMainRule, getRule(CSS_MAIN), 'main');
         callback(sassInlineRule, getRule(CSS_INLINE), 'inline');
@@ -204,6 +216,19 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
           rule.sideEffects(true);
         }
         rule.resourceQuery(cssBranchRule.get('resourceQuery'));
+
+        const cssRuleType = cssBranchRule.get('type');
+        if (cssRuleType) {
+          rule.type(cssRuleType);
+        }
+        const cssRuleParser = cssBranchRule.get('parser');
+        if (cssRuleParser) {
+          rule.parser(cssRuleParser);
+        }
+        const cssRuleGenerator = cssBranchRule.get('generator');
+        if (cssRuleGenerator) {
+          rule.generator(cssRuleGenerator);
+        }
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
           const loader = cssBranchRule.uses.get(id);

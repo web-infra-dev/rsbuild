@@ -72,6 +72,7 @@ export const CHAIN_ID = {
     JS_TEXT: 'js-text',
     /** CSS oneOf rules */
     CSS_MAIN: 'css',
+    CSS_MODULE: 'css-module',
     CSS_RAW: 'css-raw',
     CSS_TEXT: 'css-text',
     CSS_URL: 'css-url',

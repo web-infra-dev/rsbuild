@@ -90,9 +90,14 @@ export const pluginTailwindcss = (options: PluginTailwindcssOptions = {}): Rsbui
       };
 
       const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
-      addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL));
+      if (cssRule.oneOfs.has(CHAIN_ID.ONE_OF.CSS_URL)) {
+        addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL));
+      }
       if (emitCss) {
         addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN));
+        if (cssRule.oneOfs.has(CHAIN_ID.ONE_OF.CSS_MODULE)) {
+          addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MODULE));
+        }
       }
       addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_INLINE));
     });
