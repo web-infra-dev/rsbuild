@@ -208,6 +208,9 @@ catalogs:
     heading-case:
       specifier: ^1.1.4
       version: 1.1.4
+    hono:
+      specifier: ^4.12.33
+      version: 4.12.34
     html-loader:
       specifier: ^5.1.0
       version: 5.1.0
@@ -311,8 +314,8 @@ catalogs:
       specifier: ^1.0.4
       version: 1.0.4
     rstack:
-      specifier: ^0.3.2
-      version: 0.3.2
+      specifier: ^0.3.3
+      version: 0.3.3
     sass:
       specifier: ^1.102.0
       version: 1.102.0
@@ -398,7 +401,7 @@ importers:
         version: 1.1.4
       rstack:
         specifier: 'catalog:'
-        version: 0.3.2(@module-federation/runtime-tools@2.8.1)(@rspress/core@2.0.19)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3)
+        version: 0.3.3(@module-federation/runtime-tools@2.8.1)(@rspress/core@2.0.19)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1339,7 +1342,7 @@ importers:
         version: 0.6.0
       rstack:
         specifier: 'catalog:'
-        version: 0.3.2(@module-federation/runtime-tools@2.8.1)(@rspress/core@2.0.19)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3)
+        version: 0.3.3(@module-federation/runtime-tools@2.8.1)(@rspress/core@2.0.19)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1402,16 +1405,16 @@ importers:
         version: 19.2.8(react@19.2.8)
       rsbuild-plugin-google-analytics:
         specifier: 'catalog:'
-        version: 1.0.6(@rsbuild/core@2.1.9)
+        version: 1.0.6(@rsbuild/core@2.1.10)
       rsbuild-plugin-open-graph:
         specifier: 'catalog:'
-        version: 1.1.3(@rsbuild/core@2.1.9)
+        version: 1.1.3(@rsbuild/core@2.1.10)
       rspress-plugin-font-open-sans:
         specifier: 'catalog:'
         version: 1.0.4(@rspress/core@2.0.19)
       rstack:
         specifier: 'catalog:'
-        version: 0.3.2(@module-federation/runtime-tools@2.8.1)(@rspress/core@2.0.19)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3)
+        version: 0.3.3(@module-federation/runtime-tools@2.8.1)(@rspress/core@2.0.19)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -2231,6 +2234,16 @@ packages:
     resolution: {integrity: sha512-i37urpoV4y9NSsGiUOuLdoI42KJ5h4gAZ8EG8Ilmsond3bxoAoOCu7YvC+1pJ7p+r16suVPW8cki891ZKHOoXQ==}
     engines: {node: '>=18.12.0'}
     hasBin: true
+
+  '@rsbuild/core@2.1.10':
+    resolution: {integrity: sha512-lwxC5w88U2AMv6aNwG3VH7+AV33N4JJQjD//egVWFsMbV+OE/bnfCsurSpX8s3lGyRYkJMwUVN+YXMbmmYZFfw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
 
   '@rsbuild/core@2.1.9':
     resolution: {integrity: sha512-yqf1hFZ3wbMYI431LqsxLH3r0VZkfyarVKTf7kMeIiGe0YLwsrgsfp+sKpIyVkQkq60J0qyp6l/CoqqsQZqEwQ==}
@@ -4726,8 +4739,8 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0
 
-  rstack@0.3.2:
-    resolution: {integrity: sha512-xT2trYrQlxZ9SGtt4+BZzd9MCkPrVT5QJZt9B0kfJexByC37uEVryzEjkIiPFFvC6HCJMjBbdd5Cizoatwjmxg==}
+  rstack@0.3.3:
+    resolution: {integrity: sha512-9KyjJBiWlZBRatTXj5L88fZbW3ckf6pzvrH3h7ZNyfuvgbatDXFsXtaJAG4ukJa9E6HWuTAzxIcsKaIvX55UYg==}
     engines: {node: '>=22.12.0'}
     hasBin: true
     peerDependencies:
@@ -6164,6 +6177,15 @@ snapshots:
       '@swc/helpers': 0.5.23
       core-js: 3.47.0
       jiti: 2.7.0
+
+  '@rsbuild/core@2.1.10(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)':
+    dependencies:
+      '@rspack/core': 2.1.8(@module-federation/runtime-tools@2.8.1)(@swc/helpers@0.5.23)
+      '@swc/helpers': 0.5.23
+    optionalDependencies:
+      core-js: 3.49.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
 
   '@rsbuild/core@2.1.9(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)':
     dependencies:
@@ -8910,13 +8932,13 @@ snapshots:
     optionalDependencies:
       typescript: 6.0.3
 
-  rsbuild-plugin-google-analytics@1.0.6(@rsbuild/core@2.1.9):
+  rsbuild-plugin-google-analytics@1.0.6(@rsbuild/core@2.1.10):
     optionalDependencies:
-      '@rsbuild/core': 2.1.9(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.10(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
 
-  rsbuild-plugin-open-graph@1.1.3(@rsbuild/core@2.1.9):
+  rsbuild-plugin-open-graph@1.1.3(@rsbuild/core@2.1.10):
     optionalDependencies:
-      '@rsbuild/core': 2.1.9(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.10(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
 
   rslog@2.3.0: {}
 
@@ -8945,9 +8967,9 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.19(@module-federation/runtime-tools@2.8.1)(@rspack/core@2.1.8)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)(supports-color@8.1.1)
 
-  rstack@0.3.2(@module-federation/runtime-tools@2.8.1)(@rspress/core@2.0.19)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3):
+  rstack@0.3.3(@module-federation/runtime-tools@2.8.1)(@rspress/core@2.0.19)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3):
     dependencies:
-      '@rsbuild/core': 2.1.9(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
+      '@rsbuild/core': 2.1.10(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
       '@rslib/core': 1.0.0-beta.1(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)(typescript@6.0.3)
       '@rslint/core': 0.7.2(jiti@2.7.0)
       '@rstest/core': 0.11.5(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
