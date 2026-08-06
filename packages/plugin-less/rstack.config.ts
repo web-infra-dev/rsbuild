@@ -4,8 +4,9 @@ define.lib(async () => {
   const { esmConfig } = await import('@scripts/config/lib');
 
   return {
-    lib: [esmConfig],
+    ...esmConfig,
     output: {
+      ...esmConfig.output,
       externals: /[\\/]compiled[\\/]/,
     },
   };

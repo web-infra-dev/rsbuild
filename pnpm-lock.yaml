@@ -2291,8 +2291,8 @@ packages:
       '@typescript/native-preview':
         optional: true
 
-  '@rslib/core@1.0.0-beta.1':
-    resolution: {integrity: sha512-HHPZ+wTUKT/3bEhw2y0JB0O62wMuljkSHVZelLbSGhBflCaUt+D3LohBcIxYW6bhzPbUp4gkJXo1pdTpxiuNLQ==}
+  '@rslib/core@1.0.0-beta.2':
+    resolution: {integrity: sha512-A0j3MBP8Kga8Qrh7znO2UKf00Sga37PJCiTGUqVVBHb+u58fNoGXZtFAgeH6qKjf5eU1wYt4WptXX/1blOAfRw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -4685,8 +4685,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsbuild-plugin-dts@1.0.0-beta.1:
-    resolution: {integrity: sha512-hAEjOXhfIHR4erqjsqjRvA9Yqzc6Thry06tHheXDJUVwmR3VbN8BSMDC8kBZzyKdypDF0IJ98FmLQRiC194sMA==}
+  rsbuild-plugin-dts@1.0.0-beta.2:
+    resolution: {integrity: sha512-xOYa/kw/y29kKFFNjd+CIemlq+CB8E7LhqNkIzg7HT9dYNBVBpZvnnL6OEsOgjeuqzKpGSCRgZN/dDoVOk4VhQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -6250,10 +6250,10 @@ snapshots:
       - '@rspack/core'
       - typescript
 
-  '@rslib/core@1.0.0-beta.1(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)(typescript@6.0.3)':
+  '@rslib/core@1.0.0-beta.2(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)(typescript@6.0.3)':
     dependencies:
       '@rsbuild/core': 2.1.10(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
-      rsbuild-plugin-dts: 1.0.0-beta.1(@rsbuild/core@2.1.10)(typescript@6.0.3)
+      rsbuild-plugin-dts: 1.0.0-beta.2(@rsbuild/core@2.1.10)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -8952,7 +8952,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.4
       fsevents: 2.3.3
 
-  rsbuild-plugin-dts@1.0.0-beta.1(@rsbuild/core@2.1.10)(typescript@6.0.3):
+  rsbuild-plugin-dts@1.0.0-beta.2(@rsbuild/core@2.1.10)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.1.10(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
@@ -8997,7 +8997,7 @@ snapshots:
   rstack@0.3.4(@module-federation/runtime-tools@2.8.1)(@rspress/core@2.0.19)(core-js@3.49.0)(jiti@2.7.0)(typescript@6.0.3):
     dependencies:
       '@rsbuild/core': 2.1.10(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
-      '@rslib/core': 1.0.0-beta.1(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)(typescript@6.0.3)
+      '@rslib/core': 1.0.0-beta.2(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)(typescript@6.0.3)
       '@rslint/core': 0.7.3(jiti@2.7.0)
       '@rstest/core': 0.11.6(@module-federation/runtime-tools@2.8.1)(core-js@3.49.0)
       prettier: 3.9.6

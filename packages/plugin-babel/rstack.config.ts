@@ -3,9 +3,7 @@ import { define } from 'rstack';
 define.lib(async () => {
   const { esmConfig } = await import('@scripts/config/lib');
 
-  return {
-    lib: [esmConfig],
-  };
+  return esmConfig;
 });
 
 define.test(async () => {
