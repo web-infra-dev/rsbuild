@@ -5,7 +5,7 @@
       "source": "rstackjs/agent-skills",
       "sourceType": "github",
       "skillPath": ".agents/skills/create-draft-release-notes/SKILL.md",
-      "computedHash": "9fa7807d607c7fb7e02795ddee2560cc190d4af791320537a66ca8b2e429d858"
+      "computedHash": "1c07601e93b35361c92cd6f067ddba3c710c27e98fd42f7b11e74b446590d1a9"
     },
     "pr-creator": {
       "source": "rstackjs/agent-skills",
@@ -29,7 +29,7 @@
       "source": "rstackjs/rstack-cli",
       "sourceType": "github",
       "skillPath": ".agents/skills/rstack-cli-best-practices/SKILL.md",
-      "computedHash": "428df66995c4ff446d2ab04f58654a31b4dee440590e1929fc7d4a7ea8e53fa0"
+      "computedHash": "1155646a5e06cf9f6e30a6393d2b261f63d611b6cc130f4da4f7083f579c189c"
     }
   }
 }
