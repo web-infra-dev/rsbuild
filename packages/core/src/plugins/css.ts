@@ -428,21 +428,18 @@ export const pluginCss = (): RsbuildPlugin => ({
         });
 
         await updateRules((rule, type) => {
-          let finalOptions = cssLoaderOptions;
-
-          if (type === 'inline' || type === 'url') {
-            finalOptions = {
-              ...cssLoaderOptions,
-              exportType: 'string',
-              modules: false,
-              importLoaders: importLoaders.inline,
-            };
-          } else {
-            finalOptions = {
-              ...cssLoaderOptions,
-              importLoaders: importLoaders.normal,
-            };
-          }
+          const finalOptions =
+            type === 'inline' || type === 'url'
+              ? {
+                  ...cssLoaderOptions,
+                  exportType: 'string',
+                  modules: false,
+                  importLoaders: importLoaders.inline,
+                }
+              : {
+                  ...cssLoaderOptions,
+                  importLoaders: importLoaders.normal,
+                };
 
           // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
           if (!emitCss && type === 'main') {

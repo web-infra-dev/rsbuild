@@ -1,4 +1,4 @@
-let message = $state('Normal Svelte');
+const message = $state('Normal Svelte');
 
 export function getMessage() {
   return message;
