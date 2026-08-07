@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "vue-tsc && rsbuild build",
-    "dev": "rsbuild --open",
+    "dev": "rsbuild",
     "preview": "rsbuild preview"
   },
   "dependencies": {

@@ -10,7 +10,7 @@ export const expectPackageJson = (
   expectedBuildScript = 'rsbuild build',
 ) => {
   expect(pkgJson.name).toBe(name);
-  expect(pkgJson.scripts.dev).toBe('rsbuild --open');
+  expect(pkgJson.scripts.dev).toBe('rsbuild');
   expect(pkgJson.scripts.build).toBe(expectedBuildScript);
   expect(pkgJson.devDependencies['@rsbuild/core']).toBeTruthy();
 };
