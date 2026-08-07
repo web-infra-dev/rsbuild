@@ -8,7 +8,7 @@ import {
   type ESLintTemplateName,
   type RslintTemplateName,
   select,
-} from 'create-rstack';
+} from '@rstackjs/create-toolkit';
 import {
   addPluginsToRsbuildConfig,
   enableReactCompilerInRsbuildConfig,
