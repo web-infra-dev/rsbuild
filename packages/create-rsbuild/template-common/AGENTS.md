@@ -1,7 +1,5 @@
 # AGENTS.md
 
-You are an expert in JavaScript, Rsbuild, and web application development. You write maintainable, performant, and accessible code.
-
 ## Commands
 
 - `{{ packageManager }} run dev` - Start the dev server
