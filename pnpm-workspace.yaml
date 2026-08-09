@@ -41,7 +41,7 @@ catalog:
   '@rspress/plugin-rss': '^2.0.19'
   '@rspress/plugin-sitemap': '^2.0.19'
   '@rstack-dev/doc-ui': '1.14.7'
-  '@rstackjs/create-toolkit': '2.2.0'
+  '@rstackjs/create-toolkit': '2.2.1'
   '@rstackjs/load-config': '^0.1.2'
   '@rstackjs/test-utils': '^0.2.0'
   '@rstest/core': '^0.11.5'
