@@ -46,9 +46,10 @@ import { PackageManagerTabs } from '@theme';
 
 Follow the prompts to choose options, such as whether to add optional tools like TypeScript and ESLint.
 
+By default, the scaffold initializes a Git repository in the generated project. Pass `--no-git` to skip Git initialization.
+
 After creating the application, do the following:
 
-- Run `git init` to initialize a Git repository.
 - Run `npm install` (or your package manager's install command) to install dependencies.
 - Run `npm run dev` to start the dev server, which runs on `http://localhost:3000` by default.
 
@@ -126,6 +127,7 @@ Options:
   -h, --help            display help for command
   -d, --dir <dir>       create project in specified directory
   -t, --template <tpl>  specify the template to use
+  --no-git              skip Git repository initialization
   --tools <tool>        add additional tools, comma separated
   --skill <skill>       add optional skills, comma separated
   --override            override files in target directory
