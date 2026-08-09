@@ -46,9 +46,10 @@ import { PackageManagerTabs } from '@theme';
 
 按照提示操作，并按需选择 TypeScript、ESLint 等额外工具。
 
+脚手架默认会在生成的项目中初始化 Git 仓库。如需跳过 Git 初始化，请在创建命令中添加 `--no-git`。
+
 创建完成后，执行以下步骤：
 
-- 执行 `git init` 来初始化 Git 仓库。
 - 执行 `npm install`（或其他包管理器的 install 命令）安装 npm 依赖。
 - 执行 `npm run dev` 启动开发服务器，服务器默认运行在 `localhost:3000`。
 
@@ -126,6 +127,7 @@ Options:
   -h, --help            display help for command
   -d, --dir <dir>       create project in specified directory
   -t, --template <tpl>  specify the template to use
+  --no-git              skip Git repository initialization
   --tools <tool>        add additional tools, comma separated
   --skill <skill>       add optional skills, comma separated
   --override            override files in target directory
