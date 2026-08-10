@@ -209,8 +209,8 @@ catalogs:
       specifier: ^1.1.5
       version: 1.1.5
     hono:
-      specifier: ^4.12.33
-      version: 4.12.34
+      specifier: ^4.13.1
+      version: 4.13.1
     html-loader:
       specifier: ^5.1.0
       version: 5.1.0
@@ -441,7 +441,7 @@ importers:
         version: link:helper
       '@hono/node-server':
         specifier: 'catalog:'
-        version: 2.1.0(hono@4.12.34)
+        version: 2.1.0(hono@4.13.1)
       '@module-federation/enhanced':
         specifier: 'catalog:'
         version: 2.8.2(@rspack/core@2.1.8)(typescript@6.0.3)
@@ -528,7 +528,7 @@ importers:
         version: 11.4.0
       hono:
         specifier: 'catalog:'
-        version: 4.12.34
+        version: 4.13.1
       playwright:
         specifier: 'catalog:'
         version: 1.61.1
@@ -3695,8 +3695,8 @@ packages:
     resolution: {integrity: sha512-dVZmEJLF5vK2IV3LLpEWgyy0wbe4W+vsUzuHy6KE440IClTXR5GIGDGwiawHqCqunsqos4nvOBpnLGUrUv3BUg==}
     hasBin: true
 
-  hono@4.12.34:
-    resolution: {integrity: sha512-GqXJqY/xJkJmuloTrnV1ZEXG3fqte+VjkUqoRNZXcrUidiUOP4fMSIHHY4tsqZBK++kVyWmt/AAfSUuy57/eSA==}
+  hono@4.13.1:
+    resolution: {integrity: sha512-kdJoFVv2xmayw6cY09H7AbMJMt8Jn5jdlEdXsP7AGBdF2DIptVlKlOLKXP41yPip4/a3yQPv9gVcJYI8YY04dw==}
     engines: {node: '>=16.9.0'}
 
   hookable@6.1.1:
@@ -4468,10 +4468,6 @@ packages:
 
   postcss@8.5.22:
     resolution: {integrity: sha512-KBDEIpLrvpv16pp3K0Fw+UCoZfopFjjgeB+0tA/aaThfEE74kKDLrgg603YvOWJyg3+WYtyq3xYsQWsIyZlPqQ==}
-    engines: {node: ^10 || ^12 || >=14}
-
-  postcss@8.5.25:
-    resolution: {integrity: sha512-DTPx3RWSSnWyzLxQnlH0rJP+EW5ekl16ZU4/psbIhA0e53kJfdgaN5vKM+xP7yJtXVu+nfdVFmlgFDEKAe4Pyw==}
     engines: {node: ^10 || ^12 || >=14}
 
   postcss@8.5.26:
@@ -5652,9 +5648,9 @@ snapshots:
 
   '@epic-web/invariant@1.0.0': {}
 
-  '@hono/node-server@2.1.0(hono@4.12.34)':
+  '@hono/node-server@2.1.0(hono@4.13.1)':
     dependencies:
-      hono: 4.12.34
+      hono: 4.13.1
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -6951,7 +6947,7 @@ snapshots:
       '@vue/shared': 3.5.41
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.25
+      postcss: 8.5.26
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.41':
@@ -7671,7 +7667,7 @@ snapshots:
 
   heading-case@1.1.5: {}
 
-  hono@4.12.34: {}
+  hono@4.13.1: {}
 
   hookable@6.1.1: {}
 
@@ -8662,12 +8658,6 @@ snapshots:
   postcss-value-parser@4.2.0: {}
 
   postcss@8.5.22:
-    dependencies:
-      nanoid: 3.3.16
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
-
-  postcss@8.5.25:
     dependencies:
       nanoid: 3.3.16
       picocolors: 1.1.1
