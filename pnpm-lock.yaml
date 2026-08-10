@@ -20,8 +20,8 @@ catalogs:
       specifier: ^7.29.7
       version: 7.29.7
     '@hono/node-server':
-      specifier: ^2.0.12
-      version: 2.0.12
+      specifier: ^2.1.0
+      version: 2.1.0
     '@jridgewell/remapping':
       specifier: ^2.3.5
       version: 2.3.5
@@ -441,7 +441,7 @@ importers:
         version: link:helper
       '@hono/node-server':
         specifier: 'catalog:'
-        version: 2.0.12(hono@4.12.34)
+        version: 2.1.0(hono@4.12.34)
       '@module-federation/enhanced':
         specifier: 'catalog:'
         version: 2.8.1(@rspack/core@2.1.8)(typescript@6.0.3)
@@ -1701,8 +1701,8 @@ packages:
   '@epic-web/invariant@1.0.0':
     resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
 
-  '@hono/node-server@2.0.12':
-    resolution: {integrity: sha512-eWpQYr67tqJLeaSUl0Q+TquuYfUdTibpOJlUMV2FfUP7+KqCC5TufnwnlXL6mobZBJbGAYRd7ZvEBDCbLInjhg==}
+  '@hono/node-server@2.1.0':
+    resolution: {integrity: sha512-XovyyCCnBzW+zKu+z/zq8hwNs4KOR5rEMAOxo2f40Q5xoOI37IMm6MIg2COOUtUApo0i6850MTBKH2u4QLGIqg==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4
@@ -5648,7 +5648,7 @@ snapshots:
 
   '@epic-web/invariant@1.0.0': {}
 
-  '@hono/node-server@2.0.12(hono@4.12.34)':
+  '@hono/node-server@2.1.0(hono@4.12.34)':
     dependencies:
       hono: 4.12.34
 
