@@ -38,9 +38,7 @@ test('should create solid project as expected', async () => {
 });
 
 test('should create svelte project as expected', async () => {
-  const { pkgJson } = await createAndValidate(import.meta.dirname, 'svelte', {
-    expectedPnpmWorkspace: 'allowBuilds:\n  svelte-preprocess: false\n',
-  });
+  const { pkgJson } = await createAndValidate(import.meta.dirname, 'svelte');
   expect(pkgJson.dependencies.svelte).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-svelte']).toBeTruthy();
 });

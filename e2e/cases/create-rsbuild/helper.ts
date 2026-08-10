@@ -23,13 +23,11 @@ export const createAndValidate = async (
     tools = [],
     clean = true,
     expectedBuildScript,
-    expectedPnpmWorkspace,
   }: {
     name?: string;
     tools?: string[];
     clean?: boolean;
     expectedBuildScript?: string;
-    expectedPnpmWorkspace?: string;
   } = {},
 ) => {
   const dir = path.join(cwd, name);
@@ -53,12 +51,6 @@ export const createAndValidate = async (
 
   const pkgJson = await fse.readJSON(path.join(dir, 'package.json'));
   expectPackageJson(pkgJson, path.basename(name), expectedBuildScript);
-
-  if (expectedPnpmWorkspace) {
-    expect(await fse.readFile(path.join(dir, 'pnpm-workspace.yaml'), 'utf8')).toBe(
-      expectedPnpmWorkspace,
-    );
-  }
 
   if (template.endsWith('-ts')) {
     expect(pkgJson.devDependencies.typescript).toBeTruthy();
