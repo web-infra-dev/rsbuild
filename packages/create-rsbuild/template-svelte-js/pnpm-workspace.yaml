@@ -1,0 +1,2 @@
+allowBuilds:
+  svelte-preprocess: false
