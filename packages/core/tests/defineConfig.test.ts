@@ -1,8 +1,11 @@
 import path from 'node:path';
 import ts from 'typescript';
+import { toPosixPath } from '../src/helpers/path';
 
-const projectDir = path.join(import.meta.dirname, '..');
-const virtualFile = path.join(projectDir, 'tests', 'defineConfig.virtual.ts');
+// The language service normalizes file names to posix separators, so the host
+// has to use them too, otherwise the virtual file is missing from the program.
+const projectDir = toPosixPath(path.join(import.meta.dirname, '..'));
+const virtualFile = `${projectDir}/tests/defineConfig.virtual.ts`;
 
 const compilerOptions: ts.CompilerOptions = {
   module: ts.ModuleKind.ESNext,
