@@ -123,7 +123,6 @@ create({
     'solid-js',
     'solid-ts',
   ],
-  git: !process.argv.includes('--no-git'),
   getTemplateName,
   mapESLintTemplate,
   mapRslintTemplate,
