@@ -30,28 +30,26 @@ Rsbuild 支持使用 [Node.js](https://nodejs.org/)、[Deno](https://deno.com/) 
 
 ## 创建 Rsbuild 应用 \{#create-an-rsbuild-application}
 
-使用 [create-rsbuild](https://www.npmjs.com/package/create-rsbuild) 创建 Rsbuild 应用：
+使用 [create-rsbuild](https://www.npmjs.com/package/create-rsbuild) 可以快速创建一个 Rsbuild 应用，推荐使用 [pnpm](https://pnpm.io/) 作为包管理器。
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs
   command={{
+    pnpm: 'pnpm create rsbuild@latest',
     npm: 'npm create rsbuild@latest',
     yarn: 'yarn create rsbuild',
-    pnpm: 'pnpm create rsbuild@latest',
     bun: 'bun create rsbuild@latest',
     deno: 'deno init --npm rsbuild@latest',
   }}
 />
 
-按照提示操作，并按需选择 TypeScript、ESLint 等额外工具。
-
-脚手架默认会在生成的项目中初始化 Git 仓库。如需跳过 Git 初始化，请在创建命令中添加 `--no-git`。
+按照提示操作即可。
 
 创建完成后，执行以下步骤：
 
-- 执行 `npm install`（或其他包管理器的 install 命令）安装 npm 依赖。
-- 执行 `npm run dev` 启动开发服务器，服务器默认运行在 `localhost:3000`。
+- 执行 `pnpm install`（或其他包管理器的 install 命令）安装依赖。
+- 执行 `pnpm run dev` 启动 [开发服务器](/guide/basic/server)。
 
 ### 模板
 
@@ -76,16 +74,16 @@ import { PackageManagerTabs } from '@theme';
 
 `create-rsbuild` 可帮助设置以下常用工具。使用上下箭头和空格进行选择；如不需要这些工具，直接按回车跳过。
 
-| 工具                                                    | 用途                           |
-| ------------------------------------------------------- | ------------------------------ |
-| [Rstest](https://github.com/web-infra-dev/rstest)       | 测试                           |
-| [Rslint](https://github.com/web-infra-dev/rslint)       | 代码检查                       |
-| [ESLint](https://github.com/eslint/eslint)              | 代码检查                       |
-| [Prettier](https://github.com/prettier/prettier)        | 代码格式化                     |
-| [Biome](https://github.com/biomejs/biome)               | 代码检查和格式化               |
-| [Storybook](https://storybook.js.org/)                  | 组件开发                       |
-| [Tailwind CSS](https://tailwindcss.com)                 | 样式                           |
-| [React Compiler](/guide/framework/react#react-compiler) | 优化 React 应用，仅 React 模板 |
+| 工具                                                    | 用途                             |
+| ------------------------------------------------------- | -------------------------------- |
+| [Rstest](https://github.com/web-infra-dev/rstest)       | 测试                             |
+| [Rslint](https://github.com/web-infra-dev/rslint)       | 代码检查                         |
+| [ESLint](https://github.com/eslint/eslint)              | 代码检查                         |
+| [Prettier](https://github.com/prettier/prettier)        | 代码格式化                       |
+| [Biome](https://github.com/biomejs/biome)               | 代码检查和格式化                 |
+| [Storybook](https://storybook.js.org/)                  | 组件开发                         |
+| [Tailwind CSS](https://tailwindcss.com)                 | 样式                             |
+| [React Compiler](/guide/framework/react#react-compiler) | 优化 React 应用（仅 React 模板） |
 
 ### 当前目录
 
@@ -114,7 +112,7 @@ npx -y create-rsbuild@latest my-app --template react
 npx -y create-rsbuild@latest my-app -t react
 
 # 指定多个 tools
-npx -y create-rsbuild@latest my-app -t react --tools eslint,prettier
+npx -y create-rsbuild@latest my-app -t react --tools rslint,prettier
 ```
 
 `create-rsbuild` 完整的 CLI 选项如下：
