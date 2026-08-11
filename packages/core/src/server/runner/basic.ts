@@ -8,6 +8,7 @@ import type {
   ModuleObject,
   Runner,
   RunnerRequirer,
+  RunnerResolver,
 } from './type';
 
 const isRelativePath = (p: string) => /^\.\.?\//.test(p);
@@ -38,6 +39,7 @@ export interface IBasicRunnerOptions {
   readFileSync: (path: string) => string;
   dist: string;
   compilerOptions: CompilerOptions;
+  resolveModule: RunnerResolver;
 }
 
 export abstract class BasicRunner implements Runner {

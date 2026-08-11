@@ -42,11 +42,17 @@ export interface Runner {
   getRequire(): RunnerRequirer;
 }
 
+export type RunnerResolver = (
+  context: string,
+  request: string,
+) => Promise<string>;
+
 export type RunnerFactoryOptions = {
   dist: string;
   compilerOptions: CompilerOptions;
   readFileSync: (path: string) => string;
   isBundleOutput: (modulePath: string) => boolean;
+  resolveModule: RunnerResolver;
 };
 
 export interface RunnerFactory {

@@ -18,9 +18,13 @@ export default defineConfig({
             helloType: string;
             undefinedType: string;
             result: string;
+            staticImportOnlyResult: string;
+            getDynamicImportOnlyResult: () => Promise<string>;
           }>('index');
           const nativeModule = await import('esm-pkg' as string);
           const nativeDefault = nativeModule.default;
+          const dynamicImportOnlyResult =
+            await bundle.getDynamicImportOnlyResult();
 
           const payload = {
             loadBundleType: bundle.helloType,
@@ -31,6 +35,8 @@ export default defineConfig({
                 ? nativeDefault()
                 : `BUG: native default is ${typeof nativeDefault}`,
             loadBundleUndefinedType: bundle.undefinedType,
+            staticImportOnlyResult: bundle.staticImportOnlyResult,
+            dynamicImportOnlyResult,
           };
 
           res.setHeader('Content-Type', 'application/json');
@@ -54,7 +60,11 @@ export default defineConfig({
       },
       output: {
         target: 'node',
-        externals: ['esm-pkg', 'cjs-undefined-pkg'],
+        externals: [
+          'esm-pkg',
+          'cjs-undefined-pkg',
+          'esm-import-only-pkg/server',
+        ],
       },
     },
   },

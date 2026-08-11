@@ -1,3 +1,4 @@
+import { isBuiltin } from 'node:module';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { SourceTextModule } from 'node:vm';
@@ -17,7 +18,11 @@ export class EsmRunner extends CommonJsRunner {
     this.requirers.set('entry', (currentDirectory, modulePath, context) => {
       const file = this.getFile(modulePath, currentDirectory);
       if (!file) {
-        return this.requirers.get('miss')!(currentDirectory, modulePath);
+        return this.requirers.get('miss')!(
+          currentDirectory,
+          modulePath,
+          context,
+        );
       }
 
       if (outputModule && !file.path.endsWith('.cjs')) {
@@ -31,6 +36,48 @@ export class EsmRunner extends CommonJsRunner {
         file,
       });
     });
+  }
+
+  protected createMissRequirer(): RunnerRequirer {
+    const cjsRequirer = super.createMissRequirer();
+    const esmRequirer: RunnerRequirer = async (
+      currentDirectory,
+      modulePath,
+    ) => {
+      if (Array.isArray(modulePath)) {
+        throw new Error(
+          `${color.dim('[rsbuild:runner]')} Array module paths cannot be loaded as ESM externals.`,
+        );
+      }
+
+      try {
+        const specifier =
+          isBuiltin(modulePath) ||
+          modulePath.startsWith('node:') ||
+          modulePath.startsWith('file:') ||
+          modulePath.startsWith('data:')
+            ? modulePath
+            : pathToFileURL(
+                await this._options.resolveModule(currentDirectory, modulePath),
+              ).href;
+
+        return await import(/* webpackIgnore: true */ specifier);
+      } catch (error) {
+        if (error instanceof Error) {
+          error.message += `\n${color.dim('[rsbuild:runner]')} Failed to import external module ${color.yellow(modulePath)} from ${color.yellow(currentDirectory)}.`;
+          throw error;
+        }
+        throw new Error(
+          `${color.dim('[rsbuild:runner]')} Failed to import external module ${color.yellow(modulePath)} from ${color.yellow(currentDirectory)}.`,
+          { cause: error },
+        );
+      }
+    };
+
+    return (currentDirectory, modulePath, context = {}) =>
+      context.esmMode === undefined
+        ? cjsRequirer(currentDirectory, modulePath, context)
+        : esmRequirer(currentDirectory, modulePath, context);
   }
 
   protected createEsmRequirer(): RunnerRequirer {
@@ -53,7 +100,11 @@ export class EsmRunner extends CommonJsRunner {
       const _require = this.getRequire();
       const file = context.file || this.getFile(modulePath, currentDirectory);
       if (!file) {
-        return this.requirers.get('miss')!(currentDirectory, modulePath);
+        return this.requirers.get('miss')!(
+          currentDirectory,
+          modulePath,
+          context,
+        );
       }
 
       let esm = esmCache.get(file.path);

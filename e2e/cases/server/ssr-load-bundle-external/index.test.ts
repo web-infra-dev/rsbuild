@@ -6,6 +6,8 @@ type CheckResult = {
   loadBundleResult: string;
   nativeResult: string;
   loadBundleUndefinedType: string;
+  staticImportOnlyResult: string;
+  dynamicImportOnlyResult: string;
 };
 
 test('should align loadBundle ESM default import with native Node.js', async ({
@@ -26,4 +28,6 @@ test('should align loadBundle ESM default import with native Node.js', async ({
   expect(result.loadBundleType).toBe(result.nativeType);
   expect(result.loadBundleResult).toBe(result.nativeResult);
   expect(result.loadBundleUndefinedType).toBe('undefined');
+  expect(result.staticImportOnlyResult).toBe('loaded with import condition');
+  expect(result.dynamicImportOnlyResult).toBe('loaded with import condition');
 });

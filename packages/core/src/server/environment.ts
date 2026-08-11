@@ -54,7 +54,15 @@ export const loadBundle = async <T>(
   }
 
   const allChunkFiles =
+<<<<<<< Updated upstream
     chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) || [];
+=======
+    chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) ||
+    [];
+  const esmResolver = stats.compilation.compiler.resolverFactory.get('normal', {
+    dependencyType: 'esm',
+  });
+>>>>>>> Stashed changes
 
   const res = await run<T>({
     bundlePath: files[0],
@@ -62,6 +70,22 @@ export const loadBundle = async <T>(
     compilerOptions: stats.compilation.options,
     readFileSync: utils.readFileSync,
     isBundleOutput: (modulePath: string) => allChunkFiles.includes(modulePath),
+    resolveModule: (context, request) =>
+      new Promise((resolve, reject) => {
+        esmResolver.resolve({}, context, request, {}, (error, result) => {
+          if (error) {
+            reject(error);
+          } else if (typeof result === 'string') {
+            resolve(result);
+          } else {
+            reject(
+              new Error(
+                `${color.dim('[rsbuild:runner]')} Failed to resolve external module ${color.yellow(request)} from ${color.yellow(context)}.`,
+              ),
+            );
+          }
+        });
+      }),
   });
 
   return res;
