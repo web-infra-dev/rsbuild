@@ -118,7 +118,7 @@ catalog:
   'rspack-merge': '1.0.1'
   'rspack-vue-loader': '^17.6.2'
   'rspress-plugin-font-open-sans': '^1.0.4'
-  'rstack': '^0.4.0'
+  'rstack': '^0.5.1'
   'sass': '^1.102.0'
   'sass-embedded': '^1.100.0'
   'sass-loader': '^16.0.8'
