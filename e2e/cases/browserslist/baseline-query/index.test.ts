@@ -6,4 +6,5 @@ test('should transform syntax with a Baseline query', async ({ build }) => {
   const indexFile = getFileContent(rsbuild.getDistFiles(), 'index.js');
 
   expect(indexFile).not.toContain('?.');
+  expect(indexFile).toContain('value === null || value === void 0 ? void 0 : value.message');
 });
