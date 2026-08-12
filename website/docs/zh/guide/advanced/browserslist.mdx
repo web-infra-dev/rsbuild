@@ -98,6 +98,20 @@ last 2 versions
 not dead
 ```
 
+### Baseline 查询 \{#baseline-queries}
+
+Rsbuild >= v2.1.11 支持使用 Baseline 查询，你可以根据 Baseline 特性集来指定目标浏览器版本。例如，如需兼容所有被归类为 [Baseline 广泛可用的特性](https://web.dev/baseline)，可以配置：
+
+```yaml title=".browserslistrc"
+baseline widely available
+```
+
+你还可以使用 `baseline 2024` 等年份查询，或 `baseline widely available on 2025-05-01` 等固定日期查询。
+
+:::tip
+更多信息请参考 [在 Browserslist 中使用 Baseline](https://web.dev/articles/use-baseline-with-browserslist)。
+:::
+
 ### 生效范围
 
 `.browserslistrc` 文件默认只对浏览器端的构建产物生效，包括 `web` 和 `web-worker` 这两种产物类型。
