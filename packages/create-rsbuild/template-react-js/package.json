@@ -13,7 +13,7 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.1.11",
+    "@rsbuild/core": "^2.1.12",
     "@rsbuild/plugin-react": "^2.1.0"
   }
 }
