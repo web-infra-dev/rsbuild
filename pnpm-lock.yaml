@@ -1411,10 +1411,10 @@ importers:
         version: 19.2.8(react@19.2.8)
       rsbuild-plugin-google-analytics:
         specifier: 'catalog:'
-        version: 1.0.6(@rsbuild/core@2.1.11)
+        version: 1.0.6(@rsbuild/core@2.1.12)
       rsbuild-plugin-open-graph:
         specifier: 'catalog:'
-        version: 1.1.3(@rsbuild/core@2.1.11)
+        version: 1.1.3(@rsbuild/core@2.1.12)
       rspress-plugin-font-open-sans:
         specifier: 'catalog:'
         version: 1.0.4(@rspress/core@2.0.19)
@@ -2318,6 +2318,16 @@ packages:
       core-js:
         optional: true
 
+  '@rsbuild/core@2.1.12':
+    resolution: {integrity: sha512-xRqNHj/svDqeUzXPahmN4BdxEFCU1rxnVdjxyVV7WgsFfH+L3yAoQMJtIXVGhr00IQseDKkc3eonMF3NGrFj2Q==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
   '@rsbuild/plugin-check-syntax@2.0.1':
     resolution: {integrity: sha512-z+NMAUXEbM4fhoQlKJNgTjsf+O1tknBihsXj4JnSFlwpfoY5uDjKC6D+StATATvUilSKXFrk4WDhcIyoxkj1gg==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -2354,8 +2364,8 @@ packages:
       '@typescript/native-preview':
         optional: true
 
-  '@rslib/core@1.0.0-beta.2':
-    resolution: {integrity: sha512-A0j3MBP8Kga8Qrh7znO2UKf00Sga37PJCiTGUqVVBHb+u58fNoGXZtFAgeH6qKjf5eU1wYt4WptXX/1blOAfRw==}
+  '@rslib/core@1.0.0-beta.3':
+    resolution: {integrity: sha512-OtfmaBoGlHo1KYvQ3+B0ZLy3zUsAdoRZfWieaxoJMJ9uKAws2//afFgvUqeSDkkSJDlp8TDdgt4hib+QaFOaGQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -4845,8 +4855,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsbuild-plugin-dts@1.0.0-beta.2:
-    resolution: {integrity: sha512-xOYa/kw/y29kKFFNjd+CIemlq+CB8E7LhqNkIzg7HT9dYNBVBpZvnnL6OEsOgjeuqzKpGSCRgZN/dDoVOk4VhQ==}
+  rsbuild-plugin-dts@1.0.0-beta.3:
+    resolution: {integrity: sha512-Q8x/yyOsy8sNR8sHn0xuZsul7ErT5kXkTmDwCIxQ8esiMCW7QKjfyXDa4kvTxWn7oSQ5NP/O6qZM2vEA07thKw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -6439,6 +6449,15 @@ snapshots:
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
+  '@rsbuild/core@2.1.12(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)':
+    dependencies:
+      '@rspack/core': 2.1.10(@module-federation/runtime-tools@2.8.2)(@swc/helpers@0.5.23)
+      '@swc/helpers': 0.5.23
+    optionalDependencies:
+      core-js: 3.50.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+
   '@rsbuild/plugin-check-syntax@2.0.1(@rsbuild/core@packages+core)':
     dependencies:
       acorn: 8.17.0
@@ -6476,10 +6495,10 @@ snapshots:
       - '@rspack/core'
       - typescript
 
-  '@rslib/core@1.0.0-beta.2(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)(typescript@6.0.3)':
+  '@rslib/core@1.0.0-beta.3(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)(typescript@6.0.3)':
     dependencies:
-      '@rsbuild/core': 2.1.10(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
-      rsbuild-plugin-dts: 1.0.0-beta.2(@rsbuild/core@2.1.10)(typescript@6.0.3)
+      '@rsbuild/core': 2.1.12(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
+      rsbuild-plugin-dts: 1.0.0-beta.3(@rsbuild/core@2.1.12)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -9238,20 +9257,20 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.4
       fsevents: 2.3.3
 
-  rsbuild-plugin-dts@1.0.0-beta.2(@rsbuild/core@2.1.10)(typescript@6.0.3):
+  rsbuild-plugin-dts@1.0.0-beta.3(@rsbuild/core@2.1.12)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.1.10(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.1.12(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
     optionalDependencies:
       typescript: 6.0.3
 
-  rsbuild-plugin-google-analytics@1.0.6(@rsbuild/core@2.1.11):
+  rsbuild-plugin-google-analytics@1.0.6(@rsbuild/core@2.1.12):
     optionalDependencies:
-      '@rsbuild/core': 2.1.11(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.1.12(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
 
-  rsbuild-plugin-open-graph@1.1.3(@rsbuild/core@2.1.11):
+  rsbuild-plugin-open-graph@1.1.3(@rsbuild/core@2.1.12):
     optionalDependencies:
-      '@rsbuild/core': 2.1.11(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.1.12(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
 
   rslog@2.3.0: {}
 
@@ -9283,7 +9302,7 @@ snapshots:
   rstack@0.6.0(@module-federation/runtime-tools@2.8.2)(@rspress/core@2.0.19)(core-js@3.50.0)(jiti@2.7.0)(typescript@6.0.3):
     dependencies:
       '@rsbuild/core': 2.1.10(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
-      '@rslib/core': 1.0.0-beta.2(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)(typescript@6.0.3)
+      '@rslib/core': 1.0.0-beta.3(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)(typescript@6.0.3)
       '@rslint/core': 0.8.0(jiti@2.7.0)
       '@rstest/core': 0.11.6(@module-federation/runtime-tools@2.8.2)(core-js@3.50.0)
       prettier: 3.9.6
