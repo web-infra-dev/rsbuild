@@ -13,7 +13,7 @@
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
     "format": "rs fmt && heading-case --write",
-    "lint": "node --run check",
+    "lint": "rs lint",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
     "prepare": "rs setup && node --run prebundle",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
