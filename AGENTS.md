@@ -14,7 +14,7 @@
 corepack enable && pnpm install
 
 # dev checks
-pnpm lint
+pnpm check
 pnpm test
 
 # build / format / docs
