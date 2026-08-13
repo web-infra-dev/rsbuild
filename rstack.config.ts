@@ -22,6 +22,7 @@ define.staged({
 });
 
 define.lint(async () => {
+  const { default: globals } = await import('globals');
   const { globalIgnores, js, ts } = await import('rstack/lint');
 
   return [
@@ -31,6 +32,22 @@ define.lint(async () => {
     ]),
     js.configs.recommended,
     ts.configs.recommended,
+    {
+      files: ['**/*.{js,jsx,cjs,mjs}'],
+      languageOptions: {
+        globals: {
+          ...globals.browser,
+          ...globals.nodeBuiltin,
+          __dirname: 'readonly',
+          __filename: 'readonly',
+          CONFIG_VALUE: 'readonly',
+          CONTENT: 'readonly',
+          DEFINED_VALUE: 'readonly',
+          ENABLE_TEST: 'readonly',
+          undefinedValue: 'readonly',
+        },
+      },
+    },
     {
       languageOptions: {
         parserOptions: {
