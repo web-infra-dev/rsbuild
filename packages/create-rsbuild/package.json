@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "2.1.12",
+  "version": "2.1.13",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.rs",
   "bugs": {
