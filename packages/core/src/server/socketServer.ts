@@ -15,6 +15,13 @@ interface ExtWebSocket extends WebSocket {
   isAlive: boolean;
 }
 
+export type HmrUpdateCause = 'lazy' | 'normal';
+
+type CompletedBuildRecord = {
+  hash: string;
+  cause: HmrUpdateCause;
+};
+
 function isEqualSet(a: Set<string>, b: Set<string>): boolean {
   if (a.size !== b.size) {
     return false;
@@ -50,6 +57,11 @@ export type ServerMessageStaticChanged = {
 
 export type ServerMessageHash = {
   type: 'hash';
+  data: string;
+};
+
+export type ServerMessageLazyCompilationHash = {
+  type: 'lazy-compilation-hash';
   data: string;
 };
 
@@ -91,6 +103,7 @@ export type ServerMessage =
   | ServerMessageFullReload
   | ServerMessageStaticChanged
   | ServerMessageHash
+  | ServerMessageLazyCompilationHash
   | ServerMessageWarnings
   | ServerMessageErrors
   | ServerMessageResolvedClientError
@@ -160,6 +173,10 @@ export class SocketServer {
 
   private currentHash = new Map<string, string>();
 
+  private pendingBuildCauses = new Map<string, HmrUpdateCause>();
+
+  private completedBuildRecords = new Map<string, CompletedBuildRecord>();
+
   constructor(
     context: InternalContext,
     options: DevConfig,
@@ -168,6 +185,14 @@ export class SocketServer {
     this.context = context;
     this.options = options;
     this.getOutputFileSystem = getOutputFileSystem;
+  }
+
+  public setBuildInvalidationCause(token: string, cause: HmrUpdateCause): void {
+    const currentCause = this.pendingBuildCauses.get(token);
+    this.pendingBuildCauses.set(
+      token,
+      currentCause === 'normal' || cause === 'normal' ? 'normal' : 'lazy',
+    );
   }
 
   // subscribe upgrade event to handle socket
@@ -247,9 +272,29 @@ export class SocketServer {
     this.reportedBrowserLogs.clear();
     this.ensureInitialChunks();
 
-    if (!this.socketsMap.size) {
-      return;
+    for (const { webSocketToken } of this.context.environmentList) {
+      const result = this.getStats(webSocketToken);
+      if (!result) {
+        this.completedBuildRecords.delete(webSocketToken);
+        continue;
+      }
+
+      const { errors, stats } = result;
+      const hash = stats.hash;
+      if (errors.length > 0 || !hash || hash === 'XXXX') {
+        this.completedBuildRecords.delete(webSocketToken);
+        continue;
+      }
+
+      const pendingCause = this.pendingBuildCauses.get(webSocketToken);
+      const previousRecord = this.completedBuildRecords.get(webSocketToken);
+
+      this.completedBuildRecords.set(webSocketToken, {
+        hash,
+        cause: pendingCause ?? (previousRecord?.hash === hash ? previousRecord.cause : 'normal'),
+      });
     }
+    this.pendingBuildCauses.clear();
 
     for (const token of this.socketsMap.keys()) {
       this.sendStats({ token });
@@ -355,6 +400,8 @@ export class SocketServer {
     this.socketsMap.clear();
     this.initialChunksMap.clear();
     this.reportedBrowserLogs.clear();
+    this.pendingBuildCauses.clear();
+    this.completedBuildRecords.clear();
 
     return new Promise<void>((resolve, reject) => {
       this.wsServer.close((err) => {
@@ -561,6 +608,10 @@ export class SocketServer {
     }
 
     const { stats, errors, warnings } = result;
+    const previousHash = this.currentHash.get(token);
+    const completedBuild = this.completedBuildRecords.get(token);
+    const lazyCompilationUpdate =
+      completedBuild?.hash === stats.hash && completedBuild?.cause === 'lazy';
 
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
@@ -569,7 +620,10 @@ export class SocketServer {
 
     const initialChunks = this.initialChunksMap.get(token);
     const shouldReload =
-      stats.entrypoints && initialChunks && !isEqualSet(initialChunks, newInitialChunks);
+      previousHash !== stats.hash &&
+      stats.entrypoints &&
+      initialChunks &&
+      !isEqualSet(initialChunks, newInitialChunks);
 
     this.initialChunksMap.set(token, newInitialChunks);
 
@@ -578,20 +632,19 @@ export class SocketServer {
       return;
     }
 
-    if (stats.hash) {
-      const prevHash = this.currentHash.get(token);
+    if (stats.hash && stats.hash !== 'XXXX') {
       this.currentHash.set(token, stats.hash);
 
       // If build hash is not changed and there is no error or warning,
       // skip the other messages
-      if (!force && errors.length === 0 && warnings.length === 0 && prevHash === stats.hash) {
+      if (!force && errors.length === 0 && warnings.length === 0 && previousHash === stats.hash) {
         this.sendMessage({ type: 'ok' }, token);
         return;
       }
 
       this.sendMessage(
         {
-          type: 'hash',
+          type: lazyCompilationUpdate ? 'lazy-compilation-hash' : 'hash',
           data: stats.hash,
         },
         token,

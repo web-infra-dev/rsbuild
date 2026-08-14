@@ -4,6 +4,10 @@ const BUILD_FOO = 'building src/foo.js';
 
 test('should lazy compile dynamic imported modules', async ({ page, devOnly }) => {
   const rsbuild = await devOnly();
+  await page.addInitScript(() => {
+    const key = 'lazy-compilation-document-loads';
+    sessionStorage.setItem(key, String(Number(sessionStorage.getItem(key) ?? 0) + 1));
+  });
 
   // initial build
   await rsbuild.expectBuildEnd();
@@ -16,4 +20,7 @@ test('should lazy compile dynamic imported modules', async ({ page, devOnly }) =
   await rsbuild.expectBuildEnd();
   const value = await page.evaluate(() => window.foo);
   expect(value).toBe(42);
+  expect(
+    await page.evaluate(() => Number(sessionStorage.getItem('lazy-compilation-document-loads'))),
+  ).toBe(1);
 });
