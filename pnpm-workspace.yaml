@@ -82,7 +82,7 @@ catalog:
   'fast-glob': '^3.3.3'
   'fresh-import': '^0.2.1'
   'fs-extra': '^11.4.0'
-  'globals': '^17.10.0'
+  'globals': '^17.11.0'
   'heading-case': '^1.1.5'
   'hono': '^4.13.1'
   'html-loader': '^5.1.0'
