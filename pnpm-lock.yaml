@@ -230,8 +230,8 @@ catalogs:
       specifier: ^2.14.1
       version: 2.14.1
     less:
-      specifier: ^4.8.1
-      version: 4.8.1
+      specifier: ^4.9.0
+      version: 4.9.0
     less-loader:
       specifier: ^12.3.3
       version: 12.3.3
@@ -616,7 +616,7 @@ importers:
     devDependencies:
       less:
         specifier: 'catalog:'
-        version: 4.8.1(supports-color@8.1.1)
+        version: 4.9.0(supports-color@8.1.1)
       sass:
         specifier: 'catalog:'
         version: 1.102.0
@@ -1087,10 +1087,10 @@ importers:
         version: 4.3.1
       less:
         specifier: 'catalog:'
-        version: 4.8.1(supports-color@8.1.1)
+        version: 4.9.0(supports-color@8.1.1)
       less-loader:
         specifier: 'catalog:'
-        version: 12.3.3(@rspack/core@2.1.10)(less@4.8.1)
+        version: 12.3.3(@rspack/core@2.1.10)(less@4.9.0)
       reduce-configs:
         specifier: 'catalog:'
         version: 2.0.1
@@ -1239,7 +1239,7 @@ importers:
         version: 3.2.4(svelte@5.56.8)
       svelte-preprocess:
         specifier: 'catalog:'
-        version: 6.0.5(@babel/core@7.29.7)(less@4.8.1)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.102.0)(svelte@5.56.8)(typescript@6.0.3)
+        version: 6.0.5(@babel/core@7.29.7)(less@4.9.0)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.102.0)(svelte@5.56.8)(typescript@6.0.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -4068,8 +4068,8 @@ packages:
       webpack:
         optional: true
 
-  less@4.8.1:
-    resolution: {integrity: sha512-jQ3lRIo1aUtiWVYXZ7mk4+V4BjCGswF3IxTLJ+4RUta8ZiHh8lhkig2G8dya2eCcyR1dYUvzuV46EkJN8PSwww==}
+  less@4.9.0:
+    resolution: {integrity: sha512-umRhrCH7fCi8Uj2RcwKjJdvUORTjeWqkdKx0LbcZvjIwsAVsnIAGcxHaqowPeBFBjQuWOeC/bve0AlpFzF/+SQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -8129,13 +8129,13 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.10.0
 
-  less-loader@12.3.3(@rspack/core@2.1.10)(less@4.8.1):
+  less-loader@12.3.3(@rspack/core@2.1.10)(less@4.9.0):
     dependencies:
-      less: 4.8.1(supports-color@8.1.1)
+      less: 4.9.0(supports-color@8.1.1)
     optionalDependencies:
       '@rspack/core': 2.1.10(@module-federation/runtime-tools@2.8.2)(@swc/helpers@0.5.23)
 
-  less@4.8.1(supports-color@8.1.1):
+  less@4.9.0(supports-color@8.1.1):
     dependencies:
       copy-anything: 3.0.5
       parse-node-version: 1.0.1
@@ -9597,12 +9597,12 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@5.56.8)
 
-  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.8.1)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.102.0)(svelte@5.56.8)(typescript@6.0.3):
+  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.9.0)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.102.0)(svelte@5.56.8)(typescript@6.0.3):
     dependencies:
       svelte: 5.56.8
     optionalDependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
-      less: 4.8.1(supports-color@8.1.1)
+      less: 4.9.0(supports-color@8.1.1)
       postcss: 8.5.26
       postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.26)
       sass: 1.102.0
