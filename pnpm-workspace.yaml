@@ -121,7 +121,7 @@ catalog:
   'rspress-plugin-font-open-sans': '^1.0.4'
   'rstack': '^0.6.0'
   'sass': '^1.102.0'
-  'sass-embedded': '^1.100.0'
+  'sass-embedded': '^1.102.0'
   'sass-loader': '^16.0.8'
   'sirv': '^3.0.2'
   'solid-js': '^1.9.14'
