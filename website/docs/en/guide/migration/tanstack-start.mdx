@@ -1,0 +1,409 @@
+---
+description: 'Migrate TanStack Start React or Solid applications from Vite to Rsbuild, including Rstest and Node.js deployment.'
+---
+
+# TanStack Start
+
+TanStack Start supports Rsbuild for React and Solid applications. This guide replaces the Vite integration while preserving TanStack Start's managed client and server entries.
+
+Do not apply the generic [build entry](/guide/migration/vite#build-entry) migration steps to a TanStack Start application.
+
+import { PackageManagerTabs } from '@theme';
+
+## Before you start
+
+Keep your existing `tanstackStart` options, routes, server functions, and application code. This migration changes the build tool; it does not change the TanStack Start application model.
+
+Review your Vite configuration and deployment integration before editing dependencies. Vite plugins cannot run in `rsbuild.config.ts`; migrate each one to an Rsbuild or Rspack equivalent, or remove it only after confirming that it is no longer needed.
+
+## Replace the Vite configuration
+
+### React
+
+Remove Vite and its React plugin, then install the Rsbuild equivalents:
+
+<PackageManagerTabs command="remove vite @vitejs/plugin-react" />
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
+
+If you use `@vitejs/plugin-react-swc`, remove that package instead. Keep `@tanstack/react-start` and `@tanstack/react-router` installed.
+
+Replace `vite.config.ts` with `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { tanstackStart } from '@tanstack/react-start/plugin/rsbuild';
+
+export default defineConfig({
+  plugins: [pluginReact(), tanstackStart()],
+});
+```
+
+This is the minimal configuration used by the [Rsbuild React example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start), excluding its optional Tailwind CSS plugin.
+
+### Solid
+
+Remove Vite and its Solid plugin, then install the Rsbuild equivalents:
+
+<PackageManagerTabs command="remove vite vite-plugin-solid" />
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+
+Keep `@tanstack/solid-start` and `@tanstack/solid-router` installed.
+
+Replace `vite.config.ts` with `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+import { tanstackStart } from '@tanstack/solid-start/plugin/rsbuild';
+
+export default defineConfig({
+  plugins: [
+    pluginBabel({
+      include: /\.(?:jsx|tsx)$/,
+    }),
+    pluginSolid(),
+    tanstackStart(),
+  ],
+});
+```
+
+This is the minimal configuration used by the [Rsbuild Solid example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start-solid), excluding its optional Tailwind CSS plugin.
+
+## Update scripts
+
+Retain `"type": "module"` in `package.json`, then replace the Vite scripts:
+
+```json title="package.json"
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev", // [!code --]
+    "build": "vite build", // [!code --]
+    "preview": "vite preview", // [!code --]
+    "dev": "rsbuild", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
+  }
+}
+```
+
+`rsbuild` without a subcommand starts the dev server. `rsbuild dev` is equivalent.
+
+### Route generation
+
+If the project has a `generate-routes` script that runs `tsr generate`, replace it with `rsbuild build`:
+
+```json title="package.json"
+{
+  "scripts": {
+    "generate-routes": "tsr generate", // [!code --]
+    "generate-routes": "rsbuild build" // [!code ++]
+  }
+}
+```
+
+The TanStack Start Rsbuild plugin generates the route tree during the build and adds its required registration to `routeTree.gen.ts`. Running `tsr generate` directly can overwrite that registration.
+
+## Migrate project-specific settings
+
+The configuration above replaces only the TanStack Start and Vite integration. Migrate all other Vite configuration deliberately:
+
+- Use the [Vite config migration reference](/guide/migration/vite#config-migration) for aliases, CSS, dev server settings, static assets, and other Vite options.
+- Replace each Vite plugin with an Rsbuild or Rspack equivalent. Integrations that expose only a Vite plugin need a separately supported replacement.
+- Delete `vite.config.ts` after its settings have been migrated.
+
+### React Compiler
+
+For React applications that use React Compiler through a Babel plugin, configure the built-in Rspack implementation instead:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      reactCompiler: true,
+    }),
+  ],
+});
+```
+
+If a Babel or Rolldown Babel plugin was used only for React Compiler, remove that plugin and `babel-plugin-react-compiler`. For React 17 or 18 applications, install `react-compiler-runtime` and set the compiler target as described in the [React plugin documentation](/plugins/list/plugin-react#reactcompiler).
+
+### Paraglide
+
+Paraglide provides a dedicated Rspack plugin. Replace `paraglideVitePlugin` with `paraglideRspackPlugin`, and move it from Vite's top-level `plugins` array to `tools.rspack.plugins`. The plugin options are unchanged:
+
+```ts title="rsbuild.config.ts"
+import { paraglideRspackPlugin } from '@inlang/paraglide-js';
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  tools: {
+    rspack: {
+      plugins: [
+        paraglideRspackPlugin({
+          project: './project.inlang',
+          outdir: './src/paraglide',
+          outputStructure: 'message-modules',
+        }),
+      ],
+    },
+  },
+});
+```
+
+Keep existing Paraglide strategy, URL patterns, cookie settings, and generated output directory. Paraglide's generated `server.js` middleware and TanStack Router URL rewrite configuration are independent of the bundler migration.
+
+### Sentry source maps and releases
+
+Replace the Vite adapter's build-time Sentry integration with [`@sentry/webpack-plugin`](https://www.npmjs.com/package/@sentry/webpack-plugin). It is compatible with Rspack plugins and must be registered in `tools.rspack.plugins`:
+
+<PackageManagerTabs command="add @sentry/webpack-plugin -D" />
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { sentryWebpackPlugin } from '@sentry/webpack-plugin';
+
+const sentryPlugin =
+  process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_RELEASE
+    ? sentryWebpackPlugin({
+        org: 'example-org',
+        project: 'example-project',
+        url: 'https://sentry.example.com/',
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        release: {
+          name: process.env.SENTRY_RELEASE,
+        },
+        sourcemaps: {
+          filesToDeleteAfterUpload: ['dist/**/*.map'],
+        },
+      })
+    : undefined;
+
+export default defineConfig({
+  output: sentryPlugin
+    ? {
+        sourceMap: {
+          js: 'hidden-source-map',
+        },
+      }
+    : {},
+  tools: {
+    rspack: {
+      plugins: sentryPlugin ? [sentryPlugin] : [],
+    },
+  },
+});
+```
+
+Set `SENTRY_AUTH_TOKEN` as a build secret and `SENTRY_RELEASE` to the release name in CI. `hidden-source-map` produces source maps for upload without adding source map references to deployed JavaScript. The plugin deletes uploaded `.map` files, so they are not included in the final image.
+
+### Sentry managed tunnel
+
+The Sentry Vite adapter can create a managed tunnel route. With Rsbuild, define the TanStack Start route explicitly and limit it to your public DSN, preventing the route from becoming an open proxy:
+
+```ts title="src/routes/monitoring.ts"
+import * as Sentry from '@sentry/tanstackstart-react';
+import { createFileRoute } from '@tanstack/react-router';
+
+const sentryDsn = import.meta.env.PUBLIC_SENTRY_DSN;
+
+export const Route = createFileRoute('/monitoring')({
+  server: Sentry.createSentryTunnelRoute({
+    allowedDsns: sentryDsn ? [sentryDsn] : [],
+  }),
+});
+```
+
+Then configure the same route in the client SDK:
+
+```ts
+Sentry.init({
+  dsn: env.PUBLIC_SENTRY_DSN,
+  tunnel: '/monitoring',
+  // other options
+});
+```
+
+The route accepts Sentry envelopes only for `PUBLIC_SENTRY_DSN` and forwards them to Sentry. Keep its path and the `tunnel` option identical.
+
+### TypeScript
+
+Replace Vite's preset types in `tsconfig.json` with Rsbuild's preset types. If your project already defines a `types` array, replace only the Vite entries and retain the other required types:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["vite/client", "vite-plugin-svgr/client"], // [!code --]
+    "types": ["@rsbuild/core/types"] // [!code ++]
+  }
+}
+```
+
+`@rsbuild/plugin-svgr` does not provide a TypeScript declaration for `*.svg?react` imports. If your application uses that query, add a declaration file such as `src/types/svg.d.ts`:
+
+```ts title="src/types/svg.d.ts"
+declare module '*.svg?react' {
+  import type React from 'react';
+
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+```
+
+### Environment variables
+
+Rsbuild exposes client environment variables with the `PUBLIC_` prefix. Rename every client variable from `VITE_*` to `PUBLIC_*`, including its definition in `.env` files, CI variables, Docker build arguments, and application code:
+
+```diff
+- VITE_API_URL
++ PUBLIC_API_URL
+```
+
+Update application code to use direct property access, such as `import.meta.env.PUBLIC_API_URL`. If an environment validator receives the entire `import.meta.env` object, pass it an explicit object containing the required `PUBLIC_` properties.
+
+### Static prerendering and CDN URLs
+
+Keep options passed to `tanstackStart`. For example, static prerendering remains configured through the plugin:
+
+```ts
+tanstackStart({
+  prerender: {
+    enabled: true,
+    crawlLinks: true,
+  },
+});
+```
+
+See the [React](https://tanstack.com/start/latest/docs/framework/react/guide/static-prerendering) and [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/static-prerendering) static prerendering guides for all available options.
+
+For React applications that use CDN asset URLs, configure `transformAssets` in the TanStack Start server entry. This is different from setting an Rsbuild `assetPrefix`:
+
+```ts
+const handler = createStartHandler({
+  handler: defaultStreamHandler,
+  transformAssets: process.env.CDN_ORIGIN || '',
+});
+```
+
+Use the React server APIs when creating the handler. See [CDN asset URLs](https://tanstack.com/start/latest/docs/framework/react/guide/cdn-asset-urls) for a complete example.
+
+## Migrate tests from Vitest to Rstest
+
+Vitest runs tests through Vite. If you want to remove Vite from the test toolchain, migrate the Vitest configuration and test imports to Rstest before removing `vitest`, `@vitest/coverage-v8`, and Vite-only test plugins.
+
+Install Rstest and its Rsbuild adapter. Add the V8 coverage package when the Vitest configuration uses V8 coverage:
+
+<PackageManagerTabs command="add @rstest/core @rstest/adapter-rsbuild @rstest/coverage-v8 jsdom -D" />
+
+Create `rstest.config.ts` and reuse the application configuration:
+
+```ts title="rstest.config.ts"
+import { withRsbuildConfig } from '@rstest/adapter-rsbuild';
+import { defineConfig } from '@rstest/core';
+
+export default defineConfig({
+  extends: withRsbuildConfig(),
+  testEnvironment: 'jsdom',
+  setupFiles: ['./src/test/setup.ts'],
+  coverage: {
+    provider: 'v8',
+    reporters: ['text', 'html', 'lcov', 'cobertura'],
+  },
+});
+```
+
+Rstest options are top-level fields: for example, move `test.environment` to `testEnvironment`, `test.setupFiles` to `setupFiles`, and `test.coverage` to `coverage`. Rename Vitest's `coverage.reporter` option to `coverage.reporters`.
+
+Replace test API imports:
+
+```ts
+import { describe, expect, it } from 'vitest'; // [!code --]
+import { describe, expect, it } from '@rstest/core'; // [!code ++]
+```
+
+For Testing Library and `@testing-library/jest-dom`, register matchers with Rstest's `expect` in the setup file. Use the Testing Library package for your framework:
+
+```ts title="src/test/setup.ts (React)"
+import { cleanup } from '@testing-library/react';
+import * as jestDomMatchers from '@testing-library/jest-dom/matchers';
+import { afterEach, expect } from '@rstest/core';
+
+expect.extend(jestDomMatchers);
+afterEach(cleanup);
+```
+
+```ts title="src/test/setup.ts (Solid)"
+import * as jestDomMatchers from '@testing-library/jest-dom/matchers';
+import { cleanup } from '@testing-library/solid';
+import { afterEach, expect } from '@rstest/core';
+
+expect.extend(jestDomMatchers);
+afterEach(cleanup);
+```
+
+Update scripts to use `rstest`, `rstest --watch`, and `rstest --coverage`. For more configuration mappings, see the [Rstest migration guide](https://rstest.rs/guide/migration/vitest) and the Rsbuild [Testing](/guide/advanced/testing) guide.
+
+## Deploy to Node.js or Docker
+
+If `nitro/vite` is used only for Node.js or Docker deployment, remove `nitro`. A TanStack Start Rsbuild build emits its own server entry. Install [srvx](https://srvx.h3.dev/) as a production dependency:
+
+{/* cspell:ignore srvx */}
+
+<PackageManagerTabs command="remove nitro" />
+
+<PackageManagerTabs command="add srvx" />
+
+```json title="package.json"
+{
+  "scripts": {
+    "start": "srvx --prod -s ../client dist/server/index.js"
+  }
+}
+```
+
+The production build emits client assets in `dist/client` and the fetch-style server entry in `dist/server/index.js`. If your build emits `dist/server/server.js`, use that path instead.
+
+For Docker, install production dependencies again in the final stage. The `runner` stage starts from a fresh base image: the builder's `node_modules` includes development dependencies and should not be copied to the runtime image.
+
+The following Dockerfile is for npm projects. For another package manager, copy its lockfile and use its immutable production install command instead.
+
+```dockerfile title="Dockerfile (npm)"
+FROM node:24-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+
+FROM deps AS builder
+COPY . .
+RUN npm run build
+
+FROM node:24-alpine AS runner
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --ignore-scripts
+COPY --from=builder /app/dist ./dist
+CMD ["./node_modules/.bin/srvx", "--prod", "-s", "../client", "dist/server/index.js"]
+```
+
+For deployment targets other than Node.js or Docker, Vite-specific deployment integrations cannot be used with Rsbuild. Use a supported non-Vite adapter, or retain the Vite integration. See the [React hosting guide](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) and [Solid hosting guide](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting).
+
+## Verify the migration
+
+Run the development server, production build, test suite, and production server. Before removing Vite, confirm that all test tools, plugins, and other dependencies work without it:
+
+```bash
+npm run dev
+npm run build
+npm run test
+npm run start
+npm ls vite
+```
+
+If a tool still resolves or imports Vite, migrate or update that tool before removing Vite. A package's optional Vite peer dependency alone does not require Vite at runtime; validate the actual application build and tests.
