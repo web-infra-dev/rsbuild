@@ -372,38 +372,26 @@ The production build emits client assets in `dist/client` and the fetch-style se
 
 For Docker, install production dependencies again in the final stage. The `runner` stage starts from a fresh base image: the builder's `node_modules` includes development dependencies and should not be copied to the runtime image.
 
-The following Dockerfile is for npm projects. For another package manager, copy its lockfile and use its immutable production install command instead.
+Use the following `runner` stage in your Dockerfile. It detects the package manager from the project's lockfile and supports npm, Yarn, and pnpm:
 
-```dockerfile title="Dockerfile (npm)"
-FROM node:24-alpine AS deps
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
-
-FROM deps AS builder
-COPY . .
-RUN npm run build
-
+```dockerfile title="Dockerfile (runner stage)"
 FROM node:24-alpine AS runner
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci --omit=dev --ignore-scripts
+COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* .npmrc* ./
+RUN corepack enable && \
+  if [ -f package-lock.json ]; then \
+    npm ci --omit=dev --ignore-scripts; \
+  elif [ -f yarn.lock ]; then \
+    yarn install --frozen-lockfile --production=true --ignore-scripts; \
+  elif [ -f pnpm-lock.yaml ]; then \
+    pnpm install --prod --frozen-lockfile --ignore-scripts; \
+  else \
+    echo "No lockfile found." && exit 1; \
+  fi
 COPY --from=builder /app/dist ./dist
 CMD ["./node_modules/.bin/srvx", "--prod", "-s", "../client", "dist/server/index.js"]
 ```
 
+Configure the preceding build stages according to the TanStack Start [React](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) or [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting) deployment guide.
+
 For deployment targets other than Node.js or Docker, Vite-specific deployment integrations cannot be used with Rsbuild. Use a supported non-Vite adapter, or retain the Vite integration. See the [React hosting guide](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) and [Solid hosting guide](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting).
-
-## Verify the migration
-
-Run the development server, production build, test suite, and production server. Before removing Vite, confirm that all test tools, plugins, and other dependencies work without it:
-
-```bash
-npm run dev
-npm run build
-npm run test
-npm run start
-npm ls vite
-```
-
-If a tool still resolves or imports Vite, migrate or update that tool before removing Vite. A package's optional Vite peer dependency alone does not require Vite at runtime; validate the actual application build and tests.

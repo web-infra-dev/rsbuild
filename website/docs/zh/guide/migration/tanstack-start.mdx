@@ -372,38 +372,26 @@ afterEach(cleanup);
 
 对于 Docker，请在最终 stage 中重新安装生产依赖。`runner` stage 从新的基础镜像开始：builder 的 `node_modules` 包含开发依赖，不应复制到 runtime image。
 
-以下 Dockerfile 适用于 npm 项目。使用其他包管理器时，请复制对应的 lockfile，并改用其不可变的生产依赖安装命令。
+在 Dockerfile 中使用以下 `runner` stage。它会通过项目的 lockfile 自动识别包管理器，并支持 npm、Yarn 和 pnpm：
 
-```dockerfile title="Dockerfile (npm)"
-FROM node:24-alpine AS deps
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
-
-FROM deps AS builder
-COPY . .
-RUN npm run build
-
+```dockerfile title="Dockerfile（runner stage）"
 FROM node:24-alpine AS runner
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci --omit=dev --ignore-scripts
+COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* .npmrc* ./
+RUN corepack enable && \
+  if [ -f package-lock.json ]; then \
+    npm ci --omit=dev --ignore-scripts; \
+  elif [ -f yarn.lock ]; then \
+    yarn install --frozen-lockfile --production=true --ignore-scripts; \
+  elif [ -f pnpm-lock.yaml ]; then \
+    pnpm install --prod --frozen-lockfile --ignore-scripts; \
+  else \
+    echo "No lockfile found." && exit 1; \
+  fi
 COPY --from=builder /app/dist ./dist
 CMD ["./node_modules/.bin/srvx", "--prod", "-s", "../client", "dist/server/index.js"]
 ```
 
+请按照 TanStack Start 的 [React](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) 或 [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting) 部署指南配置之前的构建 stages。
+
 对于 Node.js 或 Docker 之外的部署目标，不能继续使用 Vite 专用的部署集成。请使用受支持的非 Vite adapter，或保留 Vite 集成。可参考 [React hosting guide](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) 和 [Solid hosting guide](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting)。
-
-## 验证迁移
-
-运行 dev server、生产构建、测试套件和生产 server。移除 Vite 前，请确认所有测试工具、插件和其他依赖均可在没有 Vite 的情况下工作：
-
-```bash
-npm run dev
-npm run build
-npm run test
-npm run start
-npm ls vite
-```
-
-如果某个工具仍会解析或导入 Vite，请在移除 Vite 前迁移或更新该工具。某个包声明 Vite 为 optional peer 并不意味着 runtime 必须依赖 Vite；请验证实际应用的构建和测试。
