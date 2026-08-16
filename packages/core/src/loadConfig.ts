@@ -16,11 +16,14 @@ export type ConfigParams = {
   meta?: Record<string, unknown>;
 };
 
-export type RsbuildConfigAsyncFn = (env: ConfigParams) => Promise<RsbuildConfig>;
+export type RsbuildConfigAsyncFn = (
+  env: ConfigParams,
+) => Promise<RsbuildConfig>;
 
 export type RsbuildConfigSyncFn = (env: ConfigParams) => RsbuildConfig;
 
-export type RsbuildConfigDefinition = RsbuildConfig | RsbuildConfigSyncFn | RsbuildConfigAsyncFn;
+export type RsbuildConfigDefinition =
+  RsbuildConfig | RsbuildConfigSyncFn | RsbuildConfigAsyncFn;
 
 export type LoadConfigOptions = Pick<
   BaseOptions<[ConfigParams]>,
@@ -54,7 +57,9 @@ export type LoadConfigResult<Config = RsbuildConfig> = Pick<
 export function defineConfig<
   const Config extends RsbuildConfig,
   const Definition extends
-    Config | ((env: ConfigParams) => Config) | ((env: ConfigParams) => Promise<Config>),
+    | Config
+    | ((env: ConfigParams) => Config)
+    | ((env: ConfigParams) => Promise<Config>),
 >(
   config: Definition,
 ): Definition extends (env: ConfigParams) => Promise<unknown>

@@ -35,7 +35,10 @@ const getSassLoaderOptions = async (
     excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 
-  const mergeFn = (defaults: SassLoaderOptions, userOptions: SassLoaderOptions) => {
+  const mergeFn = (
+    defaults: SassLoaderOptions,
+    userOptions: SassLoaderOptions,
+  ) => {
     const getSassOptions = () => {
       if (defaults.sassOptions && userOptions.sassOptions) {
         return deepmerge<SassLoaderOptions['sassOptions']>(
@@ -97,7 +100,9 @@ const findRuleId = (chain: RspackChain, defaultId: string) => {
   return id;
 };
 
-export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin => ({
+export const pluginSass = (
+  pluginOptions: PluginSassOptions = {},
+): RsbuildPlugin => ({
   name: PLUGIN_SASS_NAME,
 
   setup(api) {
@@ -121,7 +126,8 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
       const { sourceMap } = config.output;
-      const isUseSourceMap = typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
+      const isUseSourceMap =
+        typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
 
       const { excludes, options } = await getSassLoaderOptions(
         pluginOptions.sassLoaderOptions,
@@ -155,11 +161,15 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
 
       // Sass text import with import attributes.
       if (hasCssTextRule) {
-        getRule(SASS_TEXT).type('asset/source').with(getRule(cssTextRuleId).get('with'));
+        getRule(SASS_TEXT)
+          .type('asset/source')
+          .with(getRule(cssTextRuleId).get('with'));
       }
 
       // Raw Sass for `?raw` imports
-      getRule(SASS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
+      getRule(SASS_RAW)
+        .type('asset/source')
+        .resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
 
       // Main Sass transform
       const sassMainRule = getRule(SASS_MAIN);
@@ -179,9 +189,15 @@ export const pluginSass = (pluginOptions: PluginSassOptions = {}): RsbuildPlugin
         callback(sassInlineRule, getRule(CSS_INLINE), 'inline');
       };
 
-      const sassLoaderPath = path.join(__dirname, '../compiled/sass-loader/index.js');
+      const sassLoaderPath = path.join(
+        __dirname,
+        '../compiled/sass-loader/index.js',
+      );
 
-      const resolveUrlLoaderPath = path.join(__dirname, '../compiled/resolve-url-loader/index.js');
+      const resolveUrlLoaderPath = path.join(
+        __dirname,
+        '../compiled/resolve-url-loader/index.js',
+      );
 
       const resolveUrlLoaderOptions = {
         join: getResolveUrlJoinFn(),

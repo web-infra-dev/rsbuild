@@ -1,5 +1,9 @@
 import type { Server } from 'node:http';
-import type { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'node:http2';
+import type {
+  Http2SecureServer,
+  Http2ServerRequest,
+  Http2ServerResponse,
+} from 'node:http2';
 import type { Connect, ServerConfig } from '../types';
 
 export const createHttpServer = async ({
@@ -19,7 +23,10 @@ export const createHttpServer = async ({
         maxSessionMemory: 1024,
         ...serverConfig.https,
       },
-      middlewares as unknown as (req: Http2ServerRequest, res: Http2ServerResponse) => void,
+      middlewares as unknown as (
+        req: Http2ServerRequest,
+        res: Http2ServerResponse,
+      ) => void,
     );
   }
 

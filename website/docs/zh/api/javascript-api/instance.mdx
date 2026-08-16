@@ -332,7 +332,9 @@ type StartDevServerResult = {
   server: RsbuildDevServer;
 };
 
-function StartDevServer(options?: StartDevServerOptions): Promise<StartDevServerResult>;
+function StartDevServer(
+  options?: StartDevServerOptions,
+): Promise<StartDevServerResult>;
 ```
 
 - **示例：**
@@ -411,7 +413,9 @@ type CreateDevServerOptions = {
   runCompile?: boolean;
 };
 
-function createDevServer(options?: CreateDevServerOptions): Promise<RsbuildDevServer>;
+function createDevServer(
+  options?: CreateDevServerOptions,
+): Promise<RsbuildDevServer>;
 ```
 
 Rsbuild 配备了一个内置的开发服务器，当你执行 `rsbuild dev` 时，将启动 Rsbuild dev server，并提供页面预览、路由、模块热更新等功能。
@@ -529,7 +533,10 @@ const compiler = await rsbuild.createCompiler();
 ```ts
 type AddPluginsOptions = { before?: string; environment?: string };
 
-function AddPlugins(plugins: Array<RsbuildPlugin | Falsy>, options?: AddPluginsOptions): void;
+function AddPlugins(
+  plugins: Array<RsbuildPlugin | Falsy>,
+  options?: AddPluginsOptions,
+): void;
 ```
 
 - **示例：**
@@ -664,7 +671,9 @@ type InitConfigsOptions = {
   action?: 'dev' | 'build' | 'preview';
 };
 
-function InitConfigs(options?: InitConfigsOptions): Promise<Rspack.Configuration[]>;
+function InitConfigs(
+  options?: InitConfigsOptions,
+): Promise<Rspack.Configuration[]>;
 ```
 
 - **示例：**
@@ -987,7 +996,10 @@ rsbuild.onAfterDevCompile(({ isFirstCompile }) => {
 
 ```ts
 rsbuild.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
-  console.log(`the bundler config for the ${environment.name} is `, bundlerConfig);
+  console.log(
+    `the bundler config for the ${environment.name} is `,
+    bundlerConfig,
+  );
 });
 ```
 

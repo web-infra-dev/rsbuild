@@ -7,7 +7,9 @@ const getJsFilenames = (files: Record<string, string>) =>
     .map((filename) => basename(filename));
 
 const findChunk = (filenames: string[], name: string) =>
-  filenames.find((filename) => new RegExp(`^${name}\\.[a-f0-9]{8}\\.js$`).test(filename));
+  filenames.find((filename) =>
+    new RegExp(`^${name}\\.[a-f0-9]{8}\\.js$`).test(filename),
+  );
 
 test('should keep unchanged MPA filename hashes stable', async ({
   build,
@@ -36,7 +38,9 @@ test('should keep unchanged MPA filename hashes stable', async ({
   expect(firstPageA).toBeDefined();
   expect(firstPageB).toBeDefined();
 
-  await editFile(join(srcDir, 'pageAMessage.js'), (content) => content.replace('before', 'after'));
+  await editFile(join(srcDir, 'pageAMessage.js'), (content) =>
+    content.replace('before', 'after'),
+  );
 
   const secondBuild = await build({ config });
   const secondFilenames = getJsFilenames(secondBuild.getDistFiles());

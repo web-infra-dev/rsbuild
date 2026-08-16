@@ -8,7 +8,10 @@ test('should import SVG as text with import attributes when using pluginSvgr', a
 }) => {
   await runBothServe(async () => {
     expect(await page.evaluate('window.svgText')).toBe(
-      readFileSync(join(import.meta.dirname, '../../../assets/circle.svg'), 'utf-8'),
+      readFileSync(
+        join(import.meta.dirname, '../../../assets/circle.svg'),
+        'utf-8',
+      ),
     );
   });
 });

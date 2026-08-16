@@ -2,7 +2,12 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-test('should print changed files in logs', async ({ page, dev, editFile, copySrcDir }) => {
+test('should print changed files in logs', async ({
+  page,
+  dev,
+  editFile,
+  copySrcDir,
+}) => {
   const tempSrc = await copySrcDir();
 
   const rsbuild = await dev({
@@ -25,7 +30,11 @@ test('should print changed files in logs', async ({ page, dev, editFile, copySrc
   await rsbuild.expectLog('building test-temp-src/App.tsx', { posix: true });
 });
 
-test('should print removed files in logs', async ({ page, dev, copySrcDir }) => {
+test('should print removed files in logs', async ({
+  page,
+  dev,
+  copySrcDir,
+}) => {
   const tempSrc = await copySrcDir();
 
   const rsbuild = await dev({

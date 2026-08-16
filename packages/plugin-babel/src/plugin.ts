@@ -11,9 +11,10 @@ import type { BabelLoaderOptions, PluginBabelOptions } from './types.js';
 
 const require = createRequire(import.meta.url);
 const BABEL_LOADER_PATH = require.resolve('babel-loader');
-const { version: BABEL_LOADER_VERSION = '' } = require('babel-loader/package.json') as {
-  version?: string;
-};
+const { version: BABEL_LOADER_VERSION = '' } =
+  require('babel-loader/package.json') as {
+    version?: string;
+  };
 
 export const PLUGIN_BABEL_NAME = 'rsbuild:babel';
 const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
@@ -41,7 +42,9 @@ const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
 
 function getCacheDirectory(context: RsbuildContext, cacheDirectory?: string) {
   if (cacheDirectory) {
-    return isAbsolute(cacheDirectory) ? cacheDirectory : join(context.rootPath, cacheDirectory);
+    return isAbsolute(cacheDirectory)
+      ? cacheDirectory
+      : join(context.rootPath, cacheDirectory);
   }
   return context.cachePath;
 }
@@ -68,14 +71,22 @@ export function getDefaultBabelOptions(
     configFile: false,
     compact: config.mode === 'production',
     plugins: [
-      [require.resolve('@babel/plugin-proposal-decorators'), { ...config.source.decorators }],
+      [
+        require.resolve('@babel/plugin-proposal-decorators'),
+        { ...config.source.decorators },
+      ],
       // If you are using @babel/preset-env and legacy decorators, you must ensure the class elements transform is enabled regardless of your targets, because Babel only supports compiling legacy decorators when also compiling class properties:
       // see https://babeljs.io/docs/babel-plugin-proposal-decorators#legacy
-      ...(isLegacyDecorators ? [require.resolve('@babel/plugin-transform-class-properties')] : []),
+      ...(isLegacyDecorators
+        ? [require.resolve('@babel/plugin-transform-class-properties')]
+        : []),
     ],
     presets: [
       // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
-      [require.resolve('@babel/preset-typescript'), { ...DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS }],
+      [
+        require.resolve('@babel/preset-typescript'),
+        { ...DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS },
+      ],
     ],
   };
 
@@ -95,7 +106,9 @@ export function getDefaultBabelOptions(
   return options;
 }
 
-export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => ({
+export const pluginBabel = (
+  options: PluginBabelOptions = {},
+): RsbuildPlugin => ({
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
@@ -105,7 +118,10 @@ export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => 
       const { config } = environment;
       const baseOptions = getDefaultBabelOptions(config, api.context);
 
-      const mergedOptions = applyUserBabelConfig(baseOptions, options.babelLoaderOptions);
+      const mergedOptions = applyUserBabelConfig(
+        baseOptions,
+        options.babelLoaderOptions,
+      );
 
       // calculate cacheIdentifier with the merged options
       if (mergedOptions.cacheDirectory && !mergedOptions.cacheIdentifier) {

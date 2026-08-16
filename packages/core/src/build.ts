@@ -28,13 +28,18 @@ export const build = async (
   let closeCompiler: (() => Promise<void>) | undefined;
 
   if (watch) {
-    const watchOptions: WatchOptions[] = rspackConfigs.map((options) => options.watchOptions || {});
+    const watchOptions: WatchOptions[] = rspackConfigs.map(
+      (options) => options.watchOptions || {},
+    );
 
-    compiler.watch(watchOptions.length > 1 ? watchOptions : watchOptions[0] || {}, (err) => {
-      if (err) {
-        logger.error(err);
-      }
-    });
+    compiler.watch(
+      watchOptions.length > 1 ? watchOptions : watchOptions[0] || {},
+      (err) => {
+        if (err) {
+          logger.error(err);
+        }
+      },
+    );
 
     closeCompiler = () =>
       new Promise((resolve) => {
@@ -43,25 +48,27 @@ export const build = async (
         });
       });
   } else {
-    stats = await new Promise<Rspack.Stats | Rspack.MultiStats | undefined>((resolve, reject) => {
-      compiler.run((err, stats) => {
-        // When using run or watch, call close and wait for it to finish before calling run or watch again.
-        // Concurrent compilations will corrupt the output files.
-        compiler.close((closeErr) => {
-          if (closeErr) {
-            logger.error('Failed to close compiler: ', closeErr);
-          }
+    stats = await new Promise<Rspack.Stats | Rspack.MultiStats | undefined>(
+      (resolve, reject) => {
+        compiler.run((err, stats) => {
+          // When using run or watch, call close and wait for it to finish before calling run or watch again.
+          // Concurrent compilations will corrupt the output files.
+          compiler.close((closeErr) => {
+            if (closeErr) {
+              logger.error('Failed to close compiler: ', closeErr);
+            }
 
-          if (err) {
-            reject(err);
-          } else if (context.buildState.hasErrors) {
-            reject(new Error(RSPACK_BUILD_ERROR));
-          } else {
-            resolve(stats);
-          }
+            if (err) {
+              reject(err);
+            } else if (context.buildState.hasErrors) {
+              reject(new Error(RSPACK_BUILD_ERROR));
+            } else {
+              resolve(stats);
+            }
+          });
         });
-      });
-    });
+      },
+    );
   }
 
   let closingPromise: Promise<void> | undefined;

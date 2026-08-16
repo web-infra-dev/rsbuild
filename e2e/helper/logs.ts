@@ -14,7 +14,9 @@ export type LogHelper = BaseLogHelper & ExpectBuildEnd;
 
 export type ExtendedLogHelper = BaseExtendedLogHelper & ExpectBuildEnd;
 
-export const proxyConsole = (options?: ProxyConsoleOptions): ExtendedLogHelper => {
+export const proxyConsole = (
+  options?: ProxyConsoleOptions,
+): ExtendedLogHelper => {
   const logHelper = baseProxyConsole(options);
 
   return {

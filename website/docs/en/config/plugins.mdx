@@ -12,7 +12,10 @@ Registers Rsbuild plugins.
 type Falsy = false | null | undefined;
 
 type RsbuildPlugins = (
-  RsbuildPlugin | Falsy | Promise<RsbuildPlugin | Falsy | RsbuildPlugins> | RsbuildPlugins
+  | RsbuildPlugin
+  | Falsy
+  | Promise<RsbuildPlugin | Falsy | RsbuildPlugins>
+  | RsbuildPlugins
 )[];
 ```
 

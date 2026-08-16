@@ -9,7 +9,10 @@ test.beforeEach(() => {
   fs.writeFileSync(watchedFile, '1');
 });
 
-test('should call onRestart before restarting a watch build', async ({ execCli, logHelper }) => {
+test('should call onRestart before restarting a watch build', async ({
+  execCli,
+  logHelper,
+}) => {
   execCli('build --watch');
 
   const { clearLogs, expectBuildEnd, expectLog } = logHelper;
@@ -21,7 +24,10 @@ test('should call onRestart before restarting a watch build', async ({ execCli, 
   await expectBuildEnd();
 });
 
-test('should call onRestart before restarting a dev server', async ({ execCli, logHelper }) => {
+test('should call onRestart before restarting a dev server', async ({
+  execCli,
+  logHelper,
+}) => {
   execCli(`dev --port ${await getRandomPort()}`);
 
   const { clearLogs, expectBuildEnd, expectLog } = logHelper;

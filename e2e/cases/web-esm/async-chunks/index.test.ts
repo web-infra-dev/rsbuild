@@ -1,7 +1,10 @@
 import { expect, test } from '@e2e/helper';
 import { findFile } from '@rstackjs/test-utils';
 
-test('should load async JS, CSS, and assets in web ESM bundles', async ({ page, runBothServe }) => {
+test('should load async JS, CSS, and assets in web ESM bundles', async ({
+  page,
+  runBothServe,
+}) => {
   const pageErrors: string[] = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
@@ -16,7 +19,10 @@ test('should load async JS, CSS, and assets in web ESM bundles', async ({ page, 
     await expect(image).toHaveAttribute('src', /\/static\/image\//);
     await expect
       .poll(() =>
-        image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0),
+        image.evaluate(
+          (element: HTMLImageElement) =>
+            element.complete && element.naturalWidth > 0,
+        ),
       )
       .toBe(true);
 

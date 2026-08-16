@@ -1,6 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
-test('should respect tsconfig paths and override resolve.alias', async ({ page, buildPreview }) => {
+test('should respect tsconfig paths and override resolve.alias', async ({
+  page,
+  buildPreview,
+}) => {
   await buildPreview({
     config: {
       resolve: {

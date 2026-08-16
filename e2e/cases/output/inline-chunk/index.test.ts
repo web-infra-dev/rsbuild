@@ -16,7 +16,10 @@ const toolsConfig = {
   },
 };
 
-test('should inline all scripts and emit all source maps', async ({ page, buildPreview }) => {
+test('should inline all scripts and emit all source maps', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       source: {
@@ -45,7 +48,10 @@ test('should inline all scripts and emit all source maps', async ({ page, buildP
   ).toEqual(0);
 
   // all source maps in output
-  expect(Object.keys(files).filter((fileName) => fileName.endsWith('.js.map')).length).toEqual(3);
+  expect(
+    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
+      .length,
+  ).toEqual(3);
 });
 
 test('should inline scripts when matching a RegExp', async ({ build }) => {
@@ -68,7 +74,8 @@ test('should inline scripts when matching a RegExp', async ({ build }) => {
 
   // all source maps in output
   expect(
-    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map')).length,
+    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
+      .length,
   ).toBeGreaterThanOrEqual(2);
 });
 
@@ -94,7 +101,8 @@ test('should inline scripts based on filename and size', async ({ build }) => {
 
   // all source maps in output
   expect(
-    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map')).length,
+    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
+      .length,
   ).toBeGreaterThanOrEqual(2);
 });
 
@@ -147,11 +155,16 @@ test('should not inline styles by default in dev', async ({ page, dev }) => {
 
   // index.css in page
   await expect(
-    page.evaluate(`document.querySelectorAll('link[href*="index.css"]').length`),
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
   ).resolves.toEqual(1);
 });
 
-test('should inline styles in dev when matching a RegExp', async ({ page, dev }) => {
+test('should inline styles in dev when matching a RegExp', async ({
+  page,
+  dev,
+}) => {
   await dev({
     config: {
       output: {
@@ -166,11 +179,16 @@ test('should inline styles in dev when matching a RegExp', async ({ page, dev })
 
   // no index.css in page
   await expect(
-    page.evaluate(`document.querySelectorAll('link[href*="index.css"]').length`),
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
   ).resolves.toEqual(0);
 });
 
-test('should inline styles in dev based on filename and size', async ({ page, dev }) => {
+test('should inline styles in dev based on filename and size', async ({
+  page,
+  dev,
+}) => {
   await dev({
     config: {
       output: {
@@ -187,7 +205,9 @@ test('should inline styles in dev based on filename and size', async ({ page, de
 
   // no index.css in page
   await expect(
-    page.evaluate(`document.querySelectorAll('link[href*="index.css"]').length`),
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
   ).resolves.toEqual(0);
 });
 
@@ -214,7 +234,8 @@ test('should not inline scripts when disabled', async ({ build }) => {
 
   // all source maps in output
   expect(
-    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map')).length,
+    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
+      .length,
   ).toBeGreaterThanOrEqual(2);
 });
 
@@ -267,7 +288,8 @@ test('should inline assets in build when enable is auto', async ({ build }) => {
 
   // all source maps in output
   expect(
-    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map')).length,
+    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
+      .length,
   ).toBeGreaterThanOrEqual(2);
 
   // no index.css in output
@@ -278,7 +300,10 @@ test('should inline assets in build when enable is auto', async ({ build }) => {
   ).toEqual(0);
 });
 
-test('should not inline assets in dev when enable is auto', async ({ page, dev }) => {
+test('should not inline assets in dev when enable is auto', async ({
+  page,
+  dev,
+}) => {
   await dev({
     config: {
       output: {
@@ -297,12 +322,16 @@ test('should not inline assets in dev when enable is auto', async ({ page, dev }
 
   // all index.js in page
   await expect(
-    page.evaluate(`document.querySelectorAll('script[src*="index.js"]').length`),
+    page.evaluate(
+      `document.querySelectorAll('script[src*="index.js"]').length`,
+    ),
   ).resolves.toEqual(1);
 
   // all index.css in page
   await expect(
-    page.evaluate(`document.querySelectorAll('link[href*="index.css"]').length`),
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
   ).resolves.toEqual(1);
 });
 
@@ -322,16 +351,22 @@ test('should not inline scripts or styles in dev by default when enable is unset
 
   // all index.js in page
   await expect(
-    page.evaluate(`document.querySelectorAll('script[src*="index.js"]').length`),
+    page.evaluate(
+      `document.querySelectorAll('script[src*="index.js"]').length`,
+    ),
   ).resolves.toEqual(1);
 
   // all index.css in page
   await expect(
-    page.evaluate(`document.querySelectorAll('link[href*="index.css"]').length`),
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
   ).resolves.toEqual(1);
 });
 
-test('should inline assets independently for multiple environments', async ({ build }) => {
+test('should inline assets independently for multiple environments', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       environments: {
@@ -384,11 +419,16 @@ test('should inline assets independently for multiple environments', async ({ bu
 
   const countJs = (root: string) =>
     Object.keys(files).filter(
-      (file) => file.includes(root) && file.endsWith('.js') && !file.includes('/async/'),
+      (file) =>
+        file.includes(root) &&
+        file.endsWith('.js') &&
+        !file.includes('/async/'),
     ).length;
 
   const countCss = (root: string) =>
-    Object.keys(files).filter((file) => file.includes(root) && file.endsWith('.css')).length;
+    Object.keys(files).filter(
+      (file) => file.includes(root) && file.endsWith('.css'),
+    ).length;
 
   expect(countJs('/dist/web/')).toEqual(0);
   expect(countJs('/dist/web1/')).toEqual(0);
@@ -413,6 +453,8 @@ test('should update source mapping URL in build', async ({ build }) => {
   const indexHtml = getFileContent(files, '/index.html');
 
   expect(
-    indexHtml.includes(`//# sourceMappingURL=${assetPrefix}static/js/index.js.map`),
+    indexHtml.includes(
+      `//# sourceMappingURL=${assetPrefix}static/js/index.js.map`,
+    ),
   ).toBeTruthy();
 });

@@ -1,6 +1,9 @@
 import { expect, expectPoll, test } from '@e2e/helper';
 
-test('should apply custom middleware via `setupMiddlewares`', async ({ page, dev }) => {
+test('should apply custom middleware via `setupMiddlewares`', async ({
+  page,
+  dev,
+}) => {
   let count = 0;
 
   await dev({

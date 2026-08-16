@@ -184,7 +184,10 @@ type RsbuildFixture = {
 
 type Close = DevResult['close'];
 
-const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(options: T, cwd: string): T => {
+const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(
+  options: T,
+  cwd: string,
+): T => {
   // inherit process.env from current process
   const { NODE_ENV: _, ...restEnv } = process.env;
   options.env ||= {};
@@ -323,7 +326,9 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
 
   editFile: async ({ cwd }, use) => {
     const editFile: EditFile = (filename, editor) => {
-      const resolvedFilename = path.isAbsolute(filename) ? filename : path.resolve(cwd, filename);
+      const resolvedFilename = path.isAbsolute(filename)
+        ? filename
+        : path.resolve(cwd, filename);
       return baseEditFile(resolvedFilename, editor);
     };
     await use(editFile);
@@ -333,7 +338,10 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     const closes: Array<() => void> = [];
 
     const exec: Exec = (command, options = {}) => {
-      const childProcess = nodeSpawn(command, setupExecOptions({ shell: true, ...options }, cwd));
+      const childProcess = nodeSpawn(
+        command,
+        setupExecOptions({ shell: true, ...options }, cwd),
+      );
 
       const onData = (data: Buffer) => {
         logHelper.addLog(data.toString());

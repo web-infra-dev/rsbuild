@@ -32,10 +32,16 @@ test('should work with string and path to file', async ({ dev, page }) => {
     },
   });
 
-  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(watchedFile1, 'test')]);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
 });
 
-test('should reload when a watched file is added, changed, or removed', async ({ dev, page }) => {
+test('should reload when a watched file is added, changed, or removed', async ({
+  dev,
+  page,
+}) => {
   await dev({
     config: {
       dev: {
@@ -46,8 +52,14 @@ test('should reload when a watched file is added, changed, or removed', async ({
     },
   });
 
-  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(addedFile, 'test')]);
-  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(watchedFile1, 'test')]);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(addedFile, 'test'),
+  ]);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
   await Promise.all([page.waitForEvent('load'), fs.promises.rm(addedFile)]);
 });
 
@@ -62,9 +74,15 @@ test('should work with string array directory', async ({ dev, page }) => {
     },
   });
 
-  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(watchedFile1, 'test')]);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
 
-  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(watchedFile2, 'test')]);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile2, 'test'),
+  ]);
 });
 
 test('should work with string and glob', async ({ dev, page }) => {
@@ -78,7 +96,10 @@ test('should work with string and glob', async ({ dev, page }) => {
     },
   });
 
-  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(watchedFile1, 'test')]);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
 });
 
 test('should work with options', async ({ dev, page }) => {
@@ -95,7 +116,10 @@ test('should work with options', async ({ dev, page }) => {
     },
   });
 
-  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(watchedFile1, 'test')]);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
 });
 
 test('should reload the page for selected events', async ({ dev, page }) => {
@@ -110,6 +134,9 @@ test('should reload the page for selected events', async ({ dev, page }) => {
     },
   });
 
-  await Promise.all([page.waitForEvent('load'), fs.promises.writeFile(addedFile, 'test')]);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(addedFile, 'test'),
+  ]);
   await Promise.all([page.waitForEvent('load'), fs.promises.rm(addedFile)]);
 });

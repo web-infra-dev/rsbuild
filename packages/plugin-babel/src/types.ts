@@ -104,7 +104,10 @@ export type PluginBabelOptions = {
    * Options passed to `babel-loader`.
    * @see https://github.com/babel/babel-loader
    */
-  babelLoaderOptions?: ConfigChainWithContext<BabelLoaderOptions, BabelConfigUtils>;
+  babelLoaderOptions?: ConfigChainWithContext<
+    BabelLoaderOptions,
+    BabelConfigUtils
+  >;
   /**
    * Whether to run Babel transformations in parallel using worker threads. When
    * enabled, JavaScript modules are processed across multiple worker threads,

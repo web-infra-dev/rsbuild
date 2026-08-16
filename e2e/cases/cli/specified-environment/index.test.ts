@@ -11,8 +11,12 @@ test('should only build specified environment when using --environment option', 
   const files = await readDirContents(distPath);
   const outputFiles = Object.keys(files);
 
-  expect(outputFiles.find((item) => item.includes('web1/index.html'))).toBeFalsy();
-  expect(outputFiles.find((item) => item.includes('web2/index.html'))).toBeTruthy();
+  expect(
+    outputFiles.find((item) => item.includes('web1/index.html')),
+  ).toBeFalsy();
+  expect(
+    outputFiles.find((item) => item.includes('web2/index.html')),
+  ).toBeTruthy();
 });
 
 test('should build specified environments when using --environment shorten option', async ({
@@ -25,6 +29,10 @@ test('should build specified environments when using --environment shorten optio
   const files = await readDirContents(distPath);
   const outputFiles = Object.keys(files);
 
-  expect(outputFiles.find((item) => item.includes('web1/index.html'))).toBeTruthy();
-  expect(outputFiles.find((item) => item.includes('web2/index.html'))).toBeTruthy();
+  expect(
+    outputFiles.find((item) => item.includes('web1/index.html')),
+  ).toBeTruthy();
+  expect(
+    outputFiles.find((item) => item.includes('web2/index.html')),
+  ).toBeTruthy();
 });

@@ -1,6 +1,11 @@
 import type { RspackPluginInstance } from '@rspack/core';
 import { matchPlugin } from '@scripts/test-helper';
-import { createRsbuild, defineConfig, mergeRsbuildConfig, rspack } from '../src';
+import {
+  createRsbuild,
+  defineConfig,
+  mergeRsbuildConfig,
+  rspack,
+} from '../src';
 
 describe('configure Rspack', () => {
   it('should allow tools.rspack to return config', async () => {
@@ -141,7 +146,9 @@ describe('configure Rspack', () => {
         tools: {
           rspack(_config, utils) {
             utils.appendPlugins([new utils.rspack.DefinePlugin({ foo: '1' })]);
-            utils.prependPlugins([new utils.rspack.BannerPlugin({ banner: 'hello' })]);
+            utils.prependPlugins([
+              new utils.rspack.BannerPlugin({ banner: 'hello' }),
+            ]);
           },
         },
       },
@@ -151,7 +158,9 @@ describe('configure Rspack', () => {
     const plugins = config[0].plugins || [];
     expect(plugins.length).toBeGreaterThan(2);
     expect((plugins[0] as RspackPluginInstance).name).toEqual('BannerPlugin');
-    expect((plugins[plugins.length - 1] as RspackPluginInstance).name).toEqual('DefinePlugin');
+    expect((plugins[plugins.length - 1] as RspackPluginInstance).name).toEqual(
+      'DefinePlugin',
+    );
   });
 
   it('should allow removing plugins', async () => {
@@ -224,9 +233,15 @@ describe('configure Rspack', () => {
     const config = await rsbuildInstance.initConfigs();
     const plugins = config[0].plugins || [];
 
-    expect((plugins.pop() as RspackPluginInstance).name).toEqual('HtmlRspackPlugin');
-    expect((plugins.pop() as RspackPluginInstance).name).toEqual('IgnorePlugin');
-    expect((plugins.pop() as RspackPluginInstance).name).toEqual('BannerPlugin');
+    expect((plugins.pop() as RspackPluginInstance).name).toEqual(
+      'HtmlRspackPlugin',
+    );
+    expect((plugins.pop() as RspackPluginInstance).name).toEqual(
+      'IgnorePlugin',
+    );
+    expect((plugins.pop() as RspackPluginInstance).name).toEqual(
+      'BannerPlugin',
+    );
   });
 
   test('should merge rules as expected when using appendRules', async () => {

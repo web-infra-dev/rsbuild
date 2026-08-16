@@ -3,9 +3,19 @@ import { isPromise } from 'node:util/types';
 import { build as baseBuild } from './build';
 import { createCompiler as baseCreateCompiler } from './createCompiler';
 import { createContext } from './createContext';
-import { castArray, color, getNodeEnv, isFunction, pick, setNodeEnv } from './helpers';
+import {
+  castArray,
+  color,
+  getNodeEnv,
+  isFunction,
+  pick,
+  setNodeEnv,
+} from './helpers';
 import { isEmptyDir } from './helpers/fs';
-import { initConfigs as baseInitConfigs, initRsbuildConfig } from './initConfigs';
+import {
+  initConfigs as baseInitConfigs,
+  initRsbuildConfig,
+} from './initConfigs';
 import { initPluginAPI } from './initPlugins';
 import { inspectConfig as baseInspectConfig } from './inspectConfig';
 import type { LoadConfigResult } from './loadConfig';
@@ -65,7 +75,10 @@ import type {
   StartDevServer,
 } from './types';
 
-function applyDefaultPlugins(pluginManager: PluginManager, context: InternalContext) {
+function applyDefaultPlugins(
+  pluginManager: PluginManager,
+  context: InternalContext,
+) {
   pluginManager.addPlugins([
     pluginBasic(),
     pluginEntry(),
@@ -157,7 +170,9 @@ function isLoadConfigResult(result: unknown): result is LoadConfigResult {
 /**
  * Create an Rsbuild instance.
  */
-export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise<RsbuildInstance> {
+export async function createRsbuild(
+  options: CreateRsbuildOptions = {},
+): Promise<RsbuildInstance> {
   const envs = options.loadEnv
     ? loadEnv({
         cwd: options.cwd,
@@ -166,7 +181,9 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
     : null;
 
   const configOrFactory = options.config ?? options.rsbuildConfig;
-  let config = isFunction(configOrFactory) ? await configOrFactory() : configOrFactory;
+  let config = isFunction(configOrFactory)
+    ? await configOrFactory()
+    : configOrFactory;
   let loadConfigResult: LoadConfigResult | undefined;
   if (isLoadConfigResult(config)) {
     loadConfigResult = config;
@@ -200,7 +217,12 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
 
   const pluginManager = createPluginManager(logger);
 
-  const context = await createContext(resolvedOptions, config, logger, loadConfigResult);
+  const context = await createContext(
+    resolvedOptions,
+    config,
+    logger,
+    loadConfigResult,
+  );
 
   const getPluginAPI = initPluginAPI({ context, pluginManager });
   context.getPluginAPI = getPluginAPI;
@@ -338,7 +360,11 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
   };
 
   const initConfigs = async (options?: InitConfigsOptions) => {
-    if (context.action && options?.action && context.action !== options.action) {
+    if (
+      context.action &&
+      options?.action &&
+      context.action !== options.action
+    ) {
       // Calling initConfigs multiple times with different actions
       throw new Error(
         `\
@@ -369,7 +395,12 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
     createDevServer,
     inspectConfig,
     initConfigs,
-    ...pick(pluginManager, ['addPlugins', 'getPlugins', 'removePlugins', 'isPluginExists']),
+    ...pick(pluginManager, [
+      'addPlugins',
+      'getPlugins',
+      'removePlugins',
+      'isPluginExists',
+    ]),
     ...pick(globalPluginAPI, [
       'context',
       'expose',
@@ -405,7 +436,9 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
   const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
     let plugins = pluginOptions;
     do {
-      plugins = (await Promise.all(plugins)).flat(Number.POSITIVE_INFINITY as 1);
+      plugins = (await Promise.all(plugins)).flat(
+        Number.POSITIVE_INFINITY as 1,
+      );
     } while (plugins.some((v) => isPromise(v)));
 
     return plugins as (RsbuildPlugin | Falsy)[];
@@ -419,21 +452,26 @@ export async function createRsbuild(options: CreateRsbuildOptions = {}): Promise
   // Register environment plugin
   if (config.environments) {
     await Promise.all(
-      Object.entries(config.environments).map(async ([name, environmentConfig]) => {
-        if (!environmentConfig.plugins) {
-          return;
-        }
+      Object.entries(config.environments).map(
+        async ([name, environmentConfig]) => {
+          if (!environmentConfig.plugins) {
+            return;
+          }
 
-        // If the current environment is not specified, skip it
-        if (context.specifiedEnvironments && !context.specifiedEnvironments.includes(name)) {
-          return;
-        }
+          // If the current environment is not specified, skip it
+          if (
+            context.specifiedEnvironments &&
+            !context.specifiedEnvironments.includes(name)
+          ) {
+            return;
+          }
 
-        const plugins = await getFlattenedPlugins(environmentConfig.plugins);
-        rsbuild.addPlugins(plugins, {
-          environment: name,
-        });
-      }),
+          const plugins = await getFlattenedPlugins(environmentConfig.plugins);
+          rsbuild.addPlugins(plugins, {
+            environment: name,
+          });
+        },
+      ),
     );
   }
 

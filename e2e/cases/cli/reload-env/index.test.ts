@@ -3,7 +3,10 @@ import path from 'node:path';
 import { test } from '@e2e/helper';
 import { getRandomPort, waitForFileContent } from '@rstackjs/test-utils';
 
-test('should restart dev server when .env file is changed', async ({ execCli, logHelper }) => {
+test('should restart dev server when .env file is changed', async ({
+  execCli,
+  logHelper,
+}) => {
   const dist = path.join(import.meta.dirname, 'dist');
   const configFile = path.join(import.meta.dirname, 'rsbuild.config.mjs');
   const envLocalFile = path.join(import.meta.dirname, '.env.local');
