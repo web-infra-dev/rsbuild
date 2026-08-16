@@ -11,8 +11,6 @@ define.fmt({
     'e2e/cases/syntax-es/using-declaration/src/index.ts',
     // Preserve uppercase DOCTYPE in create-rsbuild templates.
     'packages/create-rsbuild/**/*.html',
-    // Keep the package-manager-generated layout stable.
-    'pnpm-lock.yaml',
   ],
 });
 
@@ -21,10 +19,8 @@ define.staged({
   '*.{js,jsx,ts,tsx,mjs,cjs}': ['rs lint --type-check', 'rs fmt'],
 });
 
-define.lint(async () => {
+define.lint(async ({ globalIgnores, js, ts }) => {
   const { default: globals } = await import('globals');
-  const { globalIgnores, js, ts } = await import('rstack/lint');
-
   return [
     globalIgnores([
       'e2e/cases/browser-logs/skip-build-error/src/index.js',
