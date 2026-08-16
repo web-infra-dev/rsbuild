@@ -20,6 +20,169 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
+## TanStack Start
+
+TanStack Start supports Rsbuild for React and Solid applications. Follow the steps for the framework used by your project instead of the generic configuration and build entry steps in this guide.
+
+### React migration
+
+#### Update dependencies
+
+Remove Vite and its React plugin, then install Rsbuild and its React plugin:
+
+<PackageManagerTabs command="remove vite @vitejs/plugin-react" />
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
+
+If your project uses `@vitejs/plugin-react-swc`, remove that package instead. Keep `@tanstack/react-start` and `@tanstack/react-router` installed.
+
+#### Replace the configuration file
+
+Replace `vite.config.ts` with `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { tanstackStart } from '@tanstack/react-start/plugin/rsbuild';
+
+export default defineConfig({
+  plugins: [pluginReact(), tanstackStart()],
+});
+```
+
+This is the minimal configuration used by the [Rsbuild React example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start), excluding its optional Tailwind CSS plugin. Copy any options passed to `tanstackStart` to the Rsbuild plugin. Vite plugins cannot be used in `rsbuild.config.ts` and need Rsbuild equivalents.
+
+#### Update npm scripts
+
+Retain `"type": "module"` in `package.json`, then update the scripts:
+
+```json title="package.json"
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev", // [!code --]
+    "build": "vite build", // [!code --]
+    "preview": "vite preview", // [!code --]
+    "dev": "rsbuild", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
+  }
+}
+```
+
+`rsbuild` without a subcommand starts the dev server. You can also use the equivalent explicit command, `rsbuild dev`.
+
+### Solid migration
+
+#### Update dependencies
+
+Remove Vite and its Solid plugin, then install Rsbuild and its Solid plugins:
+
+<PackageManagerTabs command="remove vite vite-plugin-solid" />
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+
+Keep `@tanstack/solid-start` and `@tanstack/solid-router` installed.
+
+#### Replace the configuration file
+
+Replace `vite.config.ts` with `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+import { tanstackStart } from '@tanstack/solid-start/plugin/rsbuild';
+
+export default defineConfig({
+  plugins: [
+    pluginBabel({
+      include: /\.(?:jsx|tsx)$/,
+    }),
+    pluginSolid(),
+    tanstackStart(),
+  ],
+});
+```
+
+This is the minimal configuration used by the [Rsbuild Solid example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start-solid), excluding its optional Tailwind CSS plugin. Copy any options passed to `tanstackStart` to the Rsbuild plugin. Vite plugins cannot be used in `rsbuild.config.ts` and need Rsbuild equivalents.
+
+#### Update npm scripts
+
+Retain `"type": "module"` in `package.json`, then update the scripts:
+
+```json title="package.json"
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev", // [!code --]
+    "build": "vite build", // [!code --]
+    "preview": "vite preview", // [!code --]
+    "dev": "rsbuild", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
+  }
+}
+```
+
+`rsbuild` without a subcommand starts the dev server. You can also use the equivalent explicit command, `rsbuild dev`.
+
+### Project-specific settings
+
+The configurations above replace only the TanStack Start integration with Vite. TanStack Start manages the client and server entries, so do not apply the generic [Build entry](#build-entry) migration steps below.
+
+Migrate the remaining Vite configuration with [Config migration](#config-migration), [Migrating plugins](#migrating-plugins), and [Environment variables](#environment-variables). In particular, review custom server settings, build settings, Vite plugins, and client environment variables prefixed with `VITE_`. Rsbuild defaults to port `3000`; if your Vite project uses a custom port, configure [server.port](/config/server/port).
+
+After migrating the required settings, remove `vite.config.ts`.
+
+### Preserve TanStack Start settings
+
+Keep any existing options passed to `tanstackStart`. For example, static prerendering remains configured through the plugin:
+
+```ts
+tanstackStart({
+  prerender: {
+    enabled: true,
+    crawlLinks: true,
+  },
+});
+```
+
+See the [React](https://tanstack.com/start/latest/docs/framework/react/guide/static-prerendering) and [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/static-prerendering) static prerendering guides for all available options.
+
+For React projects that use CDN asset URLs, configure `transformAssets` in the TanStack Start server entry. This is different from setting an Rsbuild `assetPrefix`:
+
+```ts
+const handler = createStartHandler({
+  handler: defaultStreamHandler,
+  transformAssets: process.env.CDN_ORIGIN || '',
+});
+```
+
+Use the React server APIs when creating the handler. See [CDN asset URLs](https://tanstack.com/start/latest/docs/framework/react/guide/cdn-asset-urls) for a complete server entry example.
+
+### Node.js deployment
+
+This deployment method applies to Node.js and Docker. If your Vite project uses `nitro/vite` only for Node.js or Docker deployment, remove `nitro`: TanStack Start's Rsbuild build emits its own server entry. Both Rsbuild examples use [srvx](https://srvx.h3.dev/) to serve the client assets and TanStack Start server entry:
+
+{/* cspell:ignore srvx */}
+
+<PackageManagerTabs command="remove nitro" />
+
+<PackageManagerTabs command="add srvx" />
+
+```json title="package.json"
+{
+  "scripts": {
+    "start": "srvx --prod -s ../client dist/server/index.js"
+  }
+}
+```
+
+An Rsbuild production build emits client assets in `dist/client` and the server entry in `dist/server/index.js`. The server entry exposes a fetch-style handler. If the server entry is emitted as `dist/server/server.js`, use that path instead.
+
+For a deployment target other than Node.js or Docker, Vite-specific deployment integrations cannot be used with Rsbuild. Use a supported non-Vite adapter or keep the Vite integration. See the [React hosting guide](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) and [Solid hosting guide](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting).
+
 ## Updating npm scripts
 
 Next, update the npm scripts in your package.json to run Rsbuild CLI commands.

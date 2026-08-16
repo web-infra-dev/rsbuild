@@ -20,6 +20,169 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
+## TanStack Start
+
+TanStack Start 支持通过 Rsbuild 构建 React 和 Solid 应用。请根据项目使用的框架选择以下步骤，而不是本章节中通用的配置文件和构建入口步骤。
+
+### React 迁移 \{#react-migration}
+
+#### 更新依赖
+
+移除 Vite 及其 React 插件，然后安装 Rsbuild 及其 React 插件：
+
+<PackageManagerTabs command="remove vite @vitejs/plugin-react" />
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
+
+如果项目使用的是 `@vitejs/plugin-react-swc`，请移除该依赖。请保留 `@tanstack/react-start` 和 `@tanstack/react-router`。
+
+#### 替换配置文件
+
+将 `vite.config.ts` 替换为 `rsbuild.config.ts`：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { tanstackStart } from '@tanstack/react-start/plugin/rsbuild';
+
+export default defineConfig({
+  plugins: [pluginReact(), tanstackStart()],
+});
+```
+
+该配置对应 [Rsbuild React 示例](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start)使用的最小配置，未包含示例中的可选 Tailwind CSS 插件。将传给 `tanstackStart` 的选项复制到 Rsbuild 插件中。Vite 插件不能在 `rsbuild.config.ts` 中使用，需要替换为对应的 Rsbuild 插件。
+
+#### 更新 npm scripts
+
+请保留 `package.json` 中的 `"type": "module"`，然后更新 scripts：
+
+```json title="package.json"
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev", // [!code --]
+    "build": "vite build", // [!code --]
+    "preview": "vite preview", // [!code --]
+    "dev": "rsbuild", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
+  }
+}
+```
+
+未指定子命令的 `rsbuild` 会启动 dev server。也可以使用等价的完整命令 `rsbuild dev`。
+
+### Solid 迁移 \{#solid-migration}
+
+#### 更新依赖
+
+移除 Vite 及其 Solid 插件，然后安装 Rsbuild 及其 Solid 插件：
+
+<PackageManagerTabs command="remove vite vite-plugin-solid" />
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+
+请保留 `@tanstack/solid-start` 和 `@tanstack/solid-router`。
+
+#### 替换配置文件
+
+将 `vite.config.ts` 替换为 `rsbuild.config.ts`：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+import { tanstackStart } from '@tanstack/solid-start/plugin/rsbuild';
+
+export default defineConfig({
+  plugins: [
+    pluginBabel({
+      include: /\.(?:jsx|tsx)$/,
+    }),
+    pluginSolid(),
+    tanstackStart(),
+  ],
+});
+```
+
+该配置对应 [Rsbuild Solid 示例](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start-solid)使用的最小配置，未包含示例中的可选 Tailwind CSS 插件。将传给 `tanstackStart` 的选项复制到 Rsbuild 插件中。Vite 插件不能在 `rsbuild.config.ts` 中使用，需要替换为对应的 Rsbuild 插件。
+
+#### 更新 npm scripts
+
+请保留 `package.json` 中的 `"type": "module"`，然后更新 scripts：
+
+```json title="package.json"
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev", // [!code --]
+    "build": "vite build", // [!code --]
+    "preview": "vite preview", // [!code --]
+    "dev": "rsbuild", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
+  }
+}
+```
+
+未指定子命令的 `rsbuild` 会启动 dev server。也可以使用等价的完整命令 `rsbuild dev`。
+
+### 项目特定配置 \{#project-specific-settings}
+
+以上配置仅替换 TanStack Start 与 Vite 的集成。TanStack Start 会管理 client 和 server entry，因此不要应用本页下方通用的[构建入口](#build-entry)迁移步骤。
+
+请通过[配置迁移](#config-migration)、[迁移插件](#migrating-plugins)和[环境变量](#environment-variables)迁移其余 Vite 配置。尤其应检查自定义 server 配置、构建配置、Vite 插件以及以 `VITE_` 为前缀的 client 环境变量。Rsbuild 默认使用端口 `3000`；如果 Vite 项目使用了自定义端口，请配置 [server.port](/config/server/port)。
+
+迁移所需配置后，删除 `vite.config.ts`。
+
+### 保留 TanStack Start 配置 \{#preserve-tanstack-start-settings}
+
+保留所有已有的 `tanstackStart` 配置。例如，静态预渲染仍通过该插件配置：
+
+```ts
+tanstackStart({
+  prerender: {
+    enabled: true,
+    crawlLinks: true,
+  },
+});
+```
+
+完整配置请参考 [React 静态预渲染](https://tanstack.com/start/latest/docs/framework/react/guide/static-prerendering) 和 [Solid 静态预渲染](https://tanstack.com/start/latest/docs/framework/solid/guide/static-prerendering) 文档。
+
+对于使用 CDN 资源 URL 的 React 项目，请在 TanStack Start server entry 中配置 `transformAssets`。这与设置 Rsbuild 的 `assetPrefix` 不同：
+
+```ts
+const handler = createStartHandler({
+  handler: defaultStreamHandler,
+  transformAssets: process.env.CDN_ORIGIN || '',
+});
+```
+
+创建 handler 时请使用 React server API。完整的 server entry 示例请参考 [CDN asset URL](https://tanstack.com/start/latest/docs/framework/react/guide/cdn-asset-urls) 文档。
+
+### 部署到 Node.js
+
+此部署方式适用于 Node.js 和 Docker。如果 Vite 项目仅通过 `nitro/vite` 部署到 Node.js 或 Docker，请移除 `nitro`：TanStack Start 的 Rsbuild 构建会生成自己的 server entry。两个 Rsbuild 示例都使用 [srvx](https://srvx.h3.dev/) 提供 client 资源和 TanStack Start server entry：
+
+{/* cspell:ignore srvx */}
+
+<PackageManagerTabs command="remove nitro" />
+
+<PackageManagerTabs command="add srvx" />
+
+```json title="package.json"
+{
+  "scripts": {
+    "start": "srvx --prod -s ../client dist/server/index.js"
+  }
+}
+```
+
+Rsbuild 的生产构建会将 client 资源输出到 `dist/client`，将 server entry 输出到 `dist/server/index.js`。server entry 会导出 fetch 风格的 handler。如果 server entry 输出为 `dist/server/server.js`，请改用该路径。
+
+对于 Node.js 或 Docker 之外的部署目标，Vite 专用的部署集成不能与 Rsbuild 一起使用。请使用受支持的非 Vite adapter，或保留 Vite 集成。可参考 [React hosting guide](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) 和 [Solid hosting guide](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting)。
+
 ## 更新 npm scripts
 
 下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
@@ -49,7 +212,7 @@ export default defineConfig({
 });
 ```
 
-## 构建入口
+## 构建入口 \{#build-entry}
 
 Rsbuild 与 Vite 默认的构建入口不同，Vite 使用 `index.html` 作为默认入口，而 Rsbuild 会自动检测 `src/index.*` 模块，例如 `src/index.ts` 或 `src/index.js`。
 
@@ -79,7 +242,7 @@ export default {
 
 Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中。
 
-## 迁移插件
+## 迁移插件 \{#migrating-plugins}
 
 大部分常见的 Vite 插件可以轻松地迁移到 Rsbuild 插件，比如：
 
@@ -184,7 +347,7 @@ export default {
 };
 ```
 
-## 环境变量
+## 环境变量 \{#environment-variables}
 
 Vite 默认会将 `VITE_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-variables)）。
 
