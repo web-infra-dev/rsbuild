@@ -5,7 +5,10 @@ import type { SourceMapExtract } from '@rsbuild/core';
 import fse from 'fs-extra';
 
 const setupMappedPackage = () => {
-  const packageDir = path.resolve(import.meta.dirname, 'node_modules/mapped-package');
+  const packageDir = path.resolve(
+    import.meta.dirname,
+    'node_modules/mapped-package',
+  );
 
   fse.outputJsonSync(path.join(packageDir, 'package.json'), {
     name: 'mapped-package',
@@ -60,7 +63,10 @@ async function buildWithExtract(build: Build, extract: SourceMapExtract) {
   });
 }
 
-const expectMappedPackageSource = async (build: Build, extract: SourceMapExtract) => {
+const expectMappedPackageSource = async (
+  build: Build,
+  extract: SourceMapExtract,
+) => {
   const rsbuild = await buildWithExtract(build, extract);
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
@@ -71,13 +77,19 @@ const expectMappedPackageSource = async (build: Build, extract: SourceMapExtract
     getGeneratedPosition(outputCode, 'from-package-ts'),
   ]);
 
-  expect(originalPosition.source).toContain('node_modules/mapped-package/index.ts');
+  expect(originalPosition.source).toContain(
+    'node_modules/mapped-package/index.ts',
+  );
 };
 
-test('should preserve JavaScript source maps with default extract test', async ({ build }) => {
+test('should preserve JavaScript source maps with default extract test', async ({
+  build,
+}) => {
   await expectMappedPackageSource(build, {});
 });
 
-test('should preserve JavaScript source maps when extract is true', async ({ build }) => {
+test('should preserve JavaScript source maps when extract is true', async ({
+  build,
+}) => {
   await expectMappedPackageSource(build, true);
 });

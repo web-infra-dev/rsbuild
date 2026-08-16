@@ -1,6 +1,9 @@
 import { gotoPage, test } from '@e2e/helper';
 
-test('should forward React runtime error logs to terminal', async ({ devOnly, page }) => {
+test('should forward React runtime error logs to terminal', async ({
+  devOnly,
+  page,
+}) => {
   const rsbuild = await devOnly();
 
   await gotoPage(page, rsbuild, '/undefinedError');

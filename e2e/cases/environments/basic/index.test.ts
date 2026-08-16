@@ -1,6 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
-test('should build successfully with multiple environments', async ({ page, buildPreview }) => {
+test('should build successfully with multiple environments', async ({
+  page,
+  buildPreview,
+}) => {
   await buildPreview({
     config: {
       environments: {
@@ -18,7 +21,10 @@ test('should build successfully with multiple environments', async ({ page, buil
   await expect(test).toHaveText('Hello Rsbuild!');
 });
 
-test('should serve successfully in dev with multiple environments', async ({ page, dev }) => {
+test('should serve successfully in dev with multiple environments', async ({
+  page,
+  dev,
+}) => {
   await dev({
     config: {
       environments: {

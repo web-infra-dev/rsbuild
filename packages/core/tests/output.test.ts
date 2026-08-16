@@ -128,7 +128,9 @@ describe('plugin-output', () => {
     });
 
     const rspackConfigs = await rsbuild.initConfigs();
-    expect(rspackConfigs[0].output?.chunkFilename).toEqual('custom/js/[name].js');
+    expect(rspackConfigs[0].output?.chunkFilename).toEqual(
+      'custom/js/[name].js',
+    );
   });
 
   it('should allow using filename.js to modify filename', async () => {

@@ -78,7 +78,10 @@ export default {
 export default {
   output: {
     filename: {
-      css: process.env.NODE_ENV === 'production' ? '[name].[contenthash:10].css' : '[name].css',
+      css:
+        process.env.NODE_ENV === 'production'
+          ? '[name].[contenthash:10].css'
+          : '[name].css',
     },
   },
 };

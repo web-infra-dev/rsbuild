@@ -49,7 +49,9 @@ test('should support raw header arrays passed to writeHead', async () => {
     });
     await response.text();
 
-    expect(response.headers.get('content-type')).toBe('text/plain; charset=utf-8');
+    expect(response.headers.get('content-type')).toBe(
+      'text/plain; charset=utf-8',
+    );
     expect(response.headers.get('x-test-header')).toBe('ok');
     expect(response.headers.get('content-encoding')).toBe('gzip');
     expect(response.headers.get('0')).toBeNull();
@@ -198,7 +200,9 @@ test('should not compress text/event-stream responses', async () => {
     const text = await response.text();
 
     expect(response.headers.get('content-encoding')).toBeNull();
-    expect(response.headers.get('content-type')).toBe('text/event-stream; charset=utf-8');
+    expect(response.headers.get('content-type')).toBe(
+      'text/event-stream; charset=utf-8',
+    );
     expect(text).toBe('data: hello\n\n');
   } finally {
     await closeServer(server);

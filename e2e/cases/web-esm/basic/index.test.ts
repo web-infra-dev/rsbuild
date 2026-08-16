@@ -1,7 +1,10 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('should output and run basic web ESM bundles', async ({ page, runBothServe }) => {
+test('should output and run basic web ESM bundles', async ({
+  page,
+  runBothServe,
+}) => {
   const pageErrors: string[] = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
 

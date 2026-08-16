@@ -3,8 +3,15 @@ import type { LoadConfigResult } from '../loadConfig';
 import type { LoadEnvOptions } from '../loadEnv';
 import type { Logger } from '../logger';
 import type { RsbuildDevServer } from '../server/devServer';
-import type { StartDevServerResult, StartPreviewServerResult } from '../server/helper';
-import type { NormalizedConfig, NormalizedEnvironmentConfig, RsbuildConfig } from './config';
+import type {
+  StartDevServerResult,
+  StartPreviewServerResult,
+} from '../server/helper';
+import type {
+  NormalizedConfig,
+  NormalizedEnvironmentConfig,
+  RsbuildConfig,
+} from './config';
 import type { RsbuildContext } from './context';
 import type { RestartFn } from './hooks';
 import type { RsbuildPlugin, RsbuildPluginAPI } from './plugin';
@@ -166,11 +173,17 @@ export type ResolvedCreateRsbuildOptions = Required<
     rsbuildConfig: RsbuildConfig;
   };
 
-export type CreateDevServer = (options?: CreateDevServerOptions) => Promise<RsbuildDevServer>;
+export type CreateDevServer = (
+  options?: CreateDevServerOptions,
+) => Promise<RsbuildDevServer>;
 
-export type StartDevServer = (options?: StartDevServerOptions) => Promise<StartDevServerResult>;
+export type StartDevServer = (
+  options?: StartDevServerOptions,
+) => Promise<StartDevServerResult>;
 
-export type InspectConfig = (options?: InspectConfigOptions) => Promise<InspectConfigResult>;
+export type InspectConfig = (
+  options?: InspectConfigOptions,
+) => Promise<InspectConfigResult>;
 
 export type AddPluginsOptions = {
   /**
@@ -185,7 +198,10 @@ export type AddPluginsOptions = {
   environment?: string;
 };
 
-export type AddPlugins = (plugins: (RsbuildPlugin | Falsy)[], options?: AddPluginsOptions) => void;
+export type AddPlugins = (
+  plugins: (RsbuildPlugin | Falsy)[],
+  options?: AddPluginsOptions,
+) => void;
 
 export type RsbuildInstance = {
   /**
@@ -242,7 +258,9 @@ export type RsbuildInstance = {
    * since it's automatically invoked by methods like `rsbuild.build` and
    * `rsbuild.startDevServer`.
    */
-  initConfigs: (options?: InitConfigsOptions) => Promise<Rspack.Configuration[]>;
+  initConfigs: (
+    options?: InitConfigsOptions,
+  ) => Promise<Rspack.Configuration[]>;
   /**
    * Inspect and debug Rsbuild's internal configurations. It provides access to:
    * - The resolved Rsbuild configuration
@@ -252,7 +270,9 @@ export type RsbuildInstance = {
    * The method serializes these configurations to strings and optionally writes
    * them to disk for inspection.
    */
-  inspectConfig: (options?: InspectConfigOptions) => Promise<InspectConfigResult>;
+  inspectConfig: (
+    options?: InspectConfigOptions,
+  ) => Promise<InspectConfigResult>;
   /**
    * Create an Rspack [Compiler](https://rspack.rs/api/javascript-api/compiler)
    * instance. If there are multiple [environments](/config/environments) for
@@ -319,7 +339,10 @@ export type RsbuildEntryDescription = Rspack.EntryDescription & {
   html?: boolean;
 };
 
-export type RsbuildEntry = Record<string, string | string[] | RsbuildEntryDescription>;
+export type RsbuildEntry = Record<
+  string,
+  string | string[] | RsbuildEntryDescription
+>;
 
 export type RsbuildMode = 'development' | 'production' | 'none';
 

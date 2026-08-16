@@ -1,4 +1,7 @@
-import { createCacheableFunction, type ServerUtils } from '../src/server/environment';
+import {
+  createCacheableFunction,
+  type ServerUtils,
+} from '../src/server/environment';
 import type { Rspack } from '../src/types';
 
 const stats = {} as Rspack.Stats;
@@ -30,7 +33,10 @@ test('should cache pending calls for the same compilation and entry', async () =
 
 test('should retry after a pending call rejects', async () => {
   const error = new Error('failed');
-  const getter = rstest.fn().mockRejectedValueOnce(error).mockResolvedValueOnce('result');
+  const getter = rstest
+    .fn()
+    .mockRejectedValueOnce(error)
+    .mockResolvedValueOnce('result');
   const cacheableGetter = createCacheableFunction<string>(getter);
 
   const first = cacheableGetter(stats, 'index', utils);

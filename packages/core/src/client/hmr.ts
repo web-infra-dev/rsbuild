@@ -6,7 +6,11 @@ import type {
   ServerMessageFullReload,
   ServerMessageResolvedClientError,
 } from '../server/socketServer';
-import type { LogLevel, NormalizedClientConfig, WebSocketUrlResolver } from '../types';
+import type {
+  LogLevel,
+  NormalizedClientConfig,
+  WebSocketUrlResolver,
+} from '../types';
 import { logger } from './log';
 
 let createOverlay: undefined | ((title: string, content: string) => void);
@@ -18,7 +22,10 @@ declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((options: {
   module: { hot: Rspack.Hot };
 }) => void)[];
 
-const getErrorField = (error: unknown, field: keyof Error): string | undefined => {
+const getErrorField = (
+  error: unknown,
+  field: keyof Error,
+): string | undefined => {
   if (error instanceof Error) {
     const value = error[field];
     return value === undefined ? undefined : String(value);
@@ -45,7 +52,11 @@ function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
   RSPACK_INTERCEPT_MODULE_EXECUTION.push(({ module }) => {
     const newListeners: CustomListenersMap = new Map();
 
-    const addToMap = (map: CustomListenersMap, event: string, cb: (payload: unknown) => void) => {
+    const addToMap = (
+      map: CustomListenersMap,
+      event: string,
+      cb: (payload: unknown) => void,
+    ) => {
       const existing = map.get(event) || [];
       existing.push(cb);
       map.set(event, existing);
@@ -106,7 +117,8 @@ export function init(
     const { location } = self;
     const hostname = (fallback ? serverHost : config.host) || location.hostname;
     const port = (fallback ? serverPort : config.port) || location.port;
-    const protocol = config.protocol || (location.protocol === 'https:' ? 'wss' : 'ws');
+    const protocol =
+      config.protocol || (location.protocol === 'https:' ? 'wss' : 'ws');
     const pathname = config.path;
 
     if (typeof URL !== 'undefined') {
@@ -173,7 +185,8 @@ export function init(
     const { overlay } = config;
     if (
       createOverlay &&
-      (overlay === true || (typeof overlay === 'object' && overlay.errors !== false))
+      (overlay === true ||
+        (typeof overlay === 'object' && overlay.errors !== false))
     ) {
       if (html) {
         createOverlay('Build failed', html);
@@ -211,11 +224,17 @@ export function init(
   // then resolved to the current compilation hash.
   const shouldUpdate = () => lastHash !== BUILD_HASH;
 
-  const handleApplyUpdates = (err: unknown, updatedModules: (string | number)[] | null) => {
+  const handleApplyUpdates = (
+    err: unknown,
+    updatedModules: (string | number)[] | null,
+  ) => {
     const forcedReload = err || !updatedModules;
     if (forcedReload) {
       if (err) {
-        logger.error('[rsbuild] HMR update failed, performing full reload:', err);
+        logger.error(
+          '[rsbuild] HMR update failed, performing full reload:',
+          err,
+        );
       }
       fullReload();
       return;
@@ -335,7 +354,9 @@ export function init(
   function onClose() {
     if (reconnectCount >= config.reconnect) {
       if (config.reconnect > 0) {
-        logger.warn('[rsbuild] WebSocket connection failed after maximum retry attempts.');
+        logger.warn(
+          '[rsbuild] WebSocket connection failed after maximum retry attempts.',
+        );
       }
       return;
     }
@@ -355,7 +376,9 @@ export function init(
     }
 
     if (getSocketURL() !== getSocketURL(true)) {
-      logger.error('[rsbuild] WebSocket connection failed. Trying direct connection fallback.');
+      logger.error(
+        '[rsbuild] WebSocket connection failed. Trying direct connection fallback.',
+      );
       removeListeners();
       socket = null;
       connect(true);

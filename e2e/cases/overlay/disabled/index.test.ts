@@ -1,5 +1,11 @@
 import { join } from 'node:path';
-import { expect, HMR_CONNECTED_LOG, MODULE_BUILD_FAILED_LOG, OVERLAY_ID, test } from '@e2e/helper';
+import {
+  expect,
+  HMR_CONNECTED_LOG,
+  MODULE_BUILD_FAILED_LOG,
+  OVERLAY_ID,
+  test,
+} from '@e2e/helper';
 
 test('should disable error overlay when dev.client.overlay is false', async ({
   page,
@@ -29,7 +35,9 @@ test('should disable error overlay when dev.client.overlay is false', async ({
 
   await expect(page.locator(OVERLAY_ID)).not.toBeAttached();
 
-  await editFile(join(tempSrc, 'App.tsx'), (code) => code.replace('</div>', '</a>'));
+  await editFile(join(tempSrc, 'App.tsx'), (code) =>
+    code.replace('</div>', '</a>'),
+  );
 
   await expectLog(MODULE_BUILD_FAILED_LOG);
   await expect(page.locator(OVERLAY_ID)).not.toBeAttached();

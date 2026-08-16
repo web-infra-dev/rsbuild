@@ -1,6 +1,8 @@
 import { test } from '@e2e/helper';
 
-test('should forward browser unhandled rejection logs to terminal', async ({ dev }) => {
+test('should forward browser unhandled rejection logs to terminal', async ({
+  dev,
+}) => {
   const rsbuild = await dev();
   await rsbuild.expectLog('error   [browser] Uncaught (in promise) 404');
   await rsbuild.expectLog('error   [browser] Uncaught (in promise) false');
@@ -14,7 +16,9 @@ test('should forward browser unhandled rejection logs to terminal', async ({ dev
     'error   [browser] Uncaught (in promise) Error: reason (src/index.js:7:0)',
     { posix: true },
   );
-  await rsbuild.expectLog('error   [browser] Uncaught (in promise) AbortError: Aborted');
+  await rsbuild.expectLog(
+    'error   [browser] Uncaught (in promise) AbortError: Aborted',
+  );
   await rsbuild.expectLog(
     'error   [browser] Uncaught (in promise) Error: Thrown in async (src/index.js:11:0)',
     { posix: true },

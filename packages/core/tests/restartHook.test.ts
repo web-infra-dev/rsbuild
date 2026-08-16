@@ -28,7 +28,10 @@ describe('restartManager', () => {
 
   test('should unregister callbacks', async () => {
     const callback = rstest.fn();
-    const manager = createRestartManager({ onRestart: () => {}, restart: () => true });
+    const manager = createRestartManager({
+      onRestart: () => {},
+      restart: () => true,
+    });
     const unregister = manager.registerCleanup(callback);
 
     unregister();

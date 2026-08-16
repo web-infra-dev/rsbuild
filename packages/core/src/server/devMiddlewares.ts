@@ -46,10 +46,15 @@ const applySetupMiddlewares = (
     : [];
 
   if (setupMiddlewares.length) {
-    logger.warn('[rsbuild] `dev.setupMiddlewares` is deprecated, use `server.setup` instead');
+    logger.warn(
+      '[rsbuild] `dev.setupMiddlewares` is deprecated, use `server.setup` instead',
+    );
   }
 
-  const serverOptions: SetupMiddlewaresContext = pick(devServer, ['sockWrite', 'environments']);
+  const serverOptions: SetupMiddlewaresContext = pick(devServer, [
+    'sockWrite',
+    'environments',
+  ]);
 
   const before: RequestHandler[] = [];
   const after: RequestHandler[] = [];
@@ -84,8 +89,12 @@ const applyDefaultMiddlewares = async ({
   const { logger } = context;
 
   if (server.cors) {
-    const { default: corsMiddleware } = await import(/* rspackChunkName: "cors" */ 'cors');
-    middlewares.use(corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors));
+    const { default: corsMiddleware } = await import(
+      /* rspackChunkName: "cors" */ 'cors'
+    );
+    middlewares.use(
+      corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors),
+    );
   }
 
   // apply `server.headers` option
@@ -103,10 +112,8 @@ const applyDefaultMiddlewares = async ({
   // Apply proxy middleware
   // each proxy configuration creates its own middleware instance
   if (server.proxy) {
-    const { middlewares: proxyMiddlewares, upgrade } = await createProxyMiddleware(
-      server.proxy,
-      logger,
-    );
+    const { middlewares: proxyMiddlewares, upgrade } =
+      await createProxyMiddleware(server.proxy, logger);
     upgradeEvents.push(upgrade);
 
     for (const middleware of proxyMiddlewares) {
@@ -118,7 +125,9 @@ const applyDefaultMiddlewares = async ({
   // but before other middleware to ensure responses are properly compressed
   const { compress } = server;
   if (compress) {
-    middlewares.use(gzipMiddleware(typeof compress === 'object' ? compress : undefined));
+    middlewares.use(
+      gzipMiddleware(typeof compress === 'object' ? compress : undefined),
+    );
   }
 
   // enable lazy compilation
@@ -131,13 +140,17 @@ const applyDefaultMiddlewares = async ({
     // 2. Use Rspack's configuration top-level `lazyCompilation` option
     const isLazyCompilationEnabled = () => {
       if (isMultiCompiler(compiler)) {
-        return compiler.compilers.some((childCompiler) => childCompiler.options.lazyCompilation);
+        return compiler.compilers.some(
+          (childCompiler) => childCompiler.options.lazyCompilation,
+        );
       }
       return compiler.options.lazyCompilation;
     };
 
     if (isLazyCompilationEnabled()) {
-      middlewares.use(rspack.lazyCompilationMiddleware(compiler) as RequestHandler);
+      middlewares.use(
+        rspack.lazyCompilationMiddleware(compiler) as RequestHandler,
+      );
     }
   }
 
@@ -201,7 +214,9 @@ const applyDefaultMiddlewares = async ({
   }
 
   if (server.publicDir.length) {
-    const { default: sirv } = await import(/* rspackChunkName: "sirv" */ 'sirv');
+    const { default: sirv } = await import(
+      /* rspackChunkName: "sirv" */ 'sirv'
+    );
     for (const { name } of server.publicDir) {
       const sirvMiddleware = sirv(name, {
         etag: true,
@@ -276,7 +291,11 @@ export const getDevMiddlewares = async (
   }
 
   // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
-  const { before, after } = applySetupMiddlewares(options.config, options.devServer, logger);
+  const { before, after } = applySetupMiddlewares(
+    options.config,
+    options.devServer,
+    logger,
+  );
 
   for (const middleware of before) {
     middlewares.use(middleware);

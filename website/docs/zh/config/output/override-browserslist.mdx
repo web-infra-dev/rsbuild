@@ -30,7 +30,13 @@ description: '该值会被 SWC 和 Lightning CSS 等工具读取，用来确定�
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
-    overrideBrowserslist: ['iOS >= 9', 'Android >= 4.4', 'last 2 versions', '> 0.2%', 'not dead'],
+    overrideBrowserslist: [
+      'iOS >= 9',
+      'Android >= 4.4',
+      'last 2 versions',
+      '> 0.2%',
+      'not dead',
+    ],
   },
 };
 ```

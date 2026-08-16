@@ -13,7 +13,9 @@ Create an [Rsbuild instance](/api/javascript-api/instance).
 - **Type:**
 
 ```ts
-function createRsbuild(options?: CreateRsbuildOptions): Promise<RsbuildInstance>;
+function createRsbuild(
+  options?: CreateRsbuildOptions,
+): Promise<RsbuildInstance>;
 ```
 
 - **Example:**
@@ -38,7 +40,10 @@ type CreateRsbuildOptions = {
   callerName?: string;
   environment?: string[];
   loadEnv?: boolean | LoadEnvOptions;
-  config?: RsbuildConfig | LoadConfigResult | (() => Promise<RsbuildConfig | LoadConfigResult>);
+  config?:
+    | RsbuildConfig
+    | LoadConfigResult
+    | (() => Promise<RsbuildConfig | LoadConfigResult>);
   restart?: RestartFn;
 };
 ```
@@ -469,7 +474,9 @@ The `mergeRsbuildConfig` function takes multiple configuration objects as parame
 - **Type:**
 
 ```ts
-function mergeRsbuildConfig(...configs: (RsbuildConfig | undefined)[]): RsbuildConfig;
+function mergeRsbuildConfig(
+  ...configs: (RsbuildConfig | undefined)[]
+): RsbuildConfig;
 ```
 
 ### Basic example
@@ -657,6 +664,9 @@ ensureAssetPrefix('foo/bar.js', '/static/');
 ensureAssetPrefix('foo/bar.js', 'https://example.com/static/');
 // -> 'https://example.com/static/foo/bar.js'
 
-ensureAssetPrefix('https://example.com/index.html', 'https://example.com/static/');
+ensureAssetPrefix(
+  'https://example.com/index.html',
+  'https://example.com/static/',
+);
 // -> 'https://example.com/index.html'
 ```

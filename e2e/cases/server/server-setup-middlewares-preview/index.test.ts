@@ -1,6 +1,8 @@
 import { expect, test } from '@e2e/helper';
 
-test('should apply server.setup in both dev and preview mode', async ({ runBothServe }) => {
+test('should apply server.setup in both dev and preview mode', async ({
+  runBothServe,
+}) => {
   await runBothServe(
     async ({ result }) => {
       const res = await fetch(`http://localhost:${result.port}/api/shared`);
@@ -24,7 +26,10 @@ test('should apply server.setup in both dev and preview mode', async ({ runBothS
   );
 });
 
-test('should apply server.setup in preview mode', async ({ page, buildPreview }) => {
+test('should apply server.setup in preview mode', async ({
+  page,
+  buildPreview,
+}) => {
   let middlewareCount = 0;
 
   await buildPreview({
@@ -45,7 +50,9 @@ test('should apply server.setup in preview mode', async ({ page, buildPreview })
   expect(middlewareCount).toBeGreaterThanOrEqual(1);
 });
 
-test('should apply server.setup for custom API route', async ({ buildPreview }) => {
+test('should apply server.setup for custom API route', async ({
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       server: {
@@ -67,7 +74,10 @@ test('should apply server.setup for custom API route', async ({ buildPreview }) 
   expect(await res.text()).toBe('api-ok');
 });
 
-test('should support multiple server.setup functions', async ({ page, buildPreview }) => {
+test('should support multiple server.setup functions', async ({
+  page,
+  buildPreview,
+}) => {
   let firstCalled = false;
   let secondCalled = false;
 
@@ -98,7 +108,9 @@ test('should support multiple server.setup functions', async ({ page, buildPrevi
   expect(secondCalled).toBe(true);
 });
 
-test('should run returned callback after internal middlewares', async ({ buildPreview }) => {
+test('should run returned callback after internal middlewares', async ({
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       server: {

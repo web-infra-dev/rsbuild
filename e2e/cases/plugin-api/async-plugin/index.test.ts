@@ -22,7 +22,10 @@ const asyncPlugin = async (): Promise<RsbuildPlugin> => {
   };
 };
 
-test('should allow to register async plugin in plugins field', async ({ page, buildPreview }) => {
+test('should allow to register async plugin in plugins field', async ({
+  page,
+  buildPreview,
+}) => {
   await buildPreview({
     config: {
       plugins: [asyncPlugin()],

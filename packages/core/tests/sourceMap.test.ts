@@ -2,13 +2,17 @@ import { createRsbuild, type RsbuildConfig, type Rspack } from '../src';
 import { JS_REGEX } from '../src/constants';
 import { normalizeRuleConditionPath } from '../src/helpers/path';
 
-const isExtractRule = (rule: Rspack.RuleSetRules[number]): rule is Rspack.RuleSetRule =>
+const isExtractRule = (
+  rule: Rspack.RuleSetRules[number],
+): rule is Rspack.RuleSetRule =>
   !!rule &&
   typeof rule === 'object' &&
   'extractSourceMap' in rule &&
   rule.extractSourceMap === true;
 
-const getExtractRules = async (config?: RsbuildConfig): Promise<Rspack.RuleSetRule[]> => {
+const getExtractRules = async (
+  config?: RsbuildConfig,
+): Promise<Rspack.RuleSetRule[]> => {
   const rsbuild = await createRsbuild({
     config,
   });
@@ -17,8 +21,10 @@ const getExtractRules = async (config?: RsbuildConfig): Promise<Rspack.RuleSetRu
   return bundlerConfig.module?.rules?.filter(isExtractRule) || [];
 };
 
-const findRuleByTest = (rules: Rspack.RuleSetRule[], test: Rspack.RuleSetCondition) =>
-  rules.find((item) => item.test?.toString() === test.toString());
+const findRuleByTest = (
+  rules: Rspack.RuleSetRule[],
+  test: Rspack.RuleSetCondition,
+) => rules.find((item) => item.test?.toString() === test.toString());
 
 describe('plugin-source-map', () => {
   it('should not add extract rules by default', async () => {

@@ -26,6 +26,11 @@ const runWorker = (
   worker.postMessage(message);
 };
 
-runWorker(new QueryWorker({ name: 'named' }), 'ping', '#worker', (data) => data.text);
+runWorker(
+  new QueryWorker({ name: 'named' }),
+  'ping',
+  '#worker',
+  (data) => data.text,
+);
 
 runWorker(new MjsWorker(), 'mjs', '#mjs', (data) => data.text);

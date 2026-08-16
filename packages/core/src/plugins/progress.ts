@@ -12,7 +12,10 @@ export const pluginProgress = (): RsbuildPlugin => ({
         return;
       }
 
-      const prefix = options !== true && options.id !== undefined ? options.id : environment.name;
+      const prefix =
+        options !== true && options.id !== undefined
+          ? options.id
+          : environment.name;
 
       chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(rspack.ProgressPlugin, [
         {

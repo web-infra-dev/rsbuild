@@ -1,6 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
-test('should apply plugin as expected when running dev server', async ({ page, dev }) => {
+test('should apply plugin as expected when running dev server', async ({
+  page,
+  dev,
+}) => {
   await dev();
 
   const body = page.locator('body');
@@ -8,7 +11,10 @@ test('should apply plugin as expected when running dev server', async ({ page, d
   await expect(body).not.toHaveText('build-plugin');
 });
 
-test('should apply plugin as expected when running build', async ({ page, buildPreview }) => {
+test('should apply plugin as expected when running build', async ({
+  page,
+  buildPreview,
+}) => {
   await buildPreview();
 
   const body = page.locator('body');

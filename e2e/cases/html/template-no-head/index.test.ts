@@ -2,7 +2,9 @@ import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
 // https://github.com/web-infra-dev/rsbuild/issues/4924
-test('should inject tags to HTML template without <head> tag', async ({ build }) => {
+test('should inject tags to HTML template without <head> tag', async ({
+  build,
+}) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 

@@ -13,7 +13,9 @@ description: 'Rsbuild JavaScript API 参考，涵盖createRsbuild、loadConfig�
 - **类型：**
 
 ```ts
-function createRsbuild(options?: CreateRsbuildOptions): Promise<RsbuildInstance>;
+function createRsbuild(
+  options?: CreateRsbuildOptions,
+): Promise<RsbuildInstance>;
 ```
 
 - **示例：**
@@ -38,7 +40,10 @@ type CreateRsbuildOptions = {
   callerName?: string;
   environment?: string[];
   loadEnv?: boolean | LoadEnvOptions;
-  config?: RsbuildConfig | LoadConfigResult | (() => Promise<RsbuildConfig | LoadConfigResult>);
+  config?:
+    | RsbuildConfig
+    | LoadConfigResult
+    | (() => Promise<RsbuildConfig | LoadConfigResult>);
   restart?: RestartFn;
 };
 ```
@@ -469,7 +474,9 @@ loadEnv({ processEnv: { ...process.env } });
 - **类型：**
 
 ```ts
-function mergeRsbuildConfig(...configs: (RsbuildConfig | undefined)[]): RsbuildConfig;
+function mergeRsbuildConfig(
+  ...configs: (RsbuildConfig | undefined)[]
+): RsbuildConfig;
 ```
 
 ### 基础示例
@@ -658,6 +665,9 @@ ensureAssetPrefix('foo/bar.js', '/static/');
 ensureAssetPrefix('foo/bar.js', 'https://example.com/static/');
 // -> 'https://example.com/static/foo/bar.js'
 
-ensureAssetPrefix('https://example.com/index.html', 'https://example.com/static/');
+ensureAssetPrefix(
+  'https://example.com/index.html',
+  'https://example.com/static/',
+);
 // -> 'https://example.com/index.html'
 ```

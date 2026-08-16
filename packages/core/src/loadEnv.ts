@@ -159,9 +159,16 @@ export function loadEnv({
     );
   }
 
-  const filenames = ['.env', '.env.local', `.env.${mode}`, `.env.${mode}.local`];
+  const filenames = [
+    '.env',
+    '.env.local',
+    `.env.${mode}`,
+    `.env.${mode}.local`,
+  ];
 
-  const filePaths = filenames.map((filename) => join(cwd, filename)).filter(isFileSync);
+  const filePaths = filenames
+    .map((filename) => join(cwd, filename))
+    .filter(isFileSync);
 
   const parsed: Record<string, string> = {};
 

@@ -60,6 +60,10 @@ export default App;
   );
 
   await expectLog("Can't resolve 'shown-overlay-error'");
-  await expect(errorOverlay.locator('.title')).toHaveText(OVERLAY_TITLE_BUILD_FAILED);
-  await expect(errorOverlay).toContainText("Can't resolve 'shown-overlay-error'");
+  await expect(errorOverlay.locator('.title')).toHaveText(
+    OVERLAY_TITLE_BUILD_FAILED,
+  );
+  await expect(errorOverlay).toContainText(
+    "Can't resolve 'shown-overlay-error'",
+  );
 });

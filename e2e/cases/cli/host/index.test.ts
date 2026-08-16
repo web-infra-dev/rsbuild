@@ -1,7 +1,10 @@
 import { NETWORK_LOG_REGEX, test } from '@e2e/helper';
 import { getRandomPort } from '@rstackjs/test-utils';
 
-test('should listen on localhost by default', async ({ execCli, logHelper }) => {
+test('should listen on localhost by default', async ({
+  execCli,
+  logHelper,
+}) => {
   const port = await getRandomPort();
   execCli(`dev --port ${port}`);
   await logHelper.expectBuildEnd();
@@ -9,7 +12,10 @@ test('should listen on localhost by default', async ({ execCli, logHelper }) => 
   logHelper.expectNoLog(NETWORK_LOG_REGEX);
 });
 
-test('should listen on all interfaces when host is true', async ({ execCli, logHelper }) => {
+test('should listen on all interfaces when host is true', async ({
+  execCli,
+  logHelper,
+}) => {
   const port = await getRandomPort();
   execCli(`dev --host --port ${port}`);
   await logHelper.expectBuildEnd();
@@ -17,7 +23,10 @@ test('should listen on all interfaces when host is true', async ({ execCli, logH
   await logHelper.expectLog(NETWORK_LOG_REGEX);
 });
 
-test('should listen on all interfaces when host is 0.0.0.0', async ({ execCli, logHelper }) => {
+test('should listen on all interfaces when host is 0.0.0.0', async ({
+  execCli,
+  logHelper,
+}) => {
   const port = await getRandomPort();
   execCli(`dev --host 0.0.0.0 --port ${port}`);
   await logHelper.expectBuildEnd();

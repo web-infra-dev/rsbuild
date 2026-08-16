@@ -14,10 +14,14 @@ test('should copy asset to dist folder correctly', async ({ build }) => {
     },
   });
 
-  expect(fs.existsSync(join(import.meta.dirname, 'dist-1/icon.png'))).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist-1/icon.png')),
+  ).toBeTruthy();
 });
 
-test('should copy asset from src to dist folder correctly', async ({ build }) => {
+test('should copy asset from src to dist folder correctly', async ({
+  build,
+}) => {
   await build({
     config: {
       output: {
@@ -32,7 +36,9 @@ test('should copy asset from src to dist folder correctly', async ({ build }) =>
     },
   });
 
-  expect(fs.existsSync(join(import.meta.dirname, 'dist/assets/foo.txt'))).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist/assets/foo.txt')),
+  ).toBeTruthy();
 });
 
 test('should transform copied assets', async ({ build }) => {
@@ -53,9 +59,12 @@ test('should transform copied assets', async ({ build }) => {
     },
   });
 
-  expect(fs.readFileSync(join(import.meta.dirname, 'dist/transformed/foo.txt'), 'utf-8')).toBe(
-    'BAR',
-  );
+  expect(
+    fs.readFileSync(
+      join(import.meta.dirname, 'dist/transformed/foo.txt'),
+      'utf-8',
+    ),
+  ).toBe('BAR');
 });
 
 test('should copy asset to dist sub-folder correctly', async ({ build }) => {
@@ -68,7 +77,9 @@ test('should copy asset to dist sub-folder correctly', async ({ build }) => {
     },
   });
 
-  expect(fs.existsSync(join(import.meta.dirname, 'dist-1/foo/icon.png'))).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist-1/foo/icon.png')),
+  ).toBeTruthy();
 });
 
 test('should merge copy config correctly', async ({ build }) => {
@@ -117,6 +128,10 @@ test('should merge copy config correctly', async ({ build }) => {
     },
   });
 
-  expect(fs.existsSync(join(import.meta.dirname, 'dist-4/icon.png'))).toBeTruthy();
-  expect(fs.existsSync(join(import.meta.dirname, 'dist-4/image.png'))).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist-4/icon.png')),
+  ).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist-4/image.png')),
+  ).toBeTruthy();
 });

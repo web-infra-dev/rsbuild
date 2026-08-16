@@ -54,7 +54,9 @@ test('should use dev.client URL for lazy compilation trigger requests', async ({
     },
   });
 
-  const htmlResponse = await fetch(`http://localhost:${rsbuild.port}/index.html`);
+  const htmlResponse = await fetch(
+    `http://localhost:${rsbuild.port}/index.html`,
+  );
   expect(htmlResponse.ok).toBeTruthy();
 
   const html = await htmlResponse.text();
@@ -80,13 +82,18 @@ test('should use dev.client URL for lazy compilation trigger requests', async ({
     await rsbuild.expectBuildEnd();
 
     await expect(page.locator('#result')).toHaveText('lazy loaded');
-    expect(lazyTriggerRequests).toContain(`http://localhost:${rsbuildPort}/_rspack/lazy/trigger`);
+    expect(lazyTriggerRequests).toContain(
+      `http://localhost:${rsbuildPort}/_rspack/lazy/trigger`,
+    );
   } finally {
     await close(backendServer);
   }
 });
 
-test('should use current page URL when dev.assetPrefix is relative', async ({ page, devOnly }) => {
+test('should use current page URL when dev.assetPrefix is relative', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuildPort = await getRandomPort();
   const backendPort = await getRandomPort();
   const lazyTriggerRequests: string[] = [];
@@ -112,7 +119,9 @@ test('should use current page URL when dev.assetPrefix is relative', async ({ pa
     },
   });
 
-  const htmlResponse = await fetch(`http://localhost:${rsbuild.port}/index.html`);
+  const htmlResponse = await fetch(
+    `http://localhost:${rsbuild.port}/index.html`,
+  );
   expect(htmlResponse.ok).toBeTruthy();
 
   const html = await htmlResponse.text();
@@ -154,13 +163,18 @@ test('should use current page URL when dev.assetPrefix is relative', async ({ pa
     await rsbuild.expectBuildEnd();
 
     await expect(page.locator('#result')).toHaveText('lazy loaded');
-    expect(lazyTriggerRequests).toContain(`http://localhost:${backendPort}/_rspack/lazy/trigger`);
+    expect(lazyTriggerRequests).toContain(
+      `http://localhost:${backendPort}/_rspack/lazy/trigger`,
+    );
   } finally {
     await close(backendServer);
   }
 });
 
-test('should prefer lazyCompilation.serverUrl over dev.client URL', async ({ page, devOnly }) => {
+test('should prefer lazyCompilation.serverUrl over dev.client URL', async ({
+  page,
+  devOnly,
+}) => {
   const wrongClientPort = await getRandomPort();
   const lazyTriggerRequests: string[] = [];
 
@@ -193,5 +207,7 @@ test('should prefer lazyCompilation.serverUrl over dev.client URL', async ({ pag
   await rsbuild.expectBuildEnd();
 
   await expect(page.locator('#result')).toHaveText('lazy loaded');
-  expect(lazyTriggerRequests).toContain(`http://localhost:${rsbuild.port}/_rspack/lazy/trigger`);
+  expect(lazyTriggerRequests).toContain(
+    `http://localhost:${rsbuild.port}/_rspack/lazy/trigger`,
+  );
 });

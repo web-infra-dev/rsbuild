@@ -401,7 +401,8 @@ export default {
       resolve: {
         mainFields: ['browser', 'module', 'main'],
       },
-      plugins: process.env.NODE_ENV === 'development' ? [new MyWebpackPlugin()] : [],
+      plugins:
+        process.env.NODE_ENV === 'development' ? [new MyWebpackPlugin()] : [],
     },
   },
 };

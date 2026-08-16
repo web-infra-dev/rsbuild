@@ -1,5 +1,8 @@
 import { JS_DIST_DIR } from './constants';
-import { updateContextByNormalizedConfig, updateEnvironmentContext } from './createContext';
+import {
+  updateContextByNormalizedConfig,
+  updateEnvironmentContext,
+} from './createContext';
 import { getDefaultEntry, normalizeConfig } from './defaultConfig';
 import { camelCase, color, pick } from './helpers';
 import { ensureAbsolutePath } from './helpers/path';
@@ -38,9 +41,12 @@ async function modifyRsbuildConfig(context: InternalContext) {
   context.logger.debug('applying modifyRsbuildConfig hook');
 
   const pluginsCount = context.config.plugins?.length ?? 0;
-  const [modified] = await context.hooks.modifyRsbuildConfig.callChain(context.config, {
-    mergeRsbuildConfig,
-  });
+  const [modified] = await context.hooks.modifyRsbuildConfig.callChain(
+    context.config,
+    {
+      mergeRsbuildConfig,
+    },
+  );
   context.config = modified;
 
   const newPluginsCount = modified.plugins?.length ?? 0;
@@ -108,7 +114,12 @@ const initEnvironmentConfigs = (
     return defaultEntry;
   };
 
-  const { environments, dev, server: _server, ...baseConfig } = normalizedConfig;
+  const {
+    environments,
+    dev,
+    server: _server,
+    ...baseConfig
+  } = normalizedConfig;
 
   const isEnvironmentEnabled = (name: string) =>
     !specifiedEnvironments || specifiedEnvironments.includes(name);
@@ -175,7 +186,10 @@ const initEnvironmentConfigs = (
   };
 };
 
-const validateRsbuildConfig = (context: InternalContext, config: NormalizedConfig) => {
+const validateRsbuildConfig = (
+  context: InternalContext,
+  config: NormalizedConfig,
+) => {
   if (config.server.base && !config.server.base.startsWith('/')) {
     throw new Error(
       `${color.dim('[rsbuild:config]')} The ${color.yellow(
@@ -227,7 +241,10 @@ const validateRsbuildConfig = (context: InternalContext, config: NormalizedConfi
 export async function initRsbuildConfig({
   context,
   pluginManager,
-}: Pick<InitConfigsOptions, 'context' | 'pluginManager'>): Promise<NormalizedConfig> {
+}: Pick<
+  InitConfigsOptions,
+  'context' | 'pluginManager'
+>): Promise<NormalizedConfig> {
   // initialized
   if (context.normalizedConfig) {
     return context.normalizedConfig;
@@ -240,7 +257,10 @@ export async function initRsbuildConfig({
 
   await modifyRsbuildConfig(context);
 
-  const normalizedBaseConfig = normalizeConfig(context.config, context.rootPath);
+  const normalizedBaseConfig = normalizeConfig(
+    context.config,
+    context.rootPath,
+  );
   const environments: Record<string, NormalizedEnvironmentConfig> = {};
 
   const mergedEnvironments = initEnvironmentConfigs(
@@ -252,7 +272,11 @@ export async function initRsbuildConfig({
   const tsconfigPaths = new Set<string>();
 
   for (const [name, config] of Object.entries(mergedEnvironments)) {
-    const environmentConfig = await modifyEnvironmentConfig(context, config, name);
+    const environmentConfig = await modifyEnvironmentConfig(
+      context,
+      config,
+      name,
+    );
 
     const normalizedEnvironmentConfig = {
       ...environmentConfig,
@@ -267,7 +291,10 @@ export async function initRsbuildConfig({
 
     // Ensure the `tsconfigPath` is an absolute path
     if (tsconfigPath) {
-      const absoluteTsconfigPath = ensureAbsolutePath(context.rootPath, tsconfigPath);
+      const absoluteTsconfigPath = ensureAbsolutePath(
+        context.rootPath,
+        tsconfigPath,
+      );
       normalizedEnvironmentConfig.source.tsconfigPath = absoluteTsconfigPath;
       tsconfigPaths.add(absoluteTsconfigPath);
     }
@@ -277,7 +304,10 @@ export async function initRsbuildConfig({
 
   // Watch tsconfig files and restart the dev server or watch build when they change
   // to ensure that `paths` aliases can be updated.
-  if (tsconfigPaths.size && normalizedBaseConfig.resolve.aliasStrategy === 'prefer-tsconfig') {
+  if (
+    tsconfigPaths.size &&
+    normalizedBaseConfig.resolve.aliasStrategy === 'prefer-tsconfig'
+  ) {
     normalizedBaseConfig.dev.watchFiles.push({
       paths: Array.from(tsconfigPaths),
       type: 'restart',
@@ -308,7 +338,9 @@ export async function initConfigs({
   const rspackConfigs: Rspack.Configuration[] = [];
 
   // Generate Rspack configs sequentially to ensure deterministic ordering and stable results
-  for (const [environmentName, config] of Object.entries(normalizedConfig.environments)) {
+  for (const [environmentName, config] of Object.entries(
+    normalizedConfig.environments,
+  )) {
     rspackConfigs.push(
       await generateRspackConfig({
         target: config.output.target,

@@ -48,7 +48,9 @@ test('should load env files correctly', () => {
   });
 
   expect(env.filePaths.find((item) => item.endsWith('.env'))).toBeTruthy();
-  expect(env.filePaths.find((item) => item.endsWith('.env.staging'))).toBeTruthy();
+  expect(
+    env.filePaths.find((item) => item.endsWith('.env.staging')),
+  ).toBeTruthy();
 
   env.cleanup();
   expect(process.env.REACT_NAME).toEqual(undefined);

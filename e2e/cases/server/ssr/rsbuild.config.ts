@@ -1,5 +1,10 @@
 import inspector from 'node:inspector';
-import { defineConfig, logger, type RequestHandler, type RsbuildDevServer } from '@rsbuild/core';
+import {
+  defineConfig,
+  logger,
+  type RequestHandler,
+  type RsbuildDevServer,
+} from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export const serverRender =

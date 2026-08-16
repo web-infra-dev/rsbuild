@@ -1,7 +1,9 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('should allow plugin to transform code by environments', async ({ build }) => {
+test('should allow plugin to transform code by environments', async ({
+  build,
+}) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();

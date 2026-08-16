@@ -21,7 +21,9 @@ test('should emit local favicon to dist path', async ({ build }) => {
   expect(html).toContain('<link rel="icon" href="/icon.png">');
 });
 
-test('should allow `html.favicon` to be an absolute path', async ({ build }) => {
+test('should allow `html.favicon` to be an absolute path', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       html: {
@@ -52,7 +54,9 @@ test('should add type attribute for SVG favicon', async ({ build }) => {
   expect(icon.endsWith('/mobile.svg')).toBeTruthy();
 
   const html = getFileContent(files, 'index.html');
-  expect(html).toContain('<link rel="icon" href="/mobile.svg" type="image/svg+xml">');
+  expect(html).toContain(
+    '<link rel="icon" href="/mobile.svg" type="image/svg+xml">',
+  );
 });
 
 test('should apply asset prefix to favicon URL', async ({ build }) => {
@@ -70,7 +74,9 @@ test('should apply asset prefix to favicon URL', async ({ build }) => {
 
   const html = getFileContent(files, 'index.html');
 
-  expect(html).toContain('<link rel="icon" href="https://www.example.com/icon.png">');
+  expect(html).toContain(
+    '<link rel="icon" href="https://www.example.com/icon.png">',
+  );
 });
 
 test('should allow favicon to be a CDN URL', async ({ build }) => {
@@ -111,13 +117,19 @@ test('should generate favicon via function correctly', async ({ build }) => {
   const files = rsbuild.getDistFiles();
 
   const fooHtml = getFileContent(files, 'foo.html');
-  expect(fooHtml).toContain('<link rel="icon" href="https://example.com/foo.ico">');
+  expect(fooHtml).toContain(
+    '<link rel="icon" href="https://example.com/foo.ico">',
+  );
 
   const barHtml = getFileContent(files, 'bar.html');
-  expect(barHtml).toContain('<link rel="icon" href="https://example.com/bar.ico">');
+  expect(barHtml).toContain(
+    '<link rel="icon" href="https://example.com/bar.ico">',
+  );
 });
 
-test('should allow to custom favicon dist path with a relative path', async ({ build }) => {
+test('should allow to custom favicon dist path with a relative path', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       html: {
@@ -156,9 +168,15 @@ test('should distinguish favicon output path from assets with the same basename'
         rspack(_config, { appendPlugins, rspack }) {
           appendPlugins({
             apply(compiler: Rspack.Compiler) {
-              compiler.hooks.thisCompilation.tap('test-favicon-output-path', (compilation) => {
-                compilation.emitAsset('icon.png', new rspack.sources.RawSource('root icon'));
-              });
+              compiler.hooks.thisCompilation.tap(
+                'test-favicon-output-path',
+                (compilation) => {
+                  compilation.emitAsset(
+                    'icon.png',
+                    new rspack.sources.RawSource('root icon'),
+                  );
+                },
+              );
             },
           });
         },
@@ -201,7 +219,9 @@ test('should allow to custom favicon dist path with a relative path starting wit
 for (const filename of ['favicon.ico', 'favicon.png', 'favicon.svg']) {
   const publicPath = path.join(import.meta.dirname, 'test-temp-public');
 
-  test(`should resolve ${filename} under public dir by default`, async ({ build }) => {
+  test(`should resolve ${filename} under public dir by default`, async ({
+    build,
+  }) => {
     await fse.remove(publicPath);
     await fse.outputFile(path.join(publicPath, filename), '');
 

@@ -3,7 +3,9 @@ import type { Module, ModuleLinker, SyntheticModule } from 'node:vm';
 const isModuleNamespaceObject = (moduleExports: Record<string, unknown>) =>
   Object.prototype.toString.call(moduleExports) === '[object Module]';
 
-const normalizeModuleExports = (moduleExports: unknown): Record<string, unknown> => {
+const normalizeModuleExports = (
+  moduleExports: unknown,
+): Record<string, unknown> => {
   if (
     moduleExports !== null &&
     (typeof moduleExports === 'object' || typeof moduleExports === 'function')
@@ -26,7 +28,9 @@ export const asModule = async (
   }
 
   const normalizedModuleExports = normalizeModuleExports(moduleExports);
-  const exports = [...new Set(['default', ...Object.keys(normalizedModuleExports)])];
+  const exports = [
+    ...new Set(['default', ...Object.keys(normalizedModuleExports)]),
+  ];
 
   const syntheticModule = new SyntheticModule(
     exports,
@@ -34,7 +38,8 @@ export const asModule = async (
       for (const name of exports) {
         if (name === 'default') {
           const defaultExport =
-            isModuleNamespaceObject(normalizedModuleExports) && 'default' in normalizedModuleExports
+            isModuleNamespaceObject(normalizedModuleExports) &&
+            'default' in normalizedModuleExports
               ? normalizedModuleExports.default
               : moduleExports;
           syntheticModule.setExport(name, defaultExport);

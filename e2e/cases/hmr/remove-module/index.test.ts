@@ -29,7 +29,10 @@ test('should recover after a missing module is restored', async ({
   await logHelper.expectLog(`Can't resolve './Button'`);
 
   logHelper.clearLogs();
-  await fse.copy(join(import.meta.dirname, 'src/Button.jsx'), join(tempSrc, 'Button.jsx'));
+  await fse.copy(
+    join(import.meta.dirname, 'src/Button.jsx'),
+    join(tempSrc, 'Button.jsx'),
+  );
   await logHelper.expectBuildEnd();
   await expect(page.locator('#button')).toHaveText('count: 0');
 });

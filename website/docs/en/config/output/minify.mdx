@@ -11,10 +11,12 @@ type Minify =
   | boolean
   | {
       js?: boolean | 'always';
-      jsOptions?: SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[];
+      jsOptions?:
+        SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[];
       css?: boolean | 'always';
       cssOptions?:
-        LightningCssMinimizerRspackPluginOptions | LightningCssMinimizerRspackPluginOptions[];
+        | LightningCssMinimizerRspackPluginOptions
+        | LightningCssMinimizerRspackPluginOptions[];
     };
 ```
 

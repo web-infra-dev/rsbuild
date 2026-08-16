@@ -1,6 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
-test('should apply `historyApiFallback.rewrites` correctly', async ({ page, devOnly }) => {
+test('should apply `historyApiFallback.rewrites` correctly', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly();
 
   await page.goto(`http://localhost:${rsbuild.port}`);
