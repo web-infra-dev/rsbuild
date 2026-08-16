@@ -20,7 +20,9 @@ test('should escape template parameters correctly', async ({ build }) => {
   expect(barHtml).toContain('<div>escape me</div>');
 });
 
-test('should allow to passing undefined to template parameters', async ({ build }) => {
+test('should allow to passing undefined to template parameters', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       html: {

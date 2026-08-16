@@ -42,7 +42,8 @@ export const pluginEntry = (): RsbuildPlugin => ({
         }
 
         const isModuleFederationPlugin = (plugin: Rspack.Plugin) =>
-          isObject(plugin) && plugin.constructor.name === 'ModuleFederationPlugin';
+          isObject(plugin) &&
+          plugin.constructor.name === 'ModuleFederationPlugin';
 
         const hasModuleFederation = bundlerConfigs.some(({ plugins }) =>
           plugins?.some(isModuleFederationPlugin),

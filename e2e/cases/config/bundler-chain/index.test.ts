@@ -9,7 +9,10 @@ test('should allow to use tools.bundlerChain to set alias config', async ({
     config: {
       tools: {
         bundlerChain: (chain) => {
-          chain.resolve.alias.set('@common', join(import.meta.dirname, 'src/common'));
+          chain.resolve.alias.set(
+            '@common',
+            join(import.meta.dirname, 'src/common'),
+          );
         },
       },
     },
@@ -28,7 +31,10 @@ test('should allow to use async tools.bundlerChain to set alias config', async (
         bundlerChain: async (chain) => {
           return new Promise((resolve) => {
             setTimeout(() => {
-              chain.resolve.alias.set('@common', join(import.meta.dirname, 'src/common'));
+              chain.resolve.alias.set(
+                '@common',
+                join(import.meta.dirname, 'src/common'),
+              );
               resolve();
             }, 0);
           });
@@ -40,12 +46,18 @@ test('should allow to use async tools.bundlerChain to set alias config', async (
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
 });
 
-test('should allow to use rspack in tools.bundlerChain', async ({ page, buildPreview }) => {
+test('should allow to use rspack in tools.bundlerChain', async ({
+  page,
+  buildPreview,
+}) => {
   await buildPreview({
     config: {
       tools: {
         bundlerChain: (chain, { rspack }) => {
-          chain.resolve.alias.set('@common', join(import.meta.dirname, 'src/common'));
+          chain.resolve.alias.set(
+            '@common',
+            join(import.meta.dirname, 'src/common'),
+          );
 
           chain.plugin('extra-define').use(rspack.DefinePlugin, [
             {

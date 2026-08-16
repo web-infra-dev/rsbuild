@@ -2,7 +2,10 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import type { Config } from 'prebundle';
 
-function replaceFileContent(filePath: string, replaceFn: (content: string) => string) {
+function replaceFileContent(
+  filePath: string,
+  replaceFn: (content: string) => string,
+) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const newContent = replaceFn(content);
   if (newContent !== content) {
@@ -21,7 +24,10 @@ export default {
       name: 'html-rspack-plugin',
       afterBundle(task) {
         replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
-          content.replace('export { HtmlRspackPlugin as default };', 'export = HtmlRspackPlugin;'),
+          content.replace(
+            'export { HtmlRspackPlugin as default };',
+            'export = HtmlRspackPlugin;',
+          ),
         );
       },
     },
@@ -67,9 +73,13 @@ export default {
       name: 'style-loader',
       ignoreDts: true,
       afterBundle: (task) => {
-        fs.cpSync(join(task.depPath, 'dist/runtime'), join(task.distPath, 'runtime'), {
-          recursive: true,
-        });
+        fs.cpSync(
+          join(task.depPath, 'dist/runtime'),
+          join(task.distPath, 'runtime'),
+          {
+            recursive: true,
+          },
+        );
       },
     },
     {
@@ -81,8 +91,10 @@ export default {
         replaceFileContent(join(task.distPath, 'lib/postcss.d.ts'), (content) =>
           content.replace("from 'source-map-js'", 'from "./source-map-js"'),
         );
-        replaceFileContent(join(task.distPath, 'lib/previous-map.d.ts'), (content) =>
-          content.replace("from 'source-map-js'", 'from "./source-map-js"'),
+        replaceFileContent(
+          join(task.distPath, 'lib/previous-map.d.ts'),
+          (content) =>
+            content.replace("from 'source-map-js'", 'from "./source-map-js"'),
         );
         fs.writeFileSync(
           join(task.distPath, 'lib/source-map-js.d.ts'),

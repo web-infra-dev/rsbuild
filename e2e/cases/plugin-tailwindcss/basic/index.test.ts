@@ -1,7 +1,9 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('should generate tailwindcss utilities correctly with plugin', async ({ build }) => {
+test('should generate tailwindcss utilities correctly with plugin', async ({
+  build,
+}) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();

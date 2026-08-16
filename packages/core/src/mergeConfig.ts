@@ -134,7 +134,9 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
  * This function returns a new merged configuration object and does not modify
  * the input configuration objects.
  */
-export const mergeRsbuildConfig = <T = RsbuildConfig>(...originalConfigs: (T | undefined)[]): T => {
+export const mergeRsbuildConfig = <T = RsbuildConfig>(
+  ...originalConfigs: (T | undefined)[]
+): T => {
   const configs = originalConfigs
     .filter((config) => config !== undefined)
     .map(normalizeConfigStructure);
@@ -146,5 +148,8 @@ export const mergeRsbuildConfig = <T = RsbuildConfig>(...originalConfigs: (T | u
   if (configs.length === 0) {
     return {} as T;
   }
-  return configs.reduce((result, config) => merge(result, config) as T, {} as T);
+  return configs.reduce(
+    (result, config) => merge(result, config) as T,
+    {} as T,
+  );
 };

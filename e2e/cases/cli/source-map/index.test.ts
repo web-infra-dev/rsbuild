@@ -1,7 +1,10 @@
 import { expect, test } from '@e2e/helper';
 import { readDirContents } from '@rstackjs/test-utils';
 
-test('should enable source map from CLI', async ({ prepareDist, execCliSync }) => {
+test('should enable source map from CLI', async ({
+  prepareDist,
+  execCliSync,
+}) => {
   const distPath = await prepareDist();
   execCliSync('build --source-map');
 
@@ -11,7 +14,10 @@ test('should enable source map from CLI', async ({ prepareDist, execCliSync }) =
   expect(outputFiles.some((file) => file.endsWith('.js.map'))).toBeTruthy();
 });
 
-test('should disable source map from CLI', async ({ prepareDist, execCliSync }) => {
+test('should disable source map from CLI', async ({
+  prepareDist,
+  execCliSync,
+}) => {
   const distPath = await prepareDist();
   execCliSync('build --config source-map.config.ts --no-source-map');
 

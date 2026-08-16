@@ -8,7 +8,12 @@ import {
   DEFAULT_WATCH_FILE_EVENTS,
   type WatchFilesResult,
 } from './server/watchFiles';
-import type { InternalContext, RestartContext, WatchFileEvent, WatchFiles } from './types';
+import type {
+  InternalContext,
+  RestartContext,
+  WatchFileEvent,
+  WatchFiles,
+} from './types';
 
 const clearConsole = () => {
   if (isTTY() && !process.env.DEBUG) {
@@ -103,7 +108,11 @@ export function watchFilesForRestart({
   let restarting = false;
   let closePromise: Promise<void> | undefined;
 
-  const onWatchEvent = async (event: WatchFileEvent, filePath: string, cwd: string) => {
+  const onWatchEvent = async (
+    event: WatchFileEvent,
+    filePath: string,
+    cwd: string,
+  ) => {
     if (restarting || closePromise) {
       return;
     }
@@ -127,7 +136,9 @@ export function watchFilesForRestart({
         await close();
       } else if (restartManager.canRestart) {
         logger.error(
-          restartContext.action === 'build' ? 'Restart build failed.' : 'Restart server failed.',
+          restartContext.action === 'build'
+            ? 'Restart build failed.'
+            : 'Restart server failed.',
         );
       }
     } catch (error) {
@@ -150,7 +161,9 @@ export function watchFilesForRestart({
         });
         // Chokidar reports event paths relative to `cwd` when it is configured.
         const cwd = options?.cwd ?? root;
-        const watchEvents = events ? new Set(events) : DEFAULT_WATCH_FILE_EVENTS;
+        const watchEvents = events
+          ? new Set(events)
+          : DEFAULT_WATCH_FILE_EVENTS;
         for (const event of watchEvents) {
           watcher.on(event, (filePath) => onWatchEvent(event, filePath, cwd));
         }
@@ -164,7 +177,9 @@ export function watchFilesForRestart({
   const close = () => {
     if (!closePromise) {
       closePromise = watchersPromise
-        .then((watchers) => Promise.all(watchers.map((watcher) => watcher?.close())))
+        .then((watchers) =>
+          Promise.all(watchers.map((watcher) => watcher?.close())),
+        )
         .then(() => {});
     }
     return closePromise;

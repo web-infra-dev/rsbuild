@@ -1,7 +1,11 @@
 import type { Page } from 'playwright';
 import { expect, HMR_CONNECTED_LOG, OVERLAY_ID, test } from '@e2e/helper';
 
-const triggerRuntimeError = async (page: Page, name: string, message: string) => {
+const triggerRuntimeError = async (
+  page: Page,
+  name: string,
+  message: string,
+) => {
   await page.evaluate(
     ({ name, message }) => {
       window.dispatchEvent(
@@ -17,7 +21,11 @@ const triggerRuntimeError = async (page: Page, name: string, message: string) =>
   );
 };
 
-test('should filter runtime errors from overlay', async ({ page, dev, logHelper }) => {
+test('should filter runtime errors from overlay', async ({
+  page,
+  dev,
+  logHelper,
+}) => {
   const { expectLog, addLog } = logHelper;
 
   page.on('console', (consoleMessage) => {
@@ -36,6 +44,8 @@ test('should filter runtime errors from overlay', async ({ page, dev, logHelper 
   await triggerRuntimeError(page, 'TypeError', 'shown runtime error');
   await expectLog('shown runtime error');
   await expect(errorOverlay.locator('.title')).toHaveText('Runtime errors');
-  await expect(errorOverlay).toContainText('Uncaught TypeError: shown runtime error');
+  await expect(errorOverlay).toContainText(
+    'Uncaught TypeError: shown runtime error',
+  );
   await expect(errorOverlay).not.toContainText('filtered runtime error');
 });

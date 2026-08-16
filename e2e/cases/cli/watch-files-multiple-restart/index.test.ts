@@ -6,7 +6,10 @@ const defaultFile = path.join(import.meta.dirname, 'test-temp-default.txt');
 const customFile = path.join(import.meta.dirname, 'test-temp-custom.txt');
 const defaultRestartLog = 'restarting build as test-temp-default.txt changed';
 
-test('should restart once with multiple restart watchers', async ({ execCli, logHelper }) => {
+test('should restart once with multiple restart watchers', async ({
+  execCli,
+  logHelper,
+}) => {
   fs.writeFileSync(defaultFile, '1');
   fs.writeFileSync(customFile, '1');
   execCli('build --watch');
@@ -24,5 +27,7 @@ test('should restart once with multiple restart watchers', async ({ execCli, log
   await expectLog(defaultRestartLog);
   await expectBuildEnd();
 
-  expect(logHelper.logs.filter((log) => log.includes(defaultRestartLog))).toHaveLength(1);
+  expect(
+    logHelper.logs.filter((log) => log.includes(defaultRestartLog)),
+  ).toHaveLength(1);
 });

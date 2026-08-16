@@ -7,6 +7,8 @@ test('should build CSS assets correctly', async ({ build }) => {
   const filenames = Object.keys(files);
 
   expect(
-    filenames.find((item) => item.includes('static/image/image') && item.endsWith('.jpeg')),
+    filenames.find(
+      (item) => item.includes('static/image/image') && item.endsWith('.jpeg'),
+    ),
   ).toBeTruthy();
 });

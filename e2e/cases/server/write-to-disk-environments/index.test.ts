@@ -5,11 +5,22 @@ import { expect, test } from '@e2e/helper';
 const cwd = import.meta.dirname;
 
 test.beforeEach(async ({ prepareDist }) => {
-  const distFolderNames = ['dist', 'dist-1', 'dist-2', 'dist-same', 'dist-same-1'];
-  await Promise.all(distFolderNames.map((distFolderName) => prepareDist(distFolderName)));
+  const distFolderNames = [
+    'dist',
+    'dist-1',
+    'dist-2',
+    'dist-same',
+    'dist-same-1',
+  ];
+  await Promise.all(
+    distFolderNames.map((distFolderName) => prepareDist(distFolderName)),
+  );
 });
 
-test('should handle writeToDisk correctly across multiple environments', async ({ page, dev }) => {
+test('should handle writeToDisk correctly across multiple environments', async ({
+  page,
+  dev,
+}) => {
   await dev({
     config: {
       dev: {

@@ -1,7 +1,9 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('should compile CSS Modules with default configuration', async ({ build }) => {
+test('should compile CSS Modules with default configuration', async ({
+  build,
+}) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, 'index.css');
@@ -10,7 +12,9 @@ test('should compile CSS Modules with default configuration', async ({ build }) 
   );
 });
 
-test('should compile CSS Modules with custom auto configuration', async ({ build }) => {
+test('should compile CSS Modules with custom auto configuration', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -29,7 +33,9 @@ test('should compile CSS Modules with custom auto configuration', async ({ build
   );
 });
 
-test('should compile CSS Modules with custom localIdentName pattern', async ({ build }) => {
+test('should compile CSS Modules with custom localIdentName pattern', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -46,7 +52,9 @@ test('should compile CSS Modules with custom localIdentName pattern', async ({ b
   );
 });
 
-test('should compile CSS Modules with custom hash digest format', async ({ build }) => {
+test('should compile CSS Modules with custom hash digest format', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {

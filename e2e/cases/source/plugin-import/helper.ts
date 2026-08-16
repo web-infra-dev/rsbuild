@@ -32,7 +32,10 @@ export const cases: Parameters<typeof shareTest>[] = [
   ],
 ];
 
-export function findEntry(files: Record<string, string>, name = 'index'): string {
+export function findEntry(
+  files: Record<string, string>,
+  name = 'index',
+): string {
   for (const key of Reflect.ownKeys(files) as string[]) {
     if (key.includes(`dist/static/js/${name}`) && key.endsWith('.js')) {
       return key;
@@ -42,7 +45,11 @@ export function findEntry(files: Record<string, string>, name = 'index'): string
   throw new Error('unreachable');
 }
 
-export function shareTest(msg: string, entry: string, transformImport: TransformImport) {
+export function shareTest(
+  msg: string,
+  entry: string,
+  transformImport: TransformImport,
+) {
   const config: RsbuildConfig = {
     source: {
       entry: {

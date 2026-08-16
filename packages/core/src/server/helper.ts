@@ -6,7 +6,11 @@ import { posix, relative, sep } from 'node:path';
 import { ALL_INTERFACES_IPV4, LOCALHOST } from '../constants';
 import { color, isFunction } from '../helpers';
 import { getCommonParentPath } from '../helpers/path';
-import { addTrailingSlash, removeLeadingSlash, removeTailingSlash } from '../helpers/url';
+import {
+  addTrailingSlash,
+  removeLeadingSlash,
+  removeTailingSlash,
+} from '../helpers/url';
 import type { Logger } from '../logger';
 import type {
   Connect,
@@ -25,7 +29,11 @@ import type { RsbuildPreviewServer } from './previewServer';
 /**
  * It used to subscribe http upgrade event
  */
-export type UpgradeEvent = (req: IncomingMessage, socket: Socket, head: any) => void;
+export type UpgradeEvent = (
+  req: IncomingMessage,
+  socket: Socket,
+  head: any,
+) => void;
 
 export type ServerStartResult<T> = {
   /**
@@ -47,7 +55,8 @@ export type StartDevServerResult = ServerStartResult<RsbuildDevServer>;
 export type StartPreviewServerResult = ServerStartResult<RsbuildPreviewServer>;
 
 // remove repeat '/'
-export const normalizeUrl = (url: string): string => url.replace(/([^:]\/)\/+/g, '$1');
+export const normalizeUrl = (url: string): string =>
+  url.replace(/([^:]\/)\/+/g, '$1');
 
 /**
  * Make sure there is slash before and after prefix
@@ -95,7 +104,9 @@ const normalizeMaxRoutes = (maxRoutes: number | undefined): number => {
   return Math.max(0, Math.floor(maxRoutes));
 };
 
-const getPrintUrlsOptions = (printUrls: PrintUrls | undefined): PrintUrlsOptions => {
+const getPrintUrlsOptions = (
+  printUrls: PrintUrls | undefined,
+): PrintUrlsOptions => {
   if (printUrls && typeof printUrls === 'object') {
     return printUrls;
   }
@@ -103,7 +114,10 @@ const getPrintUrlsOptions = (printUrls: PrintUrls | undefined): PrintUrlsOptions
   return {};
 };
 
-const getMoreEntriesMessage = (moreEntries: number, cliShortcutsEnabled: boolean): string => {
+const getMoreEntriesMessage = (
+  moreEntries: number,
+  cliShortcutsEnabled: boolean,
+): string => {
   if (cliShortcutsEnabled) {
     return `  ${color.dim(`... ${moreEntries} more entries, press `)}${color.bold(
       'u + enter',
@@ -117,7 +131,11 @@ const getMoreEntriesMessage = (moreEntries: number, cliShortcutsEnabled: boolean
 
 export const isUrlPathUnderBase = (pathname: string, base: string): boolean => {
   const basePath = removeTailingSlash(base);
-  return basePath === '' || pathname === basePath || pathname.startsWith(`${basePath}/`);
+  return (
+    basePath === '' ||
+    pathname === basePath ||
+    pathname.startsWith(`${basePath}/`)
+  );
 };
 
 export const removeBasePath = (url: string, base: string): string => {
@@ -151,7 +169,9 @@ export const getRoutes = (context: InternalContext): Routes => {
     return [];
   }
 
-  const commonDistPath = getCommonParentPath(environmentWithHtml.map((item) => item.distPath));
+  const commonDistPath = getCommonParentPath(
+    environmentWithHtml.map((item) => item.distPath),
+  );
 
   return environmentWithHtml.reduce<Routes>((prev, environmentContext) => {
     const { distPath, config } = environmentContext;
@@ -203,7 +223,9 @@ type AddressUrl = {
 // Keep long interface names from making startup logs excessively wide.
 const MAX_NAME_LEN = 20;
 const formatName = (name?: string) =>
-  name ? `(${name.length > MAX_NAME_LEN ? `${name.slice(0, MAX_NAME_LEN - 1)}…` : name})` : name;
+  name
+    ? `(${name.length > MAX_NAME_LEN ? `${name.slice(0, MAX_NAME_LEN - 1)}…` : name})`
+    : name;
 
 function getURLMessages(
   urls: AddressUrl[],
@@ -218,9 +240,12 @@ function getURLMessages(
     cliShortcutsEnabled: boolean;
   },
 ) {
-  const routeLimit = showAllRoutes ? Number.POSITIVE_INFINITY : normalizeMaxRoutes(maxRoutes);
+  const routeLimit = showAllRoutes
+    ? Number.POSITIVE_INFINITY
+    : normalizeMaxRoutes(maxRoutes);
   const printableRoutes = routeLimit === 0 ? [] : routes.slice(0, routeLimit);
-  const moreEntries = routeLimit > 0 ? routes.length - printableRoutes.length : 0;
+  const moreEntries =
+    routeLimit > 0 ? routes.length - printableRoutes.length : 0;
 
   // Interface names are only useful for distinguishing multiple network URLs.
   let nameCount = 0;
@@ -238,12 +263,20 @@ function getURLMessages(
       name: showNames ? formatName(name) : undefined,
       url: normalizeUrl(`${url}${pathname}`),
     }));
-    const labelWidth = Math.max(10, ...items.map((item) => item.label.trimEnd().length + 2));
-    const urlWidth = Math.max(0, ...items.map((item) => (item.name ? item.url.length : 0)));
+    const labelWidth = Math.max(
+      10,
+      ...items.map((item) => item.label.trimEnd().length + 2),
+    );
+    const urlWidth = Math.max(
+      0,
+      ...items.map((item) => (item.name ? item.url.length : 0)),
+    );
     let message = items
       .map(({ label, name, url }) => {
         const prefix = `➜  ${color.dim(label.trimEnd().padEnd(labelWidth))}`;
-        const suffix = name ? `${' '.repeat(urlWidth - url.length + 2)}${color.dim(name)}` : '';
+        const suffix = name
+          ? `${' '.repeat(urlWidth - url.length + 2)}${color.dim(name)}`
+          : '';
         return `  ${prefix}${color.cyan(url)}${suffix}\n`;
       })
       .join('');
@@ -258,7 +291,9 @@ function getURLMessages(
   let message = '';
   let prevLabel = '';
   let prevName: string | undefined;
-  const entryWidth = Math.max(...printableRoutes.map((route) => route.entryName.length));
+  const entryWidth = Math.max(
+    ...printableRoutes.map((route) => route.entryName.length),
+  );
   urls.forEach(({ label, name, url }, index) => {
     const shortName = showNames ? formatName(name) : undefined;
     if (prevLabel !== label || prevName !== shortName) {
@@ -266,7 +301,9 @@ function getURLMessages(
         message += '\n';
       }
       // Move the trailing colon after the interface name: `Network (Wi-Fi):`.
-      const title = shortName ? `${label.trimEnd().slice(0, -1)} ${color.dim(shortName)}:` : label;
+      const title = shortName
+        ? `${label.trimEnd().slice(0, -1)} ${color.dim(shortName)}:`
+        : label;
       message += `  ➜  ${title}\n`;
       prevLabel = label;
       prevName = shortName;
@@ -359,7 +396,9 @@ export function printServerURLs({
 
   const printUrlsOptions = getPrintUrlsOptions(printUrls);
   let message = getURLMessages(urls, printableRoutes, {
-    maxRoutes: useCustomUrl ? Number.POSITIVE_INFINITY : printUrlsOptions.maxRoutes,
+    maxRoutes: useCustomUrl
+      ? Number.POSITIVE_INFINITY
+      : printUrlsOptions.maxRoutes,
     showAllRoutes,
     cliShortcutsEnabled,
   });
@@ -485,7 +524,8 @@ const LOOPBACK_HOSTS = new Set([
   '0000:0000:0000:0000:0000:0000:0000:0001',
 ]);
 
-export const isWildcardHost = (host: string): boolean => WILDCARD_HOSTS.has(host);
+export const isWildcardHost = (host: string): boolean =>
+  WILDCARD_HOSTS.has(host);
 
 const isLoopbackHost = (host: string) => LOOPBACK_HOSTS.has(host);
 
@@ -501,8 +541,15 @@ export const getHostInUrl = async (host: string): Promise<string> => {
   return host;
 };
 
-const concatUrl = ({ host, port, protocol }: { host: string; port: number; protocol: string }) =>
-  `${protocol}://${host}:${port}`;
+const concatUrl = ({
+  host,
+  port,
+  protocol,
+}: {
+  host: string;
+  port: number;
+  protocol: string;
+}) => `${protocol}://${host}:${port}`;
 
 const LOCAL_LABEL = 'Local:  ';
 const NETWORK_LABEL = 'Network:  ';
@@ -576,7 +623,9 @@ export const getAddressUrls = async ({
   return urls;
 };
 
-export function getServerTerminator(server: Server | Http2SecureServer): () => Promise<void> {
+export function getServerTerminator(
+  server: Server | Http2SecureServer,
+): () => Promise<void> {
   let listened = false;
   const pendingSockets = new Set<Socket>();
 
@@ -655,7 +704,8 @@ export type RsbuildServerBase = {
    * - Will be `Http2SecureServer` if `server.https` config is used.
    * - Will be `null` if `server.middlewareMode` is enabled.
    */
-  httpServer: import('node:http').Server | import('node:http2').Http2SecureServer | null;
+  httpServer:
+    import('node:http').Server | import('node:http2').Http2SecureServer | null;
   /**
    * The `connect` app instance.
    * Can be used to attach custom middlewares to the server.

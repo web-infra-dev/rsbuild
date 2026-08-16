@@ -216,5 +216,7 @@ async function matchConfigSnapshot(config: RsbuildConfig) {
     cwd: defaultCwd,
   });
   const rspackConfigs = await rsbuild.initConfigs();
-  expect(rspackConfigs.map((rspackConfig) => matchRules(rspackConfig, 'a.js'))).toMatchSnapshot();
+  expect(
+    rspackConfigs.map((rspackConfig) => matchRules(rspackConfig, 'a.js')),
+  ).toMatchSnapshot();
 }

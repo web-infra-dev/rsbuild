@@ -32,6 +32,8 @@ test('should reconnect WebSocket server as expected', async ({
     },
   });
 
-  await editFile(join(tempSrc, 'App.tsx'), (code) => code.replace('Hello Rsbuild', 'Hello Test'));
+  await editFile(join(tempSrc, 'App.tsx'), (code) =>
+    code.replace('Hello Rsbuild', 'Hello Test'),
+  );
   await expect(locator).toHaveText('Hello Test!');
 });

@@ -1,7 +1,10 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('generate integrity using sha512 algorithm', async ({ page, buildPreview }) => {
+test('generate integrity using sha512 algorithm', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview();
 
   const files = rsbuild.getDistFiles();

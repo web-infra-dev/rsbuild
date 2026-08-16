@@ -1,7 +1,10 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('should compile nested npm import correctly', async ({ build, copyNodeModules }) => {
+test('should compile nested npm import correctly', async ({
+  build,
+  copyNodeModules,
+}) => {
   await copyNodeModules();
 
   const rsbuild = await build();
@@ -9,5 +12,7 @@ test('should compile nested npm import correctly', async ({ build, copyNodeModul
   const files = rsbuild.getDistFiles();
   const cssContent = getFileContent(files, '.css');
 
-  expect(cssContent).toEqual('#b{color:#ff0}#c{color:green}#a{font-size:10px}html{font-size:18px}');
+  expect(cssContent).toEqual(
+    '#b{color:#ff0}#c{color:green}#a{font-size:10px}html{font-size:18px}',
+  );
 });

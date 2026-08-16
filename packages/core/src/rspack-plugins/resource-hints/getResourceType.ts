@@ -40,7 +40,13 @@ export type ResourceType =
   | 'worker'
   | 'video';
 
-export function getResourceType({ href, file }: { href: string; file: string }): ResourceType {
+export function getResourceType({
+  href,
+  file,
+}: {
+  href: string;
+  file: string;
+}): ResourceType {
   // If `as` value is not provided in option, dynamically determine the correct
   // value based on the suffix of filename.
 

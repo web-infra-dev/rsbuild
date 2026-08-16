@@ -1,6 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
-test('should work with the default writeToDisk configuration', async ({ page, dev }) => {
+test('should work with the default writeToDisk configuration', async ({
+  page,
+  dev,
+}) => {
   await dev({
     config: {
       output: {

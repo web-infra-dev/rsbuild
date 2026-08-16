@@ -3,7 +3,9 @@ import { getFileContent } from '@rstackjs/test-utils';
 
 const EXPECTED_ERROR = 'CSS Modules do not support the ?url query';
 
-test('should throw error when importing CSS Modules with `?url`', async ({ build }) => {
+test('should throw error when importing CSS Modules with `?url`', async ({
+  build,
+}) => {
   const rsbuild = await build({
     catchBuildError: true,
   });
@@ -12,7 +14,9 @@ test('should throw error when importing CSS Modules with `?url`', async ({ build
   await rsbuild.expectLog(EXPECTED_ERROR);
 });
 
-test('should allow `.module.css?url` when CSS Modules auto is disabled', async ({ build }) => {
+test('should allow `.module.css?url` when CSS Modules auto is disabled', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {

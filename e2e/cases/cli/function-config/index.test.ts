@@ -25,7 +25,10 @@ test('should specify env as expected', async ({ prepareDist, execCliSync }) => {
   expect(content.includes('development-development-build')).toBeTruthy();
 });
 
-test('should specify env mode as expected', async ({ prepareDist, execCliSync }) => {
+test('should specify env mode as expected', async ({
+  prepareDist,
+  execCliSync,
+}) => {
   const distDir = await prepareDist();
   execCliSync('build --env-mode staging');
   const files = await readDirContents(distDir);

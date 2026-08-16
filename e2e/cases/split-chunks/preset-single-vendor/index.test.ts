@@ -2,7 +2,9 @@ import { basename } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { findFile } from '@rstackjs/test-utils';
 
-test('should generate a vendor chunk when preset is "single-vendor"', async ({ build }) => {
+test('should generate a vendor chunk when preset is "single-vendor"', async ({
+  build,
+}) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 

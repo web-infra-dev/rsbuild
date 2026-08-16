@@ -1,7 +1,6 @@
 import { define } from 'rstack';
 
 define.fmt({
-  printWidth: 100,
   singleQuote: true,
   sortPackageJson: true,
   ignorePatterns: [

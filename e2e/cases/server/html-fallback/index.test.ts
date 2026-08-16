@@ -1,7 +1,10 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('should access / success and htmlFallback success by default', async ({ page, devOnly }) => {
+test('should access / success and htmlFallback success by default', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly();
 
   const url = new URL(`http://localhost:${rsbuild.port}/`);
@@ -40,7 +43,10 @@ test('should return 404 when htmlFallback false', async ({ page, devOnly }) => {
   expect(res?.status()).toBe(404);
 });
 
-test('should access /main with query or hash success', async ({ page, devOnly }) => {
+test('should access /main with query or hash success', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly({
     config: {
       source: {
@@ -67,7 +73,10 @@ test('should access /main with query or hash success', async ({ page, devOnly })
   expect(res1?.status()).toBe(200);
 });
 
-test('should access /main.html success when entry is main', async ({ page, devOnly }) => {
+test('should access /main.html success when entry is main', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly({
     config: {
       source: {
@@ -86,7 +95,10 @@ test('should access /main.html success when entry is main', async ({ page, devOn
   await expect(locator).toHaveText('Hello Rsbuild!');
 });
 
-test('should access /main success when entry is main', async ({ page, devOnly }) => {
+test('should access /main success when entry is main', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly({
     config: {
       source: {
@@ -269,7 +281,10 @@ test('should access /main success when modify publicPath in compiler', async ({
   expect(htmlContent.includes('/aaaa/static/js/main.js')).toBeTruthy();
 });
 
-test('should access /main success when distPath is absolute', async ({ page, devOnly }) => {
+test('should access /main success when distPath is absolute', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly({
     config: {
       source: {

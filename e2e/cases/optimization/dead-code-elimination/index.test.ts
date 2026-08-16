@@ -1,6 +1,8 @@
 import { expect, test } from '@e2e/helper';
 
-test('should remove dead branches guarded by unused exported bindings', async ({ build }) => {
+test('should remove dead branches guarded by unused exported bindings', async ({
+  build,
+}) => {
   const rsbuild = await build();
   const indexJs = await rsbuild.getIndexBundle();
 

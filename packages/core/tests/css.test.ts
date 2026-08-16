@@ -25,7 +25,9 @@ describe('normalizeCssLoaderOptions', () => {
       },
     });
 
-    expect(normalizeCssLoaderOptions({ modules: { auto: true } }, true)).toEqual({
+    expect(
+      normalizeCssLoaderOptions({ modules: { auto: true } }, true),
+    ).toEqual({
       modules: {
         auto: true,
         exportOnlyLocals: true,
@@ -90,7 +92,9 @@ describe('plugin-css', () => {
 
     const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(JSON.stringify(rspackConfigs[0])).toContain('"localIdentName":"[hash]"');
+    expect(JSON.stringify(rspackConfigs[0])).toContain(
+      '"localIdentName":"[hash]"',
+    );
   });
 
   it('should use custom cssModules rule when using output.cssModules config', async () => {

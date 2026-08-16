@@ -15,10 +15,15 @@ const cliState: {
   options: {} as CommonOptions,
 };
 
-export const initCliAction = (command: CommandName, options: CommonOptions): void => {
+export const initCliAction = (
+  command: CommandName,
+  options: CommonOptions,
+): void => {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV =
-      command === 'build' || command === 'preview' ? 'production' : 'development';
+      command === 'build' || command === 'preview'
+        ? 'production'
+        : 'development';
   }
 
   // Build multiple environments can be shortened to: --environment name1,name2
@@ -98,7 +103,9 @@ const loadConfig = async (root: string) => {
     const sourceMap = options.sourceMap as unknown;
 
     if (typeof sourceMap !== 'boolean') {
-      throw new Error('The "--source-map" option only accepts a boolean value.');
+      throw new Error(
+        'The "--source-map" option only accepts a boolean value.',
+      );
     }
 
     config.output ||= {};
@@ -130,9 +137,9 @@ const restart: RestartFn = async (context) => {
   return true;
 };
 
-export async function init({ isRestart }: { isRestart?: boolean } = {}): Promise<
-  RsbuildInstance | undefined
-> {
+export async function init({
+  isRestart,
+}: { isRestart?: boolean } = {}): Promise<RsbuildInstance | undefined> {
   let logger = defaultLogger;
   const { options } = cliState;
 

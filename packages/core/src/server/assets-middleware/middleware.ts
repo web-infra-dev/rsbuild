@@ -1,5 +1,9 @@
 import type { Stats as FSStats, ReadStream } from 'node:fs';
-import type { IncomingHttpHeaders, OutgoingHttpHeaders, ServerResponse } from 'node:http';
+import type {
+  IncomingHttpHeaders,
+  OutgoingHttpHeaders,
+  ServerResponse,
+} from 'node:http';
 import { lookup } from 'mrmime';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
@@ -24,10 +28,11 @@ function createReadStream(
   start: number,
   end: number,
 ): ReadStream {
-  const createOutputReadStream = outputFileSystem.createReadStream as unknown as (
-    p: string,
-    opts: { start: number; end: number; highWaterMark: number },
-  ) => ReadStream;
+  const createOutputReadStream =
+    outputFileSystem.createReadStream as unknown as (
+      p: string,
+      opts: { start: number; end: number; highWaterMark: number },
+    ) => ReadStream;
 
   return createOutputReadStream(filename, {
     start,
@@ -53,8 +58,15 @@ function getContentType(str: string): false | string {
 
 const BYTES_RANGE_REGEXP = /^ *bytes/i;
 
-function getValueContentRangeHeader(type: string, size: number, range?: Range): string {
-  return `${type} ${range ? `${range.start}-${range.end}` : '*'}:${size}`.replace(':', '/');
+function getValueContentRangeHeader(
+  type: string,
+  size: number,
+  range?: Range,
+): string {
+  return `${type} ${range ? `${range.start}-${range.end}` : '*'}:${size}`.replace(
+    ':',
+    '/',
+  );
 }
 
 function parseHttpDate(date: string): number {
@@ -64,7 +76,10 @@ function parseHttpDate(date: string): number {
 
 const CACHE_CONTROL_NO_CACHE_REGEXP = /(?:^|,)\s*?no-cache\s*?(?:,|$)/;
 
-function getRequestHeader(headers: IncomingHttpHeaders, name: string): string | undefined {
+function getRequestHeader(
+  headers: IncomingHttpHeaders,
+  name: string,
+): string | undefined {
   const value = headers[name];
   return Array.isArray(value) ? value.join(',') : value;
 }
@@ -78,7 +93,10 @@ function isConditionalGET(headers: IncomingHttpHeaders): boolean {
   );
 }
 
-function isPreconditionFailure(headers: IncomingHttpHeaders, res: ServerResponse): boolean {
+function isPreconditionFailure(
+  headers: IncomingHttpHeaders,
+  res: ServerResponse,
+): boolean {
   const ifMatch = getRequestHeader(headers, 'if-match');
 
   if (ifMatch) {
@@ -88,7 +106,8 @@ function isPreconditionFailure(headers: IncomingHttpHeaders, res: ServerResponse
       !etag ||
       (ifMatch !== '*' &&
         parseTokenList(ifMatch).every(
-          (match: string) => match !== etag && match !== `W/${etag}` && `W/${match}` !== etag,
+          (match: string) =>
+            match !== etag && match !== `W/${etag}` && `W/${match}` !== etag,
         ))
     );
   }
@@ -97,7 +116,9 @@ function isPreconditionFailure(headers: IncomingHttpHeaders, res: ServerResponse
   if (ifUnmodifiedSince) {
     const unmodifiedSince = parseHttpDate(ifUnmodifiedSince);
     if (!Number.isNaN(unmodifiedSince)) {
-      const lastModified = parseHttpDate(String(res.getHeader('Last-Modified')));
+      const lastModified = parseHttpDate(
+        String(res.getHeader('Last-Modified')),
+      );
       return Number.isNaN(lastModified) || lastModified > unmodifiedSince;
     }
   }
@@ -106,10 +127,16 @@ function isPreconditionFailure(headers: IncomingHttpHeaders, res: ServerResponse
 }
 
 function isCachable(statusCode: number): boolean {
-  return (statusCode >= 200 && statusCode < 300) || statusCode === HttpCode.NotModified;
+  return (
+    (statusCode >= 200 && statusCode < 300) ||
+    statusCode === HttpCode.NotModified
+  );
 }
 
-function isFresh(headers: IncomingHttpHeaders, resHeaders: OutgoingHttpHeaders): boolean {
+function isFresh(
+  headers: IncomingHttpHeaders,
+  resHeaders: OutgoingHttpHeaders,
+): boolean {
   const cacheControl = getRequestHeader(headers, 'cache-control');
 
   if (cacheControl && CACHE_CONTROL_NO_CACHE_REGEXP.test(cacheControl)) {
@@ -155,7 +182,8 @@ function isFresh(headers: IncomingHttpHeaders, resHeaders: OutgoingHttpHeaders):
   if (modifiedSince) {
     const lastModified = resHeaders['last-modified'];
     const modifiedStale =
-      !lastModified || !(parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince));
+      !lastModified ||
+      !(parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince));
 
     if (modifiedStale) {
       return false;
@@ -165,7 +193,10 @@ function isFresh(headers: IncomingHttpHeaders, resHeaders: OutgoingHttpHeaders):
   return true;
 }
 
-function isRangeFresh(headers: IncomingHttpHeaders, res: ServerResponse): boolean {
+function isRangeFresh(
+  headers: IncomingHttpHeaders,
+  res: ServerResponse,
+): boolean {
   const ifRange = getRequestHeader(headers, 'if-range');
 
   if (!ifRange) {
@@ -230,7 +261,9 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
   }
 }
 
-const parseRangeHeaders = async (value: string): Promise<RangeResult | Ranges> => {
+const parseRangeHeaders = async (
+  value: string,
+): Promise<RangeResult | Ranges> => {
   const { default: rangeParser } = await import(
     /* rspackChunkName: "range-parser" */
     'range-parser'
@@ -362,7 +395,8 @@ export function createAssetsMiddleware(
           isCachable(res.statusCode) &&
           isFresh(req.headers, {
             etag: res.getHeader('ETag') as string | undefined,
-            'last-modified': res.getHeader('Last-Modified') as string | undefined,
+            'last-modified': res.getHeader('Last-Modified') as
+              string | undefined,
           })
         ) {
           res.statusCode = HttpCode.NotModified;
@@ -387,9 +421,14 @@ export function createAssetsMiddleware(
         }
 
         if (parsedRanges === -1) {
-          logger.error("[rsbuild:middleware] Unsatisfiable range for 'Range' header.");
+          logger.error(
+            "[rsbuild:middleware] Unsatisfiable range for 'Range' header.",
+          );
 
-          res.setHeader('Content-Range', getValueContentRangeHeader('bytes', size));
+          res.setHeader(
+            'Content-Range',
+            getValueContentRangeHeader('bytes', size),
+          );
 
           sendError(res, HttpCode.RangeNotSatisfiable);
           return;

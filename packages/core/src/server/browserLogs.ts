@@ -1,5 +1,9 @@
 import path from 'node:path';
-import type { InvalidOriginalMapping, OriginalMapping, TraceMap } from '@jridgewell/trace-mapping';
+import type {
+  InvalidOriginalMapping,
+  OriginalMapping,
+  TraceMap,
+} from '@jridgewell/trace-mapping';
 import type { StackFrame } from 'stacktrace-parser';
 import { SCRIPT_REGEX } from '../constants';
 import { color, isRspackRuntimeModule } from '../helpers';
@@ -37,7 +41,10 @@ const findFirstUserFrame = (parsed: StackFrame[]) => {
       frame.column !== null &&
       frame.lineNumber !== null &&
       SCRIPT_REGEX.test(frame.file),
-  ) as (StackFrame & Pick<Required<StackFrame>, 'file' | 'column' | 'lineNumber'>) | undefined;
+  ) as
+    | (StackFrame &
+        Pick<Required<StackFrame>, 'file' | 'column' | 'lineNumber'>)
+    | undefined;
 };
 
 /**
@@ -80,7 +87,9 @@ const parseFrame = async (
     return { sourceMapPath, originalPosition };
   } catch (error) {
     if (error instanceof Error) {
-      context.logger.debug(`failed to map source map position: ${error.message}`);
+      context.logger.debug(
+        `failed to map source map position: ${error.message}`,
+      );
     }
   }
 };
@@ -156,13 +165,17 @@ const formatFrameLocation = (frame: StackFrame) => {
     return;
   }
   if (lineNumber !== null) {
-    return column !== null ? `${file}:${lineNumber}:${column}` : `${file}:${lineNumber}`;
+    return column !== null
+      ? `${file}:${lineNumber}:${column}`
+      : `${file}:${lineNumber}`;
   }
   return file;
 };
 
 const enhanceErrorLogWithHints = (log: string) => {
-  const isProcessUndefined = log.includes('ReferenceError: process is not defined');
+  const isProcessUndefined = log.includes(
+    'ReferenceError: process is not defined',
+  );
   if (isProcessUndefined) {
     return `${log}\n${color.yellow(`        - \`process\` is a Node.js global and not available in browsers.
         - To access \`process.env.*\`, define them in a \`.env\` file with the \`PUBLIC_\` prefix.
@@ -198,7 +211,11 @@ const formatFullStack = async (
     let parsed = false;
     if (parsedFrame) {
       const { sourceMapPath, originalPosition } = parsedFrame;
-      const originalLocation = formatOriginalLocation(sourceMapPath, originalPosition, context);
+      const originalLocation = formatOriginalLocation(
+        sourceMapPath,
+        originalPosition,
+        context,
+      );
       if (originalLocation) {
         location = originalLocation;
         parts.push(originalLocation);
@@ -218,7 +235,8 @@ const formatFullStack = async (
 
     const [first, second] = parts;
     if (first) {
-      const isRspackRuntime = isRspackRuntimeStack(methodName) || isRspackRuntimeStack(location);
+      const isRspackRuntime =
+        isRspackRuntimeStack(methodName) || isRspackRuntimeStack(location);
       formattedFrames.push({
         text: second ? `\n    at ${first} (${second})` : `\n    at ${first}`,
         isRspackRuntime,
@@ -255,7 +273,12 @@ export const formatBrowserErrorLog = async (
   if (stackFrames?.length) {
     switch (stackTrace) {
       case 'summary': {
-        const resolved = await resolveOriginalLocation(stackFrames, fs, context, cachedTraceMap);
+        const resolved = await resolveOriginalLocation(
+          stackFrames,
+          fs,
+          context,
+          cachedTraceMap,
+        );
 
         if (!resolved) {
           break;
@@ -276,7 +299,12 @@ export const formatBrowserErrorLog = async (
         break;
       }
       case 'full': {
-        const fullStack = await formatFullStack(stackFrames, context, fs, cachedTraceMap);
+        const fullStack = await formatFullStack(
+          stackFrames,
+          context,
+          fs,
+          cachedTraceMap,
+        );
         if (fullStack) {
           log += fullStack;
         }

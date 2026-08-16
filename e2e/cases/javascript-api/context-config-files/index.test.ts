@@ -10,7 +10,9 @@ test('should expose config files through context', async () => {
     config: content,
   });
 
-  expect(rsbuild.context.configFile).toBe(join(import.meta.dirname, 'rsbuild.config.mjs'));
+  expect(rsbuild.context.configFile).toBe(
+    join(import.meta.dirname, 'rsbuild.config.mjs'),
+  );
   expect(rsbuild.context.configFileDependencies).toEqual([
     await realpath(join(import.meta.dirname, 'shared.config.mjs')),
   ]);

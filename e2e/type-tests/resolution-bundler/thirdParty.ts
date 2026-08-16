@@ -1,4 +1,9 @@
-import type { HtmlRspackPlugin, PostCSSOptions, PostCSSPlugin, ServerConfig } from '@rsbuild/core';
+import type {
+  HtmlRspackPlugin,
+  PostCSSOptions,
+  PostCSSPlugin,
+  ServerConfig,
+} from '@rsbuild/core';
 
 type CorsOptions = Exclude<ServerConfig['cors'], boolean | undefined>;
 

@@ -23,7 +23,9 @@ const occupyPort = async () => {
   };
 };
 
-test('should throw when strictPort is enabled and port is taken', async ({ devOnly }) => {
+test('should throw when strictPort is enabled and port is taken', async ({
+  devOnly,
+}) => {
   const blocker = await occupyPort();
 
   let message = '';

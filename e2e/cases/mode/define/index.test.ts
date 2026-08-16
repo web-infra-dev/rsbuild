@@ -6,7 +6,10 @@ declare global {
   }
 }
 
-test('should define vars in build correctly', async ({ page, buildPreview }) => {
+test('should define vars in build correctly', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       mode: 'production',
@@ -20,16 +23,26 @@ test('should define vars in build correctly', async ({ page, buildPreview }) => 
   expect(content).toContain('"[value] process.env.NODE_ENV","production"');
 
   // runtime values
-  expect(await page.evaluate(() => window['import.meta.env.MODE === "development"'])).toBe(
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "development"']),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(
+      () => window['import.meta.env?.MODE === "development"'],
+    ),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "production"']),
+  ).toBe(true);
+  expect(
+    await page.evaluate(() => window['import.meta.env?.MODE === "production"']),
+  ).toBe(true);
+  expect(await page.evaluate(() => window['import.meta.env.DEV'])).toBe(
     undefined,
   );
-  expect(await page.evaluate(() => window['import.meta.env?.MODE === "development"'])).toBe(
+  expect(await page.evaluate(() => window['import.meta.env?.DEV'])).toBe(
     undefined,
   );
-  expect(await page.evaluate(() => window['import.meta.env.MODE === "production"'])).toBe(true);
-  expect(await page.evaluate(() => window['import.meta.env?.MODE === "production"'])).toBe(true);
-  expect(await page.evaluate(() => window['import.meta.env.DEV'])).toBe(undefined);
-  expect(await page.evaluate(() => window['import.meta.env?.DEV'])).toBe(undefined);
   expect(await page.evaluate(() => window['import.meta.env.PROD'])).toBe(true);
   expect(await page.evaluate(() => window['import.meta.env?.PROD'])).toBe(true);
   expect(await page.evaluate(() => window.destructedValues)).toBe(
@@ -37,7 +50,9 @@ test('should define vars in build correctly', async ({ page, buildPreview }) => 
   );
 
   // dead code elimination
-  expect(content).not.toContain('[condition] import.meta.env.MODE === "development"');
+  expect(content).not.toContain(
+    '[condition] import.meta.env.MODE === "development"',
+  );
   expect(content).not.toContain('[condition] import.meta.env.DEV');
 });
 
@@ -55,24 +70,37 @@ test('should define vars in dev', async ({ page, buildPreview }) => {
   expect(content).toContain(`'[value] process.env.NODE_ENV', "development"`);
 
   // runtime values
-  expect(await page.evaluate(() => window['import.meta.env.MODE === "development"'])).toBe(true);
-  expect(await page.evaluate(() => window['import.meta.env?.MODE === "development"'])).toBe(true);
-  expect(await page.evaluate(() => window['import.meta.env.MODE === "production"'])).toBe(
-    undefined,
-  );
-  expect(await page.evaluate(() => window['import.meta.env?.MODE === "production"'])).toBe(
-    undefined,
-  );
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "development"']),
+  ).toBe(true);
+  expect(
+    await page.evaluate(
+      () => window['import.meta.env?.MODE === "development"'],
+    ),
+  ).toBe(true);
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "production"']),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(() => window['import.meta.env?.MODE === "production"']),
+  ).toBe(undefined);
   expect(await page.evaluate(() => window['import.meta.env.DEV'])).toBe(true);
   expect(await page.evaluate(() => window['import.meta.env?.DEV'])).toBe(true);
-  expect(await page.evaluate(() => window['import.meta.env.PROD'])).toBe(undefined);
-  expect(await page.evaluate(() => window['import.meta.env?.PROD'])).toBe(undefined);
+  expect(await page.evaluate(() => window['import.meta.env.PROD'])).toBe(
+    undefined,
+  );
+  expect(await page.evaluate(() => window['import.meta.env?.PROD'])).toBe(
+    undefined,
+  );
   expect(await page.evaluate(() => window.destructedValues)).toBe(
     'MODE:development,DEV:true,PROD:false',
   );
 });
 
-test('should define vars in none mode correctly', async ({ page, buildPreview }) => {
+test('should define vars in none mode correctly', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       mode: 'none',
@@ -83,26 +111,40 @@ test('should define vars in none mode correctly', async ({ page, buildPreview })
 
   // Replaced identifiers
   expect(content).toContain(`'[value] import.meta.env.MODE', "none"`);
-  expect(content).toContain(`'[value] process.env.NODE_ENV', process.env.NODE_ENV`);
+  expect(content).toContain(
+    `'[value] process.env.NODE_ENV', process.env.NODE_ENV`,
+  );
 
   // runtime values
-  expect(await page.evaluate(() => window['import.meta.env.MODE === "development"'])).toBe(
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "development"']),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(
+      () => window['import.meta.env?.MODE === "development"'],
+    ),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "production"']),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(() => window['import.meta.env?.MODE === "production"']),
+  ).toBe(undefined);
+  expect(await page.evaluate(() => window['import.meta.env.DEV'])).toBe(
     undefined,
   );
-  expect(await page.evaluate(() => window['import.meta.env?.MODE === "development"'])).toBe(
+  expect(await page.evaluate(() => window['import.meta.env?.DEV'])).toBe(
     undefined,
   );
-  expect(await page.evaluate(() => window['import.meta.env.MODE === "production"'])).toBe(
+  expect(await page.evaluate(() => window['import.meta.env.PROD'])).toBe(
     undefined,
   );
-  expect(await page.evaluate(() => window['import.meta.env?.MODE === "production"'])).toBe(
+  expect(await page.evaluate(() => window['import.meta.env?.PROD'])).toBe(
     undefined,
   );
-  expect(await page.evaluate(() => window['import.meta.env.DEV'])).toBe(undefined);
-  expect(await page.evaluate(() => window['import.meta.env?.DEV'])).toBe(undefined);
-  expect(await page.evaluate(() => window['import.meta.env.PROD'])).toBe(undefined);
-  expect(await page.evaluate(() => window['import.meta.env?.PROD'])).toBe(undefined);
-  expect(await page.evaluate(() => window.destructedValues)).toBe('MODE:none,DEV:false,PROD:false');
+  expect(await page.evaluate(() => window.destructedValues)).toBe(
+    'MODE:none,DEV:false,PROD:false',
+  );
 });
 
 test('should allow to disable NODE_ENV injection', async ({ build }) => {
@@ -118,5 +160,7 @@ test('should allow to disable NODE_ENV injection', async ({ build }) => {
   });
 
   const content = await rsbuild.getIndexBundle();
-  expect(content).toContain('[value] process.env.NODE_ENV",process.env.NODE_ENV');
+  expect(content).toContain(
+    '[value] process.env.NODE_ENV",process.env.NODE_ENV',
+  );
 });

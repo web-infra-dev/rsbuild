@@ -29,7 +29,9 @@ type RestartContext = {
     }
 );
 
-function OnRestart(callback: (context: RestartContext) => Promise<void> | void): void;
+function OnRestart(
+  callback: (context: RestartContext) => Promise<void> | void,
+): void;
 ```
 
 - `action`：当前正在重启的 Rsbuild 操作类型。
