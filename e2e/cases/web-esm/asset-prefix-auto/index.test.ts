@@ -16,7 +16,9 @@ test('should resolve assets with auto asset prefix in web ESM bundles', async ({
     const image = page.locator('#async-image');
     await expect(image).toHaveAttribute('src', /static\/image\//);
     await expect
-      .poll(() => image.evaluate((element: HTMLImageElement) => element.naturalWidth))
+      .poll(() =>
+        image.evaluate((element: HTMLImageElement) => element.naturalWidth),
+      )
       .toBeGreaterThan(0);
   });
 });
