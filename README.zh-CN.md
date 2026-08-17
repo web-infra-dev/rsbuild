@@ -40,7 +40,7 @@ Rsbuild 具备以下特性：
 
 ## 🦀 Rstack
 
-Rstack 是一个以 Rspack 为核心的 JavaScript 统一工具链，具有优秀的性能和一致的架构。
+Rsbuild 是 Rstack 的一员。Rstack 是为开发者与 Agent 打造的高性能、一体化 JavaScript 工具链。
 
 | 名称                                                  | 描述           | 版本                                                                                                                                                                             |
 | ----------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -86,11 +86,15 @@ Rstack 是一个以 Rspack 为核心的 JavaScript 统一工具链，具有优�
 
 ## 🙏 致谢
 
-Rsbuild 受到社区中几个杰出项目的启发。我们想要对以下项目表示认可和诚挚的感谢：
+Rsbuild 的部分实现和 API 设计参考或改编自社区中的优秀开源项目。我们真诚感谢这些项目为开源社区沉淀的经验、思路与实现：
 
-- 多个插件的实现受到 [create-react-app](https://github.com/facebook/create-react-app) 的启发
-- 多个实用工具函数改编自 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
-- 一些 API 设计模式受到 [Vite](https://github.com/vitejs/vite) 的影响
+- [create-react-app](https://github.com/react/create-react-app)
+- [Vite](https://github.com/vitejs/vite)
+- [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
+- [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware)
+- [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback)
+- [preload-webpack-plugin](https://github.com/vuejs/preload-webpack-plugin)
+- [dotenv](https://github.com/motdotla/dotenv)
 
 ## 📖 License
 

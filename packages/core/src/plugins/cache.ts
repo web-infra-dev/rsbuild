@@ -4,7 +4,6 @@ import { findExists, isFileExists } from '../helpers/fs';
 import type {
   BuildCacheOptions,
   EnvironmentContext,
-  NormalizedEnvironmentConfig,
   RsbuildContext,
   RsbuildPlugin,
 } from '../types';
@@ -27,7 +26,6 @@ function getCacheDirectory(
  */
 async function getBuildDependencies(
   context: Readonly<RsbuildContext>,
-  config: NormalizedEnvironmentConfig,
   environmentContext: EnvironmentContext,
   additionalDependencies?: string[],
 ) {
@@ -45,8 +43,11 @@ async function getBuildDependencies(
     buildDependencies.tsconfig = [tsconfigPath];
   }
 
-  if (config._privateMeta?.configFilePath) {
-    buildDependencies.rsbuildConfig = [config._privateMeta.configFilePath];
+  if (context.configFile) {
+    buildDependencies.rsbuildConfig = [
+      context.configFile,
+      ...context.configFileDependencies,
+    ];
   }
 
   if (await isFileExists(browserslistConfig)) {
@@ -91,7 +92,6 @@ export const pluginCache = (): RsbuildPlugin => ({
       const cacheDirectory = getCacheDirectory(cacheConfig, context);
       const buildDependencies = await getBuildDependencies(
         context,
-        config,
         environment,
         cacheConfig.buildDependencies,
       );

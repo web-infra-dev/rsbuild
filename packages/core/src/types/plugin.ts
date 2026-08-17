@@ -29,6 +29,7 @@ import type {
   OnCloseBuildFn,
   OnCloseDevServerFn,
   OnExitFn,
+  OnRestartFn,
 } from './hooks';
 import type {
   AddPluginsOptions,
@@ -245,6 +246,14 @@ export type GetRsbuildConfig = {
   (): Readonly<RsbuildConfig>;
   (type: 'original' | 'current'): Readonly<RsbuildConfig>;
   (type: 'normalized'): NormalizedConfig;
+};
+
+export type ExposeOptions = {
+  /**
+   * Register the exposed API for a specific Rsbuild environment name (the key of `config.environments`).
+   * If omitted, the API is registered as global.
+   */
+  environment?: string;
 };
 
 type PluginHook<T extends (...args: any[]) => any> = (
@@ -508,7 +517,11 @@ export type RsbuildPluginAPI = Readonly<{
    * Explicitly expose some properties or methods of the current plugin,
    * and other plugins can get these APIs through `api.useExposed`.
    */
-  expose: <T = any>(id: string | symbol, api: T) => void;
+  expose: <T = any>(
+    id: string | symbol,
+    api: T,
+    options?: ExposeOptions,
+  ) => void;
   /**
    * Get the Rsbuild config, this method must be called after the
    * `modifyRsbuildConfig` hook is executed.
@@ -578,7 +591,7 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onAfterBuild: PluginHook<OnAfterBuildFn>;
   /**
-   * A callback function that is triggered after the compiler instance has been
+   * A callback function that is triggered after the Rspack Compiler instance has been
    * created, but before the build process. This hook is called when you run
    * `rsbuild.startDevServer`, `rsbuild.build`, or `rsbuild.createCompiler`.
    */
@@ -614,8 +627,8 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onBeforeDevCompile: PluginHook<OnBeforeDevCompileFn>;
   /**
-   * A callback function that is triggered after the Compiler instance has been
-   * created, but before the build process begins. This hook is called when you
+   * A callback function that is triggered before the Rspack Compiler instance is
+   * created. This hook is called when you
    * run `rsbuild.startDevServer`, `rsbuild.build`, or `rsbuild.createCompiler`.
    */
   onBeforeCreateCompiler: PluginHook<OnBeforeCreateCompilerFn>;
@@ -653,6 +666,10 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onExit: PluginHook<OnExitFn>;
   /**
+   * Called when a restart is requested for the dev server or watch build.
+   */
+  onRestart: PluginHook<OnRestartFn>;
+  /**
    * Modify assets before emitting, the same as Rspack's
    * [compilation.hooks.processAssets](https://rspack.rs/api/plugin-api/compilation-hooks#processassets) hook.
    */
@@ -671,6 +688,10 @@ export type RsbuildPluginAPI = Readonly<{
   transform: TransformHook;
   /**
    * Get the properties or methods exposed by other plugins.
+   *
+   * If the current plugin is registered in an environment, Rsbuild will
+   * first resolve the exposed API registered for the same environment,
+   * then fall back to the global exposed API.
    */
   useExposed: <T = any>(id: string | symbol) => T | undefined;
 }>;

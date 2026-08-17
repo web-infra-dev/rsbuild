@@ -4,9 +4,9 @@ describe('plugin-resolve', () => {
   it('should apply default extensions correctly', async () => {
     const rsbuild = await createRsbuild();
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].resolve?.extensions).toEqual([
+    expect(rspackConfigs[0].resolve?.extensions).toEqual([
       '.ts',
       '.tsx',
       '.mjs',
@@ -25,8 +25,8 @@ describe('plugin-resolve', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].resolve?.extensions).toEqual(['.ts', '.js']);
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].resolve?.extensions).toEqual(['.ts', '.js']);
   });
 
   it('should not apply tsConfigPath when aliasStrategy is "prefer-alias"', async () => {
@@ -38,9 +38,9 @@ describe('plugin-resolve', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].resolve?.tsConfig).toBeUndefined();
+    expect(rspackConfigs[0].resolve?.tsConfig).toBeUndefined();
   });
 
   it('should allow using resolve.alias to configure alias', async () => {
@@ -53,10 +53,10 @@ describe('plugin-resolve', () => {
         },
       },
     });
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
     expect(
-      (bundlerConfigs[0].resolve?.alias as Record<string, string>)?.foo,
+      (rspackConfigs[0].resolve?.alias as Record<string, string>)?.foo,
     ).toEqual('bar');
   });
 
@@ -72,9 +72,9 @@ describe('plugin-resolve', () => {
         },
       },
     });
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].resolve?.alias).toEqual({
+    expect(rspackConfigs[0].resolve?.alias).toEqual({
       foo: 'bar',
     });
   });

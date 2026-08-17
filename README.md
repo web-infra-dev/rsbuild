@@ -19,10 +19,6 @@ Rsbuild is a modern build tool for web applications, powered by [Rspack](https:/
 
 It delivers fast builds and optimized production output, while keeping configuration simple, consistent, and extensible through plugins.
 
-> [!NOTE]
-> The `main` branch is under active development for **Rsbuild 2.0**.  
-> The stable **1.x** releases are maintained in the [v1.x](https://github.com/web-infra-dev/rsbuild/tree/v1.x) branch.
-
 ## 🔥 Features
 
 Rsbuild has the following features:
@@ -44,7 +40,7 @@ Rsbuild has the following features:
 
 ## 🦀 Rstack
 
-Rstack is a unified JavaScript toolchain centered on Rspack, with high performance and consistent architecture.
+Rsbuild is part of Rstack, the fast, unified JavaScript toolchain for developers and agents.
 
 | Name                                                  | Description              | Version                                                                                                                                                                          |
 | ----------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -88,11 +84,15 @@ Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rstack te
 
 ## 🙏 Credits
 
-Rsbuild has been inspired by several outstanding projects in the community. We would like to acknowledge and express our sincere gratitude to the following projects:
+Parts of Rsbuild are derived from or inspired by many excellent open source projects. We sincerely appreciate the work of these projects and the ideas they have shared with the community:
 
-- Various plugin implementations have been inspired by [create-react-app](https://github.com/facebook/create-react-app)
-- Multiple utility functions have been adapted from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
-- Several API design patterns have been influenced by [Vite](https://github.com/vitejs/vite)
+- [create-react-app](https://github.com/react/create-react-app)
+- [Vite](https://github.com/vitejs/vite)
+- [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
+- [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware)
+- [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback)
+- [preload-webpack-plugin](https://github.com/vuejs/preload-webpack-plugin)
+- [dotenv](https://github.com/motdotla/dotenv)
 
 ## 📖 License
 

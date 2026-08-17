@@ -7,11 +7,6 @@ test('should reload page when HTML template changed', async ({
   editFile,
   copySrcDir,
 }) => {
-  // Failed to run this case on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   const tempSrc = await copySrcDir();
 
   await dev();
@@ -32,11 +27,6 @@ test('should not reload page when HTML live reload is disabled', async ({
   logHelper,
   copySrcDir,
 }) => {
-  // Failed to run this case on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   const tempSrc = await copySrcDir();
 
   await dev({

@@ -1,13 +1,11 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { expect, getFileContent, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getFileContent } from '@rstackjs/test-utils';
 
-test('should compile nested npm import correctly', async ({ build }) => {
-  fs.cpSync(
-    path.resolve(import.meta.dirname, '_node_modules'),
-    path.resolve(import.meta.dirname, 'node_modules'),
-    { recursive: true },
-  );
+test('should compile nested npm import correctly', async ({
+  build,
+  copyNodeModules,
+}) => {
+  await copyNodeModules();
 
   const rsbuild = await build();
 

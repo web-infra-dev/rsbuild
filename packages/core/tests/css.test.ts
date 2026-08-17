@@ -37,10 +37,6 @@ describe('normalizeCssLoaderOptions', () => {
 });
 
 describe('plugin-css', () => {
-  afterEach(() => {
-    rs.unstubAllEnvs();
-  });
-
   it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createRsbuild({
       config: {
@@ -52,9 +48,9 @@ describe('plugin-css', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(JSON.stringify(bundlerConfigs[0])).toContain('"sourceMap":true');
+    expect(JSON.stringify(rspackConfigs[0])).toContain('"sourceMap":true');
   });
 
   it('should disable source map when output.sourceMap.css is false', async () => {
@@ -68,9 +64,9 @@ describe('plugin-css', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(JSON.stringify(bundlerConfigs[0])).toContain('"sourceMap":false');
+    expect(JSON.stringify(rspackConfigs[0])).toContain('"sourceMap":false');
   });
 
   it('should disable source map in production by default', async () => {
@@ -78,9 +74,9 @@ describe('plugin-css', () => {
 
     const rsbuild = await createRsbuild();
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(JSON.stringify(bundlerConfigs[0])).toContain('"sourceMap":false');
+    expect(JSON.stringify(rspackConfigs[0])).toContain('"sourceMap":false');
   });
 
   it('should allow customizing cssModules.localIdentName', async () => {
@@ -94,9 +90,9 @@ describe('plugin-css', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(JSON.stringify(bundlerConfigs[0])).toContain(
+    expect(JSON.stringify(rspackConfigs[0])).toContain(
       '"localIdentName":"[hash]"',
     );
   });
@@ -111,8 +107,8 @@ describe('plugin-css', () => {
         },
       },
     });
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.module.css')).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.module.css')).toMatchSnapshot();
   });
 });
 
@@ -126,9 +122,9 @@ describe('plugin-css injectStyles', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(matchRules(bundlerConfigs[0], 'a.css')).toMatchSnapshot();
+    expect(matchRules(rspackConfigs[0], 'a.css')).toMatchSnapshot();
   });
 
   it('should apply ignoreCssLoader when injectStyles is true and target is node', async () => {
@@ -141,9 +137,9 @@ describe('plugin-css injectStyles', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(matchRules(bundlerConfigs[0], 'a.css')).toMatchSnapshot();
+    expect(matchRules(rspackConfigs[0], 'a.css')).toMatchSnapshot();
   });
 });
 
@@ -175,7 +171,7 @@ it('should ensure isolation of PostCSS config objects between different builds',
     },
   });
 
-  const bundlerConfigs = await rsbuild.initConfigs();
-  expect(matchRules(bundlerConfigs[0], 'a.css')).toMatchSnapshot();
-  expect(matchRules(bundlerConfigs[1], 'a.css')).toMatchSnapshot();
+  const rspackConfigs = await rsbuild.initConfigs();
+  expect(matchRules(rspackConfigs[0], 'a.css')).toMatchSnapshot();
+  expect(matchRules(rspackConfigs[1], 'a.css')).toMatchSnapshot();
 });

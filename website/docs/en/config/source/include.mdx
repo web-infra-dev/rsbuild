@@ -4,7 +4,7 @@ description: 'Specify additional JavaScript files that need to be compiled by SW
 
 # source.include
 
-- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)`[]`
 
 Specify additional JavaScript files that need to be compiled by [SWC](/guide/configuration/swc).
 
@@ -112,7 +112,7 @@ export default {
 
 This is because most of the npm packages in `node_modules` are already compiled, and it is usually unnecessary to recompile them. Compiling the entire `node_modules` will increase compilation time and may cause unexpected errors in certain npm packages, such as `core-js`, which may result in runtime exceptions after compilation.
 
-If you are willing to accept the increase in compilation time, you can use the following configuration to compile all JavaScript files but exclude `core-js':
+If you are willing to accept the increase in compilation time, you can use the following configuration to compile all JavaScript files but exclude `core-js`:
 
 ```ts title="rsbuild.config.ts"
 export default {

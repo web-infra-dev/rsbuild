@@ -9,7 +9,7 @@ import type {
   RspackChain,
 } from '../types';
 
-function applyAlias({
+async function applyAlias({
   chain,
   config,
   rootPath,
@@ -20,7 +20,7 @@ function applyAlias({
   rootPath: string;
   logger: Logger;
 }) {
-  const mergedAlias = reduceConfigs({
+  const mergedAlias = await reduceConfigs({
     initial: {},
     config: config.resolve.alias,
   });
@@ -98,8 +98,7 @@ function applyAlias({
     chain.resolve.alias.set(
       name,
       (formattedValues.length === 1 ? formattedValues[0] : formattedValues) as
-        | string
-        | string[],
+        string | string[],
     );
   }
 }
@@ -110,7 +109,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: (chain, { environment, CHAIN_ID }) => {
+      handler: async (chain, { environment, CHAIN_ID }) => {
         const { config, tsconfigPath } = environment;
         const { extensions, conditionNames, mainFields } = config.resolve;
 
@@ -133,7 +132,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
             .set('.jsx', ['.jsx', '.tsx']);
         }
 
-        applyAlias({
+        await applyAlias({
           chain,
           config,
           rootPath: api.context.rootPath,

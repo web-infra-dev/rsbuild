@@ -78,3 +78,9 @@ Rsbuild 提供了一些 Module Federation 的示例项目，你可以参考：
 
 - [Module Federation v2.0 示例](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/module-federation-enhanced)
 - [Module Federation v1.5 示例](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/module-federation)
+
+## 使用限制
+
+模块联邦目前不兼容 [output.module](/config/output/module)。
+
+这是因为模块联邦的运行时目前还不支持 ESM 产物。请避免在模块联邦应用中设置 `output.module: true`，否则可能会在运行时加载失败。

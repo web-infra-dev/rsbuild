@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## 配置 PostCSS
 
-你可以通过 [postcss.config.cjs](https://npmjs.com/package/postcss-loader#config) 或 [tools.postcss](/config/tools/postcss) 来注册 `tailwindcss` 的 PostCSS 插件。
+你可以通过 [PostCSS 配置文件](https://github.com/webpack/postcss-loader#config) 或 [tools.postcss](/config/tools/postcss) 来注册 `tailwindcss` 的 PostCSS 插件。
 
 ```js title="postcss.config.cjs"
 module.exports = {
@@ -65,7 +65,7 @@ module.exports = {
 
 ### 其他配置方式
 
-- 你可以在 `postcss.config.cjs` 中直接传入 Tailwind CSS 的配置：
+- 你可以在 PostCSS 配置文件中直接传入 Tailwind CSS 的配置：
 
 ```js title="postcss.config.cjs"
 module.exports = {
@@ -131,7 +131,7 @@ Tailwind CSS 提供了 [Tailwind CSS IntelliSense](https://github.com/tailwindla
 
 你可以在 VS Code 中安装该插件，即可开启自动补全功能。
 
-## 优化构建性能
+## 优化构建性能 \{#optimize-build-performance}
 
 在使用 Tailwind CSS 时，如果没有正确地配置 `tailwind.config.js` 中的 `content` 字段，可能会导致构建性能和热更新性能下降。这是因为 Tailwind CSS 内部会基于 `content` 定义的 glob 来匹配文件，扫描的文件数量越多，产生的性能开销越大。
 

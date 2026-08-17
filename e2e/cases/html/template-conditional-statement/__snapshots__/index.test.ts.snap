@@ -1,0 +1,27 @@
+// Rstest Snapshot v1
+
+exports[`should render conditional statement correctly 1`] = `
+"<body>
+<!-- Basic if statement -->
+<div id="basic-if">
+<p>Basic if true</p>
+</div>
+<!-- if/else statement -->
+<div id="if-else">
+<p>Condition false</p>
+</div>
+<!-- if/else if/else statement -->
+<div id="if-elseif-else">
+<p>Value > 5</p>
+</div>
+<!-- Nested if statements -->
+<div id="nested-if">
+<p>Outer true</p>
+<p>Inner true</p>
+</div>
+<!-- Conditional expression -->
+<div id="conditional-expression">
+<p>Result: Success</p>
+</div>
+</body>"
+`;

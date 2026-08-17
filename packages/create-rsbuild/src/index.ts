@@ -8,7 +8,12 @@ import {
   type ESLintTemplateName,
   type RslintTemplateName,
   select,
-} from 'create-rstack';
+} from '@rstackjs/create-toolkit';
+import {
+  addPluginsToRsbuildConfig,
+  enableReactCompilerInRsbuildConfig,
+  tailwindcssPlugin,
+} from './rsbuildConfig.js';
 
 const frameworkAlias: Record<string, string> = {
   vue3: 'vue',
@@ -109,6 +114,10 @@ create({
     'react-ts',
     'vue-js',
     'vue-ts',
+    'lit-js',
+    'lit-ts',
+    'preact-js',
+    'preact-ts',
     'svelte-js',
     'svelte-ts',
     'solid-js',
@@ -141,13 +150,8 @@ create({
       order: 'pre',
       when: ({ templateName }) =>
         ['react-js', 'react-ts'].includes(templateName),
-      action: ({ templateName, distFolder }) => {
-        const toolFolder = path.join(root, 'template-react-compiler');
-        copyFolder({
-          from: path.join(toolFolder, templateName),
-          to: distFolder,
-          isMergePackageJson: true,
-        });
+      action: async ({ distFolder }) => {
+        await enableReactCompilerInRsbuildConfig(distFolder);
       },
     },
     {
@@ -174,6 +178,8 @@ create({
             break;
           }
         }
+
+        await addPluginsToRsbuildConfig(distFolder, [tailwindcssPlugin]);
       },
     },
     {

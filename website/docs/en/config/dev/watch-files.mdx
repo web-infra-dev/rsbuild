@@ -1,5 +1,5 @@
 ---
-description: 'Watch specified files and directories for changes. When a change is detected, it can trigger a page reload or restart the dev server.'
+description: 'Watch specified files and directories for changes. When a change is detected, it can trigger a page reload or restart the dev server or watch build.'
 ---
 
 # dev.watchFiles
@@ -7,9 +7,12 @@ description: 'Watch specified files and directories for changes. When a change i
 - **Type:**
 
 ```ts
+type WatchFileEvent = 'add' | 'change' | 'unlink';
+
 type WatchFiles = {
   paths: string | string[];
-  type?: 'reload-page' | 'reload-server';
+  events?: WatchFileEvent[];
+  type?: 'reload-page' | 'restart' | 'reload-server';
   // watch options for chokidar
   options?: ChokidarOptions;
 };
@@ -19,7 +22,7 @@ type WatchFilesConfig = WatchFiles | WatchFiles[];
 
 - **Default:** `undefined`
 
-Watch specified files and directories for changes. When a change is detected, it can trigger a page reload or restart the dev server.
+Watch specified files and directories for changes. When a change is detected, it can trigger a page reload or restart the dev server or watch build.
 
 ## paths
 
@@ -64,16 +67,49 @@ export default {
 };
 ```
 
+:::tip
+Glob patterns are expanded when the watcher starts and do not include new matching paths created later. To observe files that may be added after startup, watch their parent directory instead.
+
+Glob patterns should use forward slashes (`/`) as path separators on all platforms. Avoid using `path.join()` to construct glob patterns because it produces backslashes on Windows, where backslashes are interpreted as escape characters in glob syntax.
+
+Use a string literal or `path.posix.join()` to construct relative glob patterns.
+:::
+
+## events
+
+- **Type:** `('add' | 'change' | 'unlink')[]`
+- **Default:** `['add', 'change', 'unlink']`
+
+Specifies the file events that trigger the configured action:
+
+- `add`: A watched file is detected. By default, only files that appear after the watcher starts trigger this event. If [`options.ignoreInitial`](#options) is `false`, existing files also trigger it during startup.
+- `change`: A watched file changes.
+- `unlink`: A watched file disappears.
+
+For example, to restart only when files are added to or removed from a directory:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    watchFiles: {
+      paths: './config',
+      type: 'restart',
+      events: ['add', 'unlink'],
+    },
+  },
+};
+```
+
 ## type
 
-- **Type:** `'reload-page' | 'reload-server'`
+- **Type:** `'reload-page' | 'restart' | 'reload-server'`
 - **Default:** `'reload-page'`
 
-Specifies whether to trigger a page reload or restart the dev server when a file changes.
+Specifies whether to trigger a page reload or restart the dev server or watch build when a file changes.
 
 ### reload-page
 
-`reload-page` means that when a file changes, the page in the browser will automatically reload. If the type is not explicitly specified, Rsbuild defaults to the `reload-page` behavior.
+`reload-page` means that when a watched file event specified by [`events`](#events) occurs, the page in the browser automatically reloads. By default, additions, changes, and removals all trigger a reload. If `type` is not explicitly specified, Rsbuild uses `reload-page`.
 
 This can be used to watch changes to static assets, such as files in the [public directory](/config/server/public-dir).
 
@@ -82,7 +118,7 @@ export default {
   dev: {
     watchFiles: {
       type: 'reload-page',
-      paths: 'public/**/*',
+      paths: 'public',
     },
   },
 };
@@ -90,11 +126,13 @@ export default {
 
 > If both [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) are set to `false`, the page will not automatically reload.
 
-### reload-server
+### restart
 
-`reload-server` means that the dev server will automatically restart when a file changes. This can be used to watch changes to configuration files, such as modules imported by your `rsbuild.config.ts` file.
+`restart` requests a dev server restart when running `rsbuild dev`, or a watch build restart when running `rsbuild build --watch`.
 
-For example, if you maintain some common configuration files in the `config` directory, such as `common.ts`, you may want the dev server to automatically restart when these files change. Example configuration:
+This can be used to watch configuration files whose changes require Rsbuild to be reinitialized.
+
+For example, if you maintain some common configuration files in the `config` directory, such as `common.ts`, you may want changes to these files to restart the dev server or watch build:
 
 ```ts title="rsbuild.config.ts"
 import { commonConfig } from './config/common';
@@ -103,21 +141,25 @@ export default {
   ...commonConfig,
   dev: {
     watchFiles: {
-      type: 'reload-server',
+      type: 'restart',
       paths: ['./config/*.ts'],
     },
   },
 };
 ```
 
-Note that the reload-server functionality is provided by Rsbuild CLI. If you are using a custom server or a framework built on top of Rsbuild, this configuration is currently not supported.
+> For details about automatic config file watching and restart behavior, see [Configuration file watching](/guide/configuration/rsbuild#configuration-file-watching).
+
+### reload-server
+
+`reload-server` is a deprecated alias for `restart`. It remains supported for backward compatibility.
 
 ## options
 
 - **Type:** `ChokidarOptions`
 - **Default:** `undefined`
 
-`watchFiles` is implemented based on [chokidar v4](https://github.com/paulmillr/chokidar#api), and you can pass chokidar options through `options`.
+`watchFiles` is implemented based on [chokidar v4](https://github.com/paulmillr/chokidar#getting-started), and you can pass chokidar options through `options`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -139,3 +181,10 @@ export default {
 If you want to prevent some files from triggering a rebuild when they change, you can use Rspack's [watchOptions.ignored](https://rspack.rs/config/watch#watchoptionsignored) configuration item.
 
 > See [HMR - File Watching](/guide/advanced/hmr#file-watching) for details.
+
+## Version history
+
+| Version | Changes                                                                          |
+| ------- | -------------------------------------------------------------------------------- |
+| v2.1.8  | Added the `events` option; `reload-page` now responds to added and removed files |
+| v2.1.7  | Added the `restart` type; deprecated `reload-server`                             |

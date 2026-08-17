@@ -19,7 +19,7 @@ If the version is missing, ask for it before making changes.
 
 3. Run `pnpm i` at the repository root.
 
-4. Run `pnpm test` and `pnpm e2e`. If either command fails, stop, report the failure, and do not commit or create a PR.
+4. Run `pnpm build`, `pnpm test`, and then `pnpm e2e`. If any command fails, stop, report the failure, and do not commit or create a PR.
 
 5. Review the diff and confirm it only contains the intended dependency upgrade and lockfile changes. If `@rspack/core` is already at the target version and there is no diff, report that nothing changed and stop.
 

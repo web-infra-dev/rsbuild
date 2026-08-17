@@ -30,7 +30,7 @@ You can eliminate duplicate dependencies using your package manager.
 pnpm dedupe
 ```
 
-- If you are using `pnpm < 7.26.0`, you can use [pnpm-deduplicate](https://github.com/ocavue/pnpm-deduplicate) to analyze duplicate dependencies, then update dependencies or declare [pnpm overrides](https://pnpm.io/package_json#pnpmoverrides) to merge them.
+- If you are using `pnpm < 7.26.0`, you can use [pnpm-deduplicate](https://github.com/ocavue/pnpm-deduplicate) to analyze duplicate dependencies, then update dependencies or declare [pnpm overrides](https://pnpm.io/settings#overrides) to merge them.
 
 ```bash
 npx pnpm-deduplicate --list
@@ -46,7 +46,7 @@ npx yarn-deduplicate && yarn
 
 We recommend using lightweight libraries in your project, such as replacing [moment](https://momentjs.com/) with [day.js](https://day.js.org/).
 
-To identify the largest third-party libraries in your project, analyze bundle size with Rsdoctor. For more details, see [Using Rsdoctor](/guide/debug/rsdoctor).
+To identify the largest third-party libraries in your project, analyze bundle size with Rsdoctor. For more details, see [Use Rsdoctor](/guide/debug/rsdoctor).
 
 ## Adjust browserslist
 

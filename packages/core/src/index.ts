@@ -6,13 +6,16 @@
 import type * as Rspack from '@rspack/core';
 import { rspack } from '@rspack/core';
 
-export { runCLI } from './cli';
+export { type RunCLIOptions, runCLI } from './cli';
 export { createRsbuild } from './createRsbuild';
 export {
   type ConfigParams,
   defineConfig,
   type LoadConfigOptions,
   type LoadConfigResult,
+  type RsbuildConfigAsyncFn,
+  type RsbuildConfigDefinition,
+  type RsbuildConfigSyncFn,
   loadConfig,
 } from './loadConfig';
 // Core methods
@@ -46,6 +49,8 @@ export type {
   AliasStrategy,
   AppIcon,
   AppIconItem,
+  AutoExternal,
+  AutoExternalExclude,
   Build,
   BuildOptions,
   BuildResult,
@@ -142,6 +147,7 @@ export type {
   OnCloseDevServerFn,
   OnDevCompileDoneFn,
   OnExitFn,
+  OnRestartFn,
   OutputConfig,
   OverlayOptions,
   OutputStructure,
@@ -170,6 +176,8 @@ export type {
   ResolveHandler,
   ResolveHook,
   ResourceHintsIncludeType,
+  RestartContext,
+  RestartFn,
   RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,
@@ -206,5 +214,7 @@ export type {
   TransformHandler,
   TransformHook,
   TransformImport,
+  WatchFileEvent,
   WatchFiles,
+  WebSocketUrlResolver,
 } from './types';

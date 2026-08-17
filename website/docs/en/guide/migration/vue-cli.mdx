@@ -8,7 +8,7 @@ This chapter introduces how to migrate a [Vue CLI](https://github.com/vuejs/vue-
 
 ## Install dependencies
 
-First, you need to replace the npm dependencies of Vue CLI with Rsbuild's dependencies.
+First, replace the npm dependencies of Vue CLI with Rsbuild's dependencies.
 
 import { PackageManagerTabs } from '@theme';
 
@@ -26,7 +26,7 @@ If your project is based on Vue 2, replace `@rsbuild/plugin-vue` with `@rsbuild/
 
 ## Update npm scripts
 
-Next, you need to update the npm scripts in the package.json file to Rsbuild's CLI commands.
+Next, update the npm scripts in the package.json file to Rsbuild's CLI commands.
 
 ```json title="package.json"
 {
@@ -41,7 +41,7 @@ Next, you need to update the npm scripts in the package.json file to Rsbuild's C
 ```
 
 :::tip
-Rsbuild does not integrate ESLint, so it does not provide a command to replace `vue-cli-service lint`. You can directly use ESLint's [CLI commands](https://eslint.org/docs/latest/use/command-line-interface) as an alternative.
+Rsbuild does not integrate ESLint, so it does not provide a command to replace `vue-cli-service lint`. Use ESLint's [CLI commands](https://eslint.org/docs/latest/use/command-line-interface) directly as an alternative.
 :::
 
 ## Create configuration file
@@ -69,7 +69,7 @@ If your project is based on Vue 2, use `import { pluginVue2 } from '@rsbuild/plu
 
 ## HTML template
 
-Vue CLI uses the `public/index.html` file as the default HTML template. In Rsbuild, you can specify the HTML template through [html.template](/config/html/template):
+Vue CLI uses the `public/index.html` file as the default HTML template. In Rsbuild, specify the HTML template through [html.template](/config/html/template):
 
 ```ts title="rsbuild.config.ts"
 export default defineConfig({
@@ -79,7 +79,7 @@ export default defineConfig({
 });
 ```
 
-In the HTML template, if you are using the `BASE_URL` variable from Vue CLI, replace it with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
+In the HTML template, replace Vue CLI's `BASE_URL` variable with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
 
 ```html
 <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
@@ -88,7 +88,7 @@ In the HTML template, if you are using the `BASE_URL` variable from Vue CLI, rep
 <!-- [!code ++] -->
 ```
 
-This completes the basic migration from Vue CLI to Rsbuild. You can now run the `npm run serve` command to try starting the dev server.
+This completes the basic migration from Vue CLI to Rsbuild. Run `npm run serve` to start the dev server.
 
 ## Config migration
 

@@ -1,9 +1,48 @@
+import { mkdtempSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, sep } from 'node:path';
 import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
-import { ensureAssetPrefix } from '../src/helpers/url';
+import { readPackageJsonByPath } from '../src/helpers/packageJson';
+import { ensureAssetPrefix, removeTailingSlash } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
-import type { RsbuildTarget, InternalContext } from '../src/types';
+import type { InternalContext, RsbuildTarget } from '../src/types';
+
+describe('readPackageJsonByPath', () => {
+  it('should read package.json from specified path', async () => {
+    const root = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
+    const packageJsonPath = join(root, 'package.json');
+    writeFileSync(
+      packageJsonPath,
+      JSON.stringify({
+        name: 'test-package',
+        dependencies: {
+          foo: '1.0.0',
+        },
+      }),
+    );
+
+    await expect(readPackageJsonByPath(packageJsonPath)).resolves.toEqual({
+      name: 'test-package',
+      dependencies: {
+        foo: '1.0.0',
+      },
+    });
+  });
+
+  it('should return undefined when package.json does not exist or is invalid', async () => {
+    const missingPath = join(
+      mkdtempSync(join(tmpdir(), 'rsbuild-package-json-')),
+      'package.json',
+    );
+    await expect(readPackageJsonByPath(missingPath)).resolves.toBeUndefined();
+
+    const invalidRoot = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
+    const invalidPath = join(invalidRoot, 'package.json');
+    writeFileSync(invalidPath, '{ invalid json');
+    await expect(readPackageJsonByPath(invalidPath)).resolves.toBeUndefined();
+  });
+});
 
 test('should get routes correctly', () => {
   const cwd = import.meta.dirname;
@@ -88,15 +127,15 @@ test('should get routes correctly', () => {
 });
 
 test('should format time correctly', () => {
-  expect(prettyTime(0.0012)).toEqual('0.001 s');
-  expect(prettyTime(0.0123)).toEqual('0.01 s');
-  expect(prettyTime(0.1234)).toEqual('0.12 s');
-  expect(prettyTime(1.234)).toEqual('1.23 s');
-  expect(prettyTime(12.34)).toEqual('12.3 s');
-  expect(prettyTime(120)).toEqual('2 m');
-  expect(prettyTime(123.4)).toEqual('2 m 3.4 s');
-  expect(prettyTime(1234)).toEqual('20 m 34 s');
-  expect(prettyTime(1234.5)).toEqual('20 m 34.5 s');
+  expect(prettyTime(0.0012)).toEqual('0.001s');
+  expect(prettyTime(0.0123)).toEqual('0.01s');
+  expect(prettyTime(0.1234)).toEqual('0.12s');
+  expect(prettyTime(1.234)).toEqual('1.23s');
+  expect(prettyTime(12.34)).toEqual('12.3s');
+  expect(prettyTime(120)).toEqual('2m');
+  expect(prettyTime(123.4)).toEqual('2m 3.4s');
+  expect(prettyTime(1234)).toEqual('20m 34s');
+  expect(prettyTime(1234.5)).toEqual('20m 34.5s');
 });
 
 describe('pick', () => {
@@ -152,6 +191,14 @@ it('should normalize URLs correctly', () => {
   expect(normalizeUrl('https://www.example.com/static/')).toBe(
     'https://www.example.com/static/',
   );
+});
+
+it('should remove trailing slashes correctly', () => {
+  expect(removeTailingSlash('/base')).toBe('/base');
+  expect(removeTailingSlash('/base/')).toBe('/base');
+  expect(removeTailingSlash('/base///')).toBe('/base');
+  expect(removeTailingSlash('/')).toBe('');
+  expect(removeTailingSlash('')).toBe('');
 });
 
 describe('ensureAssetPrefix', () => {

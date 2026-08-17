@@ -1,5 +1,5 @@
-import path from 'node:path';
-import { expect, getFileContent, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getFileContent } from '@rstackjs/test-utils';
 import type { RspackChain } from '@rsbuild/core';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
@@ -24,8 +24,8 @@ test('should inline all scripts and emit all source maps', async ({
     config: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          another: path.resolve(import.meta.dirname, './src/another.js'),
+          index: './src/index.js',
+          another: './src/another.js',
         },
       },
       output: {

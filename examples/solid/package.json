@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild --open",
     "build": "rsbuild build",
+    "dev": "rsbuild --open",
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@solidjs/web": ">=2.0.0-beta.0 <2.0.0-experimental.0",
-    "solid-js": ">=2.0.0-beta.0 <2.0.0-experimental.0"
+    "@solidjs/web": "catalog:",
+    "solid-js": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

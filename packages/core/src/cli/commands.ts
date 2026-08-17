@@ -3,12 +3,13 @@ import { RSPACK_BUILD_ERROR } from '../build';
 import { color } from '../helpers';
 import type { ConfigLoader } from '../loadConfig';
 import { defaultLogger } from '../logger';
-import { onBeforeRestartServer } from '../restart';
 import type { LogLevel, RsbuildMode } from '../types';
-import { init } from './init';
+import { init, initCliAction } from './init';
 
 export type CommonOptions = {
   base?: string;
+  distPath?: string;
+  sourceMap?: boolean;
   root?: string;
   mode?: RsbuildMode;
   config?: string;
@@ -19,6 +20,7 @@ export type CommonOptions = {
   open?: boolean | string;
   host?: true | string;
   port?: number;
+  strictPort?: boolean;
   environment?: string[];
   logLevel?: LogLevel;
 };
@@ -51,6 +53,8 @@ const applyCommonOptions = (cli: CAC) => {
         default: 'auto',
       },
     )
+    .option('--dist-path <dir>', 'Set the root directory of output files')
+    .option('--source-map', 'Enable source map')
     .option('--env-dir <dir>', 'Set the directory for loading `.env` files')
     .option(
       '--env-mode <mode>',
@@ -79,10 +83,11 @@ const applyServerOptions = (command: Command) => {
   command
     .option('-o, --open [url]', 'Open the page in browser on startup')
     .option('--port <port>', 'Set the port number for the server')
+    .option('--strict-port', 'Exit if the specified port is already in use')
     .option('--host [host]', 'Set the host that the server listens to');
 };
 
-export function setupCommands(): void {
+export function setupCommands(argv: string[]): void {
   const cli = cac('rsbuild');
 
   cli.version(RSBUILD_VERSION);
@@ -108,10 +113,9 @@ export function setupCommands(): void {
   let logger = defaultLogger;
 
   devCommand.action(async (options: DevOptions) => {
+    initCliAction('dev', options);
     try {
-      const rsbuild = await init({
-        cliOptions: options,
-      });
+      const rsbuild = await init();
       if (!rsbuild) {
         return;
       }
@@ -131,15 +135,13 @@ export function setupCommands(): void {
       'Enable watch mode to automatically rebuild on file changes',
     )
     .action(async (options: BuildOptions) => {
+      initCliAction('build', options);
       try {
         if (!options.watch) {
           process.env.RSPACK_UNSAFE_FAST_DROP = 'true';
         }
 
-        const rsbuild = await init({
-          cliOptions: options,
-          isBuildWatch: options.watch,
-        });
+        const rsbuild = await init();
         if (!rsbuild) {
           return;
         }
@@ -150,12 +152,8 @@ export function setupCommands(): void {
           watch: options.watch,
         });
 
-        if (buildResult) {
-          if (options.watch) {
-            onBeforeRestartServer(buildResult.close);
-          } else {
-            await buildResult.close();
-          }
+        if (!options.watch) {
+          await buildResult.close();
         }
       } catch (err) {
         const isRspackError =
@@ -170,10 +168,9 @@ export function setupCommands(): void {
     });
 
   previewCommand.action(async (options: PreviewOptions) => {
+    initCliAction('preview', options);
     try {
-      const rsbuild = await init({
-        cliOptions: options,
-      });
+      const rsbuild = await init();
 
       if (!rsbuild) {
         return;
@@ -192,10 +189,9 @@ export function setupCommands(): void {
     .option('--output <output>', 'Set the output path for inspection results')
     .option('--verbose', 'Show complete function definitions in output')
     .action(async (options: InspectOptions) => {
+      initCliAction('inspect', options);
       try {
-        const rsbuild = await init({
-          cliOptions: options,
-        });
+        const rsbuild = await init();
 
         if (!rsbuild) {
           return;
@@ -218,12 +214,16 @@ export function setupCommands(): void {
     // remove the default version log as we already log it in greeting
     sections.shift();
 
+    const commandName = cli.matchedCommandName;
+    sections = sections.filter(
+      ({ title }) =>
+        !commandName ||
+        (title !== 'Commands' && !title?.startsWith('For more info')),
+    );
+
     for (const section of sections) {
       if (section.title === 'Usage') {
-        section.body = section.body.replace(
-          '$ rsbuild',
-          color.yellow(`$ rsbuild [command] [options]`),
-        );
+        section.body = `  ${color.yellow(`$ rsbuild ${commandName || '[command]'} [options]`)}`;
       }
 
       // Fix the dev command name
@@ -234,7 +234,7 @@ export function setupCommands(): void {
         );
       }
 
-      // Simplify the help output for sub-commands
+      // Simplify the root help instructions for sub-commands
       if (section.title?.startsWith('For more info')) {
         section.title = color.dim('  For details on a sub-command, run');
         section.body = color.dim('  $ rsbuild <command> -h');
@@ -242,7 +242,9 @@ export function setupCommands(): void {
         section.title = color.cyan(section.title);
       }
     }
+
+    return sections;
   });
 
-  cli.parse();
+  cli.parse(argv);
 }

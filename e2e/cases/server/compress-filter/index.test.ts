@@ -12,7 +12,7 @@ test('should support configuring the compression filter in dev', async ({
   expect(indexJsResponse.headers()['content-encoding']).toEqual(undefined);
 
   const asyncJsResponse = await request.get(
-    `http://localhost:${rsbuild.port}/static/js/async/vue.js`,
+    `http://localhost:${rsbuild.port}/static/js/async/react-dom.js`,
   );
   expect(asyncJsResponse.headers()['content-encoding']).toEqual('gzip');
 });
@@ -29,7 +29,7 @@ test('should support configuring the compression filter in preview mode', async 
   expect(indexJsResponse.headers()['content-encoding']).toEqual(undefined);
 
   const asyncJsResponse = await request.get(
-    `http://localhost:${rsbuild.port}/static/js/async/vue.js`,
+    `http://localhost:${rsbuild.port}/static/js/async/react-dom.js`,
   );
   expect(asyncJsResponse.headers()['content-encoding']).toEqual('gzip');
 });

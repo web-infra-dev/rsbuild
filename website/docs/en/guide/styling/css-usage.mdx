@@ -24,7 +24,7 @@ Rsbuild uses Rspack's built-in [lightningcss-loader](https://rspack.rs/guide/fea
 
 ### Disabling Lightning CSS
 
-If Lightning CSS does not meet your needs, you can disable Lightning CSS and use [PostCSS](#using-postcss) to transform your CSS code.
+If Lightning CSS does not meet your needs, you can disable Lightning CSS and use [PostCSS](#postcss) to transform your CSS code.
 
 Steps:
 
@@ -111,9 +111,9 @@ Rsbuild supports CSS Modules by default, please read the [CSS Modules](/guide/st
 
 Rsbuild supports popular CSS preprocessors through plugins, including Sass, Less and Stylus. See how to use them:
 
-- [Sass Plugin](/plugins/list/plugin-sass)
-- [Less Plugin](/plugins/list/plugin-less)
-- [Stylus Plugin](/plugins/list/plugin-stylus)
+- [Sass plugin](/plugins/list/plugin-sass)
+- [Less plugin](/plugins/list/plugin-less)
+- [Stylus Plugin](https://github.com/rstackjs/rsbuild-plugin-stylus)
 
 ## CSS-in-JS
 
@@ -123,7 +123,7 @@ See [CSS-in-JS](/guide/styling/css-in-js) to learn how to use common CSS-in-JS l
 
 By default, Rsbuild will extract CSS into a separate `.css` file and output it to the dist directory.
 
-To inline styles into your JS file, set [output.injectStyles](/config/output/inject-styles) to true to disable CSS extraction logic. When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
+To inline styles into your JS file, set [output.injectStyles](/config/output/inject-styles) to true to disable CSS extraction logic. When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the HTML to load the CSS styles.
 
 ```ts
 export default {
@@ -163,6 +163,26 @@ In Sass and Less files, it is also allowed to add the `~` prefix to resolve styl
 @import 'normalize.css';
 ```
 
+## Import attributes
+
+Rsbuild supports importing raw CSS source as a string in JavaScript by using import attributes with `type: 'text'`.
+
+```js title="src/index.js"
+import rawCss from './style.css' with { type: 'text' };
+
+console.log(rawCss); // Output the raw content of the CSS file
+```
+
+Using `import "*.css" with { type: 'text' }` has the following behaviors:
+
+- Get the raw text content of the CSS file, without any preprocessing or compilation
+- The content of the CSS file will be inlined into the final JavaScript bundle
+- No separate CSS file will be generated
+
+:::tip
+`type: 'text'` is supported in Rsbuild >= 2.1.3.
+:::
+
 ## Query parameters
 
 ### inline
@@ -190,9 +210,9 @@ Using `import "*.css?inline"` has the following behaviors:
 
 ### raw
 
-Rsbuild supports importing raw CSS files as strings in JavaScript by using the `?raw` query parameter.
+Rsbuild also supports importing raw CSS files as strings in JavaScript by using the `?raw` query parameter.
 
-```ts title="src/index.js"
+```js title="src/index.js"
 import rawCss from './style.css?raw';
 
 console.log(rawCss); // Output the raw content of the CSS file

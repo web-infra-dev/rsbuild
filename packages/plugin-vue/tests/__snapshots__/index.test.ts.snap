@@ -15,6 +15,11 @@ exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 1`] = 
       },
     },
   ],
+  "with": {
+    "type": {
+      "not": "text",
+    },
+  },
 }
 `;
 
@@ -53,6 +58,11 @@ exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
       },
     },
   ],
+  "with": {
+    "type": {
+      "not": "text",
+    },
+  },
 }
 `;
 
@@ -71,29 +81,11 @@ exports[`plugin-vue > should allow to custom test condition 1`] = `
       },
     },
   ],
-}
-`;
-
-exports[`plugin-vue > should apply splitChunks with Rsbuild v1 1`] = `
-{
-  "cacheGroups": {
-    "lib-axios": {
-      "name": "lib-axios",
-      "priority": 0,
-      "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-    },
-    "router": {
-      "name": "lib-router",
-      "priority": 0,
-      "test": /node_modules\\[\\\\\\\\/\\]vue-router\\[\\\\\\\\/\\]/,
-    },
-    "vue": {
-      "name": "lib-vue",
-      "priority": 0,
-      "test": /node_modules\\[\\\\\\\\/\\]\\(\\?:vue\\|rspack-vue-loader\\|@vue\\[\\\\\\\\/\\]shared\\|@vue\\[\\\\\\\\/\\]reactivity\\|@vue\\[\\\\\\\\/\\]runtime-dom\\|@vue\\[\\\\\\\\/\\]runtime-core\\)\\[\\\\\\\\/\\]/,
+  "with": {
+    "type": {
+      "not": "text",
     },
   },
-  "chunks": "all",
 }
 `;
 
@@ -110,6 +102,7 @@ DefinePlugin {
         "DEV": false,
         "MODE": "\\"none\\"",
         "PROD": false,
+        "SSR": false,
       },
       "process.env.ASSET_PREFIX": "\\"\\"",
       "process.env.BASE_URL": "\\"/\\"",

@@ -46,7 +46,7 @@ import type {
 
 ## NormalizedConfig
 
-Rsbuild 配置归一化后的类型，对应 [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 方法的返回值。
+Rsbuild 配置经过规范化后的类型，对应 [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 方法的返回值。
 
 ```ts
 import type { NormalizedConfig } from '@rsbuild/core';
@@ -54,7 +54,7 @@ import type { NormalizedConfig } from '@rsbuild/core';
 const config: NormalizedConfig = api.getNormalizedConfig();
 ```
 
-你也可以引用归一化后的 Rsbuild 配置中各个字段的类型定义：
+你也可以引用规范化后的 Rsbuild 配置中各个字段的类型定义：
 
 ```ts
 import type {
@@ -72,7 +72,7 @@ import type {
 
 ## NormalizedEnvironmentConfig
 
-指定环境下的 Rsbuild 归一化配置类型，对应 [`getNormalizedConfig({ environment })`](/plugins/dev/core#apigetnormalizedconfig) 方法的返回值。
+指定环境下经过规范化的 Rsbuild 配置类型，对应 [`getNormalizedConfig({ environment })`](/plugins/dev/core#apigetnormalizedconfig) 方法的返回值。
 
 ```ts
 import type { NormalizedEnvironmentConfig } from '@rsbuild/core';

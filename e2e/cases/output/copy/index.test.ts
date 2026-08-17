@@ -41,6 +41,32 @@ test('should copy asset from src to dist folder correctly', async ({
   ).toBeTruthy();
 });
 
+test('should transform copied assets', async ({ build }) => {
+  await build({
+    config: {
+      output: {
+        copy: [
+          {
+            from: 'foo.txt',
+            to: 'transformed/foo.txt',
+            context: join(import.meta.dirname, 'src'),
+            transform(content) {
+              return content.toString().toUpperCase();
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  expect(
+    fs.readFileSync(
+      join(import.meta.dirname, 'dist/transformed/foo.txt'),
+      'utf-8',
+    ),
+  ).toBe('BAR');
+});
+
 test('should copy asset to dist sub-folder correctly', async ({ build }) => {
   await build({
     config: {

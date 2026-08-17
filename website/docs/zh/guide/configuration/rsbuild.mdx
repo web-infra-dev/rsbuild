@@ -55,7 +55,7 @@ export default {
 };
 ```
 
-你可以在 [Config 总览](/config/) 页面找到所有配置项的详细说明。
+你可以在 [配置总览](/config/) 页面找到所有配置项的详细说明。
 
 ## 配置文件
 
@@ -104,7 +104,7 @@ export default defineConfig({
 });
 ```
 
-## 指定配置文件
+## 指定配置文件 \{#specify-config-file}
 
 Rsbuild CLI 通过 `--config` 选项来指定配置文件，可以设置为相对路径或绝对路径。
 
@@ -124,7 +124,7 @@ Rsbuild CLI 通过 `--config` 选项来指定配置文件，可以设置为相�
 rsbuild build -c rsbuild.prod.config.mjs
 ```
 
-## 指定加载方式
+## 指定加载方式 \{#specify-config-loader}
 
 Rsbuild 提供了三种配置文件加载方式：
 
@@ -265,6 +265,22 @@ const config2 = defineConfig({
 // { dev: { port: '3001' }
 export default mergeRsbuildConfig(config1, config2);
 ```
+
+## 配置文件监听 \{#configuration-file-watching}
+
+### Rsbuild CLI
+
+使用 Rsbuild CLI 时，`rsbuild dev` 和 `rsbuild build --watch` 会自动监听已加载的配置文件及其导入依赖。
+
+当其中任一文件发生变化时，Rsbuild 会重新加载配置，并重启当前 dev server 或监听构建。
+
+### JavaScript API
+
+使用 JavaScript API 时，请将 [`loadConfig`](/api/javascript-api/core#loadconfig) 的完整返回结果传入 `createRsbuild`。Rsbuild 会据此追踪配置文件及其导入依赖。
+
+调用 `rsbuild.startDevServer()`、`rsbuild.createDevServer()` 或 `rsbuild.build({ watch: true })` 时，Rsbuild 会安装 restart 监听器，并自动监听上述文件；普通构建和预览服务器不会安装监听器。被监听的文件发生变化时，Rsbuild 会调用 [onRestart hook](/plugins/dev/hooks#onrestart)。
+
+默认情况下，Rsbuild 仅调用该 hook，不会自动重启当前任务。如需执行重启流程，可以传入 [`restart` 选项](/api/javascript-api/core#restart-handling)。
 
 ## 调试配置
 

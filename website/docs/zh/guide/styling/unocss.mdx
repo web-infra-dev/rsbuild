@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## 配置 PostCSS
 
-你可以通过 [postcss.config.mjs](https://www.npmjs.com/package/postcss-loader#config) 或 [tools.postcss](/config/tools/postcss) 来注册 `unocss` 的 PostCSS 插件。
+你可以通过 [postcss.config.mjs](https://github.com/webpack/postcss-loader#config) 或 [tools.postcss](/config/tools/postcss) 来注册 `unocss` 的 PostCSS 插件。
 
 ```js title="postcss.config.mjs"
 import UnoCSS from '@unocss/postcss';
@@ -27,6 +27,8 @@ export default {
   plugins: [UnoCSS()],
 };
 ```
+
+Rsbuild 默认使用 [Lightning CSS](/guide/styling/css-usage#lightning-css) 添加浏览器前缀，因此你只需要注册 `UnoCSS` 插件。
 
 ## 配置 UnoCSS
 

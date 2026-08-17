@@ -15,7 +15,7 @@ This section describes all the properties and methods on the Rsbuild instance ob
 ```ts
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = createRsbuild({
+const rsbuild = await createRsbuild({
   // ...
 });
 
@@ -52,6 +52,19 @@ The root path of the current build, corresponding to the `cwd` option of the [cr
 ```ts
 type RootPath = string;
 ```
+
+### context.configFile
+
+The absolute path to the configuration file loaded by [loadConfig](/api/javascript-api/core#loadconfig). It is `undefined` when no configuration file is loaded.
+
+- **Type:** `string | undefined`
+
+### context.configFileDependencies
+
+The absolute paths of files imported by the configuration file. The dependencies are collected by [loadConfig](/api/javascript-api/core#loadconfig).
+
+- **Type:** `readonly string[]`
+- **Default:** `[]`
 
 ### context.distPath
 
@@ -132,7 +145,7 @@ type DevServer = {
 import { createRsbuild } from '@rsbuild/core';
 
 async function main() {
-  const rsbuild = createRsbuild({
+  const rsbuild = await createRsbuild({
     // ...
   });
   await rsbuild.startDevServer();
@@ -572,18 +585,27 @@ This method needs to be called before compiling. If it is called after compiling
 - **Type:**
 
 ```ts
-function RemovePlugins(pluginNames: string[]): void;
+function RemovePlugins(
+  pluginNames: string[],
+  options?: {
+    /**
+     * Remove the plugin in the specified environment.
+     * If environment is not specified, remove it in all environments.
+     */
+    environment?: string;
+  },
+): void;
 ```
 
 - **Example:**
 
 ```ts
 // add plugin
-const pluginFoo = pluginFoo();
-rsbuild.addPlugins(pluginFoo);
+const foo = pluginFoo();
+rsbuild.addPlugins([foo]);
 
 // remove plugin
-rsbuild.removePlugins([pluginFoo.name]);
+rsbuild.removePlugins([foo.name]);
 ```
 
 ## rsbuild.isPluginExists
@@ -602,7 +624,7 @@ const pluginFoo = {
   },
 };
 
-const rsbuild = createRsbuild({
+const rsbuild = await createRsbuild({
   config: {
     plugins: [pluginFoo],
   },
@@ -614,7 +636,7 @@ rsbuild.isPluginExists(pluginFoo.name); // true
 Or check if a plugin exists in a specified environment:
 
 ```ts
-const rsbuild = createRsbuild({
+const rsbuild = await createRsbuild({
   config: {
     environments: {
       web: {
@@ -648,9 +670,9 @@ type InitConfigsOptions = {
   action?: 'dev' | 'build' | 'preview';
 };
 
-function InitConfigs(options?: InitConfigsOptions): Promise<{
-  rspackConfigs: Rspack.Configuration[];
-}>;
+function InitConfigs(
+  options?: InitConfigsOptions,
+): Promise<Rspack.Configuration[]>;
 ```
 
 - **Example:**
@@ -683,8 +705,9 @@ The method serializes these configurations to strings and optionally writes them
 type InspectConfigOptions = {
   /**
    * Inspect the config in the specified mode.
-   * Available options: 'development' or 'production'.
-   * @default 'development'
+   * Available options: 'development', 'production', or 'none'.
+   * @default Inferred from `process.env.NODE_ENV`: 'development' when unset,
+   * 'development' or 'production' when matching, otherwise 'none'.
    */
   mode?: RsbuildMode;
   /**
@@ -695,7 +718,7 @@ type InspectConfigOptions = {
   verbose?: boolean;
   /**
    * Specify the output path for inspection results.
-   * @default 'output.distPath.root'
+   * @default '<context.distPath>/.rsbuild'
    */
   outputPath?: string;
   /**
@@ -716,15 +739,15 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
   bundlerConfigs: string[];
   environmentConfigs: string[];
   origin: {
-    rsbuildConfig: RsbuildConfig;
-    environmentConfigs: Record<string, EnvironmentConfig>;
-    bundlerConfigs: BundlerConfigs[];
+    rsbuildConfig: Omit<NormalizedConfig, 'environments'>;
+    environmentConfigs: Record<string, NormalizedEnvironmentConfig>;
+    bundlerConfigs: Rspack.Configuration[];
   };
 }>;
 ```
 
 :::tip
-To view the Rsbuild and Rspack configurations during the build process, use [debug mode](/guide/debug/debug-mode), or obtain them through hooks such as [onBeforeBuild](#rsbuildonbeforebuild), [onBeforeCreateCompile](#rsbuildonbeforecreatecompiler).
+To view the Rsbuild and Rspack configurations during the build process, use [debug mode](/guide/debug/debug-mode), or obtain them through hooks such as [onBeforeBuild](#rsbuildonbeforebuild), [onBeforeCreateCompiler](#rsbuildonbeforecreatecompiler).
 :::
 
 ### Example
@@ -747,9 +770,9 @@ await rsbuild.inspectConfig({
 
 ### Output path
 
-You can set the output path using `outputPath`. The default value is [output.distPath.root](/config/output/dist-path).
+You can set the output path using `outputPath`. By default, the files are written to the `.rsbuild` directory under [context.distPath](#contextdistpath).
 
-If `outputPath` is a relative path, it will be concatenated relative to the value of `output.distPath.root`. You can also set `outputPath` to an absolute path, in which case the files will be written directly to that path. For example:
+If `outputPath` is a relative path, it will be resolved relative to `context.distPath`. You can also set `outputPath` to an absolute path, in which case the files will be written directly to that path. For example:
 
 ```ts
 import path from 'node:path';
@@ -993,6 +1016,22 @@ rsbuild.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
 });
 ```
 
+## rsbuild.onRestart
+
+> Provides the same functionality as the [onRestart](/plugins/dev/hooks#onrestart) plugin hook.
+
+import OnRestart from '@en/shared/onRestart.mdx';
+
+<OnRestart />
+
+- **Example:**
+
+```ts
+rsbuild.onRestart(async ({ action, filePath }) => {
+  console.log('restart!', action, filePath);
+});
+```
+
 ## rsbuild.onExit
 
 > Provides the same functionality as the [onExit](/plugins/dev/hooks#onexit) plugin hook.
@@ -1056,6 +1095,23 @@ rsbuild.expose('my-id', {
   double: (val: number) => val * 2,
 });
 ```
+
+You can also expose an API for a specific Rsbuild environment (the key of `config.environments`):
+
+```ts
+rsbuild.expose(
+  'my-id',
+  {
+    value: 1,
+    double: (val: number) => val * 2,
+  },
+  {
+    environment: 'web',
+  },
+);
+```
+
+When a plugin registered in the same environment calls `api.useExposed`, Rsbuild will first resolve the environment-scoped API, then fall back to the global API.
 
 ## rsbuild.modifyRsbuildConfig
 

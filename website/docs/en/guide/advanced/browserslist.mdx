@@ -104,6 +104,20 @@ last 2 versions
 not dead
 ```
 
+### Baseline queries
+
+Starting with v2.1.11, Rsbuild supports Baseline queries, which let you target browser versions based on a Baseline feature set. For example, to target browsers that support all features classified as [Baseline Widely available](https://web.dev/baseline):
+
+```yaml title=".browserslistrc"
+baseline widely available
+```
+
+You can also use a year query such as `baseline 2024`, or a fixed-date query such as `baseline widely available on 2025-05-01`.
+
+:::tip
+For more information, see [Use Baseline with Browserslist](https://web.dev/articles/use-baseline-with-browserslist).
+:::
+
 ### Effective scope
 
 By default, the `.browserslistrc` file only applies to browser-side bundles, including the `web` and `web-worker` target types.

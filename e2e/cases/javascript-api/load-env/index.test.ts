@@ -1,5 +1,19 @@
+import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, test } from '@e2e/helper';
 import { loadEnv } from '@rsbuild/core';
+
+function getLoadEnvError(prefixes: string[]) {
+  try {
+    loadEnv({
+      cwd: import.meta.dirname,
+      prefixes,
+    });
+  } catch (err) {
+    return err as Error;
+  }
+
+  throw new Error('Expected loadEnv to throw.');
+}
 
 test('should load env files correctly', () => {
   const env = loadEnv({
@@ -57,4 +71,16 @@ test('should not modify process.env if processEnv is provided', () => {
   env.cleanup();
   expect(process.env.REACT_NAME).toEqual(undefined);
   expect(targetEnv.REACT_NAME).toEqual(undefined);
+});
+
+test('should throw when prefixes contains empty string', () => {
+  const message = stripAnsi(getLoadEnvError(['PUBLIC_', '']).message);
+
+  expect(message).toMatchSnapshot();
+});
+
+test('should throw when prefixes contains whitespace-only string', () => {
+  const message = stripAnsi(getLoadEnvError(['PUBLIC_', '  ']).message);
+
+  expect(message).toMatchSnapshot();
 });

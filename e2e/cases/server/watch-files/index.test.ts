@@ -2,113 +2,112 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { test } from '@e2e/helper';
 
-test('should work with string and path to file', async ({ dev, page }) => {
-  const file = path.join(import.meta.dirname, '/assets/example.txt');
-  await dev({
-    config: {
-      dev: {
-        watchFiles: {
-          paths: file,
-        },
-      },
-    },
-  });
+const watchedDir1 = path.join(import.meta.dirname, 'test-temp-1');
+const watchedDir2 = path.join(import.meta.dirname, 'test-temp-2');
+const watchedFile1 = path.join(watchedDir1, 'test.txt');
+const watchedFile2 = path.join(watchedDir2, 'test.txt');
+const addedFile = path.join(watchedDir1, 'added.txt');
 
-  await fs.promises.writeFile(file, 'test');
-  // check the page is reloaded
-  await new Promise((resolve) => {
-    page.waitForURL(page.url()).then(resolve);
-  });
-
-  // reset file
-  fs.truncateSync(file);
+test.beforeEach(() => {
+  fs.mkdirSync(watchedDir1, { recursive: true });
+  fs.mkdirSync(watchedDir2, { recursive: true });
+  fs.writeFileSync(watchedFile1, '');
+  fs.writeFileSync(watchedFile2, '');
+  fs.rmSync(addedFile, { force: true });
 });
 
-test('should work with string and path to directory', async ({ dev, page }) => {
-  const file = path.join(import.meta.dirname, '/assets/example.txt');
+test.afterAll(() => {
+  fs.rmSync(watchedDir1, { force: true, recursive: true });
+  fs.rmSync(watchedDir2, { force: true, recursive: true });
+});
+
+test('should work with string and path to file', async ({ dev, page }) => {
   await dev({
     config: {
       dev: {
         watchFiles: {
-          paths: path.join(import.meta.dirname, '/assets'),
+          paths: watchedFile1,
         },
       },
     },
   });
 
-  await fs.promises.writeFile(file, 'test');
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
+});
 
-  await new Promise((resolve) => {
-    page.waitForURL(page.url()).then(resolve);
+test('should reload when a watched file is added, changed, or removed', async ({
+  dev,
+  page,
+}) => {
+  await dev({
+    config: {
+      dev: {
+        watchFiles: {
+          paths: watchedDir1,
+        },
+      },
+    },
   });
 
-  // reset file
-  fs.truncateSync(file);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(addedFile, 'test'),
+  ]);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
+  await Promise.all([page.waitForEvent('load'), fs.promises.rm(addedFile)]);
 });
 
 test('should work with string array directory', async ({ dev, page }) => {
-  const file = path.join(import.meta.dirname, '/assets/example.txt');
-  const other = path.join(import.meta.dirname, '/other/other.txt');
   await dev({
     config: {
       dev: {
         watchFiles: {
-          paths: [
-            path.join(import.meta.dirname, '/assets'),
-            path.join(import.meta.dirname, '/other'),
-          ],
+          paths: [watchedDir1, watchedDir2],
         },
       },
     },
   });
 
-  await fs.promises.writeFile(file, 'test');
-  // check the page is reloaded
-  await new Promise((resolve) => {
-    page.waitForURL(page.url()).then(resolve);
-  });
-  // reset file
-  fs.truncateSync(file);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
 
-  await fs.promises.writeFile(other, 'test');
-  // check the page is reloaded
-  await new Promise((resolve) => {
-    page.waitForURL(page.url()).then(resolve);
-  });
-  // reset file
-  fs.truncateSync(other);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile2, 'test'),
+  ]);
 });
 
 test('should work with string and glob', async ({ dev, page }) => {
-  const file = path.join(import.meta.dirname, '/assets/example.txt');
-  const watchDir = path.join(import.meta.dirname, '/assets');
   await dev({
     config: {
       dev: {
         watchFiles: {
-          paths: `${watchDir}/**/*`,
+          paths: 'test-temp-1/**/*',
         },
       },
     },
   });
 
-  await fs.promises.writeFile(file, 'test');
-  // check the page is reloaded
-  await new Promise((resolve) => {
-    page.waitForURL(page.url()).then(resolve);
-  });
-
-  // reset file
-  fs.truncateSync(file);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
 });
 
 test('should work with options', async ({ dev, page }) => {
-  const file = path.join(import.meta.dirname, '/assets/example.txt');
   await dev({
     config: {
       dev: {
         watchFiles: {
-          paths: file,
+          paths: watchedFile1,
           options: {
             usePolling: true,
           },
@@ -117,12 +116,27 @@ test('should work with options', async ({ dev, page }) => {
     },
   });
 
-  await fs.promises.writeFile(file, 'test');
-  // check the page is reloaded
-  await new Promise((resolve) => {
-    page.waitForURL(page.url()).then(resolve);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(watchedFile1, 'test'),
+  ]);
+});
+
+test('should reload the page for selected events', async ({ dev, page }) => {
+  await dev({
+    config: {
+      dev: {
+        watchFiles: {
+          paths: watchedDir1,
+          events: ['add', 'unlink'],
+        },
+      },
+    },
   });
 
-  // reset file
-  fs.truncateSync(file);
+  await Promise.all([
+    page.waitForEvent('load'),
+    fs.promises.writeFile(addedFile, 'test'),
+  ]);
+  await Promise.all([page.waitForEvent('load'), fs.promises.rm(addedFile)]);
 });

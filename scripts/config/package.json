@@ -1,13 +1,18 @@
 {
   "name": "@scripts/config",
-  "type": "module",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
+  "exports": {
+    "./lib": "./lib.ts",
+    "./test": "./test.ts",
+    "./tsconfig": "./tsconfig.json",
+    "./tsconfig-nodenext": "./tsconfig-nodenext.json"
+  },
   "devDependencies": {
-    "@rslib/core": "0.21.3",
-    "@rsbuild/core": "^2.0.0-beta.7",
-    "@types/node": "^24.12.2",
-    "rsbuild-plugin-arethetypeswrong": "0.3.1",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "path-serializer": "catalog:",
+    "rstack": "catalog:",
+    "typescript": "catalog:"
   }
 }

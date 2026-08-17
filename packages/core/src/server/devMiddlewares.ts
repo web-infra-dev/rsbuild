@@ -90,7 +90,7 @@ const applyDefaultMiddlewares = async ({
 
   if (server.cors) {
     const { default: corsMiddleware } = await import(
-      /* webpackChunkName: "cors" */ 'cors'
+      /* rspackChunkName: "cors" */ 'cors'
     );
     middlewares.use(
       corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors),
@@ -158,11 +158,27 @@ const applyDefaultMiddlewares = async ({
     middlewares.use(getBaseUrlMiddleware({ base: server.base }));
   }
 
-  const { default: launchEditorMiddleware } = await import(
-    /* webpackChunkName: "launch-editor-middleware" */
-    'launch-editor-middleware'
-  );
-  middlewares.use('/__open-in-editor', launchEditorMiddleware());
+  let launchEditorHandlerPromise: Promise<RequestHandler> | undefined;
+  const getLaunchEditorHandler = () => {
+    launchEditorHandlerPromise ??= (async () => {
+      const { default: launchEditorMiddleware } = await import(
+        /* rspackChunkName: "launch-editor-middleware" */
+        'launch-editor-middleware'
+      );
+      return launchEditorMiddleware();
+    })();
+
+    return launchEditorHandlerPromise;
+  };
+
+  middlewares.use('/__open-in-editor', async (req, res, next) => {
+    try {
+      const handler = await getLaunchEditorHandler();
+      handler(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  });
 
   middlewares.use(
     viewingServedFilesMiddleware({
@@ -190,15 +206,16 @@ const applyDefaultMiddlewares = async ({
   if (buildManager) {
     middlewares.use(
       getHtmlCompletionMiddleware({
-        buildManager,
-        distPath: context.distPath,
+        assetsMiddleware: buildManager.assetsMiddleware,
+        distPaths: [context.distPath],
+        outputFileSystem: buildManager.outputFileSystem,
       }),
     );
   }
 
   if (server.publicDir.length) {
     const { default: sirv } = await import(
-      /* webpackChunkName: "sirv" */ 'sirv'
+      /* rspackChunkName: "sirv" */ 'sirv'
     );
     for (const { name } of server.publicDir) {
       const sirvMiddleware = sirv(name, {
@@ -238,9 +255,10 @@ const applyDefaultMiddlewares = async ({
   if (buildManager && server.htmlFallback) {
     middlewares.use(
       getHtmlFallbackMiddleware({
-        buildManager,
-        distPath: context.distPath,
+        assetsMiddleware: buildManager.assetsMiddleware,
+        distPaths: [context.distPath],
         logger,
+        outputFileSystem: buildManager.outputFileSystem,
       }),
     );
   }

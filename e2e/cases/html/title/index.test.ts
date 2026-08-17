@@ -1,12 +1,11 @@
-import path from 'node:path';
-
-import { expect, getFileContent, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getFileContent } from '@rstackjs/test-utils';
 
 test('should generate default title correctly', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
     },
   });
@@ -22,7 +21,7 @@ test('should allow setting empty title to unset the default title', async ({
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: '',
@@ -39,7 +38,7 @@ test('should generate title correctly', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: 'foo',
@@ -58,11 +57,11 @@ test('should generate title correctly when using custom HTML template', async ({
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: 'foo',
-        template: path.resolve(import.meta.dirname, './src/empty.html'),
+        template: './src/empty.html',
       },
     },
   });
@@ -78,14 +77,11 @@ test('should generate title correctly when using htmlPlugin.options.title', asyn
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: 'foo',
-        template: path.resolve(
-          import.meta.dirname,
-          './src/plugin-options-title.html',
-        ),
+        template: './src/plugin-options-title.html',
       },
     },
   });
@@ -100,8 +96,8 @@ test('should generate title via function correctly', async ({ build }) => {
     config: {
       source: {
         entry: {
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
-          bar: path.resolve(import.meta.dirname, './src/foo.js'),
+          foo: './src/foo.js',
+          bar: './src/foo.js',
         },
       },
       html: {
@@ -126,7 +122,7 @@ test('should not inject title if template already contains a title', async ({
   const rsbuild = await build({
     config: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: './src/foo.js' },
       },
       html: {
         title: 'Hello',

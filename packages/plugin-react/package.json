@@ -1,7 +1,11 @@
 {
   "name": "@rsbuild/plugin-react",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "React plugin for Rsbuild",
+  "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
@@ -20,23 +24,23 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib",
-    "dev": "rslib -w"
+    "build": "rs lib",
+    "dev": "rs lib -w",
+    "test": "rs test"
   },
   "dependencies": {
-    "@rspack/plugin-react-refresh": "2.0.0",
-    "react-refresh": "^0.18.0"
+    "@rspack/plugin-react-refresh": "catalog:",
+    "react-refresh": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
-    "@rslib/core": "0.21.3",
+    "@rsbuild/core-v1": "catalog:",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.2",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^2.0.0-0"
+    "@rsbuild/core": "^2.0.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {

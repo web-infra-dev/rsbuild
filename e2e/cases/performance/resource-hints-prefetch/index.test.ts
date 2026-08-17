@@ -1,5 +1,6 @@
 import { join } from 'node:path';
-import { expect, findFile, getFileContent, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { findFile, getFileContent } from '@rstackjs/test-utils';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = import.meta.dirname;
@@ -27,10 +28,14 @@ test('should generate prefetch link when prefetch is defined', async ({
   const files = rsbuild.getDistFiles();
 
   const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
+  const textFileName = findFile(files, /\/static\/assets\/.+\.txt$/);
   const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(3);
+  expect(content).not.toContain(
+    textFileName.slice(textFileName.indexOf('/static/assets/')),
+  );
 
   expect(
     content.includes(
@@ -39,6 +44,36 @@ test('should generate prefetch link when prefetch is defined', async ({
       )}" rel="prefetch">`,
     ),
   ).toBeTruthy();
+});
+
+test('should allow prefetch.exclude to override default asset excludes', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      plugins: [pluginReact()],
+      source: {
+        entry: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
+      performance: {
+        prefetch: {
+          exclude: /\.css$/,
+        },
+      },
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+
+  const textFileName = findFile(files, /\/static\/assets\/.+\.txt$/);
+  const content = getFileContent(files, '.html');
+  const textHref = textFileName.slice(textFileName.indexOf('/static/assets/'));
+
+  // test.js, image.png, file.txt
+  expect(content.match(/rel="prefetch"/g)?.length).toBe(3);
+  expect(content).toContain(`<link href="${textHref}" rel="prefetch">`);
 });
 
 test('should generate prefetch link correctly when assetPrefix do not have a protocol', async ({
@@ -143,6 +178,59 @@ test('should generate prefetch link with include array', async ({ build }) => {
   ).toBeTruthy();
 });
 
+test('should generate prefetch link with options array', async ({ build }) => {
+  const rsbuild = await build({
+    config: {
+      plugins: [pluginReact()],
+      source: {
+        entry: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
+      performance: {
+        prefetch: [
+          {
+            include: /\.js$/,
+          },
+          {
+            type: 'all-chunks',
+            include: /icon\..+\.png$/,
+          },
+          {
+            type: 'all-chunks',
+            include: /icon\..+\.png$/,
+          },
+        ],
+      },
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+
+  const iconFileName = findFile(files, 'icon.png');
+  const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
+  const content = getFileContent(files, '.html');
+
+  // test.js, icon.png
+  expect(content.match(/rel="prefetch"/g)?.length).toBe(2);
+
+  expect(
+    content.includes(
+      `<link href="${asyncFileName.slice(
+        asyncFileName.indexOf('/static/js/async/'),
+      )}" rel="prefetch">`,
+    ),
+  ).toBeTruthy();
+
+  expect(
+    content.includes(
+      `<link href="${iconFileName.slice(
+        iconFileName.indexOf('/static/image/icon'),
+      )}" rel="prefetch">`,
+    ),
+  ).toBeTruthy();
+});
+
 test('should generate prefetch link with exclude array', async ({ build }) => {
   const rsbuild = await build({
     config: {
@@ -163,10 +251,12 @@ test('should generate prefetch link with exclude array', async ({ build }) => {
   const files = rsbuild.getDistFiles();
 
   const asyncFileName = findFile(files, 'image.png');
+  const textFileName = findFile(files, /\/static\/assets\/.+\.txt$/);
   const content = getFileContent(files, '.html');
+  const textHref = textFileName.slice(textFileName.indexOf('/static/assets/'));
 
-  // image.png
-  expect(content.match(/rel="prefetch"/g)?.length).toBe(1);
+  // image.png, file.txt
+  expect(content.match(/rel="prefetch"/g)?.length).toBe(2);
 
   expect(
     content.includes(
@@ -175,6 +265,7 @@ test('should generate prefetch link with exclude array', async ({ build }) => {
       )}" rel="prefetch">`,
     ),
   ).toBeTruthy();
+  expect(content).toContain(`<link href="${textHref}" rel="prefetch">`);
 });
 
 test('should generate prefetch link by config (distinguish html)', async ({

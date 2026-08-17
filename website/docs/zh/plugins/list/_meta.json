@@ -7,7 +7,7 @@
   "plugin-svelte",
   "plugin-solid",
   "plugin-babel",
+  "plugin-tailwindcss",
   "plugin-sass",
-  "plugin-less",
-  "plugin-stylus"
+  "plugin-less"
 ]

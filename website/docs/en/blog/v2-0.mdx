@@ -3,13 +3,18 @@ description: 'Rsbuild 2.0 is out, featuring Rspack 2.0, RSC support, and more mo
 date: 2026-04-22 12:00:00
 sidebar: false
 authors:
-  - name: chenjiahan
+  - name: Jiahan Chen
     avatar: 'https://github.com/chenjiahan.png'
+    github: 'chenjiahan'
 ---
+
+import { BlogAuthors } from '@rstack-dev/doc-ui/blog-authors';
+
+# Announcing Rsbuild 2.0
 
 _April 22, 2026_
 
-# Announcing Rsbuild 2.0
+<BlogAuthors />
 
 ![](https://assets.rspack.rs/rsbuild/rsbuild-banner-v2.0.png)
 
@@ -28,7 +33,7 @@ The main improvements in 2.0 include:
 - New features:
   - [Upgrade to Rspack 2.0](#upgrade-to-rspack-20)
   - [React Server Components support](#react-server-components-support)
-  - [Dev server and client communication](#dev-server-and-client-communication)
+  - [Dev server and client communication](#dev-server-client-communication)
   - [Extending the built-in server](#extending-the-built-in-server)
   - [Custom logger support](#custom-logger-support)
   - [Easier chunk splitting configuration](#easier-chunk-splitting-configuration)
@@ -84,7 +89,7 @@ The plugin is still experimental. It can already run the [React Router RSC examp
 
 We're also working with the [TanStack](https://tanstack.com/) team and plan to add support for [TanStack Start](https://tanstack.com/start) and [TanStack's RSC](https://tanstack.com/blog/react-server-components) in future releases. TanStack Start is a full-stack framework built on TanStack Router, and we're excited to explore more possibilities for RSC together.
 
-## Dev server and client communication
+## Dev server and client communication \{#dev-server-client-communication}
 
 While working on React Server Components support, we found that some scenarios require communication between the dev server and the browser. For example, after the server completes some work, it may need to actively notify the client to run related logic.
 
@@ -307,7 +312,7 @@ If you are using a coding agent with skill support, you can install the [rsbuild
 npx skills add rstackjs/agent-skills --skill rsbuild-v2-upgrade
 ```
 
-For the full migration guide and the complete list of breaking changes, see [Migrate from v1 to v2](/guide/upgrade/v1-to-v2).
+For the full migration guide and the complete list of breaking changes, see [Upgrading from v1 to v2](/guide/upgrade/v1-to-v2).
 
 ## Acknowledgments
 
@@ -316,8 +321,8 @@ Rsbuild is primarily developed by the Rstack team, and it also relies on contrib
 {/* cspell:disable */}
 
 [@9aoy](https://github.com/9aoy), [@adammark](https://github.com/adammark), [@ahabhgk](https://github.com/ahabhgk), [@alexUXUI](https://github.com/alexUXUI), [@bodia-uz](https://github.com/bodia-uz), [@Brennvo](https://github.com/Brennvo), [@caohuilin](https://github.com/caohuilin), [@Cheese-Yu](https://github.com/Cheese-Yu), [@chenjiahan](https://github.com/chenjiahan), [@Chevindu](https://github.com/Chevindu), [@Colin3191](https://github.com/Colin3191), [@colinaaa](https://github.com/colinaaa),
-[@CPunisher](https://github.com/CPunisher), [@davide97g](https://github.com/davide97g), [@Deku-nattsu](https://github.com/Deku-nattsu), [@DeveshSapkale](https://github.com/DeveshSapkale), [@dovigod](https://github.com/dovigod), [@Draculabo](https://github.com/Draculabo), [@easy1090](https://github.com/easy1090), [@escaton](https://github.com/escaton), [@fansenze](https://github.com/fansenze), [@fi3ework](https://github.com/fi3ework), [@gaoachao](https://github.com/gaoachao), [@GiveMe-A-Name](https://github.com/GiveMe-A-Name),
-[@GRAMMAC1](https://github.com/GRAMMAC1), [@hai-x](https://github.com/hai-x), [@hangCode2001](https://github.com/hangCode2001), [@hardfist](https://github.com/hardfist), [@hasnum-stack](https://github.com/hasnum-stack), [@htoooth](https://github.com/htoooth), [@Huxpro](https://github.com/Huxpro), [@ianzone](https://github.com/ianzone), [@iceprosurface](https://github.com/iceprosurface), [@inottn](https://github.com/inottn), [@jerrykingxyz](https://github.com/jerrykingxyz), [@jkzing](https://github.com/jkzing),
+[@CPunisher](https://github.com/CPunisher), [@davide97g](https://github.com/davide97g), [@Deku-nattsu](https://github.com/Deku-nattsu), [@DeveshSapkale](https://github.com/DeveshSapkale), [@dovigod](https://github.com/dovigod), [@Draculabo](https://github.com/Draculabo), [@easy1090](https://github.com/yifancong), [@escaton](https://github.com/escaton), [@fansenze](https://github.com/fansenze), [@fi3ework](https://github.com/fi3ework), [@gaoachao](https://github.com/gaoachao), [@GiveMe-A-Name](https://github.com/GiveMe-A-Name),
+[@GRAMMAC1](https://github.com/GRAMMAC1), [@hai-x](https://github.com/hai-x), [@hangCode2001](https://github.com/nice-hang), [@hardfist](https://github.com/hardfist), [@hasnum-stack](https://github.com/hasnum-stack), [@htoooth](https://github.com/htoooth), [@Huxpro](https://github.com/Huxpro), [@ianzone](https://github.com/ianzone), [@iceprosurface](https://github.com/iceprosurface), [@inottn](https://github.com/inottn), [@jerrykingxyz](https://github.com/jerrykingxyz), [@jkzing](https://github.com/jkzing),
 [@JounQin](https://github.com/JounQin), [@JSerFeng](https://github.com/JSerFeng), [@JSH-data](https://github.com/JSH-data), [@junhea](https://github.com/junhea), [@junxiongchu](https://github.com/junxiongchu), [@lguzzon](https://github.com/lguzzon), [@LingyuCoder](https://github.com/LingyuCoder), [@lluisemper](https://github.com/lluisemper), [@lxKylin](https://github.com/lxKylin), [@mhutter](https://github.com/mhutter), [@miownag](https://github.com/miownag), [@mycoin](https://github.com/mycoin),
 [@nikhilsnayak](https://github.com/nikhilsnayak), [@notzheng](https://github.com/notzheng), [@Nsttt](https://github.com/Nsttt), [@nyqykk](https://github.com/nyqykk), [@puxiao](https://github.com/puxiao), [@qmakani](https://github.com/qmakani), [@quininer](https://github.com/quininer), [@RobHannay](https://github.com/RobHannay), [@roli-lpci](https://github.com/roli-lpci), [@s-chance](https://github.com/s-chance), [@s-r-x](https://github.com/s-r-x), [@sagar-dwivedi](https://github.com/sagar-dwivedi),
 [@Sang-Sang33](https://github.com/Sang-Sang33), [@schu34](https://github.com/schu34), [@ScriptedAlchemy](https://github.com/ScriptedAlchemy), [@Shucei](https://github.com/Shucei), [@shulaoda](https://github.com/shulaoda), [@Simon-He95](https://github.com/Simon-He95), [@slobo](https://github.com/slobo), [@snatvb](https://github.com/snatvb), [@SoonIter](https://github.com/SoonIter), [@stormslowly](https://github.com/stormslowly), [@SyMind](https://github.com/SyMind), [@T9-Forever](https://github.com/T9-Forever),

@@ -61,6 +61,18 @@ export default {
 
 At this point, you can access the page via `http://[::1]:3000/`.
 
+## Network interface names
+
+When Rsbuild listens on all IPv4 interfaces and detects multiple network addresses, the default startup log displays the corresponding network interface names in parentheses. This helps distinguish addresses from Wi-Fi, VPN, Docker, or other network interfaces:
+
+```text
+  ➜  Local:    http://localhost:3000/
+  ➜  Network:  http://192.0.2.10:3000/     (xray_tun)
+  ➜  Network:  http://198.51.100.20:3000/  (Wi-Fi)
+```
+
+When only one network address is available, its interface name is omitted.
+
 ## Version history
 
 | Version | Changes                                                                             |

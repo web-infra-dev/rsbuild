@@ -13,13 +13,19 @@ type Entry = Record<
 >;
 ```
 
-- **Default:**
+- **Default:** The first existing `./src/index.*` file in this order, or `{}` if none exist:
 
 ```ts
-const defaultEntry = {
-  // Rsbuild also supports other suffixes by default, such as ts, tsx, jsx, mts, cts, mjs, cjs
-  index: './src/index.js',
-};
+[
+  './src/index.ts',
+  './src/index.js',
+  './src/index.tsx',
+  './src/index.jsx',
+  './src/index.mts',
+  './src/index.cts',
+  './src/index.mjs',
+  './src/index.cjs',
+];
 ```
 
 Set the entry modules for building.

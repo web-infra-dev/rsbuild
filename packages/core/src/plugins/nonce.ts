@@ -28,10 +28,10 @@ export const pluginNonce = (): RsbuildPlugin => ({
           return;
         }
 
-        // apply __webpack_nonce__
-        // https://rspack.rs/api/runtime-api/module-variables#__webpack_nonce__
+        // apply import.meta.rspackNonce
+        // https://rspack.rs/api/runtime-api/module-variables#importmetarspacknonce
         const injectCode = createVirtualModule(
-          `__webpack_nonce__ = "${nonce}";`,
+          `import.meta.rspackNonce = ${JSON.stringify(nonce)};`,
         );
         new rspack.EntryPlugin(compiler.context, injectCode, {
           name: undefined,

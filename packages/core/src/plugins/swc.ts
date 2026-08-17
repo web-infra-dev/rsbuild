@@ -111,7 +111,10 @@ export const pluginSwc = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: (chain, { CHAIN_ID, isDev, isProd, target, environment }) => {
+      handler: async (
+        chain,
+        { CHAIN_ID, isDev, isProd, target, environment },
+      ) => {
         const { config, browserslist } = environment;
         const cacheRoot = path.join(api.context.cachePath, '.swc');
 
@@ -121,6 +124,12 @@ export const pluginSwc = (): RsbuildPlugin => ({
           // When using `new URL('./path/to/foo.js', import.meta.url)`,
           // the module should be treated as an asset module rather than a JS module.
           .dependency({ not: 'url' });
+
+        // Support for `import source from "a.js" with { type: "text" }`
+        rule
+          .oneOf(CHAIN_ID.ONE_OF.JS_TEXT)
+          .with({ type: 'text' })
+          .type('asset/source');
 
         // Support for `import rawJs from "a.js?raw"`
         rule
@@ -176,7 +185,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           }
         }
 
-        const mergedConfig = reduceConfigs({
+        const mergedConfig = await reduceConfigs({
           initial: swcConfig,
           config: config.tools.swc,
           mergeFn: deepmerge,
@@ -238,9 +247,7 @@ const resolveCoreJsPath = (rootPath: string) => {
     throw new Error(
       `${color.dim('[rsbuild:polyfill]')} Failed to resolve ${color.yellow(
         'core-js',
-      )} dependency. Install ${color.yellow(
-        'core-js >= 3.0.0',
-      )} to use polyfills.`,
+      )} dependency. Install ${color.yellow('core-js >= 3.0.0')} to use polyfills.`,
     );
   }
 };
@@ -317,9 +324,7 @@ function applySwcDecoratorConfig(
       break;
     default:
       throw new Error(
-        `${color.dim('[rsbuild:swc]')} Unknown decorators version: ${color.yellow(
-          version,
-        )}`,
+        `${color.dim('[rsbuild:swc]')} Unknown decorators version: ${color.yellow(version)}`,
       );
   }
 }

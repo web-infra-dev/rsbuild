@@ -3,16 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild",
-    "build": "rsbuild build"
+    "build": "rsbuild build",
+    "dev": "rsbuild"
   },
   "dependencies": {
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@module-federation/enhanced": "2.3.3",
-    "@module-federation/rsbuild-plugin": "2.3.3",
+    "@module-federation/enhanced": "catalog:",
+    "@module-federation/rsbuild-plugin": "catalog:",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*"
   }

@@ -8,44 +8,29 @@
   ],
   "scripts": {
     "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
+    "check": "rs check --type-check",
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
-    "format": "prettier --experimental-cli --write . && heading-case --write",
-    "lint": "rslint --type-check",
+    "format": "rs fmt && heading-case --write",
+    "lint": "rs lint",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
-    "prepare": "simple-git-hooks && node --run prebundle && node --run build",
+    "prepare": "rs setup && node --run prebundle",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
-    "test": "rstest",
-    "test:watch": "rstest watch"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm exec nano-staged"
-  },
-  "nano-staged": {
-    "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "rslint --type-check",
-      "prettier --experimental-cli --write"
-    ]
+    "test": "pnpm --parallel --filter \"./packages/*\" test"
   },
   "devDependencies": {
     "@scripts/config": "workspace:*",
-    "@rslint/core": "^0.5.1",
-    "@rstest/adapter-rslib": "^0.2.2",
-    "@rstest/core": "^0.9.10",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.2",
-    "@typescript/native-preview": "7.0.0-dev.20260503.1",
-    "cross-env": "^10.1.0",
-    "cspell-ban-words": "^0.0.4",
-    "heading-case": "^1.1.0",
-    "nano-staged": "^1.0.2",
-    "prettier": "^3.8.3",
-    "simple-git-hooks": "^2.13.1",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "cross-env": "catalog:",
+    "cspell-ban-words": "catalog:",
+    "globals": "catalog:",
+    "heading-case": "catalog:",
+    "rstack": "catalog:",
+    "typescript": "catalog:"
   },
-  "packageManager": "pnpm@11.0.6",
+  "packageManager": "pnpm@11.22.0",
   "engines": {
     "node": ">=22.18.0",
     "pnpm": ">=11.0.0"

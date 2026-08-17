@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild",
-    "build": "rsbuild build"
+    "build": "rsbuild build",
+    "dev": "rsbuild"
   },
   "dependencies": {
-    "@module-federation/runtime-tools": "2.3.3",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "@module-federation/runtime-tools": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

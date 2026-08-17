@@ -32,15 +32,15 @@ Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不�
 
 ## 示例
 
-参考：[RspackChain 示例](/guide/configuration/rspack#使用-bundler-chain)。
+参考：[RspackChain 示例](/guide/configuration/rspack#use-bundler-chain)。
 
-## 工具对象
+## 工具对象 \{#utils}
 
 ### env
 
-- **类型：** `'development' | 'production' | 'test'`
+- **类型：** `string`
 
-通过 env 参数可以判断当前环境为 development、production 还是 test，比如：
+`env` 参数是 `process.env.NODE_ENV` 的当前值，未设置时为空字符串，也可能包含 `'staging'` 等自定义值。比如：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -230,20 +230,21 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 
 ### CHAIN_ID.RULE
 
-| ID            | 描述                                                                    |
-| ------------- | ----------------------------------------------------------------------- |
-| `RULE.JS`     | 处理 `js` 和 `ts` 的规则                                                |
-| `RULE.SVG`    | 处理 `svg` 的规则                                                       |
-| `RULE.CSS`    | 处理 `css` 的规则                                                       |
-| `RULE.WASM`   | 处理 `wasm` 的规则                                                      |
-| `RULE.FONT`   | 处理 `font` 的规则                                                      |
-| `RULE.IMAGE`  | 处理 `image` 的规则                                                     |
-| `RULE.MEDIA`  | 处理 `media` 的规则                                                     |
-| `RULE.VUE`    | 处理 `vue` 的规则（依赖 [Vue 插件](/plugins/list/plugin-vue)）          |
-| `RULE.LESS`   | 处理 `less` 的规则（依赖 [Less 插件](/plugins/list/plugin-less)）       |
-| `RULE.SASS`   | 处理 `sass` 的规则（依赖 [Sass 插件](/plugins/list/plugin-sass)）       |
-| `RULE.SVELTE` | 处理 `svelte` 的规则（依赖 [Svelte 插件](/plugins/list/plugin-svelte)） |
-| `RULE.STYLUS` | 处理 `stylus` 的规则（依赖 [Stylus 插件](/plugins/list/plugin-stylus)） |
+| ID            | 描述                                                                                          |
+| ------------- | --------------------------------------------------------------------------------------------- |
+| `RULE.JS`     | 处理 `js` 和 `ts` 的规则                                                                      |
+| `RULE.SVG`    | 处理 `svg` 的规则                                                                             |
+| `RULE.CSS`    | 处理 `css` 的规则                                                                             |
+| `RULE.WASM`   | 处理 `wasm` 的规则                                                                            |
+| `RULE.FONT`   | 处理 `font` 的规则                                                                            |
+| `RULE.IMAGE`  | 处理 `image` 的规则                                                                           |
+| `RULE.MEDIA`  | 处理 `media` 的规则                                                                           |
+| `RULE.ASSETS` | 处理其他内置静态资源的规则                                                                    |
+| `RULE.VUE`    | 处理 `vue` 的规则（依赖 [Vue 插件](/plugins/list/plugin-vue)）                                |
+| `RULE.LESS`   | 处理 `less` 的规则（依赖 [Less 插件](/plugins/list/plugin-less)）                             |
+| `RULE.SASS`   | 处理 `sass` 的规则（依赖 [Sass 插件](/plugins/list/plugin-sass)）                             |
+| `RULE.SVELTE` | 处理 `svelte` 的规则（依赖 [Svelte 插件](/plugins/list/plugin-svelte)）                       |
+| `RULE.STYLUS` | 处理 `stylus` 的规则（依赖 [Stylus 插件](https://github.com/rstackjs/rsbuild-plugin-stylus)） |
 
 ### CHAIN_ID.ONE_OF
 
@@ -270,13 +271,13 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 | `USE.POSTCSS` | 对应 `postcss-loader`     |
 | `USE.STYLE`   | 对应 `style-loader`       |
 
-详见 [自定义 loader](/guide/configuration/rspack#自定义-loader)
+详见 [自定义 loader](/guide/configuration/rspack#custom-loader)
 
 ### CHAIN_ID.PLUGIN
 
 通过 `PLUGIN.[ID]` 可以匹配到特定的 Rspack 或 webpack plugin。
 
-详见 [自定义 Plugin](/guide/configuration/rspack#自定义-plugin)
+详见 [自定义 Plugin](/guide/configuration/rspack#custom-plugin)
 
 ### CHAIN_ID.MINIMIZER
 

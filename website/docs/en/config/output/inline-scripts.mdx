@@ -101,14 +101,14 @@ export default {
 ```
 
 :::tip
-Production filenames include a hash value by default, such as `static/js/main.18a568e5.js`. In regular expressions, use `\w+` to match the hash.
+Production filenames include a hash value by default, such as `static/js/main.18a568e5ab.js`. In regular expressions, use `\w+` to match the hash.
 :::
 
 ### Using function
 
 You can also set `output.inlineScripts` to a function that accepts the following parameters:
 
-- `name`: The filename, such as `static/js/main.18a568e5.js`.
+- `name`: The filename, such as `static/js/main.18a568e5ab.js`.
 - `size`: The file size in bytes.
 
 For example, if we want to inline assets that are smaller than 10 kB, we can add the following configuration:
@@ -127,7 +127,7 @@ export default {
 
 When you use [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) in JavaScript, Rspack will generate an async chunk. By default, `output.inlineScripts` will not inline async chunks into the HTML.
 
-To inline async chunks into the HTML, change Rspack's default behavior using the [tools.rspack](/config/tools/rspack) config by setting [module.parser.javascript.dynamicImportMode](https://rspack.rs/config/module#moduleparserjavascriptdynamicimportmode) to `'eager'`. In this case, Rspack will not generate separate JS files for dynamic imports.
+To inline async chunks into the HTML, change Rspack's default behavior using the [tools.rspack](/config/tools/rspack) config by setting [module.parser.javascript.dynamicImportMode](https://rspack.rs/config/module-parser#javascriptdynamicimportmode) to `'eager'`. In this case, Rspack will not generate separate JS files for dynamic imports.
 
 ```ts title="rsbuild.config.ts"
 export default {

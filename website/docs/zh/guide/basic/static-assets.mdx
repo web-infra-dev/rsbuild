@@ -1,10 +1,10 @@
 ---
-description: 'Rsbuild 支持在代码中引用图片、字体、音频、视频等类型的静态资源。'
+description: 'Rsbuild 支持在代码中引用图片、字体、媒体和其他类型文件等静态资源。'
 ---
 
 # 静态资源
 
-Rsbuild 支持在代码中引用图片、字体、音频、视频等类型的静态资源。
+Rsbuild 支持在代码中引用图片、字体、媒体和其他类型文件等静态资源。
 
 :::tip 什么是静态资源
 静态资源是指 Web 应用中不会发生变化的文件。常见的静态资源包括图片、字体、视频、样式表和 JavaScript 文件。这些资源通常存储在服务器或 CDN 上，当用户访问 Web 应用时会被传送到用户的浏览器。由于它们不会发生变化，静态资源可以被浏览器缓存，从而提高 Web 应用的性能。
@@ -14,12 +14,13 @@ Rsbuild 支持在代码中引用图片、字体、音频、视频等类型的静
 
 以下是 Rsbuild 默认支持的静态资源格式：
 
-- **图片**：png、jpg、jpeg、gif、svg、bmp、webp、ico、apng、avif、tif、tiff、jfif、pjpeg、pjp、cur。
+- **图片**：png、jpg、jpeg、gif、svg、bmp、webp、ico、apng、avif、tif、tiff、jfif、pjpeg、pjp、cur、jxl。
 - **字体**：woff、woff2、eot、ttf、otf、ttc。
 - **音频**：mp3、wav、flac、aac、m4a、opus。
 - **视频**：mp4、webm、ogg、mov。
+- **其他**：webmanifest、pdf、txt、vtt。
 
-如果你需要引用其他格式的静态资源，请参考 [扩展静态资源类型](#扩展静态资源类型)。
+如果你需要引用其他格式的静态资源，请参考 [扩展静态资源类型](#extend-asset-types)。
 
 :::tip SVG 图片
 SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能力，对 SVG 进行单独处理，详见 [SVGR 插件](/plugins/list/plugin-svgr)。
@@ -159,33 +160,59 @@ console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
 
 ## 导入为字符串
 
-Rsbuild 支持通过 `?raw` 查询参数引用静态资源的原始内容，并将其作为字符串导入到 JavaScript 中。
+### 通过导入属性
+
+Rsbuild 支持通过 `type: 'text'` 导入属性将文件原始内容作为字符串导入到 JavaScript 中。
+
+```ts
+import svgText from './static/logo.svg' with { type: 'text' };
+import imageText from './static/image.png' with { type: 'text' };
+import jsonText from './data.json' with { type: 'text' };
+import componentText from './component.tsx' with { type: 'text' };
+import styleText from './style.css' with { type: 'text' };
+
+console.log(svgText); // 输出 SVG 文件的原始内容
+```
+
+`type: 'text'` 导入属性支持将资源的原始内容作为字符串导入，不会经过默认的资源、脚本或样式处理流程。
+
+导入属性只影响当前导入，普通导入仍会保持默认行为：
+
+```ts
+import { foo } from './foo.js';
+import fooText from './foo.js' with { type: 'text' };
+
+console.log(foo); // foo.js 导出的内容
+console.log(fooText); // foo.js 的原始内容
+```
+
+动态导入也可以通过第二个参数传入导入属性：
+
+```ts
+const { default: fooText } = await import('./foo.js', {
+  with: { type: 'text' },
+});
+
+console.log(fooText); // foo.js 的原始内容
+```
+
+:::tip
+`type: 'text'` 在 Rsbuild >= 2.1.3 中支持，推荐优先使用它，而不是 `?raw` 查询参数。
+:::
+
+### 通过查询参数
+
+Rsbuild 也支持通过 `?raw` 查询参数将文件内容作为字符串导入：
 
 ```ts
 import rawSvg from './static/logo.svg?raw';
+import rawImage from './static/image.png?raw';
+import rawJson from './data.json?raw';
+import rawComponent from './component.tsx?raw';
+import rawStyle from './style.css?raw';
 
 console.log(rawSvg); // 输出 SVG 文件的原始内容
 ```
-
-Rsbuild 还支持通过 `?raw` 查询参数引用 JavaScript、TypeScript 和 JSX 等文件的原始内容。
-
-```ts
-import rawJs from './script1.js?raw';
-import rawTs from './script2.ts?raw';
-import rawJsx from './script3.jsx?raw';
-import rawTsx from './script4.tsx?raw';
-
-console.log(rawJs); // JS 文件的原始内容
-console.log(rawTs); // TS 文件的原始内容
-console.log(rawJsx); // JSX 文件的原始内容
-console.log(rawTsx); // TSX 文件的原始内容
-```
-
-你也可以使用 `?raw` 查询参数来引用 CSS 文件的原始内容，详见 [CSS](/guide/styling/css-usage#raw)。
-
-:::tip
-Rsbuild >= 1.3.0 支持 `?raw` 查询参数，>= 1.4.0 支持引用 JS 和 TS 文件的原始内容。
-:::
 
 ## 构建产物
 
@@ -220,7 +247,7 @@ import logo from './static/logo.png';
 console.log(logo); // "https://example.com/static/logo.[hash].png"
 ```
 
-## public 目录
+## public 目录 \{#public-folder}
 
 项目根目录下的 public 目录可以用于放置一些静态资源，这些资源不会被 Rsbuild 构建，并且可以直接通过 URL 引用。
 
@@ -233,7 +260,7 @@ console.log(logo); // "https://example.com/static/logo.[hash].png"
 
 你可以通过 URL 来引用 public 目录下的文件。
 
-例如，在 HTML 模板中，`./public/favicon.ico` 文件可以被引用为 `/favicon.ico`，[BASE_URL](/guide/advanced/env-vars#processenvpublic_base_path) 对应服务端的基础路径。
+例如，在 HTML 模板中，`./public/favicon.ico` 文件可以被引用为 `/favicon.ico`，[BASE_URL](/guide/advanced/env-vars#processenvbase_url) 对应服务端的基础路径。
 
 ```html title="index.html"
 <link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
@@ -285,12 +312,16 @@ export default {
 TS2307: Cannot find module './logo.png' or its corresponding type declarations.
 ```
 
-此时你需要为静态资源添加类型声明文件，请在项目中创建 `src/env.d.ts` 文件，并添加相应的类型声明。
+此时你可以使用以下任一方法添加类型声明：
 
-- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#预设类型)：
+- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以在 `tsconfig.json` 中添加 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#preset-types)：
 
-```ts
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["@rsbuild/core/types"]
+  }
+}
 ```
 
 - 方法二：手动添加需要的类型声明：
@@ -305,7 +336,7 @@ declare module '*.png' {
 
 添加类型声明后，如果依然存在上述错误提示，请尝试重启当前 IDE，或者调整 `env.d.ts` 所在的目录，使 TypeScript 能够正确识别类型定义。
 
-## 扩展静态资源类型
+## 扩展静态资源类型 \{#extend-asset-types}
 
 如果 Rsbuild 内置的静态资源类型不能满足你的需求，可以通过以下方式扩展额外的静态资源类型。
 
@@ -316,24 +347,24 @@ declare module '*.png' {
 ```ts title="rsbuild.config.ts"
 export default {
   source: {
-    assetsInclude: /\.pdf$/,
+    assetsInclude: /\.gltf$/,
   },
 };
 ```
 
-添加以上配置后，你就可以在代码里引用 `*.pdf` 文件了，比如：
+添加以上配置后，你就可以在代码里引用 `*.gltf` 文件了，比如：
 
 ```js
-import myFile from './static/myFile.pdf';
+import myFile from './static/model.gltf';
 
-console.log(myFile); // "/static/myFile.[hash].pdf"
+console.log(myFile); // "/static/model.[hash].gltf"
 ```
 
 ### 使用 `tools.rspack`
 
 可以通过 [tools.rspack](/config/tools/rspack) 来修改内置的 Rspack 配置，并添加自定义的静态资源处理规则。
 
-比如，把 `*.pdf` 文件当做静态资源输出到产物目录，可以添加以下配置：
+比如，把 `*.gltf` 文件当做静态资源输出到产物目录，可以添加以下配置：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -341,7 +372,7 @@ export default {
     rspack(config, { addRules }) {
       addRules([
         {
-          test: /\.pdf$/,
+          test: /\.gltf$/,
           // 将资源转换为单独的文件，并且导出产物地址
           type: 'asset/resource',
         },

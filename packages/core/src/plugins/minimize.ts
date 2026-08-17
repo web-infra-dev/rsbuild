@@ -4,7 +4,11 @@ import type {
 } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import { isPlainObject, pick } from '../helpers';
-import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
+import type {
+  NormalizedEnvironmentConfig,
+  OneOrMany,
+  RsbuildPlugin,
+} from '../types';
 import { getLightningCSSLoaderOptions } from './css';
 
 const CONSOLE_METHODS = [
@@ -88,8 +92,8 @@ export function getSwcMinimizerOptions(
 export function parseMinifyOptions(config: NormalizedEnvironmentConfig): {
   minifyJs: boolean;
   minifyCss: boolean;
-  jsOptions?: SwcJsMinimizerRspackPluginOptions;
-  cssOptions?: LightningCssMinimizerRspackPluginOptions;
+  jsOptions?: OneOrMany<SwcJsMinimizerRspackPluginOptions>;
+  cssOptions?: OneOrMany<LightningCssMinimizerRspackPluginOptions>;
 } {
   const isProd = config.mode === 'production';
   const { minify = true } = config.output;
@@ -114,7 +118,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild:minimize',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { environment, CHAIN_ID, rspack }) => {
+    api.modifyBundlerChain(async (chain, { environment, CHAIN_ID, rspack }) => {
       const { config } = environment;
       const { minifyJs, minifyCss, jsOptions, cssOptions } =
         parseMinifyOptions(config);
@@ -122,16 +126,34 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       chain.optimization.minimize(minifyJs || minifyCss);
 
       if (minifyJs) {
-        chain.optimization
-          .minimizer(CHAIN_ID.MINIMIZER.JS)
-          .use(rspack.SwcJsMinimizerRspackPlugin, [
-            getSwcMinimizerOptions(config, jsOptions),
-          ])
-          .end();
+        const registerJsMinimizer = (
+          jsOptionsItem?: SwcJsMinimizerRspackPluginOptions,
+          index = 0,
+        ) => {
+          const minimizerId =
+            index === 0
+              ? CHAIN_ID.MINIMIZER.JS
+              : `${CHAIN_ID.MINIMIZER.JS}-${index}`;
+
+          chain.optimization
+            .minimizer(minimizerId)
+            .use(rspack.SwcJsMinimizerRspackPlugin, [
+              getSwcMinimizerOptions(config, jsOptionsItem),
+            ])
+            .end();
+        };
+
+        if (!Array.isArray(jsOptions)) {
+          registerJsMinimizer(jsOptions);
+        } else if (jsOptions.length === 0) {
+          registerJsMinimizer();
+        } else {
+          jsOptions.forEach(registerJsMinimizer);
+        }
       }
 
       if (minifyCss) {
-        const loaderOptions = getLightningCSSLoaderOptions(
+        const loaderOptions = await getLightningCSSLoaderOptions(
           config,
           environment.browserslist,
           true,
@@ -157,17 +179,34 @@ export const pluginMinimize = (): RsbuildPlugin => ({
           },
         };
 
-        const mergedOptions = cssOptions
-          ? deepmerge<LightningCssMinimizerRspackPluginOptions>(
-              defaultOptions,
-              cssOptions,
-            )
-          : defaultOptions;
+        const registerCssMinimizer = (
+          cssOptionsItem?: LightningCssMinimizerRspackPluginOptions,
+          index = 0,
+        ) => {
+          const options = cssOptionsItem
+            ? deepmerge<LightningCssMinimizerRspackPluginOptions>(
+                defaultOptions,
+                cssOptionsItem,
+              )
+            : defaultOptions;
+          const minimizerId =
+            index === 0
+              ? CHAIN_ID.MINIMIZER.CSS
+              : `${CHAIN_ID.MINIMIZER.CSS}-${index}`;
 
-        chain.optimization
-          .minimizer(CHAIN_ID.MINIMIZER.CSS)
-          .use(rspack.LightningCssMinimizerRspackPlugin, [mergedOptions])
-          .end();
+          chain.optimization
+            .minimizer(minimizerId)
+            .use(rspack.LightningCssMinimizerRspackPlugin, [options])
+            .end();
+        };
+
+        if (!Array.isArray(cssOptions)) {
+          registerCssMinimizer(cssOptions);
+        } else if (cssOptions.length === 0) {
+          registerCssMinimizer();
+        } else {
+          cssOptions.forEach(registerCssMinimizer);
+        }
       }
     });
   },

@@ -1,7 +1,11 @@
 {
   "name": "@rsbuild/plugin-preact",
-  "version": "1.7.2",
+  "version": "2.0.0",
   "description": "Preact plugin for Rsbuild",
+  "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
@@ -12,8 +16,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "default": "./dist/index.js"
     }
   },
   "types": "./dist/index.d.ts",
@@ -21,24 +24,24 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib",
-    "dev": "rslib -w"
+    "build": "rs lib",
+    "dev": "rs lib -w",
+    "test": "rs test"
   },
   "dependencies": {
-    "@prefresh/core": "^1.5.9",
-    "@prefresh/utils": "^1.2.1",
-    "@rspack/plugin-preact-refresh": "^1.1.5",
-    "@swc/plugin-prefresh": "^12.9.0"
+    "@prefresh/core": "catalog:",
+    "@prefresh/utils": "catalog:",
+    "@rspack/plugin-preact-refresh": "catalog:",
+    "@swc/plugin-prefresh": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.21.3",
-    "@types/node": "^24.12.2",
-    "preact": "^10.29.1",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "preact": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^1.0.0 || ^2.0.0-0"
+    "@rsbuild/core": "^2.0.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {

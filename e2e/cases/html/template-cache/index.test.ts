@@ -9,11 +9,6 @@ test('should not re-compile templates when the template is not changed', async (
   editFile,
   copySrcDir,
 }) => {
-  // Failed to run this case on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   let count = 0;
 
   const tempSrc = await copySrcDir();

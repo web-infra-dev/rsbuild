@@ -9,7 +9,6 @@ import {
 const initialGlobalLogLevel = logger.level;
 
 afterEach(() => {
-  rs.unstubAllEnvs();
   logger.level = initialGlobalLogLevel;
 });
 

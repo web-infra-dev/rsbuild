@@ -4,18 +4,16 @@ import type { Rspack } from '@rsbuild/core';
 import { interpolateName } from 'loader-utils';
 
 type FilenameTemplate =
-  | string
-  | ((resourcePath: string, resourceQuery?: string) => string);
+  string | ((resourcePath: string, resourceQuery?: string) => string);
 
 export type SvgAssetLoaderOptions = {
   limit: number;
   name: FilenameTemplate;
   publicPath?:
-    | string
-    | ((url: string, resourcePath: string, context: string) => string);
+    string | ((url: string, resourcePath: string, context: string) => string);
 };
 
-type RawLoaderDefinition<OptionsType = {}> = ((
+type RawLoaderDefinition<OptionsType> = ((
   this: Rspack.LoaderContext<OptionsType>,
   content: Buffer | string,
 ) => string | Buffer | void | Promise<string | Buffer | void>) & {

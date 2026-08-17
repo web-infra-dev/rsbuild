@@ -5,15 +5,15 @@
   "type": "module",
   "scripts": {
     "build": "rsbuild build",
-    "dev": "rsbuild --open",
+    "dev": "rsbuild",
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.3",
-    "@rsbuild/plugin-react": "^2.0.0"
+    "@rsbuild/core": "^2.1.13",
+    "@rsbuild/plugin-react": "^2.1.0"
   }
 }

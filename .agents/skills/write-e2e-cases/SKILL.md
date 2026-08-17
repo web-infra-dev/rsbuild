@@ -11,19 +11,22 @@ description: Use when adding or updating Rsbuild end-to-end tests in `e2e/cases`
 
 2. Read `e2e/README.md` and follow its conventions.
 
-3. Prefer `@e2e/helper` methods (for example `dev`, `build`) to keep tests minimal.
+3. Use `@e2e/helper` for Rsbuild-specific fixtures and helpers, such as `test`, `dev`, and `build`. Import generic test utilities, such as `getDistFiles`, `findFile`, and `getFileContent`, directly from `@rstackjs/test-utils`.
 
 4. Add Playwright cases under `e2e/cases`, following existing directory patterns.
 
-5. Keep assertions focused and readable; avoid redundant setup and checks.
+5. Use short, direct, and stable assertions. Avoid redundant setup and checks.
 
-6. Run `pnpm e2e` to validate.
+6. Run `pnpm build` once, then run `pnpm e2e` to validate.
 
 ## Case Structure
 
 - Include a `src` directory in every case (required).
-- Add `rsbuild.config.ts` only when needed.
+- Prefer putting static Rsbuild configurations in `rsbuild.config.ts` to enable easier debugging via `npx rsbuild`.
+- Use inline config for dynamic values or minor per-test variations.
 - Split into multiple case directories when cases need different `src` code or different Rsbuild configs.
+- When static assets are needed, prefer reusing assets from `@e2e/assets` before adding new files.
+- For package mocks used by one case, place them under that case's `_node_modules` directory and call `copyNodeModules()` before they are resolved.
 
 ## Constraints
 

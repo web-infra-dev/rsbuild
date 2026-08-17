@@ -90,9 +90,9 @@ The second parameter of this function is an object, which contains some utility 
 
 ### env
 
-- **Type:** `'development' | 'production' | 'test'`
+- **Type:** `string`
 
-The `env` parameter determines whether the current environment is development, production or test. For example:
+The `env` parameter is the current value of `process.env.NODE_ENV`, or an empty string when it is unset. It may also contain a custom value such as `'staging'`. For example:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -135,10 +135,11 @@ A boolean value indicating whether this is a production build. Set to `true` whe
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    rspack: (chain, { isProd }) => {
+    rspack: (config, { isProd }) => {
       if (isProd) {
-        chain.devtool('source-map');
+        config.devtool = 'source-map';
       }
+      return config;
     },
   },
 };
@@ -247,7 +248,7 @@ Context information for all environments.
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    rspack: (chain, { environments }) => {
+    rspack: (config, { environments }) => {
       console.log(environments);
     },
   },
@@ -345,9 +346,7 @@ export default {
 - **Type:** `
 
 ```ts
-function prependPlugins(
-  plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-): void;
+function prependPlugins(plugins: Rspack.Plugin | Rspack.Plugin[]): void;
 ```
 
 Add additional plugins to the head of the internal Rspack plugins array, and the plugin will be executed first.
@@ -371,9 +370,7 @@ export default {
 - **Type:**
 
 ```ts
-function appendPlugins(
-  plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-): void;
+function appendPlugins(plugins: Rspack.Plugin | Rspack.Plugin[]): void;
 ```
 
 Add additional plugins at the end of the internal Rspack plugins array, the plugin will be executed last.
@@ -383,7 +380,7 @@ export default {
   tools: {
     rspack: (config, { appendPlugins }) => {
       // add a single plugin
-      appendPlugins([new PluginA()]);
+      appendPlugins(new PluginA());
 
       // Add multiple plugins
       appendPlugins([new PluginA(), new PluginB()]);

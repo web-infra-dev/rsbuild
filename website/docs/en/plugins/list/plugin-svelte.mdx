@@ -14,15 +14,19 @@ The Svelte plugin provides support for Svelte components (`.svelte` files). The 
 
 ### Install plugin
 
-You can install the plugin using the following command:
+Run the following command:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-svelte -D" />
 
+:::tip
+`@rsbuild/plugin-svelte` v2 no longer supports Rsbuild 1.x or Svelte 4.x. If your project uses these versions, install `@rsbuild/plugin-svelte@1` instead.
+:::
+
 ### Register plugin
 
-You can register the plugin in the `rsbuild.config.ts` file:
+Register the plugin in Rsbuild config:
 
 ```ts title="rsbuild.config.ts"
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
@@ -32,7 +36,7 @@ export default {
 };
 ```
 
-After registering the plugin, you can import `*.svelte` files in your code.
+After registration, you can import `*.svelte` files in your code.
 
 ## Options
 

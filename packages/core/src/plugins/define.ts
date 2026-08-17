@@ -61,6 +61,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
           MODE: JSON.stringify(config.mode),
           DEV: config.mode === 'development',
           PROD: config.mode === 'production',
+          SSR: config.output.target === 'node',
           BASE_URL: baseUrl,
           ASSET_PREFIX: assetPrefix,
         },

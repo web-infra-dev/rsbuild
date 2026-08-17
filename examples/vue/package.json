@@ -3,12 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild --open",
     "build": "rsbuild build",
+    "dev": "rsbuild --open",
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "vue": "^3.5.32"
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

@@ -10,10 +10,13 @@ description: '用于设置开启代码压缩，以及提供选项来配置压缩
 type Minify =
   | boolean
   | {
-      js?: boolean;
-      jsOptions?: Rspack.SwcJsMinimizerRspackPluginOptions;
-      css?: boolean;
-      cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
+      js?: boolean | 'always';
+      jsOptions?:
+        SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[];
+      css?: boolean | 'always';
+      cssOptions?:
+        | LightningCssMinimizerRspackPluginOptions
+        | LightningCssMinimizerRspackPluginOptions[];
     };
 ```
 
@@ -66,7 +69,7 @@ export default {
 
 ### minify.js
 
-- **类型：** `boolean`
+- **类型：** `boolean | 'always'`
 - **默认值：** `true`
 
 是否开启对 JavaScript 代码的压缩：
@@ -101,7 +104,7 @@ export default {
 
 ### minify.jsOptions
 
-- **类型：** `Rspack.SwcJsMinimizerRspackPluginOptions`
+- **类型：** `SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[]`
 - **默认值：** `{}`
 
 `output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SwcJsMinimizerRspackPlugin 文档](https://rspack.rs/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)。
@@ -124,9 +127,36 @@ export default {
 
 > 参考 [配置 SWC](/guide/configuration/swc) 了解更多。
 
+你可以传入一个选项数组，为不同文件设置不同的压缩配置。每一项都会注册一个独立的 `SwcJsMinimizerRspackPlugin` 实例：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      jsOptions: [
+        {
+          include: /vendor\.js$/,
+          minimizerOptions: {
+            mangle: true,
+          },
+        },
+        {
+          exclude: /vendor\.js$/,
+          minimizerOptions: {
+            mangle: false,
+          },
+        },
+      ],
+    },
+  },
+};
+```
+
+每个 JavaScript 产物只会被压缩一次。如果一个产物匹配了多个配置项，则第一个匹配项生效，因此建议使用互斥的 `test`、`include` 或 `exclude` 条件。
+
 ### minify.css
 
-- **类型：** `boolean`
+- **类型：** `boolean | 'always'`
 - **默认值：** `true`
 
 是否开启对 CSS 代码的压缩：
@@ -161,7 +191,7 @@ export default {
 
 ### minify.cssOptions
 
-- **类型：** `Rspack.LightningcssMinimizerRspackPluginOptions`
+- **类型：** `LightningCssMinimizerRspackPluginOptions | LightningCssMinimizerRspackPluginOptions[]`
 - **默认值：** 继承 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 的值
 
 `output.minify.cssOptions` 用于配置 Lightning CSS 的压缩选项，具体配置项请参考 [LightningCssMinimizerRspackPlugin 文档](https://rspack.rs/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin)。
@@ -186,23 +216,50 @@ export default {
 当你在 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 中配置了一些选项时，`output.minify.cssOptions` 会自动继承这些选项，这样可以确保开发环境和生产环境的 CSS 代码转换行为保持一致。
 :::
 
-## 切换压缩器
+你可以传入一个选项数组，为不同文件设置不同的压缩配置。每一项都会注册一个独立的 `LightningCssMinimizerRspackPlugin` 实例：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      cssOptions: [
+        {
+          include: /foo\.css$/,
+          minimizerOptions: {
+            unusedSymbols: ['foo-unused'],
+          },
+        },
+        {
+          include: /bar\.css$/,
+          minimizerOptions: {
+            unusedSymbols: ['bar-unused'],
+          },
+        },
+      ],
+    },
+  },
+};
+```
+
+每个 CSS 产物只会被压缩一次。如果一个产物匹配了多个配置项，则第一个匹配项生效，因此建议使用互斥的 `test`、`include` 或 `exclude` 条件。
+
+## 切换压缩器 \{#switching-minifier}
 
 ### JS 压缩器
 
 如果默认的 SWC 压缩器无法满足你的需求，你可以通过 [tools.bundlerChain](/config/tools/bundler-chain) 选项来切换到其他压缩器。
 
-例如，使用 [terser-webpack-plugin](https://github.com/terser/terser-webpack-plugin) 插件来切换到 Terser 或 esbuild。
+例如，使用 [minimizer-webpack-plugin](https://github.com/webpack/minimizer-webpack-plugin) 插件来切换到 Terser 或 esbuild。
 
 - 使用 [terser](https://github.com/terser/terser) 压缩 JS 代码：
 
 ```ts title="rsbuild.config.ts"
-import TerserPlugin from 'terser-webpack-plugin';
+import MinimizerPlugin from 'minimizer-webpack-plugin';
 
 export default {
   tools: {
     bundlerChain(chain, { CHAIN_ID }) {
-      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(MinimizerPlugin, [
         {
           // options
         },
@@ -215,14 +272,14 @@ export default {
 - 使用 [esbuild](https://github.com/evanw/esbuild) 压缩 JS 代码时，需要安装 `esbuild` 包，并设置 `esbuildMinify`：
 
 ```ts title="rsbuild.config.ts"
-import TerserPlugin from 'terser-webpack-plugin';
+import MinimizerPlugin from 'minimizer-webpack-plugin';
 
 export default {
   tools: {
     bundlerChain(chain, { CHAIN_ID }) {
-      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(MinimizerPlugin, [
         {
-          minify: TerserPlugin.esbuildMinify,
+          minify: MinimizerPlugin.esbuildMinify,
         },
       ]);
     },
@@ -236,6 +293,8 @@ export default {
 
 ## 版本历史
 
-| 版本   | 变更内容                        |
-| ------ | ------------------------------- |
-| v2.0.0 | `node` 产物的默认值改为 `false` |
+| 版本   | 变更内容                              |
+| ------ | ------------------------------------- |
+| v2.1.8 | 支持将 `minify.cssOptions` 设置为数组 |
+| v2.1.7 | 支持将 `minify.jsOptions` 设置为数组  |
+| v2.0.0 | `node` 产物的默认值改为 `false`       |

@@ -21,6 +21,14 @@ export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
 
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-less" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-less" v1.`,
+    );
+  }
+}
+
 export type LessLoaderOptions = {
   /**
    * Options passed to less.
@@ -96,17 +104,20 @@ export type PluginLessOptions = {
    */
   exclude?: Rspack.RuleSetCondition;
   /**
-   * Whether to enable parallel loader execution, running `less-loader` in worker
-   * threads. When enabled, this typically improves build performance when compiling
-   * large numbers of Less modules.
-   * @experimental This is an experimental Rspack feature and will not work if your Less
-   * options contain functions.
+   * Whether to compile Less modules in parallel using worker threads. When enabled,
+   * Less modules are processed across multiple worker threads, reducing pressure on
+   * the main thread and improving overall build performance when compiling large
+   * numbers of Less modules.
+   *
+   * Options transferred to worker threads must comply with the HTML structured clone
+   * algorithm. For example, functions cannot be passed as options.
+   * @see https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist
    * @default false
    */
   parallel?: boolean;
 };
 
-const getLessLoaderOptions = (
+const getLessLoaderOptions = async (
   userOptions: PluginLessOptions['lessLoaderOptions'],
   isUseCssSourceMap: boolean,
   rootPath: string,
@@ -147,7 +158,7 @@ const getLessLoaderOptions = (
     };
   };
 
-  const mergedOptions = reduceConfigsWithContext({
+  const mergedOptions = await reduceConfigsWithContext({
     initial: defaultLessLoaderOptions,
     config: userOptions,
     ctx: { addExcludes },
@@ -177,18 +188,20 @@ export const pluginLess = (
   name: PLUGIN_LESS_NAME,
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     const { include = /\.less$/, parallel = false } = pluginOptions;
 
     const CSS_MAIN = 'css';
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
     const LESS_MAIN = 'less';
+    const LESS_TEXT = 'less-text';
     const LESS_URL = 'less-url';
     const LESS_INLINE = 'less-inline';
     const LESS_RAW = 'less-raw';
-    const isV1 = api.context.version.startsWith('1.');
 
-    api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
       const lessRule = chain.module
@@ -198,16 +211,7 @@ export const pluginLess = (
         .resolve.preferRelative(true)
         .end();
 
-      if (isV1) {
-        chain.module.rule(LESS_RAW).test(include);
-        chain.module.rule(LESS_INLINE).test(include);
-      }
-
       const getRule = (id: string) => {
-        // Compatibility for Rsbuild v1
-        if (isV1) {
-          return chain.module.rule(id);
-        }
         return (
           id.startsWith('less')
             ? lessRule
@@ -216,6 +220,8 @@ export const pluginLess = (
       };
 
       const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+      const cssTextRuleId = CHAIN_ID.ONE_OF.CSS_TEXT;
+      const hasCssTextRule = cssTextRuleId && cssRule.oneOfs.has(cssTextRuleId);
       const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
       const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
 
@@ -224,6 +230,13 @@ export const pluginLess = (
 
       // Inline Less for `?inline` imports
       const lessInlineRule = getRule(LESS_INLINE);
+
+      // Less text import with import attributes.
+      if (hasCssTextRule) {
+        getRule(LESS_TEXT)
+          .type('asset/source')
+          .with(getRule(cssTextRuleId).get('with'));
+      }
 
       // Raw Less for `?raw` imports
       getRule(LESS_RAW)
@@ -234,7 +247,7 @@ export const pluginLess = (
       const lessMainRule = getRule(LESS_MAIN);
 
       const { sourceMap } = config.output;
-      const { excludes, options } = getLessLoaderOptions(
+      const { excludes, options } = await getLessLoaderOptions(
         pluginOptions.lessLoaderOptions,
         typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css,
         api.context.rootPath,
@@ -293,14 +306,6 @@ export const pluginLess = (
           loader.parallel(true);
         }
       });
-
-      // `experiments.parallelLoader` is no longer required in Rspack 2.0+
-      if (parallel && isV1) {
-        chain.experiments({
-          ...chain.get('experiments'),
-          parallelLoader: true,
-        });
-      }
     });
   },
 });

@@ -55,7 +55,7 @@ export default {
 };
 ```
 
-You can find detailed descriptions of every option on the [Configure Overview](/config/) page.
+You can find detailed descriptions of every option on the [Config overview](/config/) page.
 
 ## Configuration file
 
@@ -266,6 +266,22 @@ const config2 = defineConfig({
 export default mergeRsbuildConfig(config1, config2);
 ```
 
+## Configuration file watching
+
+### Rsbuild CLI
+
+When using the Rsbuild CLI, `rsbuild dev` and `rsbuild build --watch` automatically watch the loaded configuration file and its imported dependencies.
+
+When one of these files changes, Rsbuild reloads the configuration and restarts the current dev server or watch build.
+
+### JavaScript API
+
+When using the JavaScript API, pass the complete result returned by [`loadConfig`](/api/javascript-api/core#loadconfig) to `createRsbuild`. This allows Rsbuild to track the configuration file and its imported dependencies.
+
+When calling `rsbuild.startDevServer()`, `rsbuild.createDevServer()`, or `rsbuild.build({ watch: true })`, Rsbuild installs a restart watcher and automatically watches these files. Regular builds and preview servers do not install a watcher. When a watched file changes, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart).
+
+By default, Rsbuild only calls this hook and does not automatically restart the current task. To run the restart process, pass the [`restart` option](/api/javascript-api/core#restart-handling).
+
 ## Debug the config
 
 You can enable Rsbuild's debug mode by setting `DEBUG=rsbuild` when running a build.
@@ -285,4 +301,4 @@ config inspection completed, open the following files to view the content:
 
 Open the generated `/dist/.rsbuild/rsbuild.config.mjs` file to see the complete content of the Rsbuild config.
 
-For a complete introduction to debug mode, see the [Debug Mode](/guide/debug/debug-mode) chapter.
+For a complete introduction to debug mode, see the [Debug mode](/guide/debug/debug-mode) chapter.

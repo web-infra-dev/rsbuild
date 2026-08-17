@@ -7,7 +7,7 @@
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
 
-import { join } from 'node:path';
+import { isAbsolute, join } from 'node:path';
 import {
   type Compiler,
   type MultiCompiler,
@@ -29,7 +29,7 @@ import type {
 } from '../../types';
 import { resolveHostname } from './../hmrFallback';
 import type { SocketServer } from '../socketServer';
-import { createMiddleware } from './middleware';
+import { createAssetsMiddleware } from './middleware';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
 import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
 
@@ -201,13 +201,19 @@ function applyHMREntry({
     config.dev.liveReload,
   );
 
-  const clientConfig = { ...config.dev.client };
+  const { webSocketUrlResolver, ...clientConfig } = { ...config.dev.client };
   if (clientConfig.port === '<port>') {
     clientConfig.port = resolvedPort;
   }
 
+  const resolverPath =
+    webSocketUrlResolver && !isAbsolute(webSocketUrlResolver)
+      ? join(compiler.context, webSocketUrlResolver)
+      : webSocketUrlResolver;
+
   const hmrEntry = `import { init } from '${toPosixPath(join(CLIENT_PATH, 'hmr.js'))}';
 ${isOverlayEnabled(config.dev.client.overlay) ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay.js'))}';` : ''}
+${resolverPath ? `import urlResolver from ${JSON.stringify(toPosixPath(resolverPath))};` : ''}
 init(
   '${token}',
   ${JSON.stringify(clientConfig)},
@@ -216,7 +222,7 @@ init(
   ${JSON.stringify(config.server.base)},
   ${liveReloadEnabled},
   ${Boolean(config.dev.browserLogs)},
-  ${JSON.stringify(config.dev.client.logLevel)}
+  ${JSON.stringify(config.dev.client.logLevel)}${resolverPath ? ',\n  urlResolver' : ''}
 )
 `;
 
@@ -314,7 +320,7 @@ export const assetsMiddleware = async ({
     }
   };
 
-  const instance = createMiddleware(
+  const instance = createAssetsMiddleware(
     context,
     ready,
     outputFileSystem,

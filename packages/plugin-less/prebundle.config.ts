@@ -25,10 +25,7 @@ export default {
         replaceFileContent(
           join(process.cwd(), 'node_modules/@types/less/index.d.ts'),
           (content) =>
-            `${content.replace(
-              /declare module "less" {\s+export = less;\s+}/,
-              'export = Less;',
-            )}`,
+            `${content.replace(/declare module "less" {\s+export = less;\s+}/, 'export = Less;')}`,
         );
       },
     },

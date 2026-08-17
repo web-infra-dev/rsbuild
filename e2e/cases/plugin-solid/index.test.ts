@@ -3,7 +3,6 @@ import type { BuildOptions, BuildResult } from '@e2e/helper';
 import { expect, gotoPage, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
-import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 const buildFixture = (
   build: (options?: BuildOptions) => Promise<BuildResult>,
@@ -16,8 +15,6 @@ const buildFixture = (
     }),
     pluginSolid(),
   ];
-
-  if (rootDir === 'stylus') plugins.push(pluginStylus());
 
   return build({
     cwd: root,
@@ -56,7 +53,7 @@ test('should build solid component with typescript', async ({
 });
 
 // test cases for CSS preprocessors
-for (const name of ['less', 'scss', 'stylus']) {
+for (const name of ['less', 'scss']) {
   test(`should build solid component with ${name}`, async ({ page, build }) => {
     const rsbuild = await buildFixture(build, name);
 

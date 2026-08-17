@@ -3,10 +3,6 @@ import { matchPlugin } from '@scripts/test-helper';
 import { createRsbuild, type RsbuildPlugin } from '../src';
 
 describe('environment config', () => {
-  afterEach(() => {
-    rs.unstubAllEnvs();
-  });
-
   it('should normalize context correctly', async () => {
     rs.stubEnv('NODE_ENV', 'development');
     const cwd = process.cwd();
@@ -396,5 +392,79 @@ describe('environment config', () => {
 
     expect(matchPlugin(configs[0], 'HotModuleReplacementPlugin')).toBeFalsy();
     expect(matchPlugin(configs[1], 'HotModuleReplacementPlugin')).toBeTruthy();
+  });
+
+  it('should skip lazy compilation when environment disables hmr and liveReload', async () => {
+    rs.stubEnv('NODE_ENV', 'development');
+    const rsbuild = await createRsbuild({
+      config: {
+        dev: {
+          lazyCompilation: true,
+        },
+        environments: {
+          web: {
+            dev: {
+              hmr: false,
+              liveReload: false,
+            },
+          },
+          web2: {
+            dev: {
+              hmr: false,
+              liveReload: true,
+            },
+          },
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs({ action: 'dev' });
+
+    expect(configs[0].lazyCompilation).toBeFalsy();
+    expect(configs[1].lazyCompilation).toBeTruthy();
+  });
+
+  it('should expose APIs by environment', async () => {
+    const logs: string[] = [];
+    const createConsumerPlugin = (name: string): RsbuildPlugin => ({
+      name: `${name}-consumer`,
+      setup(api) {
+        logs.push(`${name}: ${api.useExposed('test-api')}`);
+      },
+    });
+
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [
+          {
+            name: 'global-provider',
+            setup(api) {
+              api.expose('test-api', 'global');
+            },
+          },
+          createConsumerPlugin('global'),
+        ],
+        environments: {
+          web: {
+            plugins: [
+              {
+                name: 'web-provider',
+                setup(api) {
+                  api.expose('test-api', 'web', { environment: 'web' });
+                },
+              },
+              createConsumerPlugin('web'),
+            ],
+          },
+          node: {
+            plugins: [createConsumerPlugin('node')],
+          },
+        },
+      },
+    });
+
+    await rsbuild.initConfigs();
+
+    expect(logs).toEqual(['global: global', 'web: web', 'node: global']);
   });
 });

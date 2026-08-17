@@ -35,7 +35,6 @@ type SizeSnapshots = Record<string, SizeSnapshot>;
 
 type FormattedAsset = {
   filePath: string;
-  filename: string;
   filenameLabel: string;
   filenameLength: number;
   size: number;
@@ -55,7 +54,7 @@ async function gzipSize(input: Buffer | string) {
       resolve(result);
     });
   });
-  return Buffer.byteLength(data);
+  return data.length;
 }
 
 /** Get the cache file path for storing previous build sizes */
@@ -103,9 +102,9 @@ async function saveSnapshots(
   }
 }
 
-const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.ts)$/;
+const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.(?:ts|mts|cts))$/;
 
-/** Exclude source map and license files by default */
+/** Exclude source map, license, and type declaration files by default */
 export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
   EXCLUDE_ASSET_REGEX.test(asset.name);
 
@@ -179,11 +178,16 @@ const coloringAssetName = (assetName: string) => {
 };
 
 const COMPRESSIBLE_REGEX =
-  /\.(?:js|css|html|json|svg|txt|xml|xhtml|wasm|manifest|md)$/i;
+  /\.(?:js|mjs|cjs|jsx|ts|tsx|mts|cts|css|html|json|svg|txt|xml|xhtml|wasm|manifest|md)$/i;
 
 /** Check if the asset is compressible. */
 const isCompressible = (assetName: string) =>
   COMPRESSIBLE_REGEX.test(assetName);
+
+const getFilePath = (assetName: string) => {
+  const queryIndex = assetName.indexOf('?');
+  return queryIndex === -1 ? assetName : assetName.slice(0, queryIndex);
+};
 
 const calcTotalSize = (assets: FormattedAsset[], compressed?: boolean) => {
   let totalSize = 0;
@@ -202,12 +206,6 @@ const calcTotalSize = (assets: FormattedAsset[], compressed?: boolean) => {
   };
 };
 
-type StatsAsset = {
-  size: number;
-  content: Buffer | string;
-  filePath: string;
-};
-
 async function printFileSizes(
   options: PrintFileSizeOptions,
   stats: Rspack.Stats,
@@ -215,6 +213,7 @@ async function printFileSizes(
   distPath: string,
   environmentName: string,
   previousSizes: SizeSnapshots | null,
+  saveSnapshot: boolean,
 ) {
   const logs: string[] = [];
   const showDetail = options.detail !== false;
@@ -226,25 +225,34 @@ async function printFileSizes(
   }
 
   const relativeDistPath = path.relative(rootPath, distPath);
-  const snapshot: SizeSnapshot = {
-    files: {},
-    totalSize: 0,
-    totalGzipSize: 0,
-  };
+  const rootFolderLabel = `${relativeDistPath || '.'}${path.sep}`;
+  const snapshot: SizeSnapshot | null = saveSnapshot
+    ? {
+        files: {},
+        totalSize: 0,
+        totalGzipSize: 0,
+      }
+    : null;
 
-  const formatAsset = async (asset: StatsAsset): Promise<FormattedAsset> => {
-    const { size, filePath } = asset;
-    const compressible = options.compressed && isCompressible(filePath);
-    const gzippedSize = compressible ? await gzipSize(asset.content) : null;
-
-    // Normalize filename for comparison (remove hash)
-    const normalizedPath = normalizeFilePath(filePath);
+  const formatAsset = (
+    filePath: string,
+    size: number,
+    gzippedSize: number | null,
+  ): FormattedAsset => {
+    let normalizedPath = '';
 
     // Store current size for next build
-    snapshot.files[normalizedPath] = {
-      size,
-      gzippedSize: gzippedSize ?? undefined,
-    };
+    if (snapshot || showDiff) {
+      // Normalize filename for comparison (remove hash)
+      normalizedPath = normalizeFilePath(filePath);
+
+      if (snapshot) {
+        snapshot.files[normalizedPath] = {
+          size,
+          gzippedSize: gzippedSize ?? undefined,
+        };
+      }
+    }
 
     // Append inline diff to sizeLabel
     let sizeLabel = calcFileSize(size);
@@ -271,15 +279,18 @@ async function printFileSizes(
       }
     }
 
-    const folder = path.join(relativeDistPath, path.dirname(filePath));
-    const filename = path.basename(filePath);
-    const filenameLabel =
-      color.dim(folder + path.sep) + coloringAssetName(filename);
-    const filenameLength = (folder + path.sep + filename).length;
+    const separatorIndex = filePath.lastIndexOf('/');
+    const folderLabel =
+      separatorIndex === -1
+        ? rootFolderLabel
+        : `${path.join(relativeDistPath, filePath.slice(0, separatorIndex))}${path.sep}`;
+    const filename =
+      separatorIndex === -1 ? filePath : filePath.slice(separatorIndex + 1);
+    const filenameLabel = color.dim(folderLabel) + coloringAssetName(filename);
+    const filenameLength = folderLabel.length + filename.length;
 
     return {
       filePath,
-      filename,
       filenameLabel,
       filenameLength,
       size,
@@ -291,39 +302,54 @@ async function printFileSizes(
   };
 
   const getAssets = async () => {
-    const assets: StatsAsset[] = Object.entries(stats.compilation.assets).map(
-      ([assetName, value]) => {
-        const filePath = assetName.split('?')[0];
-        const content = value.source();
-        return {
-          filePath,
-          size: Buffer.byteLength(content),
-          content,
+    const { exclude, include } = options;
+    const formattedAssets: (FormattedAsset | Promise<FormattedAsset>)[] = [];
+    const compilationAssets = stats.compilation.assets;
+
+    for (const assetName of Object.keys(compilationAssets)) {
+      const filePath = getFilePath(assetName);
+
+      if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
+        continue;
+      }
+
+      // Accessing an asset retrieves its Source through the Rust-JS bridge,
+      // so filter by filename before reading it.
+      const value = compilationAssets[assetName];
+      const content =
+        options.compressed && isCompressible(filePath)
+          ? value.source()
+          : undefined;
+      const size =
+        content === undefined ? value.size() : Buffer.byteLength(content);
+
+      if (exclude || include) {
+        const publicAsset: PrintFileSizeAsset = {
+          name: filePath,
+          size,
         };
-      },
-    );
-
-    const exclude = options.exclude ?? excludeAsset;
-
-    const filteredAssets = assets.filter((asset) => {
-      const publicAsset: PrintFileSizeAsset = {
-        name: asset.filePath,
-        size: asset.size,
-      };
-      if (exclude(publicAsset)) {
-        return false;
+        if (exclude?.(publicAsset)) {
+          continue;
+        }
+        if (include) {
+          if (!include(publicAsset)) {
+            continue;
+          }
+        }
       }
-      if (options.include) {
-        return options.include(publicAsset);
+
+      if (content === undefined) {
+        formattedAssets.push(formatAsset(filePath, size, null));
+      } else {
+        formattedAssets.push(
+          gzipSize(content).then((gzippedSize) =>
+            formatAsset(filePath, size, gzippedSize),
+          ),
+        );
       }
-      return true;
-    });
+    }
 
-    const formattedAssets = await Promise.all(
-      filteredAssets.map((asset) => formatAsset(asset)),
-    );
-
-    return formattedAssets.sort((a, b) => a.size - b.size);
+    return (await Promise.all(formattedAssets)).sort((a, b) => a.size - b.size);
   };
 
   const assets = await getAssets();
@@ -344,8 +370,10 @@ async function printFileSizes(
     options.compressed,
   );
 
-  snapshot.totalSize = totalSize;
-  snapshot.totalGzipSize = totalGzipSize;
+  if (snapshot) {
+    snapshot.totalSize = totalSize;
+    snapshot.totalGzipSize = totalGzipSize;
+  }
 
   const fileHeader = showDetail ? `File (${environmentName})` : '';
 
@@ -397,20 +425,26 @@ async function printFileSizes(
   };
 
   if (showDetail) {
-    const maxFileLength = Math.max(
-      ...assets.map((asset) => asset.filenameLength),
+    let maxFileLength = Math.max(
       showTotal ? totalSizeTitle.length : 0,
       fileHeader.length,
     );
+    let maxSizeLength = totalSizeLabelLength;
+    let hasGzipSize = false;
 
-    const maxSizeLength = Math.max(
-      ...assets.map((a) => a.sizeLabelLength),
-      totalSizeLabelLength,
-    );
+    for (const asset of assets) {
+      if (asset.filenameLength > maxFileLength) {
+        maxFileLength = asset.filenameLength;
+      }
+      if (asset.sizeLabelLength > maxSizeLength) {
+        maxSizeLength = asset.sizeLabelLength;
+      }
+      if (asset.gzippedSize !== null) {
+        hasGzipSize = true;
+      }
+    }
 
-    const showGzipHeader = Boolean(
-      options.compressed && assets.some((item) => item.gzippedSize !== null),
-    );
+    const showGzipHeader = Boolean(options.compressed && hasGzipSize);
 
     logs.push(
       getHeader(maxFileLength, maxSizeLength, fileHeader, showGzipHeader),
@@ -537,11 +571,10 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
         return typeof printFileSize === 'object' && Boolean(printFileSize.diff);
       });
 
-      // If `configFilePath` is provided, use it to generate a unique snapshot path
+      // If `configFile` is provided, use it to generate a unique snapshot path
       // to avoid collision when using multiple Rsbuild config files
-      const { configFilePath } = api.getNormalizedConfig()._privateMeta || {};
-      const snapshotHash =
-        showDiff && configFilePath ? await hash(configFilePath) : '';
+      const { configFile } = api.context;
+      const snapshotHash = showDiff && configFile ? await hash(configFile) : '';
       const snapshotPath = showDiff
         ? getSnapshotPath(api.context.cachePath, snapshotHash)
         : '';
@@ -562,6 +595,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
             distPath,
             name,
             prevSnapshots,
+            showDiff,
           );
 
           // Store current sizes for this environment

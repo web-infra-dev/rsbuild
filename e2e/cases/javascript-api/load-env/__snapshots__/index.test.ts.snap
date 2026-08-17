@@ -1,0 +1,5 @@
+// Rstest Snapshot v1
+
+exports[`should throw when prefixes contains empty string 1`] = `"[rsbuild:loadEnv] Invalid prefixes option: received "". An empty string matches every key in processEnv, so every environment variable would be treated as public and could be inlined into client-side code through process.env.* and import.meta.env.* replacements. Use a prefix with at least one non-whitespace character, such as "PUBLIC_"."`;
+
+exports[`should throw when prefixes contains whitespace-only string 1`] = `"[rsbuild:loadEnv] Invalid prefixes option: received "  ". A whitespace-only string is not a valid public environment variable prefix because it does not contain any non-whitespace characters. Use a prefix with at least one non-whitespace character, such as "PUBLIC_"."`;

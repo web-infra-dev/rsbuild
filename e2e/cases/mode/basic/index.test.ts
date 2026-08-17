@@ -1,4 +1,5 @@
-import { expect, getFileContent, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getFileContent } from '@rstackjs/test-utils';
 
 test('should allow to set development mode when building', async ({
   build,
@@ -73,7 +74,9 @@ test('should allow to set production mode when starting dev server', async ({
   const indexJs = getFileContent(
     files,
     (key) => /static\/js\/index\.\w+\.js/.test(key),
-    { ignoreHash: false },
+    {
+      ignoreHash: false,
+    },
   );
 
   // should replace `process.env.NODE_ENV` with `'production'`

@@ -24,6 +24,11 @@ type Environments = {
 
 Since multiple environments share the same server instance, the following options are currently not supported in `EnvironmentConfig`:
 
+- `root`
+- `mode`
+- `logLevel`
+- `customLogger`
+- `environments`
 - `server.*`
 - `dev.watchFiles`
 - `dev.cliShortcuts`
@@ -66,6 +71,9 @@ export default {
       },
       output: {
         target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
       },
       resolve: {
         alias: {
@@ -109,6 +117,9 @@ const nodeConfig = {
   },
   output: {
     target: 'node',
+    distPath: {
+      root: 'dist/server',
+    },
   },
   resolve: {
     alias: {

@@ -1,4 +1,5 @@
 import type { Hooks } from '../hooks';
+import type { RestartManager } from '../helpers/restartManager';
 import type { Logger } from '../logger';
 import type { SocketServer } from '../server/socketServer';
 import type { NormalizedConfig, RsbuildConfig } from './config';
@@ -16,6 +17,10 @@ export type RsbuildContext = {
   version: string;
   /** The root path of current project. */
   rootPath: string;
+  /** Absolute path to the loaded configuration file. */
+  configFile?: string;
+  /** Absolute paths of files imported by the configuration file. */
+  configFileDependencies: readonly string[];
   /** Absolute path of output files. */
   distPath: string;
   /** Absolute path of cache files. */
@@ -29,7 +34,7 @@ export type RsbuildContext = {
    * import { createRsbuild } from '@rsbuild/core';
    *
    * async function main() {
-   *   const rsbuild = createRsbuild({
+   *   const rsbuild = await createRsbuild({
    *     // ...
    *   });
    *   await rsbuild.startDevServer();
@@ -90,6 +95,8 @@ export type InternalContext = RsbuildContext & {
   logger: Logger;
   /** All hooks. */
   hooks: Readonly<Hooks>;
+  /** Manage callbacks for restarting the current Rsbuild instance. */
+  restartManager: RestartManager;
   /** Current Rsbuild config. */
   config: Readonly<RsbuildConfig>;
   /** The original Rsbuild config passed from the createRsbuild method. */

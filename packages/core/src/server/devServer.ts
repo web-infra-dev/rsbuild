@@ -1,22 +1,21 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import { color } from '../helpers';
+import { color, pick } from '../helpers';
 import {
   getPublicPathFromCompiler,
   isMultiCompiler,
 } from '../helpers/compiler';
-import { getPathnameFromUrl } from '../helpers/path';
-import { onBeforeRestartServer, restartDevServer } from '../restart';
+import { requestRestart, watchFilesForRestart } from '../restart';
 import type {
   CreateCompiler,
   CreateDevServerOptions,
   EnvironmentAPI,
   InternalContext,
   NormalizedConfig,
-  Rspack,
 } from '../types';
 import { BuildManager } from './buildManager';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
+import { createCompileState } from './compileState';
 import {
   type GetDevMiddlewaresResult,
   getDevMiddlewares,
@@ -39,11 +38,11 @@ import {
   type RsbuildServerBase,
   resolvePort,
   type StartDevServerResult,
-  stripBase,
 } from './helper';
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
+import { getPublicPathnames } from './publicPathnames';
 import { applyServerSetup } from './serverSetup';
 import type { ServerMessage } from './socketServer';
 import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
@@ -98,8 +97,13 @@ export async function createDevServer<
   options: Options,
   createCompiler: CreateCompiler,
   config: NormalizedConfig,
-  { getPortSilently, runCompile = true }: CreateDevServerOptions = {},
+  devServerOptions: CreateDevServerOptions = {},
 ): Promise<RsbuildDevServer> {
+  const { getPortSilently, runCompile = true } = devServerOptions;
+  const restartContext = {
+    action: 'dev' as const,
+    options: pick(devServerOptions, ['getPortSilently']),
+  };
   const { context } = options;
   const { logger } = context;
   logger.debug('create dev server');
@@ -124,37 +128,7 @@ export async function createDevServer<
     https: isHttps,
   };
 
-  let lastStats: Rspack.Stats[];
-
-  let waitLastCompileDoneResolve: (() => void) | null = null;
-  let waitLastCompileDone = new Promise<void>((resolve) => {
-    waitLastCompileDoneResolve = resolve;
-  });
-
-  const resetWaitLastCompileDone = () => {
-    // No need to reset if lastStats is not set
-    if (!lastStats) {
-      return;
-    }
-
-    // Resolve the previous promise if it exists
-    if (waitLastCompileDoneResolve) {
-      waitLastCompileDoneResolve();
-      waitLastCompileDoneResolve = null;
-    }
-    waitLastCompileDone = new Promise<void>((resolve) => {
-      waitLastCompileDoneResolve = resolve;
-    });
-  };
-
-  // should register onAfterDevCompile hook before startCompile
-  context.hooks.onAfterDevCompile.tap(({ stats }) => {
-    lastStats = 'stats' in stats ? stats.stats : [stats];
-    if (waitLastCompileDoneResolve) {
-      waitLastCompileDoneResolve();
-      waitLastCompileDoneResolve = null;
-    }
-  });
+  const compileState = createCompileState(context.environmentList.length);
 
   const startCompile: () => Promise<BuildManager> = async () => {
     const compiler = await createCompiler();
@@ -169,16 +143,33 @@ export async function createDevServer<
       ? compiler.compilers.map(getPublicPathFromCompiler)
       : [getPublicPathFromCompiler(compiler)];
 
-    const { base } = config.server;
-    context.publicPathnames = publicPaths
-      .map(getPathnameFromUrl)
-      .map((prefix) =>
-        base && base !== '/' ? stripBase(prefix, base) : prefix,
-      );
+    context.publicPathnames = getPublicPathnames(
+      publicPaths,
+      config.server.base,
+    );
 
-    compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
-      resetWaitLastCompileDone();
-    });
+    const hookOptions = {
+      name: 'rsbuild:environment-api',
+      // Reset API state before user watchRun hooks can read stale environment stats.
+      stage: -10000,
+    };
+    if (isMultiCompiler(compiler)) {
+      compiler.compilers.forEach((compiler, index) => {
+        compiler.hooks.watchRun.tap(hookOptions, () => {
+          compileState.reset(index);
+        });
+        compiler.hooks.done.tap(hookOptions, (stats) => {
+          compileState.done(index, stats);
+        });
+      });
+    } else {
+      compiler.hooks.watchRun.tap(hookOptions, () => {
+        compileState.reset(0);
+      });
+      compiler.hooks.done.tap(hookOptions, (stats) => {
+        compileState.done(0, stats);
+      });
+    }
 
     const buildManager = new BuildManager({
       context,
@@ -197,7 +188,7 @@ export async function createDevServer<
 
   const cliShortcutsEnabled = isCliShortcutsEnabled(config);
 
-  const printUrls = () =>
+  const printUrls = (options?: { showAllRoutes?: boolean }) =>
     printServerURLs({
       urls,
       port,
@@ -205,7 +196,8 @@ export async function createDevServer<
       protocol,
       printUrls: config.server.printUrls,
       fallbackPathname,
-      trailingLineBreak: !cliShortcutsEnabled,
+      showAllRoutes: options?.showAllRoutes,
+      cliShortcutsEnabled,
       originalConfig: context.originalConfig,
       logger,
     });
@@ -223,6 +215,7 @@ export async function createDevServer<
 
   const state: {
     fileWatcher?: WatchFilesResult;
+    restartWatcher?: WatchFilesResult;
     devMiddlewares?: GetDevMiddlewaresResult;
     buildManager?: BuildManager;
   } = {};
@@ -231,12 +224,16 @@ export async function createDevServer<
     ? null
     : setupGracefulShutdown();
 
-  let closingPromise: Promise<void> | null = null;
+  let closingPromise: Promise<void> | undefined;
+  let unregisterRestart: (() => void) | undefined;
 
-  const closeServer = async () => {
+  // Keep the restart watcher active when closing server resources,
+  // so failed restarts can be retried.
+  const closeServerResources = () => {
     if (!closingPromise) {
+      unregisterRestart?.();
+      unregisterRestart = undefined;
       closingPromise = (async () => {
-        // ensure closeServer is only called once
         removeCleanup(closeServer);
         cleanupGracefulShutdown?.();
         await context.hooks.onCloseDevServer.callBatch();
@@ -247,6 +244,28 @@ export async function createDevServer<
       })();
     }
     return closingPromise;
+  };
+
+  // Fully close the server and its restart watcher.
+  const closeServer = async () => {
+    await state.restartWatcher?.close();
+    await closeServerResources();
+  };
+
+  // Request a manual restart and close the old watcher only after it succeeds.
+  const restartServer = async () => {
+    const restarted = await requestRestart({
+      restartContext,
+      clear: false,
+      logger,
+      restartManager: context.restartManager,
+    });
+
+    if (restarted) {
+      await state.restartWatcher?.close();
+    }
+
+    return restarted;
   };
 
   if (!middlewareMode) {
@@ -266,7 +285,9 @@ export async function createDevServer<
         openPage,
         closeServer,
         printUrls,
-        restartServer: () => restartDevServer({ clear: false, logger }),
+        restartServer: context.restartManager.canRestart
+          ? restartServer
+          : undefined,
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
         logger,
@@ -311,15 +332,14 @@ export async function createDevServer<
         if (!state.buildManager) {
           throw new Error(getErrorMsg('getStats'));
         }
-        await waitLastCompileDone;
-        return lastStats[index];
+        return compileState.wait(index);
       },
       loadBundle: async <T>(entryName: string) => {
         if (!state.buildManager) {
           throw new Error(getErrorMsg('loadBundle'));
         }
-        await waitLastCompileDone;
-        return cacheableLoadBundle(lastStats[index], entryName, {
+        const stats = await compileState.wait(index);
+        return cacheableLoadBundle(stats, entryName, {
           readFileSync: state.buildManager.readFileSync,
           environment,
         }) as T;
@@ -328,8 +348,8 @@ export async function createDevServer<
         if (!state.buildManager) {
           throw new Error(getErrorMsg('getTransformedHtml'));
         }
-        await waitLastCompileDone;
-        return cacheableTransformedHtml(lastStats[index], entryName, {
+        const stats = await compileState.wait(index);
+        return cacheableTransformedHtml(stats, entryName, {
           readFileSync: state.buildManager.readFileSync,
           environment,
         });
@@ -338,7 +358,7 @@ export async function createDevServer<
   });
 
   const { connect } = await import(
-    /* webpackChunkName: "connect-next" */ 'connect-next'
+    /* rspackChunkName: "connect-next" */ 'connect-next'
   );
   const middlewares = connect();
 
@@ -396,8 +416,6 @@ export async function createDevServer<
             logger.debug('listen dev server done');
 
             await devServer.afterListen();
-
-            onBeforeRestartServer(devServer.close);
 
             resolve({
               port,
@@ -465,6 +483,14 @@ export async function createDevServer<
 
   // start watching
   state.buildManager?.watch();
+
+  unregisterRestart =
+    context.restartManager.registerCleanup(closeServerResources);
+  state.restartWatcher = watchFilesForRestart({
+    watchFiles: config.dev.watchFiles,
+    context,
+    restartContext,
+  });
 
   logger.debug('create dev server done');
 

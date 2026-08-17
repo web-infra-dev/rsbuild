@@ -37,9 +37,9 @@ When HTTPS is enabled, Rsbuild uses an HTTP/2 server by default.
 
 ## Set certificate
 
-You can manually pass in the certificate and the private key required in the `server.https` option. This parameter will be directly passed to the `createServer` method of the https module in Node.js.
+You can manually pass in the certificate and the private key required in the `server.https` option. This parameter will be directly passed to the `createSecureServer` method of the http2 module in Node.js.
 
-For details, please refer to [https.createServer](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener).
+For details, see [http2.createSecureServer](https://nodejs.org/api/http2.html#http2createsecureserveroptions-onrequesthandler).
 
 ```ts
 import fs from 'node:fs';

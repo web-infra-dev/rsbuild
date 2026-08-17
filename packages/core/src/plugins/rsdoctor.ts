@@ -1,5 +1,4 @@
 import { pathToFileURL } from 'node:url';
-import type { Configuration } from '@rspack/core';
 import { isWindows } from '../constants';
 import { color, require } from '../helpers';
 import type { RsbuildPlugin, Rspack } from '../types';
@@ -8,7 +7,7 @@ type RsdoctorExports = {
   RsdoctorRspackPlugin: { new (): Rspack.RspackPluginInstance };
 };
 
-type MaybeRsdoctorPlugin = Configuration['plugins'] & {
+type MaybeRsdoctorPlugin = Rspack.RspackPluginInstance & {
   isRsdoctorPlugin?: boolean;
 };
 

@@ -1,4 +1,5 @@
-import { expect, getFileContent, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getFileContent } from '@rstackjs/test-utils';
 
 test('should allow to force filename hash for node target', async ({
   build,
@@ -22,7 +23,9 @@ test('should allow to force filename hash for node target', async ({
   const indexJs = getFileContent(
     files,
     (key) => /\/index\.\w{8}\.js$/.test(key),
-    { ignoreHash: false },
+    {
+      ignoreHash: false,
+    },
   );
 
   expect(indexJs).toContain('filename hash for node target');

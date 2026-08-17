@@ -11,8 +11,7 @@ declare module '@rspack/core' {
 }
 
 export type ResolvedWriteToDisk =
-  | boolean
-  | ((filePath: string, name?: string) => boolean);
+  boolean | ((filePath: string, name?: string) => boolean);
 
 /**
  * Resolve writeToDisk config across multiple environments.

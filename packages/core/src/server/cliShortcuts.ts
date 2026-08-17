@@ -2,6 +2,8 @@ import { color, isTTY } from '../helpers';
 import type { Logger } from '../logger';
 import type { CliShortcut, NormalizedConfig } from '../types/config';
 
+type PrintUrlsHandler = (options?: { showAllRoutes?: boolean }) => void;
+
 export const isCliShortcutsEnabled = (config: NormalizedConfig): boolean =>
   config.dev.cliShortcuts && isTTY('stdin');
 
@@ -22,7 +24,7 @@ export async function setupCliShortcuts({
   help?: boolean | string;
   openPage: () => Promise<void>;
   closeServer: () => Promise<void>;
-  printUrls: () => void;
+  printUrls: PrintUrlsHandler;
   restartServer?: () => Promise<boolean>;
   customShortcuts?: (shortcuts: CliShortcut[]) => CliShortcut[];
   logger: Logger;
@@ -61,7 +63,7 @@ export async function setupCliShortcuts({
     {
       key: 'u',
       description: `${color.bold('u + enter')}  ${color.dim('show urls')}`,
-      action: printUrls,
+      action: () => printUrls({ showAllRoutes: true }),
     },
   ].filter(Boolean) as CliShortcut[];
 

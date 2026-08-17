@@ -12,8 +12,13 @@ type Routes = Array<{
   pathname: string;
 }>;
 
+type PrintUrlsOptions = {
+  maxRoutes?: number;
+};
+
 type PrintUrls =
   | boolean
+  | PrintUrlsOptions
   | ((params: {
       urls: string[];
       port: number;
@@ -32,6 +37,30 @@ type PrintUrls =
   ➜  Local:    http://localhost:3000
   ➜  Network:  use --host to expose
 ```
+
+## 限制 entry URL 输出
+
+默认情况下，Rsbuild 最多会打印 10 个 entry URL。如果 entry 数量超过限制，Rsbuild 会打印剩余数量：
+
+```
+  ... 5 more entries, press u + enter to show all
+```
+
+你可以通过 `maxRoutes` 修改这个限制：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls: {
+      maxRoutes: 20,
+    },
+  },
+};
+```
+
+将 `maxRoutes` 设置为 `0` 时，只会打印 server URL，不会打印 entry routes。
+
+`maxRoutes` 选项只对内置 URL 输出生效。如果 `server.printUrls` 被设置为函数，Rsbuild 会保持已有的自定义日志行为。
 
 ## 自定义日志
 
@@ -158,4 +187,5 @@ export default {
 
 | 版本    | 变更内容           |
 | ------- | ------------------ |
+| v2.0.16 | 支持 `maxRoutes`   |
 | v1.5.17 | 支持自定义 `label` |

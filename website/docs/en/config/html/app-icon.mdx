@@ -179,6 +179,44 @@ export default {
 };
 ```
 
+## Adding more manifest fields
+
+`html.appIcon` is designed for configuring web application icons. If you need to add more fields to the web app manifest, create a `manifest.webmanifest` file in the [public folder](/guide/basic/static-assets#public-folder) instead of using `html.appIcon` to generate the manifest.
+
+```json title="public/manifest.webmanifest"
+{
+  "name": "My Website",
+  "short_name": "Website",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
+```
+
+Icon files referenced in `icons` should also be placed in the `public` folder. For example, `/icon-192.png` maps to `public/icon-192.png`.
+
+Use [html.tags](/config/html/tags) to reference the manifest file:
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'link',
+        attrs: {
+          rel: 'manifest',
+          href: '/manifest.webmanifest',
+        },
+      },
+    ],
+  },
+};
+```
+
 ## Version history
 
 | Version | Changes                            |

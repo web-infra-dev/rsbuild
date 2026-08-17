@@ -1,6 +1,7 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, getRandomPort, gotoPage, test } from '@e2e/helper';
+import { expect, gotoPage, test } from '@e2e/helper';
+import { getRandomPort } from '@rstackjs/test-utils';
 import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
@@ -81,6 +82,7 @@ test('should run module federation in dev with server.base', async ({
   const remotePort = await getRandomPort();
 
   process.env.REMOTE_PORT = remotePort.toString();
+  process.env.REMOTE_BASE = '/remote';
 
   const remoteApp = await devOnly({
     cwd: remote,
@@ -98,6 +100,7 @@ test('should run module federation in dev with server.base', async ({
       },
     },
   });
+  delete process.env.REMOTE_BASE;
 
   await gotoPage(page, remoteApp);
   await expect(page.locator('#title')).toHaveText('Remote');

@@ -101,7 +101,11 @@ const generateManifest =
 
         if (file.chunk) {
           for (const auxiliaryFile of file.chunk.auxiliaryFiles) {
-            assets.add(auxiliaryFile);
+            assets.add(
+              manifestOptions.prefix
+                ? ensureAssetPrefix(auxiliaryFile, publicPath)
+                : auxiliaryFile,
+            );
           }
         }
       }
@@ -220,7 +224,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
       const manifestOptions = normalizeManifestObjectConfig(manifest);
 
       const { RspackManifestPlugin } = await import(
-        /* webpackChunkName: "manifest-plugin" */ 'rspack-manifest-plugin'
+        /* rspackChunkName: "manifest-plugin" */ 'rspack-manifest-plugin'
       );
       const { htmlPaths } = environment;
 

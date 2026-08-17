@@ -17,6 +17,21 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
   ],
   "oneOf": [
     {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -60,7 +75,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "loader": "<PNPM_INNER>/babel-loader/lib/index.js",
           "options": {
             "babelrc": false,
             "compact": false,
@@ -94,94 +109,173 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
 }
 `;
 
-exports[`plugins/babel > babel-loader should works with builtin:swc-loader for Rsbuild v1 1`] = `
-{
-  "dependency": {
-    "not": "url",
-  },
-  "exclude": [
-    "src/example",
-  ],
-  "include": [
-    {
-      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+exports[`plugins/babel > should allow to add multiple babel rules 1`] = `
+[
+  {
+    "resolve": {
+      "fullySpecified": false,
     },
-    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-    /node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
-  ],
-  "resourceQuery": {
-    "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    "test": /\\\\\\.m\\?js/,
   },
-  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-  "type": "javascript/auto",
-  "use": [
-    {
-      "loader": "builtin:swc-loader",
-      "options": {
-        "collectTypeScriptInfo": {
-          "exportedEnum": false,
-          "typeExports": true,
-        },
-        "env": {
-          "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
-          ],
-        },
-        "isModule": "unknown",
-        "jsc": {
-          "experimental": {
-            "cacheRoot": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/.swc",
-            "keepImportAttributes": true,
-          },
-          "externalHelpers": true,
-          "output": {
-            "charset": "utf8",
-          },
-          "parser": {
-            "decorators": true,
-            "syntax": "typescript",
-            "tsx": false,
-          },
-          "transform": {
-            "decoratorVersion": "2022-03",
-            "legacyDecorator": false,
-          },
-        },
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "include": [
+      {
+        "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
       },
-    },
-    {
-      "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
-      "options": {
-        "babelrc": false,
-        "compact": false,
-        "configFile": false,
-        "plugins": [
-          [
-            "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-            {
-              "version": "2022-03",
-            },
-          ],
-        ],
-        "presets": [
-          [
-            "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-            {
-              "allExtensions": true,
-              "allowDeclareFields": true,
-              "allowNamespaces": true,
-              "isTSX": true,
-              "optimizeConstEnums": true,
-            },
-          ],
+      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+    ],
+    "oneOf": [
+      {
+        "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+          },
         ],
       },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "builtin:swc-loader",
+            "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
+              "detectSyntax": "auto",
+              "env": {
+                "targets": [
+                  "chrome >= 107",
+                  "edge >= 107",
+                  "firefox >= 104",
+                  "safari >= 16",
+                ],
+              },
+              "isModule": "unknown",
+              "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
+                },
+                "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
+                "parser": {
+                  "decorators": true,
+                },
+                "transform": {
+                  "decoratorVersion": "2023-11",
+                  "legacyDecorator": false,
+                },
+              },
+            },
+          },
+        ],
+      },
+    ],
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  },
+  {
+    "dependency": {
+      "not": "url",
     },
-  ],
-}
+    "include": [
+      /b\\\\\\.js\\$/,
+    ],
+    "resourceQuery": {
+      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    },
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "use": [
+      {
+        "loader": "<PNPM_INNER>/babel-loader/lib/index.js",
+        "options": {
+          "babelrc": false,
+          "compact": false,
+          "configFile": false,
+          "plugins": [
+            "babel-plugin-b",
+          ],
+          "presets": [
+            [
+              "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+              {
+                "allExtensions": true,
+                "allowDeclareFields": true,
+                "allowNamespaces": true,
+                "isTSX": true,
+                "optimizeConstEnums": true,
+              },
+            ],
+          ],
+        },
+      },
+    ],
+    "with": {
+      "type": {
+        "not": "text",
+      },
+    },
+  },
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "include": [
+      /a\\\\\\.js\\$/,
+    ],
+    "resourceQuery": {
+      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    },
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "use": [
+      {
+        "loader": "<PNPM_INNER>/babel-loader/lib/index.js",
+        "options": {
+          "babelrc": false,
+          "compact": false,
+          "configFile": false,
+          "plugins": [
+            "babel-plugin-a",
+          ],
+          "presets": [
+            [
+              "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+              {
+                "allExtensions": true,
+                "allowDeclareFields": true,
+                "allowNamespaces": true,
+                "isTSX": true,
+                "optimizeConstEnums": true,
+              },
+            ],
+          ],
+        },
+      },
+    ],
+    "with": {
+      "type": {
+        "not": "text",
+      },
+    },
+  },
+]
 `;
 
 exports[`plugins/babel > should apply decorators version 2023-11 correctly 1`] = `
@@ -196,6 +290,21 @@ exports[`plugins/babel > should apply decorators version 2023-11 correctly 1`] =
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
   "oneOf": [
+    {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
     {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
@@ -240,7 +349,7 @@ exports[`plugins/babel > should apply decorators version 2023-11 correctly 1`] =
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "loader": "<PNPM_INNER>/babel-loader/lib/index.js",
           "options": {
             "babelrc": false,
             "compact": false,
@@ -290,6 +399,21 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
   ],
   "oneOf": [
     {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -333,7 +457,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "loader": "<PNPM_INNER>/babel-loader/lib/index.js",
           "options": {
             "babelrc": false,
             "compact": false,
@@ -383,6 +507,21 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
   ],
   "oneOf": [
     {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -424,7 +563,7 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "loader": "<PNPM_INNER>/babel-loader/lib/index.js",
           "options": {
             "babelrc": false,
             "compact": false,
@@ -472,6 +611,21 @@ exports[`plugins/babel > should set babel-loader 1`] = `
   ],
   "oneOf": [
     {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -515,7 +669,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "loader": "<PNPM_INNER>/babel-loader/lib/index.js",
           "options": {
             "babelrc": false,
             "compact": false,
@@ -562,6 +716,21 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
   ],
   "oneOf": [
     {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -605,7 +774,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "loader": "<PNPM_INNER>/babel-loader/lib/index.js",
           "options": {
             "babelrc": false,
             "cacheCompression": false,

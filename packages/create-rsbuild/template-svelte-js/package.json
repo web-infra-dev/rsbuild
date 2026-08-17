@@ -5,14 +5,14 @@
   "type": "module",
   "scripts": {
     "build": "rsbuild build",
-    "dev": "rsbuild --open",
+    "dev": "rsbuild",
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "svelte": "^5.55.5"
+    "svelte": "^5.56.9"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.3",
-    "@rsbuild/plugin-svelte": "^1.1.1"
+    "@rsbuild/core": "^2.1.13",
+    "@rsbuild/plugin-svelte": "^2.0.1"
   }
 }

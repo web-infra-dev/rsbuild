@@ -7,6 +7,10 @@
     "dev": "rsbuild",
     "dev:esm": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" TEST_ESM_LIBRARY=true rsbuild"
   },
+  "dependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
   "devDependencies": {
     "@rsbuild/core": "workspace:*"
   }

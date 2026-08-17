@@ -36,11 +36,11 @@ const getCSSModulesLocalIdentName = (
     ? '[local]-[hash:base64:6]'
     : '[path][name]__[local]-[hash:base64:6]');
 
-export function getLightningCSSLoaderOptions(
+export async function getLightningCSSLoaderOptions(
   config: NormalizedEnvironmentConfig,
   targets: string[],
   minify: boolean,
-): Rspack.LightningcssLoaderOptions {
+): Promise<Rspack.LightningcssLoaderOptions> {
   const userOptions =
     typeof config.tools.lightningcssLoader === 'object'
       ? config.tools.lightningcssLoader
@@ -172,7 +172,7 @@ const getPostcssLoaderOptions = async ({
     sourceMap: getCSSSourceMap(config),
   };
 
-  const finalOptions = reduceConfigsWithContext({
+  const finalOptions = await reduceConfigsWithContext({
     initial: defaultOptions,
     config: config.tools.postcss,
     ctx: context,
@@ -233,7 +233,7 @@ const getPostcssLoaderOptions = async ({
   return finalOptions;
 };
 
-const getCSSLoaderOptions = ({
+const getCSSLoaderOptions = async ({
   config,
   localIdentName,
   emitCss,
@@ -252,7 +252,7 @@ const getCSSLoaderOptions = ({
     sourceMap: getCSSSourceMap(config),
   };
 
-  const mergedCssLoaderOptions = reduceConfigs({
+  const mergedCssLoaderOptions = await reduceConfigs({
     initial: defaultOptions,
     config: config.tools.cssLoader,
     mergeFn: deepmerge,
@@ -288,6 +288,12 @@ export const pluginCss = (): RsbuildPlugin => ({
           // the module should be treated as an asset module rather than a JS module.
           .dependency({ not: 'url' });
 
+        // Support for `import cssText from "a.css" with { type: "text" }`
+        cssRule
+          .oneOf(CHAIN_ID.ONE_OF.CSS_TEXT)
+          .with({ type: 'text' })
+          .type('asset/source');
+
         // Support for `import cssUrl from "a.css?url"`
         const urlRule = cssRule
           .oneOf(CHAIN_ID.ONE_OF.CSS_URL)
@@ -317,7 +323,7 @@ export const pluginCss = (): RsbuildPlugin => ({
         if (emitCss) {
           // use style-loader
           if (config.output.injectStyles) {
-            const styleLoaderOptions = reduceConfigs({
+            const styleLoaderOptions = await reduceConfigs({
               initial: {},
               config: config.tools.styleLoader,
             });
@@ -346,22 +352,22 @@ export const pluginCss = (): RsbuildPlugin => ({
         };
 
         // Update CSS rules that share the CSS transform pipeline.
-        const updateRules = (
+        const updateRules = async (
           callback: (
             rule: RspackChain.Rule<RspackChain.Rule>,
             type: 'main' | 'inline' | 'url',
-          ) => void,
+          ) => void | Promise<void>,
           options: { skipMain?: boolean } = {},
         ) => {
           if (!options.skipMain) {
-            callback(mainRule, 'main');
+            await callback(mainRule, 'main');
           }
-          callback(inlineRule, 'inline');
-          callback(urlRule, 'url');
+          await callback(inlineRule, 'inline');
+          await callback(urlRule, 'url');
         };
 
         const cssLoaderPath = getCompiledPath('css-loader');
-        updateRules((rule) => {
+        await updateRules((rule) => {
           rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
         });
 
@@ -386,8 +392,8 @@ export const pluginCss = (): RsbuildPlugin => ({
             }
           }
 
-          updateRules(
-            (rule, type) => {
+          await updateRules(
+            async (rule, type) => {
               // Inline styles are not processed by Rspack's minimizers,
               // so we need to minify them via `builtin:lightningcss-loader`
               const inlineStyle =
@@ -396,7 +402,7 @@ export const pluginCss = (): RsbuildPlugin => ({
                 config.output.injectStyles;
               const minify = inlineStyle && minifyCss;
 
-              const lightningcssOptions = getLightningCSSLoaderOptions(
+              const lightningcssOptions = await getLightningCSSLoaderOptions(
                 config,
                 browserslist,
                 minify,
@@ -430,7 +436,7 @@ export const pluginCss = (): RsbuildPlugin => ({
 
           const postcssLoaderPath = getCompiledPath('postcss-loader');
 
-          updateRules(
+          await updateRules(
             (rule) => {
               rule
                 .use(CHAIN_ID.USE.POSTCSS)
@@ -443,28 +449,33 @@ export const pluginCss = (): RsbuildPlugin => ({
         }
 
         const localIdentName = getCSSModulesLocalIdentName(config, isProd);
-        const cssLoaderOptions = getCSSLoaderOptions({
+        const cssLoaderOptions = await getCSSLoaderOptions({
           config,
           localIdentName,
           emitCss,
         });
 
-        updateRules((rule, type) => {
-          let finalOptions = cssLoaderOptions;
+        await updateRules((rule, type) => {
+          const finalOptions =
+            type === 'inline' || type === 'url'
+              ? {
+                  ...cssLoaderOptions,
+                  exportType: 'string',
+                  modules: false,
+                  importLoaders: importLoaders.inline,
+                }
+              : {
+                  ...cssLoaderOptions,
+                  importLoaders: importLoaders.normal,
+                };
 
-          if (type === 'inline' || type === 'url') {
-            finalOptions = {
-              ...cssLoaderOptions,
-              exportType: 'string',
-              modules: false,
-              importLoaders: importLoaders.inline,
-            };
-          } else {
-            finalOptions = {
-              ...cssLoaderOptions,
-              importLoaders: importLoaders.normal,
-            };
+          // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
+          if (!emitCss && type === 'main') {
+            rule.use(CHAIN_ID.USE.IGNORE_CSS).options({
+              modules: finalOptions.modules,
+            });
           }
+
           rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
 
           if (type !== 'url') {

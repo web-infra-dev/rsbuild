@@ -48,18 +48,31 @@ function updateSourceMappingURL({
   return source;
 }
 
-function matchTests(
+function getMatchedAsset(
   name: string,
-  asset: Rspack.sources.Source,
+  assets: Rspack.Compilation['assets'],
   tests: InlineChunkTest[],
 ) {
-  return tests.some((test) => {
+  let asset: Rspack.sources.Source | undefined;
+  const matched = tests.some((test) => {
     if (isFunction(test)) {
+      asset ??= assets[name];
+      if (!asset) {
+        return false;
+      }
       const size = asset.size();
       return test({ name, size });
     }
     return test.exec(name);
   });
+
+  if (!matched) {
+    return;
+  }
+
+  // Accessing an asset retrieves its Source through the Rust-JS bridge,
+  // so defer the lookup until the filename matches.
+  return asset ?? assets[name];
 }
 
 export function getInlineTests(config: NormalizedEnvironmentConfig): {
@@ -143,14 +156,8 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
       const { src, ...otherAttrs } = tag.attrs;
       const scriptName = publicPath ? src.replace(publicPath, '') : src;
 
-      // If asset is not found, skip it
-      const asset = assets[scriptName];
-      if (asset == null) {
-        return tag;
-      }
-
-      const shouldInline = matchTests(scriptName, asset, scriptTests);
-      if (!shouldInline) {
+      const asset = getMatchedAsset(scriptName, assets, scriptTests);
+      if (!asset) {
         return tag;
       }
 
@@ -194,14 +201,8 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         ? tag.attrs.href.replace(publicPath, '')
         : tag.attrs.href;
 
-      // If asset is not found, skip it
-      const asset = assets[linkName];
-      if (asset == null) {
-        return tag;
-      }
-
-      const shouldInline = matchTests(linkName, asset, styleTests);
-      if (!shouldInline) {
+      const asset = getMatchedAsset(linkName, assets, styleTests);
+      if (!asset) {
         return tag;
       }
 
@@ -274,16 +275,21 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         const hasSourceMap =
           devtool !== 'hidden-source-map' && devtool !== false;
         for (const name of inlinedAssets) {
-          const asset = compilation.assets[name];
-          if (!asset) {
-            continue;
-          }
-          // Preserve source maps of inlined assets. Setting `related.sourceMap` to `null` prevents
-          // `deleteAsset` from removing the source map file.
           if (hasSourceMap) {
+            const asset = compilation.assets[name];
+            if (!asset) {
+              continue;
+            }
+            // Preserve source maps of inlined assets. Setting `related.sourceMap` to `null` prevents
+            // `deleteAsset` from removing the source map file.
             compilation.updateAsset(name, asset, {
               related: { sourceMap: null },
             });
+          } else {
+            // Check existence without retrieving the Source through the Rust-JS bridge.
+            if (!(name in compilation.assets)) {
+              continue;
+            }
           }
           compilation.deleteAsset(name);
         }

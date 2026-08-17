@@ -39,6 +39,8 @@ export const CHAIN_ID = {
     IMAGE: 'image',
     /** Rule for media */
     MEDIA: 'media',
+    /** Rule for other built-in assets */
+    ASSETS: 'assets',
     /** Rule for additional assets */
     ADDITIONAL_ASSETS: 'additional-assets',
     /** Rule for JS */
@@ -66,15 +68,19 @@ export const CHAIN_ID = {
   ONE_OF: {
     /** JS oneOf rules */
     JS_MAIN: 'js',
+    JS_WORKER: 'js-worker',
     JS_RAW: 'js-raw',
+    JS_TEXT: 'js-text',
     /** CSS oneOf rules */
     CSS_MAIN: 'css',
     CSS_RAW: 'css-raw',
+    CSS_TEXT: 'css-text',
     CSS_URL: 'css-url',
     CSS_INLINE: 'css-inline',
     /** SVG oneOf rules */
     SVG: 'svg',
     SVG_RAW: 'svg-asset-raw',
+    SVG_TEXT: 'svg-asset-text',
     SVG_URL: 'svg-asset-url',
     SVG_ASSET: 'svg-asset',
     SVG_REACT: 'svg-react',
@@ -100,6 +106,8 @@ export const CHAIN_ID = {
     VUE: 'vue',
     /** swc-loader */
     SWC: 'swc',
+    /** worker query loader */
+    WORKER_QUERY: 'worker-query',
     /** svgr */
     SVGR: 'svgr',
     /** babel-loader */

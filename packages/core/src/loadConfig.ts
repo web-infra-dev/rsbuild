@@ -1,9 +1,13 @@
-import fs from 'node:fs';
-import { isAbsolute, join } from 'node:path';
-import { pathToFileURL } from 'node:url';
+import {
+  loadConfig as baseImpl,
+  type LoadConfigOptions as BaseOptions,
+  type LoadConfigResult as BaseResult,
+} from '@rstackjs/load-config';
 import { color, getNodeEnv, isObject } from './helpers';
 import { defaultLogger } from './logger';
 import type { RsbuildConfig } from './types';
+
+export type { ConfigLoader } from '@rstackjs/load-config';
 
 export type ConfigParams = {
   env: string;
@@ -18,22 +22,13 @@ export type RsbuildConfigAsyncFn = (
 
 export type RsbuildConfigSyncFn = (env: ConfigParams) => RsbuildConfig;
 
-export type RsbuildConfigExport =
-  | RsbuildConfig
-  | RsbuildConfigSyncFn
-  | RsbuildConfigAsyncFn;
+export type RsbuildConfigDefinition =
+  RsbuildConfig | RsbuildConfigSyncFn | RsbuildConfigAsyncFn;
 
-export type LoadConfigOptions = {
-  /**
-   * The root path to resolve the config file.
-   * @default process.cwd()
-   */
-  cwd?: string;
-  /**
-   * The path to the config file, can be a relative or absolute path.
-   * If `path` is not provided, the function will search for the config file in the `cwd`.
-   */
-  path?: string;
+export type LoadConfigOptions = Pick<
+  BaseOptions<[ConfigParams]>,
+  'cwd' | 'path' | 'loader' | 'exportName' | 'configFileNames'
+> & {
   /**
    * A custom meta object to be passed into the config function of `defineConfig`.
    */
@@ -44,187 +39,95 @@ export type LoadConfigOptions = {
    */
   envMode?: string;
   /**
-   * Specify the config loader, can be `auto`, `jiti` or `native`.
-   * - 'auto': Use native Node.js loader first, fallback to jiti if failed
-   * - 'jiti': Use `jiti` as loader, which supports TypeScript and ESM out of the box
-   * - 'native': Use native Node.js loader, requires TypeScript support in Node.js >= 22.6
-   * @default 'auto'
+   * The command passed to the config function.
+   * @default process.argv[2]
    */
-  loader?: ConfigLoader;
+  command?: string;
 };
 
-export type LoadConfigResult = {
-  /**
-   * The loaded configuration object.
-   */
-  content: RsbuildConfig;
-  /**
-   * The path to the loaded configuration file.
-   * Return `null` if the configuration file is not found.
-   */
-  filePath: string | null;
-};
+export type LoadConfigResult<Config = RsbuildConfig> = Pick<
+  BaseResult<Config>,
+  'content' | 'filePath' | 'dependencies'
+>;
 
 /**
  * This function helps you to autocomplete configuration types.
  * It accepts a Rsbuild config object, or a function that returns a config.
  */
-export function defineConfig(config: RsbuildConfig): RsbuildConfig;
-export function defineConfig(config: RsbuildConfigSyncFn): RsbuildConfigSyncFn;
-export function defineConfig(
-  config: RsbuildConfigAsyncFn,
-): RsbuildConfigAsyncFn;
-export function defineConfig(config: RsbuildConfigExport): RsbuildConfigExport;
-export function defineConfig(config: RsbuildConfigExport) {
+export function defineConfig<
+  const Config extends RsbuildConfig,
+  const Definition extends
+    | Config
+    | ((env: ConfigParams) => Config)
+    | ((env: ConfigParams) => Promise<Config>),
+>(
+  config: Definition,
+): Definition extends (env: ConfigParams) => Promise<unknown>
+  ? RsbuildConfigAsyncFn
+  : Definition extends (env: ConfigParams) => unknown
+    ? RsbuildConfigSyncFn
+    : RsbuildConfig;
+export function defineConfig(config: RsbuildConfigDefinition) {
   return config;
 }
 
-const resolveConfigPath = (root: string, customConfig?: string) => {
-  if (customConfig) {
-    const customConfigPath = isAbsolute(customConfig)
-      ? customConfig
-      : join(root, customConfig);
-    if (fs.existsSync(customConfigPath)) {
-      return customConfigPath;
-    }
-    throw new Error(
-      `${color.dim('[rsbuild:loadConfig]')} Cannot find config file: ${color.dim(customConfigPath)}`,
-    );
-  }
+// Resolve the most commonly used config file types first to improve lookup performance.
+const DEFAULT_CONFIG_FILE_NAMES = [
+  'rsbuild.config.ts',
+  'rsbuild.config.js',
+  'rsbuild.config.mts',
+  'rsbuild.config.mjs',
+  'rsbuild.config.cts',
+  'rsbuild.config.cjs',
+];
 
-  // Resolve the most commonly used config file types first
-  // to improve lookup performance.
-  const CONFIG_FILES = [
-    'rsbuild.config.ts',
-    'rsbuild.config.js',
-    'rsbuild.config.mts',
-    'rsbuild.config.mjs',
-    'rsbuild.config.cts',
-    'rsbuild.config.cjs',
-  ];
-
-  for (const file of CONFIG_FILES) {
-    const configFile = join(root, file);
-
-    if (fs.existsSync(configFile)) {
-      return configFile;
-    }
-  }
-
-  return null;
-};
-
-export type ConfigLoader = 'auto' | 'jiti' | 'native';
-
-export async function loadConfig({
+export async function loadConfig<Config = RsbuildConfig>({
   cwd = process.cwd(),
   path,
+  configFileNames = DEFAULT_CONFIG_FILE_NAMES,
   envMode,
   meta,
   loader = 'auto',
-}: LoadConfigOptions = {}): Promise<LoadConfigResult> {
-  const configFilePath = resolveConfigPath(cwd, path);
-
-  if (!configFilePath) {
-    defaultLogger.debug('no config file found.');
-    return {
-      content: {},
-      filePath: configFilePath,
-    };
-  }
-
-  const applyMetaInfo = (config: RsbuildConfig) => {
-    config._privateMeta = { configFilePath };
-    return config;
+  command,
+  exportName = 'default',
+}: LoadConfigOptions = {}): Promise<LoadConfigResult<Config>> {
+  const nodeEnv = getNodeEnv();
+  const configParams: ConfigParams = {
+    env: nodeEnv,
+    command: command ?? process.argv[2],
+    envMode: envMode || nodeEnv,
+    meta,
   };
 
-  let configExport: RsbuildConfigExport | undefined;
+  const result = await baseImpl<Config, [ConfigParams]>({
+    cwd,
+    path,
+    configFileNames,
+    loader,
+    exportName,
+    configParams: [configParams],
+    fresh: true,
+  });
 
-  // Determine the loading strategy based on the config loader type
-  const useNative = Boolean(
-    loader === 'native' ||
-    (loader === 'auto' &&
-      (process.features.typescript ||
-        process.versions.bun ||
-        process.versions.deno)),
-  );
-
-  if (useNative || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
-    try {
-      const configFileURL = pathToFileURL(configFilePath).href;
-      const exportModule = await import(`${configFileURL}?t=${Date.now()}`);
-      configExport = exportModule.default ? exportModule.default : exportModule;
-    } catch (err) {
-      const errorMessage = `Failed to load file with native loader: ${color.dim(configFilePath)}`;
-      if (loader === 'native') {
-        defaultLogger.error(errorMessage);
-        throw err;
-      }
-
-      defaultLogger.debug(`${errorMessage}, fallback to jiti.`);
-      defaultLogger.debug(err);
-    }
+  if (!result.filePath) {
+    defaultLogger.debug('no config file found.');
+    return result as LoadConfigResult<Config>;
   }
 
-  if (configExport === undefined) {
-    try {
-      const { createJiti } = await import('jiti');
-      const jiti = createJiti(import.meta.filename, {
-        // disable require cache to support restart CLI and read the new config
-        moduleCache: false,
-        interopDefault: true,
-        // Always use native `require()` for these packages,
-        // This avoids `@rspack/core` being loaded twice.
-        nativeModules: ['typescript'],
-      });
-
-      configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {
-        default: true,
-      });
-    } catch (err) {
-      defaultLogger.error(
-        `Failed to load file with jiti: ${color.dim(configFilePath)}`,
-      );
-      throw err;
-    }
-  }
-
-  if (typeof configExport === 'function') {
-    const command = process.argv[2];
-    const nodeEnv = getNodeEnv();
-    const configParams: ConfigParams = {
-      env: nodeEnv,
-      command,
-      envMode: envMode || nodeEnv,
-      meta,
-    };
-
-    const result = await configExport(configParams);
-
-    if (result === undefined) {
-      throw new Error(
-        `${color.dim('[rsbuild:loadConfig]')} The config function must return a config object.`,
-      );
-    }
-
-    return {
-      content: applyMetaInfo(result),
-      filePath: configFilePath,
-    };
-  }
-
-  if (!isObject(configExport)) {
+  if (!isObject(result.content)) {
     throw new Error(
-      `${color.dim('[rsbuild:loadConfig]')} The config must be an object or a function that returns an object, get ${color.yellow(
-        configExport,
+      `The config must be an object or a function that returns an object, get ${color.yellow(
+        String(result.content),
       )}`,
     );
   }
 
-  defaultLogger.debug('configuration loaded from:', configFilePath);
-
-  return {
-    content: applyMetaInfo(configExport),
-    filePath: configFilePath,
+  (result.content as RsbuildConfig)._privateMeta = {
+    configFilePath: result.filePath,
+    configFileDependencies: result.dependencies,
   };
+
+  defaultLogger.debug('configuration loaded from:', result.filePath);
+
+  return result;
 }

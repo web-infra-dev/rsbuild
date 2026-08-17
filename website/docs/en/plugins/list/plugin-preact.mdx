@@ -14,15 +14,19 @@ The Preact plugin provides support for Preact, integrating features such as JSX 
 
 ### Install plugin
 
-You can install the plugin using the following command:
+Run the following command:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-preact -D" />
 
+:::tip
+`@rsbuild/plugin-preact` v2 no longer supports Rsbuild 1.x. If your project uses Rsbuild 1.x, install `@rsbuild/plugin-preact@1` instead.
+:::
+
 ### Register plugin
 
-You can register the plugin in the `rsbuild.config.ts` file:
+Register the plugin in Rsbuild config:
 
 ```ts title="rsbuild.config.ts"
 import { pluginPreact } from '@rsbuild/plugin-preact';
@@ -32,7 +36,7 @@ export default {
 };
 ```
 
-After registering the plugin, you can directly develop Preact.
+After registration, you can develop Preact directly.
 
 ## Options
 
@@ -65,30 +69,43 @@ pluginPreact({
 });
 ```
 
-### include
+### preactRefreshOptions
 
-Include files to be processed by the [@rspack/plugin-preact-refresh](https://github.com/rstackjs/rspack-plugin-preact-refresh) plugin. The value is the same as the [rules[].test](https://rspack.rs/config/module-rules#rulestest) option in Rspack.
+Set the options for [@rspack/plugin-preact-refresh](https://github.com/rstackjs/rspack-plugin-preact-refresh). The value is passed to the Rspack plugin, and `preactPath` is automatically configured by Rsbuild.
 
-- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
-- **Default:** `/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/`
-- **Version:** `>= v1.1.0`
+- **Type:**
 
 ```ts
-pluginPreact({
-  include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/, /some-other-module/],
-});
+type PreactRefreshOptions = {
+  // @link https://rspack.rs/config/module-rules#condition
+  test?: Rspack.RuleSetCondition;
+  include?: Rspack.RuleSetCondition | null;
+  exclude?: Rspack.RuleSetCondition | null;
+  overlay?: {
+    module: string;
+  };
+};
 ```
 
-### exclude
+- **Default:**
 
-Exclude files from being processed by the [@rspack/plugin-preact-refresh](https://github.com/rstackjs/rspack-plugin-preact-refresh) plugin. The value is the same as the [rules[].exclude](https://rspack.rs/config/module-rules#rulesexclude) option in Rspack.
+The default value is the same as `@rspack/plugin-preact-refresh`:
 
-- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
-- **Default:** `/[\\/]node_modules[\\/]/`
-- **Version:** `>= v1.1.0`
+```js
+const defaultOptions = {
+  test: /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
+  exclude: /[\\/]node_modules[\\/]/,
+};
+```
+
+- **Example:**
 
 ```ts
 pluginPreact({
-  exclude: [/[\\/]node_modules[\\/]/, /some-other-module/],
+  preactRefreshOptions: {
+    test: /\.(?:jsx|tsx)$/,
+    include: /src/,
+    exclude: /node_modules/,
+  },
 });
 ```

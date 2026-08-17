@@ -14,7 +14,7 @@ Rsbuild 默认使用 SWC 编译，当内置的功能无法满足诉求、需要�
 
 ### 安装插件
 
-你可以通过如下的命令安装插件:
+执行以下命令安装插件：
 
 import { PackageManagerTabs } from '@theme';
 
@@ -22,7 +22,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### 注册插件
 
-你可以在 `rsbuild.config.ts` 文件中注册插件：
+在 Rsbuild 配置中注册插件：
 
 ```ts title="rsbuild.config.ts"
 import { pluginBabel } from '@rsbuild/plugin-babel';
@@ -58,7 +58,7 @@ export default {
 ```ts
 const defaultOptions = {
   babelrc: false,
-  compact: false,
+  compact: config.mode === 'production',
   configFile: false,
   plugins: [
     ['@babel/plugin-proposal-decorators', config.source.decorators],
@@ -200,6 +200,40 @@ pluginBabel({
 });
 ```
 
+##### modifyPresetEnvOptions
+
+- **类型：** `(options: PresetEnvOptions) => void`
+
+修改已有的 `@babel/preset-env` 预设选项。如果 `config.presets` 中不存在该预设，则该函数不会产生效果。
+
+```js
+pluginBabel({
+  babelLoaderOptions: (config, { addPresets, modifyPresetEnvOptions }) => {
+    addPresets(['@babel/preset-env']);
+    modifyPresetEnvOptions({
+      targets: ['chrome >= 107'],
+    });
+  },
+});
+```
+
+##### modifyPresetReactOptions
+
+- **类型：** `(options: PresetReactOptions) => void`
+
+修改已有的 `@babel/preset-react` 预设选项。如果 `config.presets` 中不存在该预设，则该函数不会产生效果。
+
+```js
+pluginBabel({
+  babelLoaderOptions: (config, { addPresets, modifyPresetReactOptions }) => {
+    addPresets(['@babel/preset-react']);
+    modifyPresetReactOptions({
+      runtime: 'automatic',
+    });
+  },
+});
+```
+
 ### include
 
 - **类型：** `string | RegExp | (string | RegExp)[]`
@@ -209,13 +243,11 @@ pluginBabel({
 
 由于 Babel 编译存在性能开销，通过 `include` 来匹配部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
 
-比如，只对 `.custom.js` 文件进行编译，并忽略 `node_modules` 下的文件：
+比如，只对 `.custom.js` 文件进行编译：
 
 ```js
 pluginBabel({
   include: /\.custom\.js$/,
-  // 建议 exclude node_modules 目录以提升构建性能
-  exclude: /[\\/]node_modules[\\/]/,
 });
 ```
 
@@ -234,6 +266,56 @@ pluginBabel({
 
 由于 Babel 编译存在性能开销，通过 `exclude` 来排除部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
 
+比如，忽略 `node_modules` 下的 `.js` 文件：
+
+```js
+pluginBabel({
+  // 排除 node_modules 下的 .js 文件以提升构建性能
+  exclude: /[\\/]node_modules[\\/].*\.js$/,
+});
+```
+
+### parallel
+
+- **类型：** `boolean`
+- **默认值：** `false`
+- **版本：** `>= 2.0.0`
+
+是否使用 worker 线程并行执行 Babel 转换。开启后，JavaScript 模块会被分配到多个 worker 线程中处理，降低主线程压力，并在编译大量模块时提升整体构建性能。
+
+```ts
+pluginBabel({
+  parallel: true,
+});
+```
+
+> 该功能基于 Rspack 的 parallel loader 实现。传递给 worker 线程的选项必须符合 [HTML 结构化克隆算法](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist) 的要求，否则会传输失败。例如，不能将函数作为选项传递。详见 [Rspack - Rule.use.parallel](https://rspack.rs/zh/config/module-rules#rulesuseparallel)。
+
+## 注册多个插件
+
+通过使用 `include` 和 `exclude` 选项，你可以注册多个 `@rsbuild/plugin-babel` 实例，并为不同文件创建独立的 Babel 规则。
+
+例如：
+
+```ts
+export default {
+  plugins: [
+    pluginBabel({
+      exclude: /\.legacy\.js$/,
+      babelLoaderOptions: {
+        plugins: ['babel-plugin-modern'],
+      },
+    }),
+    pluginBabel({
+      include: /\.legacy\.js$/,
+      babelLoaderOptions: {
+        plugins: ['babel-plugin-legacy'],
+      },
+    }),
+  ],
+};
+```
+
 ## 执行顺序
 
 使用 `@rsbuild/plugin-babel` 后，Rsbuild 会使用 `babel-loader` 和 `builtin:swc-loader` 分别对 JavaScript 文件进行编译，且 Babel 的执行时机早于 SWC。
@@ -248,6 +330,83 @@ pluginBabel({
     plugins: ['@babel/plugin-transform-private-methods'],
   },
 });
+```
+
+## 使用指南
+
+### 使用 React Compiler \{#use-react-compiler}
+
+本节介绍如何通过 Babel 插件启用 React Compiler。这是一个可选方案，主要适合维护已有 Babel 配置、使用较旧版本的 Rsbuild，或需要基于 Babel 插件进行自定义的场景。对于大多数项目，更推荐使用 Rust 版本的 React Compiler，详见 [React Compiler 指南](/guide/framework/react#react-compiler)。
+
+通过 Babel 插件使用 React Compiler 的步骤如下：
+
+1. 升级 `react` 和 `react-dom` 版本到 19。如果你暂时无法升级，可以在 React 17 或 18 项目中安装 [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime)，以允许编译后的代码在 19 之前的版本上运行。
+2. 安装 [@rsbuild/plugin-babel](/plugins/list/plugin-babel) 和 [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler)。
+3. 在你的 Rsbuild 配置文件中注册 Babel 插件：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact(),
+    pluginBabel({
+      include: /\.[jt]sx?$/,
+      exclude: [/[\\/]node_modules[\\/]/],
+      babelLoaderOptions(opts) {
+        opts.plugins ??= [];
+        opts.plugins.unshift('babel-plugin-react-compiler');
+      },
+    }),
+  ],
+});
+```
+
+:::tip
+`include` 使用 `/\.[jt]sx?$/` 来匹配 `.js`、`.jsx`、`.ts` 和 `.tsx` 文件。这样可以确保 React Compiler 能够优化组件和[自定义 Hooks](https://zh-hans.react.dev/learn/reusing-logic-with-custom-hooks)，因为自定义 Hooks 通常定义在 `.ts` 文件中。`exclude` 中的 `node_modules` 可以防止编译器处理第三方依赖。
+
+如果你只想编译 JSX/TSX 文件，可以使用 `include: /\.(?:jsx|tsx)$/`，但 `.ts` 文件中的自定义 Hooks 将不会被优化。
+:::
+
+> 你也可以参考 [示例项目](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/react-compiler-babel)。
+
+#### 配置 React Compiler
+
+通过 Babel 配置 React Compiler 时，可以将编译选项传给 `babel-plugin-react-compiler`：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+const ReactCompilerConfig = {/* ... */};
+
+export default defineConfig({
+  plugins: [
+    pluginReact(),
+    pluginBabel({
+      include: /\.[jt]sx?$/,
+      exclude: [/[\\/]node_modules[\\/]/],
+      babelLoaderOptions(opts) {
+        opts.plugins ??= [];
+        opts.plugins.unshift([
+          'babel-plugin-react-compiler',
+          ReactCompilerConfig,
+        ]);
+      },
+    }),
+  ],
+});
+```
+
+对于 React 17 和 18 的项目，除了安装 [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime)，还需要指定 `target`：
+
+```ts title="rsbuild.config.ts"
+const ReactCompilerConfig = {
+  target: '18', // '17' | '18' | '19'
+};
 ```
 
 ## 调试配置

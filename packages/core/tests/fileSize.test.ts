@@ -14,6 +14,8 @@ describe('plugin-file-size', () => {
     ).toBeTruthy();
     expect(excludeAsset({ name: 'dist/a.png', size: 1000 })).toBeFalsy();
     expect(excludeAsset({ name: 'dist/a.d.ts', size: 1000 })).toBeTruthy();
+    expect(excludeAsset({ name: 'dist/a.d.mts', size: 1000 })).toBeTruthy();
+    expect(excludeAsset({ name: 'dist/a.d.cts', size: 1000 })).toBeTruthy();
   });
 
   describe('#normalizeFilePath', () => {

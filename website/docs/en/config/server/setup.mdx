@@ -99,9 +99,9 @@ type ServerSetupContext =
 
 ## Middleware execution order
 
-When `server.setup` is called, the default middleware of Rsbuild are not registered yet, so the middleware you add will run before the default middleware.
+When `server.setup` is called, the default Rsbuild middlewares are not registered yet, so the middleware you add will run before the default middlewares.
 
-`server.setup` allows you to return a callback function, which will be called when the default middleware of Rsbuild are registered. The middleware you register in the callback function will run after the default middleware.
+`server.setup` allows you to return a callback function, which will be called when the default Rsbuild middlewares are registered. The middleware you register in the callback function will run after the default middlewares.
 
 ```ts title="rsbuild.config.ts"
 export default {

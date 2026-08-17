@@ -1,4 +1,5 @@
-import { expect, getRandomPort, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getRandomPort } from '@rstackjs/test-utils';
 import { createAdaptorServer } from '@hono/node-server';
 import { Hono } from 'hono';
 
@@ -35,32 +36,34 @@ test('should proxy SSE request', async ({ dev, page }) => {
     server.listen(ssePort, () => resolve());
   });
 
-  const sseUrl = `http://localhost:${rsbuild.port}/api/sse`;
+  try {
+    const sseUrl = `http://localhost:${rsbuild.port}/api/sse`;
 
-  const result = await page.evaluate(async (url) => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const result = await page.evaluate(async (url) => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-    try {
-      const response = await fetch(url, { signal: controller.signal });
-      const reader = response.body!.getReader();
-      const { value } = await reader.read();
-      const text = new TextDecoder().decode(value);
+      try {
+        const response = await fetch(url, { signal: controller.signal });
+        const reader = response.body!.getReader();
+        const { value } = await reader.read();
+        const text = new TextDecoder().decode(value);
 
-      return {
-        ok: response.ok,
-        contentType: response.headers.get('content-type'),
-        text,
-      };
-    } finally {
-      clearTimeout(timeoutId);
-    }
-  }, sseUrl);
+        return {
+          ok: response.ok,
+          contentType: response.headers.get('content-type'),
+          text,
+        };
+      } finally {
+        clearTimeout(timeoutId);
+      }
+    }, sseUrl);
 
-  expect(result.ok).toBe(true);
-  expect(result.contentType).toBe('text/event-stream');
-  expect(result.text).toContain('Hello SSE1');
-  expect(result.text).toContain('Hello SSE2');
-
-  server.close();
+    expect(result.ok).toBe(true);
+    expect(result.contentType).toBe('text/event-stream');
+    expect(result.text).toContain('Hello SSE1');
+    expect(result.text).toContain('Hello SSE2');
+  } finally {
+    server.close();
+  }
 });

@@ -69,6 +69,11 @@ export const INLINE_QUERY_REGEX: RegExp = /[?&]inline(?:&|=|$)/;
  * Matches patterns like: `?url`, `?url&other=value`, `?other=value&url`, `?url=value`
  */
 export const URL_QUERY_REGEX: RegExp = /[?&]url(?:&|=|$)/;
+/**
+ * Regular expression to match the 'worker' query parameter.
+ * Matches patterns like: `?worker`, `?worker&inline`, `?inline&worker`, `?worker=value`
+ */
+export const WORKER_QUERY_REGEX: RegExp = /[?&]worker(?:&|=|$)/;
 export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 
 // Plugins
@@ -84,6 +89,7 @@ export const FONT_EXTENSIONS: string[] = [
   'otf',
   'ttc',
 ];
+export const ASSET_EXTENSIONS: string[] = ['webmanifest', 'pdf', 'txt'];
 export const IMAGE_EXTENSIONS: string[] = [
   'png',
   'jpg',
@@ -100,6 +106,7 @@ export const IMAGE_EXTENSIONS: string[] = [
   'tiff',
   'jfif',
   'cur',
+  'jxl',
 ];
 export const VIDEO_EXTENSIONS: string[] = ['mp4', 'webm', 'ogg', 'mov'];
 export const AUDIO_EXTENSIONS: string[] = [
@@ -110,6 +117,7 @@ export const AUDIO_EXTENSIONS: string[] = [
   'm4a',
   'opus',
 ];
+export const TRACK_EXTENSIONS: string[] = ['vtt'];
 
 export const LAZY_COMPILATION_IDENTIFIER = 'lazy-compilation-proxy';
 

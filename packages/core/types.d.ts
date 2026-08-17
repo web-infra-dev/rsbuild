@@ -11,7 +11,7 @@
  * }
  * ```
  */
-// rslint-disable-next-line @typescript-eslint/no-empty-interface
+// rslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface RsbuildTypeOptions {}
 
 /**
@@ -45,6 +45,15 @@ interface ImportMetaEnv extends Record<ImportMetaEnvFallbackKey, any> {
    * }
    */
   PROD: boolean;
+  /**
+   * Whether the current build is for the server (SSR).
+   * If `output.target` is `'node'`, the value is `true`; otherwise, it is `false`.
+   * @example
+   * if (import.meta.env.SSR) {
+   *   console.log('SSR build');
+   * }
+   */
+  SSR: boolean;
   /**
    * The value of the `server.base` configuration.
    * @example
@@ -142,6 +151,10 @@ declare module '*.cur' {
   const src: string;
   export default src;
 }
+declare module '*.jxl' {
+  const src: string;
+  export default src;
+}
 
 /**
  * Font assets
@@ -214,6 +227,26 @@ declare module '*.opus' {
   const src: string;
   export default src;
 }
+declare module '*.vtt' {
+  const src: string;
+  export default src;
+}
+
+/**
+ * Other assets
+ */
+declare module '*.webmanifest' {
+  const src: string;
+  export default src;
+}
+declare module '*.pdf' {
+  const src: string;
+  export default src;
+}
+declare module '*.txt' {
+  const src: string;
+  export default src;
+}
 
 /**
  * @requires [@rsbuild/plugin-yaml](https://npmjs.com/package/@rsbuild/plugin-yaml)
@@ -250,6 +283,39 @@ declare module '*.toml' {
 declare module '*?url' {
   const content: string;
   export default content;
+}
+
+/**
+ * Imports the file as a Web Worker constructor.
+ * @example
+ * import MyWorker from './worker.ts?worker';
+ * const worker = new MyWorker();
+ */
+declare module '*?worker' {
+  const WorkerConstructor: {
+    new (options?: { name?: string }): Worker;
+  };
+  export default WorkerConstructor;
+}
+
+/**
+ * Imports the file as an inline Web Worker constructor.
+ * @example
+ * import MyWorker from './worker.ts?worker&inline';
+ * const worker = new MyWorker();
+ */
+declare module '*?worker&inline' {
+  const WorkerConstructor: {
+    new (options?: { name?: string }): Worker;
+  };
+  export default WorkerConstructor;
+}
+
+declare module '*?inline&worker' {
+  const WorkerConstructor: {
+    new (options?: { name?: string }): Worker;
+  };
+  export default WorkerConstructor;
 }
 
 /**

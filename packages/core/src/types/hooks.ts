@@ -10,7 +10,12 @@ import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
-import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
+import type {
+  BuildOptions,
+  RsbuildEntry,
+  RsbuildTarget,
+  StartDevServerOptions,
+} from './rsbuild';
 import type { Rspack } from './rspack';
 import type { HtmlRspackPlugin } from './thirdParty';
 import type { MaybePromise } from './utils';
@@ -151,6 +156,47 @@ export type OnAfterCreateCompilerFn<
 
 export type OnExitFn = (context: { exitCode: number }) => void;
 
+export type WatchFileEvent = 'add' | 'change' | 'unlink';
+
+export type RestartContext = {
+  /**
+   * The absolute path of the file that triggered the restart.
+   * It is undefined when the restart is manually triggered.
+   */
+  filePath?: string;
+  /**
+   * The file event that triggered the restart.
+   * It is undefined when the restart is manually triggered.
+   */
+  event?: WatchFileEvent;
+} & (
+  | {
+      /**
+       * The current Rsbuild action being restarted.
+       */
+      action: 'build';
+      /**
+       * The options passed to `rsbuild.build()`.
+       */
+      options: BuildOptions;
+    }
+  | {
+      /**
+       * The current Rsbuild action being restarted.
+       */
+      action: 'dev';
+      /**
+       * The options passed to `rsbuild.startDevServer()`.
+       */
+      options: StartDevServerOptions;
+    }
+);
+
+/** Restart the current Rsbuild task and return whether the restart succeeded. */
+export type RestartFn = (context: RestartContext) => MaybePromise<boolean>;
+
+export type OnRestartFn = (context: RestartContext) => MaybePromise<void>;
+
 export type ModifyHTMLContext = {
   /**
    * The Compilation object of Rspack.
@@ -270,8 +316,8 @@ export type EnvironmentContext = {
   manifest?: Record<string, unknown> | ManifestData;
   /**
    * WebSocket authentication token, used to authenticate WebSocket connections and
-   * prevent unauthorized access. Only available in the development mode, and is
-   * an empty string in the production mode.
+   * prevent unauthorized access. It contains a token when running the `dev` action
+   * and is an empty string for other actions.
    */
   webSocketToken: string;
 };

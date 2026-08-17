@@ -1,5 +1,3 @@
-import { cpSync } from 'node:fs';
-import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
 type CheckResult = {
@@ -10,21 +8,13 @@ type CheckResult = {
   loadBundleUndefinedType: string;
 };
 
-test.beforeAll(() => {
-  cpSync(
-    join(import.meta.dirname, '_node_modules'),
-    join(import.meta.dirname, 'node_modules'),
-    {
-      force: true,
-      recursive: true,
-    },
-  );
-});
-
 test('should align loadBundle ESM default import with native Node.js', async ({
+  copyNodeModules,
   devOnly,
   request,
 }) => {
+  await copyNodeModules();
+
   const rsbuild = await devOnly();
   const response = await request.get(`http://localhost:${rsbuild.port}/check`);
 

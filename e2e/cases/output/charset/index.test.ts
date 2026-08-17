@@ -1,4 +1,5 @@
-import { expect, getFileContent, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
+import { getFileContent } from '@rstackjs/test-utils';
 
 const utf8Str = `你好 world! I'm 🦀`;
 const asciiStr = `\\u{4F60}\\u{597D} world! I'm \\u{1F980}`;
@@ -10,7 +11,7 @@ const expectedObject = {
   ð: 'd',
   þ: 'o',
   Д: 'A',
-  '𝒩': 'a',
+  𝒩: 'a',
 };
 
 test('should set output.charset to ascii', async ({ page, runBothServe }) => {

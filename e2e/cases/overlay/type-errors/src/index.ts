@@ -1,5 +1,5 @@
 // This is a type error
-let num = 1;
-num = '2';
+let num: number;
+num = '2'; // rslint-disable-line prefer-const -- intentional type-error fixture
 
 console.log(num);

@@ -6,6 +6,9 @@ exports[`plugin-output > should allow customizing filename hash format with obje
   "chunkFilename": "static/js/async/[name].[contenthash:16].js",
   "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
   "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "environment": {
+    "const": false,
+  },
   "filename": "static/js/[name].[contenthash:16].js",
   "path": "<ROOT>/dist",
   "publicPath": "/",
@@ -39,6 +42,9 @@ exports[`plugin-output > should allow disabling filename hash with object config
   "chunkFilename": "static/js/async/[name].js",
   "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
   "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "environment": {
+    "const": false,
+  },
   "filename": "static/js/[name].js",
   "path": "<ROOT>/dist",
   "publicPath": "/",
@@ -52,6 +58,9 @@ exports[`plugin-output > should allow enabling filename hash in development mode
   "chunkFilename": "static/js/async/[name].[contenthash:10].js",
   "devtoolFallbackModuleFilenameTemplate": [Function],
   "devtoolModuleFilenameTemplate": [Function],
+  "environment": {
+    "const": false,
+  },
   "filename": "static/js/[name].[contenthash:10].js",
   "path": "<ROOT>/dist",
   "publicPath": "/",
@@ -65,6 +74,9 @@ exports[`plugin-output > should allow setting distPath.js and distPath.css to em
   "chunkFilename": "async/[name].js",
   "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
   "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "environment": {
+    "const": false,
+  },
   "filename": "[name].js",
   "path": "<ROOT>/dist",
   "publicPath": "/",
@@ -112,6 +124,9 @@ exports[`plugin-output > should allow using filename.js to modify filename 1`] =
   "chunkFilename": "static/js/async/foo.js",
   "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
   "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "environment": {
+    "const": false,
+  },
   "filename": "static/js/foo.js",
   "path": "<ROOT>/dist",
   "publicPath": "/",
@@ -145,6 +160,9 @@ exports[`plugin-output > should set output correctly 1`] = `
   "chunkFilename": "static/js/async/[name].js",
   "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
   "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "environment": {
+    "const": false,
+  },
   "filename": "static/js/[name].js",
   "path": "<ROOT>/dist",
   "publicPath": "/",

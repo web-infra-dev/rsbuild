@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "build": "rsbuild build",
-    "dev": "rsbuild --open",
+    "dev": "rsbuild",
     "preview": "rsbuild preview"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.3",
+    "@rsbuild/core": "^2.1.13",
+    "@types/node": "^24.13.3",
     "typescript": "^6.0.3"
   }
 }

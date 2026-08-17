@@ -30,31 +30,30 @@ Use one of the following installation guides to set up a runtime:
 
 ## Create an Rsbuild application
 
-Use [create-rsbuild](https://www.npmjs.com/package/create-rsbuild) to create a new Rsbuild application. Run the following command:
+[create-rsbuild](https://www.npmjs.com/package/create-rsbuild) lets you quickly create an Rsbuild application. We recommend using [pnpm](https://pnpm.io/) as your package manager.
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs
   command={{
+    pnpm: 'pnpm create rsbuild@latest',
     npm: 'npm create rsbuild@latest',
     yarn: 'yarn create rsbuild',
-    pnpm: 'pnpm create rsbuild@latest',
     bun: 'bun create rsbuild@latest',
     deno: 'deno init --npm rsbuild@latest',
   }}
 />
 
-Follow the prompts to choose options, such as whether to add optional tools like TypeScript and ESLint.
+Follow the prompts to complete the setup.
 
 After creating the application, do the following:
 
-- Run `git init` to initialize a Git repository.
-- Run `npm install` (or your package manager's install command) to install dependencies.
-- Run `npm run dev` to start the dev server, which runs on `http://localhost:3000` by default.
+- Run `pnpm install` (or your package manager's install command) to install dependencies.
+- Run `pnpm run dev` to start the [dev server](/guide/basic/server).
 
 ### Templates
 
-When creating an application, you can choose from the following templates provided by `create-rsbuild`:
+When creating an application, choose from the following templates provided by `create-rsbuild`:
 
 | Template | Official docs                   | Rsbuild integration guide               |
 | -------- | ------------------------------- | --------------------------------------- |
@@ -75,16 +74,16 @@ When creating an application, you can choose from the following templates provid
 
 `create-rsbuild` can help you set up the following commonly used tools. Use the arrow keys to navigate and the space bar to select. Press Enter without selecting anything to skip these tools.
 
-| Tool                                                    | Use                                        |
-| ------------------------------------------------------- | ------------------------------------------ |
-| [Rstest](https://github.com/web-infra-dev/rstest)       | Testing                                    |
-| [Rslint](https://github.com/web-infra-dev/rslint)       | Linting                                    |
-| [ESLint](https://github.com/eslint/eslint)              | Linting                                    |
-| [Prettier](https://github.com/prettier/prettier)        | Formatting                                 |
-| [Biome](https://github.com/biomejs/biome)               | Linting and formatting                     |
-| [Storybook](https://storybook.js.org/)                  | Component development                      |
-| [Tailwind CSS](https://tailwindcss.com)                 | Styling                                    |
-| [React Compiler](/guide/framework/react#react-compiler) | Optimizing React apps, React template only |
+| Tool                                                    | Use                                          |
+| ------------------------------------------------------- | -------------------------------------------- |
+| [Rstest](https://github.com/web-infra-dev/rstest)       | Testing                                      |
+| [Rslint](https://github.com/web-infra-dev/rslint)       | Linting                                      |
+| [ESLint](https://github.com/eslint/eslint)              | Linting                                      |
+| [Prettier](https://github.com/prettier/prettier)        | Formatting                                   |
+| [Biome](https://github.com/biomejs/biome)               | Linting and formatting                       |
+| [Storybook](https://storybook.js.org/)                  | Component development                        |
+| [Tailwind CSS](https://tailwindcss.com)                 | Styling                                      |
+| [React Compiler](/guide/framework/react#react-compiler) | Optimizing React apps (React templates only) |
 
 ### Current directory
 
@@ -113,31 +112,45 @@ npx -y create-rsbuild@latest my-app --template react
 npx -y create-rsbuild@latest my-app -t react
 
 # Specify multiple tools
-npx -y create-rsbuild@latest my-app -t react --tools eslint,prettier
+npx -y create-rsbuild@latest my-app -t react --tools rslint,prettier
 ```
 
 All CLI flags supported by `create-rsbuild`:
 
-```
+```text wrapCode
 Usage: create-rsbuild [dir] [options]
 
 Options:
+  -h, --help                display help for command
+  -d, --dir <dir>           create project in specified directory
+  -t, --template <tpl>      specify the template to use
+  --no-git                  skip Git repository initialization
+  --tools <tool>            add additional tools, comma separated
+  --skill <skill>           add optional skills, comma separated
+  --override                override files in target directory
+  --package-name <name>     specify the package name
+  --template-version <ver>  specify the npm template version
 
-  -h, --help            display help for command
-  -d, --dir <dir>       create project in specified directory
-  -t, --template <tpl>  specify the template to use
-  --tools <tool>        add additional tools, comma separated
-  --override            override files in target directory
-  --packageName <name>  specify the package name
+Available templates: vanilla-js, vanilla-ts, react-js, react-ts, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts
 
-Templates:
+Optional tools: react-compiler, rstest, eslint, rslint, biome, prettier, tailwindcss, storybook
 
-  react-js, react-ts, vue-js, vue-ts, svelte-js, svelte-ts,
-  solid-js, solid-ts, vanilla-js, vanilla-ts
-
-Optional tools:
-  react-compiler, rstest, biome, eslint, prettier, tailwindcss, storybook
+Optional skills: rsbuild-best-practices, rstest-best-practices, vercel-react-best-practices
 ```
+
+## Use Rsbuild in monorepos
+
+The following monorepo tools provide Rsbuild integrations or examples for creating and managing Rsbuild applications in a workspace.
+
+- [Nx](https://nx.dev/docs/technologies/build-tools/rsbuild/introduction) supports Rsbuild through the `@nx/rsbuild` plugin, including generators and executors for Nx workspaces.
+- [Turborepo](https://turborepo.dev/docs/guides/frameworks/rsbuild) provides examples and guides for creating Rsbuild applications and using Rsbuild with Module Federation.
+
+## Full-stack frameworks
+
+If your application needs full-stack capabilities, you can directly use a full-stack framework built on Rsbuild, such as [TanStack Start](https://tanstack.com/start/latest) or [Modern.js](https://github.com/web-infra-dev/modern.js). These frameworks build on Rsbuild and add higher-level application features, such as SSR and routing.
+
+- [React full-stack frameworks](/guide/framework/react#full-stack-frameworks)
+- [Solid full-stack frameworks](/guide/framework/solid#full-stack-frameworks)
 
 ## Migrate from existing projects
 
@@ -159,7 +172,7 @@ If your project doesn't match the above migration guides, you can manually insta
 After installation, use the following documents to configure your project:
 
 - See [CLI](/guide/basic/cli) to learn about available CLI commands.
-- See [Plugin List](/plugins/list/index) to select Rsbuild plugins.
+- See [Plugin list](/plugins/list/index) to select Rsbuild plugins.
 - See [Configure Rsbuild](/guide/configuration/rsbuild) to configure Rsbuild.
 
 ## CLI
@@ -183,7 +196,7 @@ Refer to the [CLI](/guide/basic/cli) to learn about all available commands and o
 
 ## Entry module
 
-By default, Rsbuild CLI uses `src/index.(js|ts|jsx|tsx)` as the entry module. You can modify the entry module using the [source.entry](/config/source/entry) option.
+By default, Rsbuild CLI auto-detects `src/index.(ts|js|tsx|jsx|mts|cts|mjs|cjs)` as the entry module. You can modify the entry module using the [source.entry](/config/source/entry) option.
 
 ```ts title="rsbuild.config.ts"
 export default {

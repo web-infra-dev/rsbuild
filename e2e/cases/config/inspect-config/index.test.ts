@@ -1,17 +1,13 @@
 import fs from 'node:fs';
-import path, { join } from 'node:path';
+import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { createRsbuild } from '@rsbuild/core';
-import fse from 'fs-extra';
+import { rs } from 'rstack/test';
 
-test.afterAll(() => {
-  const files = fs.readdirSync(import.meta.dirname);
-  for (const file of files) {
-    if (file.startsWith('test-temp') || file.startsWith('dist')) {
-      fse.removeSync(join(import.meta.dirname, file));
-    }
-  }
+test.afterEach(async ({ prepareDist }) => {
+  await prepareDist();
+  await prepareDist('test-temp-output');
 });
 
 const rsbuildConfig = path.resolve(
@@ -23,7 +19,7 @@ const rsbuildNodeConfig = path.resolve(
   import.meta.dirname,
   './dist/.rsbuild/rsbuild.config.node.mjs',
 );
-const bundlerConfig = path.resolve(
+const rspackConfig = path.resolve(
   import.meta.dirname,
   `./dist/.rsbuild/rspack.config.web.mjs`,
 );
@@ -46,12 +42,9 @@ test('should generate config files when writeToDisk is true', async ({
     writeToDisk: true,
   });
 
-  expect(fs.existsSync(bundlerConfig)).toBeTruthy();
+  expect(fs.existsSync(rspackConfig)).toBeTruthy();
   expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
   await expectLog(INSPECT_LOG);
-
-  await fse.remove(rsbuildConfig);
-  await fse.remove(bundlerConfig);
 });
 
 test('should generate config files correctly when output is specified', async ({
@@ -67,7 +60,7 @@ test('should generate config files correctly when output is specified', async ({
     outputPath: 'foo',
   });
 
-  const bundlerConfig = path.resolve(
+  const rspackConfig = path.resolve(
     import.meta.dirname,
     `./dist/foo/rspack.config.web.mjs`,
   );
@@ -77,12 +70,9 @@ test('should generate config files correctly when output is specified', async ({
     './dist/foo/rsbuild.config.mjs',
   );
 
-  expect(fs.existsSync(bundlerConfig)).toBeTruthy();
+  expect(fs.existsSync(rspackConfig)).toBeTruthy();
   expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
   await expectLog(INSPECT_LOG);
-
-  await fse.remove(rsbuildConfig);
-  await fse.remove(bundlerConfig);
 });
 
 test('should generate bundler config for node when target contains node', async ({
@@ -108,14 +98,9 @@ test('should generate bundler config for node when target contains node', async 
   });
 
   expect(fs.existsSync(rsbuildNodeConfig)).toBeTruthy();
-  expect(fs.existsSync(bundlerConfig)).toBeTruthy();
+  expect(fs.existsSync(rspackConfig)).toBeTruthy();
   expect(fs.existsSync(bundlerNodeConfig)).toBeTruthy();
   await expectLog(INSPECT_LOG);
-
-  await fse.remove(rsbuildConfig);
-  await fse.remove(rsbuildNodeConfig);
-  await fse.remove(bundlerConfig);
-  await fse.remove(bundlerNodeConfig);
 });
 
 test('should not generate config files when writeToDisk is false', async () => {
@@ -127,7 +112,49 @@ test('should not generate config files when writeToDisk is false', async () => {
   });
 
   expect(fs.existsSync(rsbuildConfig)).toBeFalsy();
-  expect(fs.existsSync(bundlerConfig)).toBeFalsy();
+  expect(fs.existsSync(rspackConfig)).toBeFalsy();
+});
+
+test('should apply mode before generating configs', async () => {
+  using env = rs.stubEnv('NODE_ENV', undefined);
+
+  const developmentRsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  const developmentResult = await developmentRsbuild.inspectConfig();
+
+  expect(developmentResult.origin.rsbuildConfig.mode).toBe('development');
+  expect(developmentResult.origin.bundlerConfigs[0].mode).toBe('development');
+
+  env.stubEnv('NODE_ENV', 'staging');
+
+  const unknownEnvRsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  const unknownEnvResult = await unknownEnvRsbuild.inspectConfig();
+
+  expect(unknownEnvResult.origin.rsbuildConfig.mode).toBe('none');
+  expect(unknownEnvResult.origin.bundlerConfigs[0].mode).toBe('none');
+
+  const noneRsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  const noneResult = await noneRsbuild.inspectConfig({
+    mode: 'none',
+  });
+
+  expect(noneResult.origin.rsbuildConfig.mode).toBe('none');
+  expect(noneResult.origin.bundlerConfigs[0].mode).toBe('none');
+
+  const productionRsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  const productionResult = await productionRsbuild.inspectConfig({
+    mode: 'production',
+  });
+
+  expect(productionResult.origin.rsbuildConfig.mode).toBe('production');
+  expect(productionResult.origin.bundlerConfigs[0].mode).toBe('production');
 });
 
 test('should allow to specify absolute output path', async ({ logHelper }) => {
@@ -148,8 +175,6 @@ test('should allow to specify absolute output path', async ({ logHelper }) => {
   expect(
     fs.existsSync(path.join(outputPath, 'rspack.config.web.mjs')),
   ).toBeTruthy();
-
-  await fse.remove(rsbuildConfig);
 });
 
 test('should generate extra config files', async ({ logHelper }) => {
@@ -174,10 +199,10 @@ test('should generate extra config files', async ({ logHelper }) => {
 
   expect(fs.existsSync(rstestConfig)).toBeTruthy();
   await expectLog('Rstest Config:');
-  await fse.remove(rstestConfig);
 });
 
 test('should apply plugin correctly', async () => {
+  using env = rs.stubEnv('NODE_ENV', undefined);
   let servePluginApplied = false;
   let buildPluginApplied = false;
 
@@ -200,7 +225,6 @@ test('should apply plugin correctly', async () => {
   const rsbuild1 = await createRsbuild({
     cwd: import.meta.dirname,
     config: {
-      mode: 'development',
       plugins: [servePlugin, buildPlugin],
     },
   });
@@ -210,6 +234,7 @@ test('should apply plugin correctly', async () => {
   expect(buildPluginApplied).toBe(false);
 
   servePluginApplied = false;
+  env.stubEnv('NODE_ENV', 'development');
 
   const rsbuild2 = await createRsbuild({
     cwd: import.meta.dirname,

@@ -9,7 +9,16 @@ enum TracePreset {
   ALL = 'ALL', // contains all trace events
 }
 
-function resolveLayer(value: TracePreset): string {
+type TraceLayer = 'perfetto' | 'logger';
+
+const DEFAULT_RUST_TRACE_LOGGER_OUTPUT = 'rspack.log';
+const DEFAULT_RUST_TRACE_PERFETTO_OUTPUT = 'rspack.pftrace';
+
+function isTerminalTraceOutput(output: string) {
+  return output === 'stdout' || output === 'stderr';
+}
+
+function resolveLayer(value: string): string {
   const overviewTraceFilter = 'info';
   const allTraceFilter = 'trace';
 
@@ -32,40 +41,51 @@ async function ensureFileDir(outputFilePath: string) {
  * `RSPACK_PROFILE=ALL` // all trace events
  * `RSPACK_PROFILE=OVERVIEW` // overview trace events
  * `RSPACK_PROFILE=warn,tokio::net=info` // trace filter from  https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.EnvFilter.html#example-syntax
+ * `RSPACK_TRACE_LAYER=perfetto` // requires the Rspack debug package
  */
 async function applyProfile(
   root: string,
-  filterValue: TracePreset,
-  traceLayer = 'perfetto',
+  filterValue: string,
+  traceLayer: TraceLayer,
   traceOutput?: string,
 ) {
   if (traceLayer !== 'perfetto' && traceLayer !== 'logger') {
     throw new Error(`unsupported trace layer: ${traceLayer}`);
   }
 
+  if (
+    traceOutput &&
+    traceLayer === 'perfetto' &&
+    isTerminalTraceOutput(traceOutput)
+  ) {
+    throw new Error(
+      'RSPACK_TRACE_OUTPUT=stdout|stderr is only supported for the logger trace layer. The perfetto trace layer requires a file path.',
+    );
+  }
+
+  const timestamp = Date.now();
+  const defaultOutputDir = path.join(
+    root,
+    `.rspack-profile-${timestamp}-${process.pid}`,
+  );
+
   if (!traceOutput) {
-    const timestamp = Date.now();
-    const defaultOutputDir = path.join(
-      root,
-      `.rspack-profile-${timestamp}-${process.pid}`,
-    );
-    const defaultRustTracePerfettoOutput = path.join(
-      defaultOutputDir,
-      'rspack.pftrace',
-    );
-    const defaultRustTraceLoggerOutput = 'stdout';
-
-    const defaultTraceOutput =
+    const defaultRustTraceOutput =
       traceLayer === 'perfetto'
-        ? defaultRustTracePerfettoOutput
-        : defaultRustTraceLoggerOutput;
+        ? DEFAULT_RUST_TRACE_PERFETTO_OUTPUT
+        : DEFAULT_RUST_TRACE_LOGGER_OUTPUT;
 
-    traceOutput = defaultTraceOutput;
+    traceOutput = path.resolve(defaultOutputDir, defaultRustTraceOutput);
+  } else if (!isTerminalTraceOutput(traceOutput)) {
+    traceOutput = path.resolve(defaultOutputDir, traceOutput);
   }
 
   const filter = resolveLayer(filterValue);
 
-  await ensureFileDir(traceOutput);
+  if (!isTerminalTraceOutput(traceOutput)) {
+    await ensureFileDir(traceOutput);
+  }
+
   await rspack.experiments.globalTrace.register(
     filter,
     traceLayer,
@@ -76,12 +96,12 @@ async function applyProfile(
 }
 
 // Referenced from Rspack CLI
-// https://github.com/web-infra-dev/rspack/blob/v1.3.9/packages/rspack-cli/src/utils/profile.ts
+// https://github.com/web-infra-dev/rspack/blob/main/packages/rspack-cli/src/utils/profile.ts
 export const pluginRspackProfile = (): RsbuildPlugin => ({
   name: 'rsbuild:rspack-profile',
 
   setup(api) {
-    const { RSPACK_PROFILE } = process.env;
+    const { RSPACK_PROFILE, RSPACK_TRACE_LAYER = 'logger' } = process.env;
     if (!RSPACK_PROFILE) {
       return;
     }
@@ -91,8 +111,8 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     const onStart = async () => {
       traceOutput = await applyProfile(
         api.context.rootPath,
-        RSPACK_PROFILE as TracePreset,
-        process.env.RSPACK_TRACE_LAYER,
+        RSPACK_PROFILE,
+        RSPACK_TRACE_LAYER as TraceLayer,
         process.env.RSPACK_TRACE_OUTPUT,
       );
     };
@@ -110,7 +130,11 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
 
       rspack.experiments.globalTrace.cleanup();
-      api.logger.info(`profile file saved to ${color.cyan(traceOutput)}`);
+
+      if (!isTerminalTraceOutput(traceOutput)) {
+        const profileMessage = 'profile file saved to';
+        api.logger.info(`${profileMessage} ${color.cyan(traceOutput)}`);
+      }
     });
   },
 });

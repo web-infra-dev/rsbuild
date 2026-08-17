@@ -1,12 +1,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import {
-  expect,
-  getDistFiles,
-  getFileContent,
-  mapSourceMapPositions,
-  test,
-} from '@e2e/helper';
+import { expect, mapSourceMapPositions, test } from '@e2e/helper';
+import { getDistFiles, getFileContent } from '@rstackjs/test-utils';
 
 const expectSourceMap = async (files: Record<string, string>) => {
   const sourceCode = readFileSync(

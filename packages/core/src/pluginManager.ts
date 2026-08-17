@@ -29,9 +29,7 @@ function validatePlugin(plugin: unknown) {
       (plugin as Rspack.RspackPluginInstance).constructor || {};
 
     const messages = [
-      `${color.yellow(
-        name,
-      )} looks like a webpack or Rspack plugin, please use ${color.yellow(
+      `${color.yellow(name)} looks like a webpack or Rspack plugin, please use ${color.yellow(
         '`tools.rspack`',
       )} to register it:`,
       color.green(`
@@ -181,9 +179,7 @@ export const sortPluginsByDependencies = (
     const targets = plugins.filter((item) => item.instance.name === name);
     if (!targets.length) {
       throw new Error(
-        `${color.dim('[rsbuild:plugin]')} Plugin "${color.yellow(
-          name,
-        )}" not existed`,
+        `${color.dim('[rsbuild:plugin]')} Plugin "${color.yellow(name)}" not existed`,
       );
     }
     return targets;

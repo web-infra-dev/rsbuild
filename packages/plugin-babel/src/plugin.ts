@@ -1,21 +1,31 @@
-import fs from 'node:fs';
 import { createRequire } from 'node:module';
-import path, { isAbsolute, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { isAbsolute, join } from 'node:path';
 import type {
   EnvironmentContext,
   NormalizedEnvironmentConfig,
   RsbuildContext,
   RsbuildPlugin,
 } from '@rsbuild/core';
-import { applyUserBabelConfig, BABEL_JS_RULE, castArray } from './helper.js';
+import { applyUserBabelConfig, castArray, getBabelRuleId } from './helper.js';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
+const BABEL_LOADER_PATH = require.resolve('babel-loader');
+const { version: BABEL_LOADER_VERSION = '' } =
+  require('babel-loader/package.json') as {
+    version?: string;
+  };
 
 export const PLUGIN_BABEL_NAME = 'rsbuild:babel';
 const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
+
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-babel" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-babel" v1.`,
+    );
+  }
+}
 
 /**
  * The `@babel/preset-typescript` default options.
@@ -36,21 +46,16 @@ function getCacheDirectory(context: RsbuildContext, cacheDirectory?: string) {
       ? cacheDirectory
       : join(context.rootPath, cacheDirectory);
   }
-  return join(context.cachePath);
+  return context.cachePath;
 }
 
 async function getCacheIdentifier(options: BabelLoaderOptions) {
   let identifier = `${process.env.NODE_ENV}${JSON.stringify(options)}`;
 
   const { version: coreVersion } = await import('@babel/core');
-  const rawPkgJson = await fs.promises.readFile(
-    join(__dirname, '../compiled/babel-loader/package.json'),
-    'utf-8',
-  );
-  const loaderVersion: string = JSON.parse(rawPkgJson).version ?? '';
 
   identifier += `@babel/core@${coreVersion}`;
-  identifier += `babel-loader@${loaderVersion}`;
+  identifier += `babel-loader@${BABEL_LOADER_VERSION}`;
 
   return identifier;
 }
@@ -85,11 +90,9 @@ export function getDefaultBabelOptions(
     ],
   };
 
+  // Enable caching by default to improve performance
   const { buildCache = true } = config.performance;
-
-  // Rspack does not yet support persistent cache
-  // so we use babel-loader's cache to improve rebuild performance
-  if (buildCache && context.bundlerType === 'rspack') {
+  if (buildCache) {
     const cacheDirectory = getCacheDirectory(
       context,
       typeof buildCache === 'boolean' ? undefined : buildCache.cacheDirectory,
@@ -109,6 +112,8 @@ export const pluginBabel = (
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     const getBabelOptions = async (environment: EnvironmentContext) => {
       const { config } = environment;
       const baseOptions = getDefaultBabelOptions(config, api.context);
@@ -130,15 +135,11 @@ export const pluginBabel = (
       order: 'pre',
       handler: async (chain, { CHAIN_ID, environment }) => {
         const babelOptions = await getBabelOptions(environment);
-        const babelLoader = path.resolve(
-          __dirname,
-          '../compiled/babel-loader/index.js',
-        );
-        const { include, exclude } = options;
+        const { include, exclude, parallel = false } = options;
 
         if (include || exclude) {
           const rule = chain.module
-            .rule(BABEL_JS_RULE)
+            .rule(getBabelRuleId(chain))
             // run babel loader before the builtin JS rule
             // https://stackoverflow.com/questions/32234329/what-is-the-loader-order-for-webpack
             .after(CHAIN_ID.RULE.JS);
@@ -154,23 +155,31 @@ export const pluginBabel = (
             }
           }
 
-          rule
+          const loader = rule
             .test(SCRIPT_REGEX)
+            .dependency({ not: 'url' })
+            .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
+            .with({ type: { not: 'text' } })
             .use(CHAIN_ID.USE.BABEL)
-            .loader(babelLoader)
+            .loader(BABEL_LOADER_PATH)
             .options(babelOptions);
+
+          if (parallel) {
+            loader.parallel(true);
+          }
         } else {
-          // Compatibility for Rsbuild v1
-          const isV1 = api.context.version.startsWith('1.');
-          const jsRule = chain.module.rule(CHAIN_ID.RULE.JS).test(SCRIPT_REGEX);
-          const jsMainRule = isV1
-            ? jsRule
-            : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
-          jsMainRule
+          const loader = chain.module
+            .rule(CHAIN_ID.RULE.JS)
+            .test(SCRIPT_REGEX)
+            .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN)
             .use(CHAIN_ID.USE.BABEL)
             .after(CHAIN_ID.USE.SWC)
-            .loader(babelLoader)
+            .loader(BABEL_LOADER_PATH)
             .options(babelOptions);
+
+          if (parallel) {
+            loader.parallel(true);
+          }
         }
       },
     });

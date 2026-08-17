@@ -2,17 +2,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { enableDebugMode, expect, test } from '@e2e/helper';
 
-const getRsbuildConfig = (dist: string) =>
-  path.resolve(import.meta.dirname, `./${dist}/.rsbuild/rsbuild.config.mjs`);
+const getRsbuildConfig = (distPath: string) =>
+  path.join(distPath, '.rsbuild/rsbuild.config.mjs');
 
-const getBundlerConfig = (dist: string) =>
-  path.resolve(import.meta.dirname, `./${dist}/.rsbuild/rspack.config.web.mjs`);
+const getBundlerConfig = (distPath: string) =>
+  path.join(distPath, '.rsbuild/rspack.config.web.mjs');
 
 test('should generate config files in debug mode when build', async ({
   build,
+  prepareDist,
 }) => {
   const restore = enableDebugMode();
   const distRoot = 'dist-1';
+  const distPath = await prepareDist(distRoot);
   const rsbuild = await build({
     config: {
       output: {
@@ -21,8 +23,8 @@ test('should generate config files in debug mode when build', async ({
     },
   });
 
-  expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
-  expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
+  expect(fs.existsSync(getRsbuildConfig(distPath))).toBeTruthy();
+  expect(fs.existsSync(getBundlerConfig(distPath))).toBeTruthy();
 
   await rsbuild.expectLog('config inspection completed');
   await rsbuild.expectLog('creating compiler');
@@ -30,11 +32,13 @@ test('should generate config files in debug mode when build', async ({
 });
 
 test('should generate config files in debug mode when dev', async ({
+  prepareDist,
   page,
   dev,
 }) => {
   const restore = enableDebugMode();
   const distRoot = 'dist-2';
+  const distPath = await prepareDist(distRoot);
   const rsbuild = await dev({
     config: {
       output: {
@@ -44,8 +48,8 @@ test('should generate config files in debug mode when dev', async ({
     page,
   });
 
-  expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
-  expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
+  expect(fs.existsSync(getRsbuildConfig(distPath))).toBeTruthy();
+  expect(fs.existsSync(getBundlerConfig(distPath))).toBeTruthy();
 
   await rsbuild.expectLog('config inspection completed');
   await rsbuild.expectLog('creating compiler');

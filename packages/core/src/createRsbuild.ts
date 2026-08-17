@@ -18,6 +18,7 @@ import {
 } from './initConfigs';
 import { initPluginAPI } from './initPlugins';
 import { inspectConfig as baseInspectConfig } from './inspectConfig';
+import type { LoadConfigResult } from './loadConfig';
 import { type LoadEnvResult, loadEnv } from './loadEnv';
 import { createLogger, defaultLogger, isDebug } from './logger';
 import { createPluginManager } from './pluginManager';
@@ -52,6 +53,7 @@ import { pluginSri } from './plugins/sri';
 import { pluginSwc } from './plugins/swc';
 import { pluginTarget } from './plugins/target';
 import { pluginWasm } from './plugins/wasm';
+import { pluginWorker } from './plugins/worker';
 import { createDevServer as baseCreateDevServer } from './server/devServer';
 import { startPreviewServer } from './server/previewServer';
 import type {
@@ -71,7 +73,6 @@ import type {
   RsbuildPlugin,
   RsbuildPlugins,
   StartDevServer,
-  StartDevServerOptions,
 } from './types';
 
 function applyDefaultPlugins(
@@ -98,6 +99,7 @@ function applyDefaultPlugins(
     pluginCss(),
     pluginMinimize(),
     pluginProgress(),
+    pluginWorker(),
     pluginSwc(),
     pluginExternals(),
     pluginSplitChunks(),
@@ -136,7 +138,7 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
     ...(config.dev.watchFiles ? castArray(config.dev.watchFiles) : []),
     {
       paths: envs.filePaths,
-      type: 'reload-server',
+      type: 'restart',
     },
   ];
 
@@ -155,6 +157,16 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
   }
 }
 
+function isLoadConfigResult(result: unknown): result is LoadConfigResult {
+  return (
+    typeof result === 'object' &&
+    result !== null &&
+    'content' in result &&
+    'filePath' in result &&
+    'dependencies' in result
+  );
+}
+
 /**
  * Create an Rsbuild instance.
  */
@@ -169,9 +181,15 @@ export async function createRsbuild(
     : null;
 
   const configOrFactory = options.config ?? options.rsbuildConfig;
-  const config = isFunction(configOrFactory)
+  let config = isFunction(configOrFactory)
     ? await configOrFactory()
-    : configOrFactory || {};
+    : configOrFactory;
+  let loadConfigResult: LoadConfigResult | undefined;
+  if (isLoadConfigResult(config)) {
+    loadConfigResult = config;
+    config = config.content;
+  }
+  config ||= {};
 
   const logger =
     config.customLogger ??
@@ -199,7 +217,12 @@ export async function createRsbuild(
 
   const pluginManager = createPluginManager(logger);
 
-  const context = await createContext(resolvedOptions, config, logger);
+  const context = await createContext(
+    resolvedOptions,
+    config,
+    logger,
+    loadConfigResult,
+  );
 
   const getPluginAPI = initPluginAPI({ context, pluginManager });
   context.getPluginAPI = getPluginAPI;
@@ -251,29 +274,24 @@ export async function createRsbuild(
     return startPreviewServer(context, config, options);
   };
 
-  const build: Build = async (options) => {
+  const build: Build = async (options = {}) => {
     context.action = 'build';
 
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
 
-    const buildInstance = await baseBuild(
-      { context, pluginManager, rsbuildOptions: resolvedOptions },
-      options,
-    );
-    return {
-      ...buildInstance,
-      close: async () => {
-        await context.hooks.onCloseBuild.callBatch();
-        await buildInstance.close();
+    return baseBuild(
+      {
+        context,
+        pluginManager,
+        rsbuildOptions: resolvedOptions,
       },
-    };
+      { ...options },
+    );
   };
 
-  const startDevServer: StartDevServer = async (
-    options?: StartDevServerOptions,
-  ) => {
+  const startDevServer: StartDevServer = async (options = {}) => {
     context.action = 'dev';
 
     if (!getNodeEnv()) {
@@ -282,10 +300,14 @@ export async function createRsbuild(
 
     const config = await initRsbuildConfig({ context, pluginManager });
     const server = await baseCreateDevServer(
-      { context, pluginManager, rsbuildOptions: resolvedOptions },
+      {
+        context,
+        pluginManager,
+        rsbuildOptions: resolvedOptions,
+      },
       createCompiler,
       config,
-      options,
+      { ...options },
     );
 
     return server.listen();
@@ -307,29 +329,33 @@ export async function createRsbuild(
     );
   };
 
-  const initAction = () => {
+  const initAction = (mode: string | undefined = config.mode) => {
     if (!context.action) {
-      context.action = config.mode === 'development' ? 'dev' : 'build';
+      context.action = mode === 'development' ? 'dev' : 'build';
     }
   };
 
-  const inspectConfig: InspectConfig = async (inspectOptions) => {
-    initAction();
+  const inspectConfig: InspectConfig = async (inspectOptions = {}) => {
+    if (inspectOptions.mode) {
+      setNodeEnv(inspectOptions.mode);
+    } else if (!getNodeEnv()) {
+      setNodeEnv('development');
+    }
 
-    const bundlerConfigs = (
-      await baseInitConfigs({
-        context,
-        pluginManager,
-        rsbuildOptions: resolvedOptions,
-      })
-    ).rspackConfigs;
+    initAction(config.mode ?? getNodeEnv());
+
+    const { rspackConfigs } = await baseInitConfigs({
+      context,
+      pluginManager,
+      rsbuildOptions: resolvedOptions,
+    });
 
     return baseInspectConfig({
       context,
       pluginManager,
       rsbuildOptions: resolvedOptions,
       inspectOptions,
-      bundlerConfigs,
+      bundlerConfigs: rspackConfigs,
     });
   };
 
@@ -398,6 +424,7 @@ export async function createRsbuild(
       'onCloseDevServer',
       'onDevCompileDone',
       'onExit',
+      'onRestart',
     ]),
   };
 

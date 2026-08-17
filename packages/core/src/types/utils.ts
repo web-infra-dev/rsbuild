@@ -29,7 +29,3 @@ export type ConfigChainWithContext<T, Ctx> = OneOrMany<
 export type ConfigChainAsyncWithContext<T, Ctx> = OneOrMany<
   T | ((config: T, ctx: Ctx) => MaybePromise<T | void>)
 >;
-
-export type ConfigChainMergeContext<T, Ctx> = OneOrMany<
-  T | ((merged: { value: T } & Ctx) => T | void)
->;

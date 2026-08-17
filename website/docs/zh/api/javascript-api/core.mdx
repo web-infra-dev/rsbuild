@@ -40,15 +40,47 @@ type CreateRsbuildOptions = {
   callerName?: string;
   environment?: string[];
   loadEnv?: boolean | LoadEnvOptions;
-  config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  config?:
+    | RsbuildConfig
+    | LoadConfigResult
+    | (() => Promise<RsbuildConfig | LoadConfigResult>);
+  restart?: RestartFn;
 };
 ```
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
-- `callerName`：当前调用者的名称，默认值为 `'rsbuild'`，详见 [指定调用者名称](#指定调用者名称)。
+- `callerName`：当前调用者的名称，默认值为 `'rsbuild'`，详见 [指定调用者名称](#specify-caller-name)。
 - `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
 - `loadEnv`：是否调用 [loadEnv](/api/javascript-api/core#loadenv) 方法来加载环境变量，并通过 [source.define](/config/source/define) 定义为全局变量。
-- `config`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
+- `config`：Rsbuild 配置对象或 [`loadConfig`](#loadconfig) 返回的结果。参考 [配置总览](/config/) 查看所有可用的配置项。
+- `restart`：处理当前 dev server 或监听构建重启请求的函数，详见 [restart](#restart-handling)。
+
+### 传入配置
+
+你可以将 Rsbuild 配置对象传入 `config` 选项：
+
+```ts
+import { createRsbuild, type RsbuildConfig } from '@rsbuild/core';
+
+const config: RsbuildConfig = {
+  // Rsbuild configuration
+};
+
+const rsbuild = await createRsbuild({ config });
+```
+
+也可以将 [`loadConfig`](#loadconfig) 的完整返回结果传入 `config`：
+
+```ts
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const result = await loadConfig();
+const rsbuild = await createRsbuild({
+  config: result,
+});
+```
+
+传入完整的 `loadConfig` 返回结果后，配置文件及其导入依赖的绝对路径会分别记录在 [`rsbuild.context.configFile`](/api/javascript-api/instance#contextconfigfile) 和 [`rsbuild.context.configFileDependencies`](/api/javascript-api/instance#contextconfigfiledependencies) 中。启用持久化构建缓存时，这些文件也会作为构建依赖。关于 Rsbuild 如何监听这些文件，并在文件变化时请求重启，详见[配置文件监听](/guide/configuration/rsbuild#configuration-file-watching)。
 
 :::tip
 `config` 是 Rsbuild 1.6 新增的选项。在旧版本中，可使用 `rsbuildConfig` 作为替代。
@@ -63,9 +95,9 @@ import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
   config: async () => {
-    const { content } = await loadConfig();
-    someFunctionToUpdateConfig(content);
-    return content;
+    const result = await loadConfig();
+    someFunctionToUpdateConfig(result.content);
+    return result;
   },
 });
 ```
@@ -97,7 +129,44 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-### 指定调用者名称
+### 重启处理 \{#restart-handling}
+
+- **版本：** v2.1.7 新增
+
+`restart` 选项允许你控制 Rsbuild 如何重启当前 dev server 或监听构建，适用于需要在 Rsbuild 外部管理重启流程的场景。
+
+> 查看 [配置文件监听](/guide/configuration/rsbuild#configuration-file-watching) 了解重启的触发方式。
+
+当请求重启时，Rsbuild 会调用 [onRestart hook](/plugins/dev/hooks#onrestart)，关闭当前任务的资源，然后调用 `restart`。`restart` 回调会接收到当前调用 `rsbuild.build()` 或 `rsbuild.startDevServer()` 时传入的选项。
+
+新任务成功启动时，该函数应返回 `true`。如果返回 `false` 或抛出错误，restart watcher 会保持运行，以便后续文件变化时再次尝试重启。
+
+```ts
+import { createRsbuild, type RestartFn } from '@rsbuild/core';
+
+async function createInstance() {
+  return createRsbuild({
+    restart,
+  });
+}
+
+const restart: RestartFn = async (context) => {
+  const rsbuild = await createInstance();
+
+  if (context.action === 'build') {
+    await rsbuild.build(context.options);
+  } else {
+    await rsbuild.startDevServer(context.options);
+  }
+
+  return true;
+};
+
+const rsbuild = await createInstance();
+await rsbuild.startDevServer();
+```
+
+### 指定调用者名称 \{#specify-caller-name}
 
 你可以通过 `callerName` 选项来指定当前调用 Rsbuild 的框架或工具的名称，该名称可以被 Rsbuild 插件通过 [context.callerName](/api/javascript-api/instance#contextcallername) 访问到，并基于这个标识符来执行不同的逻辑。
 
@@ -134,24 +203,39 @@ export const myPlugin = {
 - **类型：**
 
 ```ts
-function loadConfig(params?: {
+function loadConfig<Config = RsbuildConfig>(params?: {
   // 默认为 process.cwd()
   cwd?: string;
   // 指定配置文件路径，可以为相对路径或绝对路径
   path?: string;
+  // 未指定 path 时要查找的配置文件名列表
+  configFileNames?: string[];
+  /**
+   * 从配置文件中读取的导出名称
+   * 设置为 `false` 时，只执行配置文件，不读取导出
+   * @default 'default'
+   */
+  exportName?: string | false;
   meta?: Record<string, unknown>;
   envMode?: string;
+  /**
+   * 传给配置函数的 command 参数。
+   * @default process.argv[2]
+   */
+  command?: string;
   /**
    * 指定配置文件加载器，可选值为 `auto`、`jiti` 或 `native`。
    * - `auto`：优先使用 Node.js 原生加载器，若加载失败则回退到 jiti
    * - `jiti`：使用 jiti 作为加载器，开箱即用地支持 TypeScript 和 ESM
-   * - `native`：使用 Node.js 原生加载器，要求 Node.js >= 22.6 且原生支持 TypeScript
+   * - `native`：使用 Node.js 原生加载器。TypeScript 配置文件要求运行时原生支持
+   *   TypeScript，例如 Node.js 22.6+
    * @default 'auto'
    */
   loader?: 'auto' | 'jiti' | 'native';
 }): Promise<{
-  content: RsbuildConfig;
+  content: Config;
   filePath: string | null;
+  dependencies: string[];
 }>;
 ```
 
@@ -161,12 +245,12 @@ function loadConfig(params?: {
 import { loadConfig } from '@rsbuild/core';
 
 // 按默认查找顺序从 cwd 加载 `rsbuild.config.*` 配置文件
-const { content } = await loadConfig();
+const result = await loadConfig();
 
-console.log(content); // -> Rsbuild config object
+console.log(result.content); // -> Rsbuild config object
 
 const rsbuild = await createRsbuild({
-  config: content,
+  config: result,
 });
 ```
 
@@ -183,6 +267,18 @@ const rsbuild = await createRsbuild({
 
 如果同时存在多个配置文件，`loadConfig` 会使用这个列表中第一个匹配到的文件。
 
+### 自定义配置文件名
+
+使用 `configFileNames` 选项可以替换默认的配置文件查找列表。文件名会相对于 `cwd` 解析，且指定 `path` 时会忽略该选项。
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  configFileNames: ['framework.config.ts', 'framework.config.mjs'],
+});
+```
+
 ### 指定配置文件
 
 使用 `path` 选项加载 `my-config.ts` 配置文件：
@@ -193,6 +289,34 @@ import { loadConfig } from '@rsbuild/core';
 
 const { content } = await loadConfig({
   path: join(__dirname, 'my-config.ts'),
+});
+```
+
+### 指定导出名称
+
+默认情况下，`loadConfig` 会读取配置文件的默认导出。使用 `exportName` 可以读取命名导出：
+
+```ts title="rsbuild.config.ts"
+export const rsbuildConfig = {
+  // ...
+};
+```
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  exportName: 'rsbuildConfig',
+});
+```
+
+当配置文件只需要被执行、不需要读取任何导出时，可以将 `exportName` 设置为 `false`，此时 `content` 为 `{}`。
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  exportName: false,
 });
 ```
 
@@ -220,9 +344,21 @@ export default defineConfig(({ meta }) => {
 });
 ```
 
+### 传入 command
+
+默认情况下，`loadConfig` 会将 `process.argv[2]` 作为 `command` 传给配置函数。你可以通过 `command` 选项显式设置该值。
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  command: 'build',
+});
+```
+
 ## loadEnv
 
-加载 [.env](/guide/advanced/env-vars#env-文件) 文件，并返回所有以 `prefixes` 开头的环境变量。
+加载 [.env](/guide/advanced/env-vars#env-file) 文件，并返回所有以 `prefixes` 开头的环境变量。
 
 - **类型：**
 
@@ -286,7 +422,7 @@ type LoadEnvResult = {
   cleanup: () => void;
 };
 
-function loadEnv(options: LoadEnvOptions): LoadEnvResult;
+function loadEnv(options?: LoadEnvOptions): LoadEnvResult;
 ````
 
 - **示例：**
@@ -310,7 +446,7 @@ const mergedConfig = mergeRsbuildConfig(
 
 :::tip
 
-- Rsbuild CLI 会自动调用 `loadEnv()` 方法，如果你在使用 Rsbuild CLI，可以通过 [--env-mode](/guide/advanced/env-vars#env-模式) 选项来设置 `mode` 参数。
+- Rsbuild CLI 会自动调用 `loadEnv()` 方法，如果你在使用 Rsbuild CLI，可以通过 [--env-mode](/guide/advanced/env-vars#env-mode) 选项来设置 `mode` 参数。
 - [createRsbuild](#creatersbuild) 的 `loadEnv` 选项会帮助你调用 `loadEnv()` 方法，并处理相关操作。
 
 :::
@@ -333,7 +469,7 @@ loadEnv({ processEnv: { ...process.env } });
 
 用于合并多份 Rsbuild 配置对象。
 
-`mergeRsbuildConfig` 函数接收多个配置对象作为参数，它会将每一个配置对象进行深层合并，自动将多个函数项合并为顺序执行的函数数组，返回一个合并后的配置对象。
+`mergeRsbuildConfig` 函数接收多个配置对象作为参数。它会对每个配置对象进行深层合并，自动将多个函数项合并为顺序执行的函数数组，并返回一个新的合并配置对象，不会修改传入的配置对象。
 
 - **类型：**
 
@@ -349,19 +485,19 @@ function mergeRsbuildConfig(
 import { mergeRsbuildConfig } from '@rsbuild/core';
 
 const config1 = {
-  dev: {
-    https: false,
+  server: {
+    compress: false,
   },
 };
 const config2 = {
-  dev: {
-    https: true,
+  server: {
+    compress: true,
   },
 };
 
 const mergedConfig = mergeRsbuildConfig(config1, config2);
 
-console.log(mergedConfig); // { dev: { https: true } }
+console.log(mergedConfig); // { server: { compress: true } }
 ```
 
 > 该方法不会修改入参中的 config 对象。
@@ -512,9 +648,11 @@ function ensureAssetPrefix(
   // 需要处理的 URL 字符串。可以是相对路径或绝对 URL
   url: string,
   // 需要拼接的 URL 前缀
-  assetPrefix: string
+  assetPrefix?: Rspack.PublicPath,
 ) => string;
 ```
+
+如果未传入 `assetPrefix`，Rsbuild 会使用默认的资源前缀 `/`。如果 `assetPrefix` 为 `'auto'` 或函数，该函数会直接返回传入的 URL。
 
 - **示例：**
 

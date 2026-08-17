@@ -6,30 +6,18 @@ description: 'Rsbuild 默认支持 TypeScript，你可以直接在项目中使�
 
 Rsbuild 默认支持 TypeScript，你可以直接在项目中使用 `.ts` 和 `.tsx` 文件。
 
-## TypeScript 转换
+## TypeScript 转换 \{#typescript-transformation}
 
 Rsbuild 默认使用 [SWC](/guide/configuration/swc) 来转换 TypeScript 代码为 JavaScript，也支持切换到 [Babel](/plugins/list/plugin-babel) 进行转换。
 
 ### 模块隔离
 
-与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) 或 [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) 选项：
-
-- 如果 `typescript` >= 5.0.0，使用 `verbatimModuleSyntax` 选项，它会默认启用 `isolatedModules` 选项：
+与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) 选项，该选项会默认启用 [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) 选项：
 
 ```json title="tsconfig.json"
 {
   "compilerOptions": {
     "verbatimModuleSyntax": true
-  }
-}
-```
-
-- 如果 `typescript` < 5.0.0，使用 `isolatedModules` 选项：
-
-```json title="tsconfig.json"
-{
-  "compilerOptions": {
-    "isolatedModules": true
   }
 }
 ```
@@ -46,19 +34,25 @@ export type { SomeType } from './types';
 
 > 参考 [SWC - Migrating from tsc](https://swc.rs/docs/migrating-from-tsc) 了解更多 SWC 和 tsc 的差异。
 
-## 预设类型
+## 预设类型 \{#preset-types}
 
 `@rsbuild/core` 提供了一些预设的类型定义，包含 CSS 文件、CSS Modules、静态资源、`import.meta` 等类型。
 
-你可以创建一个 `src/env.d.ts` 文件来引用：
+你可以在 `tsconfig.json` 的 `compilerOptions.types` 中添加这些预设类型：
 
-```ts title="src/env.d.ts"
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["@rsbuild/core/types"]
+  }
+}
 ```
+
+如果你的项目中已经配置了 `compilerOptions.types`，请将 `@rsbuild/core/types` 追加到已有列表中。
 
 > 参考 [types.d.ts](https://github.com/web-infra-dev/rsbuild/blob/main/packages/core/types.d.ts) 来了解 Rsbuild 提供的完整预设类型定义。
 
-## 类型检查
+## 类型检查 \{#type-checking}
 
 在进行 TypeScript 转译时，SWC 和 Babel 等工具不会执行类型检查。
 
@@ -81,7 +75,7 @@ export type { SomeType } from './types';
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^6.0.0"
   }
 }
 ```
@@ -95,7 +89,7 @@ export type { SomeType } from './types';
     "type-check": "vue-tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
+    "typescript": "^6.0.0",
     "vue-tsc": "^3.0.0"
   }
 }
@@ -155,3 +149,7 @@ export default {
   },
 };
 ```
+
+## TypeScript 版本兼容性 \{#typescript-version-compatibility}
+
+Rsbuild 支持 TypeScript 5.0 及以上版本。由于 Rsbuild 默认使用 SWC 转换 TypeScript 源代码，即使项目使用更早的 TypeScript 版本，仍可正常转换 `.ts` 和 `.tsx` 文件。不过，TypeScript 5.0 以下版本可能无法解析 Rsbuild 的类型声明，从而影响类型检查和编辑器类型提示。

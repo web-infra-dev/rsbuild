@@ -6,9 +6,9 @@ description: 'Rsbuild 配备了一个内置的开发服务器，旨在提升开�
 
 Rsbuild 配备了一个内置的开发服务器，旨在提升开发体验。当你执行 `rsbuild dev` 或 `rsbuild preview` 命令时，该服务器将启动，并提供页面预览、路由、模块热更新等功能。
 
-## 基础路径
+## 基础路径 \{#base-path}
 
-默认情况下，Rsbuild 服务器的基础路径是 `/`，你可以通过 http://localhost:3000/ 访问 `index.html` 等输出文件，以及 [public 目录](/guide/basic/static-assets#public-目录) 下的资源。
+默认情况下，Rsbuild 服务器的基础路径是 `/`，你可以通过 http://localhost:3000/ 访问 `index.html` 等输出文件，以及 [public 目录](/guide/basic/static-assets#public-folder) 下的资源。
 
 Rsbuild 支持通过 [server.base](/config/server/base) 修改服务端的基础路径。当我们希望通过 http://localhost:3000/foo/ 访问到这些资源时，可以添加如下配置：
 
@@ -20,7 +20,7 @@ export default {
 };
 ```
 
-## 查看静态资源
+## 查看静态资源 \{#view-static-assets}
 
 启动 dev server 后，你可以访问 `/rsbuild-dev-server` 查看 Rsbuild 在当前构建中生成的所有静态资源。
 
@@ -32,7 +32,7 @@ export default {
   width="600"
 />
 
-## 页面路由
+## 页面路由 \{#page-routing}
 
 Rsbuild 的 Server 提供一套默认的路由约定，并允许用户通过配置项定制。
 
@@ -142,9 +142,9 @@ Rsbuild 不支持使用 Rspack 的 [devServer](https://rspack.rs/zh/config/dev-s
 | [devServer.static](https://rspack.rs/zh/config/dev-server#devserverstatic)                           | [server.publicDir](/config/server/public-dir)                    |
 | [devServer.watchFiles](https://rspack.rs/zh/config/dev-server#devserverwatchfiles)                   | [dev.watchFiles](/config/dev/watch-files)                        |
 
-> 更多配置请参考 [Config 总览](/config/index)。
+> 更多配置请参考 [配置总览](/config/index)。
 
-## 中间件
+## 中间件 \{#middleware}
 
 Rsbuild 的中间件实现基于 [connect-next](https://github.com/rstackjs/connect-next)，一个轻量级的 HTTP 服务器框架，并使用 Node.js 标准的 `request` 和 `response` 对象来处理 HTTP 交互。
 

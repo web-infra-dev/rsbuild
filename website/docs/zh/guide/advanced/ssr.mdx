@@ -6,7 +6,14 @@ description: '本章节介绍如何使用 Rsbuild 实现 SSR 功能。'
 
 本章节介绍如何使用 Rsbuild 实现 SSR 功能。
 
-值得注意的是，Rsbuild 自身不提供开箱即用的 SSR 能力，而是提供 low-level 的 API 和配置来允许框架开发者实现 SSR。如果你需要使用开箱即用的 SSR 支持，可以考虑使用基于 Rsbuild 的框架，例如 [Modern.js](https://github.com/web-infra-dev/modern.js)。
+值得注意的是，Rsbuild 自身不提供开箱即用的 SSR 能力，而是提供 low-level 的 API 和配置来允许框架开发者实现 SSR。
+
+## 全栈框架 \{#full-stack-frameworks}
+
+如果你希望直接使用 SSR，推荐使用基于 Rsbuild 的全栈框架，因为这些框架已经实现了 SSR 能力。
+
+- [React 全栈框架](/guide/framework/react#full-stack-frameworks)
+- [Solid 全栈框架](/guide/framework/solid#full-stack-frameworks)
 
 ## 什么是 SSR
 
@@ -70,11 +77,37 @@ export default {
       output: {
         // Node.js 产物的 target 类型为 'node'
         target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
       },
     },
   },
 };
 ```
+
+### 配置 external 依赖
+
+SSR 的服务端产物通常运行在 Node.js 中。如果部署时会同时安装 `node_modules`，建议将依赖配置为 external，让 Node.js 在运行时直接加载这些依赖，而不是将它们打包进服务端产物。
+
+此时建议使用 [output.autoExternal](/config/output/auto-external)：
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    node: {
+      output: {
+        target: 'node',
+        autoExternal: true,
+      },
+    },
+  },
+};
+```
+
+开启后，Rsbuild 会将根目录 `package.json` 中声明的依赖标记为 external，并覆盖 `react/jsx-runtime` 这类子路径导入，使运行时依赖可以由 Node.js 直接加载。
+
+如果你需要生成完全独立的服务端 bundle，或者部署环境不会安装这些被 external 的依赖，可以保持该选项关闭，或按需配置需要 external 的依赖类型。
 
 ## 自定义 Server
 
@@ -245,4 +278,41 @@ export const myPlugin = () => ({
     });
   },
 });
+```
+
+## 保持资源 URL 一致
+
+在多环境 SSR 中，建议保持服务端和客户端构建的 [output.assetPrefix](/config/output/asset-prefix) 和静态资源的 [output.distPath](/config/output/dist-path) 配置一致。这有助于保障服务端使用 `?url` 等 query 时，拿到与客户端一致的资源路径。
+
+```ts title="rsbuild.config.ts"
+const assetPaths = {
+  css: 'assets/css',
+  image: 'assets/image',
+};
+
+export default {
+  output: {
+    assetPrefix: '/',
+  },
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+        distPath: {
+          root: 'dist/client',
+          ...assetPaths,
+        },
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+          ...assetPaths,
+        },
+      },
+    },
+  },
+};
 ```

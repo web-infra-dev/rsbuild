@@ -21,11 +21,7 @@ test('should print file size diff as expected', async ({
   };
 
   const rsbuild1 = await build({ config });
-  expect(extractFileSizeLogs(rsbuild1.logs)).toEqual(`
-File (web)                         Size      Gzip
-dist/static/js/index.[[hash]].js   X.X kB   X.X kB
-dist/index.html                    X.X kB   X.X kB
-                          Total:   X.X kB   X.X kB`);
+  expect(extractFileSizeLogs(rsbuild1.logs)).toMatchSnapshot();
   rsbuild1.clearLogs();
 
   editFile(
@@ -39,24 +35,13 @@ console.log(ReactDOM);
   );
 
   const rsbuild2 = await build({ config });
-  expect(extractFileSizeLogs(rsbuild2.logs)).toEqual(`
-File (web)                           Size                 Gzip
-dist/static/css/index.[[hash]].css   X.X kB (+X.X kB)   X.X kB (+X.X kB)
-dist/index.html                      X.X kB (+X.X kB)   X.X kB (+X.X kB)
-dist/static/js/index.[[hash]].js     X.X kB (+X.X kB)   X.X kB (+X.X kB)
-dist/static/js/vendor.[[hash]].js    X.X kB (+X.X kB)   X.X kB (+X.X kB)
-                            Total:   X.X kB (+X.X kB)   X.X kB (+X.X kB)`);
+  expect(extractFileSizeLogs(rsbuild2.logs)).toMatchSnapshot();
   rsbuild2.clearLogs();
 
   editFile(join(srcDir, 'index.js'), () => `import "./App.css";`);
 
   const rsbuild3 = await build({ config });
-  expect(extractFileSizeLogs(rsbuild3.logs)).toEqual(`
-File (web)                           Size                 Gzip
-dist/static/js/index.[[hash]].js     X.X kB (-X.X kB)   X.X kB (-X.X kB)
-dist/static/css/index.[[hash]].css   X.X kB              X.X kB
-dist/index.html                      X.X kB (-X.X kB)   X.X kB (-X.X kB)
-                            Total:   X.X kB (-X.X kB)   X.X kB (-X.X kB)`);
+  expect(extractFileSizeLogs(rsbuild3.logs)).toMatchSnapshot();
 });
 
 test('should not print gzip total diff when change is below threshold', async ({
@@ -95,9 +80,5 @@ test('should not print gzip total diff when change is below threshold', async ({
 
   const rsbuild2 = await build({ config });
 
-  expect(extractFileSizeLogs(rsbuild2.logs)).toEqual(`
-File (web)                         Size      Gzip
-dist/static/js/index.[[hash]].js   X.X kB   X.X kB
-dist/index.html                    X.X kB   X.X kB
-                          Total:   X.X kB   X.X kB`);
+  expect(extractFileSizeLogs(rsbuild2.logs)).toMatchSnapshot();
 });

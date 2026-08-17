@@ -11,6 +11,7 @@ export const createConnectHandler = (middlewares: RequestHandler) => {
       env.outgoing.statusCode = error ? 500 : 404;
       env.outgoing.end(error ? String(error) : 'Not Found');
     });
-    return RESPONSE_ALREADY_SENT;
+    // Hono caches Response objects, so use a fresh sentinel for each request.
+    return RESPONSE_ALREADY_SENT.clone();
   };
 };

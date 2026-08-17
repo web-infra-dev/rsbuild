@@ -67,7 +67,10 @@ export default {
 - **类型：**
 
 ```ts
-type InjectFunction = ({ value: ScriptInject; entryName: string }) => string | void;
+type InjectFunction = (context: {
+  value: ScriptInject;
+  entryName: string;
+}) => ScriptInject | void | Promise<ScriptInject | void>;
 ```
 
 当 `html.inject` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：
@@ -108,3 +111,9 @@ export default {
   </body>
 </html>
 ```
+
+## 版本历史
+
+| 版本   | 变更内容                            |
+| ------ | ----------------------------------- |
+| v2.0.8 | 新增对 `html.inject` 异步函数的支持 |

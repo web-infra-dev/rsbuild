@@ -15,7 +15,7 @@ description: '快速开始使用 Rsbuild，包括创建项目、启动开发服�
 
 Rsbuild 支持使用 [Node.js](https://nodejs.org/)、[Deno](https://deno.com/) 或 [Bun](https://bun.sh/) 作为 JavaScript 运行时。
 
-你可以参考以下安装指南，选择其中一种运行时：
+参考以下安装指南，选择一种运行时：
 
 - [安装 Node.js](https://nodejs.org/zh-cn/download)
 - [安装 Bun](https://bun.com/docs/installation)
@@ -28,33 +28,32 @@ Rsbuild 支持使用 [Node.js](https://nodejs.org/)、[Deno](https://deno.com/) 
 
 :::
 
-## 创建 Rsbuild 应用
+## 创建 Rsbuild 应用 \{#create-an-rsbuild-application}
 
-使用 [create-rsbuild](https://www.npmjs.com/package/create-rsbuild) 来创建一个 Rsbuild 应用，运行以下命令：
+使用 [create-rsbuild](https://www.npmjs.com/package/create-rsbuild) 可以快速创建一个 Rsbuild 应用，推荐使用 [pnpm](https://pnpm.io/) 作为包管理器。
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs
   command={{
+    pnpm: 'pnpm create rsbuild@latest',
     npm: 'npm create rsbuild@latest',
     yarn: 'yarn create rsbuild',
-    pnpm: 'pnpm create rsbuild@latest',
     bun: 'bun create rsbuild@latest',
     deno: 'deno init --npm rsbuild@latest',
   }}
 />
 
-按照提示一步步操作即可。在创建过程中，你可以选择是否需要 TypeScript、ESLint 等额外的工具。
+按照提示操作即可。
 
-在创建完成后，你可以执行以下步骤：
+创建完成后，执行以下步骤：
 
-- 执行 `git init` 来初始化 Git 仓库。
-- 执行 `npm install`（或其他包管理器的 install 命令）安装 npm 依赖。
-- 执行 `npm run dev` 启动开发服务器，服务器默认运行在 `localhost:3000`。
+- 执行 `pnpm install`（或其他包管理器的 install 命令）安装依赖。
+- 执行 `pnpm run dev` 启动 [开发服务器](/guide/basic/server)。
 
 ### 模板
 
-在创建应用时，你可以选择 `create-rsbuild` 提供的下列模板，查看集成指南了解更多信息。
+创建应用时，可选择 `create-rsbuild` 提供的下列模板，查看集成指南了解更多信息。
 
 | 模板    | 官方文档                        | Rsbuild 集成指南                       |
 | ------- | ------------------------------- | -------------------------------------- |
@@ -73,22 +72,22 @@ import { PackageManagerTabs } from '@theme';
 
 ### 可选工具
 
-`create-rsbuild` 能够帮助你设置以下常用工具，你可以使用上下箭头和空格进行选择。如果你不需要这些工具，可以直接按回车跳过。
+`create-rsbuild` 可帮助设置以下常用工具。使用上下箭头和空格进行选择；如不需要这些工具，直接按回车跳过。
 
-| 工具                                                    | 用途                           |
-| ------------------------------------------------------- | ------------------------------ |
-| [Rstest](https://github.com/web-infra-dev/rstest)       | 测试                           |
-| [Rslint](https://github.com/web-infra-dev/rslint)       | 代码检查                       |
-| [ESLint](https://github.com/eslint/eslint)              | 代码检查                       |
-| [Prettier](https://github.com/prettier/prettier)        | 代码格式化                     |
-| [Biome](https://github.com/biomejs/biome)               | 代码检查和格式化               |
-| [Storybook](https://storybook.js.org/)                  | 组件开发                       |
-| [Tailwind CSS](https://tailwindcss.com)                 | 样式                           |
-| [React Compiler](/guide/framework/react#react-compiler) | 优化 React 应用，仅 React 模板 |
+| 工具                                                    | 用途                             |
+| ------------------------------------------------------- | -------------------------------- |
+| [Rstest](https://github.com/web-infra-dev/rstest)       | 测试                             |
+| [Rslint](https://github.com/web-infra-dev/rslint)       | 代码检查                         |
+| [ESLint](https://github.com/eslint/eslint)              | 代码检查                         |
+| [Prettier](https://github.com/prettier/prettier)        | 代码格式化                       |
+| [Biome](https://github.com/biomejs/biome)               | 代码检查和格式化                 |
+| [Storybook](https://storybook.js.org/)                  | 组件开发                         |
+| [Tailwind CSS](https://tailwindcss.com)                 | 样式                             |
+| [React Compiler](/guide/framework/react#react-compiler) | 优化 React 应用（仅 React 模板） |
 
 ### 当前目录
 
-如果你需要在当前目录下创建应用，可以将 target folder 设置为 `.`：
+如需在当前目录下创建应用，将 target folder 设置为 `.`：
 
 ```
 ◆  Create Rsbuild Project
@@ -107,41 +106,55 @@ import { PackageManagerTabs } from '@theme';
 例如，以下命令将在 `my-app` 目录中创建一个 React 应用：
 
 ```bash
-npx -y create-rsbuild --dir my-app --template react
+npx -y create-rsbuild@latest my-app --template react
 
 # 使用缩写
-npx -y create-rsbuild -d my-app -t react
+npx -y create-rsbuild@latest my-app -t react
 
 # 指定多个 tools
-npx -y create-rsbuild -d my-app -t react --tools eslint,prettier
+npx -y create-rsbuild@latest my-app -t react --tools rslint,prettier
 ```
 
 `create-rsbuild` 完整的 CLI 选项如下：
 
-```
+```text wrapCode
 Usage: create-rsbuild [dir] [options]
 
 Options:
+  -h, --help                display help for command
+  -d, --dir <dir>           create project in specified directory
+  -t, --template <tpl>      specify the template to use
+  --no-git                  skip Git repository initialization
+  --tools <tool>            add additional tools, comma separated
+  --skill <skill>           add optional skills, comma separated
+  --override                override files in target directory
+  --package-name <name>     specify the package name
+  --template-version <ver>  specify the npm template version
 
-  -h, --help            display help for command
-  -d, --dir <dir>       create project in specified directory
-  -t, --template <tpl>  specify the template to use
-  --tools <tool>        add additional tools, comma separated
-  --override            override files in target directory
-  --packageName <name>  specify the package name
+Available templates: vanilla-js, vanilla-ts, react-js, react-ts, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts
 
-Templates:
+Optional tools: react-compiler, rstest, eslint, rslint, biome, prettier, tailwindcss, storybook
 
-  react-js, react-ts, vue-js, vue-ts, svelte-js, svelte-ts,
-  solid-js, solid-ts, vanilla-js, vanilla-ts
-
-Optional tools:
-  react-compiler, rstest, biome, eslint, prettier, tailwindcss, storybook
+Optional skills: rsbuild-best-practices, rstest-best-practices, vercel-react-best-practices
 ```
 
-## 从现有项目迁移
+## 在 Monorepo 中使用 Rsbuild \{#use-rsbuild-in-monorepos}
 
-如果你需要从一个现有项目迁移迁移到 Rsbuild，可以参考以下指南：
+以下 Monorepo 工具提供了 Rsbuild 集成或示例，可用于在工作区中创建和管理 Rsbuild 应用。
+
+- [Nx](https://nx.dev/docs/technologies/build-tools/rsbuild/introduction) 通过 `@nx/rsbuild` 插件支持 Rsbuild，为 Nx 工作区提供生成器和执行器。
+- [Turborepo](https://turborepo.dev/docs/guides/frameworks/rsbuild) 提供创建 Rsbuild 应用和使用 Module Federation 的示例和指南。
+
+## 全栈框架 \{#full-stack-frameworks}
+
+如果你的应用需要全栈能力，可以直接使用基于 Rsbuild 的全栈框架，例如 [TanStack Start](https://tanstack.com/start/latest) 或 [Modern.js](https://github.com/web-infra-dev/modern.js)。这类框架基于 Rsbuild 构建，并提供 SSR、路由等更高层的能力。
+
+- [React 全栈框架](/guide/framework/react#full-stack-frameworks)
+- [Solid 全栈框架](/guide/framework/solid#full-stack-frameworks)
+
+## 从现有项目迁移 \{#migrate-from-existing-projects}
+
+如需从现有项目迁移到 Rsbuild，参考以下指南：
 
 - [从 webpack 迁移](/guide/migration/webpack)
 - [从 Create React App 迁移](/guide/migration/cra)
@@ -152,11 +165,11 @@ Optional tools:
 
 ### 其他项目
 
-如果你的项目不属于上述迁移指南中提到的类型，你也可以直接安装 [@rsbuild/core](https://npmjs.com/package/@rsbuild/core) 包：
+如果项目不属于上述迁移指南中的类型，也可直接安装 [@rsbuild/core](https://npmjs.com/package/@rsbuild/core) 包：
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
-完成安装后，你可以参考以下文档来配置你的项目：
+安装完成后，参考以下文档配置项目：
 
 - 参考 [CLI 工具](/guide/basic/cli) 来了解可用的 CLI 命令。
 - 参考 [插件列表](/plugins/list/index) 来选择 Rsbuild 插件。
@@ -179,11 +192,11 @@ Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令�
 }
 ```
 
-请参考 [CLI 工具](/guide/basic/cli) 来了解所有可用的命令以及选项。
+参考 [CLI 工具](/guide/basic/cli) 了解所有可用命令和选项。
 
 ## 入口模块
 
-Rsbuild CLI 默认会使用 `src/index.(js|ts|jsx|tsx)` 作为入口模块，你可以使用 [source.entry](/config/source/entry) 配置项来修改入口模块。
+Rsbuild CLI 默认会自动检测 `src/index.(ts|js|tsx|jsx|mts|cts|mjs|cjs)` 作为入口模块，可使用 [source.entry](/config/source/entry) 配置项修改入口模块。
 
 ```ts title="rsbuild.config.ts"
 export default {

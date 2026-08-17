@@ -3,11 +3,6 @@ import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 
 test('HMR should work properly', async ({ page, dev, editFile }) => {
-  // Prefresh does not work as expected on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   const root = import.meta.dirname;
   const compFilePath = path.join(root, 'src/test-temp-B.jsx');
   const compSourceCode = `const B = (props) => {

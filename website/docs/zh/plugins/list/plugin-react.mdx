@@ -14,7 +14,7 @@ React 插件提供了对 React 的支持，插件内部集成了 JSX 编译、Re
 
 ### 安装插件
 
-你可以通过如下的命令安装插件:
+执行以下命令安装插件：
 
 import { PackageManagerTabs } from '@theme';
 
@@ -22,7 +22,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### 注册插件
 
-你可以在 `rsbuild.config.ts` 文件中注册插件：
+在 Rsbuild 配置中注册插件：
 
 ```ts title="rsbuild.config.ts"
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -32,7 +32,7 @@ export default {
 };
 ```
 
-注册插件后，你可以直接进行 React 开发。
+注册后，即可进行 React 开发。
 
 ## 选项
 
@@ -62,14 +62,7 @@ interface ReactConfig {
 
 - **默认值：**
 
-```ts
-const isDev = process.env.NODE_ENV === 'development';
-const defaultOptions = {
-  development: isDev,
-  refresh: isDev,
-  runtime: 'automatic',
-};
-```
+使用 automatic JSX runtime，并在适用时启用开发模式转换和 Fast Refresh。
 
 ### swcReactOptions.runtime
 
@@ -139,22 +132,89 @@ pluginReact({
 });
 ```
 
-> 参考 [自定义 JSX](/guide/framework/react#自定义-jsx) 了解更多。
+> 参考 [自定义 JSX](/guide/framework/react#customize-jsx) 了解更多。
 
 ### swcReactOptions.refresh
 
 - **类型：** `boolean`
-- **默认值：** 基于 [fastRefresh](#fastrefresh) 和 [dev.hmr](/config/dev/hmr)
+- **默认值：** 当 [fastRefresh](#fastrefresh) 和 [dev.hmr](/config/dev/hmr) 启用时，在开发模式的 web 构建中启用
 
 是否启用 [React Fast Refresh](https://npmjs.com/package/react-refresh)。
 
 大多数情况下，你应该使用插件的 [fastRefresh](#fastrefresh) 选项来启用或禁用 Fast Refresh。
 
+### reactCompiler
+
+启用或配置 [React Compiler](https://react.dev/learn/react-compiler)，Rsbuild 会将该选项传递给 Rspack 的 [`builtin:swc-loader`](https://rspack.rs/zh/guide/tech/react#%E4%BD%BF%E7%94%A8-builtinswc-loader)，对应 `jsc.transform.reactCompiler` 配置。
+
+:::tip
+该选项仅在 `@rsbuild/core` v2.1.0 及以上版本中支持。
+:::
+
+- **类型：**
+
+```ts
+type ReactCompiler =
+  | boolean
+  | {
+      compilationMode?: 'infer' | 'syntax' | 'annotation' | 'all';
+      panicThreshold?: 'none' | 'critical_errors' | 'all_errors';
+      target?: '17' | '18' | '19';
+      noEmit?: boolean;
+      outputMode?: 'client' | 'ssr' | 'lint';
+      ignoreUseNoForget?: boolean;
+      flowSuppressions?: boolean;
+      enableReanimated?: boolean;
+      isDev?: boolean;
+      eslintSuppressionRules?: string[];
+      customOptOutDirectives?: string[];
+      gating?: {
+        source: string;
+        importSpecifierName: string;
+      };
+      dynamicGating?: {
+        source: string;
+      };
+    };
+```
+
+- **默认值：** `undefined`
+
+将 `reactCompiler` 设置为 `true`，即可使用默认选项启用 React Compiler：
+
+```ts
+pluginReact({
+  reactCompiler: true,
+});
+```
+
+对于 React 17 和 18 项目，需要安装 [`react-compiler-runtime`](https://npmjs.com/package/react-compiler-runtime)，并设置编译目标：
+
+```ts
+pluginReact({
+  reactCompiler: {
+    target: '18',
+  },
+});
+```
+
+`reactCompiler` 的选项与 React Compiler 配置对齐。例如，你可以通过 [`compilationMode`](https://react.dev/reference/react-compiler/compilationMode) 控制哪些函数会被编译：
+
+```ts
+pluginReact({
+  reactCompiler: {
+    compilationMode: 'annotation',
+  },
+});
+```
+
+更多选项请参考官方 [React Compiler 配置说明](https://react.dev/reference/react-compiler/configuration)。
+
 ### splitChunks
 
 当使用 Rsbuild 的 [默认拆包 preset](/config/split-chunks#default) 时，该插件会将与 `react` 和 `react-router` 相关的包拆分到独立的 chunk 中。
 
-- `lib-react.js`：包含 `react`、`react-dom`，以及它们的子依赖（`scheduler`）。
+- `lib-react.js`：包含 `react`、`react-dom`，以及它们的子依赖（`scheduler`）。在开发环境下，它还会包含 React Fast Refresh 运行时包（`react-refresh`、`@rspack/plugin-react-refresh`）。
 - `lib-router.js`：包含 `react-router`、`react-router-dom`，以及它们的子依赖（`history`，`@remix-run/router`）。
 
 该选项用于控制这一行为，决定是否需要将 `react` 和 `router` 相关的包拆分为单独的 chunk。
@@ -237,27 +297,19 @@ pluginReact({
 type ReactRefreshOptions = {
   // @link https://rspack.rs/zh/config/module-rules#condition
   test?: Rspack.RuleSetCondition;
-  include?: Rspack.RuleSetCondition;
-  exclude?: Rspack.RuleSetCondition;
+  include?: Rspack.RuleSetCondition | null;
+  exclude?: Rspack.RuleSetCondition | null;
+  resourceQuery?: Rspack.RuleSetCondition;
   library?: string;
   forceEnable?: boolean;
+  injectLoader?: boolean;
+  injectEntry?: boolean;
+  reloadOnRuntimeErrors?: boolean;
+  reactRefreshLoader?: string;
 };
 ```
 
-- **默认值：**
-
-```js
-const defaultOptions = {
-  test: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
-  include: [
-    // Same as Rsbuild's `source.include` configuration
-  ],
-  exclude: [
-    // Same as Rsbuild's `source.exclude` configuration
-  ],
-  resourceQuery: { not: /^\?raw$/ },
-};
-```
+- **默认值：** Rsbuild 会对内置 JavaScript 规则处理的文件应用 React Fast Refresh，但通过 `?raw` 导入的文件除外。
 
 设置 [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) 的选项，传入的值会与默认值进行浅合并。
 
@@ -278,7 +330,7 @@ pluginReact({
 
 是否在开发模式下启用 [React Fast Refresh](https://npmjs.com/package/react-refresh)。
 
-当 `fastRefresh` 设置为 `true` 时，`@rsbuild/plugin-react` 会自动注册 [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) 插件。
+当 `fastRefresh` 设置为 `true` 时，`@rsbuild/plugin-react` 会在启用 HMR 的开发模式 web 构建中自动注册 [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) 插件。
 
 如果你需要禁用 Fast Refresh，可以将其设置为 `false`：
 

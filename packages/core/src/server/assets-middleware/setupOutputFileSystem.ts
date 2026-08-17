@@ -8,7 +8,7 @@ export async function setupOutputFileSystem(
 ): Promise<OutputFileSystem> {
   if (writeToDisk !== true) {
     const { createFsFromVolume, Volume } = await import(
-      /* webpackChunkName: "memfs" */ 'memfs'
+      /* rspackChunkName: "memfs" */ 'memfs'
     );
     const outputFileSystem = createFsFromVolume(
       new Volume(),

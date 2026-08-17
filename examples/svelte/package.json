@@ -3,12 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild --open",
     "build": "rsbuild build",
+    "dev": "rsbuild --open",
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "svelte": "^5.55.4"
+    "svelte": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

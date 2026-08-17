@@ -123,7 +123,7 @@ function formatModuleTrace(
     const TAIL = 2;
     trace = [
       ...trace.slice(0, HEAD),
-      `… (${trace.length - HEAD - TAIL} hidden)`,
+      `... (${trace.length - HEAD - TAIL} hidden)`,
       ...trace.slice(trace.length - TAIL),
     ];
   }
@@ -143,9 +143,7 @@ function hintUnknownFiles(message: string): string {
   const createPluginHint = (packageName: string, keyword: string) => {
     return `To enable support for ${keyword}, use "${color.yellow(
       `@rsbuild/plugin-${packageName}`,
-    )}" ${color.dim(
-      `(https://npmjs.com/package/@rsbuild/plugin-${packageName})`,
-    )}.\n`;
+    )}" ${color.dim(`(https://npmjs.com/package/@rsbuild/plugin-${packageName})`)}.\n`;
   };
 
   const recommendPlugins = [

@@ -19,13 +19,17 @@ Rsbuild plugin is defined in a way similar to Vite, usually a function that acce
 
 The main difference is that Vite's hooks are defined directly on the plugin description object, while Rsbuild's hooks are accessed and called through the [api object](/plugins/dev/core). This allows you to control the timing of plugin API calls more flexibly.
 
+The following example transforms `.foo` files into JavaScript modules:
+
 - Vite plugin:
 
 ```ts title="vitePlugin.ts"
-const vitePlugin = (options) => ({
+const vitePlugin = () => ({
   name: 'vite-plugin',
-  transform() {
-    // ...
+  transform(code, id) {
+    if (id.endsWith('.foo')) {
+      return `export default ${JSON.stringify(code)};`;
+    }
   },
 });
 ```
@@ -33,11 +37,11 @@ const vitePlugin = (options) => ({
 - Rsbuild plugin:
 
 ```ts title="rsbuildPlugin.ts"
-const rsbuildPlugin = (options) => ({
+const rsbuildPlugin = () => ({
   name: 'rsbuild-plugin',
   setup(api) {
-    api.transform(() => {
-      // ...
+    api.transform({ test: /\.foo$/ }, ({ code }) => {
+      return `export default ${JSON.stringify(code)};`;
     });
   },
 });
@@ -60,7 +64,7 @@ Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for exampl
 | `closeBundle`        | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
 | `transformIndexHtml` | [modifyHTML](/plugins/dev/hooks#modifyhtml), [modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags)                       |
 
-See [Plugin system](/plugins/dev/index) for more details.
+See [Plugin development](/plugins/dev/index) for more details.
 
 ## `config` hook
 
@@ -143,6 +147,10 @@ const rsbuildPlugin = {
 
 Rsbuild provides the [api.getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) method to get the resolved configuration. This method serves a similar purpose to Vite's `configResolved` hook.
 
+When a plugin hook provides an [environment context](/api/javascript-api/environment-api#environment-context), we recommend using `environment.config` to get the normalized config for the current environment.
+
+The following example reads the resolved config while transforming `.foo` files:
+
 - Vite plugin:
 
 ```ts title="vitePlugin.ts"
@@ -153,9 +161,12 @@ const vitePlugin = () => {
     configResolved(resolvedConfig) {
       config = resolvedConfig;
     },
-    transform() {
+    transform(code, id) {
+      if (!id.endsWith('.foo')) {
+        return;
+      }
       console.log(config);
-      // ...
+      return `export default ${JSON.stringify(code)};`;
     },
   };
 };
@@ -167,10 +178,10 @@ const vitePlugin = () => {
 const rsbuildPlugin = () => ({
   name: 'read-config',
   setup(api) {
-    api.transform(() => {
-      const config = api.getNormalizedConfig();
+    api.transform({ test: /\.foo$/ }, ({ code, environment }) => {
+      const { config } = environment;
       console.log(config);
-      // ...
+      return `export default ${JSON.stringify(code)};`;
     });
   },
 });

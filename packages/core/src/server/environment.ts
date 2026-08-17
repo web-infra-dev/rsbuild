@@ -17,23 +17,22 @@ export const loadBundle = async <T>(
     all: false,
     chunks: true,
     entrypoints: true,
+    ids: true,
     outputPath: true,
   });
 
   if (!entrypoints?.[entryName]) {
     throw new Error(
-      `${color.dim('[rsbuild:loadBundle]')} Can't find entry: ${color.yellow(
-        entryName,
-      )}`,
+      `${color.dim('[rsbuild:loadBundle]')} Can't find entry: ${color.yellow(entryName)}`,
     );
   }
 
   const { chunks: entryChunks = [] } = entrypoints[entryName];
 
   // find main entryChunk from chunks
-  const files = entryChunks.reduce<string[]>((prev, entryChunkName) => {
+  const files = entryChunks.reduce<string[]>((prev, entryChunkId) => {
     const chunk = chunks?.find(
-      (chunk) => chunk.entry && chunk.names?.includes(String(entryChunkName)),
+      (chunk) => chunk.entry && chunk.id === entryChunkId,
     );
 
     return chunk?.files
@@ -102,24 +101,34 @@ export const createCacheableFunction = <T>(
     utils: ServerUtils,
   ) => Promise<T> | T,
 ) => {
-  const cache = new WeakMap<Rspack.Stats, Record<string, T>>();
+  const cache = new WeakMap<Rspack.Stats, Map<string, Promise<T>>>();
 
-  return async (
+  return (
     stats: Rspack.Stats,
     entryName: string,
     utils: ServerUtils,
   ): Promise<T> => {
-    const cachedEntries = cache.get(stats);
-    if (cachedEntries?.[entryName]) {
-      return cachedEntries[entryName];
+    let cachedEntries = cache.get(stats);
+    if (!cachedEntries) {
+      cachedEntries = new Map();
+      cache.set(stats, cachedEntries);
     }
 
-    const res = await getter(stats, entryName, utils);
+    const cachedPromise = cachedEntries.get(entryName);
+    if (cachedPromise) {
+      return cachedPromise;
+    }
 
-    cache.set(stats, {
-      ...(cachedEntries || {}),
-      [entryName]: res,
-    });
-    return res;
+    // Cache the pending promise so concurrent calls share the same execution.
+    const promise = Promise.resolve()
+      .then(() => getter(stats, entryName, utils))
+      .catch((error) => {
+        // Do not cache failures, allowing the next call to retry.
+        cachedEntries.delete(entryName);
+        throw error;
+      });
+
+    cachedEntries.set(entryName, promise);
+    return promise;
   };
 };

@@ -84,15 +84,15 @@ export default {
 };
 ```
 
-## 工具对象
+## 工具对象 \{#utils}
 
 这个函数的第二个参数是一个对象，包含了一些工具函数和属性，详情如下：
 
 ### env
 
-- **类型：** `'development' | 'production' | 'test'`
+- **类型：** `string`
 
-通过 env 参数可以判断当前环境为 development、production 还是 test。比如：
+`env` 参数是 `process.env.NODE_ENV` 的当前值，未设置时为空字符串，也可能包含 `'staging'` 等自定义值。比如：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -135,10 +135,11 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    rspack: (chain, { isProd }) => {
+    rspack: (config, { isProd }) => {
       if (isProd) {
-        chain.devtool('source-map');
+        config.devtool = 'source-map';
       }
+      return config;
     },
   },
 };
@@ -247,7 +248,7 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    rspack: (chain, { environments }) => {
+    rspack: (config, { environments }) => {
       console.log(environments);
     },
   },
@@ -345,9 +346,7 @@ export default {
 - **类型：**
 
 ```ts
-function prependPlugins(
-  plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-): void;
+function prependPlugins(plugins: Rspack.Plugin | Rspack.Plugin[]): void;
 ```
 
 在内部 Rspack 插件数组头部添加额外的插件，数组头部的插件会优先执行。
@@ -371,9 +370,7 @@ export default {
 - **类型：**
 
 ```ts
-function appendPlugins(
-  plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-): void;
+function appendPlugins(plugins: Rspack.Plugin | Rspack.Plugin[]): void;
 ```
 
 在内部 Rspack 插件数组尾部添加额外的插件，数组尾部的插件会在最后执行。
@@ -383,7 +380,7 @@ export default {
   tools: {
     rspack: (config, { appendPlugins }) => {
       // 添加单个插件
-      appendPlugins([new PluginA()]);
+      appendPlugins(new PluginA());
 
       // 以数组形式添加多个插件
       appendPlugins([new PluginA(), new PluginB()]);

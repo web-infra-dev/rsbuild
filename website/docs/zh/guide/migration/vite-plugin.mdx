@@ -19,13 +19,17 @@ Rsbuild 插件的定义方式与 Vite 相似，通常都是一个接收插件选
 
 两者的主要区别在于：Vite 的 hooks 直接定义在插件描述对象上，而 Rsbuild 的 hooks 是通过 [api 对象](/plugins/dev/core) 来访问和调用，这允许你更灵活地控制插件 API 的调用时机。
 
+以下示例将 `.foo` 文件转换为 JavaScript 模块：
+
 - Vite 插件：
 
 ```ts title="vitePlugin.ts"
-const vitePlugin = (options) => ({
+const vitePlugin = () => ({
   name: 'vite-plugin',
-  transform() {
-    // ...
+  transform(code, id) {
+    if (id.endsWith('.foo')) {
+      return `export default ${JSON.stringify(code)};`;
+    }
   },
 });
 ```
@@ -33,11 +37,11 @@ const vitePlugin = (options) => ({
 - Rsbuild 插件：
 
 ```ts title="rsbuildPlugin.ts"
-const rsbuildPlugin = (options) => ({
+const rsbuildPlugin = () => ({
   name: 'rsbuild-plugin',
   setup(api) {
-    api.transform(() => {
-      // ...
+    api.transform({ test: /\.foo$/ }, ({ code }) => {
+      return `export default ${JSON.stringify(code)};`;
     });
   },
 });
@@ -60,7 +64,7 @@ Rsbuild 的插件 API 覆盖了大部分的 Vite 和 Rollup 插件 hooks，例�
 | `closeBundle`        | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
 | `transformIndexHtml` | [modifyHTML](/plugins/dev/hooks#modifyhtml), [modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags)                       |
 
-请参考 [插件系统](/plugins/dev/index) 文档来了解更多。
+请参考 [插件开发](/plugins/dev/index) 文档来了解更多。
 
 ## `config` 钩子
 
@@ -100,7 +104,7 @@ const rsbuildPlugin = {
 ```
 
 :::tip
-查看 [配置迁移](/guide/migration/vite#配置迁移) 了解如何将 Vite 的配置迁移到 Rsbuild。
+查看 [配置迁移](/guide/migration/vite#config-migration) 了解如何将 Vite 的配置迁移到 Rsbuild。
 :::
 
 ## `configEnvironment` 钩子
@@ -143,6 +147,10 @@ const rsbuildPlugin = {
 
 Rsbuild 提供了 [api.getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 方法来获取已解析的配置。这个方法与 Vite 的 `configResolved` 钩子的使用场景类似。
 
+当插件钩子提供 [environment context](/api/javascript-api/environment-api#environment-context) 时，建议通过 `environment.config` 获取当前环境的规范化配置。
+
+以下示例在转换 `.foo` 文件时读取规范化后的配置：
+
 - Vite 插件：
 
 ```ts title="vitePlugin.ts"
@@ -153,9 +161,12 @@ const vitePlugin = () => {
     configResolved(resolvedConfig) {
       config = resolvedConfig;
     },
-    transform() {
+    transform(code, id) {
+      if (!id.endsWith('.foo')) {
+        return;
+      }
       console.log(config);
-      // ...
+      return `export default ${JSON.stringify(code)};`;
     },
   };
 };
@@ -167,10 +178,10 @@ const vitePlugin = () => {
 const rsbuildPlugin = () => ({
   name: 'read-config',
   setup(api) {
-    api.transform(() => {
-      const config = api.getNormalizedConfig();
+    api.transform({ test: /\.foo$/ }, ({ code, environment }) => {
+      const { config } = environment;
       console.log(config);
-      // ...
+      return `export default ${JSON.stringify(code)};`;
     });
   },
 });
@@ -251,7 +262,7 @@ const rsbuildPlugin = {
 
 ## `apply` 属性
 
-Rsbuild 插件提供了与 Vite 插件一致的 [apply 属性](/plugins/dev/core#条件启用)。
+Rsbuild 插件提供了与 Vite 插件一致的 [apply 属性](/plugins/dev/core#conditional-application)。
 
 - Vite 插件：
 

@@ -1,8 +1,11 @@
 {
   "name": "create-rsbuild",
-  "version": "2.0.3",
+  "version": "2.1.13",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
@@ -17,17 +20,17 @@
     "create-rsbuild": "./bin.js"
   },
   "files": [
-    "template-*",
+    "template-*/**",
     "dist",
     "bin.js"
   ],
   "scripts": {
-    "build": "rslib --syntax es2023",
-    "dev": "rslib --syntax es2023 -w",
+    "build": "rs lib --syntax es2023",
+    "dev": "rs lib --syntax es2023 -w",
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "create-rstack": "2.1.1"
+    "@rstackjs/create-toolkit": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
@@ -37,9 +40,8 @@
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
-    "@rslib/core": "0.21.3",
-    "@types/node": "^24.12.2",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

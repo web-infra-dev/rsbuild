@@ -1,8 +1,11 @@
 {
   "name": "@rsbuild/plugin-vue",
-  "version": "1.2.7",
+  "version": "2.0.1",
   "description": "Vue 3 plugin of Rsbuild",
   "homepage": "https://rsbuild.rs",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
@@ -13,8 +16,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "default": "./dist/index.js"
     }
   },
   "types": "./dist/index.d.ts",
@@ -22,23 +24,22 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib",
-    "dev": "rslib -w"
+    "build": "rs lib",
+    "dev": "rs lib -w",
+    "test": "rs test"
   },
   "dependencies": {
-    "rspack-vue-loader": "^17.5.0"
+    "rspack-vue-loader": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
-    "@rslib/core": "0.21.3",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.2",
-    "typescript": "^6.0.3",
-    "vue": "^3.5.33"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vue": "catalog:"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^1.0.0 || ^2.0.0-0"
+    "@rsbuild/core": "^2.0.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {

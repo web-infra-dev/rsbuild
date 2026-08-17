@@ -1,5 +1,5 @@
 const worker = new Worker(
-  /* webpackChunkName: "foo-worker" */ new URL('./worker.js', import.meta.url),
+  /* rspackChunkName: "foo-worker" */ new URL('./worker.js', import.meta.url),
 );
 
 worker.postMessage({

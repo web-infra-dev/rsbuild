@@ -6,7 +6,7 @@ import content from './test-temp-config';
 export default defineConfig({
   dev: {
     watchFiles: {
-      type: 'reload-server',
+      type: 'restart',
       paths: ['./test-temp-config.ts'],
     },
   },

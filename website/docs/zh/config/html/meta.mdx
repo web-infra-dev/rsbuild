@@ -126,10 +126,10 @@ export default {
 - **类型：**
 
 ```ts
-type MetaFunction = ({
-  value: MetaOptions,
-  entryName: string,
-}) => MetaOptions | void;
+type MetaFunction = (context: {
+  value: MetaOptions;
+  entryName: string;
+}) => MetaOptions | void | Promise<MetaOptions | void>;
 ```
 
 当 `html.meta` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：
@@ -192,3 +192,9 @@ export default {
   },
 };
 ```
+
+## 版本历史
+
+| 版本   | 变更内容                          |
+| ------ | --------------------------------- |
+| v2.0.8 | 新增对 `html.meta` 异步函数的支持 |

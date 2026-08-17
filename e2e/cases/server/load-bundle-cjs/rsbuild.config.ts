@@ -30,13 +30,7 @@ export default defineConfig({
     },
   },
   environments: {
-    web: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
-    },
+    web: {},
     node: {
       output: {
         target: 'node',

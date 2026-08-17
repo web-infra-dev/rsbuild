@@ -22,9 +22,9 @@ Rsbuild 使用 Rspack 内置的 [lightningcss-loader](https://rspack.rs/zh/guide
 - Lightning CSS 会自动将 CSS 语法降级，这允许你在代码中使用现代的 CSS 特性，比如 CSS nesting，custom media queries 等，而无需担心浏览器兼容性问题。
 - 你可以使用 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 来自定义 `lightningcss-loader` 的选项。
 
-### 禁用 Lightning CSS
+### 禁用 Lightning CSS \{#disabling-lightning-css}
 
-如果 Lightning CSS 无法满足你的需求，你也可以禁用 Lightning CSS，并使用 [PostCSS](#使用-postcss) 来转换 CSS 代码。
+如果 Lightning CSS 无法满足你的需求，你也可以禁用 Lightning CSS，并使用 [PostCSS](#postcss) 来转换 CSS 代码。
 
 步骤如下：
 
@@ -113,7 +113,7 @@ Rsbuild 通过插件来支持社区流行的 CSS 预处理器，包括 Sass、Le
 
 - [Sass 插件](/plugins/list/plugin-sass)
 - [Less 插件](/plugins/list/plugin-less)
-- [Stylus 插件](/plugins/list/plugin-stylus)
+- [Stylus 插件](https://github.com/rstackjs/rsbuild-plugin-stylus)
 
 ## CSS-in-JS
 
@@ -163,6 +163,26 @@ body {
 @import '~normalize.css';
 ```
 
+## 导入属性
+
+Rsbuild 支持通过 `type: 'text'` 导入属性引用 CSS 文件的原始内容，并将其作为字符串导入到 JavaScript 中。
+
+```js title="src/index.js"
+import rawCss from './style.css' with { type: 'text' };
+
+console.log(rawCss); // 输出 CSS 文件的原始内容
+```
+
+使用 `import "*.css" with { type: 'text' }` 的行为如下：
+
+- 获取 CSS 文件的原始文本内容，不经过任何预处理或编译
+- 内容会作为字符串内联到最终的 JavaScript 包中
+- 不会生成单独的 CSS 文件
+
+:::tip
+`type: 'text'` 在 Rsbuild >= 2.1.3 中支持。
+:::
+
 ## 查询参数
 
 ### inline
@@ -190,9 +210,9 @@ console.log(inlineCss); // 编译后的 CSS 内容
 
 ### raw
 
-Rsbuild 支持通过 `?raw` 查询参数引用 CSS 文件的原始内容，并将其作为字符串导入到 JavaScript 中。
+Rsbuild 也支持通过 `?raw` 查询参数引用 CSS 文件的原始内容，并将其作为字符串导入到 JavaScript 中。
 
-```ts title="src/index.js"
+```js title="src/index.js"
 import rawCss from './style.css?raw';
 
 console.log(rawCss); // 输出 CSS 文件的原始内容

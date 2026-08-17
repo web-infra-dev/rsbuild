@@ -43,7 +43,9 @@ async function modifyRsbuildConfig(context: InternalContext) {
   const pluginsCount = context.config.plugins?.length ?? 0;
   const [modified] = await context.hooks.modifyRsbuildConfig.callChain(
     context.config,
-    { mergeRsbuildConfig },
+    {
+      mergeRsbuildConfig,
+    },
   );
   context.config = modified;
 
@@ -122,6 +124,11 @@ const initEnvironmentConfigs = (
   const isEnvironmentEnabled = (name: string) =>
     !specifiedEnvironments || specifiedEnvironments.includes(name);
 
+  const baseEnvironmentConfig = {
+    ...baseConfig,
+    dev: pick(dev, allowedEnvironmentDevKeys),
+  };
+
   const applyEnvironmentDefaultConfig = (config: MergedEnvironmentConfig) => {
     if (!config.source.entry || Object.keys(config.source.entry).length === 0) {
       config.source.entry = getDefaultEntryWithMemo();
@@ -136,6 +143,7 @@ const initEnvironmentConfigs = (
     if (config.output.module === undefined) {
       config.output.module = isServer;
     }
+
     // For `web` and `web-worker` targets, minify is true by default in production mode
     // For `node` target, minify is false by default
     if (config.output.minify === undefined) {
@@ -150,15 +158,10 @@ const initEnvironmentConfigs = (
       Object.entries(environments)
         .filter(([name]) => isEnvironmentEnabled(name))
         .map(([name, config]) => {
-          const environmentConfig = {
-            ...mergeRsbuildConfig(
-              {
-                ...baseConfig,
-                dev: pick(dev, allowedEnvironmentDevKeys),
-              },
-              config,
-            ),
-          } as unknown as MergedEnvironmentConfig;
+          const environmentConfig = mergeRsbuildConfig(
+            baseEnvironmentConfig,
+            config,
+          ) as unknown as MergedEnvironmentConfig;
 
           return [name, applyEnvironmentDefaultConfig(environmentConfig)];
         }),
@@ -177,10 +180,9 @@ const initEnvironmentConfigs = (
   }
 
   return {
-    [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
-      ...baseConfig,
-      dev: pick(dev, allowedEnvironmentDevKeys),
-    } as MergedEnvironmentConfig),
+    [defaultEnvironmentName]: applyEnvironmentDefaultConfig(
+      baseEnvironmentConfig as MergedEnvironmentConfig,
+    ),
   };
 };
 
@@ -300,15 +302,15 @@ export async function initRsbuildConfig({
     environments[name] = normalizedEnvironmentConfig;
   }
 
-  // watch tsconfig files and restart server when tsconfig files changed
-  // to ensure `paths` alias can be updated
+  // Watch tsconfig files and restart the dev server or watch build when they change
+  // to ensure that `paths` aliases can be updated.
   if (
     tsconfigPaths.size &&
     normalizedBaseConfig.resolve.aliasStrategy === 'prefer-tsconfig'
   ) {
     normalizedBaseConfig.dev.watchFiles.push({
       paths: Array.from(tsconfigPaths),
-      type: 'reload-server',
+      type: 'restart',
     });
   }
 

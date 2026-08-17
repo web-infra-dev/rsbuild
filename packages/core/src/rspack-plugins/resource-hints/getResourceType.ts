@@ -22,6 +22,7 @@ import {
   AUDIO_EXTENSIONS,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
+  TRACK_EXTENSIONS,
   VIDEO_EXTENSIONS,
 } from '../../constants';
 
@@ -75,7 +76,7 @@ export function getResourceType({
     return 'font';
   }
 
-  if (['vtt'].includes(extension)) {
+  if (TRACK_EXTENSIONS.includes(extension)) {
     return 'track';
   }
 

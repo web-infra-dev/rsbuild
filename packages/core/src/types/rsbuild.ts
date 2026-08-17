@@ -1,4 +1,5 @@
 import type { Compiler, MultiCompiler } from '@rspack/core';
+import type { LoadConfigResult } from '../loadConfig';
 import type { LoadEnvOptions } from '../loadEnv';
 import type { Logger } from '../logger';
 import type { RsbuildDevServer } from '../server/devServer';
@@ -12,6 +13,7 @@ import type {
   RsbuildConfig,
 } from './config';
 import type { RsbuildContext } from './context';
+import type { RestartFn } from './hooks';
 import type { RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';
 import type { Falsy } from './utils';
@@ -72,8 +74,9 @@ export type InitConfigsOptions = Pick<RsbuildContext, 'action'>;
 export type InspectConfigOptions = {
   /**
    * Inspect the config in the specified mode.
-   * Available options: 'development' or 'production'.
-   * @default 'development'
+   * Available options: 'development', 'production', or 'none'.
+   * @default Inferred from `process.env.NODE_ENV`: 'development' when unset,
+   * 'development' or 'production' when matching, otherwise 'none'.
    */
   mode?: RsbuildMode;
   /**
@@ -84,7 +87,7 @@ export type InspectConfigOptions = {
   verbose?: boolean;
   /**
    * Specify the output path for inspection results.
-   * @default 'output.distPath.root'
+   * @default '<context.distPath>/.rsbuild'
    */
   outputPath?: string;
   /**
@@ -120,6 +123,8 @@ export type InspectConfigResult = {
 
 export type CreateCompiler = () => Promise<Compiler | MultiCompiler>;
 
+type RsbuildConfigInput = RsbuildConfig | LoadConfigResult;
+
 export type CreateRsbuildOptions = {
   /**
    * The root path of current project.
@@ -143,24 +148,28 @@ export type CreateRsbuildOptions = {
    * Alias for `config`.
    * This option will be deprecated in the future.
    */
-  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  rsbuildConfig?: RsbuildConfigInput | (() => Promise<RsbuildConfigInput>);
   /**
-   * Rsbuild configurations.
+   * Rsbuild configuration or the result returned by `loadConfig`.
    * Passing a function to load the config asynchronously with custom logic.
    */
-  config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  config?: RsbuildConfigInput | (() => Promise<RsbuildConfigInput>);
   /**
    * Whether to call `loadEnv` to load environment variables and define them
    * as global variables via `source.define`.
    * @default false
    */
   loadEnv?: boolean | LoadEnvOptions;
+  /**
+   * Function used to restart the current dev server or watch build.
+   */
+  restart?: RestartFn;
 };
 
 export type ResolvedCreateRsbuildOptions = Required<
   Pick<CreateRsbuildOptions, 'cwd' | 'callerName'>
 > &
-  Pick<CreateRsbuildOptions, 'loadEnv' | 'environment'> & {
+  Pick<CreateRsbuildOptions, 'loadEnv' | 'environment' | 'restart'> & {
     rsbuildConfig: RsbuildConfig;
   };
 
@@ -229,7 +238,7 @@ export type RsbuildInstance = {
        * Remove the plugin in the specified environment.
        * If environment is not specified, remove it in all environments.
        */
-      environment: string;
+      environment?: string;
     },
   ) => void;
   /**
@@ -316,6 +325,7 @@ export type RsbuildInstance = {
   | 'onCloseDevServer'
   | 'onDevCompileDone'
   | 'onExit'
+  | 'onRestart'
 >;
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker';

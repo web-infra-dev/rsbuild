@@ -10,7 +10,7 @@ description: 'Customize CLI shortcuts by providing a function that receives the 
 type CliShortcuts =
   | boolean
   | {
-      help?: boolean;
+      help?: boolean | string;
       custom?: (shortcuts: CliShortcut[]) => CliShortcut[];
     };
 ```
@@ -57,7 +57,7 @@ export default {
 
 ## Custom shortcuts
 
-`custom` option can be used to custom shortcuts, the value is a function that receives the default shortcuts array and returns a new shortcuts array.
+The `custom` option can be used to customize shortcuts. Its value is a function that receives the default shortcuts array and returns a new shortcuts array.
 
 - Add custom shortcuts:
 

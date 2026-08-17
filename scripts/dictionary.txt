@@ -45,6 +45,8 @@ fnames
 frontends
 fullhash
 fullhref
+giget
+gltf
 gzipped
 httpxy
 icss
@@ -53,6 +55,7 @@ iife
 imagex
 inlines
 jfif
+Jiahan
 jiti
 jridgewell
 jscpuprofile
@@ -70,6 +73,7 @@ Mergeable
 microfrontend
 microfrontends
 minifiers
+miniflare
 modularly
 mrmime
 mYbzBtlg6o
@@ -99,6 +103,7 @@ pmmmwh
 postcssrc
 preact
 prebundle
+prebundled
 preconnecting
 preflights
 prefresh

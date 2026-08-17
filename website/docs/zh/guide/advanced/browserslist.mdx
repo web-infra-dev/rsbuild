@@ -38,7 +38,7 @@ export default {
 
 > 请参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 了解更多。
 
-## 默认值
+## 默认值 \{#default-values}
 
 Rsbuild 会根据 [output.target](/config/output/target) 来设置不同的 Browserslist 默认值，你也可以在项目中显式设置 Browserslist，这会让项目的兼容范围更加明确。
 
@@ -103,6 +103,20 @@ last 2 versions
 > 0.2%
 not dead
 ```
+
+### Baseline 查询 \{#baseline-queries}
+
+Rsbuild >= v2.1.11 支持使用 Baseline 查询，你可以根据 Baseline 特性集来指定目标浏览器版本。例如，如需兼容所有被归类为 [Baseline 广泛可用的特性](https://web.dev/baseline)，可以配置：
+
+```yaml title=".browserslistrc"
+baseline widely available
+```
+
+你还可以使用 `baseline 2024` 等年份查询，或 `baseline widely available on 2025-05-01` 等固定日期查询。
+
+:::tip
+更多信息请参考 [在 Browserslist 中使用 Baseline](https://web.dev/articles/use-baseline-with-browserslist)。
+:::
 
 ### 生效范围
 

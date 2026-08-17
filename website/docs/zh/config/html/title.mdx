@@ -4,7 +4,7 @@ description: '如果当前项目使用的 HTML 模板中已经包含了 title �
 
 # html.title
 
-- **类型：** `string ｜ Function`
+- **类型：** `string | Function`
 - **默认值：** `'Rsbuild App'`
 
 配置 HTML 页面的 title 标签。
@@ -36,7 +36,10 @@ export default {
 - **类型：**
 
 ```ts
-type TitleFunction = ({ value: string; entryName: string }) => string | void;
+type TitleFunction = (context: {
+  value: string;
+  entryName: string;
+}) => string | void | Promise<string | void>;
 ```
 
 当 `html.title` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：
@@ -71,3 +74,9 @@ export default {
   },
 };
 ```
+
+## 版本历史
+
+| 版本   | 变更内容                           |
+| ------ | ---------------------------------- |
+| v2.0.8 | 新增对 `html.title` 异步函数的支持 |

@@ -69,12 +69,11 @@ Rsbuild 支持使用 `RSPACK_PROFILE` 环境变量来对 Rspack 进行构建性�
 }
 ```
 
-当 build 命令执行完成，或是 dev server 被关闭时，Rsbuild 会在当前目录下生成一个 `.rspack-profile-${timestamp}-${pid}` 文件夹，其中包含 `rspack.pftrace` 文件（在 1.4.0 之前的版本中为 `trace.json`），该文件由 Rspack 基于 [tracing](https://github.com/tokio-rs/tracing) 细粒度地记录了各个阶段的耗时，可以使用 [ui.perfetto.dev](https://ui.perfetto.dev/) 进行查看。
+默认情况下，Rspack 会使用 `logger` trace layer，并将 profile 输出到项目根目录下的 `.rspack-profile-${timestamp}-${pid}/rspack.log`。当 `RSPACK_TRACE_OUTPUT` 是相对文件路径时，它会解析到生成的 `.rspack-profile-${timestamp}-${pid}` 目录下；绝对路径会按原样使用。如果需要输出到终端，请显式设置 `RSPACK_TRACE_OUTPUT=stdout` 或 `RSPACK_TRACE_OUTPUT=stderr`。
 
 :::tip
 
 - 在关闭 dev server 时，优先使用 `CTRL + D` 关闭，而不是 `CTRL + C`，这可以确保 Rspack 能够完整地记录性能数据。
-- 生成的 `trace.json` 文件体积较大，如果需要分享给他人查看，可以压缩为 zip 文件来减小体积。
 - 关于 Rspack 性能分析的更多用法，可参考 [Rspack - Tracing](https://rspack.rs/zh/contribute/development/tracing)。
 
 :::

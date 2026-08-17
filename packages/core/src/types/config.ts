@@ -28,6 +28,7 @@ import type {
   ModifyBundlerChainUtils,
   ModifyChainUtils,
   Routes,
+  WatchFileEvent,
 } from './hooks';
 import type { RsbuildPlugins } from './plugin';
 import type { RsbuildEntry, RsbuildMode, RsbuildTarget } from './rsbuild';
@@ -44,7 +45,7 @@ import type {
 } from './thirdParty';
 import type {
   ConfigChain,
-  ConfigChainMergeContext,
+  ConfigChainAsyncWithContext,
   ConfigChainWithContext,
   LiteralUnion,
   MaybePromise,
@@ -98,14 +99,10 @@ export type RspackMerge = (
 ) => Rspack.Configuration;
 
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
-  addRules: (rules: RspackRule | RspackRule[]) => void;
-  appendRules: (rules: RspackRule | RspackRule[]) => void;
-  prependPlugins: (
-    plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-  ) => void;
-  appendPlugins: (
-    plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-  ) => void;
+  addRules: (rules: OneOrMany<RspackRule>) => void;
+  appendRules: (rules: OneOrMany<RspackRule>) => void;
+  prependPlugins: (plugins: OneOrMany<Rspack.Plugin>) => void;
+  appendPlugins: (plugins: OneOrMany<Rspack.Plugin>) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: RspackMerge;
 };
@@ -145,7 +142,7 @@ export type NarrowedRspackConfig = Omit<
   /**
    * Plugins to use during compilation.
    */
-  plugins: NonNullable<Rspack.Configuration['plugins']>;
+  plugins: Rspack.Plugin[];
   /**
    * Options for module configuration.
    */
@@ -340,8 +337,7 @@ export type ProxyOptions = HttpProxyOptions & {
 };
 
 export type ProxyConfig =
-  | Record<string, string | ProxyOptions>
-  | ProxyOptions[];
+  Record<string, string | ProxyOptions> | ProxyOptions[];
 
 export type HistoryApiFallbackContext = {
   match: RegExpMatchArray;
@@ -350,8 +346,7 @@ export type HistoryApiFallbackContext = {
 };
 
 export type HistoryApiFallbackTo =
-  | string
-  | ((context: HistoryApiFallbackContext) => string);
+  string | ((context: HistoryApiFallbackContext) => string);
 
 export type HistoryApiFallbackOptions = {
   /**
@@ -387,14 +382,28 @@ export type HistoryApiFallbackOptions = {
   }[];
 };
 
+export type PrintUrlsParams = {
+  urls: string[];
+  port: number;
+  routes: Routes;
+  protocol: string;
+};
+
+export type PrintUrlsOptions = {
+  /**
+   * The maximum number of entry URLs to print.
+   * Set to `0` to print only the server URL without entry routes.
+   * @default 10
+   */
+  maxRoutes?: number;
+};
+
 export type PrintUrls =
   | boolean
-  | ((params: {
-      urls: string[];
-      port: number;
-      routes: Routes;
-      protocol: string;
-    }) => (string | { url: string; label?: string })[] | void);
+  | PrintUrlsOptions
+  | ((
+      params: PrintUrlsParams,
+    ) => (string | { url: string; label?: string })[] | void);
 
 export type PublicDirOptions = {
   /**
@@ -713,7 +722,7 @@ export type PrintFileSizeOptions = {
   /**
    * A filter function to exclude static assets from the total size or detailed size.
    * If both `include` and `exclude` are set, `exclude` will take precedence.
-   * @default (asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)
+   * @default (asset) => /\.(?:map|LICENSE\.txt|d\.(?:ts|mts|cts))$/.test(asset.name)
    */
   exclude?: (asset: PrintFileSizeAsset) => boolean;
   /**
@@ -742,10 +751,7 @@ export type Preconnect = (string | PreconnectOption)[];
 export type DnsPrefetch = string[];
 
 export type ResourceHintsIncludeType =
-  | 'async-chunks'
-  | 'initial'
-  | 'all-assets'
-  | 'all-chunks';
+  'async-chunks' | 'initial' | 'all-assets' | 'all-chunks';
 
 export type ResourceHintsFilterFn = (filename: string) => boolean;
 
@@ -757,7 +763,7 @@ export interface ResourceHintsOptions {
   /**
    * Specifies which types of resources will be included.
    * - `async-chunks`: Includes all async resources on the current page, such as async JS
-   * chunks, and its associated CSS, images, fonts, and other static resources.
+   * chunks, and its associated CSS, images, and fonts.
    * - `initial`: Includes all non-async resources on the current page.
    * - `all-chunks`: Includes all async and non-async resources on the current page.
    * - `all-assets`: Includes all resources from all pages.
@@ -765,11 +771,13 @@ export interface ResourceHintsOptions {
    */
   type?: ResourceHintsIncludeType;
   /**
-   * A extra filter to determine which resources to include.
+   * An extra filter to determine which resources to include.
    */
   include?: ResourceHintsFilter;
   /**
-   * A extra filter to determine which resources to exclude.
+   * An extra filter to determine which resources to exclude.
+   *
+   * @default /\.(?:webmanifest|pdf|txt)$/i
    */
   exclude?: ResourceHintsFilter;
   /**
@@ -794,7 +802,6 @@ export interface PerformanceConfig {
 
   /**
    * To enable or configure persistent build cache.
-   * @experimental This feature is experimental and may be changed in the future.
    * @default false
    */
   buildCache?: BuildCacheOptions | boolean;
@@ -829,11 +836,11 @@ export interface PerformanceConfig {
   /**
    * Inject the `<link rel="preload">` tags for the static assets generated by Rsbuild.
    *
-   * `performance.preload` can be set to an object to specify the options.
+   * `performance.preload` can be set to an object or an array of objects to specify the options.
    *
    * When `performance.preload` is set to `true`, Rsbuild will use the following default
    * options to preload resources. This means preloading all async resources on the current
-   * page, including async JS and its associated CSS, image, font, and other resources.
+   * page, including async JS and its associated CSS, image, and font resources.
    *
    * ```js
    * const defaultOptions = {
@@ -842,16 +849,16 @@ export interface PerformanceConfig {
    * ```
    * @default undefined
    */
-  preload?: true | PreloadOptions;
+  preload?: true | OneOrMany<PreloadOptions>;
 
   /**
    * Inject the `<link rel="prefetch">` tags for the static assets generated by Rsbuild.
    *
-   * `performance.prefetch` can be set to an object to specify the options.
+   * `performance.prefetch` can be set to an object or an array of objects to specify the options.
    *
    * When `performance.prefetch` is set to `true`, Rsbuild will use the following default
    * options to prefetch resources. This means prefetching all async resources on the current
-   * page, including async JS and its associated CSS, image, font, and other resources.
+   * page, including async JS and its associated CSS, image, and font resources.
    *
    * ```js
    * const defaultOptions = {
@@ -860,7 +867,7 @@ export interface PerformanceConfig {
    * ```
    * @default undefined
    */
-  prefetch?: true | PrefetchOptions;
+  prefetch?: true | OneOrMany<PrefetchOptions>;
 }
 
 export interface NormalizedPerformanceConfig extends PerformanceConfig {
@@ -878,10 +885,7 @@ export type SplitChunks = Rspack.OptimizationSplitChunksOptions | false;
  * - `none`: disables Rsbuild preset rules.
  */
 export type SplitChunksPreset =
-  | 'default'
-  | 'single-vendor'
-  | 'per-package'
-  | 'none';
+  'default' | 'single-vendor' | 'per-package' | 'none';
 
 export type SplitChunksConfig = Rspack.OptimizationSplitChunksOptions & {
   preset?: SplitChunksPreset;
@@ -899,10 +903,7 @@ export interface BaseSplitRules {
 
 export interface BaseChunkSplit extends BaseSplitRules {
   strategy?:
-    | 'split-by-module'
-    | 'split-by-experience'
-    | 'all-in-one'
-    | 'single-vendor';
+    'split-by-module' | 'split-by-experience' | 'all-in-one' | 'single-vendor';
 }
 
 export interface SplitBySize extends BaseSplitRules {
@@ -1141,11 +1142,7 @@ export type SourceMap = {
 };
 
 export type CSSModulesLocalsConvention =
-  | 'asIs'
-  | 'camelCase'
-  | 'camelCaseOnly'
-  | 'dashes'
-  | 'dashesOnly';
+  'asIs' | 'camelCase' | 'camelCaseOnly' | 'dashes' | 'dashesOnly';
 
 export type CSSModules = {
   /**
@@ -1193,9 +1190,11 @@ export type Minify =
       js?: boolean | 'always';
       /**
        * Minimizer options of JavaScript, which will be passed to SWC.
+       * When using an array, each item registers a separate minimizer and the first matching item
+       * applies to each JavaScript asset.
        * @default {}
        */
-      jsOptions?: SwcJsMinimizerRspackPluginOptions;
+      jsOptions?: OneOrMany<SwcJsMinimizerRspackPluginOptions>;
       /**
        * Whether to enable minification for CSS bundles.
        * - `true`: Enabled in production mode.
@@ -1206,9 +1205,11 @@ export type Minify =
       css?: boolean | 'always';
       /**
        * Minimizer options of CSS, which will be passed to LightningCSS.
+       * When using an array, each item registers a separate minimizer and the first matching item
+       * applies to each CSS asset.
        * @default inherit from `tools.lightningcssLoader` config
        */
-      cssOptions?: LightningCssMinimizerRspackPluginOptions;
+      cssOptions?: OneOrMany<LightningCssMinimizerRspackPluginOptions>;
     };
 
 export type InlineChunkTestFunction = (params: {
@@ -1317,6 +1318,45 @@ export type CleanDistPathObject = {
 
 export type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
 
+export type AutoExternalExclude = OneOrMany<string | RegExp>;
+
+export type AutoExternal =
+  | boolean
+  | {
+      /**
+       * Whether to automatically externalize dependencies of type `dependencies`.
+       * @default true
+       */
+      dependencies?: boolean;
+      /**
+       * Whether to automatically externalize dependencies of type `optionalDependencies`.
+       * @default true
+       */
+      optionalDependencies?: boolean;
+      /**
+       * Whether to automatically externalize dependencies of type `peerDependencies`.
+       * @default true
+       */
+      peerDependencies?: boolean;
+      /**
+       * Whether to automatically externalize dependencies of type `devDependencies`.
+       * @default false
+       */
+      devDependencies?: boolean;
+      /**
+       * Specify the package.json file path(s) used to collect dependencies.
+       * Relative paths are resolved from the Rsbuild root directory.
+       * @default '<root>/package.json'
+       */
+      packageJson?: string | string[];
+      /**
+       * Prevent matched packages from being automatically externalized.
+       * Strings match package names exactly, and regular expressions test package names.
+       * @default undefined
+       */
+      exclude?: AutoExternalExclude;
+    };
+
 export interface OutputConfig {
   /**
    * Setting the build target for Rsbuild.
@@ -1330,6 +1370,12 @@ export interface OutputConfig {
    * @default undefined
    */
   externals?: Externals;
+  /**
+   * Automatically externalize dependencies declared in the root package.json.
+   * This option will generate `externals` rules for matching dependencies and their subpath imports.
+   * @default false
+   */
+  autoExternal?: AutoExternal;
   /**
    * Set the directory of the output files.
    * Rsbuild will emit files to the specified subdirectory according to the file type.
@@ -1638,7 +1684,9 @@ export type HtmlTagHandler = (
 
 export type HtmlTagDescriptor = HtmlTag | HtmlTagHandler;
 
-type ChainedHtmlOption<O> = ConfigChainMergeContext<O, { entryName: string }>;
+type ChainedHtmlOption<O> = OneOrMany<
+  O | ((context: { value: O; entryName: string }) => MaybePromise<O | void>)
+>;
 
 export type AppIconItem = {
   /**
@@ -1765,7 +1813,7 @@ export interface HtmlConfig {
    * Define the parameters in the HTML template,
    * corresponding to the `templateParameters` config of [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin).
    */
-  templateParameters?: ConfigChainWithContext<
+  templateParameters?: ConfigChainAsyncWithContext<
     Record<string, unknown>,
     { entryName: string }
   >;
@@ -1911,12 +1959,19 @@ export type ClientConfig = {
    * @default 'info'
    */
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
+  /**
+   * The path to a browser-side module that resolves the WebSocket URL.
+   * The module should default export a function: `(url: string) => string`.
+   */
+  webSocketUrlResolver?: string;
 };
 
 export type NormalizedClientConfig = Optional<
   Required<ClientConfig>,
-  'protocol'
+  'protocol' | 'webSocketUrlResolver'
 >;
+
+export type WebSocketUrlResolver = (url: string) => string;
 
 export type { ChokidarOptions };
 
@@ -1926,14 +1981,25 @@ export type WatchFiles = {
    */
   paths: string | string[];
   /**
+   * File events that trigger the configured action.
+   * - `add`: A file is created.
+   * - `change`: A file is modified.
+   * - `unlink`: A file is deleted.
+   * @default ['add', 'change', 'unlink']
+   */
+  events?: WatchFileEvent[];
+  /**
    * Watch options passed to [chokidar](https://github.com/paulmillr/chokidar).
    */
   options?: ChokidarOptions;
   /**
-   * Specifies whether to reload the page or restart the dev server when files change.
+   * Specifies the action to take when files change.
+   * - `reload-page`: Reload the page.
+   * - `restart`: Trigger a restart request for the dev server or watch build.
+   * - `reload-server`: Deprecated alias for `restart`.
    * @default 'reload-page'
    */
-  type?: 'reload-page' | 'reload-server';
+  type?: 'reload-page' | 'restart' | 'reload-server';
 };
 
 export type CliShortcut = {
@@ -2047,7 +2113,7 @@ export interface DevConfig {
   writeToDisk?: WriteToDisk;
   /**
    * Watch specified files and directories for changes. When a file change is detected,
-   * it can trigger a page reload or restart the dev server.
+   * it can trigger a page reload or a restart request for the dev server or watch build.
    * @default undefined
    */
   watchFiles?: WatchFiles | WatchFiles[];
@@ -2134,6 +2200,10 @@ export type RsbuildConfigMeta = {
    * Path to the rsbuild config file.
    */
   configFilePath: string;
+  /**
+   * Paths to files imported by the rsbuild config file.
+   */
+  configFileDependencies?: string[];
 };
 
 /**

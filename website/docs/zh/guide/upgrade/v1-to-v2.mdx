@@ -264,7 +264,7 @@ export default {
 };
 ```
 
-### 迁移 `performance.chunkSplit`
+### 迁移 `performance.chunkSplit` \{#migrate-performancechunksplit}
 
 `performance.chunkSplit` 已在 Rsbuild 2.0 中废弃，但暂未移除，仍可继续使用。
 
@@ -412,11 +412,11 @@ export default {
 };
 ```
 
-### Proxy 中间件升级
+### Proxy 中间件升级 \{#proxy-middleware-upgraded}
 
 Rsbuild 依赖的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 从 v2 升级到了 v4，个别配置项发生了变化。
 
-你可以根据以下示例进行迁移，或查看 [http-proxy-middleware v3 不兼容更新](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) 了解更多细节。
+你可以根据以下示例进行迁移，或查看 [http-proxy-middleware v3 不兼容更新](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION_V3.md#v3-breaking-changes) 了解更多细节。
 
 - `context` 选项替换为 `pathFilter`：
 
@@ -428,6 +428,22 @@ export default {
 -       context: '/api',
 +       pathFilter: '/api',
         target: 'https://example.com',
+      },
+    ],
+  },
+};
+```
+
+- Rsbuild 现在会对所有代理配置写法应用默认代理选项。在数组写法中，[`changeOrigin`](https://github.com/chimurai/http-proxy-middleware#httpxy-options) 现在默认值为 `true`，与对象写法保持一致。如果你依赖之前的 `false` 默认值，请显式设置：
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+      {
+        pathFilter: '/api',
+        target: 'https://example.com',
++       changeOrigin: false,
       },
     ],
   },

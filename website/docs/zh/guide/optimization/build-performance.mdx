@@ -26,21 +26,23 @@ Rsbuild 默认对构建性能进行了充分优化，但是随着使用场景变
 
 Rsbuild 提供了 [performance.buildCache](/config/performance/build-cache) 配置，开启后可以显著提升重构建的速度。
 
-### 减少模块
+### React Compiler
+
+如果项目中使用了 React Compiler，建议通过 [Rsbuild 内置的 Rust 版本的 React Compiler](/plugins/list/plugin-react#reactcompiler) 来启用，而不是通过 Babel 接入 React Compiler，从而减少 Babel 带来的性能开销。
+
+### 减少模块数量
 
 对应用引用的模块数量进行优化，可以减少产物体积并提升构建性能，请阅读 [优化产物体积](/guide/optimization/optimize-bundle) 章节来了解一些优化方法。
 
-### 优化 Tailwind CSS
+### 并行处理
 
-在使用 Tailwind CSS v3 时，如果没有正确地配置 `tailwind.config.js` 中的 `content` 字段，可能会导致构建性能和热更新性能下降。
+部分插件支持使用 worker 线程并行处理模块。开启后，模块会被分配到多个 worker 线程中处理，降低主线程压力，并在编译大量模块时提升整体构建性能。
 
-参考 [Tailwind CSS v3 - 优化构建性能](/guide/styling/tailwindcss-v3#优化构建性能) 了解更多。
+以下插件支持 `parallel` 选项：
 
-### 并行编译 Less 文件
-
-如果你的项目使用了 [@rsbuild/plugin-less](/plugins/list/plugin-less) 插件，且项目中包含大量 Less 文件，可以尝试开启并发编译功能来提升编译性能。
-
-参考 [Less 插件 - parallel](/plugins/list/plugin-less#parallel) 了解更多。
+- [@rsbuild/plugin-babel - parallel](/plugins/list/plugin-babel#parallel)：并行执行 Babel 转换。
+- [@rsbuild/plugin-less - parallel](/plugins/list/plugin-less#parallel)：并行编译 Less 模块。
+- [@rsbuild/plugin-svgr - parallel](/plugins/list/plugin-svgr#parallel)：并行将 SVG 模块转换为 React 组件。
 
 ### 工具选择
 
@@ -48,7 +50,14 @@ Rsbuild 提供了 [performance.buildCache](/config/performance/build-cache) 配�
 
 - [@rsbuild/plugin-babel](/plugins/list/plugin-babel)：该插件基于 Babel 实现，建议优先使用性能更优的 [SWC](/guide/configuration/swc) 进行代码转换。
 - [@rsbuild/plugin-less](/plugins/list/plugin-less)：Less 编译器性能相对较差，推荐使用 [@rsbuild/plugin-sass](/plugins/list/plugin-sass) 或其他高性能的 CSS 方案。
-- [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin)：可以将 Terser 替换为更快的压缩工具，例如使用 Rsbuild 内置的 [SWC](/guide/configuration/swc)。
+- [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check)：推荐使用 TypeScript 7 或更高版本以提升类型检查性能，详见 [TypeScript 7+ 支持](https://github.com/rstackjs/rsbuild-plugin-type-check#typescript-7-support)。
+- [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin) 或 [minimizer-webpack-plugin](https://www.npmjs.com/package/minimizer-webpack-plugin)：可以将 Terser 替换为更快的压缩工具，例如使用 Rsbuild 内置的 [SWC](/guide/configuration/swc)。
+
+### 优化 Tailwind CSS
+
+在使用 Tailwind CSS v3 时，如果没有正确地配置 `tailwind.config.js` 中的 `content` 字段，可能会导致构建性能和热更新性能下降。
+
+参考 [Tailwind CSS v3 - 优化构建性能](/guide/styling/tailwindcss-v3#optimize-build-performance) 了解更多。
 
 ## 开发模式优化
 

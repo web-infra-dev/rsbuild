@@ -40,7 +40,11 @@ type CreateRsbuildOptions = {
   callerName?: string;
   environment?: string[];
   loadEnv?: boolean | LoadEnvOptions;
-  config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  config?:
+    | RsbuildConfig
+    | LoadConfigResult
+    | (() => Promise<RsbuildConfig | LoadConfigResult>);
+  restart?: RestartFn;
 };
 ```
 
@@ -48,7 +52,35 @@ type CreateRsbuildOptions = {
 - `callerName`: The name of the framework or tool currently invoking Rsbuild, defaults to `'rsbuild'`, see [Specify caller name](#specify-caller-name).
 - `environment`: Build only specified [environments](/guide/advanced/environments). If not specified or an empty array is passed, all environments will be built.
 - `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load environment variables and define them as global variables via [source.define](/config/source/define).
-- `config`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
+- `config`: Rsbuild configuration object or the result returned by [`loadConfig`](#loadconfig). Refer to [Config overview](/config/) for all available configuration options.
+- `restart`: A function that handles restart requests for the current dev server or watch build. See [restart](#restart-handling).
+
+### Pass configuration
+
+You can pass an Rsbuild configuration object to the `config` option:
+
+```ts
+import { createRsbuild, type RsbuildConfig } from '@rsbuild/core';
+
+const config: RsbuildConfig = {
+  // Rsbuild configuration
+};
+
+const rsbuild = await createRsbuild({ config });
+```
+
+You can also pass the complete result returned by [`loadConfig`](#loadconfig) to `config`:
+
+```ts
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const result = await loadConfig();
+const rsbuild = await createRsbuild({
+  config: result,
+});
+```
+
+When the complete `loadConfig` result is passed, the absolute paths of the config file and its imported dependencies are stored in [`rsbuild.context.configFile`](/api/javascript-api/instance#contextconfigfile) and [`rsbuild.context.configFileDependencies`](/api/javascript-api/instance#contextconfigfiledependencies), respectively. When persistent build cache is enabled, these files are also used as build dependencies. See [Configuration file watching](/guide/configuration/rsbuild#configuration-file-watching) for how Rsbuild watches them for restart requests.
 
 :::tip
 `config` was introduced in Rsbuild 1.6. In earlier versions, use `rsbuildConfig` as an alternative.
@@ -63,9 +95,9 @@ import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
   config: async () => {
-    const { content } = await loadConfig();
-    someFunctionToUpdateConfig(content);
-    return content;
+    const result = await loadConfig();
+    someFunctionToUpdateConfig(result.content);
+    return result;
   },
 });
 ```
@@ -95,6 +127,43 @@ const rsbuild = await createRsbuild({
     prefixes: ['PUBLIC_', 'REACT_APP_'],
   },
 });
+```
+
+### Restart handling
+
+- **Version:** Added in v2.1.7
+
+The `restart` option allows the caller to control how Rsbuild restarts the current dev server or watch build. This is useful when the restart flow needs to be managed outside Rsbuild.
+
+> See [Configuration file watching](/guide/configuration/rsbuild#configuration-file-watching) to learn what triggers a restart.
+
+When a restart is requested, Rsbuild calls the [onRestart hook](/plugins/dev/hooks#onrestart), closes the current task resources, and then calls `restart`. The `restart` callback receives the options passed to the current `rsbuild.build()` or `rsbuild.startDevServer()` call.
+
+The function should return `true` when the replacement task starts successfully. If it returns `false` or throws an error, the restart watcher remains active so later file changes can retry the restart.
+
+```ts
+import { createRsbuild, type RestartFn } from '@rsbuild/core';
+
+async function createInstance() {
+  return createRsbuild({
+    restart,
+  });
+}
+
+const restart: RestartFn = async (context) => {
+  const rsbuild = await createInstance();
+
+  if (context.action === 'build') {
+    await rsbuild.build(context.options);
+  } else {
+    await rsbuild.startDevServer(context.options);
+  }
+
+  return true;
+};
+
+const rsbuild = await createInstance();
+await rsbuild.startDevServer();
 ```
 
 ### Specify caller name
@@ -134,24 +203,39 @@ Load Rsbuild configuration file.
 - **Type:**
 
 ```ts
-function loadConfig(params?: {
+function loadConfig<Config = RsbuildConfig>(params?: {
   // Default is process.cwd()
   cwd?: string;
   // Specify the configuration file (relative or absolute path)
   path?: string;
+  // Config file names to search when path is not specified
+  configFileNames?: string[];
+  /**
+   * The export name to read from the config file
+   * Set to `false` to execute the config file without reading exports
+   * @default 'default'
+   */
+  exportName?: string | false;
   meta?: Record<string, unknown>;
   envMode?: string;
+  /**
+   * The command passed to the config function.
+   * @default process.argv[2]
+   */
+  command?: string;
   /**
    * Specify the config loader, can be `auto`, `jiti` or `native`.
    * - 'auto': Use native Node.js loader first, fallback to jiti if failed
    * - 'jiti': Use jiti as loader, which supports TypeScript and ESM out of the box
-   * - 'native': Use native Node.js loader, requires TypeScript support in Node.js >= 22.6
+   * - 'native': Use native Node.js loader. TypeScript config files require
+   *   native TypeScript support, such as Node.js 22.6+.
    * @default 'auto'
    */
   loader?: 'auto' | 'jiti' | 'native';
 }): Promise<{
-  content: RsbuildConfig;
+  content: Config;
   filePath: string | null;
+  dependencies: string[];
 }>;
 ```
 
@@ -161,12 +245,12 @@ function loadConfig(params?: {
 import { loadConfig } from '@rsbuild/core';
 
 // Load `rsbuild.config.*` from cwd using the default lookup order
-const { content } = await loadConfig();
+const result = await loadConfig();
 
-console.log(content); // -> Rsbuild config object
+console.log(result.content); // -> Rsbuild config object
 
 const rsbuild = await createRsbuild({
-  config: content,
+  config: result,
 });
 ```
 
@@ -183,6 +267,18 @@ When `path` is not specified, `loadConfig` searches for config files in the foll
 
 If multiple config files exist at the same time, `loadConfig` uses the first matching file in this list.
 
+### Customize config file names
+
+Use the `configFileNames` option to replace the default lookup list. The file names are resolved relative to `cwd`, and this option is ignored when `path` is specified.
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  configFileNames: ['framework.config.ts', 'framework.config.mjs'],
+});
+```
+
 ### Specify the configuration file
 
 Use the `path` option to load the `my-config.ts` configuration file:
@@ -193,6 +289,34 @@ import { loadConfig } from '@rsbuild/core';
 
 const { content } = await loadConfig({
   path: join(__dirname, 'my-config.ts'),
+});
+```
+
+### Specify the export name
+
+By default, `loadConfig` reads the default export from the config file. Use `exportName` to read a named export instead:
+
+```ts title="rsbuild.config.ts"
+export const rsbuildConfig = {
+  // ...
+};
+```
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  exportName: 'rsbuildConfig',
+});
+```
+
+Set `exportName` to `false` when the config file only needs to be executed and no export should be read. In this case, `content` is `{}`.
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  exportName: false,
 });
 ```
 
@@ -217,6 +341,18 @@ In the `defineConfig` configuration function, you can access the `foo` variable 
 export default defineConfig(({ meta }) => {
   console.log(meta.foo); // bar
   return config;
+});
+```
+
+### Passing command
+
+By default, `loadConfig` passes `process.argv[2]` as the `command` value to the config function. Use the `command` option to explicitly set this value.
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  command: 'build',
 });
 ```
 
@@ -286,7 +422,7 @@ type LoadEnvResult = {
   cleanup: () => void;
 };
 
-function loadEnv(options: LoadEnvOptions): LoadEnvResult;
+function loadEnv(options?: LoadEnvOptions): LoadEnvResult;
 ````
 
 - **Example:**
@@ -306,7 +442,7 @@ const mergedConfig = mergeRsbuildConfig(
 );
 ```
 
-This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
+This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment variables](/guide/advanced/env-vars) for details.
 
 :::tip
 
@@ -333,7 +469,7 @@ loadEnv({ processEnv: { ...process.env } });
 
 Used to merge multiple Rsbuild configuration objects.
 
-The `mergeRsbuildConfig` function takes multiple configuration objects as parameters. It deep merges each configuration object, automatically combining multiple function values into an array of sequentially executed functions, and returns a merged configuration object.
+The `mergeRsbuildConfig` function takes multiple configuration objects as parameters. It deeply merges each configuration object, automatically combining multiple function values into an array of sequentially executed functions, and returns a new merged configuration object without modifying the input configuration objects.
 
 - **Type:**
 
@@ -349,19 +485,19 @@ function mergeRsbuildConfig(
 import { mergeRsbuildConfig } from '@rsbuild/core';
 
 const config1 = {
-  dev: {
-    https: false,
+  server: {
+    compress: false,
   },
 };
 const config2 = {
-  dev: {
-    https: true,
+  server: {
+    compress: true,
   },
 };
 
 const mergedConfig = mergeRsbuildConfig(config1, config2);
 
-console.log(mergedConfig); // { dev: { https: true } }
+console.log(mergedConfig); // { server: { compress: true } }
 ```
 
 > This method will not modify the config object in the input parameter.
@@ -511,9 +647,11 @@ function ensureAssetPrefix(
   // URL string to be processed, can be a relative path or an absolute URL
   url: string,
   // URL prefix to be appended
-  assetPrefix: string
+  assetPrefix?: Rspack.PublicPath,
 ) => string;
 ```
+
+If `assetPrefix` is not passed, Rsbuild uses the default asset prefix `/`. If `assetPrefix` is `'auto'` or a function, this helper returns the input URL unchanged.
 
 - **Example:**
 

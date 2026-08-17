@@ -128,6 +128,12 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
   return normalizedConfig as T;
 };
 
+/**
+ * Deeply merges multiple Rsbuild configuration objects.
+ *
+ * This function returns a new merged configuration object and does not modify
+ * the input configuration objects.
+ */
 export const mergeRsbuildConfig = <T = RsbuildConfig>(
   ...originalConfigs: (T | undefined)[]
 ): T => {
@@ -138,9 +144,6 @@ export const mergeRsbuildConfig = <T = RsbuildConfig>(
   // In most cases there will be two configs so we perform this check first
   if (configs.length === 2) {
     return merge(configs[0], configs[1]) as T;
-  }
-  if (configs.length === 1) {
-    return configs[0];
   }
   if (configs.length === 0) {
     return {} as T;

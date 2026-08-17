@@ -1,0 +1,83 @@
+// Rstest Snapshot v1
+
+exports[`printFileSize.total: false should work 1`] = `
+"
+File (web)                             Size       Gzip
+dist/static/css/index.[[hash]].css     X.X kB    X.X kB
+dist/index.html                        X.X kB    X.X kB
+dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+dist/static/image/icon.[[hash]].png    X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB"
+`;
+
+exports[`should allow to custom exclude function 1`] = `
+"
+File (web)                             Size       Gzip
+dist/static/css/index.[[hash]].css     X.X kB    X.X kB
+dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+dist/static/image/icon.[[hash]].png    X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
+                              Total:   X.X kB   X.X kB"
+`;
+
+exports[`should allow to disable gzip-compressed size 1`] = `
+"
+File (web)                             Size
+dist/static/css/index.[[hash]].css     X.X kB
+dist/index.html                        X.X kB
+dist/static/js/index.[[hash]].js       X.X kB
+dist/static/image/icon.[[hash]].png    X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB
+                              Total:   X.X kB"
+`;
+
+exports[`should allow to filter assets by name 1`] = `
+"
+File (web)                             Size       Gzip
+dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
+                              Total:   X.X kB   X.X kB"
+`;
+
+exports[`should allow to filter assets by size 1`] = `
+"
+File (web)                             Size       Gzip
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB"
+`;
+
+exports[`should print dist folder correctly if it is not a subdir of root 1`] = `
+"
+File (web)                                                 Size       Gzip
+../test-temp-folder/dist/static/css/index.[[hash]].css     X.X kB    X.X kB
+../test-temp-folder/dist/index.html                        X.X kB    X.X kB
+../test-temp-folder/dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+../test-temp-folder/dist/static/image/icon.[[hash]].png    X.X kB
+../test-temp-folder/dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
+                                                  Total:   X.X kB   X.X kB"
+`;
+
+exports[`should print file size after building by default 1`] = `
+"
+File (web)                             Size       Gzip
+dist/static/css/index.[[hash]].css     X.X kB    X.X kB
+dist/index.html                        X.X kB    X.X kB
+dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+dist/static/image/icon.[[hash]].png    X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
+                              Total:   X.X kB   X.X kB"
+`;
+
+exports[`should print size of multiple environments correctly 1`] = `
+"
+File (web)                    Size       Gzip
+dist/static/css/index.css     X.X kB    X.X kB
+dist/index.html               X.X kB    X.X kB
+dist/static/js/index.js       X.X kB     X.X kB
+dist/static/image/icon.png    X.X kB
+dist/static/js/lib-react.js   X.X kB   X.X kB
+                     Total:   X.X kB   X.X kB
+File (node)                         Size
+dist/server/static/image/icon.png   X.X kB
+dist/server/index.js                X.X kB
+                           Total:   X.X kB"
+`;

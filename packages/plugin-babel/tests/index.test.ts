@@ -1,5 +1,4 @@
-import { createRsbuild, type Rspack } from '@rsbuild/core';
-import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
+import { createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
 import { pluginBabel } from '../src';
 
@@ -21,27 +20,6 @@ describe('plugins/babel', () => {
 
     const config = await rsbuild.initConfigs();
     expect(matchRules(config[0], 'a.tsx')[0]).toMatchSnapshot();
-  });
-
-  it('babel-loader should works with builtin:swc-loader for Rsbuild v1', async () => {
-    const rsbuild = await createRsbuildV1({
-      cwd: import.meta.dirname,
-      config: {
-        plugins: [pluginBabel()],
-        source: {
-          include: [/node_modules[\\/]query-string[\\/]/],
-          exclude: ['src/example'],
-        },
-        performance: {
-          buildCache: false,
-        },
-      },
-    });
-
-    const config = await rsbuild.initConfigs();
-    expect(
-      matchRules(config[0] as Rspack.Configuration, 'a.tsx')[0],
-    ).toMatchSnapshot();
   });
 
   it('should apply environment config correctly', async () => {
@@ -79,9 +57,9 @@ describe('plugins/babel', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    for (const bundlerConfig of bundlerConfigs) {
-      expect(matchRules(bundlerConfig, 'a.tsx')[0]).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    for (const rspackConfig of rspackConfigs) {
+      expect(matchRules(rspackConfig, 'a.tsx')[0]).toMatchSnapshot();
     }
   });
 
@@ -144,5 +122,33 @@ describe('plugins/babel', () => {
 
     const configs = await rsbuild.initConfigs();
     expect(matchRules(configs[0], 'a.tsx')[0]).toMatchSnapshot();
+  });
+
+  it('should allow to add multiple babel rules', async () => {
+    const rsbuild = await createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        plugins: [
+          pluginBabel({
+            include: /a\.js$/,
+            babelLoaderOptions: {
+              plugins: ['babel-plugin-a'],
+            },
+          }),
+          pluginBabel({
+            include: /b\.js$/,
+            babelLoaderOptions: {
+              plugins: ['babel-plugin-b'],
+            },
+          }),
+        ],
+        performance: {
+          buildCache: false,
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+    expect(matchRules(configs[0], 'a.js')).toMatchSnapshot();
   });
 });

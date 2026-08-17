@@ -5,14 +5,14 @@
   "type": "module",
   "scripts": {
     "build": "rsbuild build",
-    "dev": "rsbuild --open",
+    "dev": "rsbuild",
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "preact": "^10.29.1"
+    "preact": "^10.29.8"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.3",
-    "@rsbuild/plugin-preact": "^1.7.2"
+    "@rsbuild/core": "^2.1.13",
+    "@rsbuild/plugin-preact": "^2.0.0"
   }
 }

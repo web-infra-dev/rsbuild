@@ -10,10 +10,13 @@ description: 'Controls whether code minification is enabled, and provides config
 type Minify =
   | boolean
   | {
-      js?: boolean;
-      jsOptions?: Rspack.SwcJsMinimizerRspackPluginOptions;
-      css?: boolean;
-      cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
+      js?: boolean | 'always';
+      jsOptions?:
+        SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[];
+      css?: boolean | 'always';
+      cssOptions?:
+        | LightningCssMinimizerRspackPluginOptions
+        | LightningCssMinimizerRspackPluginOptions[];
     };
 ```
 
@@ -101,7 +104,7 @@ export default {
 
 ### minify.jsOptions
 
-- **Type:** `Rspack.SwcJsMinimizerRspackPluginOptions`
+- **Type:** `SwcJsMinimizerRspackPluginOptions | SwcJsMinimizerRspackPluginOptions[]`
 - **Default:** `{}`
 
 `output.minify.jsOptions` configures SWC's minification options. See [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin) for detailed configuration options.
@@ -123,6 +126,33 @@ export default {
 ```
 
 > Refer to [Configure SWC](/guide/configuration/swc) for more details.
+
+You can pass an array of options to apply different minification settings to different files. Each item registers a separate `SwcJsMinimizerRspackPlugin` instance:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      jsOptions: [
+        {
+          include: /vendor\.js$/,
+          minimizerOptions: {
+            mangle: true,
+          },
+        },
+        {
+          exclude: /vendor\.js$/,
+          minimizerOptions: {
+            mangle: false,
+          },
+        },
+      ],
+    },
+  },
+};
+```
+
+Each JavaScript asset is minimized only once. If an asset matches multiple items, the first matching item takes effect, so we recommend using mutually exclusive `test`, `include`, or `exclude` conditions.
 
 ### minify.css
 
@@ -161,7 +191,7 @@ export default {
 
 ### minify.cssOptions
 
-- **Type:** `Rspack.LightningcssMinimizerRspackPluginOptions`
+- **Type:** `LightningCssMinimizerRspackPluginOptions | LightningCssMinimizerRspackPluginOptions[]`
 - **Default:** inherit from [tools.lightningcssLoader](/config/tools/lightningcss-loader)
 
 `output.minify.cssOptions` configures Lightning CSS's minification options. See [LightningCssMinimizerRspackPlugin Documentation](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin) for detailed configuration options.
@@ -186,23 +216,50 @@ export default {
 When you configure options in [tools.lightningcssLoader](/config/tools/lightningcss-loader), `output.minify.cssOptions` will automatically inherit these options, ensuring that CSS code transformation behavior in the development build is consistent with the production build.
 :::
 
+You can pass an array of options to apply different minification settings to different files. Each item registers a separate `LightningCssMinimizerRspackPlugin` instance:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      cssOptions: [
+        {
+          include: /foo\.css$/,
+          minimizerOptions: {
+            unusedSymbols: ['foo-unused'],
+          },
+        },
+        {
+          include: /bar\.css$/,
+          minimizerOptions: {
+            unusedSymbols: ['bar-unused'],
+          },
+        },
+      ],
+    },
+  },
+};
+```
+
+Each CSS asset is minimized only once. If an asset matches multiple items, the first matching item takes effect, so we recommend using mutually exclusive `test`, `include`, or `exclude` conditions.
+
 ## Switching minifier
 
 ### JS minifier
 
 If the default SWC minifier doesn't meet your needs, you can switch to other minifiers using the [tools.bundlerChain](/config/tools/bundler-chain) option.
 
-For example, use [terser-webpack-plugin](https://github.com/terser/terser-webpack-plugin) to switch to Terser or esbuild.
+For example, use [minimizer-webpack-plugin](https://github.com/webpack/minimizer-webpack-plugin) to switch to Terser or esbuild.
 
 - Use [terser](https://github.com/terser/terser) to minify JS code:
 
 ```ts title="rsbuild.config.ts"
-import TerserPlugin from 'terser-webpack-plugin';
+import MinimizerPlugin from 'minimizer-webpack-plugin';
 
 export default {
   tools: {
     bundlerChain(chain, { CHAIN_ID }) {
-      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(MinimizerPlugin, [
         {
           // options
         },
@@ -215,14 +272,14 @@ export default {
 - Use [esbuild](https://github.com/evanw/esbuild) to minify JS code, you need to install the `esbuild` package and set `esbuildMinify`:
 
 ```ts title="rsbuild.config.ts"
-import TerserPlugin from 'terser-webpack-plugin';
+import MinimizerPlugin from 'minimizer-webpack-plugin';
 
 export default {
   tools: {
     bundlerChain(chain, { CHAIN_ID }) {
-      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(MinimizerPlugin, [
         {
-          minify: TerserPlugin.esbuildMinify,
+          minify: MinimizerPlugin.esbuildMinify,
         },
       ]);
     },
@@ -236,6 +293,8 @@ When using a custom JS minifier, the `minify.jsOptions` option will no longer ta
 
 ## Version history
 
-| Version | Changes                               |
-| ------- | ------------------------------------- |
-| v2.0.0  | Defaults to `false` for `node` target |
+| Version | Changes                                                   |
+| ------- | --------------------------------------------------------- |
+| v2.1.8  | Added support for setting `minify.cssOptions` to an array |
+| v2.1.7  | Added support for setting `minify.jsOptions` to an array  |
+| v2.0.0  | Defaults to `false` for `node` target                     |

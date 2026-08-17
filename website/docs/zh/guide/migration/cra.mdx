@@ -9,23 +9,23 @@ description: '本章节介绍如何将 Create React App（简称 CRA）或 CRACO
 :::tip CRA eject
 如果你的项目已经执行了 CRA 的 `eject` 命令，那么本文档的大部分内容将不再适用。
 
-CRA 项目在 eject 后，更近似于直接使用 webpack 的项目，因此你可以参考 [webpack 迁移指南](/guide/migration/webpack)。
+CRA 项目在 eject 后，更近似于直接使用 webpack 的项目，因此可参考 [webpack 迁移指南](/guide/migration/webpack)。
 
 :::
 
 ## 使用 Agent Skills
 
-如果你在使用支持 Skills 的 coding agent，可以安装 [migrate-cra-to-rsbuild](https://github.com/rstackjs/agent-skills#migrate-cra-to-rsbuild) 技能来辅助完成迁移流程。
+使用支持 Skills 的 coding agent 时，可安装 [migrate-to-rsbuild](https://github.com/rstackjs/agent-skills#migrate-to-rsbuild) 技能来辅助完成迁移流程。
 
 ```bash
-npx skills add rstackjs/agent-skills --skill migrate-cra-to-rsbuild
+npx skills add rstackjs/agent-skills --skill migrate-to-rsbuild
 ```
 
 安装后，让 coding agent 协助完成迁移即可。
 
 ## 安装依赖
 
-首先你需要把 CRA 的 npm 依赖替换为 Rsbuild 的依赖。
+首先，将 CRA 的 npm 依赖替换为 Rsbuild 的依赖。
 
 import { PackageManagerTabs } from '@theme';
 
@@ -41,7 +41,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## 更新 npm scripts
 
-下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
+下一步，将 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
 ```json title="package.json"
 {
@@ -57,7 +57,7 @@ import { PackageManagerTabs } from '@theme';
 ```
 
 :::tip
-Rsbuild 没有内置测试框架，因此没有提供用于替换 `react-scripts test` 的命令，你可以直接使用 [Rstest](https://github.com/web-infra-dev/rstest)、Jest 或 Vitest 等测试框架。查看 [测试](/guide/advanced/testing) 了解更多。
+Rsbuild 没有内置测试框架，因此没有提供用于替换 `react-scripts test` 的命令，可直接使用 [Rstest](https://github.com/web-infra-dev/rstest)、Jest 或 Vitest 等测试框架。查看 [测试](/guide/advanced/testing) 了解更多。
 :::
 
 ## 创建配置文件
@@ -75,7 +75,7 @@ export default defineConfig({
 
 ## HTML 模板
 
-CRA 默认使用 `public/index.html` 文件作为 HTML 模板。在 Rsbuild 中，你可以通过 [html.template](/config/html/template) 来指定 HTML 模板：
+CRA 默认使用 `public/index.html` 文件作为 HTML 模板。在 Rsbuild 中，通过 [html.template](/config/html/template) 指定 HTML 模板：
 
 ```ts title="rsbuild.config.ts"
 export default defineConfig({
@@ -100,7 +100,7 @@ export default defineConfig({
 
 CRA 默认会将构建产物输出到 `build` 目录，而 Rsbuild 的默认构建产物目录为 `dist`。
 
-你可以配置 Rsbuild 的 [output.distPath.root](/config/output/dist-path) 选项，将目录修改为 `build`，与 CRA 保持一致：
+配置 Rsbuild 的 [output.distPath.root](/config/output/dist-path) 选项，将目录修改为 `build`，与 CRA 保持一致：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -120,11 +120,11 @@ Rsbuild 通过插件来支持 Sass 和 Less 等 CSS 预处理器，使用方式�
 
 - [Sass 插件](/plugins/list/plugin-sass)
 - [Less 插件](/plugins/list/plugin-less)
-- [Stylus 插件](/plugins/list/plugin-stylus)
+- [Stylus 插件](https://github.com/rstackjs/rsbuild-plugin-stylus)
 
 ## 使用 SVGR
 
-如果你使用了 CRA 的 "SVG 转 React 组件" 功能（即 [SVGR](https://react-svgr.com/)），那么还需要安装 Rsbuild 的 SVGR 插件。
+如果 CRA 项目使用了 "SVG 转 React 组件" 功能（即 [SVGR](https://react-svgr.com/)），还需安装 Rsbuild 的 SVGR 插件。
 
 比如使用了以下用法：
 
@@ -177,7 +177,7 @@ export default {
 
 CRA 默认会使用 Babel 编译 node_modules 中的依赖，但 Rsbuild 则不会，这是为了避免二次编译带来的性能损耗和潜在的编译错误。
 
-如果你需要处理 node_modules 中依赖引起的语法兼容性问题，可以使用 [source.include](/config/source/include#编译-node_modules) 配置项来编译 node_modules。
+如果你需要处理 node_modules 中依赖引起的语法兼容性问题，可以使用 [source.include](/config/source/include#compile-node_modules) 配置项来编译 node_modules。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -190,9 +190,9 @@ export default {
 
 ## 环境变量
 
-CRA 默认会将 `REACT_APP_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-变量)）。
+CRA 默认会将 `REACT_APP_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-variables)）。
 
-为了兼容 CRA 的行为，你可以手动调用 Rsbuild 提供的 [loadEnv](/api/javascript-api/core#loadenv) 方法来读取 `REACT_APP_` 开头的环境变量，并通过 [source.define](/config/source/define) 配置项注入到 client 代码中。
+为了兼容 CRA 的行为，可手动调用 Rsbuild 提供的 [loadEnv](/api/javascript-api/core#loadenv) 方法来读取 `REACT_APP_` 开头的环境变量，并通过 [source.define](/config/source/define) 配置项注入到 client 代码中。
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, loadEnv } from '@rsbuild/core';
@@ -215,7 +215,7 @@ console.log(PUBLIC_URL);
 console.log(process.env);
 ```
 
-在 Rsbuild 中，你可以通过 [source.define](/config/source/define) 配置项设置 `process.env`，读取 `loadEnv` 方法返回的 `rawPublicVars`，来允许以上用法：
+在 Rsbuild 中，可通过 [source.define](/config/source/define) 配置项设置 `process.env`，读取 `loadEnv` 方法返回的 `rawPublicVars`，来允许以上用法：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, loadEnv } from '@rsbuild/core';
@@ -234,10 +234,10 @@ export default defineConfig({
 
 ## 引用未知资源
 
-在 CRA 中，如果你引用了一个构建工具无法识别的资源，CRA 默认会将该文件输出到 `build/static/media` 目录下，比如 `document.pdf` 文件：
+在 CRA 中，如果你引用了一个构建工具无法识别的资源，CRA 默认会将该文件输出到 `build/static/media` 目录下，比如 `model.gltf` 文件：
 
 ```js title="index.js"
-import document from './document.pdf';
+import model from './model.gltf';
 ```
 
 在 Rsbuild 中，遇到无法识别的资源时，Rsbuild 会输出报错日志，类似于：
@@ -246,12 +246,12 @@ import document from './document.pdf';
 You may need an appropriate loader to handle this file type.
 ```
 
-为了解决该错误，你可以采用以下方法：
+为了解决该错误，可采用以下方法：
 
 - 使用 [tools.rspack](/config/tools/rspack) 配置一个合适的 loader 来处理该类型的资源。
 - 使用 [tools.rspack](/config/tools/rspack) 配置 [asset modules](https://rspack.rs/zh/guide/features/asset-module) 规则来处理该类型的资源。
 
-比如，你可以添加以下 asset modules 配置，来保持与 CRA 相同的输出结果：
+比如，可添加以下 asset modules 配置，来保持与 CRA 相同的输出结果：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -279,7 +279,7 @@ export default {
 
 CRA 提供了 [react-app-polyfill](https://npmjs.com/package/react-app-polyfill) 来手动注入 polyfill 代码。
 
-在 Rsbuild 项目中，你可以移除 react-app-polyfill 相关的依赖和代码，因为 Rsbuild 会自动读取 browserslist 配置，并允许你通过 [output.polyfill](/config/output/polyfill) 配置项来启用 polyfill 注入。
+在 Rsbuild 项目中，可移除 react-app-polyfill 相关的依赖和代码，因为 Rsbuild 会自动读取 browserslist 配置，并允许通过 [output.polyfill](/config/output/polyfill) 配置项启用 polyfill 注入。
 
 1. 移除 `react-app-polyfill` 引用：
 
@@ -306,9 +306,9 @@ export default {
 
 ## 配置 ESLint
 
-CRA 默认使用 ESLint 来检查代码质量。Rsbuild 默认不包含代码检查功能，但你可以在 `package.json` 中添加单独的 npm script 来运行 ESLint。
+CRA 默认使用 ESLint 检查代码质量。Rsbuild 默认不包含代码检查功能，但可在 `package.json` 中添加单独的 npm script 来运行 ESLint。
 
-首先安装 [eslint](https://eslint.org/) 和 [eslint-config-react-app](https://npmjs.com/package/eslint-config-react-app)，你需要安装 ESLint v8 来与 CRA 保持一致：
+首先安装 [eslint](https://eslint.org/) 和 [eslint-config-react-app](https://npmjs.com/package/eslint-config-react-app)。使用 ESLint v8 以保持与 CRA 一致：
 
 <PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
 
@@ -325,11 +325,11 @@ CRA 默认使用 ESLint 来检查代码质量。Rsbuild 默认不包含代码检
 }
 ```
 
-这样，你就可以使用 `npm run lint` 命令来运行 ESLint 检查了。
+然后运行 `npm run lint` 执行 ESLint 检查。
 
 ### 在构建中运行 ESLint
 
-除了在 `package.json` 中添加 `lint` 命令，你还可以添加 [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint) 插件来保持与 CRA 相同的行为。
+除了在 `package.json` 中添加 `lint` 命令，也可添加 [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint) 插件来保持与 CRA 相同的行为。
 
 `@rsbuild/plugin-eslint` 插件允许你在构建过程中执行 ESLint 检查。
 
@@ -341,7 +341,7 @@ export default {
 };
 ```
 
-注册插件后，在开发 (`npm run dev`) 和生产构建 (`npm run build`) 过程中，ESLint 会自动运行。插件会在控制台输出 ESLint 警告和错误。
+注册后，在开发 (`npm run dev`) 和生产构建 (`npm run build`) 过程中，ESLint 会自动运行。插件会在控制台输出 ESLint 警告和错误。
 
 :::warning
 我们并不推荐使用 `@rsbuild/plugin-eslint`，因为在构建过程中运行 ESLint 检查会显著增加构建时间。更推荐的做法是使用单独的 `lint` 命令来执行 ESLint 检查。

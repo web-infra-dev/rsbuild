@@ -3,15 +3,21 @@ description: 'Rsbuild 0.7 adds Storybook support, faster Sass compilation, and t
 date: 2024-05-28 18:00:00
 sidebar: false
 authors:
-  - name: chenjiahan
+  - name: Jiahan Chen
     avatar: 'https://github.com/chenjiahan.png'
+    github: 'chenjiahan'
   - name: 9aoy
     avatar: 'https://github.com/9aoy.png'
+    github: '9aoy'
 ---
+
+import { BlogAuthors } from '@rstack-dev/doc-ui/blog-authors';
+
+# Announcing Rsbuild 0.7
 
 _May 28, 2024_
 
-# Announcing Rsbuild 0.7
+<BlogAuthors />
 
 ![](https://assets.rspack.rs/rsbuild/rsbuild-banner-v0-7.png)
 
@@ -69,7 +75,7 @@ Rsbuild has also enabled the latest sass-loader's [modern-compiler](https://gith
 
 ## Better CSS supports
 
-Rsbuild now uses [CssExtractRspackPlugin](https://rspack.rs/plugins/rspack/css-extract-rspack-plugin) to extract CSS into separate files, rather than using the [experimental.css](https://rspack.rs/config/experiments#experimentscss) config to do so.
+Rsbuild now uses [CssExtractRspackPlugin](https://rspack.rs/plugins/rspack/css-extract-rspack-plugin) to extract CSS into separate files, rather than using the [experimental.css](https://v0.rspack.rs/config/experiments#experimentscss) config to do so.
 
 This allows Rsbuild to support more CSS features, including:
 

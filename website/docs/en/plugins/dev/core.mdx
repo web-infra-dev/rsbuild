@@ -190,7 +190,7 @@ const pluginBar = {
 
 For example, if you register both the Foo and Bar plugins mentioned above, the Foo plugin will not take effect because the Bar plugin declares the removal of the Foo plugin.
 
-If the current plugin is registered as a [specific environment plugin](/guide/advanced/environments#add-plugins-for-specified-environment), you can only remove plugins in that environment; global plugins remain in place.
+If the current plugin is registered as a [specific environment plugin](/guide/advanced/environments#plugins-specified-environment), you can only remove plugins in that environment; global plugins remain in place.
 
 ## api.context
 
@@ -239,6 +239,19 @@ const pluginFoo = () => ({
     api.onBeforeBuild(({ bundlerConfigs }) => {
       const config = api.getNormalizedConfig();
       console.log(config.html.title);
+    });
+  },
+});
+```
+
+When a plugin hook provides [`environment`](/api/javascript-api/environment-api#environment-context) in its callback arguments, we recommend using `environment.config` to access the normalized config for the current environment. This config is created by merging the base config with the [config for the current environment](/guide/advanced/environments) and then normalizing the result.
+
+```ts
+const pluginFoo = () => ({
+  setup(api) {
+    api.onBeforeEnvironmentCompile(({ environment }) => {
+      const { config } = environment;
+      console.log(config.output.target);
     });
   },
 });
@@ -345,6 +358,8 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
+  /** @deprecated Use `order` instead. */
+  enforce?: 'pre' | 'post';
   order?: 'pre' | 'post' | 'default';
 };
 ```
@@ -432,15 +447,18 @@ api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
 });
 ```
 
-- `enforce`: Specifies the execution order of the transform function, the same as Rspack's [rules[].enforce](https://rspack.rs/config/module-rules#rulesenforce).
-  - When `enforce` is `pre`, the transform function will be executed before other transform functions (or Rspack loaders).
-  - When `enforce` is `post`, the transform function will be executed after other transform functions (or Rspack loaders).
+- `order`: Specifies the execution order of the transform function, corresponding to Rspack's [rules[].enforce](https://rspack.rs/config/module-rules#rulesenforce).
+  - When `order` is `pre`, the transform function will be executed before other transform functions (or Rspack loaders).
+  - When `order` is `post`, the transform function will be executed after other transform functions (or Rspack loaders).
+  - When `order` is `default`, the transform function will use the default loader order.
 
 ```js
-api.transform({ test: /\.md$/, enforce: 'pre' }, ({ code }) => {
+api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
   // ...
 });
 ```
+
+- `enforce`: Deprecated. Use `order` instead.
 
 ### Handler param
 
@@ -508,7 +526,7 @@ api.transform(
 
 ### Difference with loader
 
-`api.transform` can be thought of as a lightweight implementation of Rspack loader. It provides a simple and easy to use API and automatically calls Rspack loader at the backend to transform the code.
+`api.transform` can be thought of as a lightweight implementation of Rspack loader. It provides a simple, easy-to-use API and automatically calls Rspack loader at the backend to transform the code.
 
 In Rsbuild plugins, you can quickly implement code transformation functions using `api.transform`, which can handle the majority of common scenarios without having to learn how to write an Rspack loader.
 
@@ -712,6 +730,7 @@ Here's the list of supported stages. Rspack will execute these stages sequential
 - `pre-process` — basic preprocessing of the assets.
 - `derived` — derive new assets from the existing assets.
 - `additions` — add additional sections to the existing assets, e.g., banner or initialization code.
+- `none` — run at `PROCESS_ASSETS_STAGE_NONE`, without selecting a specialized processing stage.
 - `optimize` — optimize existing assets in a general way.
 - `optimize-count` — optimize the count of existing assets, e.g., by merging them.
 - `optimize-compatibility` — optimize the compatibility of existing assets, e.g., add polyfills or vendor prefixes.
@@ -736,8 +755,19 @@ Used for plugin communication.
 /**
  * @param id Unique identifier, using Symbol can avoid naming conflicts
  * @param api Properties or methods to be exposed, it is recommended to use object format
+ * @param options Options for exposing the API
  */
-function expose<T = any>(id: string | symbol, api: T): void;
+function expose<T = any>(
+  id: string | symbol,
+  api: T,
+  options?: {
+    /**
+     * Register the exposed API for a specific environment.
+     * If omitted, the API is registered as global.
+     */
+    environment?: string;
+  },
+): void;
 ```
 
 - **Example:**
@@ -755,8 +785,21 @@ const pluginParent = () => ({
 ```
 
 :::tip
-If `api.expose` is called multiple times with the same `id`, the latter call will overwrite the previously exposed API.
+If `api.expose` is called multiple times with the same `id` and `environment`, the latter call will overwrite the previously exposed API.
 :::
+
+### Environment scoped API
+
+You can register an exposed API for a specific Rsbuild environment (the key of `config.environments`) by setting `options.environment`.
+
+When `api.useExposed` is called in an environment plugin, Rsbuild will first resolve the exposed API registered for the same environment, then fall back to the global exposed API.
+
+```ts
+api.expose('my-api', { name: 'web' }, { environment: 'web' });
+api.expose('my-api', { name: 'node' }, { environment: 'node' });
+```
+
+If `options.environment` is omitted, the API is registered as global and can be used as a fallback by plugins in all environments.
 
 ## api.useExposed
 
@@ -770,6 +813,10 @@ Used for plugin communication.
 /**
  * @param id Unique identifier
  * @returns The properties or methods obtained
+ *
+ * If the current plugin is registered in an environment, Rsbuild will
+ * first resolve the exposed API registered for the same environment,
+ * then fall back to the global exposed API.
  */
 function useExposed<T = any>(id: string | symbol): T | undefined;
 ```

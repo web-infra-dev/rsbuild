@@ -18,7 +18,11 @@ type ProxyConfig = ProxyOptions[] | Record<string, string | ProxyOptions>;
 
 Configure proxy rules for the dev server or preview server, and forward requests to the specified service.
 
+## Proxy options
+
 This feature is powered by [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware). You can use [all options](https://github.com/chimurai/http-proxy-middleware#options) provided by `http-proxy-middleware`, plus the extra [bypass](#bypass) option from Rsbuild.
+
+Rsbuild sets [`changeOrigin`](https://github.com/chimurai/http-proxy-middleware#httpxy-options) to `true` by default for every proxy rule. Other proxy options follow the defaults of `http-proxy-middleware`. Set `changeOrigin: false` to override it.
 
 ## Example
 

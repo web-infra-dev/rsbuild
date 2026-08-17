@@ -196,6 +196,35 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  it('should not modify the original object when a merged single config is modified', () => {
+    const obj: RsbuildConfig = {
+      source: {
+        entry: {
+          index: './src/index.ts',
+        },
+      },
+    };
+
+    const res = mergeRsbuildConfig(obj);
+
+    res.source!.entry!.index = './src/main.ts';
+
+    expect(res).toEqual({
+      source: {
+        entry: {
+          index: './src/main.ts',
+        },
+      },
+    });
+    expect(obj).toEqual({
+      source: {
+        entry: {
+          index: './src/index.ts',
+        },
+      },
+    });
+  });
+
   test('should merge server.open correctly', async () => {
     expect(
       mergeRsbuildConfig(

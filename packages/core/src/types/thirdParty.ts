@@ -50,8 +50,7 @@ export type PostCSSLoaderOptions = {
    * @default undefined
    */
   postcssOptions?:
-    | PostCSSOptions
-    | ((loaderContext: Rspack.LoaderContext) => PostCSSOptions);
+    PostCSSOptions | ((loaderContext: Rspack.LoaderContext) => PostCSSOptions);
 };
 
 export type PostCSSPlugin = AcceptedPlugin;

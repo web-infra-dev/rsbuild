@@ -29,6 +29,9 @@ npx create-rsbuild --dir my-project --template react
 
 # Using abbreviations
 npx create-rsbuild -d my-project -t react
+
+# Skip Git initialization
+npx create-rsbuild --dir my-project --template react --no-git
 ```
 
 ## Documentation

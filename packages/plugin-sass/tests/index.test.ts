@@ -1,5 +1,4 @@
-import { createRsbuild, type Rspack } from '@rsbuild/core';
-import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
+import { createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
 import { pluginSass } from '../src';
 
@@ -11,21 +10,8 @@ describe('plugin-sass', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.scss')).toMatchSnapshot();
-  });
-
-  it('should add sass-loader for Rsbuild v1', async () => {
-    const rsbuild = await createRsbuildV1({
-      config: {
-        plugins: [pluginSass()],
-      },
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(
-      matchRules(bundlerConfigs[0] as Rspack.Configuration, 'a.scss'),
-    ).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.scss')).toMatchSnapshot();
   });
 
   it('should add sass-loader and css-loader when injectStyles', async () => {
@@ -38,8 +24,8 @@ describe('plugin-sass', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.scss')).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.scss')).toMatchSnapshot();
   });
 
   it('should add sass-loader with excludes', async () => {
@@ -55,8 +41,8 @@ describe('plugin-sass', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.scss')).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.scss')).toMatchSnapshot();
   });
 
   it('should allow to use legacy API and mute deprecation warnings', async () => {
@@ -72,8 +58,8 @@ describe('plugin-sass', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.scss')).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.scss')).toMatchSnapshot();
   });
 
   it('should allow to add multiple sass rules', async () => {
@@ -90,8 +76,8 @@ describe('plugin-sass', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.scss').length).toBe(1);
-    expect(matchRules(bundlerConfigs[0], 'b.scss').length).toBe(2);
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.scss').length).toBe(1);
+    expect(matchRules(rspackConfigs[0], 'b.scss').length).toBe(2);
   });
 });

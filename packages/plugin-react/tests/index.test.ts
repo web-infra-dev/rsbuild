@@ -4,10 +4,6 @@ import { matchPlugin, matchRules } from '@scripts/test-helper';
 import { pluginReact } from '../src';
 
 describe('plugins/react', () => {
-  afterEach(() => {
-    rs.unstubAllEnvs();
-  });
-
   it('should work with swc-loader', async () => {
     const rsbuild = await createRsbuild({
       config: {
@@ -164,6 +160,38 @@ describe('plugins/react', () => {
     const config = await rsbuild.initConfigs();
     expect(JSON.stringify(config[0])).toContain(
       `"importSource":"@emotion/react"`,
+    );
+  });
+
+  it('should allow to enable react compiler', async () => {
+    const rsbuild = await createRsbuild();
+
+    rsbuild.addPlugins([
+      pluginReact({
+        reactCompiler: true,
+      }),
+    ]);
+    const config = await rsbuild.initConfigs();
+
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
+      `"reactCompiler":true`,
+    );
+  });
+
+  it('should allow to configure react compiler', async () => {
+    const rsbuild = await createRsbuild();
+
+    rsbuild.addPlugins([
+      pluginReact({
+        reactCompiler: {
+          target: '18',
+        },
+      }),
+    ]);
+    const config = await rsbuild.initConfigs();
+
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
+      `"reactCompiler":{"target":"18"}`,
     );
   });
 

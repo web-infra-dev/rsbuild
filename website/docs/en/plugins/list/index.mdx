@@ -6,13 +6,13 @@ description: 'You can read about the functionality of Rsbuild plugins and how to
 
 ## Plugin system
 
-You can read about the functionality of Rsbuild plugins and how to develop an Rsbuild plugin in the [Plugin System](/plugins/dev/index) documentation.
+You can read about the functionality of Rsbuild plugins and how to develop an Rsbuild plugin in the [Plugin development](/plugins/dev/index) documentation.
 
 ## Using plugins
 
-You can register Rsbuild plugins in the `rsbuild.config.ts` file using the `plugins` option. For more details, refer to [plugins](/config/plugins).
+Register plugins with the [plugins](/config/plugins) option in Rsbuild config.
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance#rsbuildaddplugins) method.
+With Rsbuild's JavaScript API, register plugins with [addPlugins](/api/javascript-api/instance#rsbuildaddplugins).
 
 ## Official plugins
 
@@ -59,9 +59,9 @@ The following are common framework-agnostic plugins:
 
 - [@rsbuild/plugin-assets-retry](https://github.com/rstackjs/rsbuild-plugin-assets-retry): Used to automatically resend requests when static assets fail to load.
 - [@rsbuild/plugin-babel](/plugins/list/plugin-babel): Support for Babel transpilation capabilities.
+- [@rsbuild/plugin-tailwindcss](/plugins/list/plugin-tailwindcss): Use Tailwind CSS v4.
 - [@rsbuild/plugin-sass](/plugins/list/plugin-sass): Use Sass as the CSS preprocessor.
 - [@rsbuild/plugin-less](/plugins/list/plugin-less): Use Less as the CSS preprocessor.
-- [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus): Use Stylus as the CSS preprocessor.
 - [@rsbuild/plugin-basic-ssl](https://github.com/rstackjs/rsbuild-plugin-basic-ssl): Generate an untrusted, self-signed certificate for the HTTPS server.
 - [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint): Run ESLint checks during the compilation.
 - [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check): Run TypeScript type checker on a separate process.
@@ -70,7 +70,7 @@ The following are common framework-agnostic plugins:
 - [@rsbuild/plugin-node-polyfill](https://github.com/rstackjs/rsbuild-plugin-node-polyfill): Used to inject polyfills of Node core modules in the browser side.
 - [@rsbuild/plugin-source-build](https://github.com/rstackjs/rsbuild-plugin-source-build): This plugin is designed for the monorepo scenario. It supports referencing source code from other subdirectories and performs build and hot update.
 - [@rsbuild/plugin-check-syntax](https://github.com/rstackjs/rsbuild-plugin-check-syntax): Check the syntax compatibility of output files and determine if there are any advanced syntaxes that could cause compatibility issues.
-- [@rsbuild/plugin-css-minimizer](https://github.com/rstackjs/rsbuild-plugin-css-minimizer): Used to customize CSS minimizer, switch to [cssnano](https://github.com/cssnano/cssnano) or other tools for CSS compression.
+- [@rsbuild/plugin-css-minimizer](https://github.com/rstackjs/rsbuild-plugin-css-minimizer): Customize the CSS minimizer, switching to [cssnano](https://github.com/cssnano/cssnano) or other tools for CSS compression.
 - [@rsbuild/plugin-typed-css-modules](https://github.com/rstackjs/rsbuild-plugin-typed-css-modules): Generate TypeScript declaration file for CSS Modules.
 - [@rsbuild/plugin-pug](https://github.com/rstackjs/rsbuild-plugin-pug): Support for the Pug template engine.
 - [@rsbuild/plugin-rem](https://github.com/rstackjs/rsbuild-plugin-rem): Implements the rem adaptive layout for mobile pages.

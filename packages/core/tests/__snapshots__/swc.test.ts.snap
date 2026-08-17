@@ -20,6 +20,21 @@ exports[`plugin-swc > should allow \`tools.swc\` to be a function 1`] = `
     ],
     "oneOf": [
       {
+        "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+          },
+        ],
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -61,6 +76,21 @@ exports[`plugin-swc > should allow using \`tools.swc\` to configure swc-loader o
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
     "oneOf": [
+      {
+        "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+          },
+        ],
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
@@ -132,6 +162,21 @@ exports[`plugin-swc > should apply decorators version 2023-11 1`] = `
         /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       ],
       "oneOf": [
+        {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
@@ -207,6 +252,21 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
     ],
     "oneOf": [
       {
+        "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+          },
+        ],
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -227,7 +287,7 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
               },
               "detectSyntax": "auto",
               "env": {
-                "coreJs": "3.49",
+                "coreJs": "3.50",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -292,6 +352,21 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
     "oneOf": [
+      {
+        "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+          },
+        ],
+      },
+      {
+        "type": "asset/source",
+        "with": {
+          "type": "text",
+        },
+      },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
@@ -366,6 +441,21 @@ exports[`plugin-swc > should apply overrideBrowserslist 1`] = `
       ],
       "oneOf": [
         {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -434,6 +524,21 @@ exports[`plugin-swc > should apply pluginImport 1`] = `
         /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       ],
       "oneOf": [
+        {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
@@ -511,6 +616,21 @@ exports[`plugin-swc > should apply pluginImport correctly with ConfigChain 1`] =
         /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       ],
       "oneOf": [
+        {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
@@ -592,6 +712,21 @@ exports[`plugin-swc > should disable pluginImport when it returns undefined 1`] 
       ],
       "oneOf": [
         {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -664,6 +799,21 @@ exports[`plugin-swc > should disable preset-env for non-web targets 1`] = `
       ],
       "oneOf": [
         {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -732,6 +882,21 @@ exports[`plugin-swc > should disable preset-env mode 1`] = `
         /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       ],
       "oneOf": [
+        {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
@@ -805,6 +970,21 @@ exports[`plugin-swc > should enable preset-env in entry mode 1`] = `
       ],
       "oneOf": [
         {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -825,7 +1005,7 @@ exports[`plugin-swc > should enable preset-env in entry mode 1`] = `
                 },
                 "detectSyntax": "auto",
                 "env": {
-                  "coreJs": "3.49",
+                  "coreJs": "3.50",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 107",
@@ -884,6 +1064,21 @@ exports[`plugin-swc > should enable preset-env in usage mode 1`] = `
       ],
       "oneOf": [
         {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -904,7 +1099,7 @@ exports[`plugin-swc > should enable preset-env in usage mode 1`] = `
                 },
                 "detectSyntax": "auto",
                 "env": {
-                  "coreJs": "3.49",
+                  "coreJs": "3.50",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -964,6 +1159,21 @@ exports[`plugin-swc > should use the correct core-js version 1`] = `
       ],
       "oneOf": [
         {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
+        {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
         },
@@ -984,7 +1194,7 @@ exports[`plugin-swc > should use the correct core-js version 1`] = `
                 },
                 "detectSyntax": "auto",
                 "env": {
-                  "coreJs": "3.49",
+                  "coreJs": "3.50",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 107",
@@ -1042,6 +1252,21 @@ exports[`plugin-swc > should use the correct core-js version 2`] = `
         /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       ],
       "oneOf": [
+        {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
+        {
+          "type": "asset/source",
+          "with": {
+            "type": "text",
+          },
+        },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",

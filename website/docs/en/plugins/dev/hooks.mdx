@@ -20,6 +20,7 @@ This page outlines the plugin hooks available for Rsbuild plugins.
 - [onAfterCreateCompiler](#onaftercreatecompiler): Called after creating a compiler instance and before building.
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile): Called before the compilation of a single environment.
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile): Called after the compilation of a single environment. You can get the build result information.
+- [onRestart](#onrestart): Called when a restart is requested for the dev server or watch build.
 - [onExit](#onexit): Called when the process is about to exit.
 
 ### Dev hooks
@@ -141,6 +142,7 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [onCloseBuild](#onclosebuild)
 - [onBeforeStartPreviewServer](#onbeforestartpreviewserver)
 - [onAfterStartPreviewServer](#onafterstartpreviewserver)
+- [onRestart](#onrestart)
 - [onExit](#onexit)
 
 ### Environment hooks
@@ -216,7 +218,7 @@ rsbuild.addPlugins([plugin1, plugin2]);
 Modify the config passed to the Rsbuild, you can directly modify the config object, or return a new object to replace the previous object.
 
 :::warning
-`modifyRsbuildConfig` is a global hook. To add support for your plugin as an [environment-specific plugin](/guide/advanced/environments#add-plugins-for-specified-environment), you should use [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) instead of `modifyRsbuildConfig`.
+`modifyRsbuildConfig` is a global hook. To add support for your plugin as an [environment-specific plugin](/guide/advanced/environments#plugins-specified-environment), you should use [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) instead of `modifyRsbuildConfig`.
 :::
 
 - **Type:**
@@ -295,14 +297,14 @@ type ModifyEnvironmentConfigUtils = {
   name: string;
   mergeEnvironmentConfig: (
     ...configs: ArrayAtLeastOne<MergedEnvironmentConfig, EnvironmentConfig>
-  ) => EnvironmentConfig;
+  ) => MergedEnvironmentConfig;
 };
 
 function ModifyEnvironmentConfig(
   callback: (
-    config: EnvironmentConfig,
+    config: MergedEnvironmentConfig,
     utils: ModifyEnvironmentConfigUtils,
-  ) => MaybePromise<EnvironmentConfig | void>,
+  ) => MaybePromise<MergedEnvironmentConfig | void>,
 ): void;
 ```
 
@@ -360,13 +362,15 @@ To modify the Rspack config, you can directly modify the config object, or retur
 ```ts
 type ModifyRspackConfigUtils = {
   environment: EnvironmentContext;
+  environments: Record<string, EnvironmentContext>;
   env: string;
   isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;
   isWebWorker: boolean;
-  rspack: Rspack;
+  CHAIN_ID: ChainIdentifier;
+  rspack: typeof import('@rspack/core').rspack;
   HtmlPlugin: typeof import('html-rspack-plugin');
   // more...
 };
@@ -375,7 +379,7 @@ function ModifyRspackConfig(
   callback: (
     config: Rspack.Configuration,
     utils: ModifyRspackConfigUtils,
-  ) => Promise<RspackConfig | void> | Rspack.Configuration | void,
+  ) => MaybePromise<Rspack.Configuration | void>,
 ): void;
 ```
 
@@ -408,6 +412,7 @@ import RspackChain from '@en/shared/rspackChain.mdx';
 ```ts
 type ModifyBundlerChainUtils = {
   environment: EnvironmentContext;
+  environments: Record<string, EnvironmentContext>;
   env: string;
   isDev: boolean;
   isProd: boolean;
@@ -415,10 +420,10 @@ type ModifyBundlerChainUtils = {
   isServer: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
+  rspack: typeof import('@rspack/core').rspack;
   HtmlPlugin: typeof import('html-rspack-plugin');
-  bundler: {
-    // some Rspack built-in plugins
-  };
+  /** @deprecated Use `rspack` instead. */
+  bundler: typeof import('@rspack/core').rspack;
 };
 
 function ModifyBundlerChain(
@@ -628,9 +633,9 @@ See [html.tags](/config/html/tags) for more details on how to define tags.
 
 When using `modifyHTML`, `modifyHTMLTags`, and `html.tags` options together, the execution order is as follows:
 
-1. [modifyHTML](#modifyhtml)
-2. [modifyHTMLTags](#modifyhtmltags)
-3. [html.tags](/config/html/tags)
+1. [modifyHTMLTags](#modifyhtmltags)
+2. [html.tags](/config/html/tags)
+3. [modifyHTML](#modifyhtml)
 
 :::
 
@@ -803,9 +808,9 @@ const myPlugin = () => ({
 });
 ```
 
-When `onBeforeStartDevServer` is called, the default middleware of Rsbuild are not registered yet, so the middleware you add will run before the default middleware.
+When `onBeforeStartDevServer` is called, the default Rsbuild middlewares are not registered yet, so the middleware you add will run before the default middlewares.
 
-`onBeforeStartDevServer` allows you to return a callback function, which will be called when the default middleware of Rsbuild are registered. The middleware you register in the callback function will run after the default middleware.
+`onBeforeStartDevServer` allows you to return a callback function, which will be called when the default Rsbuild middlewares are registered. The middleware you register in the callback function will run after the default middlewares.
 
 ```ts
 const myPlugin = () => ({
@@ -971,6 +976,24 @@ const myPlugin = () => ({
 ```
 
 ## Other hooks
+
+### onRestart
+
+import OnRestart from '@en/shared/onRestart.mdx';
+
+<OnRestart />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onRestart(async ({ action, event, filePath }) => {
+      console.log('restart!', action, event, filePath);
+    });
+  },
+});
+```
 
 ### onExit
 

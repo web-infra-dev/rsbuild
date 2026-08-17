@@ -4,8 +4,10 @@ import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
 import { withDefaultConfig } from './defaultConfig';
 import { hash } from './helpers';
 import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
+import { createRestartManager } from './helpers/restartManager';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
+import type { LoadConfigResult } from './loadConfig';
 import type { Logger } from './logger';
 import type {
   EnvironmentContext,
@@ -50,7 +52,10 @@ export function getBrowserslistByEnvironment(
   const { target, overrideBrowserslist } = config.output;
 
   if (Array.isArray(overrideBrowserslist)) {
-    return overrideBrowserslist;
+    // CJS arrays returned by require() in a jiti-loaded config can be Proxies.
+    // Clone them before passing browserslist to native bindings.
+    // https://github.com/web-infra-dev/rsbuild/issues/8063
+    return [...overrideBrowserslist];
   }
 
   // Read project browserslist config when target is `web-like`
@@ -152,6 +157,8 @@ export function createPublicContext(
     'action',
     'version',
     'rootPath',
+    'configFile',
+    'configFileDependencies',
     'distPath',
     'devServer',
     'cachePath',
@@ -184,6 +191,7 @@ export async function createContext(
   options: ResolvedCreateRsbuildOptions,
   userConfig: RsbuildConfig,
   logger: Logger,
+  loadConfigResult?: LoadConfigResult,
 ): Promise<InternalContext> {
   const { cwd } = options;
   const rootPath = userConfig.root
@@ -196,10 +204,19 @@ export async function createContext(
     options.environment && options.environment.length > 0
       ? options.environment
       : undefined;
+  const hooks = initHooks();
+  const configFile =
+    loadConfigResult?.filePath ?? userConfig._privateMeta?.configFilePath;
+  const configFileDependencies =
+    loadConfigResult?.dependencies ??
+    userConfig._privateMeta?.configFileDependencies ??
+    [];
 
   return {
     version: RSBUILD_VERSION,
     rootPath,
+    configFile,
+    configFileDependencies,
     distPath: '',
     cachePath,
     logger,
@@ -208,7 +225,11 @@ export async function createContext(
     environments: {},
     environmentList: [],
     publicPathnames: [],
-    hooks: initHooks(),
+    hooks,
+    restartManager: createRestartManager({
+      onRestart: hooks.onRestart.callBatch,
+      restart: options.restart,
+    }),
     config: { ...rsbuildConfig },
     originalConfig: userConfig,
     specifiedEnvironments,

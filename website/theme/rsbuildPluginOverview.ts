@@ -1,6 +1,6 @@
 import path from 'node:path';
-import type { RsbuildPlugin } from '@rsbuild/core';
 import glob from 'fast-glob';
+import type { RsbuildPlugin } from 'rstack/app';
 import type { Group } from './components/Overview';
 
 const camelCase = (input: string): string =>
@@ -10,7 +10,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
   name: 'rsbuild-doc:overview',
 
   async setup(api) {
-    const root = path.join(__dirname, '../docs/en/config/');
+    const root = path.join(import.meta.dirname, '../docs/en/config/');
     const globPath = path.join(root, '**/*.{mdx,md}');
 
     const files = await glob(globPath);

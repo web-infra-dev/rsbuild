@@ -20,7 +20,21 @@ export default {
     typescript: 'typescript',
   },
   dependencies: [
-    'html-rspack-plugin',
+    {
+      name: 'html-rspack-plugin',
+      afterBundle(task) {
+        replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
+          content.replace(
+            'export { HtmlRspackPlugin as default };',
+            'export = HtmlRspackPlugin;',
+          ),
+        );
+      },
+    },
+    {
+      name: '@rstackjs/load-config',
+      dtsOnly: true,
+    },
     {
       name: 'chokidar',
       dtsOnly: true,
@@ -28,6 +42,11 @@ export default {
     {
       name: 'cors',
       dtsOnly: true,
+      afterBundle(task) {
+        replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
+          content.replace('export { e as default };', 'export = e;'),
+        );
+      },
     },
     {
       name: 'connect-next',
@@ -57,7 +76,9 @@ export default {
         fs.cpSync(
           join(task.depPath, 'dist/runtime'),
           join(task.distPath, 'runtime'),
-          { recursive: true },
+          {
+            recursive: true,
+          },
         );
       },
     },
