@@ -30,7 +30,7 @@
     "rstack": "catalog:",
     "typescript": "catalog:"
   },
-  "packageManager": "pnpm@11.18.0",
+  "packageManager": "pnpm@11.22.0",
   "engines": {
     "node": ">=22.18.0",
     "pnpm": ">=11.0.0"
