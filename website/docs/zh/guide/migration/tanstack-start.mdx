@@ -135,104 +135,6 @@ export default defineConfig({
 
 如果 Babel 或 Rolldown Babel 插件仅用于 React Compiler，请移除该插件以及 `babel-plugin-react-compiler`。对于 React 17 或 18 应用，请安装 `react-compiler-runtime`，并按照 [React 插件文档](/plugins/list/plugin-react#reactcompiler)设置 compiler target。
 
-### Paraglide
-
-Paraglide 提供专用的 Rspack 插件。请将 `paraglideVitePlugin` 替换为 `paraglideRspackPlugin`，并将其从 Vite 顶层的 `plugins` 数组移至 `tools.rspack.plugins`。插件选项保持不变：
-
-```ts title="rsbuild.config.ts"
-import { paraglideRspackPlugin } from '@inlang/paraglide-js';
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  tools: {
-    rspack: {
-      plugins: [
-        paraglideRspackPlugin({
-          project: './project.inlang',
-          outdir: './src/paraglide',
-          outputStructure: 'message-modules',
-        }),
-      ],
-    },
-  },
-});
-```
-
-请保留已有的 Paraglide strategy、URL patterns、cookie 配置和生成目录。Paraglide 生成的 `server.js` middleware 以及 TanStack Router 的 URL rewrite 配置与 bundler 迁移无关。
-
-### Sentry source maps 和 release
-
-请使用 [`@sentry/webpack-plugin`](https://www.npmjs.com/package/@sentry/webpack-plugin) 替换 Vite adapter 的构建期 Sentry 集成。它兼容 Rspack 插件，必须注册在 `tools.rspack.plugins` 中：
-
-<PackageManagerTabs command="add @sentry/webpack-plugin -D" />
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { sentryWebpackPlugin } from '@sentry/webpack-plugin';
-
-const sentryPlugin =
-  process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_RELEASE
-    ? sentryWebpackPlugin({
-        org: 'example-org',
-        project: 'example-project',
-        url: 'https://sentry.example.com/',
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        release: {
-          name: process.env.SENTRY_RELEASE,
-        },
-        sourcemaps: {
-          filesToDeleteAfterUpload: ['dist/**/*.map'],
-        },
-      })
-    : undefined;
-
-export default defineConfig({
-  output: sentryPlugin
-    ? {
-        sourceMap: {
-          js: 'hidden-source-map',
-        },
-      }
-    : {},
-  tools: {
-    rspack: {
-      plugins: sentryPlugin ? [sentryPlugin] : [],
-    },
-  },
-});
-```
-
-在 CI 中将 `SENTRY_AUTH_TOKEN` 配置为构建 secret，并将 `SENTRY_RELEASE` 设为 release 名称。`hidden-source-map` 会生成供上传的 source maps，但不会向部署后的 JavaScript 添加 source map 引用。插件会删除已上传的 `.map` 文件，因此最终 image 不会包含它们。
-
-### Sentry managed tunnel
-
-Sentry Vite adapter 可以创建 managed tunnel route。使用 Rsbuild 时，请显式定义 TanStack Start 路由，并将其限制为你的公开 DSN，避免该路由成为开放代理：
-
-```ts title="src/routes/monitoring.ts"
-import * as Sentry from '@sentry/tanstackstart-react';
-import { createFileRoute } from '@tanstack/react-router';
-
-const sentryDsn = import.meta.env.PUBLIC_SENTRY_DSN;
-
-export const Route = createFileRoute('/monitoring')({
-  server: Sentry.createSentryTunnelRoute({
-    allowedDsns: sentryDsn ? [sentryDsn] : [],
-  }),
-});
-```
-
-然后在 client SDK 中配置同一个路由：
-
-```ts
-Sentry.init({
-  dsn: env.PUBLIC_SENTRY_DSN,
-  tunnel: '/monitoring',
-  // other options
-});
-```
-
-该路由仅接受 `PUBLIC_SENTRY_DSN` 的 Sentry envelopes，并将它们转发到 Sentry。请保持路由路径和 `tunnel` 选项一致。
-
 ### TypeScript
 
 请将 `tsconfig.json` 中 Vite 的预设类型替换为 Rsbuild 的预设类型。如果项目已定义 `types` 数组，请只替换 Vite 的条目，并保留其他必需的类型：
@@ -293,6 +195,31 @@ const handler = createStartHandler({
 ```
 
 创建 handler 时请使用 React server API。完整示例请参考 [CDN asset URLs](https://tanstack.com/start/latest/docs/framework/react/guide/cdn-asset-urls) 文档。
+
+### Paraglide
+
+如果使用 Paraglide，请将 `paraglideVitePlugin` 替换为 `paraglideRspackPlugin`，并在 `tools.rspack.plugins` 中注册。保留现有插件选项和生成目录。
+
+### Sentry
+
+请使用 [`@sentry/webpack-plugin`](https://www.npmjs.com/package/@sentry/webpack-plugin) 替换 Vite adapter 的构建期集成。在 `tools.rspack.plugins` 中注册该插件，上传 source maps 时启用 `hidden-source-map`，并在 CI 中设置 `SENTRY_AUTH_TOKEN` 和 `SENTRY_RELEASE`。
+
+如果使用 Sentry tunnel，请定义 TanStack Start 路由，并限制为你的公开 DSN：
+
+```ts title="src/routes/monitoring.ts"
+import * as Sentry from '@sentry/tanstackstart-react';
+import { createFileRoute } from '@tanstack/react-router';
+
+const sentryDsn = import.meta.env.PUBLIC_SENTRY_DSN;
+
+export const Route = createFileRoute('/monitoring')({
+  server: Sentry.createSentryTunnelRoute({
+    allowedDsns: sentryDsn ? [sentryDsn] : [],
+  }),
+});
+```
+
+在 client SDK 中通过 `tunnel` 选项配置相同的路径。
 
 ## 将测试从 Vitest 迁移到 Rstest
 

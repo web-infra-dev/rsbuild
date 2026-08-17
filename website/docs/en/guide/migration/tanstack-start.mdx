@@ -135,104 +135,6 @@ export default defineConfig({
 
 If a Babel or Rolldown Babel plugin was used only for React Compiler, remove that plugin and `babel-plugin-react-compiler`. For React 17 or 18 applications, install `react-compiler-runtime` and set the compiler target as described in the [React plugin documentation](/plugins/list/plugin-react#reactcompiler).
 
-### Paraglide
-
-Paraglide provides a dedicated Rspack plugin. Replace `paraglideVitePlugin` with `paraglideRspackPlugin`, and move it from Vite's top-level `plugins` array to `tools.rspack.plugins`. The plugin options are unchanged:
-
-```ts title="rsbuild.config.ts"
-import { paraglideRspackPlugin } from '@inlang/paraglide-js';
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  tools: {
-    rspack: {
-      plugins: [
-        paraglideRspackPlugin({
-          project: './project.inlang',
-          outdir: './src/paraglide',
-          outputStructure: 'message-modules',
-        }),
-      ],
-    },
-  },
-});
-```
-
-Keep existing Paraglide strategy, URL patterns, cookie settings, and generated output directory. Paraglide's generated `server.js` middleware and TanStack Router URL rewrite configuration are independent of the bundler migration.
-
-### Sentry source maps and releases
-
-Replace the Vite adapter's build-time Sentry integration with [`@sentry/webpack-plugin`](https://www.npmjs.com/package/@sentry/webpack-plugin). It is compatible with Rspack plugins and must be registered in `tools.rspack.plugins`:
-
-<PackageManagerTabs command="add @sentry/webpack-plugin -D" />
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { sentryWebpackPlugin } from '@sentry/webpack-plugin';
-
-const sentryPlugin =
-  process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_RELEASE
-    ? sentryWebpackPlugin({
-        org: 'example-org',
-        project: 'example-project',
-        url: 'https://sentry.example.com/',
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        release: {
-          name: process.env.SENTRY_RELEASE,
-        },
-        sourcemaps: {
-          filesToDeleteAfterUpload: ['dist/**/*.map'],
-        },
-      })
-    : undefined;
-
-export default defineConfig({
-  output: sentryPlugin
-    ? {
-        sourceMap: {
-          js: 'hidden-source-map',
-        },
-      }
-    : {},
-  tools: {
-    rspack: {
-      plugins: sentryPlugin ? [sentryPlugin] : [],
-    },
-  },
-});
-```
-
-Set `SENTRY_AUTH_TOKEN` as a build secret and `SENTRY_RELEASE` to the release name in CI. `hidden-source-map` produces source maps for upload without adding source map references to deployed JavaScript. The plugin deletes uploaded `.map` files, so they are not included in the final image.
-
-### Sentry managed tunnel
-
-The Sentry Vite adapter can create a managed tunnel route. With Rsbuild, define the TanStack Start route explicitly and limit it to your public DSN, preventing the route from becoming an open proxy:
-
-```ts title="src/routes/monitoring.ts"
-import * as Sentry from '@sentry/tanstackstart-react';
-import { createFileRoute } from '@tanstack/react-router';
-
-const sentryDsn = import.meta.env.PUBLIC_SENTRY_DSN;
-
-export const Route = createFileRoute('/monitoring')({
-  server: Sentry.createSentryTunnelRoute({
-    allowedDsns: sentryDsn ? [sentryDsn] : [],
-  }),
-});
-```
-
-Then configure the same route in the client SDK:
-
-```ts
-Sentry.init({
-  dsn: env.PUBLIC_SENTRY_DSN,
-  tunnel: '/monitoring',
-  // other options
-});
-```
-
-The route accepts Sentry envelopes only for `PUBLIC_SENTRY_DSN` and forwards them to Sentry. Keep its path and the `tunnel` option identical.
-
 ### TypeScript
 
 Replace Vite's preset types in `tsconfig.json` with Rsbuild's preset types. If your project already defines a `types` array, replace only the Vite entries and retain the other required types:
@@ -294,6 +196,31 @@ const handler = createStartHandler({
 
 Use the React server APIs when creating the handler. See [CDN asset URLs](https://tanstack.com/start/latest/docs/framework/react/guide/cdn-asset-urls) for a complete example.
 
+### Paraglide
+
+If you use Paraglide, replace `paraglideVitePlugin` with `paraglideRspackPlugin` and register it in `tools.rspack.plugins`. Keep the existing plugin options and generated output directory.
+
+### Sentry
+
+Replace the Vite adapter's build-time integration with [`@sentry/webpack-plugin`](https://www.npmjs.com/package/@sentry/webpack-plugin). Register it in `tools.rspack.plugins`, enable `hidden-source-map` when uploading source maps, and set `SENTRY_AUTH_TOKEN` and `SENTRY_RELEASE` in CI.
+
+If you use a Sentry tunnel, define a TanStack Start route and limit it to your public DSN:
+
+```ts title="src/routes/monitoring.ts"
+import * as Sentry from '@sentry/tanstackstart-react';
+import { createFileRoute } from '@tanstack/react-router';
+
+const sentryDsn = import.meta.env.PUBLIC_SENTRY_DSN;
+
+export const Route = createFileRoute('/monitoring')({
+  server: Sentry.createSentryTunnelRoute({
+    allowedDsns: sentryDsn ? [sentryDsn] : [],
+  }),
+});
+```
+
+Configure the same path with the client SDK's `tunnel` option.
+
 ## Migrate tests from Vitest to Rstest
 
 Vitest runs tests through Vite. If you want to remove Vite from the test toolchain, migrate the Vitest configuration and test imports to Rstest before removing `vitest`, `@vitest/coverage-v8`, and Vite-only test plugins.
@@ -350,7 +277,7 @@ afterEach(cleanup);
 
 Update scripts to use `rstest`, `rstest --watch`, and `rstest --coverage`. For more configuration mappings, see the [Rstest migration guide](https://rstest.rs/guide/migration/vitest) and the Rsbuild [Testing](/guide/advanced/testing) guide.
 
-## Deploy to Node.js or Docker
+## Deploy to Node.js or docker
 
 If `nitro/vite` is used only for Node.js or Docker deployment, remove `nitro`. A TanStack Start Rsbuild build emits its own server entry. Install [srvx](https://srvx.h3.dev/) as a production dependency:
 
