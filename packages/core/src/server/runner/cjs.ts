@@ -18,8 +18,12 @@ export class CommonJsRunner extends BasicRunner {
   protected createGlobalContext(): BasicGlobalContext {
     return {
       console: console,
-      setTimeout: ((...args: Parameters<typeof setTimeout>) => {
-        const timeout = setTimeout(...args);
+      setTimeout: ((
+        callback: (...args: unknown[]) => void,
+        delay?: number,
+        ...args: unknown[]
+      ) => {
+        const timeout = setTimeout(callback, delay, ...args);
         timeout.unref();
         return timeout;
       }) as typeof setTimeout,
@@ -107,17 +111,10 @@ export class CommonJsRunner extends BasicRunner {
       const args = Object.keys(currentModuleScope);
       const argValues = args.map((arg) => currentModuleScope[arg]);
       this.preExecute(file.content, file);
-      const dynamicImport = new Function(
-        'specifier',
-        'return import(specifier)',
-      );
       const fn = vm.compileFunction(file.content, args, {
         filename: file.path,
         // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.
-        importModuleDynamically: async (specifier) => {
-          const result = await dynamicImport(specifier);
-          return result;
-        },
+        importModuleDynamically: vm.constants.USE_MAIN_CONTEXT_DEFAULT_LOADER,
       });
 
       fn.call(m.exports, ...argValues);

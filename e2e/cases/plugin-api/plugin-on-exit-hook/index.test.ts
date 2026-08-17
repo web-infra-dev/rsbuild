@@ -31,7 +31,13 @@ test('should run onExit hook before process exit', async () => {
           resolve();
         } catch (err) {
           clearTimeout(timeoutId);
-          reject(err);
+          reject(
+            err instanceof Error
+              ? err
+              : new Error('Failed to validate onExit hook output', {
+                  cause: err,
+                }),
+          );
         }
       },
     );
