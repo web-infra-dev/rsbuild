@@ -50,5 +50,5 @@ export type RunnerFactoryOptions = {
 };
 
 export interface RunnerFactory {
-  create(options: RunnerFactoryOptions): Runner;
+  create(options: RunnerFactoryOptions): Promise<Runner>;
 }

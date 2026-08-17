@@ -1,19 +1,21 @@
 /**
  * The following code is modified based on @rspack/test-tools/runner
  */
-import { color } from '../../helpers';
+import { color, require } from '../../helpers';
+import { CommonJsRunner } from './cjs';
 import { EsmRunner } from './esm';
+import { SystemJsRunner } from './systemJs';
 import type { Runner, RunnerFactory, RunnerFactoryOptions } from './type';
 
 class BasicRunnerFactory implements RunnerFactory {
   constructor(protected name: string) {}
 
-  create(options: RunnerFactoryOptions): Runner {
-    const runner = this.createRunner(options);
+  async create(options: RunnerFactoryOptions): Promise<Runner> {
+    const runner = await this.createRunner(options);
     return runner;
   }
 
-  protected createRunner(options: RunnerFactoryOptions): Runner {
+  protected async createRunner(options: RunnerFactoryOptions): Promise<Runner> {
     const runnerOptions = {
       name: this.name,
       ...options,
@@ -26,7 +28,18 @@ class BasicRunnerFactory implements RunnerFactory {
         )} resource in Rsbuild server`,
       );
     }
-    return new EsmRunner(runnerOptions);
+
+    if (!compilerOptions.output.module) {
+      return new CommonJsRunner(runnerOptions);
+    }
+
+    // rslint-disable-next-line @typescript-eslint/no-require-imports
+    const vm = require('node:vm') as typeof import('node:vm');
+    if (vm.SourceTextModule) {
+      return new EsmRunner(runnerOptions);
+    }
+
+    return new SystemJsRunner(runnerOptions);
   }
 }
 
@@ -37,7 +50,7 @@ export const run = async <T>({
   bundlePath: string;
 }): Promise<T> => {
   const runnerFactory = new BasicRunnerFactory(bundlePath);
-  const runner = runnerFactory.create(runnerFactoryOptions);
+  const runner = await runnerFactory.create(runnerFactoryOptions);
   const mod = await runner.run(bundlePath);
 
   return mod as T;
