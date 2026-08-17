@@ -184,3 +184,32 @@ export default {
   },
 };
 ```
+
+## 与 ESM 输出配合使用
+
+开启 [output.module](/config/output/module) 后，初始 JavaScript Chunk 可能通过静态 ESM import 引用 runtime 或共享 Chunk。`inlineScripts` 将这些 Chunk 移入 HTML 并移除对应的文件后，这些 import 将无法继续解析。
+
+因此，每个 HTML 入口应该只有一个初始 JavaScript Chunk。请将 runtime 保留在入口中，并仅拆分异步 Chunk：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    module: true,
+    inlineScripts: true,
+  },
+  splitChunks: {
+    // 仅拆分异步 Chunk
+    chunks: 'async',
+  },
+  tools: {
+    rspack: {
+      optimization: {
+        // 将 runtime 保留在入口 Chunk 中
+        runtimeChunk: false,
+      },
+    },
+  },
+};
+```
+
+通过动态导入生成的异步 Chunk 仍然受支持。默认情况下，它们不会被内联，并会继续按需加载。如果应用必须生成独立的 runtime Chunk 或共享初始 Chunk，请不要开启 `inlineScripts`。
