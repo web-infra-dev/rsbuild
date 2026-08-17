@@ -9,8 +9,7 @@ test('should load a CJS bundle containing native import()', async ({
   const port = await getRandomPort();
   execCli(`dev --port ${port}`, {
     env: {
-      NODE_OPTIONS:
-        `${process.env.NODE_OPTIONS ?? ''} --experimental-vm-modules`.trim(),
+      NODE_OPTIONS: '--experimental-vm-modules',
     },
   });
   await logHelper.expectBuildEnd();
