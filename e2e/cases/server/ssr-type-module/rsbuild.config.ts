@@ -6,12 +6,8 @@ import {
 } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-type AsyncRequestHandler = (
-  ...args: Parameters<RequestHandler>
-) => Promise<void>;
-
 export const serverRender =
-  ({ environments }: RsbuildDevServer): AsyncRequestHandler =>
+  ({ environments }: RsbuildDevServer): RequestHandler =>
   async (_req, res, _next) => {
     const bundle = await environments.node.loadBundle<{
       render: () => string;
