@@ -2,12 +2,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { enableDebugMode, expect, test } from '@e2e/helper';
 
-const getRsbuildConfig = (distPath: string) => path.join(distPath, '.rsbuild/rsbuild.config.mjs');
+const getRsbuildConfig = (distPath: string) =>
+  path.join(distPath, '.rsbuild/rsbuild.config.mjs');
 
 const getBundlerConfig = (distPath: string) =>
   path.join(distPath, '.rsbuild/rspack.config.web.mjs');
 
-test('should generate config files in debug mode when build', async ({ build, prepareDist }) => {
+test('should generate config files in debug mode when build', async ({
+  build,
+  prepareDist,
+}) => {
   const restore = enableDebugMode();
   const distRoot = 'dist-1';
   const distPath = await prepareDist(distRoot);
@@ -27,7 +31,11 @@ test('should generate config files in debug mode when build', async ({ build, pr
   restore();
 });
 
-test('should generate config files in debug mode when dev', async ({ prepareDist, page, dev }) => {
+test('should generate config files in debug mode when dev', async ({
+  prepareDist,
+  page,
+  dev,
+}) => {
   const restore = enableDebugMode();
   const distRoot = 'dist-2';
   const distPath = await prepareDist(distRoot);

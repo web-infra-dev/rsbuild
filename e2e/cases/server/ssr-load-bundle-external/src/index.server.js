@@ -6,4 +6,5 @@ const undefinedType = typeof undefinedDefault;
 
 export { helloType, undefinedType };
 
-export const result = helloType === 'function' ? hello() : `BUG: hello is ${helloType}`;
+export const result =
+  helloType === 'function' ? hello() : `BUG: hello is ${helloType}`;

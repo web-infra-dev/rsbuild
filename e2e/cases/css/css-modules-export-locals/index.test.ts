@@ -32,7 +32,11 @@ test('should compile CSS Modules with exportLocalsConvention camelCaseOnly', asy
   await expectCSSContext(rsbuild);
 
   const styles = await page.evaluate(() => window.styles);
-  expect(Object.keys(styles)).toEqual(['theDashClass', 'theCamelClass', 'theUnderscoreClass']);
+  expect(Object.keys(styles)).toEqual([
+    'theDashClass',
+    'theCamelClass',
+    'theUnderscoreClass',
+  ]);
 });
 
 test('should compile CSS Modules with exportLocalsConvention camelCase', async ({
@@ -103,7 +107,11 @@ test('should compile CSS Modules with exportLocalsConvention dashesOnly', async 
   await expectCSSContext(rsbuild);
 
   const styles = await page.evaluate(() => window.styles);
-  expect(Object.keys(styles)).toEqual(['theDashClass', 'theCamelClass', 'the_underscore_class']);
+  expect(Object.keys(styles)).toEqual([
+    'theDashClass',
+    'theCamelClass',
+    'the_underscore_class',
+  ]);
 });
 
 test('should compile CSS Modules with exportLocalsConvention asIs', async ({
@@ -123,5 +131,9 @@ test('should compile CSS Modules with exportLocalsConvention asIs', async ({
   await expectCSSContext(rsbuild);
 
   const styles = await page.evaluate(() => window.styles);
-  expect(Object.keys(styles)).toEqual(['the-dash-class', 'theCamelClass', 'the_underscore_class']);
+  expect(Object.keys(styles)).toEqual([
+    'the-dash-class',
+    'theCamelClass',
+    'the_underscore_class',
+  ]);
 });

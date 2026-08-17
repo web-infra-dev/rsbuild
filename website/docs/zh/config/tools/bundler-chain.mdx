@@ -7,7 +7,10 @@ description: 'Rsbuild 的 tools.bundler-chain 配置项参考，包含作用、�
 - **类型：**
 
 ```ts
-type BundlerChainFn = (chain: RspackChain, utils: ModifyBundlerChainUtils) => Promise<void> | void;
+type BundlerChainFn = (
+  chain: RspackChain,
+  utils: ModifyBundlerChainUtils,
+) => Promise<void> | void;
 ```
 
 - **默认值：** `undefined`

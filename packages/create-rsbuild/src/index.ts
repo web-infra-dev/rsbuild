@@ -148,7 +148,8 @@ create({
       value: 'react-compiler',
       label: 'React Compiler - optimization',
       order: 'pre',
-      when: ({ templateName }) => ['react-js', 'react-ts'].includes(templateName),
+      when: ({ templateName }) =>
+        ['react-js', 'react-ts'].includes(templateName),
       action: async ({ distFolder }) => {
         await enableReactCompilerInRsbuildConfig(distFolder);
       },
@@ -170,7 +171,10 @@ create({
           const filePath = path.join(distFolder, 'src', cssFile);
           if (fs.existsSync(filePath)) {
             const content = await fs.promises.readFile(filePath, 'utf-8');
-            await fs.promises.writeFile(filePath, `@import 'tailwindcss';\n\n${content}`);
+            await fs.promises.writeFile(
+              filePath,
+              `@import 'tailwindcss';\n\n${content}`,
+            );
             break;
           }
         }

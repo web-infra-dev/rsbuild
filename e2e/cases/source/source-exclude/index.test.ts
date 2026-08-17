@@ -1,7 +1,9 @@
 import { expect, test } from '@e2e/helper';
 import { toPosixPath } from '@rstackjs/test-utils';
 
-test('should not compile specified file when source.exclude', async ({ build }) => {
+test('should not compile specified file when source.exclude', async ({
+  build,
+}) => {
   const rsbuild = await build({
     catchBuildError: true,
   });
@@ -10,7 +12,9 @@ test('should not compile specified file when source.exclude', async ({ build }) 
   expect(rsbuild.logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
   expect(
     rsbuild.logs.find(
-      (log) => log.includes('source:') && toPosixPath(log).includes('/dist/static/js/index'),
+      (log) =>
+        log.includes('source:') &&
+        toPosixPath(log).includes('/dist/static/js/index'),
     ),
   ).toBeTruthy();
 });

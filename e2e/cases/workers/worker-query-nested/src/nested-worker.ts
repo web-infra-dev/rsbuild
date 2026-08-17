@@ -1,10 +1,13 @@
 import SubWorker from './sub-worker?worker';
 
 const subWorker = new SubWorker({ name: 'sub' });
-const constructorWorker = new Worker(new URL('./url-worker.ts', import.meta.url), {
-  name: 'ctor',
-  type: 'module',
-});
+const constructorWorker = new Worker(
+  new URL('./url-worker.ts', import.meta.url),
+  {
+    name: 'ctor',
+    type: 'module',
+  },
+);
 
 self.postMessage({
   href: self.location.href,

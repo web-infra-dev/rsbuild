@@ -2,7 +2,10 @@ import os, { type NetworkInterfaceInfo } from 'node:os';
 import { mock } from 'node:test';
 import { expect, NETWORK_LOG_REGEX, test } from '@e2e/helper';
 
-const createIpv4 = (address: string, internal = false): NetworkInterfaceInfo => ({
+const createIpv4 = (
+  address: string,
+  internal = false,
+): NetworkInterfaceInfo => ({
   address,
   cidr: `${address}/24`,
   family: 'IPv4',
@@ -11,7 +14,10 @@ const createIpv4 = (address: string, internal = false): NetworkInterfaceInfo => 
   netmask: '255.255.255.0',
 });
 
-test('should print server urls correctly by default', async ({ page, devOnly }) => {
+test('should print server urls correctly by default', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly({
     config: {
       server: {
@@ -75,14 +81,19 @@ test('should omit name for a single network url', async ({ devOnly }) => {
       },
     });
 
-    await rsbuild.expectLog(`➜  Network:  http://198.51.100.20:${rsbuild.port}/`);
+    await rsbuild.expectLog(
+      `➜  Network:  http://198.51.100.20:${rsbuild.port}/`,
+    );
     rsbuild.expectNoLog('(Wi-Fi)');
   } finally {
     networkInterfaces.mock.restore();
   }
 });
 
-test('should not print server urls when printUrls is false', async ({ page, devOnly }) => {
+test('should not print server urls when printUrls is false', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly({
     config: {
       server: {
@@ -116,7 +127,10 @@ test('should allow to custom urls', async ({ page, devOnly }) => {
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 });
 
-test('should allow to modify and return new urls', async ({ page, devOnly }) => {
+test('should allow to modify and return new urls', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly({
     config: {
       server: {
@@ -128,11 +142,18 @@ test('should allow to modify and return new urls', async ({ page, devOnly }) => 
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}/test/`);
-  await rsbuild.expectLog(/➜\s{2}Network:\s{2}http:\/\/\d{1,3}(?:\.\d{1,3}){3}:\d+\/test\//);
+  await rsbuild.expectLog(
+    `➜  Local:    http://localhost:${rsbuild.port}/test/`,
+  );
+  await rsbuild.expectLog(
+    /➜\s{2}Network:\s{2}http:\/\/\d{1,3}(?:\.\d{1,3}){3}:\d+\/test\//,
+  );
 });
 
-test('should allow to modify and return new urls and labels', async ({ page, devOnly }) => {
+test('should allow to modify and return new urls and labels', async ({
+  page,
+  devOnly,
+}) => {
   const rsbuild = await devOnly({
     config: {
       server: {
@@ -176,7 +197,10 @@ test('should listen only on localhost in dev', async ({ page, devOnly }) => {
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 });
 
-test('should listen only on localhost in preview', async ({ page, buildPreview }) => {
+test('should listen only on localhost in preview', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       server: {
@@ -194,7 +218,9 @@ test('should listen only on localhost in preview', async ({ page, buildPreview }
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 });
 
-test('should not print server urls when HTML is disabled', async ({ buildPreview }) => {
+test('should not print server urls when HTML is disabled', async ({
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       tools: {
@@ -256,8 +282,12 @@ test('should print server urls for multiple web environments with custom distPat
   await page.goto(`http://localhost:${rsbuild.port}`);
 
   await rsbuild.expectLog(`➜  Local:`);
-  await rsbuild.expectLog(`-  index     http://localhost:${rsbuild.port}/dist/`);
-  await rsbuild.expectLog(`-  index1    http://localhost:${rsbuild.port}/.dist/web1/index1`);
+  await rsbuild.expectLog(
+    `-  index     http://localhost:${rsbuild.port}/dist/`,
+  );
+  await rsbuild.expectLog(
+    `-  index1    http://localhost:${rsbuild.port}/.dist/web1/index1`,
+  );
 });
 
 test('should print server urls for multiple web environments with custom distPath.html', async ({

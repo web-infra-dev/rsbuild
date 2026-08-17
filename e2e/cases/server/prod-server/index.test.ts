@@ -4,7 +4,10 @@ import { getRandomPort } from '@rstackjs/test-utils';
 
 const fixtures = import.meta.dirname;
 
-test('should access / and htmlFallback success by default', async ({ page, buildPreview }) => {
+test('should access / and htmlFallback success by default', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       output: {
@@ -27,7 +30,10 @@ test('should access / and htmlFallback success by default', async ({ page, build
   await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
 });
 
-test('should return 404 when htmlFallback false', async ({ page, buildPreview }) => {
+test('should return 404 when htmlFallback false', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       server: {
@@ -46,7 +52,10 @@ test('should return 404 when htmlFallback false', async ({ page, buildPreview })
   expect(res?.status()).toBe(404);
 });
 
-test('should access /main.html success when entry is main', async ({ page, buildPreview }) => {
+test('should access /main.html success when entry is main', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       source: {
@@ -68,7 +77,10 @@ test('should access /main.html success when entry is main', async ({ page, build
   await expect(locator).toHaveText('Hello Rsbuild!');
 });
 
-test('should access /main success when entry is main', async ({ page, buildPreview }) => {
+test('should access /main success when entry is main', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       source: {
@@ -146,7 +158,10 @@ test('should access /main success when entry is main and outputPath is /main/ind
   await expect(locator).toHaveText('Hello Rsbuild!');
 });
 
-test('should return 404 when page is not found', async ({ page, buildPreview }) => {
+test('should return 404 when page is not found', async ({
+  page,
+  buildPreview,
+}) => {
   const rsbuild = await buildPreview({
     config: {
       source: {
@@ -203,7 +218,10 @@ test('should access /html/main success when entry is main and outputPath is /htm
   expect(res?.status()).toBe(404);
 });
 
-test('should match resource correctly with specify assetPrefix', async ({ page, buildPreview }) => {
+test('should match resource correctly with specify assetPrefix', async ({
+  page,
+  buildPreview,
+}) => {
   const port = await getRandomPort();
 
   const rsbuild = await buildPreview({

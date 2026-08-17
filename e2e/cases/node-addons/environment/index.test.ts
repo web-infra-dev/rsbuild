@@ -5,7 +5,9 @@ import { findFile, getFileContent } from '@rstackjs/test-utils';
 
 const require = createRequire(import.meta.url);
 
-test('should compile Node addons in ESM and CJS environments', async ({ build }) => {
+test('should compile Node addons in ESM and CJS environments', async ({
+  build,
+}) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 

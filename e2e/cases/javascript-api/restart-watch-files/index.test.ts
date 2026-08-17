@@ -21,7 +21,10 @@ const createConfig = (): RsbuildConfig => ({
   },
 });
 
-const expectRestart = async (rsbuild: RsbuildInstance, action: RestartContext['action']) => {
+const expectRestart = async (
+  rsbuild: RsbuildInstance,
+  action: RestartContext['action'],
+) => {
   let restartContext: RestartContext | undefined;
   let version = 1;
 
@@ -57,7 +60,10 @@ test.afterAll(() => {
   fs.rmSync(watchedDir, { force: true, recursive: true });
 });
 
-test('build({ watch: true }) should watch restart files', async ({ build, copySrcDir }) => {
+test('build({ watch: true }) should watch restart files', async ({
+  build,
+  copySrcDir,
+}) => {
   const sourcePath = await copySrcDir();
   const result = await build({
     watch: true,
@@ -76,7 +82,10 @@ test('build({ watch: true }) should watch restart files', async ({ build, copySr
 
   // Without a restart executor, the current watch build should remain active.
   result.clearLogs();
-  fs.writeFileSync(path.join(sourcePath, 'index.js'), "console.log('updated');");
+  fs.writeFileSync(
+    path.join(sourcePath, 'index.js'),
+    "console.log('updated');",
+  );
   await result.expectBuildEnd();
 });
 
@@ -107,7 +116,9 @@ test('createDevServer() should watch restart files', async () => {
   await server.close();
 });
 
-test('should include a selected restart event in context', async ({ devOnly }) => {
+test('should include a selected restart event in context', async ({
+  devOnly,
+}) => {
   const result = await devOnly({
     config: {
       dev: {
@@ -130,7 +141,10 @@ test('should include a selected restart event in context', async ({ devOnly }) =
     .poll(
       () => {
         if (!restartContext) {
-          fs.writeFileSync(path.join(watchedDir, `added-${++fileIndex}.mdx`), 'added');
+          fs.writeFileSync(
+            path.join(watchedDir, `added-${++fileIndex}.mdx`),
+            'added',
+          );
         }
         return restartContext;
       },

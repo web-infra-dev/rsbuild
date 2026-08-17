@@ -1,7 +1,6 @@
 import { define } from 'rstack';
 
 define.fmt({
-  printWidth: 100,
   singleQuote: true,
   sortPackageJson: true,
   ignorePatterns: [
@@ -27,7 +26,7 @@ define.lint(async ({ globalIgnores, js, ts }) => {
       'e2e/cases/wasm/wasm-source-import/src/index.js',
     ]),
     js.configs.recommended,
-    ts.configs.recommended,
+    ts.configs.recommendedTypeChecked,
     {
       files: ['**/*.{js,jsx,cjs,mjs}'],
       languageOptions: {
@@ -57,6 +56,22 @@ define.lint(async ({ globalIgnores, js, ts }) => {
         },
       },
       rules: {
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-argument': 'off',
+        '@typescript-eslint/require-await': 'off',
+        '@typescript-eslint/no-unsafe-call': 'off',
+        '@typescript-eslint/no-floating-promises': 'off',
+        '@typescript-eslint/no-misused-promises': 'off',
+        '@typescript-eslint/restrict-template-expressions': 'off',
+        '@typescript-eslint/no-unsafe-return': 'off',
+        '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+        '@typescript-eslint/await-thenable': 'off',
+        '@typescript-eslint/no-implied-eval': 'off',
+        '@typescript-eslint/no-redundant-type-constituents': 'off',
+        '@typescript-eslint/no-unsafe-enum-comparison': 'off',
+        '@typescript-eslint/no-base-to-string': 'off',
+        '@typescript-eslint/prefer-promise-reject-errors': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
       },
     },

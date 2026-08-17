@@ -53,14 +53,21 @@ async function applyProfile(
     throw new Error(`unsupported trace layer: ${traceLayer}`);
   }
 
-  if (traceOutput && traceLayer === 'perfetto' && isTerminalTraceOutput(traceOutput)) {
+  if (
+    traceOutput &&
+    traceLayer === 'perfetto' &&
+    isTerminalTraceOutput(traceOutput)
+  ) {
     throw new Error(
       'RSPACK_TRACE_OUTPUT=stdout|stderr is only supported for the logger trace layer. The perfetto trace layer requires a file path.',
     );
   }
 
   const timestamp = Date.now();
-  const defaultOutputDir = path.join(root, `.rspack-profile-${timestamp}-${process.pid}`);
+  const defaultOutputDir = path.join(
+    root,
+    `.rspack-profile-${timestamp}-${process.pid}`,
+  );
 
   if (!traceOutput) {
     const defaultRustTraceOutput =
@@ -79,7 +86,11 @@ async function applyProfile(
     await ensureFileDir(traceOutput);
   }
 
-  await rspack.experiments.globalTrace.register(filter, traceLayer, traceOutput);
+  await rspack.experiments.globalTrace.register(
+    filter,
+    traceLayer,
+    traceOutput,
+  );
 
   return traceOutput;
 }

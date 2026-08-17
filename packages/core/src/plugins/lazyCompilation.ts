@@ -1,7 +1,11 @@
 import { isURL } from '../helpers/url';
 import { getHostInUrl } from '../server/helper';
 import { replacePortPlaceholder } from '../server/open';
-import type { NormalizedEnvironmentConfig, RsbuildContext, RsbuildPlugin } from '../types';
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildContext,
+  RsbuildPlugin,
+} from '../types';
 
 const getServerUrlFromClientConfig = async (
   config: NormalizedEnvironmentConfig,
@@ -9,7 +13,8 @@ const getServerUrlFromClientConfig = async (
 ): Promise<string | undefined> => {
   const { assetPrefix } = config.dev;
   const hasAbsoluteAssetPrefix =
-    assetPrefix === true || (typeof assetPrefix === 'string' && isURL(assetPrefix));
+    assetPrefix === true ||
+    (typeof assetPrefix === 'string' && isURL(assetPrefix));
 
   // A relative asset prefix indicates that page requests are routed through the
   // current origin, so the lazy compilation endpoint should follow the same route.
@@ -30,9 +35,12 @@ const getServerUrlFromClientConfig = async (
     return;
   }
 
-  const protocol = client.protocol ? `${client.protocol === 'wss' ? 'https' : 'http'}:` : '';
+  const protocol = client.protocol
+    ? `${client.protocol === 'wss' ? 'https' : 'http'}:`
+    : '';
   const hostname = await getHostInUrl(client.host || devServer.hostname);
-  const port = client.port && client.port !== '<port>' ? client.port : devServer.port;
+  const port =
+    client.port && client.port !== '<port>' ? client.port : devServer.port;
 
   return `${protocol}//${hostname}:${port}`;
 };
@@ -61,7 +69,10 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
 
       if (options === true) {
         const entries = chain.entryPoints.entries() || {};
-        const serverUrl = await getServerUrlFromClientConfig(config, api.context);
+        const serverUrl = await getServerUrlFromClientConfig(
+          config,
+          api.context,
+        );
 
         // If there is only one entry, do not enable lazy compilation for entries
         // this can reduce the rebuild time
@@ -92,13 +103,19 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
       ) {
         chain.lazyCompilation({
           ...options,
-          serverUrl: replacePortPlaceholder(options.serverUrl, api.context.devServer.port),
+          serverUrl: replacePortPlaceholder(
+            options.serverUrl,
+            api.context.devServer.port,
+          ),
         });
         return;
       }
 
       if (typeof options === 'object') {
-        const serverUrl = await getServerUrlFromClientConfig(config, api.context);
+        const serverUrl = await getServerUrlFromClientConfig(
+          config,
+          api.context,
+        );
         chain.lazyCompilation(serverUrl ? { ...options, serverUrl } : options);
         return;
       }

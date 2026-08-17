@@ -1,7 +1,9 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('should apply assetPrefix to assets in manifest entries', async ({ build }) => {
+test('should apply assetPrefix to assets in manifest entries', async ({
+  build,
+}) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });

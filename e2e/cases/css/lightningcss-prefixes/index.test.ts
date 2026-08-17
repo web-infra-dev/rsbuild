@@ -1,7 +1,9 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('should add vendor prefixes by current browserslist', async ({ runBoth }) => {
+test('should add vendor prefixes by current browserslist', async ({
+  runBoth,
+}) => {
   await runBoth(async ({ mode, result }) => {
     const files = result.getDistFiles();
 

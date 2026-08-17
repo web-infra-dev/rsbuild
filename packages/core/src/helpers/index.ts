@@ -30,7 +30,9 @@ const objectPrototype = Object.prototype;
 const getProto = Object.getPrototypeOf;
 
 export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
-  return obj !== null && typeof obj === 'object' && getProto(obj) === objectPrototype;
+  return (
+    obj !== null && typeof obj === 'object' && getProto(obj) === objectPrototype
+  );
 };
 
 export const castArray = <T>(arr?: T | T[]): T[] => {
@@ -117,7 +119,10 @@ export function getFilename(
   const getHash = () => (hashConfig.enable !== false ? `.${hashTemplate}` : '');
 
   const getJsCssHash = (flag?: boolean) => {
-    if (hashConfig.enable === 'always' || (hashConfig.enable === true && flag)) {
+    if (
+      hashConfig.enable === 'always' ||
+      (hashConfig.enable === true && flag)
+    ) {
       return `.${hashTemplate}`;
     }
     return '';
@@ -145,7 +150,9 @@ export function getFilename(
       if (filename.html) {
         return filename.html;
       }
-      return config.html.outputStructure === 'flat' ? '[name].html' : '[name]/index.html';
+      return config.html.outputStructure === 'flat'
+        ? '[name].html'
+        : '[name]/index.html';
     default:
       throw new Error(
         `${color.dim('[rsbuild:config]')} unknown key ${color.yellow(
@@ -155,7 +162,10 @@ export function getFilename(
   }
 }
 
-export function partition<T>(array: T[], predicate: (value: T) => boolean): [T[], T[]] {
+export function partition<T>(
+  array: T[],
+  predicate: (value: T) => boolean,
+): [T[], T[]] {
   const truthy: T[] = [];
   const falsy: T[] = [];
 
@@ -181,7 +191,10 @@ export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   return targets.includes('web') || targets.includes('web-worker');
 }
 
-export function pick<T, U extends keyof T>(obj: T, keys: readonly U[]): Pick<T, U> {
+export function pick<T, U extends keyof T>(
+  obj: T,
+  keys: readonly U[],
+): Pick<T, U> {
   const result = {} as Pick<T, U>;
   for (const key of keys) {
     if (obj[key] !== undefined) {
@@ -195,7 +208,8 @@ export const camelCase = (input: string): string =>
   input.replace(/[-_](\w)/g, (_, c: string) => c.toUpperCase());
 
 export const prettyTime = (seconds: number): string => {
-  const format = (time: string, unit: 'm' | 's') => color.bold(`${time}${unit}`);
+  const format = (time: string, unit: 'm' | 's') =>
+    color.bold(`${time}${unit}`);
 
   if (seconds < 10) {
     const digits = seconds >= 0.01 ? 2 : 3;
@@ -214,7 +228,10 @@ export const prettyTime = (seconds: number): string => {
     return minutesLabel;
   }
 
-  const secondsLabel = format(remainingSeconds.toFixed(remainingSeconds % 1 === 0 ? 0 : 1), 's');
+  const secondsLabel = format(
+    remainingSeconds.toFixed(remainingSeconds % 1 === 0 ? 0 : 1),
+    's',
+  );
 
   return `${minutesLabel} ${secondsLabel}`;
 };
@@ -223,7 +240,10 @@ export const prettyTime = (seconds: number): string => {
  * Check if running in a TTY context
  */
 export const isTTY = (type: 'stdin' | 'stdout' = 'stdout'): boolean => {
-  return (type === 'stdin' ? process.stdin.isTTY : process.stdout.isTTY) && !process.env.CI;
+  return (
+    (type === 'stdin' ? process.stdin.isTTY : process.stdout.isTTY) &&
+    !process.env.CI
+  );
 };
 
 export async function hash(data: string): Promise<string> {

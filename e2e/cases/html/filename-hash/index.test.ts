@@ -1,7 +1,9 @@
 import { expect, test } from '@e2e/helper';
 import { findFile } from '@rstackjs/test-utils';
 
-test('should allow to generate HTML with filename hash using filename.html', async ({ build }) => {
+test('should allow to generate HTML with filename hash using filename.html', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {

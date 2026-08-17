@@ -14,7 +14,10 @@ test.afterAll(() => {
   fs.rmSync(watchedFile, { force: true });
 });
 
-test('should close the old watcher after a shortcut restart', async ({ exec, logHelper }) => {
+test('should close the old watcher after a shortcut restart', async ({
+  exec,
+  logHelper,
+}) => {
   const port = await getRandomPort();
   const { childProcess } = exec('node ./dev.js', {
     env: {

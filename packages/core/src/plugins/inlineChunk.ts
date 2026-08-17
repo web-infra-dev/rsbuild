@@ -39,7 +39,10 @@ function updateSourceMappingURL({
     const prefix = addTrailingSlash(
       ensureAssetPrefix(config.output.distPath[type] || '', publicPath),
     );
-    return source.replace(/# sourceMappingURL=/, `# sourceMappingURL=${prefix}`);
+    return source.replace(
+      /# sourceMappingURL=/,
+      `# sourceMappingURL=${prefix}`,
+    );
   }
 
   return source;
@@ -91,7 +94,8 @@ export function getInlineTests(config: NormalizedEnvironmentConfig): {
         scriptTests.push(inlineScripts);
       }
     } else {
-      const enabled = inlineScripts.enable === 'auto' ? isProd : inlineScripts.enable;
+      const enabled =
+        inlineScripts.enable === 'auto' ? isProd : inlineScripts.enable;
       if (enabled) {
         scriptTests.push(inlineScripts.test);
       }
@@ -108,7 +112,8 @@ export function getInlineTests(config: NormalizedEnvironmentConfig): {
         styleTests.push(inlineStyles);
       }
     } else {
-      const enable = inlineStyles.enable === 'auto' ? isProd : inlineStyles.enable;
+      const enable =
+        inlineStyles.enable === 'auto' ? isProd : inlineStyles.enable;
       if (enable) {
         styleTests.push(inlineStyles.test);
       }
@@ -192,7 +197,9 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         return tag;
       }
 
-      const linkName = publicPath ? tag.attrs.href.replace(publicPath, '') : tag.attrs.href;
+      const linkName = publicPath
+        ? tag.attrs.href.replace(publicPath, '')
+        : tag.attrs.href;
 
       const asset = getMatchedAsset(linkName, assets, styleTests);
       if (!asset) {
@@ -237,7 +244,14 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         );
       }
       if (tag.tag === 'link' && tag.attrs && tag.attrs.rel === 'stylesheet') {
-        return getInlinedCSSTag(publicPath, tag, compilation, inlinedAssets, styleTests, config);
+        return getInlinedCSSTag(
+          publicPath,
+          tag,
+          compilation,
+          inlinedAssets,
+          styleTests,
+          config,
+        );
       }
       return tag;
     };
@@ -258,7 +272,8 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
 
         const { devtool } = compiler.options;
 
-        const hasSourceMap = devtool !== 'hidden-source-map' && devtool !== false;
+        const hasSourceMap =
+          devtool !== 'hidden-source-map' && devtool !== false;
         for (const name of inlinedAssets) {
           if (hasSourceMap) {
             const asset = compilation.assets[name];
@@ -283,38 +298,40 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
       },
     );
 
-    api.modifyHTMLTags(({ headTags, bodyTags }, { compiler, compilation, environment }) => {
-      const { htmlPaths, config } = environment;
+    api.modifyHTMLTags(
+      ({ headTags, bodyTags }, { compiler, compilation, environment }) => {
+        const { htmlPaths, config } = environment;
 
-      if (Object.keys(htmlPaths).length === 0) {
-        return { headTags, bodyTags };
-      }
+        if (Object.keys(htmlPaths).length === 0) {
+          return { headTags, bodyTags };
+        }
 
-      const inlinedAssets = getInlinedAssetsSet(environment.name);
+        const inlinedAssets = getInlinedAssetsSet(environment.name);
 
-      const { scriptTests, styleTests } = getInlineTests(config);
+        const { scriptTests, styleTests } = getInlineTests(config);
 
-      if (!scriptTests.length && !styleTests.length) {
-        return { headTags, bodyTags };
-      }
+        if (!scriptTests.length && !styleTests.length) {
+          return { headTags, bodyTags };
+        }
 
-      const publicPath = getPublicPathFromCompiler(compiler);
+        const publicPath = getPublicPathFromCompiler(compiler);
 
-      const updateTag = (tag: HtmlBasicTag) =>
-        getInlinedTag(
-          publicPath,
-          tag,
-          compilation,
-          inlinedAssets,
-          scriptTests,
-          styleTests,
-          environment.config,
-        );
+        const updateTag = (tag: HtmlBasicTag) =>
+          getInlinedTag(
+            publicPath,
+            tag,
+            compilation,
+            inlinedAssets,
+            scriptTests,
+            styleTests,
+            environment.config,
+          );
 
-      return {
-        headTags: headTags.map(updateTag),
-        bodyTags: bodyTags.map(updateTag),
-      };
-    });
+        return {
+          headTags: headTags.map(updateTag),
+          bodyTags: bodyTags.map(updateTag),
+        };
+      },
+    );
   },
 });

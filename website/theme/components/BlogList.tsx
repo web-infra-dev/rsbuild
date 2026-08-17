@@ -1,5 +1,8 @@
 import { Link, renderInlineMarkdown } from '@rspress/core/theme';
-import { BlogList as BaseBlogList, type BlogListItem } from '@rstack-dev/doc-ui/blog-list';
+import {
+  BlogList as BaseBlogList,
+  type BlogListItem,
+} from '@rstack-dev/doc-ui/blog-list';
 import { BlogBackground } from '@rstack-dev/doc-ui/blog-background';
 import type { BlogAvatarAuthor } from '@rstack-dev/doc-ui/blog-avatar';
 import { useLang, usePages } from '@rspress/core/runtime';
@@ -38,7 +41,10 @@ export const useBlogPages = (): BlogListItem[] => {
 
   const localBlogPages = pages
     .filter((page) => page.lang === lang)
-    .filter((page) => page.routePath.includes('/blog/') && !page.routePath.endsWith('/blog/'))
+    .filter(
+      (page) =>
+        page.routePath.includes('/blog/') && !page.routePath.endsWith('/blog/'),
+    )
     .map((page) => {
       const frontmatter = (page.frontmatter ?? {}) as BlogFrontmatter;
 
@@ -51,7 +57,9 @@ export const useBlogPages = (): BlogListItem[] => {
       });
     });
 
-  return localBlogPages.sort((a, b) => getDateValue(b.date) - getDateValue(a.date));
+  return localBlogPages.sort(
+    (a, b) => getDateValue(b.date) - getDateValue(a.date),
+  );
 };
 
 export function BlogList() {

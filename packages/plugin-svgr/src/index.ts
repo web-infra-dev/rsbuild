@@ -104,7 +104,8 @@ const dedupeSvgoPlugins = (config: SvgoConfig): SvgoConfig => {
   for (const plugin of config.plugins) {
     if (typeof plugin === 'string') {
       const exist = mergedPlugins.find(
-        (item) => item === plugin || (typeof item === 'object' && item.name === plugin),
+        (item) =>
+          item === plugin || (typeof item === 'object' && item.name === plugin),
       );
 
       if (!exist) {
@@ -164,9 +165,11 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
       const { dataUriLimit } = config.output;
-      const maxSize = typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.svg;
+      const maxSize =
+        typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.svg;
 
-      let generatorOptions: Rspack.GeneratorOptionsByModuleType['asset/resource'] = {};
+      let generatorOptions: Rspack.GeneratorOptionsByModuleType['asset/resource'] =
+        {};
 
       if (chain.module.rules.has(CHAIN_ID.RULE.SVG)) {
         generatorOptions = chain.module.rules
@@ -207,7 +210,10 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
       // get SVG source: `import source from "foo.svg" with { type: "text" }`
       if (CHAIN_ID.ONE_OF.SVG_TEXT) {
-        rule.oneOf(CHAIN_ID.ONE_OF.SVG_TEXT).type('asset/source').with({ type: 'text' });
+        rule
+          .oneOf(CHAIN_ID.ONE_OF.SVG_TEXT)
+          .type('asset/source')
+          .with({ type: 'text' });
       }
 
       // get raw content: "foo.svg?raw"
@@ -239,7 +245,10 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       if (mixedImport || svgrOptions.exportType) {
         const { exportType = mixedImport ? 'named' : undefined } = svgrOptions;
 
-        const issuerInclude = [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/, /\.mdx$/];
+        const issuerInclude = [
+          /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
+          /\.mdx$/,
+        ];
         const issuer = options.excludeImporter
           ? { and: [issuerInclude, { not: options.excludeImporter }] }
           : issuerInclude;
@@ -302,7 +311,10 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           return false;
         }
 
-        for (const oneOfId of [CHAIN_ID.ONE_OF.SVG, CHAIN_ID.ONE_OF.SVG_REACT]) {
+        for (const oneOfId of [
+          CHAIN_ID.ONE_OF.SVG,
+          CHAIN_ID.ONE_OF.SVG_REACT,
+        ]) {
           if (!rule.oneOfs.has(oneOfId)) {
             continue;
           }

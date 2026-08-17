@@ -4,7 +4,11 @@ import type {
 } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import { isPlainObject, pick } from '../helpers';
-import type { NormalizedEnvironmentConfig, OneOrMany, RsbuildPlugin } from '../types';
+import type {
+  NormalizedEnvironmentConfig,
+  OneOrMany,
+  RsbuildPlugin,
+} from '../types';
 import { getLightningCSSLoaderOptions } from './css';
 
 const CONSOLE_METHODS = [
@@ -116,7 +120,8 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { environment, CHAIN_ID, rspack }) => {
       const { config } = environment;
-      const { minifyJs, minifyCss, jsOptions, cssOptions } = parseMinifyOptions(config);
+      const { minifyJs, minifyCss, jsOptions, cssOptions } =
+        parseMinifyOptions(config);
 
       chain.optimization.minimize(minifyJs || minifyCss);
 
@@ -126,11 +131,15 @@ export const pluginMinimize = (): RsbuildPlugin => ({
           index = 0,
         ) => {
           const minimizerId =
-            index === 0 ? CHAIN_ID.MINIMIZER.JS : `${CHAIN_ID.MINIMIZER.JS}-${index}`;
+            index === 0
+              ? CHAIN_ID.MINIMIZER.JS
+              : `${CHAIN_ID.MINIMIZER.JS}-${index}`;
 
           chain.optimization
             .minimizer(minimizerId)
-            .use(rspack.SwcJsMinimizerRspackPlugin, [getSwcMinimizerOptions(config, jsOptionsItem)])
+            .use(rspack.SwcJsMinimizerRspackPlugin, [
+              getSwcMinimizerOptions(config, jsOptionsItem),
+            ])
             .end();
         };
 
@@ -175,10 +184,15 @@ export const pluginMinimize = (): RsbuildPlugin => ({
           index = 0,
         ) => {
           const options = cssOptionsItem
-            ? deepmerge<LightningCssMinimizerRspackPluginOptions>(defaultOptions, cssOptionsItem)
+            ? deepmerge<LightningCssMinimizerRspackPluginOptions>(
+                defaultOptions,
+                cssOptionsItem,
+              )
             : defaultOptions;
           const minimizerId =
-            index === 0 ? CHAIN_ID.MINIMIZER.CSS : `${CHAIN_ID.MINIMIZER.CSS}-${index}`;
+            index === 0
+              ? CHAIN_ID.MINIMIZER.CSS
+              : `${CHAIN_ID.MINIMIZER.CSS}-${index}`;
 
           chain.optimization
             .minimizer(minimizerId)

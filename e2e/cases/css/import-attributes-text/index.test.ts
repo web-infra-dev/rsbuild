@@ -4,9 +4,13 @@ import { expect, test } from '@e2e/helper';
 
 const fixtures = ['css', 'less', 'scss', 'sass'] as const;
 
-test('should import style files as text with import attributes', async ({ page, runBothServe }) => {
+test('should import style files as text with import attributes', async ({
+  page,
+  runBothServe,
+}) => {
   await runBothServe(async () => {
-    const styles = await page.evaluate<Record<string, string>>('window.styleText');
+    const styles =
+      await page.evaluate<Record<string, string>>('window.styleText');
 
     for (const ext of fixtures) {
       expect(styles[ext]).toBe(
@@ -14,6 +18,8 @@ test('should import style files as text with import attributes', async ({ page, 
       );
     }
 
-    expect(await page.evaluate('getComputedStyle(document.body).color')).toBe('rgb(0, 0, 255)');
+    expect(await page.evaluate('getComputedStyle(document.body).color')).toBe(
+      'rgb(0, 0, 255)',
+    );
   });
 });

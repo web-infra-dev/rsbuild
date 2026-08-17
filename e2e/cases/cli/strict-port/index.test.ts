@@ -23,7 +23,9 @@ const occupyPort = async () => {
   };
 };
 
-test('should exit when port is occupied and --strict-port is used', async ({ execCliSync }) => {
+test('should exit when port is occupied and --strict-port is used', async ({
+  execCliSync,
+}) => {
   const blocker = await occupyPort();
 
   let message = '';

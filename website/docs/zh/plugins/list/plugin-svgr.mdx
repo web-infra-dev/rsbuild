@@ -417,7 +417,9 @@ declare module '*.svg?react' {
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
 }
 declare module '*.svg?react' {
   const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
@@ -429,7 +431,9 @@ declare module '*.svg?react' {
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
   const content: string;
   export default content;
 }

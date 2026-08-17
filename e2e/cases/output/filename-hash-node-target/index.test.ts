@@ -1,7 +1,9 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-test('should allow to force filename hash for node target', async ({ build }) => {
+test('should allow to force filename hash for node target', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -18,9 +20,13 @@ test('should allow to force filename hash for node target', async ({ build }) =>
   const filenames = Object.keys(files);
   expect(filenames.some((key) => /\/index\.js$/.test(key))).toBeFalsy();
 
-  const indexJs = getFileContent(files, (key) => /\/index\.\w{8}\.js$/.test(key), {
-    ignoreHash: false,
-  });
+  const indexJs = getFileContent(
+    files,
+    (key) => /\/index\.\w{8}\.js$/.test(key),
+    {
+      ignoreHash: false,
+    },
+  );
 
   expect(indexJs).toContain('filename hash for node target');
 });

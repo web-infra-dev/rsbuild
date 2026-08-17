@@ -121,7 +121,10 @@ test('should allow to access manifest data in environment context after dev buil
   });
 });
 
-test('should allow to access manifest data in environment API', async ({ dev, page }) => {
+test('should allow to access manifest data in environment API', async ({
+  dev,
+  page,
+}) => {
   let webManifest: Record<string, any> | undefined = {};
   let nodeManifest: Record<string, any> | undefined = {};
 

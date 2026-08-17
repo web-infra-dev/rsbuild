@@ -7,11 +7,13 @@ type SassUrlResult = {
   targetColor: string;
 };
 
-test('should return transformed Sass URL with `?url`', async ({ page, runBothServe }) => {
+test('should return transformed Sass URL with `?url`', async ({
+  page,
+  runBothServe,
+}) => {
   await runBothServe(async ({ mode, result }) => {
-    const { styleContent, styleUrl, targetColor } = await page.evaluate<SassUrlResult>(
-      'window.getSassUrlResult()',
-    );
+    const { styleContent, styleUrl, targetColor } =
+      await page.evaluate<SassUrlResult>('window.getSassUrlResult()');
 
     expect(styleUrl).toMatch(/\/static\/css\/style\.css$/);
     expect(styleContent).toContain('.url-query-sass');

@@ -48,7 +48,9 @@ async function emitConfigFiles({
 
   const files = [
     ...environmentConfigs.map(({ name, content }) => {
-      const outputFile = isSingle ? 'rsbuild.config.mjs' : `rsbuild.config.${name}.mjs`;
+      const outputFile = isSingle
+        ? 'rsbuild.config.mjs'
+        : `rsbuild.config.${name}.mjs`;
       const label = isSingle ? 'Rsbuild config' : `Rsbuild config (${name})`;
 
       return {
@@ -88,10 +90,15 @@ async function emitConfigFiles({
   );
 
   const fileInfos = files
-    .map((item) => `  - ${color.bold(color.yellow(item.label))}: ${color.underline(item.path)}`)
+    .map(
+      (item) =>
+        `  - ${color.bold(color.yellow(item.label))}: ${color.underline(item.path)}`,
+    )
     .join('\n');
 
-  logger.success(`config inspection completed, generated files: \n\n${fileInfos}\n`);
+  logger.success(
+    `config inspection completed, generated files: \n\n${fileInfos}\n`,
+  );
 }
 
 export function stringifyConfig(config: unknown, verbose?: boolean): string {
@@ -109,7 +116,9 @@ const getInspectOutputPath = (
     return join(context.distPath, RSBUILD_OUTPUTS_PATH);
   }
 
-  return isAbsolute(outputPath) ? outputPath : join(context.distPath, outputPath);
+  return isAbsolute(outputPath)
+    ? outputPath
+    : join(context.distPath, outputPath);
 };
 
 export async function inspectConfig({
@@ -131,14 +140,19 @@ export async function inspectConfig({
     ...rsbuildConfig,
     plugins: pluginManager.getPlugins().map(normalizePluginObject),
   };
-  const stringifiedRsbuildConfig = stringifyConfig(normalizedRsbuildConfig, inspectOptions.verbose);
+  const stringifiedRsbuildConfig = stringifyConfig(
+    normalizedRsbuildConfig,
+    inspectOptions.verbose,
+  );
 
   const stringifiedEnvironmentConfigs: ConfigItem[] = [];
 
   for (const [name, config] of Object.entries(environments)) {
     const normalizedEnvConfig: NormalizedEnvironmentConfig = {
       ...config,
-      plugins: pluginManager.getPlugins({ environment: name }).map(normalizePluginObject),
+      plugins: pluginManager
+        .getPlugins({ environment: name })
+        .map(normalizePluginObject),
     };
 
     stringifiedEnvironmentConfigs.push({
@@ -150,11 +164,15 @@ export async function inspectConfig({
   const outputPath = getInspectOutputPath(context, inspectOptions);
 
   const stringifiedExtraConfigs = inspectOptions.extraConfigs
-    ? Object.entries(inspectOptions.extraConfigs).map(([name, content]): ConfigItem => ({
-        name,
-        content:
-          typeof content === 'string' ? content : stringifyConfig(content, inspectOptions.verbose),
-      }))
+    ? Object.entries(inspectOptions.extraConfigs).map(
+        ([name, content]): ConfigItem => ({
+          name,
+          content:
+            typeof content === 'string'
+              ? content
+              : stringifyConfig(content, inspectOptions.verbose),
+        }),
+      )
     : undefined;
 
   if (inspectOptions.writeToDisk) {
@@ -172,7 +190,9 @@ export async function inspectConfig({
 
   return {
     rsbuildConfig: stringifiedRsbuildConfig,
-    environmentConfigs: stringifiedEnvironmentConfigs.map((item) => item.content),
+    environmentConfigs: stringifiedEnvironmentConfigs.map(
+      (item) => item.content,
+    ),
     bundlerConfigs: stringifiedBundlerConfigs.map((item) => item.content),
     origin: {
       rsbuildConfig,

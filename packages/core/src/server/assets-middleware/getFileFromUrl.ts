@@ -14,7 +14,9 @@ export async function getFileFromUrl(
   url: string,
   outputFileSystem: Rspack.OutputFileSystem,
   context: InternalContext,
-): Promise<{ filename: string; fsStats: FSStats } | { errorCode: number } | undefined> {
+): Promise<
+  { filename: string; fsStats: FSStats } | { errorCode: number } | undefined
+> {
   let pathname = getPathnameFromUrl(url);
 
   try {

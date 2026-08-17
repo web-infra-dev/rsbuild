@@ -31,9 +31,13 @@ export const loadBundle = async <T>(
 
   // find main entryChunk from chunks
   const files = entryChunks.reduce<string[]>((prev, entryChunkId) => {
-    const chunk = chunks?.find((chunk) => chunk.entry && chunk.id === entryChunkId);
+    const chunk = chunks?.find(
+      (chunk) => chunk.entry && chunk.id === entryChunkId,
+    );
 
-    return chunk?.files ? prev.concat(chunk.files.filter((file) => !file.endsWith('.css'))) : prev;
+    return chunk?.files
+      ? prev.concat(chunk.files.filter((file) => !file.endsWith('.css')))
+      : prev;
   }, []);
 
   if (files.length === 0) {
@@ -54,7 +58,8 @@ export const loadBundle = async <T>(
   }
 
   const allChunkFiles =
-    chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) || [];
+    chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) ||
+    [];
 
   const res = await run<T>({
     bundlePath: files[0],
@@ -67,7 +72,10 @@ export const loadBundle = async <T>(
   return res;
 };
 
-export const getTransformedHtml = (entryName: string, utils: ServerUtils): string => {
+export const getTransformedHtml = (
+  entryName: string,
+  utils: ServerUtils,
+): string => {
   const { htmlPaths, distPath } = utils.environment;
   const htmlPath = htmlPaths[entryName];
 
@@ -87,11 +95,19 @@ export const getTransformedHtml = (entryName: string, utils: ServerUtils): strin
 };
 
 export const createCacheableFunction = <T>(
-  getter: (stats: Rspack.Stats, entryName: string, utils: ServerUtils) => Promise<T> | T,
+  getter: (
+    stats: Rspack.Stats,
+    entryName: string,
+    utils: ServerUtils,
+  ) => Promise<T> | T,
 ) => {
   const cache = new WeakMap<Rspack.Stats, Map<string, Promise<T>>>();
 
-  return (stats: Rspack.Stats, entryName: string, utils: ServerUtils): Promise<T> => {
+  return (
+    stats: Rspack.Stats,
+    entryName: string,
+    utils: ServerUtils,
+  ): Promise<T> => {
     let cachedEntries = cache.get(stats);
     if (!cachedEntries) {
       cachedEntries = new Map();
