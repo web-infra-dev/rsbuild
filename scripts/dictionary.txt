@@ -32,6 +32,7 @@ datauri
 deepmerge
 docgen
 dotenvx
+dsns
 downleveling
 dppx
 envinfo
@@ -93,6 +94,7 @@ ontext
 osascript
 outro
 pageerror
+paraglide
 pathinfo
 pcss
 perfetto
@@ -146,6 +148,7 @@ svgr
 swcrc
 systemjs
 tailwindcss
+tanstackstart
 taze
 templating
 tinyglobby

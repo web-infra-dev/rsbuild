@@ -1,1 +1,1 @@
-["webpack", "cra", "vue-cli", "vite", "vite-plugin"]
+["webpack", "cra", "vue-cli", "vite", "vite-plugin", "tanstack-start"]
