@@ -53,6 +53,7 @@ icss
 idents
 iife
 imagex
+importmap
 inlines
 jfif
 Jiahan
