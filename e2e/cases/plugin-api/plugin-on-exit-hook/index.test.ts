@@ -29,9 +29,9 @@ test('should run onExit hook before process exit', async () => {
           expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
           clearTimeout(timeoutId);
           resolve();
-        } catch (err) {
+        } catch (error) {
           clearTimeout(timeoutId);
-          reject(err);
+          reject(error as Error);
         }
       },
     );

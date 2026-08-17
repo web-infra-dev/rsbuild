@@ -24,11 +24,10 @@ declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((options: {
 
 const getErrorField = (
   error: unknown,
-  field: keyof Error,
+  field: 'message' | 'name' | 'stack',
 ): string | undefined => {
   if (error instanceof Error) {
-    const value = error[field];
-    return value === undefined ? undefined : String(value);
+    return error[field];
   }
 };
 

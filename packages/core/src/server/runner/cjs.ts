@@ -18,8 +18,12 @@ export class CommonJsRunner extends BasicRunner {
   protected createGlobalContext(): BasicGlobalContext {
     return {
       console: console,
-      setTimeout: ((...args: Parameters<typeof setTimeout>) => {
-        const timeout = setTimeout(...args);
+      setTimeout: ((
+        callback: (...args: unknown[]) => void,
+        delay?: number,
+        ...args: unknown[]
+      ) => {
+        const timeout = setTimeout(callback, delay, ...args);
         timeout.unref();
         return timeout;
       }) as typeof setTimeout,
@@ -107,6 +111,7 @@ export class CommonJsRunner extends BasicRunner {
       const args = Object.keys(currentModuleScope);
       const argValues = args.map((arg) => currentModuleScope[arg]);
       this.preExecute(file.content, file);
+      // rslint-disable-next-line @typescript-eslint/no-implied-eval -- Evaluate import() in the main context instead of the VM context.
       const dynamicImport = new Function(
         'specifier',
         'return import(specifier)',

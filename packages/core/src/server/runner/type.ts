@@ -7,7 +7,7 @@ export type RunnerRequirer = (
     file?: BasicRunnerFile;
     esmMode?: EsmMode;
   },
-) => unknown | Promise<unknown>;
+) => unknown;
 
 export type BasicRunnerFile = {
   path: string;
