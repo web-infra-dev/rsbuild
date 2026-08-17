@@ -29,15 +29,9 @@ test('should run onExit hook before process exit', async () => {
           expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
           clearTimeout(timeoutId);
           resolve();
-        } catch (err) {
+        } catch (error) {
           clearTimeout(timeoutId);
-          reject(
-            err instanceof Error
-              ? err
-              : new Error('Failed to validate onExit hook output', {
-                  cause: err,
-                }),
-          );
+          reject(error as Error);
         }
       },
     );
