@@ -184,3 +184,32 @@ export default {
   },
 };
 ```
+
+## Using with ESM output
+
+When [output.module](/config/output/module) is enabled, initial JavaScript chunks can reference the runtime or shared chunks through static ESM imports. After `inlineScripts` moves these chunks into HTML and removes the corresponding files, those imports can no longer be resolved.
+
+Therefore, each HTML entry should have only one initial JavaScript chunk. Keep the runtime in the entry and limit `splitChunks` to async chunks:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    module: true,
+    inlineScripts: true,
+  },
+  splitChunks: {
+    // Only split async chunks
+    chunks: 'async',
+  },
+  tools: {
+    rspack: {
+      optimization: {
+        // Keep the runtime in the entry chunk
+        runtimeChunk: false,
+      },
+    },
+  },
+};
+```
+
+Async chunks created by dynamic imports are still supported. They are not inlined by default and continue to load on demand. If your application requires a separate runtime chunk or shared initial chunks, do not enable `inlineScripts`.
