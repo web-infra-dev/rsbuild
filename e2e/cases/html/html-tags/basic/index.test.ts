@@ -9,7 +9,13 @@ test('should inject tags correctly', async ({ build }) => {
   const indexHtml = getFileContent(files, 'index.html');
 
   expect(indexHtml.includes('<script src="/foo.js"></script>')).toBeTruthy();
-  expect(indexHtml.includes('<script src="https://www.cdn.com/foo.js"></script>')).toBeTruthy();
-  expect(indexHtml.includes('<meta name="referrer" content="origin">')).toBeTruthy();
-  expect(indexHtml.includes('<link ref="preconnect" href="https://example.com">')).toBeTruthy();
+  expect(
+    indexHtml.includes('<script src="https://www.cdn.com/foo.js"></script>'),
+  ).toBeTruthy();
+  expect(
+    indexHtml.includes('<meta name="referrer" content="origin">'),
+  ).toBeTruthy();
+  expect(
+    indexHtml.includes('<link ref="preconnect" href="https://example.com">'),
+  ).toBeTruthy();
 });

@@ -3,7 +3,10 @@ import { defineConfig, type RsbuildPlugin } from '@rsbuild/core';
 const servePlugin: RsbuildPlugin = {
   name: 'serve-plugin',
   apply(config, { action }) {
-    return (action === 'dev' || action === 'preview') && config.output?.target === 'web';
+    return (
+      (action === 'dev' || action === 'preview') &&
+      config.output?.target === 'web'
+    );
   },
   setup(api) {
     api.modifyHTML((html) => {

@@ -14,7 +14,10 @@ import type {
 } from '@rspack/core';
 import type { ChokidarOptions } from 'chokidar';
 import type Cors from 'cors';
-import type { Options as HttpProxyOptions, Filter as ProxyFilter } from 'http-proxy-middleware';
+import type {
+  Options as HttpProxyOptions,
+  Filter as ProxyFilter,
+} from 'http-proxy-middleware';
 import type { RspackChain } from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
 import type { HotSend, RsbuildDevServer } from '../server/devServer';
@@ -59,7 +62,7 @@ export type ToolsBundlerChainConfig = OneOrMany<
 
 export type ToolsPostCSSContext = {
   addPlugins: (
-    plugins: LoosePostCSSPlugin | LoosePostCSSPlugin[],
+    plugins: OneOrMany<LoosePostCSSPlugin>,
     options?: {
       /**
        * Controls where the plugin is placed relative to the existing PostCSS plugins.
@@ -300,7 +303,9 @@ export type TransformImport = {
   ignoreStyleComponent?: string[];
 };
 
-type TransformImportFn = (imports: TransformImport[]) => TransformImport[] | void;
+type TransformImportFn = (
+  imports: TransformImport[],
+) => TransformImport[] | void;
 
 export interface NormalizedSourceConfig extends SourceConfig {
   define: DefinePluginOptions;
@@ -331,7 +336,8 @@ export type ProxyOptions = HttpProxyOptions & {
   bypass?: ProxyBypass;
 };
 
-export type ProxyConfig = Record<string, string | ProxyOptions> | ProxyOptions[];
+export type ProxyConfig =
+  Record<string, string | ProxyOptions> | ProxyOptions[];
 
 export type HistoryApiFallbackContext = {
   match: RegExpMatchArray;
@@ -339,7 +345,8 @@ export type HistoryApiFallbackContext = {
   request: IncomingMessage;
 };
 
-export type HistoryApiFallbackTo = string | ((context: HistoryApiFallbackContext) => string);
+export type HistoryApiFallbackTo =
+  string | ((context: HistoryApiFallbackContext) => string);
 
 export type HistoryApiFallbackOptions = {
   /**
@@ -394,7 +401,9 @@ export type PrintUrlsOptions = {
 export type PrintUrls =
   | boolean
   | PrintUrlsOptions
-  | ((params: PrintUrlsParams) => (string | { url: string; label?: string })[] | void);
+  | ((
+      params: PrintUrlsParams,
+    ) => (string | { url: string; label?: string })[] | void);
 
 export type PublicDirOptions = {
   /**
@@ -569,7 +578,10 @@ export type NormalizedServerConfig = {
   host: string;
   publicDir: Required<PublicDirOptions>[];
 } & Omit<
-  Optional<Required<ServerConfig>, 'headers' | 'https' | 'historyApiFallback' | 'proxy' | 'setup'>,
+  Optional<
+    Required<ServerConfig>,
+    'headers' | 'https' | 'historyApiFallback' | 'proxy' | 'setup'
+  >,
   'host' | 'publicDir'
 >;
 
@@ -738,11 +750,14 @@ export type Preconnect = (string | PreconnectOption)[];
 
 export type DnsPrefetch = string[];
 
-export type ResourceHintsIncludeType = 'async-chunks' | 'initial' | 'all-assets' | 'all-chunks';
+export type ResourceHintsIncludeType =
+  'async-chunks' | 'initial' | 'all-assets' | 'all-chunks';
 
 export type ResourceHintsFilterFn = (filename: string) => boolean;
 
-export type ResourceHintsFilter = OneOrMany<string | RegExp | ResourceHintsFilterFn>;
+export type ResourceHintsFilter = OneOrMany<
+  string | RegExp | ResourceHintsFilterFn
+>;
 
 export interface ResourceHintsOptions {
   /**
@@ -869,7 +884,8 @@ export type SplitChunks = Rspack.OptimizationSplitChunksOptions | false;
  * - `single-vendor`: splits all `node_modules` dependencies into one vendor chunk.
  * - `none`: disables Rsbuild preset rules.
  */
-export type SplitChunksPreset = 'default' | 'single-vendor' | 'per-package' | 'none';
+export type SplitChunksPreset =
+  'default' | 'single-vendor' | 'per-package' | 'none';
 
 export type SplitChunksConfig = Rspack.OptimizationSplitChunksOptions & {
   preset?: SplitChunksPreset;
@@ -886,7 +902,8 @@ export interface BaseSplitRules {
 }
 
 export interface BaseChunkSplit extends BaseSplitRules {
-  strategy?: 'split-by-module' | 'split-by-experience' | 'all-in-one' | 'single-vendor';
+  strategy?:
+    'split-by-module' | 'split-by-experience' | 'all-in-one' | 'single-vendor';
 }
 
 export interface SplitBySize extends BaseSplitRules {
@@ -1195,12 +1212,17 @@ export type Minify =
       cssOptions?: OneOrMany<LightningCssMinimizerRspackPluginOptions>;
     };
 
-export type InlineChunkTestFunction = (params: { size: number; name: string }) => boolean;
+export type InlineChunkTestFunction = (params: {
+  size: number;
+  name: string;
+}) => boolean;
 
 export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
 export type InlineChunkConfig =
-  boolean | InlineChunkTest | { enable?: boolean | 'auto'; test: InlineChunkTest };
+  | boolean
+  | InlineChunkTest
+  | { enable?: boolean | 'auto'; test: InlineChunkTest };
 
 export type ManifestByEntry = {
   /**
@@ -1655,7 +1677,10 @@ export type HtmlTagContext = {
   publicPath: string;
 };
 
-export type HtmlTagHandler = (tags: HtmlTag[], context: HtmlTagContext) => HtmlTag[] | void;
+export type HtmlTagHandler = (
+  tags: HtmlTag[],
+  context: HtmlTagContext,
+) => HtmlTag[] | void;
 
 export type HtmlTagDescriptor = HtmlTag | HtmlTagHandler;
 
@@ -1788,7 +1813,10 @@ export interface HtmlConfig {
    * Define the parameters in the HTML template,
    * corresponding to the `templateParameters` config of [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin).
    */
-  templateParameters?: ConfigChainAsyncWithContext<Record<string, unknown>, { entryName: string }>;
+  templateParameters?: ConfigChainAsyncWithContext<
+    Record<string, unknown>,
+    { entryName: string }
+  >;
   /**
    * Specifies how `<script>` tags generated by Rsbuild are loaded.
    * - `'defer'`: Adds the `defer` attribute so scripts load in parallel and run after
@@ -1865,7 +1893,10 @@ export type EnvironmentAPI = Record<
   }
 >;
 
-export type SetupMiddlewaresContext = Pick<RsbuildDevServer, 'sockWrite' | 'environments'>;
+export type SetupMiddlewaresContext = Pick<
+  RsbuildDevServer,
+  'sockWrite' | 'environments'
+>;
 
 export type SetupMiddlewaresFn = (
   middlewares: {
@@ -2097,7 +2128,12 @@ export type NormalizedDevConfig = Omit<DevConfig, 'watchFiles'> &
   Required<
     Pick<
       DevConfig,
-      'hmr' | 'liveReload' | 'assetPrefix' | 'writeToDisk' | 'cliShortcuts' | 'browserLogs'
+      | 'hmr'
+      | 'liveReload'
+      | 'assetPrefix'
+      | 'writeToDisk'
+      | 'cliShortcuts'
+      | 'browserLogs'
     >
   > & {
     watchFiles: WatchFiles[];

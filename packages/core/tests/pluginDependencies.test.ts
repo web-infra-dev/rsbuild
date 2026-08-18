@@ -70,7 +70,12 @@ describe('sort plugins by dependency order', () => {
       })),
     );
     expect(result).toEqual(
-      [{ name: '1' }, { name: '3' }, { name: '2', pre: ['3'] }, { name: '4' }].map((p) => ({
+      [
+        { name: '1' },
+        { name: '3' },
+        { name: '2', pre: ['3'] },
+        { name: '4' },
+      ].map((p) => ({
         environment: '',
         instance: p,
       })),

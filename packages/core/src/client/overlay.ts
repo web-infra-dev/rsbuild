@@ -1,8 +1,10 @@
 import { registerOverlay } from './hmr.js';
 import { logger } from './log.js';
 
-const { HTMLElement = class {} as typeof globalThis.HTMLElement, customElements } =
-  typeof window !== 'undefined' ? window : globalThis;
+const {
+  HTMLElement = class {} as typeof globalThis.HTMLElement,
+  customElements,
+} = typeof window !== 'undefined' ? window : globalThis;
 
 class ErrorOverlay extends HTMLElement {
   init(html: string) {

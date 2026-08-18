@@ -1,10 +1,18 @@
 import fs from 'node:fs';
 import { isWebTarget } from '../helpers';
 import { isVerbose } from '../logger';
-import type { InternalContext, NormalizedConfig, PreviewOptions } from '../types';
+import type {
+  InternalContext,
+  NormalizedConfig,
+  PreviewOptions,
+} from '../types';
 import { createAssetsMiddleware } from './assets-middleware/middleware';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
-import { registerCleanup, removeCleanup, setupGracefulShutdown } from './gracefulShutdown';
+import {
+  registerCleanup,
+  removeCleanup,
+  setupGracefulShutdown,
+} from './gracefulShutdown';
 import { gzipMiddleware } from './gzipMiddleware';
 import {
   getAddressUrls,
@@ -53,13 +61,16 @@ export async function startPreviewServer(
   { getPortSilently }: PreviewOptions = {},
 ): Promise<StartPreviewServerResult> {
   const { logger } = context;
-  const { connect } = await import(/* rspackChunkName: "connect-next" */ 'connect-next');
+  const { connect } = await import(
+    /* rspackChunkName: "connect-next" */ 'connect-next'
+  );
   const middlewares = connect();
 
   const { port, portTip } = await resolvePort(config);
 
   const serverConfig = config.server;
-  const { host, headers, proxy, historyApiFallback, compress, base, cors } = serverConfig;
+  const { host, headers, proxy, historyApiFallback, compress, base, cors } =
+    serverConfig;
 
   const assetPrefixes = context.environmentList.map(
     (environment) => environment.config.output.assetPrefix,
@@ -139,10 +150,16 @@ export async function startPreviewServer(
   });
 
   const assetContext = getPreviewAssetContext(context);
-  const assetsMiddleware = createAssetsMiddleware(assetContext, (callback) => callback(), fs);
+  const assetsMiddleware = createAssetsMiddleware(
+    assetContext,
+    (callback) => callback(),
+    fs,
+  );
   const htmlMiddlewareOptions = {
     assetsMiddleware,
-    distPaths: assetContext.environmentList.map((environment) => environment.distPath),
+    distPaths: assetContext.environmentList.map(
+      (environment) => environment.distPath,
+    ),
     outputFileSystem: fs,
   };
 
@@ -151,7 +168,9 @@ export async function startPreviewServer(
   }
 
   if (cors) {
-    const { default: corsMiddleware } = await import(/* rspackChunkName: "cors" */ 'cors');
+    const { default: corsMiddleware } = await import(
+      /* rspackChunkName: "cors" */ 'cors'
+    );
     middlewares.use(corsMiddleware(typeof cors === 'boolean' ? {} : cors));
   }
 
@@ -169,7 +188,8 @@ export async function startPreviewServer(
   // Apply proxy middleware
   // each proxy configuration creates its own middleware instance
   if (proxy) {
-    const { middlewares: proxyMiddlewares, upgrade } = await createProxyMiddleware(proxy, logger);
+    const { middlewares: proxyMiddlewares, upgrade } =
+      await createProxyMiddleware(proxy, logger);
 
     for (const middleware of proxyMiddlewares) {
       middlewares.use(middleware);
@@ -200,7 +220,10 @@ export async function startPreviewServer(
 
   if (historyApiFallback) {
     middlewares.use(
-      historyApiFallbackMiddleware(logger, historyApiFallback === true ? {} : historyApiFallback),
+      historyApiFallbackMiddleware(
+        logger,
+        historyApiFallback === true ? {} : historyApiFallback,
+      ),
     );
 
     // ensure fallback request can be handled by the built asset middleware
@@ -242,7 +265,9 @@ export async function startPreviewServer(
 
         if (cliShortcutsEnabled) {
           const shortcutsOptions =
-            typeof config.dev.cliShortcuts === 'boolean' ? {} : config.dev.cliShortcuts;
+            typeof config.dev.cliShortcuts === 'boolean'
+              ? {}
+              : config.dev.cliShortcuts;
 
           await setupCliShortcuts({
             openPage,

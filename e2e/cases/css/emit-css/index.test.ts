@@ -19,7 +19,9 @@ test('should not emit CSS files when build node target', async ({ build }) => {
   expect(cssFiles).toHaveLength(0);
 });
 
-test('should allow to emit CSS with output.emitCss when build node target', async ({ build }) => {
+test('should allow to emit CSS with output.emitCss when build node target', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -38,7 +40,9 @@ test('should allow to emit CSS with output.emitCss when build node target', asyn
   expect(cssFiles).toHaveLength(1);
 });
 
-test('should not emit CSS files when build web-worker target', async ({ build }) => {
+test('should not emit CSS files when build web-worker target', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {

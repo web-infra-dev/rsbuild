@@ -21,7 +21,10 @@ class BasicRunnerFactory implements RunnerFactory {
       ...options,
     };
     const { compilerOptions } = options;
-    if (compilerOptions.target === 'web' || compilerOptions.target === 'webworker') {
+    if (
+      compilerOptions.target === 'web' ||
+      compilerOptions.target === 'webworker'
+    ) {
       throw new Error(
         `${color.dim('[rsbuild:runner]')} Not support run ${color.yellow(
           compilerOptions.target,

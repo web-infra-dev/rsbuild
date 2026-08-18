@@ -8,7 +8,9 @@ test('should print file size after building by default', async ({ build }) => {
   expect(extractFileSizeLogs(rsbuild.logs)).toMatchSnapshot();
 });
 
-test('should print size of multiple environments correctly', async ({ build }) => {
+test('should print size of multiple environments correctly', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -41,7 +43,9 @@ test('should not print logs when printFileSize is false', async ({ build }) => {
   expect(extractFileSizeLogs(rsbuild.logs)).toEqual('');
 });
 
-test('should not print details when printFileSize.detail is false', async ({ build }) => {
+test('should not print details when printFileSize.detail is false', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       performance: {
@@ -70,7 +74,9 @@ test('printFileSize.total: false should work', async ({ build }) => {
   expect(extractFileSizeLogs(rsbuild.logs)).toMatchSnapshot();
 });
 
-test('should print dist folder correctly if it is not a subdir of root', async ({ build }) => {
+test('should print dist folder correctly if it is not a subdir of root', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -130,7 +136,8 @@ test('should allow to custom exclude function', async ({ build }) => {
       performance: {
         printFileSize: {
           exclude: (asset) =>
-            /\.(?:map|LICENSE\.txt)$/.test(asset.name) || /\.html$/.test(asset.name),
+            /\.(?:map|LICENSE\.txt)$/.test(asset.name) ||
+            /\.html$/.test(asset.name),
         },
       },
     },
@@ -139,11 +146,15 @@ test('should allow to custom exclude function', async ({ build }) => {
   expect(extractFileSizeLogs(rsbuild.logs)).toMatchSnapshot();
 });
 
-test('should not calculate gzip size if the asset is not compressible', async ({ build }) => {
+test('should not calculate gzip size if the asset is not compressible', async ({
+  build,
+}) => {
   const rsbuild = await build();
   const logs = extractFileSizeLogs(rsbuild.logs);
 
-  expect(logs).toMatch(/^dist\/static\/image\/icon\.\[\[hash\]\]\.png\s+X\.X kB$/m);
+  expect(logs).toMatch(
+    /^dist\/static\/image\/icon\.\[\[hash\]\]\.png\s+X\.X kB$/m,
+  );
 });
 
 test('should calculate gzip size for script-like assets', async ({ build }) => {
@@ -175,7 +186,9 @@ test('should calculate gzip size for script-like assets', async ({ build }) => {
   expect(logs).toMatch(/dist\/static\/assets\/script\.ts\s+X\.X kB\s+X\.X kB/);
 });
 
-test('should respect a custom total function for printFileSize', async ({ build }) => {
+test('should respect a custom total function for printFileSize', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       performance: {

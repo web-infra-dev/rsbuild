@@ -28,5 +28,7 @@ test('should support ignoreEsComponent and ignoreStyleComponent', async ({
   expect(content).toContain('transformImport button component succeed');
   expect(content).toContain('transformImport button style succeed');
   expect(content).toContain('ignoreStyleComponent JS import succeed');
-  expect(content).not.toContain('ignoreStyleComponent style import should not be bundled');
+  expect(content).not.toContain(
+    'ignoreStyleComponent style import should not be bundled',
+  );
 });

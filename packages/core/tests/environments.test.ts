@@ -129,19 +129,21 @@ describe('environment config', () => {
       {
         name: 'test-environment',
         setup(api) {
-          api.modifyEnvironmentConfig((config, { name, mergeEnvironmentConfig }) => {
-            if (name !== 'web') {
-              return config;
-            }
+          api.modifyEnvironmentConfig(
+            (config, { name, mergeEnvironmentConfig }) => {
+              if (name !== 'web') {
+                return config;
+              }
 
-            return mergeEnvironmentConfig(config, {
-              resolve: {
-                alias: {
-                  '@common1': './src/common1',
+              return mergeEnvironmentConfig(config, {
+                resolve: {
+                  alias: {
+                    '@common1': './src/common1',
+                  },
                 },
-              },
-            });
-          });
+              });
+            },
+          );
         },
       },
     ]);
@@ -158,15 +160,17 @@ describe('environment config', () => {
     const plugin: (pluginId: string) => RsbuildPlugin = (pluginId) => ({
       name: 'test-environment',
       setup(api) {
-        api.modifyEnvironmentConfig((config, { name, mergeEnvironmentConfig }) => {
-          return mergeEnvironmentConfig(config, {
-            resolve: {
-              alias: {
-                [pluginId]: name,
+        api.modifyEnvironmentConfig(
+          (config, { name, mergeEnvironmentConfig }) => {
+            return mergeEnvironmentConfig(config, {
+              resolve: {
+                alias: {
+                  [pluginId]: name,
+                },
               },
-            },
-          });
-        });
+            });
+          },
+        );
       },
     });
     const rsbuild = await createRsbuild({
@@ -190,7 +194,10 @@ describe('environment config', () => {
 
     expect(
       Object.fromEntries(
-        Object.entries(environmentConfigs).map(([name, config]) => [name, config.resolve.alias]),
+        Object.entries(environmentConfigs).map(([name, config]) => [
+          name,
+          config.resolve.alias,
+        ]),
       ),
     ).toMatchSnapshot();
   });

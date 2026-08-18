@@ -9,9 +9,12 @@ test('should import static assets as text with import attributes', async ({
   runBothServe,
 }) => {
   await runBothServe(async () => {
-    const assets = await page.evaluate<Record<string, string>>('window.assetText');
+    const assets =
+      await page.evaluate<Record<string, string>>('window.assetText');
 
-    expect(assets.svg).toBe(readFileSync(join(assetsDir, 'circle.svg'), 'utf-8'));
+    expect(assets.svg).toBe(
+      readFileSync(join(assetsDir, 'circle.svg'), 'utf-8'),
+    );
     expect(assets.png).toBe(readFileSync(join(assetsDir, 'icon.png'), 'utf-8'));
   });
 });

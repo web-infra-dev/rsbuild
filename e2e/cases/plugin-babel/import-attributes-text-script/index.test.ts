@@ -3,7 +3,10 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
-test('should keep text imports unchanged with Babel include', async ({ page, buildPreview }) => {
+test('should keep text imports unchanged with Babel include', async ({
+  page,
+  buildPreview,
+}) => {
   await buildPreview({
     config: {
       plugins: [pluginBabel({ include: /src/ })],

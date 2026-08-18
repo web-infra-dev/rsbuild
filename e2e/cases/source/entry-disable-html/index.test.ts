@@ -1,6 +1,8 @@
 import { expect, test } from '@e2e/helper';
 
-test('should disable HTML generation for specific entries', async ({ build }) => {
+test('should disable HTML generation for specific entries', async ({
+  build,
+}) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();

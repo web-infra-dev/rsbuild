@@ -93,8 +93,14 @@ function formatModuleTrace(
   }
 
   const moduleNames = stats.moduleTrace
-    .map((trace) => trace.originName && removeLoaderChainDelimiter(trace.originName, logger))
-    .filter((trace) => trace && !trace.startsWith(LAZY_COMPILATION_IDENTIFIER)) as string[];
+    .map(
+      (trace) =>
+        trace.originName &&
+        removeLoaderChainDelimiter(trace.originName, logger),
+    )
+    .filter(
+      (trace) => trace && !trace.startsWith(LAZY_COMPILATION_IDENTIFIER),
+    ) as string[];
 
   if (!moduleNames.length) {
     return;
@@ -211,7 +217,9 @@ const hintNodePolyfill = (message: string): string => {
     return `${message}\n\n${color.red(tips.join('\n'))}`;
   };
 
-  const isNodeProtocolError = message.includes('need an additional plugin to handle "node:" URIs');
+  const isNodeProtocolError = message.includes(
+    'need an additional plugin to handle "node:" URIs',
+  );
   if (isNodeProtocolError) {
     return getTips('node:*');
   }
@@ -278,7 +286,9 @@ export function formatStatsError(
   // Remove duplicated newlines
   lines = lines.filter(
     (line, index, arr) =>
-      index === 0 || line.trim() !== '' || line.trim() !== arr[index - 1].trim(),
+      index === 0 ||
+      line.trim() !== '' ||
+      line.trim() !== arr[index - 1].trim(),
   );
 
   // Reassemble the message

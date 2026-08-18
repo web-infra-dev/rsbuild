@@ -93,12 +93,18 @@ pnpm e2e css
 
 ---
 
-## Linting
+## Code checks
 
-Run [Rslint](https://github.com/web-infra-dev/rslint) to keep code style consistent:
+Run the unified Rstack checks to lint with [Rslint](https://github.com/web-infra-dev/rslint), type-check TypeScript, and verify formatting:
 
 ```sh
-pnpm run lint
+pnpm run check
+```
+
+To fix formatting issues:
+
+```sh
+pnpm run format
 ```
 
 Install the [Rslint VS Code extension](https://marketplace.visualstudio.com/items?itemName=rstack.rslint) to see lints while typing.

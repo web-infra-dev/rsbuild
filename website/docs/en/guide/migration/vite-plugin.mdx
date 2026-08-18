@@ -203,7 +203,10 @@ const htmlPlugin = () => {
   return {
     name: 'html-plugin',
     transformIndexHtml(html) {
-      return html.replace(/<title>(.*?)<\/title>/, `<title>Title replaced!</title>`);
+      return html.replace(
+        /<title>(.*?)<\/title>/,
+        `<title>Title replaced!</title>`,
+      );
     },
   };
 };
@@ -216,7 +219,10 @@ const rsbuildPlugin = {
   name: 'html-plugin',
   setup(api) {
     api.modifyHTML((html) => {
-      return html.replace(/<title>(.*?)<\/title>/, `<title>Title replaced!</title>`);
+      return html.replace(
+        /<title>(.*?)<\/title>/,
+        `<title>Title replaced!</title>`,
+      );
     });
   },
 };

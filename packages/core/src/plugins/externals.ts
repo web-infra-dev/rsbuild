@@ -1,11 +1,17 @@
 import { resolve } from 'node:path';
 import type { Externals } from '@rspack/core';
 import { castArray, isPlainObject } from '../helpers';
-import { readPackageJsonByPath, type PackageJson } from '../helpers/packageJson';
+import {
+  readPackageJsonByPath,
+  type PackageJson,
+} from '../helpers/packageJson';
 import type { AutoExternal, RsbuildPlugin } from '../types';
 
 type DependencyType =
-  'dependencies' | 'optionalDependencies' | 'peerDependencies' | 'devDependencies';
+  | 'dependencies'
+  | 'optionalDependencies'
+  | 'peerDependencies'
+  | 'devDependencies';
 
 const dependencyTypes: DependencyType[] = [
   'dependencies',
@@ -31,16 +37,26 @@ const resolveAutoExternalOptions = (autoExternal?: AutoExternal) => {
     ...(autoExternal === true ? {} : autoExternal),
   };
 
-  return dependencyTypes.some((type) => externalOptions[type]) ? externalOptions : undefined;
+  return dependencyTypes.some((type) => externalOptions[type])
+    ? externalOptions
+    : undefined;
 };
 
-const escapeRegExp = (str: string): string => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+const escapeRegExp = (str: string): string =>
+  str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 
-const resolvePackageJsonPaths = (rootPath: string, packageJson?: string | string[]): string[] => {
-  return castArray(packageJson ?? 'package.json').map((path) => resolve(rootPath, path));
+const resolvePackageJsonPaths = (
+  rootPath: string,
+  packageJson?: string | string[],
+): string[] => {
+  return castArray(packageJson ?? 'package.json').map((path) =>
+    resolve(rootPath, path),
+  );
 };
 
-const mergePackageJsonList = (packageJsonList: PackageJson[]): PackageJson | undefined => {
+const mergePackageJsonList = (
+  packageJsonList: PackageJson[],
+): PackageJson | undefined => {
   if (!packageJsonList.length) {
     return undefined;
   }
@@ -76,11 +92,16 @@ const readPackageJsonList = async (
   );
 
   return mergePackageJsonList(
-    packageJsonList.filter((pkgJson): pkgJson is PackageJson => Boolean(pkgJson)),
+    packageJsonList.filter((pkgJson): pkgJson is PackageJson =>
+      Boolean(pkgJson),
+    ),
   );
 };
 
-const matchAutoExternalExclude = (packageName: string, conditions: unknown[]): boolean => {
+const matchAutoExternalExclude = (
+  packageName: string,
+  conditions: unknown[],
+): boolean => {
   return conditions.some((condition) => {
     if (typeof condition === 'string') {
       return condition === packageName;
@@ -88,7 +109,10 @@ const matchAutoExternalExclude = (packageName: string, conditions: unknown[]): b
 
     if (condition instanceof RegExp) {
       // Clone stateful regexps to avoid mutating user config via `lastIndex`.
-      const regexp = condition.global || condition.sticky ? new RegExp(condition) : condition;
+      const regexp =
+        condition.global || condition.sticky
+          ? new RegExp(condition)
+          : condition;
       return regexp.test(packageName);
     }
 
@@ -110,7 +134,9 @@ export const composeAutoExternalRules = (options: {
 
   // User externals configuration has higher priority than autoExternal.
   // Only object externals can be safely deduplicated by request name.
-  const userExternalKeys = isPlainObject(userExternals) ? Object.keys(userExternals) : [];
+  const userExternalKeys = isPlainObject(userExternals)
+    ? Object.keys(userExternals)
+    : [];
   const excludeConditions = externalOptions.exclude
     ? castArray(externalOptions.exclude)
     : undefined;
@@ -126,7 +152,8 @@ export const composeAutoExternalRules = (options: {
     .filter(
       (name) =>
         !userExternalKeys.includes(name) &&
-        (!excludeConditions || !matchAutoExternalExclude(name, excludeConditions)),
+        (!excludeConditions ||
+          !matchAutoExternalExclude(name, excludeConditions)),
     );
 
   const uniqueExternals = Array.from(new Set(externals));
@@ -136,7 +163,9 @@ export const composeAutoExternalRules = (options: {
   }
 
   // Exclude dependencies and subpath imports, e.g. `react`, `react/jsx-runtime`.
-  return uniqueExternals.map((dep) => new RegExp(`^${escapeRegExp(dep)}(?:$|[/\\\\])`));
+  return uniqueExternals.map(
+    (dep) => new RegExp(`^${escapeRegExp(dep)}(?:$|[/\\\\])`),
+  );
 };
 
 const mergeExternals = (
@@ -173,7 +202,10 @@ export function pluginExternals(): RsbuildPlugin {
             api.context.rootPath,
             externalOptions.packageJson,
           );
-          pkgJson = await readPackageJsonList(packageJsonPaths, packageJsonCache);
+          pkgJson = await readPackageJsonList(
+            packageJsonPaths,
+            packageJsonCache,
+          );
         }
 
         if (externalOptions && !pkgJson && !hasWarnedReadPackageJsonFailed) {

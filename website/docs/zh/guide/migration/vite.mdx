@@ -20,6 +20,16 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
+## 测试工具
+
+Vitest 使用 Vite 转换和运行测试，因此在继续使用 Vitest 时，请保留 Vite 以及 `vitest.config.*` 引用的所有 Vite 插件。若要从测试工具链中移除 Vite，可以迁移到 [Rstest](https://rstest.rs/)，它能够通过 `@rstest/adapter-rsbuild` 复用 Rsbuild 配置。有关必需的配置和测试 API 变更，请参考[测试](/guide/advanced/testing)指南和 [Rstest 迁移指南](https://rstest.rs/zh/guide/migration/vitest)。
+
+仅在确认没有其他开发工具或依赖仍需要 Vite 后，再将其移除。
+
+## TanStack Start
+
+TanStack Start 管理 client 和 server entry、部署产物及框架特定插件。请参考专门的 [TanStack Start 迁移指南](/guide/migration/tanstack-start)，而非本页下方通用的构建入口步骤。
+
 ## 更新 npm scripts
 
 下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
@@ -49,7 +59,7 @@ export default defineConfig({
 });
 ```
 
-## 构建入口
+## 构建入口 \{#build-entry}
 
 Rsbuild 与 Vite 默认的构建入口不同，Vite 使用 `index.html` 作为默认入口，而 Rsbuild 会自动检测 `src/index.*` 模块，例如 `src/index.ts` 或 `src/index.js`。
 
@@ -79,7 +89,7 @@ export default {
 
 Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中。
 
-## 迁移插件
+## 迁移插件 \{#migrating-plugins}
 
 大部分常见的 Vite 插件可以轻松地迁移到 Rsbuild 插件，比如：
 
@@ -184,22 +194,13 @@ export default {
 };
 ```
 
-## 环境变量
+## 环境变量 \{#environment-variables}
 
-Vite 默认会将 `VITE_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-variables)）。
+Vite 默认会将 `VITE_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-variables)）。请在 `.env` 文件、部署配置和应用代码中重命名 client 环境变量：
 
-为了兼容 Vite 的行为，你可以手动调用 Rsbuild 提供的 [loadEnv](/api/javascript-api/core#loadenv) 方法来读取 `VITE_` 开头的环境变量，并通过 [source.define](/config/source/define) 配置项注入到 client 代码中。
-
-```ts title="rsbuild.config.ts"
-import { defineConfig, loadEnv } from '@rsbuild/core';
-
-const { publicVars } = loadEnv({ prefixes: ['VITE_'] });
-
-export default defineConfig({
-  source: {
-    define: publicVars,
-  },
-});
+```diff
+- VITE_API_URL
++ PUBLIC_API_URL
 ```
 
 Rsbuild 默认注入了以下 [环境变量](/guide/advanced/env-vars)：

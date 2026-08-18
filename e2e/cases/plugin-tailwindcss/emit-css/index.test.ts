@@ -1,6 +1,8 @@
 import { expect, test } from '@e2e/helper';
 
-test('should skip Tailwind main-rule transform when CSS is not emitted', async ({ build }) => {
+test('should skip Tailwind main-rule transform when CSS is not emitted', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -13,7 +15,9 @@ test('should skip Tailwind main-rule transform when CSS is not emitted', async (
   expect(Object.keys(files).some((file) => file.endsWith('.css'))).toBe(false);
 });
 
-test('should run Tailwind main-rule transform when emitCss is enabled', async ({ build }) => {
+test('should run Tailwind main-rule transform when emitCss is enabled', async ({
+  build,
+}) => {
   const rsbuild = await build({
     catchBuildError: true,
     config: {

@@ -31,7 +31,8 @@ const indent = '  ';
 
 const normalize = (code: string) => code.replaceAll('\r\n', '\n');
 
-const getCall = ({ importName, call }: ConfigPlugin) => call ?? `${importName}()`;
+const getCall = ({ importName, call }: ConfigPlugin) =>
+  call ?? `${importName}()`;
 
 const addImport = (code: string, plugin: ConfigPlugin) => {
   if (code.includes(plugin.source)) {
@@ -44,7 +45,8 @@ const addImport = (code: string, plugin: ConfigPlugin) => {
   lines.splice(
     index + 1,
     0,
-    plugin.importLine ?? `import { ${plugin.importName} } from '${plugin.source}';`,
+    plugin.importLine ??
+      `import { ${plugin.importName} } from '${plugin.source}';`,
   );
 
   return lines.join('\n');
@@ -65,7 +67,11 @@ const formatPlugins = (calls: string[]) => {
     return `${indent}plugins: [${calls.join(', ')}],`;
   }
 
-  const lines = [`${indent}plugins: [`, ...calls.map(formatCall), `${indent}],`];
+  const lines = [
+    `${indent}plugins: [`,
+    ...calls.map(formatCall),
+    `${indent}],`,
+  ];
   return lines.join('\n');
 };
 
@@ -78,7 +84,8 @@ const addReactCompilerOption = (code: string) => {
   reactCompiler: true,
 })`;
   const multiLineCall = `${indent}${indent}pluginReact(),`;
-  const replaceCall = (call: string) => (call === 'pluginReact()' ? reactCompilerCall : call);
+  const replaceCall = (call: string) =>
+    call === 'pluginReact()' ? reactCompilerCall : call;
   const next = code
     .replace(/^ {2}plugins: \[(.*pluginReact\(\).*)\],$/m, (_, calls: string) =>
       formatPlugins(calls.split(', ').map(replaceCall)),
@@ -89,12 +96,17 @@ const addReactCompilerOption = (code: string) => {
     return next;
   }
 
-  throw new Error('Failed to update rsbuild.config: pluginReact call not found.');
+  throw new Error(
+    'Failed to update rsbuild.config: pluginReact call not found.',
+  );
 };
 
 const addPluginsField = (code: string, calls: string[]) => {
   if (code.includes('defineConfig({});')) {
-    return code.replace('defineConfig({});', `defineConfig({\n${formatPlugins(calls)}\n});`);
+    return code.replace(
+      'defineConfig({});',
+      `defineConfig({\n${formatPlugins(calls)}\n});`,
+    );
   }
 
   const next = code.replace(
@@ -103,7 +115,9 @@ const addPluginsField = (code: string, calls: string[]) => {
   );
 
   if (next === code) {
-    throw new Error('Failed to update rsbuild.config: defineConfig object not found.');
+    throw new Error(
+      'Failed to update rsbuild.config: defineConfig object not found.',
+    );
   }
 
   return next;
@@ -128,10 +142,14 @@ const addCalls = (code: string, plugins: ConfigPlugin[]) => {
 
   // Existing multi-line plugins arrays are kept as-is; new plugin calls are
   // inserted before the closing bracket.
-  const end = lines.findIndex((line, index) => index > start && line.trim() === '],');
+  const end = lines.findIndex(
+    (line, index) => index > start && line.trim() === '],',
+  );
 
   if (end === -1) {
-    throw new Error('Failed to update rsbuild.config: plugins array not found.');
+    throw new Error(
+      'Failed to update rsbuild.config: plugins array not found.',
+    );
   }
 
   lines.splice(end, 0, ...calls.map(formatCall));
@@ -149,10 +167,15 @@ const applyPlugins = (base: string, plugins: ConfigPlugin[]) => {
 };
 
 const findConfig = (dir: string) => {
-  return configFiles.map((name) => path.join(dir, name)).find((file) => fs.existsSync(file));
+  return configFiles
+    .map((name) => path.join(dir, name))
+    .find((file) => fs.existsSync(file));
 };
 
-export const addPluginsToRsbuildConfig = async (dir: string, plugins: ConfigPlugin[]) => {
+export const addPluginsToRsbuildConfig = async (
+  dir: string,
+  plugins: ConfigPlugin[],
+) => {
   const file = findConfig(dir);
 
   if (!file) {
@@ -174,7 +197,9 @@ export const addPluginsToRsbuildConfig = async (dir: string, plugins: ConfigPlug
 
   // Reapply every selected plugin to the original config on each call. This
   // avoids appending to previously generated code when multiple tools are used.
-  const ordered = [...state.plugins.values()].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  const ordered = [...state.plugins.values()].sort(
+    (a, b) => (a.order ?? 0) - (b.order ?? 0),
+  );
 
   await fs.promises.writeFile(state.file, applyPlugins(state.base, ordered));
 };

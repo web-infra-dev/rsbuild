@@ -8,9 +8,14 @@ import type {
   RsbuildPlugin,
 } from '../types';
 
-function getCacheDirectory({ cacheDirectory }: BuildCacheOptions, context: RsbuildContext) {
+function getCacheDirectory(
+  { cacheDirectory }: BuildCacheOptions,
+  context: RsbuildContext,
+) {
   if (cacheDirectory) {
-    return isAbsolute(cacheDirectory) ? cacheDirectory : join(context.rootPath, cacheDirectory);
+    return isAbsolute(cacheDirectory)
+      ? cacheDirectory
+      : join(context.rootPath, cacheDirectory);
   }
   return join(context.cachePath, 'rspack');
 }
@@ -39,7 +44,10 @@ async function getBuildDependencies(
   }
 
   if (context.configFile) {
-    buildDependencies.rsbuildConfig = [context.configFile, ...context.configFileDependencies];
+    buildDependencies.rsbuildConfig = [
+      context.configFile,
+      ...context.configFileDependencies,
+    ];
   }
 
   if (await isFileExists(browserslistConfig)) {
@@ -47,7 +55,9 @@ async function getBuildDependencies(
   }
 
   const tailwindExts = ['ts', 'js', 'cjs', 'mjs'];
-  const configs = tailwindExts.map((ext) => join(context.rootPath, `tailwind.config.${ext}`));
+  const configs = tailwindExts.map((ext) =>
+    join(context.rootPath, `tailwind.config.${ext}`),
+  );
   const tailwindConfig = findExists(configs);
 
   if (tailwindConfig) {
@@ -86,7 +96,9 @@ export const pluginCache = (): RsbuildPlugin => ({
         cacheConfig.buildDependencies,
       );
 
-      const useDigest = Array.isArray(cacheConfig.cacheDigest) && cacheConfig.cacheDigest.length;
+      const useDigest =
+        Array.isArray(cacheConfig.cacheDigest) &&
+        cacheConfig.cacheDigest.length;
 
       // set cache name to avoid cache conflicts between different environments
       const cacheVersion = useDigest

@@ -20,7 +20,9 @@ test('should keep URL dependency assets unchanged with Babel include', async ({
   );
 
   expect(asset).toBeDefined();
-  expect(files[asset!]).toContain(`export const value: string = 'url dependency';`);
+  expect(files[asset!]).toContain(
+    `export const value: string = 'url dependency';`,
+  );
   expect(await page.evaluate('window.assetUrl')).toBe(
     `http://localhost:${rsbuild.port}/static/assets/asset.ts`,
   );

@@ -38,8 +38,14 @@ export const isCSSModules = (
   }
 
   if (typeof auto === 'function') {
-    return auto(resourcePath, loaderContext.resourceQuery, loaderContext.resourceFragment);
+    return auto(
+      resourcePath,
+      loaderContext.resourceQuery,
+      loaderContext.resourceFragment,
+    );
   }
 
-  return CSS_MODULE_REGEX.test(resourcePath) || CSS_ICSS_REGEX.test(resourcePath);
+  return (
+    CSS_MODULE_REGEX.test(resourcePath) || CSS_ICSS_REGEX.test(resourcePath)
+  );
 };

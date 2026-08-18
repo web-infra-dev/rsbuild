@@ -4,10 +4,10 @@ import { rspack } from '@rspack/core';
 import { color } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
-enum TracePreset {
-  OVERVIEW = 'OVERVIEW', // contains overview trace events
-  ALL = 'ALL', // contains all trace events
-}
+const TRACE_PRESET = {
+  OVERVIEW: 'OVERVIEW', // contains overview trace events
+  ALL: 'ALL', // contains all trace events
+} as const;
 
 type TraceLayer = 'perfetto' | 'logger';
 
@@ -22,10 +22,10 @@ function resolveLayer(value: string): string {
   const overviewTraceFilter = 'info';
   const allTraceFilter = 'trace';
 
-  if (value === TracePreset.OVERVIEW) {
+  if (value === TRACE_PRESET.OVERVIEW) {
     return overviewTraceFilter;
   }
-  if (value === TracePreset.ALL) {
+  if (value === TRACE_PRESET.ALL) {
     return allTraceFilter;
   }
 
@@ -53,14 +53,21 @@ async function applyProfile(
     throw new Error(`unsupported trace layer: ${traceLayer}`);
   }
 
-  if (traceOutput && traceLayer === 'perfetto' && isTerminalTraceOutput(traceOutput)) {
+  if (
+    traceOutput &&
+    traceLayer === 'perfetto' &&
+    isTerminalTraceOutput(traceOutput)
+  ) {
     throw new Error(
       'RSPACK_TRACE_OUTPUT=stdout|stderr is only supported for the logger trace layer. The perfetto trace layer requires a file path.',
     );
   }
 
   const timestamp = Date.now();
-  const defaultOutputDir = path.join(root, `.rspack-profile-${timestamp}-${process.pid}`);
+  const defaultOutputDir = path.join(
+    root,
+    `.rspack-profile-${timestamp}-${process.pid}`,
+  );
 
   if (!traceOutput) {
     const defaultRustTraceOutput =
@@ -79,7 +86,11 @@ async function applyProfile(
     await ensureFileDir(traceOutput);
   }
 
-  await rspack.experiments.globalTrace.register(filter, traceLayer, traceOutput);
+  await rspack.experiments.globalTrace.register(
+    filter,
+    traceLayer,
+    traceOutput,
+  );
 
   return traceOutput;
 }

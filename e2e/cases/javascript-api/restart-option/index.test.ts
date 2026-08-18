@@ -1,7 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/helper';
-import { createRsbuild, type RestartContext, type RestartFn } from '@rsbuild/core';
+import {
+  createRsbuild,
+  type RestartContext,
+  type RestartFn,
+} from '@rsbuild/core';
 import { getRandomPort } from '@rstackjs/test-utils';
 
 const watchedFile = path.join(import.meta.dirname, 'test-temp-watch.txt');

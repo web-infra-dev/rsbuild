@@ -16,7 +16,8 @@ export const pluginTarget = (): RsbuildPlugin => ({
         const { browserslist } = environment;
 
         // skip calculation if the browserslist is the default value
-        const isDefaultBrowserslist = browserslist.join(',') === DEFAULT_WEB_BROWSERSLIST.join(',');
+        const isDefaultBrowserslist =
+          browserslist.join(',') === DEFAULT_WEB_BROWSERSLIST.join(',');
 
         if (target === 'web-worker') {
           chain.target(

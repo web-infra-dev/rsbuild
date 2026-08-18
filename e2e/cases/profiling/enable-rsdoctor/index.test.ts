@@ -25,7 +25,10 @@ test('should register Rsdoctor plugin when process.env.RSDOCTOR is true', async 
   await expectLog(RSDOCTOR_LOG);
 
   expect(
-    matchPlugin(compiler.options as Rspack.Configuration, 'RsdoctorRspackPlugin'),
+    matchPlugin(
+      compiler.options as Rspack.Configuration,
+      'RsdoctorRspackPlugin',
+    ),
   ).toBeTruthy();
 });
 
@@ -43,7 +46,12 @@ test('should not register Rsdoctor plugin when process.env.RSDOCTOR is false', a
 
   expectNoLog(RSDOCTOR_LOG);
 
-  expect(matchPlugin(compiler.options as Rspack.Configuration, 'RsdoctorRspackPlugin')).toBeFalsy();
+  expect(
+    matchPlugin(
+      compiler.options as Rspack.Configuration,
+      'RsdoctorRspackPlugin',
+    ),
+  ).toBeFalsy();
 });
 
 test('should not register Rsdoctor plugin when process.env.RSDOCTOR is true and the plugin has been registered', async ({
@@ -77,7 +85,10 @@ test('should not register Rsdoctor plugin when process.env.RSDOCTOR is true and 
   const compiler = await rsbuild.createCompiler();
 
   expect(
-    matchPlugin(compiler.options as Rspack.Configuration, 'RsdoctorRspackPlugin'),
+    matchPlugin(
+      compiler.options as Rspack.Configuration,
+      'RsdoctorRspackPlugin',
+    ),
   ).toBeTruthy();
 
   expectNoLog(RSDOCTOR_LOG);

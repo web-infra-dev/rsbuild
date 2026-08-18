@@ -31,7 +31,11 @@ describe('initHooks', () => {
       args: ['call in b'],
     });
 
-    expect(logs).toEqual(['[global] call in a', 'call in a', '[global] call in b']);
+    expect(logs).toEqual([
+      '[global] call in a',
+      'call in a',
+      '[global] call in b',
+    ]);
   });
 });
 

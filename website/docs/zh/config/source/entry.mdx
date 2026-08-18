@@ -7,7 +7,10 @@ description: 'source.entry 的值是一个对象，key 是入口名称，value �
 - **类型：**
 
 ```ts
-type Entry = Record<string, string | string[] | (Rspack.EntryDescription & { html?: boolean })>;
+type Entry = Record<
+  string,
+  string | string[] | (Rspack.EntryDescription & { html?: boolean })
+>;
 ```
 
 - **默认值：** 按以下顺序使用首个存在的 `./src/index.*` 文件，均不存在时为 `{}`：

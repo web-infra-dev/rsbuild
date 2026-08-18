@@ -20,6 +20,16 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
+## Test tooling
+
+Vitest uses Vite to transform and run tests, so retain Vite and any Vite plugins referenced by `vitest.config.*` while you use Vitest. To remove Vite from the test toolchain, you can migrate to [Rstest](https://rstest.rs/), which reuses your Rsbuild configuration through `@rstest/adapter-rsbuild`. See the [Testing](/guide/advanced/testing) guide and the [Rstest migration guide](https://rstest.rs/guide/migration/vitest) for the required configuration and test API changes.
+
+Remove Vite only after confirming that no other development tool or dependency still requires it.
+
+## TanStack Start
+
+TanStack Start manages client and server entries, deployment output, and framework-specific plugins. Follow the dedicated [TanStack Start migration guide](/guide/migration/tanstack-start) instead of the generic build entry steps below.
+
 ## Updating npm scripts
 
 Next, update the npm scripts in your package.json to run Rsbuild CLI commands.
@@ -186,20 +196,11 @@ export default {
 
 ## Environment variables
 
-Vite injects environment variables starting with `VITE_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
+Vite injects environment variables starting with `VITE_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)). Rename client variables in `.env` files, deployment configuration, and application code:
 
-To match Vite's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `VITE_`, and inject them into the client code through the [source.define](/config/source/define) config.
-
-```ts title="rsbuild.config.ts"
-import { defineConfig, loadEnv } from '@rsbuild/core';
-
-const { publicVars } = loadEnv({ prefixes: ['VITE_'] });
-
-export default defineConfig({
-  source: {
-    define: publicVars,
-  },
-});
+```diff
+- VITE_API_URL
++ PUBLIC_API_URL
 ```
 
 Rsbuild injects the following [environment variables](/guide/advanced/env-vars) by default:

@@ -1,6 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
-test('should expose the environment API in server.setup', async ({ dev, page }) => {
+test('should expose the environment API in server.setup', async ({
+  dev,
+  page,
+}) => {
   let assertionsCount = 0;
 
   const rsbuild = await dev({

@@ -6,7 +6,9 @@ export default {
     pluginBabel({
       parallel: true,
       babelLoaderOptions: {
-        plugins: [path.resolve(import.meta.dirname, './plugins/replace-message.mjs')],
+        plugins: [
+          path.resolve(import.meta.dirname, './plugins/replace-message.mjs'),
+        ],
       },
     }),
   ],

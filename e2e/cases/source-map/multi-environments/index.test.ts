@@ -3,7 +3,9 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { findFile } from '@rstackjs/test-utils';
 
-test('should generate source map for multiple environments', async ({ build }) => {
+test('should generate source map for multiple environments', async ({
+  build,
+}) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
@@ -12,7 +14,10 @@ test('should generate source map for multiple environments', async ({ build }) =
     (path) => path.includes('static/js/index.js.map') && !path.includes('web2'),
   );
   const web2JsMapPath = findFile(files, 'web2/static/js/index.js.map');
-  const sourceContent = readFileSync(join(import.meta.dirname, './src/index.js'), 'utf-8');
+  const sourceContent = readFileSync(
+    join(import.meta.dirname, './src/index.js'),
+    'utf-8',
+  );
 
   expect(JSON.parse(files[web1JsMapPath])).toEqual({
     version: 3,

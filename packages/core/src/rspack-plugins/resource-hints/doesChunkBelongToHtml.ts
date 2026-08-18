@@ -42,11 +42,14 @@ function recursiveChunkGroup(
     return [chunkGroup.name];
   }
 
-  return parents.flatMap((chunkParent) => recursiveChunkGroup(chunkParent, visited));
+  return parents.flatMap((chunkParent) =>
+    recursiveChunkGroup(chunkParent, visited),
+  );
 }
 
 export function recursiveChunkEntryNames(chunk: Chunk): string[] {
-  const isChunkName = (name: string | undefined): name is string => Boolean(name);
+  const isChunkName = (name: string | undefined): name is string =>
+    Boolean(name);
 
   const [...chunkGroups] = chunk.groupsIterable;
   const names = chunkGroups

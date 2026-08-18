@@ -26,8 +26,14 @@ test('should support setting an absolute root path', async ({ build }) => {
   expect(rsbuild.distPath).toContain('test');
 });
 
-test('should serve publicDir correctly when setting root', async ({ page, devOnly }) => {
-  await fse.outputFile(join(import.meta.dirname, 'test/public', 'test-temp-file.txt'), 'a');
+test('should serve publicDir correctly when setting root', async ({
+  page,
+  devOnly,
+}) => {
+  await fse.outputFile(
+    join(import.meta.dirname, 'test/public', 'test-temp-file.txt'),
+    'a',
+  );
 
   const rsbuild = await devOnly({
     config: {
@@ -35,7 +41,9 @@ test('should serve publicDir correctly when setting root', async ({ page, devOnl
     },
   });
 
-  const res = await page.goto(`http://localhost:${rsbuild.port}/test-temp-file.txt`);
+  const res = await page.goto(
+    `http://localhost:${rsbuild.port}/test-temp-file.txt`,
+  );
 
   expect((await res?.body())?.toString().trim()).toBe('a');
 });
