@@ -426,6 +426,66 @@ DEBUG=rsbuild pnpm build
 
 Then open the generated `rspack.config.web.mjs` file and search for the `babel-loader` keyword to see the complete `babel-loader` configuration.
 
+## Helper functions
+
+This helper is intended for Rsbuild plugins and framework integrations.
+
+### modifyBabelLoaders
+
+- **Type:**
+
+```ts
+function modifyBabelLoaders(options: ModifyBabelLoadersOptions): void;
+
+type ModifyBabelLoadersOptions = {
+  chain: RspackChain;
+  CHAIN_ID: ChainIdentifier;
+  modifyOptions?: (options: BabelTransformOptions) => BabelTransformOptions;
+  modifyRule?: (
+    rule: RspackChain.Rule<unknown>,
+    context: { babelUseId: string },
+  ) => void;
+};
+```
+
+- **Version:** `>= 2.1.0`
+
+`modifyBabelLoaders` allows you to modify Babel loader options and their containing rules.
+
+- `modifyOptions` updates the current `babel-loader` options and must return the final options.
+- `modifyRule` updates the matched rule. If both callbacks are provided, it runs after `modifyOptions`. Use `babelUseId` to access the Babel loader in that rule.
+
+Call it from the [`modifyBundlerChain`](/plugins/dev/hooks#modifybundlerchain) hook of a custom Rsbuild plugin:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, type RsbuildPlugin } from '@rsbuild/core';
+import { modifyBabelLoaders, pluginBabel } from '@rsbuild/plugin-babel';
+
+const pluginCustomizeBabel = (): RsbuildPlugin => ({
+  name: 'customize-babel',
+  setup(api) {
+    api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+      modifyBabelLoaders({
+        chain,
+        CHAIN_ID,
+        modifyOptions(options) {
+          options.plugins ??= [];
+          options.plugins.push('babel-plugin-example');
+          return options;
+        },
+        modifyRule(rule) {
+          rule.exclude.add(/[\\/]node_modules[\\/]/);
+        },
+      });
+    });
+  },
+});
+
+export default defineConfig({
+  plugins: [pluginBabel(), pluginCustomizeBabel()],
+});
+```
+
 ## FAQ
 
 ### Compilation freezes
