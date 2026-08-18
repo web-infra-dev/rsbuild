@@ -152,7 +152,7 @@ describe('plugins/babel', () => {
     expect(matchRules(configs[0], 'a.js')).toMatchSnapshot();
   });
 
-  it('should modify Babel loaders in nested rules', async () => {
+  it('should modify Babel loaders in known rules', async () => {
     let modifiedOptionsCount = 0;
     let modifiedRuleCount = 0;
 
@@ -172,13 +172,19 @@ describe('plugins/babel', () => {
                   .uses.get(CHAIN_ID.USE.BABEL)
                   .get('loader');
 
+                chain.module.rules
+                  .get(CHAIN_ID.RULE.JS_DATA_URI)
+                  .use(CHAIN_ID.USE.BABEL)
+                  .loader(babelLoader)
+                  .options({ comments: true });
+
                 chain.module
                   .rule('nested-rules')
                   .test(/nested-rules/)
                   .rule('babel')
                   .use(CHAIN_ID.USE.BABEL)
                   .loader(babelLoader)
-                  .options({});
+                  .options({ comments: true });
 
                 chain.module
                   .rule('nested-one-ofs')
@@ -186,7 +192,7 @@ describe('plugins/babel', () => {
                   .oneOf('babel')
                   .use(CHAIN_ID.USE.BABEL)
                   .loader(babelLoader)
-                  .options({});
+                  .options({ comments: true });
 
                 modifyBabelLoaders({
                   chain,
@@ -219,9 +225,10 @@ describe('plugins/babel', () => {
     const configs = await rsbuild.initConfigs();
     const rules = JSON.stringify(configs[0].module?.rules);
 
-    expect(modifiedOptionsCount).toBe(4);
-    expect(modifiedRuleCount).toBe(4);
-    expect(rules.match(/test-loader/g)).toHaveLength(4);
-    expect(rules.match(/"comments":false/g)).toHaveLength(4);
+    expect(modifiedOptionsCount).toBe(3);
+    expect(modifiedRuleCount).toBe(3);
+    expect(rules.match(/test-loader/g)).toHaveLength(3);
+    expect(rules.match(/"comments":false/g)).toHaveLength(3);
+    expect(rules.match(/"comments":true/g)).toHaveLength(2);
   });
 });

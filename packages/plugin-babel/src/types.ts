@@ -17,7 +17,7 @@ export type ModifyBabelLoadersOptions = {
   CHAIN_ID: ChainIdentifier;
   /** Modify the options of each Babel loader. */
   modifyOptions?: (config: BabelTransformOptions) => BabelTransformOptions;
-  /** Modify each rule that contains a Babel loader. */
+  /** Modify each matched rule that contains a Babel loader. */
   modifyRule?: (rule: BabelRule, context: { babelUseId: string }) => void;
 };
 
