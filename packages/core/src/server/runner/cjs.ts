@@ -1,4 +1,5 @@
 import path from 'node:path';
+import type { Module } from 'node:vm';
 import { require } from '../../helpers';
 import { BasicRunner } from './basic';
 import type {
@@ -79,7 +80,7 @@ export class CommonJsRunner extends BasicRunner {
       // rslint-disable-next-line @typescript-eslint/no-require-imports
       return require(
         resolvedPath.startsWith('node:') ? resolvedPath.slice(5) : resolvedPath,
-      );
+      ) as unknown;
     };
   }
 
@@ -115,7 +116,7 @@ export class CommonJsRunner extends BasicRunner {
       const dynamicImport = new Function(
         'specifier',
         'return import(specifier)',
-      );
+      ) as (specifier: string) => Promise<Module>;
       const fn = vm.compileFunction(file.content, args, {
         filename: file.path,
         // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.

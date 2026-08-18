@@ -99,7 +99,9 @@ export class EsmRunner extends CommonJsRunner {
         const ns = esm.namespace as {
           default: unknown;
         };
-        return ns.default && ns.default instanceof Promise ? ns.default : ns;
+        return ns.default && ns.default instanceof Promise
+          ? (ns.default as Promise<unknown>)
+          : ns;
       })();
     };
   }
