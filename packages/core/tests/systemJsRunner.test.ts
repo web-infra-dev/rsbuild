@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { color } from '../src/helpers';
 import { run } from '../src/server/runner';
 import { SystemJsRunner } from '../src/server/runner/systemJs';
@@ -49,6 +50,47 @@ test('runs ESM bundle output through the runner factory', async () => {
   await expect(
     run({ bundlePath: 'entry.mjs', ...options }),
   ).resolves.toMatchObject({ value: 42 });
+});
+
+test('provides Node file metadata in import.meta', async () => {
+  const moduleId = path.join(DEFAULT_DIST, 'nested', 'module.mjs');
+  const runner = createSystemJsRunner([
+    [
+      'entry.mjs',
+      `import { meta } from './nested/module.mjs';
+export { meta };`,
+    ],
+    [
+      'nested/module.mjs',
+      `export const meta = {
+  dirname: import.meta.dirname,
+  filename: import.meta.filename,
+  url: import.meta.url,
+};`,
+    ],
+  ]);
+
+  await expect(runner.run('entry.mjs')).resolves.toMatchObject({
+    meta: {
+      dirname: path.dirname(moduleId),
+      filename: moduleId,
+      url: pathToFileURL(moduleId).href,
+    },
+  });
+});
+
+test.each([
+  ['glob', `import.meta.glob('./*.js')`],
+  ['resolve', `import.meta.resolve('./dependency.mjs')`],
+])('reports unsupported import.meta.%s()', async (method, expression) => {
+  const runner = createSystemJsRunner([
+    ['entry.mjs', `${expression};\nexport const value = 1;`],
+  ]);
+
+  await expect(runner.run('entry.mjs')).rejects.toMatchObject({
+    message: `${color.dim('[rsbuild:runner]')} import.meta.${method}() is not supported by the SystemJS runner.`,
+    name: 'Error',
+  });
 });
 
 test('maps runtime errors to the original source location', async () => {

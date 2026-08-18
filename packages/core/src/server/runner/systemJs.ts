@@ -16,9 +16,15 @@ interface SystemJsExport {
 
 type SystemJsContext = {
   import: (specifier: string) => Promise<unknown>;
-  meta: {
-    url: string;
-  };
+  meta: SystemJsImportMeta;
+};
+
+type SystemJsImportMeta = {
+  dirname: string;
+  filename: string;
+  glob: () => never;
+  resolve: (specifier: string, parent?: string) => never;
+  url: string;
 };
 
 type SystemJsDeclaration = {
@@ -53,6 +59,20 @@ const SOURCE_MAP_COMMENT =
 
 const SOURCE_MAP_DATA_URL =
   /^data:application\/json(?:;charset=[^;,]+)?(?:(;base64))?,(.*)$/i;
+
+const throwUnsupportedImportMetaMethod = (method: string): never => {
+  throw new Error(
+    `${color.dim('[rsbuild:runner]')} import.meta.${method}() is not supported.`,
+  );
+};
+
+const createImportMeta = (moduleId: string): SystemJsImportMeta => ({
+  dirname: path.dirname(moduleId),
+  filename: moduleId,
+  glob: () => throwUnsupportedImportMetaMethod('glob'),
+  resolve: () => throwUnsupportedImportMetaMethod('resolve'),
+  url: pathToFileURL(moduleId).href,
+});
 
 const escapeRegExp = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -172,9 +192,7 @@ const collectImportMetadata = (
           `${color.dim('[rsbuild:runner]')} Unexpected dynamic import ${specifier} while analyzing SystemJS module ${moduleId}`,
         );
       },
-      meta: {
-        url: pathToFileURL(moduleId).href,
-      },
+      meta: createImportMeta(moduleId),
     },
     moduleId,
   );
@@ -381,9 +399,7 @@ class SystemJsEvaluator {
         this.#createExport(moduleNode),
         {
           import: (specifier) => this.#import(specifier, moduleNode.id),
-          meta: {
-            url: pathToFileURL(moduleNode.id).href,
-          },
+          meta: createImportMeta(moduleNode.id),
         },
         moduleNode.id,
       );
