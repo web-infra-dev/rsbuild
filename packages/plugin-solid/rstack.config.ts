@@ -13,6 +13,18 @@ define.lib(async () => {
           minify: nodeMinifyConfig,
         },
       },
+      {
+        source: {
+          entry: {
+            refreshLoader: './src/refreshLoader.ts',
+          },
+        },
+        output: {
+          filename: {
+            js: '[name].mjs',
+          },
+        },
+      },
     ],
   };
 });
