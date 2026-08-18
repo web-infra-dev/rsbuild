@@ -8,9 +8,11 @@ import type { RunnerFactoryOptions } from '../src/server/runner/type';
 
 type ModuleFixture = readonly [moduleId: string, code: string];
 
+const DEFAULT_DIST = path.resolve('/virtual/dist');
+
 const createRunnerOptions = (
   entries: ReadonlyArray<ModuleFixture>,
-  dist = '/virtual/dist',
+  dist = DEFAULT_DIST,
 ): RunnerFactoryOptions => {
   const files = new Map(
     entries.map(([moduleId, code]) => [path.resolve(dist, moduleId), code]),
@@ -52,6 +54,7 @@ test('runs ESM bundle output through the runner factory', async () => {
 });
 
 test('maps runtime errors to the original source location', async () => {
+  const entryPath = path.join(DEFAULT_DIST, 'entry.mjs');
   const runner = createSystemJsRunner([
     [
       'entry.mjs',
@@ -73,10 +76,8 @@ fail();`,
   expect(runtimeError).toBeInstanceOf(Error);
   const cause = (runtimeError as Error & { cause?: Error }).cause;
   expect(cause?.message).toBe('source map failure');
-  expect(cause?.stack).toContain('at fail (/virtual/dist/entry.mjs:3:9)');
-  expect(cause?.stack).toContain(
-    'at Object.execute (/virtual/dist/entry.mjs:5:1)',
-  );
+  expect(cause?.stack).toContain(`at fail (${entryPath}:3:9)`);
+  expect(cause?.stack).toContain(`at Object.execute (${entryPath}:5:1)`);
 });
 
 test('resolves import-only external packages from the bundle importer', async () => {
