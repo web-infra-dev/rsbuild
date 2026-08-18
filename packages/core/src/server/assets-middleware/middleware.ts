@@ -499,6 +499,7 @@ export function createAssetsMiddleware(
       onFinished(res, cleanup);
     }
 
+    // rslint-disable-next-line @typescript-eslint/no-misused-promises -- `ready` does not consume callback return values.
     ready(processRequest);
   };
 }
