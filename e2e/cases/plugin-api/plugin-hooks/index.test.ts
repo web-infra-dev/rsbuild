@@ -1,5 +1,27 @@
+import net from 'node:net';
 import { expect, recordPluginHooks, test } from '@e2e/helper';
-import { createRsbuild } from '@rsbuild/core';
+import {
+  createRsbuild,
+  type RsbuildDevServer,
+  type RsbuildPlugin,
+  type RsbuildPreviewServer,
+} from '@rsbuild/core';
+import { getRandomPort } from '@rstackjs/test-utils';
+
+const HOST = '127.0.0.1';
+
+const expectPortAvailable = async (port: number) => {
+  const server = net.createServer();
+
+  await new Promise<void>((resolve, reject) => {
+    server.once('error', reject);
+    server.listen({ host: HOST, port }, resolve);
+  });
+
+  await new Promise<void>((resolve) => {
+    server.close(() => resolve());
+  });
+};
 
 test('should run plugin hooks correctly when running build', async ({
   build,
@@ -119,4 +141,73 @@ test('should run plugin hooks correctly when running preview', async () => {
     'BeforeStartPreviewServer',
     'AfterStartPreviewServer',
   ]);
+});
+
+test('should close dev server when onAfterStartDevServer throws', async () => {
+  const port = await getRandomPort();
+  let devServer: RsbuildDevServer | undefined;
+  let closeHookCalled = false;
+  const plugin: RsbuildPlugin = {
+    name: 'throw-in-after-start-dev-server',
+    setup(api) {
+      api.onBeforeStartDevServer(({ server }) => {
+        devServer = server;
+      });
+      api.onAfterStartDevServer(() => {
+        throw new Error('Failed to start dev server');
+      });
+      api.onCloseDevServer(() => {
+        closeHookCalled = true;
+      });
+    },
+  };
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+    config: {
+      server: { host: HOST, port },
+      plugins: [plugin],
+    },
+  });
+
+  try {
+    await expect(
+      rsbuild.startDevServer({ getPortSilently: true }),
+    ).rejects.toThrow('Failed to start dev server');
+    expect(closeHookCalled).toBe(true);
+    await expectPortAvailable(port);
+  } finally {
+    await devServer?.close();
+  }
+});
+
+test('should close preview server when onAfterStartPreviewServer throws', async () => {
+  const port = await getRandomPort();
+  let previewServer: RsbuildPreviewServer | undefined;
+  const plugin: RsbuildPlugin = {
+    name: 'throw-in-after-start-preview-server',
+    setup(api) {
+      api.onBeforeStartPreviewServer(({ server }) => {
+        previewServer = server;
+      });
+      api.onAfterStartPreviewServer(() => {
+        throw new Error('Failed to start preview server');
+      });
+    },
+  };
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+    config: {
+      server: { host: HOST, port },
+      plugins: [plugin],
+    },
+  });
+
+  try {
+    await expect(
+      rsbuild.preview({ checkDistDir: false, getPortSilently: true }),
+    ).rejects.toThrow('Failed to start preview server');
+    await expectPortAvailable(port);
+  } finally {
+    await previewServer?.close();
+  }
 });
