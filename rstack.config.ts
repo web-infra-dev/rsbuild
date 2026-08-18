@@ -18,7 +18,7 @@ define.staged({
   '*.{js,jsx,ts,tsx,mjs,cjs}': ['rs lint --type-check', 'rs fmt'],
 });
 
-define.lint(async ({ globalIgnores, js, ts }) => {
+define.lint(async ({ globalIgnores, js, rstestPlugin, ts }) => {
   const { default: globals } = await import('globals');
   return [
     globalIgnores([
@@ -27,6 +27,10 @@ define.lint(async ({ globalIgnores, js, ts }) => {
     ]),
     js.configs.recommended,
     ts.configs.recommendedTypeChecked,
+    {
+      files: ['**/*.test.{ts,tsx}'],
+      ...rstestPlugin.configs.recommended,
+    },
     {
       files: ['**/*.{js,jsx,cjs,mjs}'],
       languageOptions: {
