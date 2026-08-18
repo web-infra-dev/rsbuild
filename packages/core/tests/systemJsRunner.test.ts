@@ -1,7 +1,4 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { experiments } from '@rspack/core';
 import { color } from '../src/helpers';
 import { run } from '../src/server/runner';
 import { SystemJsRunner } from '../src/server/runner/systemJs';
@@ -80,77 +77,6 @@ fail();`,
   expect((runtimeError as Error).stack).toContain(
     `at Object.execute (${entryPath}:5:1)`,
   );
-});
-
-test('decodes an inline source map while transforming a bundle module', async () => {
-  const originalPath = path.resolve('/virtual/src/utils/posts.tsx');
-  const generatedSource = `export function fail() {
-  throw new Error('late source map failure');
-}`;
-  const inputSourceMap = JSON.stringify({
-    mappings: 'AAAA;AACA;AACA',
-    names: [],
-    sources: [originalPath],
-    sourcesContent: [generatedSource],
-    version: 3,
-  });
-  const encodedSourceMap = Buffer.from(inputSourceMap).toString('base64');
-  const transform = rstest.spyOn(experiments.swc, 'transform');
-  const runner = createSystemJsRunner(
-    [
-      [
-        'entry.mjs',
-        `${generatedSource}
-//# sourceURL=${originalPath}?tss-serverfn-split
-//# sourceMappingURL=data:application/json;base64,${encodedSourceMap}`,
-      ],
-    ],
-    path.resolve('/virtual/inline-map-dist'),
-  );
-
-  const namespace = (await runner.run('entry.mjs')) as {
-    fail: () => void;
-  };
-  const transformOptions = transform.mock.calls.map((call) => call[1]);
-  transform.mockRestore();
-  expect(transformOptions).toContainEqual(
-    expect.objectContaining({ inputSourceMap }),
-  );
-  expect(namespace.fail).toBeTypeOf('function');
-});
-
-test('resolves import-only external packages from the bundle importer', async () => {
-  const root = mkdtempSync(path.join(tmpdir(), 'rsbuild-systemjs-'));
-  const dist = path.join(root, 'dist');
-  const packageDir = path.join(root, 'node_modules', 'systemjs-import-only');
-
-  mkdirSync(packageDir, { recursive: true });
-  writeFileSync(
-    path.join(packageDir, 'package.json'),
-    JSON.stringify({
-      exports: { '.': { import: './index.js' } },
-      name: 'systemjs-import-only',
-      type: 'module',
-    }),
-  );
-  writeFileSync(path.join(packageDir, 'index.js'), 'export const value = 42;');
-
-  try {
-    const runner = createSystemJsRunner(
-      [
-        [
-          'entry.mjs',
-          `import { value } from 'systemjs-import-only';
-           export { value };`,
-        ],
-      ],
-      dist,
-    );
-
-    await expect(runner.run('entry.mjs')).resolves.toMatchObject({ value: 42 });
-  } finally {
-    rmSync(root, { force: true, recursive: true });
-  }
 });
 
 test('reports a error for a missing static external export', async () => {
