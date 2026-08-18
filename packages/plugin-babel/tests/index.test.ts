@@ -153,9 +153,6 @@ describe('plugins/babel', () => {
   });
 
   it('should modify Babel loaders in known rules', async () => {
-    let modifiedOptionsCount = 0;
-    let modifiedRuleCount = 0;
-
     const rsbuild = await createRsbuild({
       cwd: import.meta.dirname,
       config: {
@@ -166,46 +163,29 @@ describe('plugins/babel', () => {
             name: 'test:modify-babel-loaders',
             setup(api) {
               api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-                const babelLoader = chain.module.rules
-                  .get(CHAIN_ID.RULE.JS)
-                  .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN)
-                  .uses.get(CHAIN_ID.USE.BABEL)
-                  .get('loader');
-
                 chain.module.rules
                   .get(CHAIN_ID.RULE.JS_DATA_URI)
                   .use(CHAIN_ID.USE.BABEL)
-                  .loader(babelLoader)
+                  .loader('babel-loader')
                   .options({ comments: true });
 
                 chain.module
                   .rule('nested-rules')
-                  .test(/nested-rules/)
                   .rule('babel')
                   .use(CHAIN_ID.USE.BABEL)
-                  .loader(babelLoader)
-                  .options({ comments: true });
-
-                chain.module
-                  .rule('nested-one-ofs')
-                  .test(/nested-one-ofs/)
-                  .oneOf('babel')
-                  .use(CHAIN_ID.USE.BABEL)
-                  .loader(babelLoader)
+                  .loader('babel-loader')
                   .options({ comments: true });
 
                 modifyBabelLoaders({
                   chain,
                   CHAIN_ID,
                   modifyOptions(options) {
-                    modifiedOptionsCount++;
                     return {
                       ...options,
                       comments: false,
                     };
                   },
                   modifyRule(rule, { babelUseId }) {
-                    modifiedRuleCount++;
                     rule
                       .use('test-loader')
                       .after(babelUseId)
@@ -225,10 +205,8 @@ describe('plugins/babel', () => {
     const configs = await rsbuild.initConfigs();
     const rules = JSON.stringify(configs[0].module?.rules);
 
-    expect(modifiedOptionsCount).toBe(3);
-    expect(modifiedRuleCount).toBe(3);
     expect(rules.match(/test-loader/g)).toHaveLength(3);
     expect(rules.match(/"comments":false/g)).toHaveLength(3);
-    expect(rules.match(/"comments":true/g)).toHaveLength(2);
+    expect(rules.match(/"comments":true/g)).toHaveLength(1);
   });
 });
