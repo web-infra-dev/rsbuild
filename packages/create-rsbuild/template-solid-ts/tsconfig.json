@@ -6,7 +6,7 @@
     "noEmit": true,
     "skipLibCheck": true,
     "types": ["@rsbuild/core/types", "node"],
-    "jsxImportSource": "solid-js",
+    "jsxImportSource": "@solidjs/web",
     "useDefineForClassFields": true,
 
     /* modules */
