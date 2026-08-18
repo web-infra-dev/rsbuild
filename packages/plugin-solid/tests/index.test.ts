@@ -119,7 +119,7 @@ describe('plugin-solid', () => {
 
     expect(
       JSON.stringify(matchRules(config[0], 'a.tsx')[0]).includes(
-        'solid-refresh',
+        'refreshLoader.mjs',
       ),
     ).toEqual(false);
   });

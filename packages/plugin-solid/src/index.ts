@@ -1,6 +1,7 @@
 import { createRequire } from 'node:module';
+import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
+import { modifyBabelLoaders } from '@rsbuild/plugin-babel';
 import type { SolidPresetOptions } from './types.js';
 
 const require = createRequire(import.meta.url);
@@ -65,11 +66,16 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
       api.modifyBundlerChain(
         (chain, { CHAIN_ID, environment, isProd, target }) => {
           const environmentConfig = environment.config;
+          const usingHMR =
+            options.refresh?.disabled !== true &&
+            !isProd &&
+            environmentConfig.dev.hmr &&
+            target === 'web';
 
-          modifyBabelLoaderOptions({
+          modifyBabelLoaders({
             chain,
             CHAIN_ID,
-            modifier: (babelOptions) => {
+            modifyOptions: (babelOptions) => {
               // Apply SSR defaults before user options so explicit values can override them.
               const defaultPresetOptions: SolidPresetOptions = ssr
                 ? target === 'node'
@@ -89,27 +95,18 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               ];
               babelOptions.parserOpts = { plugins: ['jsx', 'typescript'] };
 
-              // `refresh.disabled` only disables Solid Refresh transforms; Rsbuild HMR can stay enabled.
-              const usingHMR =
-                options.refresh?.disabled !== true &&
-                !isProd &&
-                environmentConfig.dev.hmr &&
-                target === 'web';
-              if (usingHMR) {
-                babelOptions.plugins ??= [];
-                babelOptions.plugins.push([
-                  require.resolve('solid-refresh/babel'),
-                  { bundler: 'rspack-esm' },
-                ]);
-
-                chain.resolve.alias.set(
-                  'solid-refresh',
-                  require.resolve('solid-refresh/dist/solid-refresh.mjs'),
-                );
-              }
-
               return babelOptions;
             },
+            modifyRule: usingHMR
+              ? (rule, { babelUseId }) => {
+                  rule
+                    .use('solid-refresh')
+                    .after(babelUseId)
+                    .loader(
+                      path.join(import.meta.dirname, 'refreshLoader.mjs'),
+                    );
+                }
+              : undefined,
           });
         },
       );

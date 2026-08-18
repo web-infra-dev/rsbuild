@@ -1,5 +1,11 @@
 # @rsbuild/plugin-solid
 
+## 2.0.0-beta.1 (2026-08-18)
+
+### New features
+
+- feat(plugin-solid): support Solid v2 RC by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8301
+
 ## 1.2.2 (2026-06-05)
 
 ### Bug fixes

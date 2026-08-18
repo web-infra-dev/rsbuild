@@ -134,6 +134,7 @@ shiki
 shikijs
 sirv
 sokra
+solidjs
 speedscope
 srcset
 stacktracey
