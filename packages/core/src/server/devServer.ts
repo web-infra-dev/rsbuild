@@ -1,3 +1,4 @@
+import { once } from 'node:events';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { color, pick } from '../helpers';
@@ -390,41 +391,33 @@ export async function createDevServer<
 
       context.hooks.onCloseDevServer.tap(serverTerminator);
 
-      return new Promise<StartDevServerResult>((resolve) => {
-        httpServer.listen(
-          {
-            host,
-            port,
-          },
-          async (err?: Error) => {
-            if (err) {
-              throw err;
-            }
-
-            // OPTIONS request fallback middleware
-            // Should register this middleware as the last
-            // see: https://github.com/web-infra-dev/rsbuild/pull/2867
-            middlewares.use(optionsFallbackMiddleware);
-
-            // 404 fallback middleware should be the last middleware
-            middlewares.use(notFoundMiddleware);
-
-            if (state.devMiddlewares) {
-              httpServer.on('upgrade', state.devMiddlewares.onUpgrade);
-            }
-
-            logger.debug('listen dev server done');
-
-            await devServer.afterListen();
-
-            resolve({
-              port,
-              urls: urls.map((item) => item.url),
-              server: devServer,
-            });
-          },
-        );
+      httpServer.listen({
+        host,
+        port,
       });
+      await once(httpServer, 'listening');
+
+      // OPTIONS request fallback middleware
+      // Should register this middleware as the last
+      // see: https://github.com/web-infra-dev/rsbuild/pull/2867
+      middlewares.use(optionsFallbackMiddleware);
+
+      // 404 fallback middleware should be the last middleware
+      middlewares.use(notFoundMiddleware);
+
+      if (state.devMiddlewares) {
+        httpServer.on('upgrade', state.devMiddlewares.onUpgrade);
+      }
+
+      logger.debug('listen dev server done');
+
+      await devServer.afterListen();
+
+      return {
+        port,
+        urls: urls.map((item) => item.url),
+        server: devServer,
+      };
     },
     afterListen: async () => {
       await context.hooks.onAfterStartDevServer.callBatch({

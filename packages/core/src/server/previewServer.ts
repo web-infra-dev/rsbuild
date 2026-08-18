@@ -1,3 +1,4 @@
+import { once } from 'node:events';
 import fs from 'node:fs';
 import { isWebTarget } from '../helpers';
 import { isVerbose } from '../logger';
@@ -247,48 +248,44 @@ export async function startPreviewServer(
   middlewares.use(optionsFallbackMiddleware);
   middlewares.use(notFoundMiddleware);
 
-  return new Promise<StartPreviewServerResult>((resolve) => {
-    httpServer.listen(
-      {
-        host,
-        port,
-      },
-      async () => {
-        await context.hooks.onAfterStartPreviewServer.callBatch({
-          port,
-          routes,
-          environments: context.environments,
-        });
-
-        registerCleanup(closeServer);
-        printUrls();
-
-        if (cliShortcutsEnabled) {
-          const shortcutsOptions =
-            typeof config.dev.cliShortcuts === 'boolean'
-              ? {}
-              : config.dev.cliShortcuts;
-
-          await setupCliShortcuts({
-            openPage,
-            closeServer,
-            printUrls,
-            help: shortcutsOptions.help,
-            customShortcuts: shortcutsOptions.custom,
-            logger,
-          });
-        }
-
-        if (!getPortSilently && portTip) {
-          logger.info(portTip);
-        }
-
-        resolve({
-          port,
-          urls: urls.map((item) => item.url),
-          server: previewServer,
-        });
-      },
-    );
+  httpServer.listen({
+    host,
+    port,
   });
+  await once(httpServer, 'listening');
+
+  await context.hooks.onAfterStartPreviewServer.callBatch({
+    port,
+    routes,
+    environments: context.environments,
+  });
+
+  registerCleanup(closeServer);
+  printUrls();
+
+  if (cliShortcutsEnabled) {
+    const shortcutsOptions =
+      typeof config.dev.cliShortcuts === 'boolean'
+        ? {}
+        : config.dev.cliShortcuts;
+
+    await setupCliShortcuts({
+      openPage,
+      closeServer,
+      printUrls,
+      help: shortcutsOptions.help,
+      customShortcuts: shortcutsOptions.custom,
+      logger,
+    });
+  }
+
+  if (!getPortSilently && portTip) {
+    logger.info(portTip);
+  }
+
+  return {
+    port,
+    urls: urls.map((item) => item.url),
+    server: previewServer,
+  };
 }
