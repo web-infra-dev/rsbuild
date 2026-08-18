@@ -77,16 +77,18 @@ export default {
 
 > See [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
 
-### Enable native watcher
+### Native watcher
 
-Enabling Rspack's [native watcher](https://rspack.rs/config/experiments#experimentsnativewatcher) improves HMR performance in development mode.
+Starting with Rsbuild 2.2.0, Rspack's [native watcher](https://rspack.rs/config/experiments#experimentsnativewatcher) is enabled by default to improve HMR performance in development mode.
+
+If a plugin requires Watchpack compatibility, you can disable the native watcher:
 
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
       experiments: {
-        nativeWatcher: true,
+        nativeWatcher: false,
       },
     },
   },

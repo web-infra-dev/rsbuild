@@ -77,16 +77,18 @@ export default {
 
 > 请参考 [dev.lazyCompilation](/config/dev/lazy-compilation) 了解更多。
 
-### 开启 native watcher
+### Native watcher
 
-启用 Rspack 的 [native watcher](https://rspack.rs/zh/config/experiments#experimentsnativewatcher) 可以提升开发模式下的 HMR 性能。
+从 Rsbuild 2.2.0 开始，Rspack 的 [native watcher](https://rspack.rs/zh/config/experiments#experimentsnativewatcher) 默认启用，以提升开发模式下的 HMR 性能。
+
+如果使用的插件需要兼容 Watchpack，你可以禁用 native watcher：
 
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
       experiments: {
-        nativeWatcher: true,
+        nativeWatcher: false,
       },
     },
   },
