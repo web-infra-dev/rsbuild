@@ -30,9 +30,9 @@
     "test": "rs test"
   },
   "dependencies": {
+    "@dom-expressions/compiler": "catalog:",
     "@rsbuild/plugin-babel": "workspace:*",
-    "babel-preset-solid": "catalog:",
-    "solid-refresh": "catalog:"
+    "babel-preset-solid": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
@@ -42,8 +42,8 @@
   },
   "peerDependencies": {
     "@rsbuild/core": "^1.0.0 || ^2.0.0",
-    "@solidjs/web": ">=2.0.0-beta.0 <2.0.0-experimental.0",
-    "solid-js": ">=2.0.0-beta.0 <2.0.0-experimental.0"
+    "@solidjs/web": "^2.0.0-rc.0",
+    "solid-js": "^2.0.0-rc.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
