@@ -22,7 +22,7 @@ test('should show assets on /rsbuild-dev-server path', async ({
   );
   for (const href of hrefList) {
     const status = await page.evaluate(async (url) => {
-      const response = await fetch(url as string);
+      const response = await fetch(url);
       return response.status;
     }, href);
 
@@ -61,7 +61,7 @@ test('should show assets on /rsbuild-dev-server path with server.base and assetP
   );
   for (const href of hrefList) {
     const status = await page.evaluate(async (url) => {
-      const response = await fetch(url as string);
+      const response = await fetch(url);
       return response.status;
     }, href);
 
@@ -116,7 +116,7 @@ test('should show assets on /rsbuild-dev-server path with environments', async (
   );
   for (const href of hrefList) {
     const status = await page.evaluate(async (url) => {
-      const response = await fetch(url as string);
+      const response = await fetch(url);
       return response.status;
     }, href);
 
