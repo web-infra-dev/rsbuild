@@ -138,10 +138,6 @@ These methods improve performance in production mode.
 
 Enable Rspack's experimental [`experiments.fasterModuleConcatenation`](https://rspack.rs/config/experiments#experimentsfastermoduleconcatenation) option to speed up module concatenation in production builds.
 
-:::tip
-`experiments.fasterModuleConcatenation` is supported in Rsbuild v2.2.0 and later.
-:::
-
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
@@ -153,3 +149,7 @@ export default {
   },
 };
 ```
+
+:::tip
+`experiments.fasterModuleConcatenation` is supported in Rsbuild v2.2.0 and later.
+:::
