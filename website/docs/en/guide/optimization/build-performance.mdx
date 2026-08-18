@@ -77,24 +77,6 @@ export default {
 
 > See [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
 
-### Native watcher
-
-Starting with Rsbuild 2.2.0, Rspack's [native watcher](https://rspack.rs/config/experiments#experimentsnativewatcher) is enabled by default to improve HMR performance in development mode.
-
-If a plugin requires Watchpack compatibility, you can disable the native watcher:
-
-```ts title="rsbuild.config.ts"
-export default {
-  tools: {
-    rspack: {
-      experiments: {
-        nativeWatcher: false,
-      },
-    },
-  },
-};
-```
-
 ### Source map format
 
 To provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format in development mode by default. This is a high-quality source map format that comes with some performance overhead.
@@ -147,3 +129,23 @@ last 1 safari version
 ```
 
 Note that this can lead to differences in build output between development and production modes.
+
+## Production optimization
+
+These methods improve performance in production mode.
+
+### Enable faster module concatenation
+
+Enable Rspack's experimental [`experiments.fasterModuleConcatenation`](https://rspack.rs/config/experiments#experimentsfastermoduleconcatenation) option to speed up module concatenation in production builds.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      experiments: {
+        fasterModuleConcatenation: true,
+      },
+    },
+  },
+};
+```
