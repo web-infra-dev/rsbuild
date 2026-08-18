@@ -120,7 +120,7 @@ export function init(
       config.protocol || (location.protocol === 'https:' ? 'wss' : 'ws');
     const pathname = config.path;
 
-    if (typeof URL !== 'undefined') {
+    if (typeof URL !== 'undefined' && 'searchParams' in URL.prototype) {
       const url = new URL('http://localhost');
       url.port = String(port);
       url.hostname = hostname;
@@ -130,7 +130,7 @@ export function init(
       return url.toString();
     }
 
-    // compatible with IE11
+    // compatible with IE 11 and legacy WebKit where URL lacks searchParams
     const colon = protocol.indexOf(':') === -1 ? ':' : '';
     return `${protocol}${colon}//${hostname}:${port}${pathname}?token=${token}`;
   }

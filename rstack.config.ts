@@ -64,8 +64,6 @@ define.lint(async ({ globalIgnores, js, ts }) => {
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
-        '@typescript-eslint/no-unsafe-return': 'off',
-        '@typescript-eslint/no-unnecessary-type-assertion': 'error',
         '@typescript-eslint/no-explicit-any': 'off',
       },
     },
