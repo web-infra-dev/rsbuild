@@ -7,13 +7,13 @@ import type {
   BabelLoaderOptions,
   BabelPlugin,
   BabelTransformOptions,
+  ModifyBabelLoadersOptions,
   PluginBabelOptions,
   PresetEnvOptions,
   PresetReactOptions,
 } from './types.js';
 
 export const BABEL_JS_RULE = 'babel-js';
-const BABEL_JS_RULE_REGEXP = /^babel-js(?:-\d+)?$/;
 
 export const getBabelRuleId = (chain: RspackChain): string => {
   let id = BABEL_JS_RULE;
@@ -22,16 +22,6 @@ export const getBabelRuleId = (chain: RspackChain): string => {
     id = `${BABEL_JS_RULE}-${++index}`;
   }
   return id;
-};
-
-const isBabelRuleId = (id: string) => BABEL_JS_RULE_REGEXP.test(id);
-
-const getBabelRules = (chain: RspackChain) => {
-  const ruleIds = Object.keys(chain.module.rules.entries()).filter(
-    isBabelRuleId,
-  );
-
-  return ruleIds.map((id) => chain.module.rules.get(id));
 };
 
 export const castArray = <T>(arr?: T | T[]): T[] => {
@@ -199,6 +189,43 @@ export const applyUserBabelConfig = (
   return defaultOptions;
 };
 
+type BabelRule = RspackChain.Rule<unknown>;
+
+const walkRules = <Parent>(
+  rules: RspackChain.Rule<Parent>[],
+  callback: (rule: BabelRule) => void,
+): void => {
+  for (const rule of rules) {
+    callback(rule);
+    walkRules(rule.rules.values(), callback);
+    walkRules(rule.oneOfs.values(), callback);
+  }
+};
+
+/** Modify every Babel loader configured in the Rspack chain. */
+export const modifyBabelLoaders = ({
+  chain,
+  CHAIN_ID,
+  modifyOptions,
+  modifyRule,
+}: ModifyBabelLoadersOptions): void => {
+  const babelUseId = CHAIN_ID.USE.BABEL;
+
+  walkRules(chain.module.rules.values(), (rule) => {
+    if (!rule.uses.has(babelUseId)) {
+      return;
+    }
+
+    if (modifyOptions) {
+      rule
+        .use(babelUseId)
+        .tap((options) => modifyOptions(options as BabelTransformOptions));
+    }
+
+    modifyRule?.(rule, { babelUseId });
+  });
+};
+
 export const modifyBabelLoaderOptions = ({
   chain,
   CHAIN_ID,
@@ -208,19 +235,9 @@ export const modifyBabelLoaderOptions = ({
   CHAIN_ID: ChainIdentifier;
   modifier: (config: BabelTransformOptions) => BabelTransformOptions;
 }): void => {
-  const rules = [
-    chain.module.rules
-      .get(CHAIN_ID.RULE.JS)
-      .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN),
-    chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI),
-    ...getBabelRules(chain),
-  ].filter(Boolean);
-
-  for (const rule of rules) {
-    if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
-      rule
-        .use(CHAIN_ID.USE.BABEL)
-        .tap((options) => modifier(options as BabelTransformOptions));
-    }
-  }
+  modifyBabelLoaders({
+    chain,
+    CHAIN_ID,
+    modifyOptions: modifier,
+  });
 };

@@ -1,6 +1,6 @@
 import { createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
-import { pluginBabel } from '../src';
+import { modifyBabelLoaders, pluginBabel } from '../src';
 
 describe('plugins/babel', () => {
   it('babel-loader should works with builtin:swc-loader', async () => {
@@ -150,5 +150,78 @@ describe('plugins/babel', () => {
 
     const configs = await rsbuild.initConfigs();
     expect(matchRules(configs[0], 'a.js')).toMatchSnapshot();
+  });
+
+  it('should modify Babel loaders in nested rules', async () => {
+    let modifiedOptionsCount = 0;
+    let modifiedRuleCount = 0;
+
+    const rsbuild = await createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        plugins: [
+          pluginBabel(),
+          pluginBabel({ include: /standalone/ }),
+          {
+            name: 'test:modify-babel-loaders',
+            setup(api) {
+              api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+                const babelLoader = chain.module.rules
+                  .get(CHAIN_ID.RULE.JS)
+                  .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN)
+                  .uses.get(CHAIN_ID.USE.BABEL)
+                  .get('loader');
+
+                chain.module
+                  .rule('nested-rules')
+                  .test(/nested-rules/)
+                  .rule('babel')
+                  .use(CHAIN_ID.USE.BABEL)
+                  .loader(babelLoader)
+                  .options({});
+
+                chain.module
+                  .rule('nested-one-ofs')
+                  .test(/nested-one-ofs/)
+                  .oneOf('babel')
+                  .use(CHAIN_ID.USE.BABEL)
+                  .loader(babelLoader)
+                  .options({});
+
+                modifyBabelLoaders({
+                  chain,
+                  CHAIN_ID,
+                  modifyOptions(options) {
+                    modifiedOptionsCount++;
+                    return {
+                      ...options,
+                      comments: false,
+                    };
+                  },
+                  modifyRule(rule, { babelUseId }) {
+                    modifiedRuleCount++;
+                    rule
+                      .use('test-loader')
+                      .after(babelUseId)
+                      .loader('test-loader');
+                  },
+                });
+              });
+            },
+          },
+        ],
+        performance: {
+          buildCache: false,
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+    const rules = JSON.stringify(configs[0].module?.rules);
+
+    expect(modifiedOptionsCount).toBe(4);
+    expect(modifiedRuleCount).toBe(4);
+    expect(rules.match(/test-loader/g)).toHaveLength(4);
+    expect(rules.match(/"comments":false/g)).toHaveLength(4);
   });
 });
