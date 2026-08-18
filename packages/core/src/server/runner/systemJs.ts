@@ -271,25 +271,15 @@ class SystemJsEvaluator {
 
   async evaluate(moduleId: string): Promise<Namespace> {
     const normalizedId = this.#normalizeBundleModuleId(moduleId);
-    try {
-      if (!this.#isBundleOutput(normalizedId)) {
-        throw new Error(
-          `${color.dim('[rsbuild:runner]')} Unknown bundle module ${normalizedId}`,
-        );
-      }
-      const moduleNode = await this.#getModule(normalizedId);
-      await this.#instantiate(moduleNode);
-      await this.#evaluateModule(moduleNode, new Set());
-      return moduleNode.namespace;
-    } catch (error) {
-      if (error instanceof SystemJsMissingExportError) {
-        throw error;
-      }
+    if (!this.#isBundleOutput(normalizedId)) {
       throw new Error(
-        `${color.dim('[rsbuild:runner]')} Failed to evaluate SystemJS module ${normalizedId}${formatErrorReason(error)}`,
-        { cause: error },
+        `${color.dim('[rsbuild:runner]')} Unknown bundle module ${normalizedId}`,
       );
     }
+    const moduleNode = await this.#getModule(normalizedId);
+    await this.#instantiate(moduleNode);
+    await this.#evaluateModule(moduleNode, new Set());
+    return moduleNode.namespace;
   }
 
   async #getModule(moduleId: string): Promise<SystemJsModuleNode> {
