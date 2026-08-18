@@ -438,9 +438,7 @@ class SystemJsEvaluator {
     if (request.startsWith('.')) {
       const resolved = path.resolve(path.dirname(importer), request);
       if (!this.#isBundleOutput(resolved)) {
-        throw new Error(
-          `${color.dim('[rsbuild:runner]')} Unknown bundle-local dependency ${specifier} from ${importer}`,
-        );
+        return;
       }
       return resolved;
     }
