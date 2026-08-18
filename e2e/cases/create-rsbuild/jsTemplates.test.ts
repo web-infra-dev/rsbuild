@@ -34,6 +34,14 @@ test('should create lit project as expected', async () => {
 test('should create solid project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'solid');
   expect(pkgJson.dependencies['solid-js']).toBeTruthy();
+  expect(pkgJson.dependencies['@solidjs/web']).toBeUndefined();
+  expect(pkgJson.devDependencies['@rsbuild/plugin-solid']).toBeTruthy();
+});
+
+test('should create solid2 project as expected', async () => {
+  const { pkgJson } = await createAndValidate(import.meta.dirname, 'solid2');
+  expect(pkgJson.dependencies['solid-js']).toBeTruthy();
+  expect(pkgJson.dependencies['@solidjs/web']).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-solid']).toBeTruthy();
 });
 
