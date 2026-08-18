@@ -51,9 +51,12 @@ export const transformToSystemJs = async (
     });
   } catch (error) {
     const reason = error instanceof Error ? `: ${error.message}` : '';
-    throw new Error(`Failed to transform ${file.path} to System.register${reason}`, {
-      cause: error,
-    });
+    throw new Error(
+      `Failed to transform ${file.path} to System.register${reason}`,
+      {
+        cause: error,
+      },
+    );
   }
 
   if (!result || typeof result.code !== 'string') {

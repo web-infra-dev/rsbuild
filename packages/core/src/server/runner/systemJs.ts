@@ -23,7 +23,7 @@ type SystemJsContext = {
 };
 
 type SystemJsDeclaration = {
-  execute: () => unknown | Promise<unknown>;
+  execute: () => void | Promise<void>;
   setters: Array<(namespace: Namespace) => void>;
 };
 
@@ -32,7 +32,10 @@ type SystemJsImportMetadata = {
 };
 
 type SystemJsRegistrationSource = {
-  declare: (exportValue: SystemJsExport, context: SystemJsContext) => SystemJsDeclaration;
+  declare: (
+    exportValue: SystemJsExport,
+    context: SystemJsContext,
+  ) => SystemJsDeclaration;
   dependencies: string[];
 };
 
@@ -53,9 +56,11 @@ const formatErrorReason = (error: unknown): string => {
   return `: ${message}`;
 };
 
-const INLINE_SOURCE_MAP = /\/\/[#@]\s*sourceMappingURL=data:application\/json;base64,([^\s]+)/;
+const INLINE_SOURCE_MAP =
+  /\/\/[#@]\s*sourceMappingURL=data:application\/json;base64,([^\s]+)/;
 
-const escapeRegExp = (value: string): string => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const escapeRegExp = (value: string): string =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const createStackTraceMapper = (code: string, moduleId: string) => {
   const encodedSourceMap = INLINE_SOURCE_MAP.exec(code)?.[1];
@@ -73,7 +78,10 @@ const createStackTraceMapper = (code: string, moduleId: string) => {
     return (_error: unknown): void => {};
   }
 
-  const moduleFrame = new RegExp(`${escapeRegExp(moduleId)}:(\\d+):(\\d+)`, 'g');
+  const moduleFrame = new RegExp(
+    `${escapeRegExp(moduleId)}:(\\d+):(\\d+)`,
+    'g',
+  );
   return (error: unknown): void => {
     if (!(error instanceof Error) || !error.stack) {
       return;
@@ -144,7 +152,10 @@ const createSystemJsDeclaration = (
   return declaration;
 };
 
-const analysisExport = ((nameOrExports: string | Record<string, unknown>, value?: unknown) =>
+const analysisExport = ((
+  nameOrExports: string | Record<string, unknown>,
+  value?: unknown,
+) =>
   typeof nameOrExports === 'object' ? nameOrExports : value) as SystemJsExport;
 
 const collectImportMetadata = (
@@ -197,7 +208,9 @@ const analyzeImportedModDifference = (
   if (!metadata?.importedNames?.length) {
     return;
   }
-  const missingBindings = metadata.importedNames.filter((name) => !(name in mod));
+  const missingBindings = metadata.importedNames.filter(
+    (name) => !(name in mod),
+  );
   if (missingBindings.length > 0) {
     const lastBinding = missingBindings[missingBindings.length - 1];
     throw new SystemJsMissingExportError(
@@ -206,7 +219,10 @@ const analyzeImportedModDifference = (
   }
 };
 
-const captureRegistration = (code: string, moduleId: string): SystemJsRegistration => {
+const captureRegistration = (
+  code: string,
+  moduleId: string,
+): SystemJsRegistration => {
   const registrations: unknown[][] = [];
   compileFunction(code, ['System'], { filename: moduleId })({
     register: (...args: unknown[]) => {
@@ -257,7 +273,9 @@ class SystemJsEvaluator {
     const normalizedId = this.#normalizeBundleModuleId(moduleId);
     try {
       if (!this.#isBundleOutput(normalizedId)) {
-        throw new Error(`${color.dim('[rsbuild:runner]')} Unknown bundle module ${normalizedId}`);
+        throw new Error(
+          `${color.dim('[rsbuild:runner]')} Unknown bundle module ${normalizedId}`,
+        );
       }
       const moduleNode = await this.#getModule(normalizedId);
       await this.#instantiate(moduleNode);
@@ -310,7 +328,10 @@ class SystemJsEvaluator {
   }
 
   #createExport(moduleNode: SystemJsModuleNode): SystemJsExport {
-    return ((nameOrExports: string | Record<string, unknown>, value?: unknown) => {
+    return ((
+      nameOrExports: string | Record<string, unknown>,
+      value?: unknown,
+    ) => {
       if (typeof nameOrExports === 'object') {
         for (const [name, exportValue] of Object.entries(nameOrExports)) {
           this.#setExport(moduleNode, name, exportValue);
@@ -379,7 +400,10 @@ class SystemJsEvaluator {
       for (let index = 0; index < registration.dependencies.length; index++) {
         const specifier = registration.dependencies[index];
         const setter = declaration.setters[index];
-        const bundleModuleId = this.#resolveBundleModuleId(specifier, moduleNode.id);
+        const bundleModuleId = this.#resolveBundleModuleId(
+          specifier,
+          moduleNode.id,
+        );
         if (bundleModuleId) {
           const dependency = await this.#getModule(bundleModuleId);
           if (dependency.state !== 'instantiating') {
@@ -391,8 +415,17 @@ class SystemJsEvaluator {
           continue;
         }
 
-        const namespace = await this.#runExternalModule(specifier, moduleNode.id);
-        setter(this.#processImport(namespace, specifier, registration.importMetadata[index]));
+        const namespace = await this.#runExternalModule(
+          specifier,
+          moduleNode.id,
+        );
+        setter(
+          this.#processImport(
+            namespace,
+            specifier,
+            registration.importMetadata[index],
+          ),
+        );
       }
       moduleNode.state = 'instantiated';
     })().catch((error) => {
@@ -405,7 +438,10 @@ class SystemJsEvaluator {
     return promise;
   }
 
-  #resolveBundleModuleId(specifier: string, importer: string): string | undefined {
+  #resolveBundleModuleId(
+    specifier: string,
+    importer: string,
+  ): string | undefined {
     const request = specifier.split(/[?#]/, 1)[0].replaceAll('\\', '/');
     if (request.startsWith('.')) {
       const resolved = path.resolve(path.dirname(importer), request);
@@ -483,10 +519,15 @@ class SystemJsEvaluator {
   }
 
   #runExternalModule(specifier: string, importer: string): Promise<Namespace> {
-    return import(this.#resolveExternalModuleId(specifier, importer)) as Promise<Namespace>;
+    return import(
+      this.#resolveExternalModuleId(specifier, importer)
+    ) as Promise<Namespace>;
   }
 
-  async #evaluateModule(moduleNode: SystemJsModuleNode, ancestors: Set<string>): Promise<void> {
+  async #evaluateModule(
+    moduleNode: SystemJsModuleNode,
+    ancestors: Set<string>,
+  ): Promise<void> {
     if (moduleNode.state === 'evaluated') {
       return;
     }

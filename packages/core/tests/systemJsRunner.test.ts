@@ -12,7 +12,9 @@ const createRunnerOptions = (
   entries: ReadonlyArray<ModuleFixture>,
   dist = '/virtual/dist',
 ): RunnerFactoryOptions => {
-  const files = new Map(entries.map(([moduleId, code]) => [path.resolve(dist, moduleId), code]));
+  const files = new Map(
+    entries.map(([moduleId, code]) => [path.resolve(dist, moduleId), code]),
+  );
   return {
     compilerOptions: {
       output: { module: true },
@@ -30,13 +32,23 @@ const createRunnerOptions = (
   };
 };
 
-const createSystemJsRunner = (entries: ReadonlyArray<ModuleFixture>, dist?: string) =>
-  new SystemJsRunner({ name: 'entry.mjs', ...createRunnerOptions(entries, dist) });
+const createSystemJsRunner = (
+  entries: ReadonlyArray<ModuleFixture>,
+  dist?: string,
+) =>
+  new SystemJsRunner({
+    name: 'entry.mjs',
+    ...createRunnerOptions(entries, dist),
+  });
 
 test('runs ESM bundle output through the runner factory', async () => {
-  const options = createRunnerOptions([['entry.mjs', 'export const value = 42;']]);
+  const options = createRunnerOptions([
+    ['entry.mjs', 'export const value = 42;'],
+  ]);
 
-  await expect(run({ bundlePath: 'entry.mjs', ...options })).resolves.toMatchObject({ value: 42 });
+  await expect(
+    run({ bundlePath: 'entry.mjs', ...options }),
+  ).resolves.toMatchObject({ value: 42 });
 });
 
 test('maps runtime errors to the original source location', async () => {
@@ -62,7 +74,9 @@ fail();`,
   const cause = (runtimeError as Error & { cause?: Error }).cause;
   expect(cause?.message).toBe('source map failure');
   expect(cause?.stack).toContain('at fail (/virtual/dist/entry.mjs:3:9)');
-  expect(cause?.stack).toContain('at Object.execute (/virtual/dist/entry.mjs:5:1)');
+  expect(cause?.stack).toContain(
+    'at Object.execute (/virtual/dist/entry.mjs:5:1)',
+  );
 });
 
 test('resolves import-only external packages from the bundle importer', async () => {
