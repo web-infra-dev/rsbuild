@@ -16,7 +16,6 @@
   "mdx.validate.validateFileLinks": "ignore",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   // Temporary workaround until we switch to the Rstack VS Code extension.
-  "prettier.printWidth": 100,
   "prettier.singleQuote": true,
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "json.schemas": [
