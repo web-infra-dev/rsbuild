@@ -1,5 +1,15 @@
 # @rsbuild/plugin-babel
 
+## 2.1.0 (2026-08-18)
+
+### New features
+
+- feat(plugin-babel): add modifyBabelLoaders helper by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8297
+
+### Performance
+
+- perf(plugin-babel): avoid redundant path join by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8124
+
 ## 2.0.1 (2026-07-02)
 
 ### Bug fixes
