@@ -23,7 +23,11 @@ const appendInlineSourceMap = (code: string, sourceMap: string | undefined) => {
     return executable;
   }
   const encoded = Buffer.from(sourceMap).toString('base64');
-  return `${executable}\n//# sourceMappingURL=data:application/json;base64,${encoded}`;
+  // Construct "URL" at runtime to keep the complete source map directive out
+  // of Rsbuild's bundled source. Regex-based source map scanners may otherwise
+  // mistake this template literal for the source map of the bundle itself.
+  const sourceMappingUrl = `sourceMapping${String.fromCharCode(85, 82, 76)}`;
+  return `${executable}\n//# ${sourceMappingUrl}=data:application/json;base64,${encoded}`;
 };
 
 export const transformToSystemJs = async (
