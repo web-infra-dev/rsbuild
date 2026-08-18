@@ -248,44 +248,54 @@ export async function startPreviewServer(
   middlewares.use(optionsFallbackMiddleware);
   middlewares.use(notFoundMiddleware);
 
-  httpServer.listen({
-    host,
-    port,
-  });
-  await once(httpServer, 'listening');
-
-  await context.hooks.onAfterStartPreviewServer.callBatch({
-    port,
-    routes,
-    environments: context.environments,
-  });
-
-  registerCleanup(closeServer);
-  printUrls();
-
-  if (cliShortcutsEnabled) {
-    const shortcutsOptions =
-      typeof config.dev.cliShortcuts === 'boolean'
-        ? {}
-        : config.dev.cliShortcuts;
-
-    await setupCliShortcuts({
-      openPage,
-      closeServer,
-      printUrls,
-      help: shortcutsOptions.help,
-      customShortcuts: shortcutsOptions.custom,
-      logger,
+  try {
+    httpServer.listen({
+      host,
+      port,
     });
-  }
+    await once(httpServer, 'listening');
 
-  if (!getPortSilently && portTip) {
-    logger.info(portTip);
-  }
+    await context.hooks.onAfterStartPreviewServer.callBatch({
+      port,
+      routes,
+      environments: context.environments,
+    });
 
-  return {
-    port,
-    urls: urls.map((item) => item.url),
-    server: previewServer,
-  };
+    registerCleanup(closeServer);
+    printUrls();
+
+    if (cliShortcutsEnabled) {
+      const shortcutsOptions =
+        typeof config.dev.cliShortcuts === 'boolean'
+          ? {}
+          : config.dev.cliShortcuts;
+
+      await setupCliShortcuts({
+        openPage,
+        closeServer,
+        printUrls,
+        help: shortcutsOptions.help,
+        customShortcuts: shortcutsOptions.custom,
+        logger,
+      });
+    }
+
+    if (!getPortSilently && portTip) {
+      logger.info(portTip);
+    }
+
+    return {
+      port,
+      urls: urls.map((item) => item.url),
+      server: previewServer,
+    };
+  } catch (error) {
+    try {
+      await closeServer();
+    } catch (closeError) {
+      logger.error('Failed to close preview server after startup error.');
+      logger.error(closeError);
+    }
+    throw error;
+  }
 }

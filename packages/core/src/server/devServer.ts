@@ -391,33 +391,43 @@ export async function createDevServer<
 
       context.hooks.onCloseDevServer.tap(serverTerminator);
 
-      httpServer.listen({
-        host,
-        port,
-      });
-      await once(httpServer, 'listening');
+      try {
+        httpServer.listen({
+          host,
+          port,
+        });
+        await once(httpServer, 'listening');
 
-      // OPTIONS request fallback middleware
-      // Should register this middleware as the last
-      // see: https://github.com/web-infra-dev/rsbuild/pull/2867
-      middlewares.use(optionsFallbackMiddleware);
+        // OPTIONS request fallback middleware
+        // Should register this middleware as the last
+        // see: https://github.com/web-infra-dev/rsbuild/pull/2867
+        middlewares.use(optionsFallbackMiddleware);
 
-      // 404 fallback middleware should be the last middleware
-      middlewares.use(notFoundMiddleware);
+        // 404 fallback middleware should be the last middleware
+        middlewares.use(notFoundMiddleware);
 
-      if (state.devMiddlewares) {
-        httpServer.on('upgrade', state.devMiddlewares.onUpgrade);
+        if (state.devMiddlewares) {
+          httpServer.on('upgrade', state.devMiddlewares.onUpgrade);
+        }
+
+        logger.debug('listen dev server done');
+
+        await devServer.afterListen();
+
+        return {
+          port,
+          urls: urls.map((item) => item.url),
+          server: devServer,
+        };
+      } catch (error) {
+        try {
+          await closeServer();
+        } catch (closeError) {
+          logger.error('Failed to close dev server after startup error.');
+          logger.error(closeError);
+        }
+        throw error;
       }
-
-      logger.debug('listen dev server done');
-
-      await devServer.afterListen();
-
-      return {
-        port,
-        urls: urls.map((item) => item.url),
-        server: devServer,
-      };
     },
     afterListen: async () => {
       await context.hooks.onAfterStartDevServer.callBatch({
