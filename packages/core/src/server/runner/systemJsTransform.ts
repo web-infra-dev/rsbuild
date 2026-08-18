@@ -14,12 +14,6 @@ export type SwcTransform = (
   options: Record<string, unknown>,
 ) => Promise<SwcTransformOutput> | SwcTransformOutput;
 
-const SOURCE_MAP_COMMENT =
-  /(?:\/\/[#@]\s*sourceMappingURL=[^\s]+|\/\*[#@]\s*sourceMappingURL=[^*]+?\s*\*\/)/gm;
-
-const SOURCE_URL_COMMENT =
-  /(?:\/\/[#@]\s*sourceURL=[^\r\n]*|\/\*[#@]\s*sourceURL=[^*]+?\s*\*\/)/gm;
-
 const FUNCTION_BODY_LINE_OFFSET = (() => {
   const marker = '/* systemjs-body */';
   // rslint-disable-next-line @typescript-eslint/no-implied-eval
@@ -41,10 +35,7 @@ const appendInlineSourceMap = (
   sourceMap: string | undefined,
   moduleId: string,
 ) => {
-  const executable = code
-    .replace(SOURCE_MAP_COMMENT, '')
-    .replace(SOURCE_URL_COMMENT, '')
-    .trimEnd();
+  const executable = code.trimEnd();
   const sourceUrl = `//# sourceURL=${moduleId}`;
   if (!sourceMap) {
     return `${executable}\n${sourceUrl}`;

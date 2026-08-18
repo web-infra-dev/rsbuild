@@ -88,7 +88,7 @@ test.each([
   ]);
 
   await expect(runner.run('entry.mjs')).rejects.toMatchObject({
-    message: `${color.dim('[rsbuild:runner]')} import.meta.${method}() is not supported by the SystemJS runner.`,
+    message: `${color.dim('[rsbuild:runner]')} import.meta.${method}() is not supported.`,
     name: 'Error',
   });
 });
