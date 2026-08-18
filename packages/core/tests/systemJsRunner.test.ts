@@ -136,3 +136,31 @@ test('reports a error for a missing static external export', async () => {
     name: 'SyntaxError',
   });
 });
+
+test('evaluates bundle dependencies before later external dependencies', async () => {
+  const stateKey = '__rsbuildSystemJsEvaluationOrder';
+  const externalId = `data:text/javascript,${encodeURIComponent(`
+const key = ${JSON.stringify(stateKey)};
+if (globalThis[key] !== 'bundle') {
+  throw new Error('bundle dependency was not evaluated first');
+}
+globalThis[key] += ':external';
+`)}`;
+  const runner = createSystemJsRunner([
+    [
+      'entry.mjs',
+      `import './polyfill.mjs';
+import ${JSON.stringify(externalId)};
+export const order = globalThis[${JSON.stringify(stateKey)}];`,
+    ],
+    ['polyfill.mjs', `globalThis[${JSON.stringify(stateKey)}] = 'bundle';`],
+  ]);
+
+  try {
+    await expect(runner.run('entry.mjs')).resolves.toMatchObject({
+      order: 'bundle:external',
+    });
+  } finally {
+    delete (globalThis as Record<string, unknown>)[stateKey];
+  }
+});

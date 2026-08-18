@@ -126,8 +126,20 @@ type SystemJsModuleState =
   | 'evaluated'
   | 'failed';
 
+type SystemJsEvaluationDependency =
+  | {
+      kind: 'bundle';
+      module: SystemJsModuleNode;
+    }
+  | {
+      kind: 'external';
+      metadata?: SystemJsImportMetadata;
+      setter: (namespace: Namespace) => void;
+      specifier: string;
+    };
+
 type SystemJsModuleNode = {
-  dependencies: SystemJsModuleNode[];
+  dependencies: SystemJsEvaluationDependency[];
   error?: unknown;
   evaluationPromise?: Promise<void>;
   execute?: SystemJsDeclaration['execute'];
@@ -418,22 +430,17 @@ class SystemJsEvaluator {
             await this.#instantiate(dependency);
           }
           dependency.importers.push({ setter });
-          moduleNode.dependencies.push(dependency);
+          moduleNode.dependencies.push({ kind: 'bundle', module: dependency });
           setter(dependency.namespace);
           continue;
         }
 
-        const namespace = await this.#runExternalModule(
+        moduleNode.dependencies.push({
+          kind: 'external',
+          metadata: registration.importMetadata[index],
+          setter,
           specifier,
-          moduleNode.id,
-        );
-        setter(
-          this.#processImport(
-            namespace,
-            specifier,
-            registration.importMetadata[index],
-          ),
-        );
+        });
       }
       moduleNode.state = 'instantiated';
     })().catch((error) => {
@@ -574,9 +581,24 @@ class SystemJsEvaluator {
     moduleNode.state = 'evaluating';
     const promise = (async () => {
       for (const dependency of moduleNode.dependencies) {
-        if (!nextAncestors.has(dependency.id)) {
-          await this.#evaluateModule(dependency, nextAncestors);
+        if (dependency.kind === 'bundle') {
+          if (!nextAncestors.has(dependency.module.id)) {
+            await this.#evaluateModule(dependency.module, nextAncestors);
+          }
+          continue;
         }
+
+        const namespace = await this.#runExternalModule(
+          dependency.specifier,
+          moduleNode.id,
+        );
+        dependency.setter(
+          this.#processImport(
+            namespace,
+            dependency.specifier,
+            dependency.metadata,
+          ),
+        );
       }
       await moduleNode.execute?.();
       moduleNode.state = 'evaluated';
