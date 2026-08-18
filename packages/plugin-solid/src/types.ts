@@ -11,6 +11,11 @@ export type SolidPresetOptions = {
    */
   moduleName?: string;
   /**
+   * Whether to generate development-only runtime checks and metadata.
+   * @default false
+   */
+  dev?: boolean;
+  /**
    * The output mode of the compiler.
    * Can be:
    * - "dom" is standard output

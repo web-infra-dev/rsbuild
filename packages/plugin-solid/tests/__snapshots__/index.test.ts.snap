@@ -94,6 +94,7 @@ exports[`plugin-solid > should allow deprecated solidPresetOptions alias 1`] = `
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "ssr",
                   "hydratable": true,
                 },
@@ -202,6 +203,7 @@ exports[`plugin-solid > should allow solid options to override ssr defaults 1`] 
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "universal",
                   "hydratable": false,
                 },
@@ -310,6 +312,7 @@ exports[`plugin-solid > should allow to configure solid options 1`] = `
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "ssr",
                   "hydratable": true,
                 },
@@ -420,7 +423,9 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
             "presets": [
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
-                {},
+                {
+                  "dev": false,
+                },
               ],
             ],
           },
@@ -529,6 +534,7 @@ exports[`plugin-solid > should use hydratable dom output for ssr option on web t
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "dom",
                   "hydratable": true,
                 },
@@ -637,6 +643,7 @@ exports[`plugin-solid > should use ssr output for ssr option on node target 1`] 
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "ssr",
                   "hydratable": true,
                 },
