@@ -7,6 +7,7 @@ import type {
   BabelLoaderOptions,
   BabelPlugin,
   BabelTransformOptions,
+  ModifyBabelLoadersOptions,
   PluginBabelOptions,
   PresetEnvOptions,
   PresetReactOptions,
@@ -199,15 +200,14 @@ export const applyUserBabelConfig = (
   return defaultOptions;
 };
 
-export const modifyBabelLoaderOptions = ({
+/** Modify Babel loaders in Rsbuild's known Babel rules. */
+export const modifyBabelLoaders = ({
   chain,
   CHAIN_ID,
-  modifier,
-}: {
-  chain: RspackChain;
-  CHAIN_ID: ChainIdentifier;
-  modifier: (config: BabelTransformOptions) => BabelTransformOptions;
-}): void => {
+  modifyOptions,
+  modifyRule,
+}: ModifyBabelLoadersOptions): void => {
+  const babelUseId = CHAIN_ID.USE.BABEL;
   const rules = [
     chain.module.rules
       .get(CHAIN_ID.RULE.JS)
@@ -217,10 +217,32 @@ export const modifyBabelLoaderOptions = ({
   ].filter(Boolean);
 
   for (const rule of rules) {
-    if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
-      rule
-        .use(CHAIN_ID.USE.BABEL)
-        .tap((options) => modifier(options as BabelTransformOptions));
+    if (!rule.uses.has(babelUseId)) {
+      continue;
     }
+
+    if (modifyOptions) {
+      rule
+        .use(babelUseId)
+        .tap((options) => modifyOptions(options as BabelTransformOptions));
+    }
+
+    modifyRule?.(rule, { babelUseId });
   }
+};
+
+export const modifyBabelLoaderOptions = ({
+  chain,
+  CHAIN_ID,
+  modifier,
+}: {
+  chain: RspackChain;
+  CHAIN_ID: ChainIdentifier;
+  modifier: (config: BabelTransformOptions) => BabelTransformOptions;
+}): void => {
+  modifyBabelLoaders({
+    chain,
+    CHAIN_ID,
+    modifyOptions: modifier,
+  });
 };

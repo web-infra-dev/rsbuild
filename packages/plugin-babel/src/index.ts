@@ -1,4 +1,8 @@
-export { getBabelUtils, modifyBabelLoaderOptions } from './helper.js';
+export {
+  getBabelUtils,
+  modifyBabelLoaderOptions,
+  modifyBabelLoaders,
+} from './helper.js';
 export {
   getDefaultBabelOptions,
   PLUGIN_BABEL_NAME,
@@ -7,6 +11,7 @@ export {
 export type {
   BabelConfigUtils,
   BabelTransformOptions,
+  ModifyBabelLoadersOptions,
   PluginBabelOptions,
   PresetEnvBuiltIns,
   PresetEnvOptions,

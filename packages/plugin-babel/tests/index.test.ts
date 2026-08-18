@@ -1,6 +1,6 @@
 import { createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
-import { pluginBabel } from '../src';
+import { modifyBabelLoaders, pluginBabel } from '../src';
 
 describe('plugins/babel', () => {
   it('babel-loader should works with builtin:swc-loader', async () => {
@@ -150,5 +150,63 @@ describe('plugins/babel', () => {
 
     const configs = await rsbuild.initConfigs();
     expect(matchRules(configs[0], 'a.js')).toMatchSnapshot();
+  });
+
+  it('should modify Babel loaders in known rules', async () => {
+    const rsbuild = await createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        plugins: [
+          pluginBabel(),
+          pluginBabel({ include: /standalone/ }),
+          {
+            name: 'test:modify-babel-loaders',
+            setup(api) {
+              api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+                chain.module.rules
+                  .get(CHAIN_ID.RULE.JS_DATA_URI)
+                  .use(CHAIN_ID.USE.BABEL)
+                  .loader('babel-loader')
+                  .options({ comments: true });
+
+                chain.module
+                  .rule('nested-rules')
+                  .rule('babel')
+                  .use(CHAIN_ID.USE.BABEL)
+                  .loader('babel-loader')
+                  .options({ comments: true });
+
+                modifyBabelLoaders({
+                  chain,
+                  CHAIN_ID,
+                  modifyOptions(options) {
+                    return {
+                      ...options,
+                      comments: false,
+                    };
+                  },
+                  modifyRule(rule, { babelUseId }) {
+                    rule
+                      .use('test-loader')
+                      .after(babelUseId)
+                      .loader('test-loader');
+                  },
+                });
+              });
+            },
+          },
+        ],
+        performance: {
+          buildCache: false,
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+    const rules = JSON.stringify(configs[0].module?.rules);
+
+    expect(rules.match(/test-loader/g)).toHaveLength(3);
+    expect(rules.match(/"comments":false/g)).toHaveLength(3);
+    expect(rules.match(/"comments":true/g)).toHaveLength(1);
   });
 });
