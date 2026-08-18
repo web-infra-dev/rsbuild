@@ -134,9 +134,11 @@ async function loadUserPostcssrc(
 }
 
 const isPostcssPluginCreator = (
-  plugin: AcceptedPlugin,
+  plugin: unknown,
 ): plugin is PluginCreator<unknown> =>
-  typeof plugin === 'function' && (plugin as PluginCreator<unknown>).postcss;
+  typeof plugin === 'function' &&
+  'postcss' in plugin &&
+  Boolean(plugin.postcss);
 
 const getPostcssLoaderOptions = async ({
   config,
@@ -189,7 +191,7 @@ const getPostcssLoaderOptions = async ({
 
     // initialize the plugin to avoid multiple initialization
     // https://github.com/web-infra-dev/rsbuild/issues/3618
-    options.plugins = options.plugins.map((plugin) =>
+    options.plugins = options.plugins.map((plugin: unknown) =>
       isPostcssPluginCreator(plugin) ? plugin() : plugin,
     );
 

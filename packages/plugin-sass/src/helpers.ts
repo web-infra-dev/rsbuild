@@ -55,7 +55,7 @@ type ResolveUrlJoinItem = {
  *
  * reference: https://github.com/bholloway/resolve-url-loader/blob/e2695cde68f325f617825e168173df92236efb93/packages/resolve-url-loader/docs/advanced-features.md
  */
-export const getResolveUrlJoinFn = (): ((...args: unknown[]) => void) => {
+export const getResolveUrlJoinFn = () => {
   const {
     createJoinFunction,
     asGenerator,
@@ -69,11 +69,11 @@ export const getResolveUrlJoinFn = (): ((...args: unknown[]) => void) => {
       if (!item.uri.startsWith('.')) {
         return [null];
       }
-      return defaultJoinGenerator(item, ...rest);
+      return defaultJoinGenerator(item, ...rest) as unknown;
     },
   );
   return createJoinFunction(
     'rsbuild-resolve-join-fn',
     createJoinImplementation(rsbuildGenerator),
-  );
+  ) as (...args: unknown[]) => void;
 };
