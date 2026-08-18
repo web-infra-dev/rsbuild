@@ -51,6 +51,12 @@ Babel compilation will introduce extra overhead, in the example above, we use `i
 
 :::
 
+## Solid v2
+
+Solid v2 support is currently in beta. To use Solid v2, install the beta version of `@rsbuild/plugin-solid`:
+
+<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid@beta -D" />
+
 ## Resolution behavior
 
 The Solid plugin adds `solid` to Rsbuild's [resolve.conditionNames](/config/resolve/condition-names). This allows package exports to resolve Solid-specific entries when they are available.
