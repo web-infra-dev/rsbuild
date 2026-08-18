@@ -428,7 +428,7 @@ Then open the generated `rspack.config.web.mjs` file and search for the `babel-l
 
 ## Helper functions
 
-This helper is intended for Rsbuild plugins and framework integrations.
+`@rsbuild/plugin-babel` provides helper functions for plugin developers and framework authors.
 
 ### modifyBabelLoaders
 
@@ -452,7 +452,7 @@ type ModifyBabelLoadersOptions = {
 
 `modifyBabelLoaders` allows you to modify Babel loader options and their containing rules.
 
-- `modifyOptions` updates the current `babel-loader` options and must return the final options.
+- `modifyOptions` updates the current `babel-loader` options and needs to return the final options.
 - `modifyRule` updates the matched rule. If both callbacks are provided, it runs after `modifyOptions`. Use `babelUseId` to access the Babel loader in that rule.
 
 Call it from the [`modifyBundlerChain`](/plugins/dev/hooks#modifybundlerchain) hook of a custom Rsbuild plugin:
