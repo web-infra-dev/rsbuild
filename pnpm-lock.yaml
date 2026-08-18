@@ -58,6 +58,9 @@ catalogs:
     '@rsbuild/plugin-type-check':
       specifier: ^1.6.0
       version: 1.6.0
+    '@rspack/core':
+      specifier: ~2.2.0-beta.1
+      version: 2.2.0-beta.1
     '@rspack/plugin-preact-refresh':
       specifier: ^2.0.1
       version: 2.0.1
@@ -882,7 +885,7 @@ importers:
   packages/core:
     dependencies:
       '@rspack/core':
-        specifier: 2.2.0-beta.1
+        specifier: 'catalog:'
         version: 2.2.0-beta.1(@module-federation/runtime-tools@2.8.2)(@swc/helpers@0.5.23)
       '@swc/helpers':
         specifier: 'catalog:'
