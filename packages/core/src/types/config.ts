@@ -62,7 +62,7 @@ export type ToolsBundlerChainConfig = OneOrMany<
 
 export type ToolsPostCSSContext = {
   addPlugins: (
-    plugins: LoosePostCSSPlugin | LoosePostCSSPlugin[],
+    plugins: OneOrMany<LoosePostCSSPlugin>,
     options?: {
       /**
        * Controls where the plugin is placed relative to the existing PostCSS plugins.

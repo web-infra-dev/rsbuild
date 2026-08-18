@@ -1,0 +1,324 @@
+---
+description: '将 TanStack Start 的 React 或 Solid 应用从 Vite 迁移到 Rsbuild，涵盖 Rstest 和 Node.js 部署。'
+---
+
+# TanStack Start
+
+TanStack Start 支持通过 Rsbuild 构建 React 和 Solid 应用。本指南用于替换 Vite 集成，同时保留 TanStack Start 管理的 client 和 server entry。
+
+不要将通用的[构建入口](/guide/migration/vite#build-entry)迁移步骤应用于 TanStack Start 应用。
+
+import { PackageManagerTabs } from '@theme';
+
+## 开始前
+
+保留已有的 `tanstackStart` 配置、路由、server functions 和应用代码。本次迁移只变更构建工具，不会改变 TanStack Start 的应用模型。
+
+在修改依赖前，请检查 Vite 配置和部署集成。Vite 插件不能在 `rsbuild.config.ts` 中运行；请将每个插件迁移到对应的 Rsbuild 或 Rspack 插件，或仅在确认不再需要后移除。
+
+## 替换 Vite 配置
+
+### React
+
+移除 Vite 及其 React 插件，然后安装对应的 Rsbuild 依赖：
+
+<PackageManagerTabs command="remove vite @vitejs/plugin-react" />
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
+
+如果使用 `@vitejs/plugin-react-swc`，请移除该依赖。请保留 `@tanstack/react-start` 和 `@tanstack/react-router`。
+
+将 `vite.config.ts` 替换为 `rsbuild.config.ts`：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { tanstackStart } from '@tanstack/react-start/plugin/rsbuild';
+
+export default defineConfig({
+  plugins: [pluginReact(), tanstackStart()],
+});
+```
+
+该配置对应 [Rsbuild React 示例](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start)使用的最小配置，未包含其中可选的 Tailwind CSS 插件。
+
+### Solid
+
+移除 Vite 及其 Solid 插件，然后安装对应的 Rsbuild 依赖：
+
+<PackageManagerTabs command="remove vite vite-plugin-solid" />
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+
+请保留 `@tanstack/solid-start` 和 `@tanstack/solid-router`。
+
+将 `vite.config.ts` 替换为 `rsbuild.config.ts`：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+import { tanstackStart } from '@tanstack/solid-start/plugin/rsbuild';
+
+export default defineConfig({
+  plugins: [
+    pluginBabel({
+      include: /\.(?:jsx|tsx)$/,
+    }),
+    pluginSolid(),
+    tanstackStart(),
+  ],
+});
+```
+
+该配置对应 [Rsbuild Solid 示例](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start-solid)使用的最小配置，未包含其中可选的 Tailwind CSS 插件。
+
+## 更新 scripts
+
+请保留 `package.json` 中的 `"type": "module"`，然后替换 Vite scripts：
+
+```json title="package.json"
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev", // [!code --]
+    "build": "vite build", // [!code --]
+    "preview": "vite preview", // [!code --]
+    "dev": "rsbuild", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
+  }
+}
+```
+
+未指定子命令的 `rsbuild` 会启动 dev server，`rsbuild dev` 与其等价。
+
+### 路由生成
+
+如果项目的 `generate-routes` script 运行 `tsr generate`，请将其替换为 `rsbuild build`：
+
+```json title="package.json"
+{
+  "scripts": {
+    "generate-routes": "tsr generate", // [!code --]
+    "generate-routes": "rsbuild build" // [!code ++]
+  }
+}
+```
+
+TanStack Start Rsbuild 插件会在构建期间生成 route tree，并向 `routeTree.gen.ts` 添加所需的 registration。直接运行 `tsr generate` 可能会覆盖该 registration。
+
+## 迁移项目特定配置
+
+上述配置只替换 TanStack Start 与 Vite 的集成。请有针对性地迁移其余 Vite 配置：
+
+- 使用 [Vite 配置迁移参考](/guide/migration/vite#config-migration)迁移别名、CSS、dev server 配置、静态资源和其他 Vite 选项。
+- 将每个 Vite 插件替换为对应的 Rsbuild 或 Rspack 插件。仅提供 Vite 插件的集成需要单独寻找支持的替代方案。
+- 在迁移其配置后删除 `vite.config.ts`。
+
+### React Compiler
+
+对于通过 Babel 插件使用 React Compiler 的 React 应用，请改为配置内置的 Rspack 实现：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      reactCompiler: true,
+    }),
+  ],
+});
+```
+
+如果 Babel 或 Rolldown Babel 插件仅用于 React Compiler，请移除该插件以及 `babel-plugin-react-compiler`。对于 React 17 或 18 应用，请安装 `react-compiler-runtime`，并按照 [React 插件文档](/plugins/list/plugin-react#reactcompiler)设置 compiler target。
+
+### TypeScript
+
+请将 `tsconfig.json` 中 Vite 的预设类型替换为 Rsbuild 的预设类型。如果项目已定义 `types` 数组，请只替换 Vite 的条目，并保留其他必需的类型：
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["vite/client", "vite-plugin-svgr/client"], // [!code --]
+    "types": ["@rsbuild/core/types"] // [!code ++]
+  }
+}
+```
+
+`@rsbuild/plugin-svgr` 不为 `*.svg?react` 导入提供 TypeScript 声明。如果应用使用该 query，请添加声明文件，例如 `src/types/svg.d.ts`：
+
+```ts title="src/types/svg.d.ts"
+declare module '*.svg?react' {
+  import type React from 'react';
+
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+```
+
+### 环境变量
+
+Rsbuild 通过 `PUBLIC_` 前缀公开 client 环境变量。请将所有 client 变量从 `VITE_*` 重命名为 `PUBLIC_*`，包括 `.env` 文件、CI 变量、Docker build arguments 和应用代码中的定义：
+
+```diff
+- VITE_API_URL
++ PUBLIC_API_URL
+```
+
+请在应用代码中使用直接属性访问，例如 `import.meta.env.PUBLIC_API_URL`。如果环境变量校验器接收完整的 `import.meta.env` 对象，请改为传入包含所需 `PUBLIC_` 属性的显式对象。
+
+### 静态预渲染和 CDN URL
+
+请保留传给 `tanstackStart` 的选项。例如，静态预渲染仍通过该插件配置：
+
+```ts
+tanstackStart({
+  prerender: {
+    enabled: true,
+    crawlLinks: true,
+  },
+});
+```
+
+完整选项请参考 [React](https://tanstack.com/start/latest/docs/framework/react/guide/static-prerendering) 和 [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/static-prerendering) 的静态预渲染文档。
+
+对于使用 CDN 资源 URL 的 React 应用，请在 TanStack Start server entry 中配置 `transformAssets`。这与设置 Rsbuild 的 `assetPrefix` 不同：
+
+```ts
+const handler = createStartHandler({
+  handler: defaultStreamHandler,
+  transformAssets: process.env.CDN_ORIGIN || '',
+});
+```
+
+创建 handler 时请使用 React server API。完整示例请参考 [CDN asset URLs](https://tanstack.com/start/latest/docs/framework/react/guide/cdn-asset-urls) 文档。
+
+### Paraglide
+
+如果使用 Paraglide，请将 `paraglideVitePlugin` 替换为 `paraglideRspackPlugin`，并在 `tools.rspack.plugins` 中注册。保留现有插件选项和生成目录。
+
+### Sentry
+
+请使用 [`@sentry/webpack-plugin`](https://www.npmjs.com/package/@sentry/webpack-plugin) 替换 Vite adapter 的构建期集成。在 `tools.rspack.plugins` 中注册该插件，上传 source maps 时启用 `hidden-source-map`，并在 CI 中设置 `SENTRY_AUTH_TOKEN` 和 `SENTRY_RELEASE`。
+
+如果使用 Sentry tunnel，请定义 TanStack Start 路由，并限制为你的公开 DSN：
+
+```ts title="src/routes/monitoring.ts"
+import * as Sentry from '@sentry/tanstackstart-react';
+import { createFileRoute } from '@tanstack/react-router';
+
+const sentryDsn = import.meta.env.PUBLIC_SENTRY_DSN;
+
+export const Route = createFileRoute('/monitoring')({
+  server: Sentry.createSentryTunnelRoute({
+    allowedDsns: sentryDsn ? [sentryDsn] : [],
+  }),
+});
+```
+
+在 client SDK 中通过 `tunnel` 选项配置相同的路径。
+
+## 将测试从 Vitest 迁移到 Rstest
+
+Vitest 通过 Vite 运行测试。如果希望从测试工具链中移除 Vite，请先迁移 Vitest 配置和测试导入，再移除 `vitest`、`@vitest/coverage-v8` 和仅用于测试的 Vite 插件。
+
+安装 Rstest 及其 Rsbuild adapter。如果 Vitest 配置使用 V8 coverage，还需要安装 V8 coverage 包：
+
+<PackageManagerTabs command="add @rstest/core @rstest/adapter-rsbuild @rstest/coverage-v8 jsdom -D" />
+
+创建 `rstest.config.ts` 并复用应用配置：
+
+```ts title="rstest.config.ts"
+import { withRsbuildConfig } from '@rstest/adapter-rsbuild';
+import { defineConfig } from '@rstest/core';
+
+export default defineConfig({
+  extends: withRsbuildConfig(),
+  testEnvironment: 'jsdom',
+  setupFiles: ['./src/test/setup.ts'],
+  coverage: {
+    provider: 'v8',
+    reporters: ['text', 'html', 'lcov', 'cobertura'],
+  },
+});
+```
+
+Rstest 将配置项放在顶层：例如，将 `test.environment` 改为 `testEnvironment`，将 `test.setupFiles` 改为 `setupFiles`，将 `test.coverage` 改为 `coverage`。将 Vitest 的 `coverage.reporter` 改为 `coverage.reporters`。
+
+替换测试 API 导入：
+
+```ts
+import { describe, expect, it } from 'vitest'; // [!code --]
+import { describe, expect, it } from '@rstest/core'; // [!code ++]
+```
+
+对于 Testing Library 和 `@testing-library/jest-dom`，请在 setup 文件中通过 Rstest 的 `expect` 注册 matchers，并使用对应框架的 Testing Library 包：
+
+```ts title="src/test/setup.ts (React)"
+import { cleanup } from '@testing-library/react';
+import * as jestDomMatchers from '@testing-library/jest-dom/matchers';
+import { afterEach, expect } from '@rstest/core';
+
+expect.extend(jestDomMatchers);
+afterEach(cleanup);
+```
+
+```ts title="src/test/setup.ts (Solid)"
+import * as jestDomMatchers from '@testing-library/jest-dom/matchers';
+import { cleanup } from '@testing-library/solid';
+import { afterEach, expect } from '@rstest/core';
+
+expect.extend(jestDomMatchers);
+afterEach(cleanup);
+```
+
+将 scripts 更新为 `rstest`、`rstest --watch` 和 `rstest --coverage`。更多配置映射请参考 [Rstest 迁移指南](https://rstest.rs/zh/guide/migration/vitest)和 Rsbuild [测试](/guide/advanced/testing)指南。
+
+## 部署到 Node.js 或 Docker
+
+如果 `nitro/vite` 仅用于 Node.js 或 Docker 部署，请移除 `nitro`。TanStack Start 的 Rsbuild 构建会生成自己的 server entry。请将 [srvx](https://srvx.h3.dev/) 安装为生产依赖：
+
+{/* cspell:ignore srvx */}
+
+<PackageManagerTabs command="remove nitro" />
+
+<PackageManagerTabs command="add srvx" />
+
+```json title="package.json"
+{
+  "scripts": {
+    "start": "srvx --prod -s ../client dist/server/index.js"
+  }
+}
+```
+
+生产构建会将 client 资源输出到 `dist/client`，并将 fetch 风格的 server entry 输出到 `dist/server/index.js`。如果构建输出 `dist/server/server.js`，请改用该路径。
+
+对于 Docker，请在最终 stage 中重新安装生产依赖。`runner` stage 从新的基础镜像开始：builder 的 `node_modules` 包含开发依赖，不应复制到 runtime image。
+
+在 Dockerfile 中使用以下 `runner` stage。它会通过项目的 lockfile 自动识别包管理器，并支持 npm、Yarn 和 pnpm：
+
+```dockerfile title="Dockerfile（runner stage）"
+FROM node:24-alpine AS runner
+WORKDIR /app
+COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* .npmrc* ./
+RUN corepack enable && \
+  if [ -f package-lock.json ]; then \
+    npm ci --omit=dev --ignore-scripts; \
+  elif [ -f yarn.lock ]; then \
+    yarn install --frozen-lockfile --production=true --ignore-scripts; \
+  elif [ -f pnpm-lock.yaml ]; then \
+    pnpm install --prod --frozen-lockfile --ignore-scripts; \
+  else \
+    echo "No lockfile found." && exit 1; \
+  fi
+COPY --from=builder /app/dist ./dist
+CMD ["./node_modules/.bin/srvx", "--prod", "-s", "../client", "dist/server/index.js"]
+```
+
+请按照 TanStack Start 的 [React](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) 或 [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting) 部署指南配置之前的构建 stages。
+
+对于 Node.js 或 Docker 之外的部署目标，不能继续使用 Vite 专用的部署集成。请使用受支持的非 Vite adapter，或保留 Vite 集成。可参考 [React hosting guide](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) 和 [Solid hosting guide](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting)。

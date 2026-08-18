@@ -1,4 +1,5 @@
 import path from 'node:path';
+import type { Module } from 'node:vm';
 import { require } from '../../helpers';
 import { BasicRunner } from './basic';
 import type {
@@ -18,8 +19,12 @@ export class CommonJsRunner extends BasicRunner {
   protected createGlobalContext(): BasicGlobalContext {
     return {
       console: console,
-      setTimeout: ((...args: Parameters<typeof setTimeout>) => {
-        const timeout = setTimeout(...args);
+      setTimeout: ((
+        callback: (...args: unknown[]) => void,
+        delay?: number,
+        ...args: unknown[]
+      ) => {
+        const timeout = setTimeout(callback, delay, ...args);
         timeout.unref();
         return timeout;
       }) as typeof setTimeout,
@@ -75,7 +80,7 @@ export class CommonJsRunner extends BasicRunner {
       // rslint-disable-next-line @typescript-eslint/no-require-imports
       return require(
         resolvedPath.startsWith('node:') ? resolvedPath.slice(5) : resolvedPath,
-      );
+      ) as unknown;
     };
   }
 
@@ -107,10 +112,11 @@ export class CommonJsRunner extends BasicRunner {
       const args = Object.keys(currentModuleScope);
       const argValues = args.map((arg) => currentModuleScope[arg]);
       this.preExecute(file.content, file);
+      // rslint-disable-next-line @typescript-eslint/no-implied-eval -- Evaluate import() in the main context instead of the VM context.
       const dynamicImport = new Function(
         'specifier',
         'return import(specifier)',
-      );
+      ) as (specifier: string) => Promise<Module>;
       const fn = vm.compileFunction(file.content, args, {
         filename: file.path,
         // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.

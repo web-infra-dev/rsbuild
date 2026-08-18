@@ -26,7 +26,7 @@ define.lint(async ({ globalIgnores, js, ts }) => {
       'e2e/cases/wasm/wasm-source-import/src/index.js',
     ]),
     js.configs.recommended,
-    ts.configs.recommended,
+    ts.configs.recommendedTypeChecked,
     {
       files: ['**/*.{js,jsx,cjs,mjs}'],
       languageOptions: {
@@ -56,6 +56,14 @@ define.lint(async ({ globalIgnores, js, ts }) => {
         },
       },
       rules: {
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-argument': 'off',
+        '@typescript-eslint/require-await': 'off',
+        '@typescript-eslint/no-unsafe-call': 'off',
+        '@typescript-eslint/no-floating-promises': 'off',
+        '@typescript-eslint/no-misused-promises': 'off',
+        '@typescript-eslint/restrict-template-expressions': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
       },
     },
