@@ -1,6 +1,7 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { experiments } from '@rspack/core';
 import { color } from '../src/helpers';
 import { run } from '../src/server/runner';
 import { SystemJsRunner } from '../src/server/runner/systemJs';
@@ -74,10 +75,48 @@ fail();`,
   }
 
   expect(runtimeError).toBeInstanceOf(Error);
-  const cause = (runtimeError as Error & { cause?: Error }).cause;
-  expect(cause?.message).toBe('source map failure');
-  expect(cause?.stack).toContain(`at fail (${entryPath}:3:9)`);
-  expect(cause?.stack).toContain(`at Object.execute (${entryPath}:5:1)`);
+  expect((runtimeError as Error).message).toBe('source map failure');
+  expect((runtimeError as Error).stack).toContain(`at fail (${entryPath}:3:9)`);
+  expect((runtimeError as Error).stack).toContain(
+    `at Object.execute (${entryPath}:5:1)`,
+  );
+});
+
+test('decodes an inline source map while transforming a bundle module', async () => {
+  const originalPath = path.resolve('/virtual/src/utils/posts.tsx');
+  const generatedSource = `export function fail() {
+  throw new Error('late source map failure');
+}`;
+  const inputSourceMap = JSON.stringify({
+    mappings: 'AAAA;AACA;AACA',
+    names: [],
+    sources: [originalPath],
+    sourcesContent: [generatedSource],
+    version: 3,
+  });
+  const encodedSourceMap = Buffer.from(inputSourceMap).toString('base64');
+  const transform = rstest.spyOn(experiments.swc, 'transform');
+  const runner = createSystemJsRunner(
+    [
+      [
+        'entry.mjs',
+        `${generatedSource}
+//# sourceURL=${originalPath}?tss-serverfn-split
+//# sourceMappingURL=data:application/json;base64,${encodedSourceMap}`,
+      ],
+    ],
+    path.resolve('/virtual/inline-map-dist'),
+  );
+
+  const namespace = (await runner.run('entry.mjs')) as {
+    fail: () => void;
+  };
+  const transformOptions = transform.mock.calls.map((call) => call[1]);
+  transform.mockRestore();
+  expect(transformOptions).toContainEqual(
+    expect.objectContaining({ inputSourceMap }),
+  );
+  expect(namespace.fail).toBeTypeOf('function');
 });
 
 test('resolves import-only external packages from the bundle importer', async () => {

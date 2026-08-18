@@ -17,17 +17,44 @@ export type SwcTransform = (
 const SOURCE_MAP_COMMENT =
   /(?:\/\/[#@]\s*sourceMappingURL=[^\s]+|\/\*[#@]\s*sourceMappingURL=[^*]+?\s*\*\/)/gm;
 
-const appendInlineSourceMap = (code: string, sourceMap: string | undefined) => {
-  const executable = code.replace(SOURCE_MAP_COMMENT, '').trimEnd();
-  if (!sourceMap) {
-    return executable;
+const SOURCE_URL_COMMENT =
+  /(?:\/\/[#@]\s*sourceURL=[^\r\n]*|\/\*[#@]\s*sourceURL=[^*]+?\s*\*\/)/gm;
+
+const FUNCTION_BODY_LINE_OFFSET = (() => {
+  const marker = '/* systemjs-body */';
+  // rslint-disable-next-line @typescript-eslint/no-implied-eval
+  const source = new Function('System', marker).toString();
+  return source.slice(0, source.indexOf(marker)).split('\n').length - 1;
+})();
+
+const offsetSourceMap = (sourceMap: string): string => {
+  const payload = JSON.parse(sourceMap) as { mappings?: unknown };
+  if (typeof payload.mappings !== 'string') {
+    return sourceMap;
   }
-  const encoded = Buffer.from(sourceMap).toString('base64');
+  payload.mappings = `${';'.repeat(FUNCTION_BODY_LINE_OFFSET)}${payload.mappings}`;
+  return JSON.stringify(payload);
+};
+
+const appendInlineSourceMap = (
+  code: string,
+  sourceMap: string | undefined,
+  moduleId: string,
+) => {
+  const executable = code
+    .replace(SOURCE_MAP_COMMENT, '')
+    .replace(SOURCE_URL_COMMENT, '')
+    .trimEnd();
+  const sourceUrl = `//# sourceURL=${moduleId}`;
+  if (!sourceMap) {
+    return `${executable}\n${sourceUrl}`;
+  }
+  const encoded = Buffer.from(offsetSourceMap(sourceMap)).toString('base64');
   // Construct "URL" at runtime to keep the complete source map directive out
   // of Rsbuild's bundled source. Regex-based source map scanners may otherwise
   // mistake this template literal for the source map of the bundle itself.
   const sourceMappingUrl = `sourceMapping${String.fromCharCode(85, 82, 76)}`;
-  return `${executable}\n//# ${sourceMappingUrl}=data:application/json;base64,${encoded}`;
+  return `${executable}\n${sourceUrl}\n//# ${sourceMappingUrl}=data:application/json;base64,${encoded}`;
 };
 
 export const transformToSystemJs = async (
@@ -44,7 +71,7 @@ export const transformToSystemJs = async (
       isModule: true,
       jsc: {
         parser: { dynamicImport: true, syntax: 'ecmascript' },
-        // Target ES5 so SWC lowers destructuring assignments before its SystemJS
+        // TODO: Target ES5 so SWC lowers destructuring assignments before its SystemJS
         // transform, which can otherwise emit invalid `<invalid> = ...` targets.
         // Remove this workaround once https://github.com/swc-project/swc/pull/12122 lands.
         target: 'es5',
@@ -66,5 +93,5 @@ export const transformToSystemJs = async (
   if (!result || typeof result.code !== 'string') {
     throw new Error(`SWC returned no code for ${file.path}`);
   }
-  return appendInlineSourceMap(result.code, result.map);
+  return appendInlineSourceMap(result.code, result.map, file.path);
 };

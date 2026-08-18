@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { isBuiltin, SourceMap, type SourceMapPayload } from 'node:module';
-import { pathToFileURL } from 'node:url';
-import { compileFunction } from 'node:vm';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { experiments } from '@rspack/core';
 import type { IBasicRunnerOptions } from './basic';
 import { color } from '../../helpers';
@@ -46,18 +45,14 @@ type SystemJsRegistration = SystemJsRegistrationSource & {
 
 class SystemJsMissingExportError extends SyntaxError {}
 
-const formatErrorReason = (error: unknown): string => {
-  if (!(error instanceof Error)) {
-    return '';
-  }
-  const message = error.message.startsWith(`${color.dim('[rsbuild:runner]')} `)
-    ? error.message.slice(color.dim('[rsbuild:runner]').length + 1)
-    : error.message;
-  return `: ${message}`;
-};
-
 const INLINE_SOURCE_MAP =
   /\/\/[#@]\s*sourceMappingURL=data:application\/json;base64,([^\s]+)/;
+
+const SOURCE_MAP_COMMENT =
+  /(?:\/\/[#@]\s*sourceMappingURL=([^\s]+)|\/\*[#@]\s*sourceMappingURL=([^*]+?)\s*\*\/)/gm;
+
+const SOURCE_MAP_DATA_URL =
+  /^data:application\/json(?:;charset=[^;,]+)?(?:(;base64))?,(.*)$/i;
 
 const escapeRegExp = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -83,7 +78,13 @@ const createStackTraceMapper = (code: string, moduleId: string) => {
     'g',
   );
   return (error: unknown): void => {
-    if (!(error instanceof Error) || !error.stack) {
+    // Node handles Function source maps natively. Only fall back to rewriting
+    // the stack when another tool has installed its own stack formatter.
+    if (
+      Error.prepareStackTrace === undefined ||
+      !(error instanceof Error) ||
+      !error.stack
+    ) {
       return;
     }
     error.stack = error.stack.replace(moduleFrame, (frame, line, column) => {
@@ -224,7 +225,8 @@ const captureRegistration = (
   moduleId: string,
 ): SystemJsRegistration => {
   const registrations: unknown[][] = [];
-  compileFunction(code, ['System'], { filename: moduleId })({
+  // rslint-disable-next-line @typescript-eslint/no-implied-eval
+  new Function('System', code)({
     register: (...args: unknown[]) => {
       registrations.push(args);
     },
@@ -470,10 +472,32 @@ class SystemJsEvaluator {
   }
 
   #transformBundleModule(moduleId: string): Promise<string> {
+    const source = this.#readFileSync(moduleId);
+    let sourceMapUrl: string | undefined;
+    for (const match of source.matchAll(SOURCE_MAP_COMMENT)) {
+      sourceMapUrl = (match[1] ?? match[2])?.trim();
+    }
+
+    let sourceMap: string | undefined;
+    if (sourceMapUrl) {
+      const dataUrlMatch = SOURCE_MAP_DATA_URL.exec(sourceMapUrl);
+      if (dataUrlMatch) {
+        sourceMap = dataUrlMatch[1]
+          ? Buffer.from(dataUrlMatch[2], 'base64').toString()
+          : decodeURIComponent(dataUrlMatch[2]);
+      } else {
+        const resolvedUrl = new URL(sourceMapUrl, pathToFileURL(moduleId));
+        if (resolvedUrl.protocol === 'file:') {
+          sourceMap = this.#readFileSync(fileURLToPath(resolvedUrl));
+        }
+      }
+    }
+
     return transformToSystemJs(
       {
         path: moduleId,
-        source: this.#readFileSync(moduleId),
+        source,
+        sourceMap,
       },
       experiments.swc.transform as SwcTransform,
     );
