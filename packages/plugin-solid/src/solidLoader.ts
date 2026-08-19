@@ -13,13 +13,11 @@ import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 const require = createRequire(import.meta.url);
 const BABEL_PRESET_SOLID_PATH = require.resolve('babel-preset-solid');
-const JSX_REGEX = /\.(?:jsx|tsx)$/;
+const JS_REGEX = /\.[cm]?js$/;
 const TS_REGEX = /\.(?:ts|tsx|mts|cts)$/;
 
 const getTransformFilename = (filename: string): string =>
-  JSX_REGEX.test(filename)
-    ? filename
-    : `${filename}${TS_REGEX.test(filename) ? '.tsx' : '.jsx'}`;
+  JS_REGEX.test(filename) ? `${filename}.jsx` : filename;
 
 export type SolidLoaderOptions = {
   compiler: SolidCompiler;
