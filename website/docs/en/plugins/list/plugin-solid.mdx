@@ -61,7 +61,7 @@ Solid v2 support is currently in beta. To use Solid v2, install the beta version
 
 The Solid plugin adds `solid` to Rsbuild's [resolve.conditionNames](/config/resolve/condition-names). This allows package exports to resolve Solid-specific entries when they are available.
 
-In development mode, the plugin also adds `development` to resolve Solid's development runtime. You can disable this behavior with [`dev: false`](#dev).
+In development mode, the plugin also adds `development` to resolve Solid's development runtime and enables development-only compiler transforms. You can disable both behaviors with [`dev: false`](#dev).
 
 If you configure `resolve.conditionNames`, the plugin preserves your configured values and prepends these Solid conditions.
 
@@ -71,7 +71,9 @@ To customize the compilation behavior of Solid, use the following options.
 
 ### dev
 
-Whether to resolve Solid's development runtime in development mode. Set it to `false` to disable the `development` condition, or set it to `true` to force the `development` condition in production mode.
+Whether to enable Solid's development runtime and development-only compiler transforms. Set it to `false` to disable both behaviors in development mode, or set it to `true` to enable them in production mode.
+
+If `solid.dev` is explicitly configured, it overrides the `dev` setting for compiler transforms without affecting runtime resolution.
 
 - **Type:** `boolean`
 - **Default:** `true` in development mode, `false` in production mode
