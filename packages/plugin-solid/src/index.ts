@@ -124,6 +124,10 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             .dependency({ not: 'url' })
             .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
             .with({ type: { not: 'text' } });
+          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+
+          solidRule.include.merge(jsRule.include.values());
+          solidRule.exclude.merge(jsRule.exclude.values());
 
           solidRule
             .use('solid')
