@@ -2,6 +2,13 @@ import { transformRefreshAsync } from '@dom-expressions/compiler';
 import type { Rspack } from '@rsbuild/core';
 
 const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
+const JSX_REGEX = /\.(?:jsx|tsx)$/;
+const TS_REGEX = /\.(?:ts|tsx|mts|cts)$/;
+
+const getTransformFilename = (filename: string): string =>
+  JSX_REGEX.test(filename)
+    ? filename
+    : `${filename}${TS_REGEX.test(filename) ? '.tsx' : '.jsx'}`;
 
 export type SolidRefreshLoaderOptions = {
   granular?: boolean;
@@ -19,7 +26,7 @@ const solidRefreshLoader: Rspack.LoaderDefinition<SolidRefreshLoaderOptions> =
 
     try {
       const result = await transformRefreshAsync(String(source), {
-        filename: this.resourcePath,
+        filename: getTransformFilename(this.resourcePath),
         bundler: 'rspack-esm',
         fixRender: true,
         ...(typeof granular === 'boolean' ? { granular } : {}),
@@ -28,11 +35,13 @@ const solidRefreshLoader: Rspack.LoaderDefinition<SolidRefreshLoaderOptions> =
         sourceMap: true,
       });
 
-      callback(
-        null,
-        result.code,
-        result.map ? JSON.parse(result.map) : sourceMap,
-      );
+      let resultMap = sourceMap;
+      if (result.map) {
+        resultMap = JSON.parse(result.map) as Rspack.RawSourceMap;
+        resultMap.sources = [this.resourcePath];
+      }
+
+      callback(null, result.code, resultMap);
     } catch (error) {
       callback(error instanceof Error ? error : new Error(String(error)));
     }
