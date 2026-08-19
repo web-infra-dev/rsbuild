@@ -26,19 +26,15 @@
       "url": "./website/node_modules/@rspress/core/nav-json-schema.json"
     }
   ],
-  "[typescript]": {
-    "editor.defaultFormatter": "rstack.rstack"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "rstack.rstack"
-  },
-  "[mdx]": {
-    "editor.defaultFormatter": "rstack.rstack"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "rstack.rstack"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "rstack.rstack"
-  }
+  "[javascript]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[javascriptreact]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[json]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[json5]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[jsonc]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[markdown]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[mdx]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[toml]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[typescript]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[typescriptreact]": { "editor.defaultFormatter": "rstack.rstack" },
+  "[yaml]": { "editor.defaultFormatter": "rstack.rstack" }
 }

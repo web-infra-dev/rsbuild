@@ -25,7 +25,6 @@
     "@types/node": "catalog:",
     "cross-env": "catalog:",
     "cspell-ban-words": "catalog:",
-    "globals": "catalog:",
     "heading-case": "catalog:",
     "rstack": "catalog:",
     "typescript": "catalog:"
