@@ -10,6 +10,11 @@ const solidRefreshLoader: Rspack.LoaderDefinition<SolidRefreshLoaderOptions> =
     const callback = this.async();
     const { granular } = this.getOptions();
 
+    if (/[\\/]node_modules[\\/]/.test(this.resourcePath)) {
+      callback(null, source, sourceMap);
+      return;
+    }
+
     try {
       const result = await transformRefreshAsync(String(source), {
         filename: this.resourcePath,
