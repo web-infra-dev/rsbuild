@@ -1,94 +1,136 @@
 /**
- * babel-preset-solid options
+ * Options passed to `babel-preset-solid`.
  *
- * https://github.com/solidjs/solid/blob/main/packages/babel-preset-solid/index.js
+ * The option types are aligned with `@dom-expressions/compiler` and adjusted
+ * for `babel-preset-solid`.
  *
- * https://github.com/ryansolid/dom-expressions/blob/main/packages/babel-plugin-jsx-dom-expressions/README.md
+ * https://github.com/solidjs/solid/blob/next/packages/babel-preset-solid/index.js
+ * https://github.com/ryansolid/dom-expressions/blob/main/packages/babel-plugin-jsx/README.md
  */
 export type SolidPresetOptions = {
   /**
-   * The name of the runtime module to import the methods from.
+   * The runtime module from which compiler helpers are imported.
+   * @default '@solidjs/web'
    */
   moduleName?: string;
   /**
    * Whether to generate development-only runtime checks and metadata.
-   * @default false
+   * Defaults to the resolved value of the top-level `dev` option.
    */
   dev?: boolean;
   /**
    * The output mode of the compiler.
-   * Can be:
-   * - "dom" is standard output
-   * - "ssr" is for server side rendering of strings.
-   * - "universal" is for using custom renderers from solid-js/universal
+   * - `dom` generates DOM operations.
+   * - `ssr` generates HTML strings for server-side rendering.
+   * - `universal` generates output for a custom renderer.
+   * - `dynamic` routes configured native elements to the DOM renderer and
+   *   uses the universal renderer as a fallback.
    *
-   * @default "dom"
+   * @default `'ssr'` for Node.js targets when the top-level `ssr` option is enabled, otherwise `'dom'`.
    */
-  generate?: 'ssr' | 'dom' | 'universal';
+  generate?: 'dom' | 'ssr' | 'universal' | 'dynamic';
   /**
-   * Indicate whether the output should contain hydratable markers.
-   * @default false
+   * Whether to include hydration markers in the generated output.
+   * @default `true` when the top-level `ssr` option is enabled, otherwise `false`.
    */
   hydratable?: boolean;
   /**
-   * Boolean to indicate whether to enable automatic event delegation on camelCase.
+   * Whether to automatically delegate supported events.
    * @default true
    */
   delegateEvents?: boolean;
   /**
-   * Boolean indicates whether smart conditional detection should be used. This optimizes simple boolean expressions and ternaries in JSX.
+   * Additional event names that should always use delegation.
+   * @default []
+   */
+  delegatedEvents?: string[];
+  /**
+   * Whether to optimize simple boolean expressions and ternaries in JSX.
    * @default true
    */
   wrapConditionals?: boolean;
   /**
-   * Boolean indicates whether to set current render context on Custom Elements and slots. Useful for seamless Context API with Web Components.
-   * @default false
+   * Whether to set the current render context on custom elements and slots.
+   * @default true
    */
   contextToCustomElements?: boolean;
   /**
-   * Array of Component exports from module, that aren't included by default with the library. This plugin will automatically import them if it comes across them in the JSX.
-   * @default string[]
+   * Component export names that should be recognized and automatically
+   * imported from the runtime module.
+   * @default `['For', 'Show', 'Switch', 'Match', 'Loading', 'Reveal', 'Portal', 'Repeat', 'Dynamic', 'Errored']`
    */
   builtIns?: string[];
   /**
-   * This plugin leverages a heuristic for reactive wrapping and lazy evaluation of JSX expressions.
+   * The runtime helper used for reactive effect wrapping.
+   * Set to `false` to disable effect wrapping.
    * @default 'effect'
    */
-  effectWrapper?: string;
+  effectWrapper?: string | false;
   /**
-   * Comment decorator string indicates the static expression, used to tell the compiler not to wrap them by effect function
-   * @default '@once'
+   * The comment marker used to assert that an expression is static and does
+   * not need reactive wrapping.
+   * @default '@static'
    */
   staticMarker?: string;
   /**
-   * Memos let you efficiently use a derived value in many reactive computations. This option indicates the memo function name
+   * The runtime helper used to memoize derived expressions.
+   * Set to `false` to disable memo wrapping.
    * @default 'memo'
    */
-  memoWrapper?: string;
+  memoWrapper?: string | false;
   /**
-   * Checks for properly formed HTML by checking for elements that would not be allowed in certain parent elements.
+   * Whether to validate HTML nesting in generated templates.
    * @default true
    */
   validate?: boolean;
   /**
-   * Remove unnecessary closing tags from template strings. More info here:
+   * Whether to omit unnecessary nested closing tags from template strings.
+   * More information:
    * https://github.com/solidjs/solid/blob/main/CHANGELOG.md#smaller-templates
    *
    * @default false
    */
   omitNestedClosingTags?: boolean;
   /**
-   * Remove the last closing tag from template strings. Enabled by default even when `omitNestedClosingTags` is disabled.
-   * Can be disabled for compatibility for some browser-like environments.
+   * Whether to omit the final closing tag from template strings when safe.
+   * Disable this for compatibility with parsers that require explicit closing
+   * tags.
    *
    * @default true
    */
   omitLastClosingTag?: boolean;
   /**
-   * Remove unnecessary quotes from template strings.
-   * Can be disabled for compatibility for some browser-like environments.
+   * Whether to omit quotes around attribute values when safe.
+   * Disable this for compatibility with parsers that require quoted values.
    *
    * @default true
    */
   omitQuotes?: boolean;
+  /**
+   * Whether quoted attributes may omit the following separator space.
+   * Set to `false` for strict HTML or SVG parsers.
+   * @default true
+   */
+  omitAttributeSpacing?: boolean;
+  /**
+   * Whether to inline static style values into generated template strings.
+   * When disabled, style values are applied at runtime.
+   * @default true
+   */
+  inlineStyles?: boolean;
+  /**
+   * Restrict JSX transformation to files whose `@jsxImportSource` pragma
+   * matches this value. Set to `false` to disable this check.
+   * @default false
+   */
+  requireImportSource?: false | string;
+  /**
+   * Renderer configurations used by the `dynamic` output mode.
+   * @default []
+   */
+  renderers?: Array<{
+    name: string;
+    moduleName?: string;
+    elements: string[];
+  }>;
 };
