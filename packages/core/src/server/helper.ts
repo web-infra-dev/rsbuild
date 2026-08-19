@@ -455,6 +455,10 @@ export const getPort = async ({
         server.unref();
         server.on('error', reject);
         server.listen({ port, host }, () => {
+          const address = server.address();
+          if (address && typeof address !== 'string') {
+            port = address.port;
+          }
           found = true;
           server.close(resolve);
         });
@@ -476,7 +480,7 @@ export const getPort = async ({
     );
   }
 
-  if (port !== original) {
+  if (original !== 0 && port !== original) {
     if (strictPort) {
       throw new Error(
         `${color.dim('[rsbuild:server]')} Port ${color.yellow(
@@ -502,7 +506,7 @@ export const resolvePort = async (
     strictPort,
   });
   const portTip =
-    port !== originalPort
+    originalPort !== 0 && port !== originalPort
       ? `port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
       : undefined;
   return {

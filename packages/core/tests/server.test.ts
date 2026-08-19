@@ -9,9 +9,10 @@ import {
   joinUrlPath,
   printServerURLs,
   removeBasePath,
+  resolvePort,
 } from '../src/server/helper';
 import { createHttpServer } from '../src/server/httpServer';
-import type { Connect } from '../src/types';
+import type { Connect, NormalizedConfig } from '../src/types';
 import { logger } from '../src';
 
 beforeEach(() => {
@@ -48,6 +49,19 @@ const networkUrls = [
     url: 'http://198.51.100.20:3000',
   },
 ];
+
+test('should resolve port 0 to an available port', async () => {
+  const result = await resolvePort({
+    server: {
+      host: '127.0.0.1',
+      port: 0,
+      strictPort: true,
+    },
+  } as NormalizedConfig);
+
+  expect(result.port).toBeGreaterThan(0);
+  expect(result.portTip).toBeUndefined();
+});
 
 test('should format routes correctly', () => {
   expect(
