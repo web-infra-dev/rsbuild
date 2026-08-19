@@ -13,6 +13,13 @@ import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 const require = createRequire(import.meta.url);
 const BABEL_PRESET_SOLID_PATH = require.resolve('babel-preset-solid');
+const JSX_REGEX = /\.(?:jsx|tsx)$/;
+const TS_REGEX = /\.(?:ts|tsx|mts|cts)$/;
+
+const getTransformFilename = (filename: string): string =>
+  JSX_REGEX.test(filename)
+    ? filename
+    : `${filename}${TS_REGEX.test(filename) ? '.tsx' : '.jsx'}`;
 
 export type SolidLoaderOptions = {
   compiler: SolidCompiler;
@@ -29,12 +36,14 @@ const normalizeSourceMap = (
 const mergeSourceMaps = (
   sourceMap: Rspack.RawSourceMap | undefined,
   generatedMap: string | null | undefined,
+  filename: string,
 ): Rspack.RawSourceMap | undefined => {
   if (!generatedMap) {
     return sourceMap;
   }
 
   const parsedMap = JSON.parse(generatedMap) as Rspack.RawSourceMap;
+  parsedMap.sources = [filename];
   if (!sourceMap) {
     return parsedMap;
   }
@@ -58,7 +67,7 @@ const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
           NonNullable<TransformOptions['parserOpts']>['plugins']
         > = ['jsx', 'decorators'];
 
-        if (/\.tsx$/i.test(filename)) {
+        if (TS_REGEX.test(filename)) {
           parserPlugins.push('typescript');
         }
 
@@ -82,11 +91,15 @@ const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
 
       const result = await nativeTransformAsync(String(source), {
         ...solid,
-        filename,
+        filename: getTransformFilename(filename),
         sourceMap: true,
       } as NativeTransformOptions);
 
-      callback(null, result.code, mergeSourceMaps(inputSourceMap, result.map));
+      callback(
+        null,
+        result.code,
+        mergeSourceMaps(inputSourceMap, result.map, filename),
+      );
     } catch (error) {
       callback(error instanceof Error ? error : new Error(String(error)));
     }

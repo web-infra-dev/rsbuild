@@ -16,6 +16,7 @@ const SOLID_BUILT_INS = [
   'Dynamic',
   'Errored',
 ];
+const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 
 export type PluginSolidOptions = {
   /**
@@ -119,7 +120,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
           const solidRule = chain.module
             .rule('solid')
             .after(CHAIN_ID.RULE.JS)
-            .test(/\.(?:jsx|tsx)$/i)
+            .test(SCRIPT_REGEX)
             .dependency({ not: 'url' })
             .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
             .with({ type: { not: 'text' } });
