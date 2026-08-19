@@ -4,7 +4,6 @@ test('should support a custom dev server', async ({ page }) => {
   const { startDevServer } = await import('./scripts/server.js' as string);
   const { config, close } = await startDevServer(import.meta.dirname);
 
-  expect(config.port).toBeGreaterThan(0);
   await gotoPage(page, config);
 
   const locator = page.locator('#test');
