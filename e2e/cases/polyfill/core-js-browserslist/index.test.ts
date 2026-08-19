@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/helper';
 import { getPolyfillContent } from '../helper';
 
 test('should read browserslist correctly', async ({ runBoth }) => {
-  await runBoth(async ({ mode, result }) => {
+  await runBoth(({ mode, result }) => {
     const files = result.getDistFiles({ sourceMaps: true });
     const content = getPolyfillContent(files);
 

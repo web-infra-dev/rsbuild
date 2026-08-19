@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
 test('should bundle CSS layers as expected', async ({ runBoth }) => {
-  await runBoth(async ({ mode, result }) => {
+  await runBoth(({ mode, result }) => {
     const files = result.getDistFiles();
     const content = getFileContent(files, 'index.css');
 

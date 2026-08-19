@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 import { defaultAllowedOrigins } from '@rsbuild/core';
 
-test('should expose `defaultAllowedOrigins`', async () => {
+test('should expose `defaultAllowedOrigins`', () => {
   expect(defaultAllowedOrigins).toBeInstanceOf(RegExp);
 });
 

@@ -151,7 +151,7 @@ test('should allow to access manifest data in environment API', async ({
           if (action !== 'dev') {
             return;
           }
-          server.middlewares.use(async (_req, _res, next) => {
+          server.middlewares.use((_req, _res, next) => {
             webManifest = server.environments.web.context.manifest;
             nodeManifest = server.environments.node.context.manifest;
             next();
