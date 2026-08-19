@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { expect, MODULE_BUILD_FAILED_LOG, test } from '@e2e/helper';
 
 test('HMR should work properly', async ({ page, dev, editFile }) => {
   const root = import.meta.dirname;
@@ -40,4 +40,31 @@ export default B;
       bText === 'Beep: 5'
     );
   });
+});
+
+test('HMR should recover after fixing a syntax error', async ({
+  page,
+  dev,
+  editFile,
+}) => {
+  const compFilePath = path.join(import.meta.dirname, 'src/test-temp-B.jsx');
+  const compSourceCode = `const B = () => <div id="B">Before</div>;
+
+export default B;
+`;
+
+  fs.writeFileSync(compFilePath, compSourceCode, 'utf-8');
+
+  const rsbuild = await dev();
+  const b = page.locator('#B');
+
+  await expect(b).toHaveText('Before');
+
+  await editFile(compFilePath, (code) => code.replace('</div>', '</div'));
+  await rsbuild.expectLog(MODULE_BUILD_FAILED_LOG);
+
+  await editFile(compFilePath, (code) =>
+    code.replace('Before</div', 'Recovered</div>'),
+  );
+  await expect(b).toHaveText('Recovered');
 });
