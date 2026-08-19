@@ -83,7 +83,7 @@ pluginSolid({
 
 ### refresh.disabled
 
-是否在开发模式下禁用 [Solid Refresh](https://github.com/solidjs/solid-refresh) HMR。该选项只控制 Solid Refresh 注入，不会禁用 Rsbuild HMR。
+是否在开发模式下禁用 Solid Refresh HMR。该选项只控制 refresh 转换，不会禁用 Rsbuild HMR。
 
 - **类型：** `boolean`
 - **默认值：** `false`
@@ -93,6 +93,23 @@ pluginSolid({
 pluginSolid({
   refresh: {
     disabled: true,
+  },
+});
+```
+
+### refresh.granular
+
+是否生成组件级元数据，使代码变更时仅重新挂载实际发生变化的组件。
+
+- **类型：** `boolean`
+- **默认值：** `true`
+- **版本：** `>= 2.0.0`
+- **示例：**
+
+```ts
+pluginSolid({
+  refresh: {
+    granular: false,
   },
 });
 ```

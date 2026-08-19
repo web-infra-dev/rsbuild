@@ -159,6 +159,19 @@ describe('plugin-solid', () => {
     ).toEqual(false);
   });
 
+  it('should configure granular solid refresh', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid({ refresh: { granular: false } }), pluginBabel()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    const rule = matchRules(config[0], 'a.tsx')[0];
+
+    expect(JSON.stringify(rule)).toContain('"granular":false');
+  });
+
   it('should use hydratable dom output for ssr option on web target', async () => {
     const rsbuild = await createRsbuild({
       config: {

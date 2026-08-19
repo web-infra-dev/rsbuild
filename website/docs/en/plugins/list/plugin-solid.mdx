@@ -87,7 +87,7 @@ pluginSolid({
 
 ### refresh.disabled
 
-Whether to disable [Solid Refresh](https://github.com/solidjs/solid-refresh) for HMR in development mode. This only controls Solid Refresh injection and does not disable Rsbuild HMR.
+Whether to disable Solid Refresh for HMR in development mode. This only controls the refresh transform and does not disable Rsbuild HMR.
 
 - **Type:** `boolean`
 - **Default:** `false`
@@ -97,6 +97,23 @@ Whether to disable [Solid Refresh](https://github.com/solidjs/solid-refresh) for
 pluginSolid({
   refresh: {
     disabled: true,
+  },
+});
+```
+
+### refresh.granular
+
+Whether to emit per-component metadata so edits only remount components whose code changed.
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Version:** `>= 2.0.0`
+- **Example:**
+
+```ts
+pluginSolid({
+  refresh: {
+    granular: false,
   },
 });
 ```

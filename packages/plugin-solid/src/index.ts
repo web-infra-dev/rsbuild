@@ -26,6 +26,12 @@ export type PluginSolidOptions = {
      * @default false
      */
     disabled?: boolean;
+    /**
+     * Whether to emit per-component metadata so edits only remount components
+     * whose code changed.
+     * @default true
+     */
+    granular?: boolean;
   };
   /**
    * Options passed to `babel-preset-solid`.
@@ -105,12 +111,18 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             },
             modifyRule: usingHMR
               ? (rule, { babelUseId }) => {
-                  rule
+                  const refreshUse = rule
                     .use('solid-refresh')
                     .after(babelUseId)
                     .loader(
                       path.join(import.meta.dirname, 'refreshLoader.mjs'),
                     );
+
+                  if (typeof options.refresh?.granular === 'boolean') {
+                    refreshUse.options({
+                      granular: options.refresh.granular,
+                    });
+                  }
                 }
               : undefined,
           });
