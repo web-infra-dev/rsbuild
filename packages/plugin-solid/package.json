@@ -30,8 +30,9 @@
     "test": "rs test"
   },
   "dependencies": {
+    "@babel/core": "catalog:",
     "@dom-expressions/compiler": "catalog:",
-    "@rsbuild/plugin-babel": "workspace:*",
+    "@jridgewell/remapping": "catalog:",
     "babel-preset-solid": "catalog:"
   },
   "devDependencies": {

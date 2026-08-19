@@ -1,12 +1,14 @@
 /**
- * Options passed to `babel-preset-solid`.
+ * Options passed to the Solid JSX compiler.
  *
  * The option types are aligned with `@dom-expressions/compiler` and adjusted
- * for `babel-preset-solid`.
+ * for the Babel backend.
  *
  * https://github.com/solidjs/solid/blob/next/packages/babel-preset-solid/index.js
  * https://github.com/ryansolid/dom-expressions/blob/main/packages/babel-plugin-jsx/README.md
  */
+export type SolidCompiler = 'babel' | 'native';
+
 export type SolidPresetOptions = {
   /**
    * The runtime module from which compiler helpers are imported.

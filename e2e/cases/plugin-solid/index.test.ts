@@ -1,32 +1,40 @@
 import path from 'node:path';
 import type { BuildOptions, BuildResult } from '@e2e/helper';
 import { expect, gotoPage, test } from '@e2e/helper';
-import { pluginBabel } from '@rsbuild/plugin-babel';
-import { pluginSolid } from '@rsbuild/plugin-solid';
+import { pluginSolid, type PluginSolidOptions } from '@rsbuild/plugin-solid';
 
 const buildFixture = (
   build: (options?: BuildOptions) => Promise<BuildResult>,
   rootDir: string,
+  options: PluginSolidOptions = {},
 ): Promise<BuildResult> => {
   const root = path.join(import.meta.dirname, rootDir);
-  const plugins = [
-    pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
-    }),
-    pluginSolid(),
-  ];
 
   return build({
     cwd: root,
     runServer: true,
     config: {
-      plugins,
+      plugins: [pluginSolid(options)],
     },
   });
 };
 
 test('should build basic solid component properly', async ({ page, build }) => {
   const rsbuild = await buildFixture(build, 'basic');
+
+  await gotoPage(page, rsbuild);
+
+  const button = page.locator('#button');
+  await expect(button).toHaveText('count: 0');
+
+  await button.click();
+  await expect(button).toHaveText('count: 1');
+});
+
+test('should support Babel compiler', async ({ page, build }) => {
+  const rsbuild = await buildFixture(build, 'ts', {
+    compiler: 'babel',
+  });
 
   await gotoPage(page, rsbuild);
 

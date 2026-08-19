@@ -49,9 +49,19 @@ Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `
 
 ## Solid v2
 
-Solid v2 支持目前处于 beta 阶段。要使用 Solid v2，请安装 `@rsbuild/plugin-solid` 的 beta 版本：
+Solid v2 支持目前处于 beta 阶段。插件默认使用 Solid native compiler，无需安装 `@rsbuild/plugin-babel`。
 
-<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid@beta -D" />
+安装并注册 `@rsbuild/plugin-solid` 的 beta 版本：
+
+<PackageManagerTabs command="add @rsbuild/plugin-solid@beta -D" />
+
+```ts title="rsbuild.config.ts"
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default {
+  plugins: [pluginSolid()],
+};
+```
 
 ## 解析行为
 
@@ -64,6 +74,21 @@ Solid 插件会将 `solid` 添加到 Rsbuild 的 [resolve.conditionNames](/confi
 ## 选项
 
 如果你需要自定义 Solid 的编译行为，可以使用以下配置项。
+
+### compiler
+
+JSX 编译器后端。默认使用 native compiler，你可以将此选项设置为 `'babel'`，改用 `babel-preset-solid` 编译 JSX。
+
+- **类型：** `'native' | 'babel'`
+- **默认值：** `'native'`
+- **版本：** `>= 2.0.0`
+- **示例：**
+
+```ts
+pluginSolid({
+  compiler: 'babel',
+});
+```
 
 ### dev
 
@@ -132,7 +157,7 @@ pluginSolid({
 
 ### solid
 
-传递给 `babel-preset-solid` 的选项，请查阅 [babel-preset-solid 文档](https://npmjs.com/package/babel-preset-solid) 来了解具体用法。
+传递给当前 JSX 编译器的 Solid 编译选项。
 
 - **类型：** `SolidPresetOptions`
 - **默认值：** `{}`

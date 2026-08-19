@@ -1218,12 +1218,15 @@ importers:
 
   packages/plugin-solid:
     dependencies:
+      '@babel/core':
+        specifier: 'catalog:'
+        version: 7.29.7(supports-color@8.1.1)
       '@dom-expressions/compiler':
         specifier: 'catalog:'
         version: 0.50.0-next.42
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../plugin-babel
+      '@jridgewell/remapping':
+        specifier: 'catalog:'
+        version: 2.3.5
       babel-preset-solid:
         specifier: 'catalog:'
         version: 2.0.0-rc.0(@babel/core@7.29.7)(solid-js@2.0.0-rc.0)
