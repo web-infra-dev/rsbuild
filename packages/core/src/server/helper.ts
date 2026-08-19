@@ -455,9 +455,11 @@ export const getPort = async ({
         server.unref();
         server.on('error', reject);
         server.listen({ port, host }, () => {
-          const address = server.address();
-          if (address && typeof address !== 'string') {
-            port = address.port;
+          if (port === 0) {
+            const address = server.address();
+            if (address && typeof address !== 'string') {
+              port = address.port;
+            }
           }
           found = true;
           server.close(resolve);
