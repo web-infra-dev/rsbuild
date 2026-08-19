@@ -2,13 +2,10 @@ import { transformRefreshAsync } from '@dom-expressions/compiler';
 import type { Rspack } from '@rsbuild/core';
 
 const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
-const JSX_REGEX = /\.(?:jsx|tsx)$/;
-const TS_REGEX = /\.(?:ts|tsx|mts|cts)$/;
+const JS_REGEX = /\.[cm]?js$/;
 
 const getTransformFilename = (filename: string): string =>
-  JSX_REGEX.test(filename)
-    ? filename
-    : `${filename}${TS_REGEX.test(filename) ? '.tsx' : '.jsx'}`;
+  JS_REGEX.test(filename) ? `${filename}.jsx` : filename;
 
 export type SolidRefreshLoaderOptions = {
   granular?: boolean;
