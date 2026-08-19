@@ -38,3 +38,17 @@ export default {
   },
 };
 ```
+
+## Dynamic port
+
+- **Version:** `>= 2.2.0`
+
+Set `server.port` to `0` to let the operating system assign an available port:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    port: 0,
+  },
+};
+```
