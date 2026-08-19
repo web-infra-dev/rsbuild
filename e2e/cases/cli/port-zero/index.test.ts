@@ -1,9 +1,5 @@
 import { expect, gotoPage, test } from '@e2e/helper';
 
-const cliEnv = {
-  TEST_CLI_PORT_ZERO: 'true',
-};
-
 const getPortFromLogs = (logs: string[]): number => {
   const match = logs.join('\n').match(/http:\/\/localhost:(\d+)/);
   if (!match) {
@@ -17,7 +13,7 @@ test('should support --port 0 for dev server', async ({
   execCli,
   logHelper,
 }) => {
-  execCli('dev --port 0', { env: cliEnv });
+  execCli('dev --port 0');
   await logHelper.expectBuildEnd();
 
   const port = getPortFromLogs(logHelper.logs);
@@ -36,7 +32,7 @@ test('should support --port 0 for preview server', async ({
   await build();
   logHelper.clearLogs();
 
-  execCli('preview --port 0', { env: cliEnv });
+  execCli('preview --port 0');
   await logHelper.expectLog('➜  Local:');
 
   const port = getPortFromLogs(logHelper.logs);
