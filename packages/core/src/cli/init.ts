@@ -81,7 +81,7 @@ const loadConfig = async (root: string) => {
     config.server.host = options.host;
   }
 
-  if (options.port) {
+  if (options.port !== undefined) {
     config.server.port = options.port;
   }
 
