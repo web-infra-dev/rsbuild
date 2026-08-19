@@ -165,6 +165,7 @@ export function watchFilesForRestart({
           ? new Set(events)
           : DEFAULT_WATCH_FILE_EVENTS;
         for (const event of watchEvents) {
+          // rslint-disable-next-line @typescript-eslint/no-misused-promises -- Chokidar does not consume listener return values.
           watcher.on(event, (filePath) => onWatchEvent(event, filePath, cwd));
         }
         return watcher;
