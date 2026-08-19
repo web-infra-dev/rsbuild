@@ -1,6 +1,6 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildMode, RsbuildPlugin } from '@rsbuild/core';
 import { modifyBabelLoaders } from '@rsbuild/plugin-babel';
 import type { SolidPresetOptions } from './types.js';
 
@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 
 export type PluginSolidOptions = {
   /**
-   * Whether to resolve Solid's development runtime.
+   * Whether to enable Solid's development runtime and compiler transforms.
    * @default `true` in development mode, `false` in production mode
    */
   dev?: boolean;
@@ -29,6 +29,7 @@ export type PluginSolidOptions = {
   };
   /**
    * Options passed to `babel-preset-solid`.
+   * `solid.dev` overrides compiler transforms without changing runtime resolution.
    * @see https://npmjs.com/package/babel-preset-solid
    */
   solid?: SolidPresetOptions;
@@ -44,6 +45,7 @@ export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
   const { dev, solid, solidPresetOptions, ssr } = options;
+  const isDevModeEnabled = (mode: RsbuildMode) => dev ?? mode === 'development';
 
   return {
     name: PLUGIN_SOLID_NAME,
@@ -51,13 +53,13 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
     setup(api) {
       api.modifyEnvironmentConfig((config) => {
         const conditionNames = config.resolve.conditionNames ?? ['...'];
-        const useDevRuntime = dev ?? config.mode === 'development';
+        const useDevMode = isDevModeEnabled(config.mode);
 
         // Prefer Solid-specific exports while preserving user conditions or Rspack defaults.
         config.resolve.conditionNames = [
           ...new Set([
             'solid',
-            ...(useDevRuntime ? ['development'] : []),
+            ...(useDevMode ? ['development'] : []),
             ...conditionNames,
           ]),
         ];
@@ -66,6 +68,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
       api.modifyBundlerChain(
         (chain, { CHAIN_ID, environment, isProd, target }) => {
           const environmentConfig = environment.config;
+          const useDevMode = isDevModeEnabled(environmentConfig.mode);
           const usingHMR =
             options.refresh?.disabled !== true &&
             !isProd &&
@@ -77,11 +80,14 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             CHAIN_ID,
             modifyOptions: (babelOptions) => {
               // Apply SSR defaults before user options so explicit values can override them.
-              const defaultPresetOptions: SolidPresetOptions = ssr
-                ? target === 'node'
-                  ? { generate: 'ssr', hydratable: true }
-                  : { generate: 'dom', hydratable: true }
-                : {};
+              const defaultPresetOptions: SolidPresetOptions = {
+                dev: useDevMode,
+                ...(ssr
+                  ? target === 'node'
+                    ? { generate: 'ssr', hydratable: true }
+                    : { generate: 'dom', hydratable: true }
+                  : {}),
+              };
 
               babelOptions.presets = [
                 [
