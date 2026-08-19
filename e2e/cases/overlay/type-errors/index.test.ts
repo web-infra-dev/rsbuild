@@ -35,6 +35,6 @@ test('should display type errors on overlay correctly', async ({
   await expectErrorOverlay(page);
 
   // The error overlay should be rendered after reloading the page
-  page.reload();
+  await page.reload();
   await expectErrorOverlay(page);
 });

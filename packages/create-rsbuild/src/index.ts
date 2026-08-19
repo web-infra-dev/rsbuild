@@ -105,7 +105,7 @@ function mapRslintTemplate(templateName: string): RslintTemplateName {
 
 const root = path.join(import.meta.dirname, '..');
 
-create({
+await create({
   root,
   name: 'rsbuild',
   templates: [

@@ -105,7 +105,7 @@ export async function setupCliShortcuts({
 
     for (const shortcut of shortcuts) {
       if (input === shortcut.key) {
-        shortcut.action();
+        void shortcut.action();
         return;
       }
     }

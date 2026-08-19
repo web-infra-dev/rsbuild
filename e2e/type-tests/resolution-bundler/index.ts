@@ -15,7 +15,7 @@ const plugins = [
   pluginSolid(),
 ];
 
-createRsbuild({
+void createRsbuild({
   config: {
     plugins,
   },
