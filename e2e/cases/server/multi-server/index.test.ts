@@ -70,10 +70,10 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
     server.listen(port, () => resolve());
   });
 
-  page.goto(`http://localhost:${port}/app1`);
+  await page.goto(`http://localhost:${port}/app1`);
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild1!');
 
-  page.goto(`http://localhost:${port}/app2`);
+  await page.goto(`http://localhost:${port}/app2`);
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild2!');
 
   await rsbuildServer1.close();

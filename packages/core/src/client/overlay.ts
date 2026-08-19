@@ -18,7 +18,7 @@ class ErrorOverlay extends HTMLElement {
       if (e.target) {
         const { file } = (e.target as HTMLLinkElement).dataset;
         if (file) {
-          fetch(`/__open-in-editor?file=${encodeURIComponent(file)}`);
+          void fetch(`/__open-in-editor?file=${encodeURIComponent(file)}`);
         }
       }
       e.stopPropagation();

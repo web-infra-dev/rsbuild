@@ -129,7 +129,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
         return;
       }
 
-      rspack.experiments.globalTrace.cleanup();
+      void rspack.experiments.globalTrace.cleanup();
 
       if (!isTerminalTraceOutput(traceOutput)) {
         const profileMessage = 'profile file saved to';
