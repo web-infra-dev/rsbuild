@@ -1,5 +1,4 @@
 import { createRsbuild, type RsbuildConfig } from '@rsbuild/core';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { matchRules } from '@scripts/test-helper';
 import { pluginSolid } from '../src';
 
@@ -10,15 +9,32 @@ describe('plugin-solid', () => {
     },
   };
 
-  it('should apply solid preset correctly', async () => {
+  it('should use native compiler by default', async () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
-        plugins: [pluginSolid(), pluginBabel()],
+        plugins: [pluginSolid()],
       },
     });
     const config = await rsbuild.initConfigs();
-    expect(matchRules(config[0], 'a.tsx')[0]).toMatchSnapshot();
+    const rule = matchRules(config[0], 'a.tsx').find((rule) =>
+      JSON.stringify(rule).includes('solidLoader.mjs'),
+    );
+    expect(rule).toMatchSnapshot();
+  });
+
+  it('should allow using Babel compiler', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid({ compiler: 'babel' })],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
+      '"compiler":"babel"',
+    );
   });
 
   it('should add solid resolve condition', async () => {
@@ -37,7 +53,7 @@ describe('plugin-solid', () => {
       config: {
         ...rsbuildConfig,
         mode: 'development',
-        plugins: [pluginSolid(), pluginBabel()],
+        plugins: [pluginSolid()],
       },
     });
     const config = await rsbuild.initConfigs();
@@ -47,7 +63,7 @@ describe('plugin-solid', () => {
       'development',
       '...',
     ]);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
       '"dev":true',
     );
   });
@@ -77,13 +93,13 @@ describe('plugin-solid', () => {
       config: {
         ...rsbuildConfig,
         mode: 'development',
-        plugins: [pluginSolid({ dev: false }), pluginBabel()],
+        plugins: [pluginSolid({ dev: false })],
       },
     });
     const config = await rsbuild.initConfigs();
 
     expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
       '"dev":false',
     );
   });
@@ -93,13 +109,13 @@ describe('plugin-solid', () => {
       config: {
         ...rsbuildConfig,
         mode: 'production',
-        plugins: [pluginSolid(), pluginBabel()],
+        plugins: [pluginSolid()],
       },
     });
     const config = await rsbuild.initConfigs();
 
     expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
       '"dev":false',
     );
   });
@@ -109,7 +125,7 @@ describe('plugin-solid', () => {
       config: {
         ...rsbuildConfig,
         mode: 'production',
-        plugins: [pluginSolid({ dev: true }), pluginBabel()],
+        plugins: [pluginSolid({ dev: true })],
       },
     });
     const config = await rsbuild.initConfigs();
@@ -119,7 +135,7 @@ describe('plugin-solid', () => {
       'development',
       '...',
     ]);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
       '"dev":true',
     );
   });
@@ -129,16 +145,13 @@ describe('plugin-solid', () => {
       config: {
         ...rsbuildConfig,
         mode: 'development',
-        plugins: [
-          pluginSolid({ dev: false, solid: { dev: true } }),
-          pluginBabel(),
-        ],
+        plugins: [pluginSolid({ dev: false, solid: { dev: true } })],
       },
     });
     const config = await rsbuild.initConfigs();
 
     expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
       '"dev":true',
     );
   });
@@ -147,13 +160,13 @@ describe('plugin-solid', () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
-        plugins: [pluginSolid({ refresh: { disabled: true } }), pluginBabel()],
+        plugins: [pluginSolid({ refresh: { disabled: true } })],
       },
     });
     const config = await rsbuild.initConfigs();
 
     expect(
-      JSON.stringify(matchRules(config[0], 'a.tsx')[0]).includes(
+      JSON.stringify(matchRules(config[0], 'a.tsx')).includes(
         'refreshLoader.mjs',
       ),
     ).toEqual(false);
@@ -163,11 +176,11 @@ describe('plugin-solid', () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
-        plugins: [pluginSolid({ refresh: { granular: false } }), pluginBabel()],
+        plugins: [pluginSolid({ refresh: { granular: false } })],
       },
     });
     const config = await rsbuild.initConfigs();
-    const rule = matchRules(config[0], 'a.tsx')[0];
+    const rule = matchRules(config[0], 'a.tsx');
 
     expect(JSON.stringify(rule)).toContain('"granular":false');
   });
@@ -176,11 +189,13 @@ describe('plugin-solid', () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
-        plugins: [pluginSolid({ ssr: true }), pluginBabel()],
+        plugins: [pluginSolid({ ssr: true })],
       },
     });
     const config = await rsbuild.initConfigs();
-    const rule = matchRules(config[0], 'a.tsx')[0];
+    const rule = matchRules(config[0], 'a.tsx').find((rule) =>
+      JSON.stringify(rule).includes('solidLoader.mjs'),
+    );
     expect(rule).toMatchSnapshot();
   });
 
@@ -191,11 +206,13 @@ describe('plugin-solid', () => {
         output: {
           target: 'node',
         },
-        plugins: [pluginSolid({ ssr: true }), pluginBabel()],
+        plugins: [pluginSolid({ ssr: true })],
       },
     });
     const config = await rsbuild.initConfigs();
-    const rule = matchRules(config[0], 'a.tsx')[0];
+    const rule = matchRules(config[0], 'a.tsx').find((rule) =>
+      JSON.stringify(rule).includes('solidLoader.mjs'),
+    );
     expect(rule).toMatchSnapshot();
   });
 
@@ -214,12 +231,13 @@ describe('plugin-solid', () => {
               hydratable: false,
             },
           }),
-          pluginBabel(),
         ],
       },
     });
     const config = await rsbuild.initConfigs();
-    const rule = matchRules(config[0], 'a.tsx')[0];
+    const rule = matchRules(config[0], 'a.tsx').find((rule) =>
+      JSON.stringify(rule).includes('solidLoader.mjs'),
+    );
     expect(rule).toMatchSnapshot();
   });
 
@@ -234,12 +252,14 @@ describe('plugin-solid', () => {
               hydratable: true,
             },
           }),
-          pluginBabel(),
         ],
       },
     });
     const config = await rsbuild.initConfigs();
-    expect(matchRules(config[0], 'a.tsx')[0]).toMatchSnapshot();
+    const rule = matchRules(config[0], 'a.tsx').find((rule) =>
+      JSON.stringify(rule).includes('solidLoader.mjs'),
+    );
+    expect(rule).toMatchSnapshot();
   });
 
   it('should allow deprecated solidPresetOptions alias', async () => {
@@ -253,11 +273,13 @@ describe('plugin-solid', () => {
               hydratable: true,
             },
           }),
-          pluginBabel(),
         ],
       },
     });
     const config = await rsbuild.initConfigs();
-    expect(matchRules(config[0], 'a.tsx')[0]).toMatchSnapshot();
+    const rule = matchRules(config[0], 'a.tsx').find((rule) =>
+      JSON.stringify(rule).includes('solidLoader.mjs'),
+    );
+    expect(rule).toMatchSnapshot();
   });
 });
