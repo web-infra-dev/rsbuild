@@ -5,7 +5,7 @@ import { getRandomPort } from '@rstackjs/test-utils';
 
 const tempConfig = path.join(import.meta.dirname, 'test-temp-config.ts');
 
-test.beforeEach(async () => {
+test.beforeEach(() => {
   fs.writeFileSync(tempConfig, 'export default 1;');
 });
 

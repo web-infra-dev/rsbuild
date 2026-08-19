@@ -114,7 +114,7 @@ export const recordPluginHooks = () => {
   return { plugin, hooks };
 };
 
-export async function mapSourceMapPositions(
+export function mapSourceMapPositions(
   rawSourceMap: string,
   generatedPositions: {
     line: number;
@@ -129,7 +129,7 @@ export async function mapSourceMapPositions(
     }),
   );
 
-  return originalPositions;
+  return Promise.resolve(originalPositions);
 }
 
 export const enableDebugMode = () => {

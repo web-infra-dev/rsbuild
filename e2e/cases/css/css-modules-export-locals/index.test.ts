@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-const expectCSSContext = async (rsbuild: BuildResult) => {
+const expectCSSContext = (rsbuild: BuildResult) => {
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, 'index.css');
   expect(content).toMatch(
@@ -29,7 +29,7 @@ test('should compile CSS Modules with exportLocalsConvention camelCaseOnly', asy
     },
   });
 
-  await expectCSSContext(rsbuild);
+  expectCSSContext(rsbuild);
 
   const styles = await page.evaluate(() => window.styles);
   expect(Object.keys(styles)).toEqual([
@@ -53,7 +53,7 @@ test('should compile CSS Modules with exportLocalsConvention camelCase', async (
     },
   });
 
-  await expectCSSContext(rsbuild);
+  expectCSSContext(rsbuild);
 
   const styles = await page.evaluate(() => window.styles);
   expect(Object.keys(styles)).toEqual([
@@ -79,7 +79,7 @@ test('should compile CSS Modules with exportLocalsConvention dashes', async ({
     },
   });
 
-  await expectCSSContext(rsbuild);
+  expectCSSContext(rsbuild);
 
   const styles = await page.evaluate(() => window.styles);
   expect(Object.keys(styles)).toEqual([
@@ -104,7 +104,7 @@ test('should compile CSS Modules with exportLocalsConvention dashesOnly', async 
     },
   });
 
-  await expectCSSContext(rsbuild);
+  expectCSSContext(rsbuild);
 
   const styles = await page.evaluate(() => window.styles);
   expect(Object.keys(styles)).toEqual([
@@ -128,7 +128,7 @@ test('should compile CSS Modules with exportLocalsConvention asIs', async ({
     },
   });
 
-  await expectCSSContext(rsbuild);
+  expectCSSContext(rsbuild);
 
   const styles = await page.evaluate(() => window.styles);
   expect(Object.keys(styles)).toEqual([

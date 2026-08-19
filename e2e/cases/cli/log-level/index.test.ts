@@ -1,25 +1,21 @@
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, test } from '@e2e/helper';
 
-test('should run build command with log level: info', async ({
-  execCliSync,
-}) => {
+test('should run build command with log level: info', ({ execCliSync }) => {
   const stdout = stripAnsi(execCliSync('build --logLevel info'));
   expect(stdout).toContain('Rsbuild v');
   expect(stdout).toContain('build started...');
   expect(stdout).toContain('built in');
 });
 
-test('should run build command with log level: warn', async ({
-  execCliSync,
-}) => {
+test('should run build command with log level: warn', ({ execCliSync }) => {
   const stdout = stripAnsi(execCliSync('build --logLevel warn'));
   expect(stdout).not.toContain('Rsbuild v');
   expect(stdout).not.toContain('build started...');
   expect(stdout).not.toContain('built in');
 });
 
-test('should always print verbose logs when debug mode is enabled', async ({
+test('should always print verbose logs when debug mode is enabled', ({
   execCliSync,
 }) => {
   const stdout = stripAnsi(

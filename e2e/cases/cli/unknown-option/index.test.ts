@@ -1,6 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should exit with error code 1 when unknown options are provided', async ({
+test('should exit with error code 1 when unknown options are provided', ({
   execCliSync,
 }) => {
   try {

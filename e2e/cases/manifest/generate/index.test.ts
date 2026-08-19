@@ -21,7 +21,7 @@ const config: RsbuildConfig = {
 
 test('should generate custom manifest data', async ({ runBoth }) => {
   await runBoth(
-    async ({ result }) => {
+    ({ result }) => {
       const files = result.getDistFiles();
       const manifestContent = getFileContent(files, 'my-manifest.json');
       const manifest = JSON.parse(manifestContent);

@@ -226,13 +226,13 @@ export async function build({
     server = result.server;
   }
 
-  const getIndexBundle = async () => {
+  const getIndexBundle = () => {
     const [name, content] =
       Object.entries(getOutputFiles()).find(
         ([file]) => file.includes('index') && file.endsWith('.js'),
       ) || [];
     assert(name && content);
-    return content;
+    return Promise.resolve(content);
   };
 
   if (page) {

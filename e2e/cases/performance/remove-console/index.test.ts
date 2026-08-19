@@ -2,7 +2,7 @@ import type { BuildResult } from '@e2e/helper';
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-const expectConsoleType = async (
+const expectConsoleType = (
   rsbuild: Awaited<BuildResult>,
   consoleType: Record<string, boolean>,
 ) => {
@@ -23,7 +23,7 @@ test('should remove specified console correctly', async ({ build }) => {
     },
   });
 
-  await expectConsoleType(rsbuild, {
+  expectConsoleType(rsbuild, {
     log: false,
     warn: false,
     debug: true,
@@ -40,7 +40,7 @@ test('should remove all console correctly', async ({ build }) => {
     },
   });
 
-  await expectConsoleType(rsbuild, {
+  expectConsoleType(rsbuild, {
     log: false,
     warn: false,
     debug: false,
