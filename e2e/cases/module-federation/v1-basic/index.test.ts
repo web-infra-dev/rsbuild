@@ -137,6 +137,34 @@ test('should allow remote module to perform HMR', async ({ page, devOnly }) => {
   await expect(page.locator('#button')).toHaveText('Button from remote (HMR)');
 });
 
+test('should allow remote module with a dynamic port to perform HMR', async ({
+  page,
+  devOnly,
+}) => {
+  writeButtonCode();
+
+  const remoteApp = await devOnly({
+    cwd: remote,
+    config: {
+      server: {
+        port: 0,
+      },
+    },
+  });
+
+  process.env.REMOTE_PORT = remoteApp.port.toString();
+
+  const hostApp = await devOnly({
+    cwd: host,
+  });
+
+  await gotoPage(page, hostApp);
+  await expect(page.locator('#button')).toHaveText('Button from remote');
+
+  writeButtonCode('Button from remote (HMR)');
+  await expect(page.locator('#button')).toHaveText('Button from remote (HMR)');
+});
+
 test('should transform module federation runtime with SWC', async ({
   build,
 }) => {
