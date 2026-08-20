@@ -1,0 +1,25 @@
+name: Build ESM runner transform
+description: Build the SWC WASM plugin used by the transformed ESM runner
+
+runs:
+  using: composite
+  steps:
+    - name: Install WASI target
+      shell: bash
+      run: rustup target add wasm32-wasip1
+
+    - name: Build WASM plugin
+      shell: bash
+      run: >-
+        cargo build
+        --manifest-path packages/core/swc-plugins/esm-runner-transform/Cargo.toml
+        --locked
+        --release
+        --target wasm32-wasip1
+
+    - name: Copy WASM plugin
+      shell: bash
+      run: >-
+        cp
+        packages/core/swc-plugins/esm-runner-transform/target/wasm32-wasip1/release/rsbuild_swc_esm_runner_transform.wasm
+        packages/core/static/swc-esm-runner-transform.wasm

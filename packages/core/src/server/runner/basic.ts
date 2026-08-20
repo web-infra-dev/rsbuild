@@ -34,6 +34,7 @@ const getSubPath = (p: string) => {
 
 export interface IBasicRunnerOptions {
   name: string;
+  bundleFiles?: ReadonlyMap<string, string>;
   isBundleOutput: (modulePath: string) => boolean;
   readFileSync: (path: string) => string;
   dist: string;

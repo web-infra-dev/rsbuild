@@ -4,7 +4,7 @@
 import { color, require } from '../../helpers';
 import { CommonJsRunner } from './cjs';
 import { EsmRunner } from './esm';
-import { SystemJsRunner } from './systemJs';
+import { TransformedEsmRunner } from './transformedEsm';
 import type { Runner, RunnerFactory, RunnerFactoryOptions } from './type';
 
 class BasicRunnerFactory implements RunnerFactory {
@@ -42,7 +42,7 @@ class BasicRunnerFactory implements RunnerFactory {
       return new EsmRunner(runnerOptions);
     }
 
-    return new SystemJsRunner(runnerOptions);
+    return new TransformedEsmRunner(runnerOptions);
   }
 }
 

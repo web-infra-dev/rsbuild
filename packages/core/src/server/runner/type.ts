@@ -43,8 +43,11 @@ export interface Runner {
 }
 
 export type RunnerFactoryOptions = {
+  bundleFiles?: ReadonlyMap<string, string>;
   dist: string;
   compilerOptions: CompilerOptions;
+  entryName?: string;
+  environmentName?: string;
   readFileSync: (path: string) => string;
   isBundleOutput: (modulePath: string) => boolean;
 };
