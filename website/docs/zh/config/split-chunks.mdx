@@ -14,20 +14,32 @@ type SplitChunksConfig =
   | false;
 ```
 
-- **默认值：** 基于 [output.target](/config/output/target)：
+- **默认值：** 根据 [output.target](/config/output/target) 而定：
   - `output.target` 为 `'web'` 时，为 `{ preset: 'default', chunks: 'all' }`
-  - `output.target` 为 `'node'` 时，默认为 `{ preset: 'none', chunks: 'all' }`。除将 `chunks` 设置为 `'all'` 外，其他选项均使用 Rspack [`optimization.splitChunks`](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin) 的默认值。这样可以将初始 chunk 和异步 chunk 中符合条件的模块提取为独立 chunk，从而减少输出 chunk 中的重复代码
-  - `output.target` 为其他值时，为 `false`
+  - `output.target` 为 `'node'` 时，为 `{ preset: 'none', chunks: 'all' }`
+  - `output.target` 为 `'web-worker'` 时，为 `false`
 - **版本：** `>= 2.0.0`
 
 `splitChunks` 用于配置 Rsbuild 的 chunk 拆分策略。
 
 该选项基于 Rspack 的 [optimization.splitChunks](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin) 实现，并在其基础上扩展了 `preset` 选项，用于启用 Rsbuild 提供的一组常用拆分预设。
 
+## 默认行为 \{#default-behavior}
+
+当 `output.target` 为 `'web'` 或 `'node'` 时，Rsbuild 默认启用 chunk 拆分，并将 `chunks` 设置为 `'all'`。因此，初始 chunk 和异步 chunk 中符合条件的模块都可以被提取到独立的 chunk 中，有助于减少不同输出 chunk 之间的重复代码。
+
+除了 `chunks` 及所选 `preset` 或 Rsbuild 插件提供的拆分规则，其余未指定的选项（如 `minSize` 和 `minChunks`）均沿用 Rspack [`optimization.splitChunks`](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin) 的默认值。
+
+由于 Web Worker 产物不支持 dynamic import，当 `output.target` 为 `'web-worker'` 时，Rsbuild 默认关闭 chunk 拆分。
+
+:::tip
+当项目作为 Module Federation provider 并配置 [`moduleFederation.options.exposes`](/config/module-federation/options) 时，为避免 chunk 拆分影响 remote entry，Rsbuild 会将 `chunks` 设置为 `'async'`。
+:::
+
 ## splitChunks.preset
 
 - **类型：** `'default' | 'per-package' | 'single-vendor' | 'none' | undefined`
-- **默认值：** `output.target` 为 `'web'` 时为 `'default'`，其他值时为 `none`
+- **默认值：** `output.target` 为 `'web'` 时为 `'default'`，其他值时为 `'none'`
 
 `preset` 用于启用 Rsbuild 内置的拆包预设，以简化常见的 chunk 拆分场景。
 
@@ -120,3 +132,9 @@ export default {
   splitChunks: false,
 };
 ```
+
+## 版本历史 \{#version-history}
+
+| 版本   | 变更内容                                                                                     |
+| ------ | -------------------------------------------------------------------------------------------- |
+| v2.2.0 | 当 `output.target` 为 `'node'` 时，默认值从 `false` 改为 `{ preset: 'none', chunks: 'all' }` |
