@@ -10,12 +10,12 @@ import type { Runner, RunnerFactory, RunnerFactoryOptions } from './type';
 class BasicRunnerFactory implements RunnerFactory {
   constructor(protected name: string) {}
 
-  async create(options: RunnerFactoryOptions): Promise<Runner> {
-    const runner = await this.createRunner(options);
+  create(options: RunnerFactoryOptions): Runner {
+    const runner = this.createRunner(options);
     return runner;
   }
 
-  protected async createRunner(options: RunnerFactoryOptions): Promise<Runner> {
+  protected createRunner(options: RunnerFactoryOptions): Runner {
     const runnerOptions = {
       name: this.name,
       ...options,
@@ -53,7 +53,7 @@ export const run = async <T>({
   bundlePath: string;
 }): Promise<T> => {
   const runnerFactory = new BasicRunnerFactory(bundlePath);
-  const runner = await runnerFactory.create(runnerFactoryOptions);
+  const runner = runnerFactory.create(runnerFactoryOptions);
   const mod = await runner.run(bundlePath);
 
   return mod as T;
