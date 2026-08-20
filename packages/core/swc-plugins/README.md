@@ -8,18 +8,11 @@ and shipped by `@rsbuild/core`.
 - The generated WASM binary is not committed. GitHub CI builds it and copies
   it to `packages/core/static` before tests, builds, and releases.
 
-To build the plugin locally:
+The `@rsbuild/core` build compiles the plugin automatically. To build only
+the plugin locally:
 
 ```bash
-rustup target add wasm32-wasip1
-cargo build \
-  --manifest-path packages/core/swc-plugins/esm-runner-transform/Cargo.toml \
-  --locked \
-  --release \
-  --target wasm32-wasip1
-cp \
-  packages/core/swc-plugins/esm-runner-transform/target/wasm32-wasip1/release/rsbuild_swc_esm_runner_transform.wasm \
-  packages/core/static/swc-esm-runner-transform.wasm
+pnpm --filter @rsbuild/core run build:esm-runner-transform
 ```
 
 Each standalone crate owns its `Cargo.lock` and ignores only its local

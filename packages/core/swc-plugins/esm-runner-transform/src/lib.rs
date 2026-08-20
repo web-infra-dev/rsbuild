@@ -318,7 +318,7 @@ impl TransformedEsmTransform {
             span: DUMMY_SP,
             ctxt: SyntaxContext::empty(),
             params: Vec::new(),
-            body: Box::new(BlockStmtOrExpr::Expr(Box::new(value))),
+            body: Box::new(ArrowFunctionBody::Expr(Box::new(value))),
             is_async: false,
             is_generator: false,
             type_params: None,

@@ -8,10 +8,10 @@ publish = false
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-swc_core = { version = "=72.0.0", features = ["ecma_plugin_transform"] }
+swc_core = { version = "=77.0.0", features = ["ecma_plugin_transform"] }
 
 [dev-dependencies]
-swc_core = { version = "=72.0.0", features = [
+swc_core = { version = "=77.0.0", features = [
   "common",
   "ecma_codegen",
   "ecma_parser",
