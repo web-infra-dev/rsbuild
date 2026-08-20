@@ -16,7 +16,7 @@ type SplitChunksConfig =
 
 - **Default:** based on [output.target](/config/output/target):
   - When `output.target` is `'web'`, the default is `{ preset: 'default', chunks: 'all' }`
-  - When `output.target` is `'node'`, the default is `{ preset: 'none' }`.
+  - When `output.target` is `'node'`, the default is `{ preset: 'none', chunks: 'all' }`. Rsbuild uses Rspack's default [`optimization.splitChunks`](https://rspack.rs/plugins/webpack/split-chunks-plugin) options except that `chunks` is set to `'all'`. This allows eligible modules from both initial and async chunks to be extracted into separate chunks, which can reduce duplicated code across output chunks
   - When `output.target` is any other value, the default is `false`
 - **Version:** `>= 2.0.0`
 

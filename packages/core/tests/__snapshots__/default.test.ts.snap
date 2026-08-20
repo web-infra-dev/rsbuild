@@ -1690,6 +1690,9 @@ exports[`should apply default plugins correctly when target is node 1`] = `
   },
   "optimization": {
     "minimize": false,
+    "splitChunks": {
+      "chunks": "all",
+    },
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",

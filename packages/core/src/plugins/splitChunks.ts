@@ -278,6 +278,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
         } else {
           const { preset = 'none', ...rest } = splitChunks;
           chain.optimization.splitChunks({
+            chunks: 'all',
             ...getSplitChunksByPreset(config, preset),
             ...rest,
           });
