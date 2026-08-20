@@ -16,7 +16,7 @@ type SplitChunksConfig =
 
 - **Default:** based on [output.target](/config/output/target):
   - When `output.target` is `'web'`, the default is `{ preset: 'default', chunks: 'all' }`
-  - When `output.target` is `'node'`, the default extracts modules shared by two or more chunks, regardless of their size
+  - When `output.target` is `'node'`, the default is `{ preset: 'none', chunks: 'all', minSize: 0 }`. This extracts shared modules into separate chunks to avoid duplicating them across output chunks
   - When `output.target` is any other value, the default is `false`
 - **Version:** `>= 2.0.0`
 

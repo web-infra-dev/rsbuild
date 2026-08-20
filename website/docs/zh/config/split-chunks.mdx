@@ -16,7 +16,7 @@ type SplitChunksConfig =
 
 - **默认值：** 基于 [output.target](/config/output/target)：
   - `output.target` 为 `'web'` 时，为 `{ preset: 'default', chunks: 'all' }`
-  - `output.target` 为 `'node'` 时，默认提取被两个及以上 chunk 共享的模块，且不限制模块大小
+  - `output.target` 为 `'node'` 时，为 `{ preset: 'none', chunks: 'all', minSize: 0 }`。该配置会将共享模块提取为独立 chunk，避免它们在多个输出 chunk 中重复打包
   - `output.target` 为其他值时，为 `false`
 - **版本：** `>= 2.0.0`
 
