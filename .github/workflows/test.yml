@@ -51,10 +51,6 @@ jobs:
           node-version: 24.18.1
           package-manager-cache: false
 
-      - name: Build ESM runner transform
-        if: steps.changes.outputs.changed == 'true'
-        uses: ./.github/actions/build-esm-runner-transform
-
       - name: Install Pnpm
         if: steps.changes.outputs.changed == 'true'
         uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
@@ -102,10 +98,6 @@ jobs:
         with:
           node-version: 24.18.1
           package-manager-cache: false
-
-      - name: Build ESM runner transform
-        if: steps.changes.outputs.changed == 'true'
-        uses: ./.github/actions/build-esm-runner-transform
 
       - name: Install Pnpm
         if: steps.changes.outputs.changed == 'true'

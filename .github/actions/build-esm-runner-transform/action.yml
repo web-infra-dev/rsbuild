@@ -1,9 +1,0 @@
-name: Build ESM runner transform
-description: Build the SWC WASM plugin used by the transformed ESM runner
-
-runs:
-  using: composite
-  steps:
-    - name: Build WASM plugin
-      shell: bash
-      run: node packages/core/swc-plugins/esm-runner-transform/build.js
