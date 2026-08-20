@@ -6,7 +6,6 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
     "context": "<ROOT>",
     "devtool": "eval-source-map",
     "experiments": {
-      "nativeWatcher": true,
       "sourceImport": true,
     },
     "infrastructureLogging": {
@@ -573,7 +572,6 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
     "context": "<ROOT>",
     "devtool": "eval",
     "experiments": {
-      "nativeWatcher": true,
       "sourceImport": true,
     },
     "infrastructureLogging": {

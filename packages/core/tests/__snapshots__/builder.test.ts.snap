@@ -10,7 +10,6 @@ exports[`default bundler > should use Rspack by default 1`] = `
     ],
   },
   "experiments": {
-    "nativeWatcher": true,
     "sourceImport": true,
   },
   "infrastructureLogging": {
