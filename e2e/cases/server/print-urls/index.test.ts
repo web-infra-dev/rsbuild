@@ -1,6 +1,6 @@
 import os, { type NetworkInterfaceInfo } from 'node:os';
-import { mock } from 'node:test';
 import { expect, NETWORK_LOG_REGEX, test } from '@e2e/helper';
+import { rs } from 'rstack/test';
 
 const createIpv4 = (
   address: string,
@@ -38,11 +38,11 @@ test('should print server urls correctly by default', async ({
 });
 
 test('should print names for multiple network urls', async ({ devOnly }) => {
-  const networkInterfaces = mock.method(os, 'networkInterfaces', () => ({
+  const networkInterfaces = rs.spyOn(os, 'networkInterfaces').mockReturnValue({
     lo: [createIpv4('127.0.0.1', true)],
     xray_tun: [createIpv4('192.0.2.10')],
     'Wi-Fi': [createIpv4('198.51.100.20')],
-  }));
+  });
 
   try {
     const rsbuild = await devOnly({
@@ -62,15 +62,15 @@ test('should print names for multiple network urls', async ({ devOnly }) => {
     await rsbuild.expectLog('➜  Network (xray_tun):');
     await rsbuild.expectLog('➜  Network (Wi-Fi):');
   } finally {
-    networkInterfaces.mock.restore();
+    networkInterfaces.mockRestore();
   }
 });
 
 test('should omit name for a single network url', async ({ devOnly }) => {
-  const networkInterfaces = mock.method(os, 'networkInterfaces', () => ({
+  const networkInterfaces = rs.spyOn(os, 'networkInterfaces').mockReturnValue({
     lo: [createIpv4('127.0.0.1', true)],
     'Wi-Fi': [createIpv4('198.51.100.20')],
-  }));
+  });
 
   try {
     const rsbuild = await devOnly({
@@ -86,7 +86,7 @@ test('should omit name for a single network url', async ({ devOnly }) => {
     );
     rsbuild.expectNoLog('(Wi-Fi)');
   } finally {
-    networkInterfaces.mock.restore();
+    networkInterfaces.mockRestore();
   }
 });
 

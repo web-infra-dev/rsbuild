@@ -64,8 +64,6 @@ define.lint(({ globals, globalIgnores, js, rstestPlugin, ts }) => [
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/restrict-template-expressions': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
-      'rstest/expect-expect': 'off',
-      'rstest/no-import-node-test': 'off',
     },
   },
 ]);
