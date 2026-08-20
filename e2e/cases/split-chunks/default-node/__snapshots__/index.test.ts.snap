@@ -31,7 +31,53 @@ exports[`should extract shared modules without extracting single-use dependencie
       "index.js",
     ],
     "modules": [
-      "./src/index.js + 1 modules",
+      "./node_modules/single-use-dependency/index.js",
+      "./src/index.js",
+    ],
+  },
+]
+`;
+
+exports[`should extract single-use dependencies when preset is "per-package" 1`] = `
+[
+  {
+    "files": [
+      "328.js",
+    ],
+    "modules": [
+      "./src/shared.js",
+    ],
+  },
+  {
+    "files": [
+      "488.js",
+    ],
+    "modules": [
+      "./src/routeB.js",
+    ],
+  },
+  {
+    "files": [
+      "675.js",
+    ],
+    "modules": [
+      "./src/routeA.js",
+    ],
+  },
+  {
+    "files": [
+      "index.js",
+    ],
+    "modules": [
+      "./src/index.js",
+    ],
+  },
+  {
+    "files": [
+      "npm-single-use-dependency.js",
+    ],
+    "modules": [
+      "./node_modules/single-use-dependency/index.js",
     ],
   },
 ]
