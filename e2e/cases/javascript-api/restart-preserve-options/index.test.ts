@@ -67,11 +67,22 @@ test('should preserve startDevServer options after restart', async () => {
   }
 });
 
-test('should preserve a dynamically assigned port after restart', async () => {
-  let restartContext: RestartContext | undefined;
+test('should preserve a dynamically assigned port with a new restart callback', async () => {
+  let restarting = false;
   let restartResult: StartDevServerResult | undefined;
 
   async function createInstance() {
+    const restart: RestartFn = async (context) => {
+      if (context.action !== 'dev') {
+        return false;
+      }
+
+      restarting = true;
+      const rsbuild = await createInstance();
+      restartResult = await rsbuild.startDevServer(context.options);
+      return true;
+    };
+
     return createRsbuild({
       cwd: import.meta.dirname,
       config: {
@@ -89,17 +100,6 @@ test('should preserve a dynamically assigned port after restart', async () => {
     });
   }
 
-  const restart: RestartFn = async (context) => {
-    restartContext = context;
-    if (context.action !== 'dev') {
-      return false;
-    }
-
-    const rsbuild = await createInstance();
-    restartResult = await rsbuild.startDevServer(context.options);
-    return true;
-  };
-
   const rsbuild = await createInstance();
   const { port, server } = await rsbuild.startDevServer({
     getPortSilently: true,
@@ -110,23 +110,14 @@ test('should preserve a dynamically assigned port after restart', async () => {
     await expect
       .poll(
         () => {
-          if (!restartContext) {
+          if (!restarting) {
             fs.writeFileSync(watchedFile, String(++version));
           }
-          return restartContext;
+          return restartResult?.port;
         },
         { timeout: 5_000 },
       )
-      .toEqual({
-        action: 'dev',
-        event: 'change',
-        filePath: watchedFile,
-        options: {
-          getPortSilently: true,
-        },
-      });
-
-    await expect.poll(() => restartResult?.port).toBe(port);
+      .toBe(port);
   } finally {
     await restartResult?.server.close();
     await server.close();

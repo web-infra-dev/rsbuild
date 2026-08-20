@@ -39,4 +39,23 @@ describe('restartManager', () => {
 
     expect(callback).not.toHaveBeenCalled();
   });
+
+  test('should isolate ports when managers share a restart callback', async () => {
+    const inheritedPorts: (number | undefined)[] = [];
+    const restart = rstest.fn(({ options }) => {
+      const manager = createRestartManager({ onRestart: () => {} });
+      inheritedPorts.push(manager.inheritPort(options));
+      return true;
+    });
+    const first = createRestartManager({ onRestart: () => {}, restart });
+    const second = createRestartManager({ onRestart: () => {}, restart });
+
+    first.setPort(3000);
+    second.setPort(4000);
+
+    await first.requestRestart({ action: 'dev', options: {} });
+    await second.requestRestart({ action: 'dev', options: {} });
+
+    expect(inheritedPorts).toEqual([3000, 4000]);
+  });
 });

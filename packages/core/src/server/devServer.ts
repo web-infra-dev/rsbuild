@@ -110,7 +110,9 @@ export async function createDevServer<
   logger.debug('create dev server');
 
   const isDynamicPort = config.server.port === 0;
-  const lastPort = isDynamicPort ? context.restartManager.getPort() : undefined;
+  const lastPort = isDynamicPort
+    ? context.restartManager.inheritPort(devServerOptions)
+    : undefined;
   const { port, portTip } = await resolvePort(config, lastPort);
   if (isDynamicPort) {
     context.restartManager.setPort(port);

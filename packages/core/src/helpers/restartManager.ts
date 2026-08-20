@@ -6,19 +6,20 @@ type Cleanup = () => MaybePromise<void>;
 export type RestartManager = {
   /** Whether a restart executor is available. */
   readonly canRestart: boolean;
-  /** Get the port used before a restart. */
-  getPort(): number | undefined;
-  /** Set the port to reuse after a restart. */
+  /** Store the dynamic port for the next restart. */
   setPort(port: number): void;
+  /** Consume the dynamic port associated with restart options. */
+  inheritPort(options?: object): number | undefined;
   /** Register a cleanup callback and return a function that unregisters it. */
   registerCleanup(cleanup: Cleanup): () => void;
   /** Handle a restart request and return whether the restart succeeded. */
   requestRestart(context: RestartContext): Promise<boolean>;
 };
 
-// Replacement instances use the same restart callback, so its identity can be
-// used to share the last port without exposing a public option.
-const restartPorts = new WeakMap<RestartFn, number>();
+// During a dynamic-port restart, the current manager associates its assigned
+// port with the restart options object. The replacement manager consumes that
+// entry when creating the new server, preserving the port across the restart.
+const restartPorts = new WeakMap<object, number>();
 
 export const createRestartManager = ({
   onRestart,
@@ -28,16 +29,19 @@ export const createRestartManager = ({
   restart?: RestartFn;
 }): RestartManager => {
   let cleanups = new Set<Cleanup>();
+  let port: number | undefined;
 
   return {
     canRestart: Boolean(restart),
-    getPort() {
-      return restart ? restartPorts.get(restart) : undefined;
+    setPort(nextPort) {
+      port = nextPort;
     },
-    setPort(port) {
-      if (restart) {
-        restartPorts.set(restart, port);
+    inheritPort(options) {
+      const inheritedPort = options ? restartPorts.get(options) : undefined;
+      if (options) {
+        restartPorts.delete(options);
       }
+      return inheritedPort;
     },
     registerCleanup(cleanup) {
       cleanups.add(cleanup);
@@ -80,7 +84,17 @@ export const createRestartManager = ({
         throw firstError;
       }
 
-      return restart(context);
+      if (context.action !== 'dev' || port === undefined) {
+        return restart(context);
+      }
+
+      // Expose the port only while the replacement task is being created.
+      restartPorts.set(context.options, port);
+      try {
+        return await restart(context);
+      } finally {
+        restartPorts.delete(context.options);
+      }
     },
   };
 };
