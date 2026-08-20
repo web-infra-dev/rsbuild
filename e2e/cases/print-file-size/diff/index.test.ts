@@ -24,7 +24,7 @@ test('should print file size diff as expected', async ({
   expect(extractFileSizeLogs(rsbuild1.logs)).toMatchSnapshot();
   rsbuild1.clearLogs();
 
-  editFile(
+  await editFile(
     join(srcDir, 'index.js'),
     () => `import "./App.css";
 import React from 'react';
@@ -38,7 +38,7 @@ console.log(ReactDOM);
   expect(extractFileSizeLogs(rsbuild2.logs)).toMatchSnapshot();
   rsbuild2.clearLogs();
 
-  editFile(join(srcDir, 'index.js'), () => `import "./App.css";`);
+  await editFile(join(srcDir, 'index.js'), () => `import "./App.css";`);
 
   const rsbuild3 = await build({ config });
   expect(extractFileSizeLogs(rsbuild3.logs)).toMatchSnapshot();

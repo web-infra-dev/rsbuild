@@ -38,3 +38,17 @@ export default {
   },
 };
 ```
+
+## 动态端口
+
+- **版本：** `>= 2.2.0`
+
+将 `server.port` 设置为 `0`，让操作系统自动分配一个可用端口：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    port: 0,
+  },
+};
+```

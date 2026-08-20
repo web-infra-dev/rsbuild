@@ -12,11 +12,11 @@ export const pluginServer = (): RsbuildPlugin => ({
   name: 'rsbuild:server',
 
   setup(api) {
-    const onStartServer: OnAfterStartDevServerFn = ({ port, routes }) => {
+    const onStartServer: OnAfterStartDevServerFn = async ({ port, routes }) => {
       const config = api.getNormalizedConfig();
       if (config.server.open) {
         const protocol = config.server.https ? 'https' : 'http';
-        open({
+        await open({
           port,
           routes,
           config,

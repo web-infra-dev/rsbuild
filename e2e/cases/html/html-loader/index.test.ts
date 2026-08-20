@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
 test('should allow to use html-loader', async ({ runBoth }) => {
-  await runBoth(async ({ result }) => {
+  await runBoth(({ result }) => {
     const files = result.getDistFiles();
     const filenames = Object.keys(files);
 

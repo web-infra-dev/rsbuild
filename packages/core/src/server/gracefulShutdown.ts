@@ -41,14 +41,14 @@ export const setupGracefulShutdown = (): (() => void) => {
   // or manually via 'kill -15 <pid>' or 'kill -TERM <pid>' command.
   // Add 128 to signal number as per POSIX convention for signal-terminated processes.
   const onSigterm = () => {
-    handleTermination(constants.signals.SIGTERM + 128);
+    void handleTermination(constants.signals.SIGTERM + 128);
   };
   process.once('SIGTERM', onSigterm);
 
   // Listen for CTRL+D (stdin end) in non-CI environments
   const isCI = process.env.CI === 'true';
   const onStdinEnd = () => {
-    handleTermination(0);
+    void handleTermination(0);
   };
   if (!isCI) {
     process.stdin.on('end', onStdinEnd);

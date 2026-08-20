@@ -17,7 +17,7 @@ const checkManifestIntegrity = (rsbuild: {
 };
 
 test('should generate manifest file with integrity', async ({ runBoth }) => {
-  await runBoth(async ({ result }) => {
+  await runBoth(({ result }) => {
     checkManifestIntegrity(result);
   });
 });
@@ -26,7 +26,7 @@ test('should generate manifest file with integrity when html plugin is disabled'
   runBoth,
 }) => {
   await runBoth(
-    async ({ result }) => {
+    ({ result }) => {
       checkManifestIntegrity(result);
     },
     {

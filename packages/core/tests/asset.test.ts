@@ -38,7 +38,7 @@ describe('plugin-asset', () => {
     expect(matchRules(config, 'a.png')).toMatchSnapshot();
   });
 
-  test('should add image rules correctly', async () => {
+  test('should allow setting distPath.image to an empty string', async () => {
     const rsbuild = await createRsbuild({
       config: {
         output: {

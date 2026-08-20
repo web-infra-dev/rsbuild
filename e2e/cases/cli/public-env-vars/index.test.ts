@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-test('should inject public env vars to client', async ({ execCliSync }) => {
+test('should inject public env vars to client', ({ execCliSync }) => {
   execCliSync('build');
 
   const content = fs.readFileSync(

@@ -365,9 +365,7 @@ test('should reload page when publicDir file changes', async ({
 
   await fse.outputFile(file, 'test');
   // check the page is reloaded
-  await new Promise((resolve) => {
-    page.waitForURL(page.url()).then(resolve);
-  });
+  await page.waitForURL(page.url());
 
   // reset file
   await fse.outputFile(file, 'a');
@@ -392,9 +390,7 @@ test('should reload page when custom publicDir file changes', async ({
 
   await fse.outputFile(file, 'test');
   // check the page is reloaded
-  await new Promise((resolve) => {
-    page.waitForURL(page.url()).then(resolve);
-  });
+  await page.waitForURL(page.url());
 
   // reset file
   await fse.outputFile(file, 'a111');

@@ -72,12 +72,10 @@ export function normalizeFilePath(filePath: string): string {
 }
 
 /** Load previous build file sizes from snapshots */
-async function loadPrevSnapshots(
-  snapshotPath: string,
-): Promise<SizeSnapshots | null> {
+async function loadPrevSnapshots(snapshotPath: string) {
   try {
     const content = await fs.promises.readFile(snapshotPath, 'utf-8');
-    return JSON.parse(content);
+    return JSON.parse(content) as SizeSnapshots;
   } catch {
     // Cache doesn't exist or is invalid
     return null;

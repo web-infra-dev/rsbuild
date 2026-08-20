@@ -42,10 +42,10 @@ test('should set template via async function correctly', async ({ build }) => {
         },
       },
       html: {
-        async template({ entryName }) {
-          return entryName === 'index'
-            ? './static/index.html'
-            : './static/foo.html';
+        template({ entryName }) {
+          return Promise.resolve(
+            entryName === 'index' ? './static/index.html' : './static/foo.html',
+          );
         },
         templateParameters: {
           foo: 'foo',
@@ -138,12 +138,12 @@ test('should allow templateParameters to be an async function', async ({
             ? './static/foo.html'
             : './static/index.html';
         },
-        async templateParameters(defaultValue, { entryName }) {
-          return {
+        templateParameters(defaultValue, { entryName }) {
+          return Promise.resolve({
             ...defaultValue,
             foo: `${entryName}-foo`,
             type: `${entryName}-type`,
-          };
+          });
         },
       },
     },

@@ -234,7 +234,7 @@ export async function open({
      * It can prevent opening the same URL multiple times.
      */
     if (!openedURLs.includes(url)) {
-      openBrowser(url, logger);
+      await openBrowser(url, logger);
       openedURLs.push(url);
     }
   }

@@ -1,0 +1,22 @@
+{
+  "name": "rsbuild-solid2-ts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "rsbuild",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@solidjs/web": "^2.0.0-rc.0",
+    "solid-js": "^2.0.0-rc.0"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^2.2.0-beta.1",
+    "@rsbuild/plugin-babel": "^2.1.0",
+    "@rsbuild/plugin-solid": "^2.0.0-beta.1",
+    "@types/node": "^24.13.3",
+    "typescript": "^6.0.3"
+  }
+}

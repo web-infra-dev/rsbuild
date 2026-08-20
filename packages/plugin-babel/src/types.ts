@@ -2,9 +2,24 @@ import type {
   PluginItem as BabelPlugin,
   TransformOptions as BabelTransformOptions,
 } from '@babel/core';
-import type { ConfigChainWithContext } from '@rsbuild/core';
+import type {
+  ChainIdentifier,
+  ConfigChainWithContext,
+  RspackChain,
+} from '@rsbuild/core';
 
 export type { BabelPlugin, BabelTransformOptions };
+
+type BabelRule = RspackChain.Rule<unknown>;
+
+export type ModifyBabelLoadersOptions = {
+  chain: RspackChain;
+  CHAIN_ID: ChainIdentifier;
+  /** Modify the options of each Babel loader. */
+  modifyOptions?: (config: BabelTransformOptions) => BabelTransformOptions;
+  /** Modify each matched rule that contains a Babel loader. */
+  modifyRule?: (rule: BabelRule, context: { babelUseId: string }) => void;
+};
 
 export type PresetEnvTargets = string | string[] | Record<string, string>;
 export type PresetEnvBuiltIns = 'usage' | 'entry' | false;

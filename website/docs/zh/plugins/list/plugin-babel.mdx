@@ -425,6 +425,66 @@ DEBUG=rsbuild pnpm build
 
 然后打开生成的 `rspack.config.web.mjs`，搜索 `babel-loader` 关键词，即可看到完整的 `babel-loader` 配置内容。
 
+## 辅助函数 \{#helper-functions}
+
+`@rsbuild/plugin-babel` 提供了一些面向插件开发者和框架作者的辅助函数。
+
+### modifyBabelLoaders
+
+- **类型：**
+
+```ts
+function modifyBabelLoaders(options: ModifyBabelLoadersOptions): void;
+
+type ModifyBabelLoadersOptions = {
+  chain: RspackChain;
+  CHAIN_ID: ChainIdentifier;
+  modifyOptions?: (options: BabelTransformOptions) => BabelTransformOptions;
+  modifyRule?: (
+    rule: RspackChain.Rule<unknown>,
+    context: { babelUseId: string },
+  ) => void;
+};
+```
+
+- **版本：** `>= 2.1.0`
+
+`modifyBabelLoaders` 用于修改 Babel loader 选项及其所在的 rule。
+
+- `modifyOptions` 修改当前的 `babel-loader` 选项，并且需要返回最终选项。
+- `modifyRule` 修改匹配的 rule。如果同时提供两个回调，它会在 `modifyOptions` 之后执行。可以通过 `babelUseId` 访问该 rule 中的 Babel loader。
+
+在自定义 Rsbuild 插件的 [`modifyBundlerChain`](/plugins/dev/hooks#modifybundlerchain) 钩子中调用此函数：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, type RsbuildPlugin } from '@rsbuild/core';
+import { modifyBabelLoaders, pluginBabel } from '@rsbuild/plugin-babel';
+
+const pluginCustomizeBabel = (): RsbuildPlugin => ({
+  name: 'customize-babel',
+  setup(api) {
+    api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+      modifyBabelLoaders({
+        chain,
+        CHAIN_ID,
+        modifyOptions(options) {
+          options.plugins ??= [];
+          options.plugins.push('babel-plugin-example');
+          return options;
+        },
+        modifyRule(rule) {
+          rule.exclude.add(/[\\/]node_modules[\\/]/);
+        },
+      });
+    });
+  },
+});
+
+export default defineConfig({
+  plugins: [pluginBabel(), pluginCustomizeBabel()],
+});
+```
+
 ## 常见问题
 
 ### 编译卡死

@@ -6,114 +6,136 @@ const defaultCwd = path.join(import.meta.dirname, '..');
 
 describe('plugin-swc', () => {
   it('should disable preset-env for non-web targets', async () => {
-    await matchConfigSnapshot({
-      output: {
-        polyfill: 'entry',
-        target: 'node',
-      },
-    });
+    await expect(
+      getMatchedRules({
+        output: {
+          polyfill: 'entry',
+          target: 'node',
+        },
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should disable preset-env mode', async () => {
-    await matchConfigSnapshot({
-      output: {
-        polyfill: 'off',
-      },
-    });
+    await expect(
+      getMatchedRules({
+        output: {
+          polyfill: 'off',
+        },
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should enable preset-env in usage mode', async () => {
-    await matchConfigSnapshot({
-      output: {
-        polyfill: 'usage',
-      },
-    });
+    await expect(
+      getMatchedRules({
+        output: {
+          polyfill: 'usage',
+        },
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should enable preset-env in entry mode', async () => {
-    await matchConfigSnapshot({
-      output: {
-        polyfill: 'entry',
-      },
-    });
+    await expect(
+      getMatchedRules({
+        output: {
+          polyfill: 'entry',
+        },
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should apply overrideBrowserslist', async () => {
-    await matchConfigSnapshot({
-      output: {
-        overrideBrowserslist: ['chrome 98'],
-      },
-    });
+    await expect(
+      getMatchedRules({
+        output: {
+          overrideBrowserslist: ['chrome 98'],
+        },
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should use the correct core-js version', async () => {
-    await matchConfigSnapshot({
-      output: {
-        polyfill: 'entry',
-      },
-    });
+    await expect(
+      getMatchedRules({
+        output: {
+          polyfill: 'entry',
+        },
+      }),
+    ).resolves.toMatchSnapshot();
 
-    await matchConfigSnapshot({
-      output: {
-        polyfill: 'entry',
-        target: 'node',
-      },
-    });
+    await expect(
+      getMatchedRules({
+        output: {
+          polyfill: 'entry',
+          target: 'node',
+        },
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should apply pluginImport', async () => {
-    await matchConfigSnapshot({
-      source: {
-        transformImport: [
-          {
-            libraryName: 'foo',
-          },
-        ],
-      },
-    });
+    await expect(
+      getMatchedRules({
+        source: {
+          transformImport: [
+            {
+              libraryName: 'foo',
+            },
+          ],
+        },
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should disable pluginImport when it returns undefined', async () => {
-    await matchConfigSnapshot({
-      source: {
-        transformImport: () => {},
-      },
-    });
+    await expect(
+      getMatchedRules({
+        source: {
+          transformImport: () => {},
+        },
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should apply pluginImport correctly with ConfigChain', async () => {
-    await matchConfigSnapshot({
-      source: {
-        transformImport: [
-          {
-            libraryName: 'foo1',
-          },
-          // ignore foo1
-          () => [],
-          {
-            libraryName: 'foo',
-          },
-          {
-            libraryName: 'baz',
-          },
-          {
-            libraryName: 'bar',
-          },
-          // ignore baz
-          (value) => value.filter((v) => v.libraryName !== 'baz'),
-        ],
-      },
-    });
+    await expect(
+      getMatchedRules({
+        source: {
+          transformImport: [
+            {
+              libraryName: 'foo1',
+            },
+            // ignore foo1
+            () => [],
+            {
+              libraryName: 'foo',
+            },
+            {
+              libraryName: 'baz',
+            },
+            {
+              libraryName: 'bar',
+            },
+            // ignore baz
+            (value) => value.filter((v) => v.libraryName !== 'baz'),
+          ],
+        },
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should apply decorators version 2023-11', async () => {
-    await matchConfigSnapshot({
-      source: {
-        decorators: {
-          version: '2023-11',
+    await expect(
+      getMatchedRules({
+        source: {
+          decorators: {
+            version: '2023-11',
+          },
         },
-      },
-    });
+      }),
+    ).resolves.toMatchSnapshot();
   });
 
   it('should allow using `tools.swc` to configure swc-loader options', async () => {
@@ -205,7 +227,7 @@ describe('plugin-swc', () => {
   });
 });
 
-async function matchConfigSnapshot(config: RsbuildConfig) {
+async function getMatchedRules(config: RsbuildConfig) {
   config.source ||= {};
   config.source.entry = {
     main: './src/index.js',
@@ -216,7 +238,5 @@ async function matchConfigSnapshot(config: RsbuildConfig) {
     cwd: defaultCwd,
   });
   const rspackConfigs = await rsbuild.initConfigs();
-  expect(
-    rspackConfigs.map((rspackConfig) => matchRules(rspackConfig, 'a.js')),
-  ).toMatchSnapshot();
+  return rspackConfigs.map((rspackConfig) => matchRules(rspackConfig, 'a.js'));
 }

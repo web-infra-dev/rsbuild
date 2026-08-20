@@ -33,6 +33,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
         chain.experiments({
           ...chain.get('experiments'),
+          nativeWatcher: true,
           sourceImport: true,
         });
 

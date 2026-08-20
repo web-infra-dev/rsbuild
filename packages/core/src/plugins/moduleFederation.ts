@@ -28,9 +28,10 @@ export function pluginModuleFederation(): RsbuildPlugin {
 
           // For remote modules, Rsbuild should send the ws request to the provider's dev server.
           // This allows the provider to do HMR when the provider module is loaded in the consumer's page.
-          if (config.server?.port && !config.dev.client?.port) {
+          if (config.server?.port !== undefined && !config.dev.client?.port) {
             config.dev.client ||= {};
-            config.dev.client.port = config.server.port;
+            config.dev.client.port =
+              config.server.port === 0 ? '<port>' : config.server.port;
           }
 
           // Change the default assetPrefix to `true` for remote modules.

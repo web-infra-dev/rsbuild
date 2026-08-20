@@ -404,6 +404,7 @@ export class SocketServer {
       socket.isAlive = true;
     });
 
+    // rslint-disable-next-line @typescript-eslint/no-misused-promises -- ws does not consume listener return values.
     socket.on('message', async (data) => {
       try {
         const payload: ClientMessage = JSON.parse(

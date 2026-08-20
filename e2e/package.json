@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@module-federation/runtime-tools": "catalog:",
+    "@solidjs/web": "catalog:",
     "core-js": "catalog:",
     "preact": "catalog:",
     "react": "catalog:",

@@ -8,7 +8,7 @@ test('should run onBeforeStartDevServer hooks and add custom middleware', async 
   const plugin: RsbuildPlugin = {
     name: 'test-plugin',
     setup(api) {
-      api.onBeforeStartDevServer(async ({ server }) => {
+      api.onBeforeStartDevServer(({ server }) => {
         server.middlewares.use((req, res, next) => {
           if (req.url === '/test.html') {
             res.end('Hello, world!');

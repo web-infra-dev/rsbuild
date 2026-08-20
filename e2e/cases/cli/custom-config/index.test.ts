@@ -28,9 +28,7 @@ test('should support custom config to find absolute path', async ({
   expect(outputFiles.length > 1).toBeTruthy();
 });
 
-test('should throw error when custom config not found', async ({
-  execCliSync,
-}) => {
+test('should throw error when custom config not found', ({ execCliSync }) => {
   expect(() => {
     execCliSync('build --config ./custom-not-found.config.js', {
       // only capture stderr output

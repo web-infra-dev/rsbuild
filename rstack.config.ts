@@ -18,56 +18,52 @@ define.staged({
   '*.{js,jsx,ts,tsx,mjs,cjs}': ['rs lint --type-check', 'rs fmt'],
 });
 
-define.lint(async ({ globalIgnores, js, ts }) => {
-  const { default: globals } = await import('globals');
-  return [
-    globalIgnores([
-      'e2e/cases/browser-logs/skip-build-error/src/index.js',
-      'e2e/cases/wasm/wasm-source-import/src/index.js',
-    ]),
-    js.configs.recommended,
-    ts.configs.recommendedTypeChecked,
-    {
-      files: ['**/*.{js,jsx,cjs,mjs}'],
-      languageOptions: {
-        globals: {
-          ...globals.browser,
-          ...globals.nodeBuiltin,
-          __dirname: 'readonly',
-          __filename: 'readonly',
-          CONFIG_VALUE: 'readonly',
-          CONTENT: 'readonly',
-          DEFINED_VALUE: 'readonly',
-          ENABLE_TEST: 'readonly',
-          undefinedValue: 'readonly',
-        },
+define.lint(({ globals, globalIgnores, js, rstestPlugin, ts }) => [
+  globalIgnores([
+    'e2e/cases/browser-logs/skip-build-error/src/index.js',
+    'e2e/cases/wasm/wasm-source-import/src/index.js',
+  ]),
+  js.configs.recommended,
+  ts.configs.recommendedTypeChecked,
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    ...rstestPlugin.configs.recommended,
+  },
+  {
+    files: ['**/*.{js,jsx,cjs,mjs}'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.nodeBuiltin,
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        CONFIG_VALUE: 'readonly',
+        CONTENT: 'readonly',
+        DEFINED_VALUE: 'readonly',
+        ENABLE_TEST: 'readonly',
+        undefinedValue: 'readonly',
       },
     },
-    {
-      languageOptions: {
-        parserOptions: {
-          project: [
-            './packages/*/tsconfig.json',
-            './scripts/*/tsconfig.json',
-            './examples/*/tsconfig.json',
-            './e2e/tsconfig.json',
-            './e2e/type-tests/*/tsconfig.json',
-          ],
-        },
-      },
-      rules: {
-        '@typescript-eslint/no-unsafe-member-access': 'off',
-        '@typescript-eslint/no-unsafe-assignment': 'off',
-        '@typescript-eslint/no-unsafe-argument': 'off',
-        '@typescript-eslint/require-await': 'off',
-        '@typescript-eslint/no-unsafe-call': 'off',
-        '@typescript-eslint/no-floating-promises': 'off',
-        '@typescript-eslint/no-misused-promises': 'off',
-        '@typescript-eslint/restrict-template-expressions': 'off',
-        '@typescript-eslint/no-unsafe-return': 'off',
-        '@typescript-eslint/no-unnecessary-type-assertion': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
+  },
+  {
+    languageOptions: {
+      parserOptions: {
+        project: [
+          './packages/*/tsconfig.json',
+          './scripts/*/tsconfig.json',
+          './examples/*/tsconfig.json',
+          './e2e/tsconfig.json',
+          './e2e/type-tests/*/tsconfig.json',
+        ],
       },
     },
-  ];
-});
+    rules: {
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+]);

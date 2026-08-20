@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-test('should allow to custom env prefix via loadEnv method', async ({
+test('should allow to custom env prefix via loadEnv method', ({
   execCliSync,
 }) => {
   execCliSync('build');

@@ -89,23 +89,21 @@ exports[`plugin-solid > should allow deprecated solidPresetOptions alias 1`] = `
                   "version": "2023-11",
                 },
               ],
-              [
-                "<PNPM_INNER>/solid-refresh/dist/babel.cjs",
-                {
-                  "bundler": "rspack-esm",
-                },
-              ],
             ],
             "presets": [
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "ssr",
                   "hydratable": true,
                 },
               ],
             ],
           },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-solid/src/refreshLoader.mjs",
         },
       ],
     },
@@ -205,6 +203,7 @@ exports[`plugin-solid > should allow solid options to override ssr defaults 1`] 
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "universal",
                   "hydratable": false,
                 },
@@ -308,23 +307,21 @@ exports[`plugin-solid > should allow to configure solid options 1`] = `
                   "version": "2023-11",
                 },
               ],
-              [
-                "<PNPM_INNER>/solid-refresh/dist/babel.cjs",
-                {
-                  "bundler": "rspack-esm",
-                },
-              ],
             ],
             "presets": [
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "ssr",
                   "hydratable": true,
                 },
               ],
             ],
           },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-solid/src/refreshLoader.mjs",
         },
       ],
     },
@@ -422,20 +419,19 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
                   "version": "2023-11",
                 },
               ],
-              [
-                "<PNPM_INNER>/solid-refresh/dist/babel.cjs",
-                {
-                  "bundler": "rspack-esm",
-                },
-              ],
             ],
             "presets": [
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
-                {},
+                {
+                  "dev": false,
+                },
               ],
             ],
           },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-solid/src/refreshLoader.mjs",
         },
       ],
     },
@@ -533,23 +529,21 @@ exports[`plugin-solid > should use hydratable dom output for ssr option on web t
                   "version": "2023-11",
                 },
               ],
-              [
-                "<PNPM_INNER>/solid-refresh/dist/babel.cjs",
-                {
-                  "bundler": "rspack-esm",
-                },
-              ],
             ],
             "presets": [
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "dom",
                   "hydratable": true,
                 },
               ],
             ],
           },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-solid/src/refreshLoader.mjs",
         },
       ],
     },
@@ -649,6 +643,7 @@ exports[`plugin-solid > should use ssr output for ssr option on node target 1`] 
               [
                 "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
+                  "dev": false,
                   "generate": "ssr",
                   "hydratable": true,
                 },

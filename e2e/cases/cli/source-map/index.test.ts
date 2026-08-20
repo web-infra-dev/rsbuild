@@ -27,7 +27,7 @@ test('should disable source map from CLI', async ({
   expect(outputFiles.some((file) => file.endsWith('.js.map'))).toBeFalsy();
 });
 
-test('should reject source map type from CLI', async ({ execCliSync }) => {
+test('should reject source map type from CLI', ({ execCliSync }) => {
   expect(() => {
     execCliSync('build --source-map hidden-source-map', {
       stdio: ['ignore', 'ignore', 'pipe'],

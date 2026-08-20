@@ -16,4 +16,4 @@ export const require: NodeJS.Require = createRequire(import.meta.url);
  */
 export const requireCompiledPackage = <T extends keyof CompiledPackages>(
   name: T,
-): CompiledPackages[T] => require(`${COMPILED_PATH}/${name}/index.js`);
+) => require(`${COMPILED_PATH}/${name}/index.js`) as CompiledPackages[T];

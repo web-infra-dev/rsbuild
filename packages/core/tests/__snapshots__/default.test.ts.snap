@@ -33,6 +33,7 @@ exports[`should apply default plugins correctly 1`] = `
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
   "experiments": {
+    "nativeWatcher": true,
     "sourceImport": true,
   },
   "infrastructureLogging": {
@@ -602,6 +603,7 @@ exports[`should apply default plugins correctly in production 1`] = `
   "context": "<ROOT>",
   "devtool": false,
   "experiments": {
+    "nativeWatcher": true,
     "sourceImport": true,
   },
   "infrastructureLogging": {
@@ -1201,6 +1203,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
   "experiments": {
+    "nativeWatcher": true,
     "sourceImport": true,
   },
   "infrastructureLogging": {
@@ -1757,6 +1760,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
   "experiments": {
+    "nativeWatcher": true,
     "sourceImport": true,
   },
   "infrastructureLogging": {

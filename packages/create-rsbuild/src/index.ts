@@ -40,6 +40,7 @@ async function getTemplateName({ template }: Argv) {
         { value: 'preact', label: 'Preact' },
         { value: 'svelte', label: 'Svelte' },
         { value: 'solid', label: 'Solid' },
+        { value: 'solid2', label: 'Solid 2 (RC)' },
       ],
     }),
   );
@@ -104,7 +105,7 @@ function mapRslintTemplate(templateName: string): RslintTemplateName {
 
 const root = path.join(import.meta.dirname, '..');
 
-create({
+await create({
   root,
   name: 'rsbuild',
   templates: [
@@ -122,6 +123,8 @@ create({
     'svelte-ts',
     'solid-js',
     'solid-ts',
+    'solid2-js',
+    'solid2-ts',
   ],
   getTemplateName,
   mapESLintTemplate,

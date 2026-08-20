@@ -8,6 +8,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
+    "@solidjs/web": "catalog:",
     "solid-js": "catalog:"
   },
   "devDependencies": {

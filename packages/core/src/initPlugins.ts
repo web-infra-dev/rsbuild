@@ -349,7 +349,7 @@ export function initPluginAPI({
   const onExit: typeof hooks.onExit.tap = (cb) => {
     if (!onExitListened) {
       exitHook((exitCode) => {
-        hooks.onExit.callBatch({ exitCode });
+        void hooks.onExit.callBatch({ exitCode });
       });
       onExitListened = true;
     }

@@ -32,20 +32,24 @@ describe('plugin-solid', () => {
     expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
   });
 
-  it('should add development resolve condition in development mode', async () => {
+  it('should enable Solid development mode in development mode', async () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
         mode: 'development',
-        plugins: [pluginSolid()],
+        plugins: [pluginSolid(), pluginBabel()],
       },
     });
     const config = await rsbuild.initConfigs();
+
     expect(config[0].resolve?.conditionNames).toEqual([
       'solid',
       'development',
       '...',
     ]);
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+      '"dev":true',
+    );
   });
 
   it('should preserve user resolve condition names', async () => {
@@ -68,44 +72,75 @@ describe('plugin-solid', () => {
     ]);
   });
 
-  it('should allow disabling solid development condition', async () => {
+  it('should allow disabling Solid development mode', async () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
         mode: 'development',
-        plugins: [pluginSolid({ dev: false })],
+        plugins: [pluginSolid({ dev: false }), pluginBabel()],
       },
     });
     const config = await rsbuild.initConfigs();
+
     expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+      '"dev":false',
+    );
   });
 
-  it('should not add development condition in production mode by default', async () => {
+  it('should disable Solid development mode in production by default', async () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
         mode: 'production',
-        plugins: [pluginSolid()],
+        plugins: [pluginSolid(), pluginBabel()],
       },
     });
     const config = await rsbuild.initConfigs();
+
     expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+      '"dev":false',
+    );
   });
 
-  it('should allow forcing solid development condition in production mode', async () => {
+  it('should allow forcing Solid development mode in production mode', async () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
         mode: 'production',
-        plugins: [pluginSolid({ dev: true })],
+        plugins: [pluginSolid({ dev: true }), pluginBabel()],
       },
     });
     const config = await rsbuild.initConfigs();
+
     expect(config[0].resolve?.conditionNames).toEqual([
       'solid',
       'development',
       '...',
     ]);
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+      '"dev":true',
+    );
+  });
+
+  it('should allow solid.dev to override compiler development mode', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        mode: 'development',
+        plugins: [
+          pluginSolid({ dev: false, solid: { dev: true } }),
+          pluginBabel(),
+        ],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+
+    expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0])).toContain(
+      '"dev":true',
+    );
   });
 
   it('should allow disabling solid refresh via refresh.disabled', async () => {
@@ -119,9 +154,22 @@ describe('plugin-solid', () => {
 
     expect(
       JSON.stringify(matchRules(config[0], 'a.tsx')[0]).includes(
-        'solid-refresh',
+        'refreshLoader.mjs',
       ),
     ).toEqual(false);
+  });
+
+  it('should configure granular solid refresh', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid({ refresh: { granular: false } }), pluginBabel()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    const rule = matchRules(config[0], 'a.tsx')[0];
+
+    expect(JSON.stringify(rule)).toContain('"granular":false');
   });
 
   it('should use hydratable dom output for ssr option on web target', async () => {

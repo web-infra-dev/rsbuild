@@ -1,7 +1,7 @@
 import { basename } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { findFile, getRandomPort } from '@rstackjs/test-utils';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin, RsbuildPreviewServer } from '@rsbuild/core';
 
 test('should preview dist files correctly', async ({ page, buildPreview }) => {
   await buildPreview();
@@ -35,6 +35,46 @@ test('should allow plugin to modify preview server config', async ({
 
   const rootEl = page.locator('#root');
   await expect(rootEl).toHaveText('Hello Rsbuild!');
+});
+
+test('should resolve server.port 0 for preview server', async ({
+  page,
+  buildPreview,
+}) => {
+  let hookPort: number | undefined;
+  let previewServer: RsbuildPreviewServer | undefined;
+  const plugin: RsbuildPlugin = {
+    name: 'test-port',
+    setup(api) {
+      api.onBeforeStartPreviewServer(({ server }) => {
+        previewServer = server;
+      });
+      api.onAfterStartPreviewServer(({ port }) => {
+        hookPort = port;
+      });
+    },
+  };
+
+  const result = await buildPreview({
+    config: {
+      server: {
+        port: 0,
+        strictPort: true,
+      },
+      plugins: [plugin],
+    },
+  });
+
+  expect(result.port).toBeGreaterThan(0);
+  expect(previewServer?.port).toBe(result.port);
+  expect(hookPort).toBe(result.port);
+
+  const address = previewServer?.httpServer?.address();
+  expect(
+    address && typeof address !== 'string' ? address.port : undefined,
+  ).toBe(result.port);
+
+  await expect(page.locator('#root')).toHaveText('Hello Rsbuild!');
 });
 
 test('should serve multi-environment assets before returned setup middleware', async ({
