@@ -1,8 +1,11 @@
 import { expect, test } from '@e2e/helper';
 
-test('should extract shared modules by default when target is "node"', async ({
+test('should extract shared modules without extracting single-use dependencies when target is "node"', async ({
   build,
+  copyNodeModules,
 }) => {
+  await copyNodeModules();
+
   const rsbuild = await build();
   const stats = rsbuild.stats?.toJson({
     all: false,

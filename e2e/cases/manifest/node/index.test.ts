@@ -9,11 +9,11 @@ test('should generate manifest file when target is node', async ({ build }) => {
   expect(manifestContent).toBeDefined();
 
   const manifest = JSON.parse(manifestContent);
-  expect(Object.keys(manifest.allFiles).length).toBe(2);
+  expect(Object.keys(manifest.allFiles).length).toBe(1);
 
   expect(manifest.entries.index).toMatchObject({
     initial: {
-      js: ['/865.js', '/index.js'],
+      js: ['/index.js'],
     },
   });
 });

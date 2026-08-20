@@ -1,6 +1,6 @@
 // Rstest Snapshot v1
 
-exports[`should extract shared modules by default when target is "node" 1`] = `
+exports[`should extract shared modules without extracting single-use dependencies when target is "node" 1`] = `
 [
   {
     "files": [
@@ -31,7 +31,7 @@ exports[`should extract shared modules by default when target is "node" 1`] = `
       "index.js",
     ],
     "modules": [
-      "./src/index.js",
+      "./src/index.js + 1 modules",
     ],
   },
 ]
