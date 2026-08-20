@@ -399,6 +399,16 @@ impl BindingRewriter<'_> {
             ],
         }))
     }
+
+    fn visit_mut_call_callee(&mut self, callee: &mut Box<Expr>) {
+        if let Expr::Ident(ident) = &**callee
+            && let Some(replacement) = self.unbound_replacement(ident)
+        {
+            **callee = replacement;
+        } else {
+            callee.visit_mut_with(self);
+        }
+    }
 }
 
 impl VisitMut for BindingRewriter<'_> {
@@ -412,19 +422,16 @@ impl VisitMut for BindingRewriter<'_> {
                 call.callee =
                     Callee::Expr(Box::new(Expr::Ident(self.dynamic_import_helper.clone())));
             }
-            Callee::Expr(callee) => {
-                if let Expr::Ident(ident) = &**callee
-                    && let Some(replacement) = self.unbound_replacement(ident)
-                {
-                    **callee = replacement;
-                } else {
-                    callee.visit_mut_with(self);
-                }
-            }
+            Callee::Expr(callee) => self.visit_mut_call_callee(callee),
             Callee::Super(_) => {}
             #[cfg(swc_ast_unknown)]
             _ => panic!("[rsbuild:runner] Unsupported call callee"),
         }
+    }
+
+    fn visit_mut_opt_call(&mut self, call: &mut OptCall) {
+        call.args.visit_mut_with(self);
+        self.visit_mut_call_callee(&mut call.callee);
     }
 
     fn visit_mut_tagged_tpl(&mut self, template: &mut TaggedTpl) {
@@ -666,6 +673,7 @@ mod tests {
         export class Child extends Base {}
         export const object = { value, local };
         export const result = call();
+        export const optionalResult = call?.();
         export const tagged = tag`value`;
       "#,
         );
@@ -675,6 +683,7 @@ mod tests {
         assert!(output.contains("(0,"), "{output}");
         assert!(output.contains("[\"call\"]"));
         assert!(output.contains("[\"tag\"]"));
+        assert!(output.matches("(0,").count() >= 3, "{output}");
         assert!(output.contains("const { local }"));
     }
 

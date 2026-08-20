@@ -257,14 +257,14 @@ export const read = () => ready;
 export const update = () => {
   const before = ready;
   mark();
-  return [before, ready, receiver()];
+  return [before, ready, receiver(), receiver?.()];
 };`,
     ],
   ]);
 
   const result = (await runner.run('entry.mjs')) as TestNamespace;
   expect(result.read()).toBe(false);
-  expect(result.update()).toEqual([false, true, undefined]);
+  expect(result.update()).toEqual([false, true, undefined, undefined]);
   expect(result.read()).toBe(true);
 });
 
@@ -294,6 +294,50 @@ export const update = () => {
   const result = (await runner.run('entry.mjs')) as TestNamespace;
   expect(result.update()).toEqual([[0, 0, 0], 1, 1, 1]);
   expect(result.update()).toEqual([[1, 1, 1], 2, 2, 2]);
+});
+
+test('omits ambiguous star exports while preserving explicit exports', async () => {
+  const runner = createRunner([
+    [
+      'entry.mjs',
+      `export * from './first.mjs';
+export * from './first.mjs';
+export * from './second.mjs';
+export { overridden } from './first.mjs';`,
+    ],
+    [
+      'first.mjs',
+      `export const conflict = 'first';
+export const firstOnly = 'first';
+export const overridden = 'first';
+export const repeated = 'first';`,
+    ],
+    [
+      'second.mjs',
+      `export const conflict = 'second';
+export const overridden = 'second';
+export const secondOnly = 'second';`,
+    ],
+    [
+      'consumer.mjs',
+      `import { conflict } from './entry.mjs';
+export const value = conflict;`,
+    ],
+  ]);
+
+  const namespace = (await runner.run('entry.mjs')) as TestNamespace;
+  expect(namespace).toMatchObject({
+    firstOnly: 'first',
+    overridden: 'first',
+    repeated: 'first',
+    secondOnly: 'second',
+  });
+  expect(Object.hasOwn(namespace, 'conflict')).toBe(false);
+
+  await expect(runner.run('consumer.mjs')).rejects.toMatchObject({
+    message: `${color.dim('[rsbuild:runner]')} The requested module './entry.mjs' contains conflicting star exports for name 'conflict'`,
+    name: 'SyntaxError',
+  });
 });
 
 test('observes asynchronous external export updates', async () => {

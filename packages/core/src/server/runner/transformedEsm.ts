@@ -27,6 +27,7 @@ type TransformedEsmImportMeta = {
 type ModuleState = 'evaluating' | 'evaluated' | 'failed';
 
 type ModuleNode = {
+  ambiguousExports: Set<string>;
   error?: unknown;
   evaluationPromise?: Promise<Namespace>;
   explicitExports: Set<string>;
@@ -127,6 +128,7 @@ const analyzeImportedModDifference = (
   namespace: Namespace,
   specifier: string,
   metadata?: TransformedEsmImportMetadata,
+  ambiguousExports?: ReadonlySet<string>,
 ): void => {
   if (!metadata?.importedNames?.length) {
     return;
@@ -136,6 +138,11 @@ const analyzeImportedModDifference = (
   );
   if (missingBindings.length > 0) {
     const lastBinding = missingBindings[missingBindings.length - 1];
+    if (ambiguousExports?.has(lastBinding)) {
+      throw new SyntaxError(
+        `${color.dim('[rsbuild:runner]')} The requested module '${specifier}' contains conflicting star exports for name '${lastBinding}'`,
+      );
+    }
     throw new SyntaxError(
       `${color.dim('[rsbuild:runner]')} The requested module '${specifier}' does not provide an export named '${lastBinding}'`,
     );
@@ -173,6 +180,7 @@ class TransformedEsmEvaluator {
     }
 
     const moduleNode: ModuleNode = {
+      ambiguousExports: new Set(),
       explicitExports: new Set(),
       exports: createNamespace(),
       id: moduleId,
@@ -250,16 +258,27 @@ class TransformedEsmEvaluator {
         },
       });
     };
+    const starExportSources = new Map<string, Namespace>();
     const exportAll = (namespace: Namespace): void => {
       for (const name of Object.keys(namespace)) {
         if (
           name === 'default' ||
           name === '__esModule' ||
           moduleNode.explicitExports.has(name) ||
-          Object.hasOwn(moduleNode.exports, name)
+          moduleNode.ambiguousExports.has(name)
         ) {
           continue;
         }
+        const existingSource = starExportSources.get(name);
+        if (existingSource) {
+          if (existingSource !== namespace) {
+            starExportSources.delete(name);
+            moduleNode.ambiguousExports.add(name);
+            delete moduleNode.exports[name];
+          }
+          continue;
+        }
+        starExportSources.set(name, namespace);
         Object.defineProperty(moduleNode.exports, name, {
           configurable: true,
           enumerable: true,
@@ -332,7 +351,12 @@ class TransformedEsmEvaluator {
         ? dependency.exports
         : await this.#evaluateModule(dependency, ancestors);
       if (validate) {
-        analyzeImportedModDifference(namespace, specifier, metadata);
+        analyzeImportedModDifference(
+          namespace,
+          specifier,
+          metadata,
+          dependency.ambiguousExports,
+        );
       }
       return namespace;
     }
