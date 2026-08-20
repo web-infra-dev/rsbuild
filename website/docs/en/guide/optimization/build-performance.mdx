@@ -77,6 +77,22 @@ export default {
 
 > See [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
 
+### Enable native watcher
+
+Enabling Rspack's [native watcher](https://rspack.rs/config/experiments#experimentsnativewatcher) improves HMR performance in development mode.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      experiments: {
+        nativeWatcher: true,
+      },
+    },
+  },
+};
+```
+
 ### Source map format
 
 To provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format in development mode by default. This is a high-quality source map format that comes with some performance overhead.
