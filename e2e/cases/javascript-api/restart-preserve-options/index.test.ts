@@ -1,7 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/helper';
-import { createRsbuild, type RestartContext } from '@rsbuild/core';
+import {
+  createRsbuild,
+  type RestartContext,
+  type RestartFn,
+  type StartDevServerResult,
+} from '@rsbuild/core';
 import { getRandomPort } from '@rstackjs/test-utils';
 
 const watchedFile = path.join(import.meta.dirname, 'test-temp-watch.txt');
@@ -58,6 +63,72 @@ test('should preserve startDevServer options after restart', async () => {
         },
       });
   } finally {
+    await server.close();
+  }
+});
+
+test('should preserve a dynamically assigned port after restart', async () => {
+  let restartContext: RestartContext | undefined;
+  let restartResult: StartDevServerResult | undefined;
+
+  async function createInstance() {
+    return createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        dev: {
+          watchFiles: {
+            paths: watchedFile,
+            type: 'restart',
+          },
+        },
+        server: {
+          port: 0,
+        },
+      },
+      restart,
+    });
+  }
+
+  const restart: RestartFn = async (context) => {
+    restartContext = context;
+    if (context.action !== 'dev') {
+      return false;
+    }
+
+    const rsbuild = await createInstance();
+    restartResult = await rsbuild.startDevServer(context.options);
+    return true;
+  };
+
+  const rsbuild = await createInstance();
+  const { port, server } = await rsbuild.startDevServer({
+    getPortSilently: true,
+  });
+  let version = 1;
+
+  try {
+    await expect
+      .poll(
+        () => {
+          if (!restartContext) {
+            fs.writeFileSync(watchedFile, String(++version));
+          }
+          return restartContext;
+        },
+        { timeout: 5_000 },
+      )
+      .toEqual({
+        action: 'dev',
+        event: 'change',
+        filePath: watchedFile,
+        options: {
+          getPortSilently: true,
+        },
+      });
+
+    await expect.poll(() => restartResult?.port).toBe(port);
+  } finally {
+    await restartResult?.server.close();
     await server.close();
   }
 });
