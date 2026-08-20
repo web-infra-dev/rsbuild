@@ -497,15 +497,17 @@ export const getPort = async ({
 
 export const resolvePort = async (
   config: NormalizedConfig,
+  lastPort?: number,
 ): Promise<{
   port: number;
   portTip: string | undefined;
 }> => {
   const { host, port: originalPort, strictPort } = config.server;
+  const preferredPort = originalPort === 0 ? lastPort : undefined;
   const port = await getPort({
     host,
-    port: originalPort,
-    strictPort,
+    port: preferredPort ?? originalPort,
+    strictPort: preferredPort === undefined && strictPort,
   });
   const portTip =
     originalPort !== 0 && port !== originalPort

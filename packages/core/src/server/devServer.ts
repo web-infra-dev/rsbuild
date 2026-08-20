@@ -109,7 +109,12 @@ export async function createDevServer<
   const { logger } = context;
   logger.debug('create dev server');
 
-  const { port, portTip } = await resolvePort(config);
+  const isDynamicPort = config.server.port === 0;
+  const lastPort = isDynamicPort ? context.restartManager.getPort() : undefined;
+  const { port, portTip } = await resolvePort(config, lastPort);
+  if (isDynamicPort) {
+    context.restartManager.setPort(port);
+  }
   const { middlewareMode, host } = config.server;
   const isHttps = Boolean(config.server.https);
   const routes = getRoutes(context);
