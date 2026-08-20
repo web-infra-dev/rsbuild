@@ -1066,7 +1066,10 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
     },
     "optimization": {
       "minimize": false,
-      "splitChunks": false,
+      "splitChunks": {
+        "chunks": "all",
+        "minSize": 0,
+      },
     },
     "output": {
       "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",

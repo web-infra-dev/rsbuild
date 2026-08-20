@@ -1,0 +1,38 @@
+// Rstest Snapshot v1
+
+exports[`should extract shared modules by default when target is "node" 1`] = `
+[
+  {
+    "files": [
+      "328.js",
+    ],
+    "modules": [
+      "./src/shared.js",
+    ],
+  },
+  {
+    "files": [
+      "488.js",
+    ],
+    "modules": [
+      "./src/routeB.js",
+    ],
+  },
+  {
+    "files": [
+      "675.js",
+    ],
+    "modules": [
+      "./src/routeA.js",
+    ],
+  },
+  {
+    "files": [
+      "index.js",
+    ],
+    "modules": [
+      "./src/index.js",
+    ],
+  },
+]
+`;
