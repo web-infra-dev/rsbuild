@@ -307,7 +307,7 @@ export async function createRsbuild(
       },
       createCompiler,
       config,
-      { ...options },
+      options,
     );
 
     return server.listen();
