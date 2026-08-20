@@ -278,11 +278,6 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
         } else {
           const { preset = 'none', ...rest } = splitChunks;
           chain.optimization.splitChunks({
-            // Extract shared modules of any size without splitting modules
-            // used by only one chunk.
-            chunks: 'all',
-            minSize: 0,
-            ...(preset === 'none' ? { minChunks: 2 } : {}),
             ...getSplitChunksByPreset(config, preset),
             ...rest,
           });
