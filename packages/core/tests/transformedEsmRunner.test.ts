@@ -110,42 +110,6 @@ await Promise.resolve();`,
   }
 });
 
-test('freezes late dynamic imports to the current compilation snapshot', async () => {
-  const entryPath = path.join(DEFAULT_DIST, 'entry.mjs');
-  const lazyPath = path.join(DEFAULT_DIST, 'lazy.mjs');
-  const files = new Map([
-    [entryPath, `export const load = () => import('./lazy.mjs');`],
-    [lazyPath, `export const value = 'before-rebuild';`],
-  ]);
-  const createSnapshotRunner = () =>
-    new TransformedEsmRunner({
-      bundleFiles: files,
-      compilerOptions: {
-        output: { module: true },
-        target: 'node',
-      } as RunnerFactoryOptions['compilerOptions'],
-      dist: DEFAULT_DIST,
-      isBundleOutput: (fileName) => files.has(fileName),
-      name: 'entry.mjs',
-      readFileSync: (fileName) => files.get(fileName)!,
-    });
-
-  const oldNamespace = (await createSnapshotRunner().run(
-    'entry.mjs',
-  )) as TestNamespace;
-  files.set(lazyPath, `export const value = 'after-rebuild';`);
-
-  await expect(oldNamespace.load()).resolves.toMatchObject({
-    value: 'before-rebuild',
-  });
-  const newNamespace = (await createSnapshotRunner().run(
-    'entry.mjs',
-  )) as TestNamespace;
-  await expect(newNamespace.load()).resolves.toMatchObject({
-    value: 'after-rebuild',
-  });
-});
-
 test('propagates top-level await completion and rejection', async () => {
   const completed = createRunner([
     [

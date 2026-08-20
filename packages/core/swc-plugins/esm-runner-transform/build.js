@@ -3,6 +3,7 @@ import { copyFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// cspell:ignore rustup wasip
 const pluginDir = path.dirname(fileURLToPath(import.meta.url));
 const target = 'wasm32-wasip1';
 
