@@ -16,6 +16,7 @@ type SplitChunksConfig =
 
 - **默认值：** 基于 [output.target](/config/output/target)：
   - `output.target` 为 `'web'` 时，为 `{ preset: 'default', chunks: 'all' }`
+  - `output.target` 为 `'node'` 时，默认为 `{ preset: 'none', chunks: 'all' }`。除将 `chunks` 设置为 `'all'` 外，其他选项均使用 Rspack [`optimization.splitChunks`](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin) 的默认值。这样可以将初始 chunk 和异步 chunk 中符合条件的模块提取为独立 chunk，从而减少输出 chunk 中的重复代码
   - `output.target` 为其他值时，为 `false`
 - **版本：** `>= 2.0.0`
 

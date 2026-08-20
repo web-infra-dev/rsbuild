@@ -272,8 +272,22 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
         });
       }
 
-      if (isServer || isWebWorker) {
-        // Disable split chunks by default for server and worker builds
+      if (isServer) {
+        if (splitChunks === false) {
+          chain.optimization.splitChunks(false);
+        } else {
+          const { preset = 'none', ...rest } = splitChunks;
+          chain.optimization.splitChunks({
+            chunks: 'all',
+            ...getSplitChunksByPreset(config, preset),
+            ...rest,
+          });
+        }
+        return;
+      }
+
+      if (isWebWorker) {
+        // Disable split chunks by default because Web Workers do not support dynamic imports
         if (splitChunks === false || Object.keys(splitChunks).length === 0) {
           chain.optimization.splitChunks(false);
         } else {
