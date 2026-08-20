@@ -33,7 +33,7 @@ type SplitChunksConfig =
 由于 Web Worker 产物不支持 dynamic import，当 `output.target` 为 `'web-worker'` 时，Rsbuild 默认关闭 chunk 拆分。
 
 :::tip
-当项目作为 Module Federation provider 并配置 `moduleFederation.options.exposes` 时，为避免 chunk 拆分影响 remote entry，Rsbuild 会将 `chunks` 设置为 `'async'`。
+当项目作为 Module Federation provider 并配置 [`moduleFederation.options.exposes`](/config/module-federation/options) 时，为避免 chunk 拆分影响 remote entry，Rsbuild 会将 `chunks` 设置为 `'async'`。
 :::
 
 ## splitChunks.preset

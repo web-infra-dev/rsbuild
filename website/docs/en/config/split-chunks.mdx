@@ -33,7 +33,7 @@ Apart from `chunks` and the splitting rules provided by the selected `preset` or
 Because Web Worker outputs do not support dynamic imports, Rsbuild disables chunk splitting by default when `output.target` is `'web-worker'`.
 
 :::tip
-When a project acts as a Module Federation provider and configures `moduleFederation.options.exposes`, Rsbuild sets `chunks` to `'async'` to prevent chunk splitting from affecting the remote entry.
+When a project acts as a Module Federation provider and configures [`moduleFederation.options.exposes`](/config/module-federation/options), Rsbuild sets `chunks` to `'async'` to prevent chunk splitting from affecting the remote entry.
 :::
 
 ## splitChunks.preset
