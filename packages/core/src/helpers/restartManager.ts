@@ -16,7 +16,9 @@ export type RestartManager = {
   requestRestart(context: RestartContext): Promise<boolean>;
 };
 
-// The options object temporarily links the current and replacement managers.
+// During a dynamic-port restart, the current manager associates its assigned
+// port with the restart options object. The replacement manager consumes that
+// entry when creating the new server, preserving the port across the restart.
 const restartPorts = new WeakMap<object, number>();
 
 export const createRestartManager = ({
