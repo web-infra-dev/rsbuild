@@ -12,11 +12,11 @@ use swc_core::{
     plugin::{plugin_transform, proxies::TransformPluginProgramMetadata},
 };
 
-const IMPORT_HELPER: &str = "__rsbuild_ssr_import__";
-const DYNAMIC_IMPORT_HELPER: &str = "__rsbuild_ssr_dynamic_import__";
-const EXPORT_ALL_HELPER: &str = "__rsbuild_ssr_exportAll__";
-const EXPORT_NAME_HELPER: &str = "__rsbuild_ssr_exportName__";
-const IMPORT_META_HELPER: &str = "__rsbuild_ssr_import_meta__";
+const IMPORT_HELPER: &str = "__rsbuild_import__";
+const DYNAMIC_IMPORT_HELPER: &str = "__rsbuild_dynamic_import__";
+const EXPORT_ALL_HELPER: &str = "__rsbuild_export_all__";
+const EXPORT_NAME_HELPER: &str = "__rsbuild_export_name__";
+const IMPORT_META_HELPER: &str = "__rsbuild_import_meta__";
 
 #[derive(Clone)]
 struct ImportBinding {
@@ -71,7 +71,7 @@ impl TransformedEsmTransform {
             match item {
                 ModuleItem::ModuleDecl(ModuleDecl::Import(import)) => {
                     self.assert_supported_import(&import);
-                    let namespace = self.private_ident("__rsbuild_ssr_import_");
+                    let namespace = self.private_ident("__rsbuild_import_");
                     let mut imported_names = Vec::new();
 
                     for specifier in import.specifiers {
@@ -140,7 +140,7 @@ impl TransformedEsmTransform {
                 ModuleItem::ModuleDecl(ModuleDecl::ExportNamed(export)) => {
                     self.assert_supported_named_export(&export);
                     if let Some(source) = export.src {
-                        let namespace = self.private_ident("__rsbuild_ssr_import_");
+                        let namespace = self.private_ident("__rsbuild_import_");
                         let mut imported_names = Vec::new();
                         for specifier in export.specifiers {
                             match specifier {
@@ -218,7 +218,7 @@ impl TransformedEsmTransform {
                     if export.with.is_some() {
                         panic!("[rsbuild:runner] Import attributes are not supported");
                     }
-                    let namespace = self.private_ident("__rsbuild_ssr_import_");
+                    let namespace = self.private_ident("__rsbuild_import_");
                     requests.push(ImportRequest {
                         imported_names: Vec::new(),
                         namespace,
@@ -231,7 +231,7 @@ impl TransformedEsmTransform {
                         DefaultDecl::Fn(function) => {
                             let ident = function
                                 .ident
-                                .unwrap_or_else(|| self.private_ident("__rsbuild_ssr_default_"));
+                                .unwrap_or_else(|| self.private_ident("__rsbuild_default_"));
                             export_registrations.push(self.export_name_statement(
                                 Atom::from("default"),
                                 Expr::Ident(ident.clone()),
@@ -245,7 +245,7 @@ impl TransformedEsmTransform {
                         DefaultDecl::Class(class) => {
                             let ident = class
                                 .ident
-                                .unwrap_or_else(|| self.private_ident("__rsbuild_ssr_default_"));
+                                .unwrap_or_else(|| self.private_ident("__rsbuild_default_"));
                             export_registrations.push(self.export_name_statement(
                                 Atom::from("default"),
                                 Expr::Ident(ident.clone()),
@@ -262,7 +262,7 @@ impl TransformedEsmTransform {
                     }
                 }
                 ModuleItem::ModuleDecl(ModuleDecl::ExportDefaultExpr(export)) => {
-                    let ident = self.private_ident("__rsbuild_ssr_default_");
+                    let ident = self.private_ident("__rsbuild_default_");
                     export_registrations.push(
                         self.export_name_statement(
                             Atom::from("default"),
@@ -639,29 +639,39 @@ mod tests {
         import fallback, { value as remote } from 'dependency';
         import * as namespace from 'namespace';
         import 'side-effect';
-        const __rsbuild_ssr_import__ = 'user binding';
+        const __rsbuild_import__ = 'user binding';
         export const direct = remote;
         export const defaultValue = fallback;
         export const ns = namespace;
         export const shadowed = (remote) => ({ remote });
-        export { __rsbuild_ssr_import__ as helperCollision };
+        export { __rsbuild_import__ as helperCollision };
       "#,
         );
 
-        assert!(output.contains("await __rsbuild_ssr_import__(\"dependency\""));
-        assert!(output.contains("importedNames"));
-        assert!(output.contains("\"default\""));
-        assert!(output.contains("\"value\""));
-        assert!(output.contains("[\"value\"]"));
-        assert!(output.contains("await __rsbuild_ssr_import__(\"side-effect\")"));
-        let dependency = output.find("\"dependency\"").unwrap();
-        let namespace = output.find("\"namespace\"").unwrap();
-        let side_effect = output.find("\"side-effect\"").unwrap();
-        assert!(dependency < namespace && namespace < side_effect);
-        assert!(output.contains("user binding"));
-        assert!(output.contains("(remote)=>({"));
-        assert!(output.contains("remote"));
-        assert!(!output.contains("import fallback"));
+        assert_eq!(
+            output,
+            r#"__rsbuild_export_name__("direct", ()=>direct);
+__rsbuild_export_name__("defaultValue", ()=>defaultValue);
+__rsbuild_export_name__("ns", ()=>ns);
+__rsbuild_export_name__("shadowed", ()=>shadowed);
+__rsbuild_export_name__("helperCollision", ()=>__rsbuild_import__1);
+const __rsbuild_import_0__ = await __rsbuild_import__("dependency", {
+    importedNames: [
+        "default",
+        "value"
+    ]
+});
+const __rsbuild_import_1__ = await __rsbuild_import__("namespace");
+const __rsbuild_import_2__ = await __rsbuild_import__("side-effect");
+const __rsbuild_import__1 = 'user binding';
+const direct = __rsbuild_import_0__["value"];
+const defaultValue = __rsbuild_import_0__["default"];
+const ns = __rsbuild_import_1__;
+const shadowed = (remote)=>({
+        remote
+    });
+"#
+        );
     }
 
     #[test]
@@ -678,13 +688,35 @@ mod tests {
       "#,
         );
 
-        assert!(output.contains("class Child extends"));
-        assert!(output.contains("value:"));
-        assert!(output.contains("(0,"), "{output}");
-        assert!(output.contains("[\"call\"]"));
-        assert!(output.contains("[\"tag\"]"));
-        assert!(output.matches("(0,").count() >= 3, "{output}");
-        assert!(output.contains("const { local }"));
+        assert_eq!(
+            output,
+            r#"__rsbuild_export_name__("Child", ()=>Child);
+__rsbuild_export_name__("object", ()=>object);
+__rsbuild_export_name__("result", ()=>result);
+__rsbuild_export_name__("optionalResult", ()=>optionalResult);
+__rsbuild_export_name__("tagged", ()=>tagged);
+const __rsbuild_import_0__ = await __rsbuild_import__("dependency", {
+    importedNames: [
+        "Base",
+        "call",
+        "tag",
+        "value"
+    ]
+});
+const { local } = {
+    local: 1
+};
+class Child extends __rsbuild_import_0__["Base"] {
+}
+const object = {
+    value: __rsbuild_import_0__["value"],
+    local
+};
+const result = (0, __rsbuild_import_0__["call"])();
+const optionalResult = (0, __rsbuild_import_0__["call"])?.();
+const tagged = (0, __rsbuild_import_0__["tag"])`value`;
+"#
+        );
     }
 
     #[test]
@@ -702,20 +734,31 @@ mod tests {
       "#,
         );
 
-        assert!(output.contains("__rsbuild_ssr_exportName__(\"local\""));
-        assert!(output.contains("__rsbuild_ssr_exportName__(\"string name\""));
-        assert!(output.contains("__rsbuild_ssr_exportName__(\"default\""));
-        assert!(output.contains("__rsbuild_ssr_exportName__(\"renamed\""));
-        assert!(output.contains("__rsbuild_ssr_exportName__(\"otherDefault\""));
-        assert!(output.contains("__rsbuild_ssr_exportName__(\"namespace\""));
-        assert!(output.contains("__rsbuild_ssr_exportAll__("));
-        assert!(
-            output.contains("__rsbuild_ssr_dynamic_import__("),
-            "{output}"
+        assert_eq!(
+            output,
+            r#"__rsbuild_export_name__("local", ()=>local);
+__rsbuild_export_name__("string name", ()=>local);
+__rsbuild_export_name__("default", ()=>named);
+__rsbuild_export_name__("renamed", ()=>__rsbuild_import_0__["value"]);
+__rsbuild_export_name__("otherDefault", ()=>__rsbuild_import_0__["default"]);
+__rsbuild_export_name__("namespace", ()=>__rsbuild_import_2__);
+__rsbuild_export_name__("dynamic", ()=>dynamic);
+__rsbuild_export_name__("meta", ()=>meta);
+const __rsbuild_import_0__ = await __rsbuild_import__("dependency", {
+    importedNames: [
+        "value",
+        "default"
+    ]
+});
+const __rsbuild_import_1__ = await __rsbuild_import__("star");
+__rsbuild_export_all__(__rsbuild_import_1__);
+const __rsbuild_import_2__ = await __rsbuild_import__("namespace");
+const local = 1;
+function named() {}
+const dynamic = ()=>__rsbuild_dynamic_import__('./lazy.mjs');
+const meta = __rsbuild_import_meta__.url;
+"#
         );
-        assert!(output.contains("./lazy.mjs"), "{output}");
-        assert!(output.contains("__rsbuild_ssr_import_meta__.url"));
-        assert!(!output.contains("export "));
     }
 
     #[test]

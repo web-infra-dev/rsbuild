@@ -38,12 +38,12 @@ type ModuleNode = {
 };
 
 const TRANSFORMED_ESM_PARAMETERS = [
-  '__rsbuild_ssr_import__',
-  '__rsbuild_ssr_dynamic_import__',
-  '__rsbuild_ssr_exports__',
-  '__rsbuild_ssr_exportAll__',
-  '__rsbuild_ssr_exportName__',
-  '__rsbuild_ssr_import_meta__',
+  '__rsbuild_import__',
+  '__rsbuild_dynamic_import__',
+  '__rsbuild_exports__',
+  '__rsbuild_export_all__',
+  '__rsbuild_export_name__',
+  '__rsbuild_import_meta__',
 ];
 
 const AsyncFunction = async function () {}.constructor as new (
