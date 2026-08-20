@@ -7,7 +7,7 @@ import { color } from '../../helpers';
 import {
   transformForTransformedEsm,
   type SwcTransform,
-} from './transformedEsmTransform';
+} from './esmRunnerTransform';
 import type { Runner, RunnerRequirer } from './type';
 
 type Namespace = Record<PropertyKey, unknown>;
