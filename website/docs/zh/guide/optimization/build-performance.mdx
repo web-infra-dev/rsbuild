@@ -145,27 +145,3 @@ last 1 safari version
 ```
 
 注意，这项优化方法会导致开发模式与生产模式的构建产物存在一定差异。
-
-## 生产模式优化
-
-以下是针对生产构建进行提速的方法。
-
-### 开启更快的模块合并
-
-开启 Rspack 的实验性 [`experiments.fasterModuleConcatenation`](https://rspack.rs/zh/config/experiments#experimentsfastermoduleconcatenation) 配置，可以提升生产模式下的模块合并速度。
-
-```ts title="rsbuild.config.ts"
-export default {
-  tools: {
-    rspack: {
-      experiments: {
-        fasterModuleConcatenation: true,
-      },
-    },
-  },
-};
-```
-
-:::tip
-`experiments.fasterModuleConcatenation` 配置在 Rsbuild v2.2.0 及以上版本中支持。
-:::
