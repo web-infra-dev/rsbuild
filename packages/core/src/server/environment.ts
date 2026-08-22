@@ -91,7 +91,7 @@ export const loadBundle = async <T>(
     dist: outputPath!,
     compilerOptions: stats.compilation.options,
     readFileSync: utils.readFileSync,
-    isBundleOutput: (modulePath: string) => outputFilePaths.has(modulePath),
+    isOutputFile: (modulePath: string) => outputFilePaths.has(modulePath),
   });
 
   return res;

@@ -34,7 +34,8 @@ const getSubPath = (p: string) => {
 
 export interface IBasicRunnerOptions {
   name: string;
-  isBundleOutput: (modulePath: string) => boolean;
+  /** Whether the module path is an output file of the current compilation. */
+  isOutputFile: (modulePath: string) => boolean;
   readFileSync: (path: string) => string;
   dist: string;
   compilerOptions: CompilerOptions;
@@ -105,7 +106,7 @@ export abstract class BasicRunner implements Runner {
       ? path.join(currentDirectory, modulePath)
       : modulePath;
 
-    if (!this._options.isBundleOutput(joinedPath)) {
+    if (!this._options.isOutputFile(joinedPath)) {
       return null;
     }
     return {
