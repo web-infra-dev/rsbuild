@@ -125,13 +125,10 @@ const applyFilter = (
 
 function filterResourceHints(
   resourceHints: HtmlRspackPlugin.HtmlTagObject[],
-  scripts: HtmlRspackPlugin.HtmlTagObject[],
+  scriptSources: ReadonlySet<string | boolean | null | undefined>,
 ): HtmlRspackPlugin.HtmlTagObject[] {
   return resourceHints.filter(
-    (resourceHint) =>
-      !scripts.find(
-        (script) => script.attributes.src === resourceHint.attributes.href,
-      ),
+    (resourceHint) => !scriptSources.has(resourceHint.attributes.href),
   );
 }
 
@@ -147,11 +144,15 @@ function mergeResourceHints(
 ): HtmlRspackPlugin.HtmlTagObject[] {
   const links: HtmlRspackPlugin.HtmlTagObject[] = [];
   const seen = new Set<string>();
+  let scriptSources: Set<string | boolean | null | undefined> | undefined;
 
   for (const { links: groupLinks, dedupe } of resourceHintGroups) {
-    const filteredLinks = dedupe
-      ? filterResourceHints(groupLinks, scripts)
-      : groupLinks;
+    let filteredLinks = groupLinks;
+
+    if (dedupe) {
+      scriptSources ??= new Set(scripts.map((script) => script.attributes.src));
+      filteredLinks = filterResourceHints(groupLinks, scriptSources);
+    }
 
     for (const link of filteredLinks) {
       const key = getResourceHintKey(link);
