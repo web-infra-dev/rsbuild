@@ -4,9 +4,9 @@ import type {
   BasicGlobalContext,
   BasicModuleScope,
   BasicRunnerFile,
-  CompilerOptions,
   ModuleObject,
   Runner,
+  RunnerFactoryOptions,
   RunnerRequirer,
 } from './type';
 
@@ -32,20 +32,15 @@ const getSubPath = (p: string) => {
   return '';
 };
 
-export interface IBasicRunnerOptions {
+export interface BasicRunnerOptions extends RunnerFactoryOptions {
   name: string;
-  /** Whether the module path is an output file of the current compilation. */
-  isOutputFile: (modulePath: string) => boolean;
-  readFileSync: (path: string) => string;
-  dist: string;
-  compilerOptions: CompilerOptions;
 }
 
 export abstract class BasicRunner implements Runner {
   protected globalContext: BasicGlobalContext | null = null;
   protected baseModuleScope: BasicModuleScope | null = null;
   protected requirers: Map<string, RunnerRequirer> = new Map();
-  constructor(protected _options: IBasicRunnerOptions) {}
+  constructor(protected _options: BasicRunnerOptions) {}
 
   run(file: string): Promise<unknown> {
     if (!this.globalContext) {
