@@ -192,26 +192,24 @@ function generateLinks(
           }),
         );
 
-  // Flatten the list of files.
-  const allFiles = htmlChunks
-    .reduce(
-      (accumulated: string[], chunk) =>
-        accumulated.concat([
-          ...chunk.files,
-          // related assets are inside auxiliaryFiles
-          ...(chunk.auxiliaryFiles || []),
-        ]),
-      [],
-    )
-    // source map and hot-update files should always be excluded
-    .filter((file) => {
-      if (isDev && file.endsWith('.hot-update.js')) {
-        return false;
-      }
-      return !file.endsWith('.map');
-    });
+  const uniqueFiles = new Set<string>();
 
-  const uniqueFiles = new Set<string>(allFiles);
+  for (const chunk of htmlChunks) {
+    // Related assets are inside auxiliaryFiles.
+    for (const files of [chunk.files, chunk.auxiliaryFiles ?? []]) {
+      for (const file of files) {
+        // Exclude source maps and development hot-update files.
+        if (
+          (isDev && file.endsWith('.hot-update.js')) ||
+          file.endsWith('.map')
+        ) {
+          continue;
+        }
+        uniqueFiles.add(file);
+      }
+    }
+  }
+
   const filteredFiles = applyFilter(
     [...uniqueFiles],
     options.include,
