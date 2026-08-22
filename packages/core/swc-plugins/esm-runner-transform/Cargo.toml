@@ -1,0 +1,30 @@
+[package]
+name = "rsbuild_swc_esm_runner_transform"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+swc_core = { version = "=77.0.0", features = ["ecma_plugin_transform"] }
+
+[dev-dependencies]
+swc_core = { version = "=77.0.0", features = [
+  "common",
+  "ecma_codegen",
+  "ecma_parser",
+  "ecma_transforms",
+  "ecma_visit",
+] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = "symbols"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ["cfg(swc_ast_unknown)"] }

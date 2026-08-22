@@ -1,8 +1,10 @@
 /**
  * The following code is modified based on @rspack/test-tools/runner
  */
-import { color } from '../../helpers';
+import { color, require } from '../../helpers';
+import { CommonJsRunner } from './cjs';
 import { EsmRunner } from './esm';
+import { TransformedEsmRunner } from './transformedEsm';
 import type { Runner, RunnerFactory, RunnerFactoryOptions } from './type';
 
 class BasicRunnerFactory implements RunnerFactory {
@@ -29,7 +31,18 @@ class BasicRunnerFactory implements RunnerFactory {
         )} resource in Rsbuild server`,
       );
     }
-    return new EsmRunner(runnerOptions);
+
+    if (!compilerOptions.output.module) {
+      return new CommonJsRunner(runnerOptions);
+    }
+
+    // rslint-disable-next-line @typescript-eslint/no-require-imports
+    const vm = require('node:vm') as typeof import('node:vm');
+    if (vm.SourceTextModule) {
+      return new EsmRunner(runnerOptions);
+    }
+
+    return new TransformedEsmRunner(runnerOptions);
   }
 }
 

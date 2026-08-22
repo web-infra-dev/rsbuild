@@ -35,7 +35,8 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "rs lib",
+    "build": "pnpm run build:esm-runner-transform && rs lib",
+    "build:esm-runner-transform": "node swc-plugins/esm-runner-transform/build.js",
     "dev": "rs lib -w",
     "prebundle": "prebundle",
     "test": "rs test"
