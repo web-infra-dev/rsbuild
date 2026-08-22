@@ -8,32 +8,36 @@ export type ServerUtils = {
   environment: EnvironmentContext;
 };
 
-type StatsProjection = Pick<
+type LoadBundleStats = Pick<
   Rspack.StatsCompilation,
   'chunks' | 'entrypoints' | 'outputPath'
->;
+> & {
+  outputFilePaths?: Set<string>;
+};
 
-// Avoid repeated `toJson` calls across entries without retaining old compilations.
-const statsProjectionCache = new WeakMap<Rspack.Stats, StatsProjection>();
+// Reuse stats data across entries without retaining old compilations.
+const loadBundleStatsCache = new WeakMap<Rspack.Stats, LoadBundleStats>();
 
 export const loadBundle = async <T>(
   stats: Rspack.Stats,
   entryName: string,
   utils: ServerUtils,
 ): Promise<T> => {
-  let statsProjection = statsProjectionCache.get(stats);
-  if (!statsProjection) {
-    statsProjection = stats.toJson({
-      all: false,
-      chunks: true,
-      entrypoints: true,
-      ids: true,
-      outputPath: true,
-    });
-    statsProjectionCache.set(stats, statsProjection);
+  let loadBundleStats = loadBundleStatsCache.get(stats);
+  if (!loadBundleStats) {
+    loadBundleStats = {
+      ...stats.toJson({
+        all: false,
+        chunks: true,
+        entrypoints: true,
+        ids: true,
+        outputPath: true,
+      }),
+    };
+    loadBundleStatsCache.set(stats, loadBundleStats);
   }
 
-  const { chunks, entrypoints, outputPath } = statsProjection;
+  const { chunks, entrypoints, outputPath } = loadBundleStats;
 
   if (!entrypoints?.[entryName]) {
     throw new Error(
@@ -71,16 +75,23 @@ export const loadBundle = async <T>(
     );
   }
 
-  const allChunkFiles =
-    chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) ||
-    [];
+  let { outputFilePaths } = loadBundleStats;
+  if (!outputFilePaths) {
+    outputFilePaths = new Set<string>();
+    for (const chunk of chunks || []) {
+      for (const file of chunk.files!) {
+        outputFilePaths.add(join(outputPath!, file));
+      }
+    }
+    loadBundleStats.outputFilePaths = outputFilePaths;
+  }
 
   const res = await run<T>({
     bundlePath: files[0],
     dist: outputPath!,
     compilerOptions: stats.compilation.options,
     readFileSync: utils.readFileSync,
-    isBundleOutput: (modulePath: string) => allChunkFiles.includes(modulePath),
+    isBundleOutput: (modulePath: string) => outputFilePaths.has(modulePath),
   });
 
   return res;
