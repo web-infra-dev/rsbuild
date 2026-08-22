@@ -44,10 +44,12 @@ const generateManifest =
         const entryNames = recursiveChunkEntryNames(file.chunk);
 
         for (const entryName of entryNames) {
-          chunkEntries.set(entryName, [
-            file,
-            ...(chunkEntries.get(entryName) || []),
-          ]);
+          const chunkFiles = chunkEntries.get(entryName);
+          if (chunkFiles) {
+            chunkFiles.push(file);
+          } else {
+            chunkEntries.set(entryName, [file]);
+          }
         }
       }
 
