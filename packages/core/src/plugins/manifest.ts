@@ -63,9 +63,6 @@ const generateManifest =
     const manifestEntries: ManifestData['entries'] = {};
 
     for (const [entryName, chunkFiles] of chunkEntries) {
-      // Preserve the existing reverse file order without copying on every insertion.
-      chunkFiles.reverse();
-
       const assets = new Set<string>();
       const initialJS: string[] = [];
       const initialCSS: string[] = [];
