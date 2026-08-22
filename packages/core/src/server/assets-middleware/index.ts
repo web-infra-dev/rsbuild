@@ -226,7 +226,18 @@ init(
 )
 `;
 
-  new rspack.EntryPlugin(compiler.context, createVirtualModule(hmrEntry), {
+  const virtualModule = createVirtualModule(hmrEntry);
+
+  if (config.tools.htmlPlugin === false) {
+    for (const entryName of Object.keys(compiler.options.entry || {})) {
+      new rspack.EntryPlugin(compiler.context, virtualModule, {
+        name: entryName,
+      }).apply(compiler);
+    }
+    return;
+  }
+
+  new rspack.EntryPlugin(compiler.context, virtualModule, {
     name: undefined,
   }).apply(compiler);
 }
