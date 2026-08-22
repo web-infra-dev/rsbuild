@@ -1,4 +1,6 @@
 import { render } from '@solidjs/web';
 import App from './App';
 
-render(App, document.getElementById('root')!);
+const identity = <T>(value: T) => value;
+
+render(identity(App), document.getElementById('root')!);
