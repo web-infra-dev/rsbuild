@@ -44,10 +44,12 @@ const generateManifest =
         const entryNames = recursiveChunkEntryNames(file.chunk);
 
         for (const entryName of entryNames) {
-          chunkEntries.set(entryName, [
-            file,
-            ...(chunkEntries.get(entryName) || []),
-          ]);
+          const chunkFiles = chunkEntries.get(entryName);
+          if (chunkFiles) {
+            chunkFiles.push(file);
+          } else {
+            chunkEntries.set(entryName, [file]);
+          }
         }
       }
 
@@ -61,6 +63,9 @@ const generateManifest =
     const manifestEntries: ManifestData['entries'] = {};
 
     for (const [entryName, chunkFiles] of chunkEntries) {
+      // Preserve the existing reverse file order without copying on every insertion.
+      chunkFiles.reverse();
+
       const assets = new Set<string>();
       const initialJS: string[] = [];
       const initialCSS: string[] = [];
