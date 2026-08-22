@@ -26,7 +26,7 @@ exports[`plugin-module-federation > should set environment module federation con
 ]
 `;
 
-exports[`plugin-module-federation > should set module federation and environment chunkSplit config correctly 1`] = `
+exports[`plugin-module-federation > should set module federation and environment splitChunks config correctly 1`] = `
 [
   ModuleFederationPlugin {
     "_options": {
