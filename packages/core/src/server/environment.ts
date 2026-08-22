@@ -8,18 +8,32 @@ export type ServerUtils = {
   environment: EnvironmentContext;
 };
 
+type StatsProjection = Pick<
+  Rspack.StatsCompilation,
+  'chunks' | 'entrypoints' | 'outputPath'
+>;
+
+// Avoid repeated `toJson` calls across entries without retaining old compilations.
+const statsProjectionCache = new WeakMap<Rspack.Stats, StatsProjection>();
+
 export const loadBundle = async <T>(
   stats: Rspack.Stats,
   entryName: string,
   utils: ServerUtils,
 ): Promise<T> => {
-  const { chunks, entrypoints, outputPath } = stats.toJson({
-    all: false,
-    chunks: true,
-    entrypoints: true,
-    ids: true,
-    outputPath: true,
-  });
+  let statsProjection = statsProjectionCache.get(stats);
+  if (!statsProjection) {
+    statsProjection = stats.toJson({
+      all: false,
+      chunks: true,
+      entrypoints: true,
+      ids: true,
+      outputPath: true,
+    });
+    statsProjectionCache.set(stats, statsProjection);
+  }
+
+  const { chunks, entrypoints, outputPath } = statsProjection;
 
   if (!entrypoints?.[entryName]) {
     throw new Error(
