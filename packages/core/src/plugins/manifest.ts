@@ -31,11 +31,16 @@ const generateManifest =
     { compilation },
   ) => {
     const chunkEntries = new Map<string, FileDescriptor[]>();
+    const filePathByName = new Map<string, string>();
     const licenseMap = new Map<string, string>();
     const publicPath = getPublicPathFromCompiler(compilation);
     const integrity: Record<string, string> = {};
 
     const allFiles = files.map((file) => {
+      if (!filePathByName.has(file.name)) {
+        filePathByName.set(file.name, file.path);
+      }
+
       if (file.integrity) {
         integrity[file.path] = file.integrity;
       }
@@ -118,7 +123,7 @@ const generateManifest =
         entryManifest.assets = Array.from(assets);
       }
 
-      const htmlPath = files.find((f) => f.name === htmlPaths[entryName])?.path;
+      const htmlPath = filePathByName.get(htmlPaths[entryName]);
 
       if (htmlPath) {
         entryManifest.html = [htmlPath];
