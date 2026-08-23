@@ -41,6 +41,7 @@ async function getTemplateName({ template }: Argv) {
         { value: 'svelte', label: 'Svelte' },
         { value: 'solid', label: 'Solid' },
         { value: 'solid2', label: 'Solid 2 (RC)' },
+        { value: 'octane', label: 'Octane' },
       ],
     }),
   );
@@ -113,6 +114,8 @@ await create({
     'vanilla-ts',
     'react-js',
     'react-ts',
+    'octane-js',
+    'octane-ts',
     'vue-js',
     'vue-ts',
     'lit-js',
