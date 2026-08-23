@@ -103,6 +103,12 @@ const getTagPriority = (tag: HtmlTag, tagConfig: TagConfig) => {
   return priority;
 };
 
+const sortTags = (tags: HtmlTag[], tagConfig: TagConfig) =>
+  tags.sort(
+    (tag1, tag2) =>
+      getTagPriority(tag1, tagConfig) - getTagPriority(tag2, tagConfig),
+  );
+
 /**
  * `HtmlTagObject` -> `HtmlBasicTag`
  */
@@ -203,17 +209,25 @@ const applyTagConfig = (
     publicPath: data.publicPath,
   };
 
+  // Defer sorting consecutive static tags to avoid repeatedly sorting the
+  // entire array. Flush before function configs so they receive sorted tags.
+  let shouldSort = false;
+
   for (const item of tagConfig.tags) {
     if (isFunction(item)) {
+      if (shouldSort) {
+        tags = sortTags(tags, tagConfig);
+      }
       tags = item(tags, context) || tags;
     } else {
       tags.push(item);
     }
 
-    tags = tags.sort(
-      (tag1, tag2) =>
-        getTagPriority(tag1, tagConfig) - getTagPriority(tag2, tagConfig),
-    );
+    shouldSort = true;
+  }
+
+  if (shouldSort) {
+    tags = sortTags(tags, tagConfig);
   }
 
   const [headTags, bodyTags] = partition(
