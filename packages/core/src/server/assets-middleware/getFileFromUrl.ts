@@ -6,6 +6,20 @@ import { HttpCode, isUrlPathUnderBase } from '../helper';
 
 const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
 
+const stat = (
+  filename: string,
+  outputFileSystem: Rspack.OutputFileSystem,
+): Promise<FSStats | undefined> =>
+  new Promise((resolve, reject) => {
+    outputFileSystem.stat(filename, (err, stats) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(stats);
+      }
+    });
+  });
+
 /**
  * Resolves URL to file path with security checks and retrieves file from
  * the build output directories.
@@ -39,18 +53,6 @@ export async function getFileFromUrl(
     return { errorCode: HttpCode.Forbidden };
   }
 
-  const stat = async (filename: string) => {
-    return new Promise<FSStats | undefined>((resolve, reject) => {
-      outputFileSystem.stat(filename, (err, stats) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(stats);
-        }
-      });
-    });
-  };
-
   const { environmentList, publicPathnames } = context;
   const distPaths = environmentList.map((env) => env.distPath);
   const possibleFilenames = new Set<string>();
@@ -75,7 +77,7 @@ export async function getFileFromUrl(
     let fsStats: FSStats | undefined;
 
     try {
-      fsStats = await stat(filename);
+      fsStats = await stat(filename, outputFileSystem);
     } catch {
       continue;
     }
@@ -92,7 +94,7 @@ export async function getFileFromUrl(
       filename = path.join(filename, 'index.html');
 
       try {
-        fsStats = await stat(filename);
+        fsStats = await stat(filename, outputFileSystem);
       } catch {
         continue;
       }
