@@ -134,7 +134,7 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    bundlerChain: (chain, { env }) => {
+    bundlerChain: async (chain, { env }) => {
       const value = await fetchValue();
       chain.devtool(value);
     },

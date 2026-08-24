@@ -274,19 +274,23 @@ export default {
 
 ### Function
 
-You can also pass a function to `modules.mode` that determines the mode based on the resource path, query, or fragment. This allows you to use different modes for different files.
+You can also pass a function to `cssModules.mode` that determines the mode based on the resource path, query, or fragment. This allows you to use different modes for different files.
 
 For example, to use local scoping for `.module.css` files and global styles for other files:
 
-```js
-modules: {
-  mode: (resourcePath) => {
-    if (/\.module\.\css$/.test(resourcePath)) {
-      return 'local';
-    }
-    return 'global';
-  };
-}
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    cssModules: {
+      mode: (resourcePath) => {
+        if (/\.module\.css$/.test(resourcePath)) {
+          return 'local';
+        }
+        return 'global';
+      },
+    },
+  },
+};
 ```
 
 ## cssModules.namedExport
