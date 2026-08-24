@@ -174,6 +174,7 @@ export const sortPluginsByDependencies = (
   plugins: PluginMeta[],
 ): PluginMeta[] => {
   let allLines: [string, string][] = [];
+  const pluginNames = new Set(plugins.map((item) => item.instance.name));
 
   function getPlugin(name: string) {
     const targets = plugins.filter((item) => item.instance.name === name);
@@ -188,7 +189,7 @@ export const sortPluginsByDependencies = (
   for (const plugin of plugins) {
     if (plugin.instance.pre) {
       for (const pre of plugin.instance.pre) {
-        if (pre && plugins.some((item) => item.instance.name === pre)) {
+        if (pre && pluginNames.has(pre)) {
           allLines.push([pre, plugin.instance.name]);
         }
       }
@@ -196,43 +197,42 @@ export const sortPluginsByDependencies = (
 
     if (plugin.instance.post) {
       for (const post of plugin.instance.post) {
-        if (post && plugins.some((item) => item.instance.name === post)) {
+        if (post && pluginNames.has(post)) {
           allLines.push([plugin.instance.name, post]);
         }
       }
     }
   }
 
-  // search the zero input plugin
+  let endPoints = new Set(allLines.map((line) => line[1]));
   let zeroEndPoints = plugins.filter(
-    (item) => !allLines.find((l) => l[1] === item.instance.name),
+    (item) => !endPoints.has(item.instance.name),
   );
 
   const sortedPoint: PluginMeta[] = [];
+  const sortedPluginNames = new Set<string>();
 
   while (zeroEndPoints.length) {
-    const zep = zeroEndPoints.shift()!;
-    const pluginInstances = getPlugin(zep.instance.name);
+    const { name } = zeroEndPoints[0].instance;
+    const pluginInstances = getPlugin(name);
     sortedPoint.push(...pluginInstances);
-    allLines = allLines.filter(
-      (l) => l[0] !== pluginInstances[0].instance.name,
-    );
+    sortedPluginNames.add(name);
+    allLines = allLines.filter((line) => line[0] !== name);
+    endPoints = new Set(allLines.map((line) => line[1]));
 
-    const restPoints = plugins.filter(
+    zeroEndPoints = plugins.filter(
       (item) =>
-        !sortedPoint.find((sp) => sp.instance.name === item.instance.name),
-    );
-    zeroEndPoints = restPoints.filter(
-      (item) => !allLines.find((l) => l[1] === item.instance.name),
+        !sortedPluginNames.has(item.instance.name) &&
+        !endPoints.has(item.instance.name),
     );
   }
 
   // if has ring, throw error
   if (allLines.length) {
     const restInRingPoints: Record<string, boolean> = {};
-    for (const l of allLines) {
-      restInRingPoints[l[0]] = true;
-      restInRingPoints[l[1]] = true;
+    for (const line of allLines) {
+      restInRingPoints[line[0]] = true;
+      restInRingPoints[line[1]] = true;
     }
 
     throw new Error(
