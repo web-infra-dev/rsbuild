@@ -41,8 +41,6 @@ export default {
 
 ## Dynamic port
 
-- **Version:** `>= 2.2.0`
-
 Set `server.port` to `0` to let the operating system assign an available port:
 
 ```ts title="rsbuild.config.ts"
@@ -52,3 +50,11 @@ export default {
   },
 };
 ```
+
+This is particularly useful in test scenarios, as it avoids port conflicts when multiple tests start Rsbuild servers simultaneously.
+
+## Version history
+
+| Version | Changes                                                     |
+| ------- | ----------------------------------------------------------- |
+| v2.2.0  | Added support for dynamic ports by setting the value to `0` |
