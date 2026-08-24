@@ -40,66 +40,66 @@ The following commands create a project without interactive prompts:
 
 - **Vanilla**
 
-  ```bash
-  npx -y create-rsbuild@latest my-app -t vanilla-js
-  npx -y create-rsbuild@latest my-app -t vanilla-ts
-  ```
+```bash
+npx -y create-rsbuild@latest my-app -t vanilla-js
+npx -y create-rsbuild@latest my-app -t vanilla-ts
+```
 
 - **React**
 
-  ```bash
-  npx -y create-rsbuild@latest my-app -t react-js
-  npx -y create-rsbuild@latest my-app -t react-ts
-  ```
+```bash
+npx -y create-rsbuild@latest my-app -t react-js
+npx -y create-rsbuild@latest my-app -t react-ts
+```
 
 - **Vue**
 
-  ```bash
-  npx -y create-rsbuild@latest my-app -t vue-js
-  npx -y create-rsbuild@latest my-app -t vue-ts
-  ```
+```bash
+npx -y create-rsbuild@latest my-app -t vue-js
+npx -y create-rsbuild@latest my-app -t vue-ts
+```
 
 - **Lit**
 
-  ```bash
-  npx -y create-rsbuild@latest my-app -t lit-js
-  npx -y create-rsbuild@latest my-app -t lit-ts
-  ```
+```bash
+npx -y create-rsbuild@latest my-app -t lit-js
+npx -y create-rsbuild@latest my-app -t lit-ts
+```
 
 - **Preact**
 
-  ```bash
-  npx -y create-rsbuild@latest my-app -t preact-js
-  npx -y create-rsbuild@latest my-app -t preact-ts
-  ```
+```bash
+npx -y create-rsbuild@latest my-app -t preact-js
+npx -y create-rsbuild@latest my-app -t preact-ts
+```
 
 - **Svelte**
 
-  ```bash
-  npx -y create-rsbuild@latest my-app -t svelte-js
-  npx -y create-rsbuild@latest my-app -t svelte-ts
-  ```
+```bash
+npx -y create-rsbuild@latest my-app -t svelte-js
+npx -y create-rsbuild@latest my-app -t svelte-ts
+```
 
 - **Solid**
 
-  ```bash
-  npx -y create-rsbuild@latest my-app -t solid-js
-  npx -y create-rsbuild@latest my-app -t solid-ts
-  ```
+```bash
+npx -y create-rsbuild@latest my-app -t solid-js
+npx -y create-rsbuild@latest my-app -t solid-ts
+```
 
 - **Solid 2 (RC)**
 
-  ```bash
-  npx -y create-rsbuild@latest my-app -t solid2-js
-  npx -y create-rsbuild@latest my-app -t solid2-ts
-  ```
+```bash
+npx -y create-rsbuild@latest my-app -t solid2-js
+npx -y create-rsbuild@latest my-app -t solid2-ts
+```
 
 - **Octane**
 
-  ```bash
-  npx -y create-rsbuild@latest my-app -t octane-js
-  npx -y create-rsbuild@latest my-app -t octane-ts
-  ```
+```bash
+npx -y create-rsbuild@latest my-app -t octane-js
+npx -y create-rsbuild@latest my-app -t octane-ts
+```
 
 ## Documentation
 
