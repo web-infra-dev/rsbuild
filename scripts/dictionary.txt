@@ -87,6 +87,7 @@ nosniff
 nosources
 ntqry
 nuxt
+octanejs
 oklab
 onclosetag
 onopentag
@@ -158,6 +159,7 @@ treeshaking
 tsbuildinfo
 tsdoc
 tsgo
+tsrx
 twoslash
 TYPELESS
 uncompiled

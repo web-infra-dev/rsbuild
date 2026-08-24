@@ -8,6 +8,12 @@ test('should create react project as expected', async () => {
   expect(pkgJson.devDependencies['@rsbuild/plugin-react']).toBeTruthy();
 });
 
+test('should create octane project as expected', async () => {
+  const { pkgJson } = await createAndValidate(import.meta.dirname, 'octane');
+  expect(pkgJson.dependencies.octane).toBeTruthy();
+  expect(pkgJson.devDependencies['@octanejs/rsbuild-plugin']).toBeTruthy();
+});
+
 test('should create preact project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'preact');
   expect(pkgJson.dependencies.preact).toBeTruthy();

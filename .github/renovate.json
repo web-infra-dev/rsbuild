@@ -27,6 +27,15 @@
       "enabled": false
     },
     {
+      "description": "Keep TypeScript 5 in the Octane template because @tsrx/typescript-plugin currently supports TypeScript ^5.9.3.",
+      "matchManagers": ["npm"],
+      "matchFileNames": [
+        "packages/create-rsbuild/template-octane-ts/package.json"
+      ],
+      "matchPackageNames": ["typescript"],
+      "enabled": false
+    },
+    {
       "groupName": "Rspress",
       "groupSlug": "rspress",
       "matchPackageNames": ["/rspress/"]
