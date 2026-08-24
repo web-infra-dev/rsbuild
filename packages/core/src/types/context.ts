@@ -73,7 +73,7 @@ export type RsbuildContext = {
   callerName: string;
 };
 
-export type BuildStatus = 'idle' | 'building' | 'done';
+export type BuildStatus = 'idle' | 'building' | 'done' | 'failed';
 
 export type BuildState = {
   /**
