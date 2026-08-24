@@ -213,7 +213,7 @@ export const sortPluginsByDependencies = (
   const sortedPluginNames = new Set<string>();
 
   while (zeroEndPoints.length) {
-    const name = zeroEndPoints[0].instance.name;
+    const { name } = zeroEndPoints[0].instance;
     const pluginInstances = getPlugin(name);
     sortedPoint.push(...pluginInstances);
     sortedPluginNames.add(name);
