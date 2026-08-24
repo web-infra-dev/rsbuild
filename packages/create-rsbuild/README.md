@@ -80,14 +80,14 @@ npx -y create-rsbuild@latest my-app -t svelte-js
 npx -y create-rsbuild@latest my-app -t svelte-ts
 ```
 
-- **Solid**
+- **Solid 1**
 
 ```bash
 npx -y create-rsbuild@latest my-app -t solid-js
 npx -y create-rsbuild@latest my-app -t solid-ts
 ```
 
-- **Solid 2 (RC)**
+- **Solid 2**
 
 ```bash
 npx -y create-rsbuild@latest my-app -t solid2-js
