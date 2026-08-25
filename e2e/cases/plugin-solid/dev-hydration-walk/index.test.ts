@@ -11,6 +11,14 @@ for (const compiler of ['native', 'babel'] as const) {
         output: {
           minify: false,
         },
+        performance: {
+          chunkSplit: {
+            strategy: 'single-vendor',
+            forceSplitting: {
+              'solid-runtime': /node_modules[\\/]@solidjs[\\/]web[\\/]/,
+            },
+          },
+        },
         plugins: [
           pluginSolid({
             compiler,
@@ -35,6 +43,14 @@ for (const compiler of ['native', 'babel'] as const) {
         output: {
           minify: false,
         },
+        performance: {
+          chunkSplit: {
+            strategy: 'single-vendor',
+            forceSplitting: {
+              'solid-runtime': /node_modules[\\/]@solidjs[\\/]web[\\/]/,
+            },
+          },
+        },
         plugins: [
           pluginSolid({
             compiler,
@@ -47,6 +63,8 @@ for (const compiler of ['native', 'babel'] as const) {
     });
     const content = getFileContent(rsbuild.getDistFiles(), 'index.js');
 
+    expect(content).toContain('.firstChild');
+    expect(content).toContain('.nextSibling');
     expect(content).not.toContain('getFirstChild');
     expect(content).not.toContain('getNextSibling');
   });
