@@ -1,5 +1,35 @@
 # @rsbuild/plugin-solid
 
+## 2.0.0-beta.2 (2026-08-25)
+
+### Breaking changes
+
+- fix(plugin-solid)!: remove deprecated solidPresetOptions by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8369
+
+### New features
+
+- feat(create-rsbuild): add Solid 2 templates by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8306
+- feat(plugin-solid): apply dev option to compiler transforms by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8311
+- feat(plugin-solid): complete Solid preset option types by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8316
+- feat(plugin-solid): add granular refresh option by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8320
+- feat(plugin-solid): add native JSX compiler by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8327
+
+### Bug fixes
+
+- fix(plugin-solid): skip refresh for node_modules by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8326
+- fix(plugin-solid): parse TypeScript correctly with Babel by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8368
+
+### Document
+
+- docs: document Solid v2 usage by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8304
+- docs: clarify Solid dev option behavior by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8314
+- docs(create-rsbuild): add template examples and update Solid labels by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8353
+
+### Other changes
+
+- chore(examples): remove Babel from Solid example by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8366
+- chore(create-rsbuild): remove Babel from Solid 2 templates by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8367
+
 ## 2.0.0-beta.1 (2026-08-18)
 
 ### New features
