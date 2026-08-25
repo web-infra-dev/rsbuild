@@ -15,7 +15,7 @@
     "format": "rs fmt && heading-case --write",
     "lint": "rs lint",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
-    "prepare": "rs setup && node --run prebundle",
+    "prepare": "rs hooks && node --run prebundle",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "pnpm --parallel --filter \"./packages/*\" test"
   },
