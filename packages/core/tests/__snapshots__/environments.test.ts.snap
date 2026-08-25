@@ -1065,7 +1065,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
     "optimization": {
       "minimize": false,
       "splitChunks": {
-        "chunks": "all",
+        "chunks": "async",
         "minSize": 0,
       },
     },

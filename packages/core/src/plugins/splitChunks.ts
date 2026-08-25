@@ -65,6 +65,7 @@ function resolveDefaultPreset(
 
 function resolvePerPackagePreset(): Rspack.OptimizationSplitChunksOptions {
   return {
+    chunks: 'all',
     minSize: 0,
     maxInitialRequests: Number.POSITIVE_INFINITY,
     cacheGroups: {
@@ -278,7 +279,8 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
         } else {
           const { preset = 'none', ...rest } = splitChunks;
           chain.optimization.splitChunks({
-            chunks: 'all',
+            // Split initial chunks only for multi-entry builds to extract shared modules.
+            chunks: Object.keys(environment.entry).length > 1 ? 'all' : 'async',
             minSize: 0,
             ...getSplitChunksByPreset(config, preset),
             ...rest,

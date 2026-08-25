@@ -5,7 +5,7 @@ import {
 } from '../src/plugins/splitChunks';
 
 describe('plugin-split-chunks', () => {
-  it('should set minSize to 0 by default for Node.js builds', async () => {
+  it('should split async chunks for Node.js builds with one entry', async () => {
     const rsbuild = await createRsbuild({
       config: {
         output: {
@@ -16,7 +16,93 @@ describe('plugin-split-chunks', () => {
 
     const config = await rsbuild.initConfigs();
     expect(config[0].optimization?.splitChunks).toMatchObject({
+      chunks: 'async',
+      minSize: 0,
+    });
+  });
+
+  it('should split all chunks for Node.js builds with multiple entries', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        source: {
+          entry: {
+            first: './src/first.js',
+            second: './src/second.js',
+          },
+        },
+        output: {
+          target: 'node',
+        },
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchObject({
       chunks: 'all',
+      minSize: 0,
+    });
+  });
+
+  it('should allow using all chunks for a Node.js build with one entry', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          target: 'node',
+        },
+        splitChunks: {
+          chunks: 'all',
+        },
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchObject({
+      chunks: 'all',
+      minSize: 0,
+    });
+  });
+
+  it('should allow using async chunks for a Node.js build with multiple entries', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        source: {
+          entry: {
+            first: './src/first.js',
+            second: './src/second.js',
+          },
+        },
+        output: {
+          target: 'node',
+        },
+        splitChunks: {
+          chunks: 'async',
+        },
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchObject({
+      chunks: 'async',
+      minSize: 0,
+    });
+  });
+
+  it('should allow overriding chunks for the per-package preset in Node.js builds', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          target: 'node',
+        },
+        splitChunks: {
+          preset: 'per-package',
+          chunks: 'async',
+        },
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchObject({
+      chunks: 'async',
       minSize: 0,
     });
   });
@@ -35,7 +121,7 @@ describe('plugin-split-chunks', () => {
 
     const config = await rsbuild.initConfigs();
     expect(config[0].optimization?.splitChunks).toMatchObject({
-      chunks: 'all',
+      chunks: 'async',
       minSize: 5000,
     });
   });

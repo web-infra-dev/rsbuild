@@ -1688,7 +1688,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
   "optimization": {
     "minimize": false,
     "splitChunks": {
-      "chunks": "all",
+      "chunks": "async",
       "minSize": 0,
     },
   },
