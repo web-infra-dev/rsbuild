@@ -126,6 +126,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             .loader(path.join(import.meta.dirname, 'solidLoader.mjs'))
             .options({
               compiler,
+              decoratorVersion: environmentConfig.source.decorators.version,
               solid: solidOptions,
             });
 

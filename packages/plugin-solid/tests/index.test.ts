@@ -47,6 +47,7 @@ describe('plugin-solid', () => {
 
     expect(getSolidLoaderOptions(config[0])).toEqual({
       compiler: 'native',
+      decoratorVersion: '2023-11',
       solid: {
         builtIns: [
           'For',
@@ -81,6 +82,27 @@ describe('plugin-solid', () => {
 
     expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
       '"compiler":"babel"',
+    );
+  });
+
+  it('should pass decorator version to Babel compiler', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        source: {
+          decorators: {
+            version: 'legacy',
+          },
+        },
+        plugins: [pluginSolid({ compiler: 'babel' })],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+
+    expect(getSolidLoaderOptions(config[0])).toEqual(
+      expect.objectContaining({
+        decoratorVersion: 'legacy',
+      }),
     );
   });
 

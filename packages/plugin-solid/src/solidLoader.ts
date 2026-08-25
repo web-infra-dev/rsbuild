@@ -8,7 +8,7 @@ import {
   type TransformOptions as NativeTransformOptions,
 } from '@dom-expressions/compiler';
 import remapping from '@jridgewell/remapping';
-import type { Rspack } from '@rsbuild/core';
+import type { Decorators, Rspack } from '@rsbuild/core';
 import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 const require = createRequire(import.meta.url);
@@ -22,6 +22,7 @@ const getTransformFilename = (filename: string): string =>
 
 export type SolidLoaderOptions = {
   compiler: SolidCompiler;
+  decoratorVersion: NonNullable<Decorators['version']>;
   solid: SolidPresetOptions;
 };
 
@@ -56,7 +57,7 @@ const mergeSourceMaps = (
 const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
   async function (source, sourceMap): Promise<void> {
     const callback = this.async();
-    const { compiler, solid } = this.getOptions();
+    const { compiler, decoratorVersion, solid } = this.getOptions();
     const filename = this.resourcePath;
     const inputSourceMap = normalizeSourceMap(sourceMap);
 
@@ -64,7 +65,9 @@ const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
       if (compiler === 'babel') {
         const parserPlugins: NonNullable<
           NonNullable<TransformOptions['parserOpts']>['plugins']
-        > = ['decorators'];
+        > = [
+          decoratorVersion === 'legacy' ? 'decorators-legacy' : 'decorators',
+        ];
 
         if (JSX_REGEX.test(filename)) {
           parserPlugins.push('jsx');
