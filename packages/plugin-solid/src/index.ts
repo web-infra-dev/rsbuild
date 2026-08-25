@@ -55,18 +55,12 @@ export type PluginSolidOptions = {
    * `solid.dev` overrides compiler transforms without changing runtime resolution.
    */
   solid?: SolidPresetOptions;
-  /**
-   * Options passed to the selected JSX compiler.
-   * If both `solid` and `solidPresetOptions` are set, `solid` takes precedence.
-   * @deprecated Use `solid` instead.
-   */
-  solidPresetOptions?: SolidPresetOptions;
 };
 
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
-  const { compiler = 'native', dev, solid, solidPresetOptions, ssr } = options;
+  const { compiler = 'native', dev, solid, ssr } = options;
   const isDevModeEnabled = (mode: RsbuildMode) => dev ?? mode === 'development';
 
   return {
@@ -113,7 +107,6 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
           };
           const solidOptions = {
             ...defaultPresetOptions,
-            ...solidPresetOptions,
             ...solid,
           };
 
