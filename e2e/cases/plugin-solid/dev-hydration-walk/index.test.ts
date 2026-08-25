@@ -1,6 +1,24 @@
 import { expect, test } from '@e2e/helper';
+import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { getFileContent } from '@rstackjs/test-utils';
+
+const commonConfig = {
+  output: {
+    minify: false,
+  },
+  splitChunks: {
+    preset: 'none',
+    cacheGroups: {
+      'solid-runtime': {
+        test: /node_modules[\\/]@solidjs[\\/]web[\\/]/,
+        name: 'solid-runtime',
+        chunks: 'all',
+        enforce: true,
+      },
+    },
+  },
+} satisfies RsbuildConfig;
 
 for (const compiler of ['native', 'babel'] as const) {
   test(`should emit hydration walk helpers with ${compiler} when dev is true`, async ({
@@ -8,20 +26,7 @@ for (const compiler of ['native', 'babel'] as const) {
   }) => {
     const rsbuild = await build({
       config: {
-        output: {
-          minify: false,
-        },
-        splitChunks: {
-          preset: 'none',
-          cacheGroups: {
-            'solid-runtime': {
-              test: /node_modules[\\/]@solidjs[\\/]web[\\/]/,
-              name: 'solid-runtime',
-              chunks: 'all',
-              enforce: true,
-            },
-          },
-        },
+        ...commonConfig,
         plugins: [
           pluginSolid({
             compiler,
@@ -43,20 +48,7 @@ for (const compiler of ['native', 'babel'] as const) {
   }) => {
     const rsbuild = await devOnly({
       config: {
-        output: {
-          minify: false,
-        },
-        splitChunks: {
-          preset: 'none',
-          cacheGroups: {
-            'solid-runtime': {
-              test: /node_modules[\\/]@solidjs[\\/]web[\\/]/,
-              name: 'solid-runtime',
-              chunks: 'all',
-              enforce: true,
-            },
-          },
-        },
+        ...commonConfig,
         plugins: [
           pluginSolid({
             compiler,
