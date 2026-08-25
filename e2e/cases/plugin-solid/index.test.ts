@@ -1,7 +1,28 @@
 import path from 'node:path';
 import type { BuildOptions, BuildResult } from '@e2e/helper';
 import { expect, gotoPage, test } from '@e2e/helper';
+import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid, type PluginSolidOptions } from '@rsbuild/plugin-solid';
+
+const renameButtonId = () => ({
+  visitor: {
+    JSXAttribute(path: {
+      node: {
+        name: { name?: string };
+        value: { type?: string; value?: string } | null;
+      };
+    }) {
+      const { name, value } = path.node;
+      if (
+        name.name === 'id' &&
+        value?.type === 'StringLiteral' &&
+        value.value === 'button'
+      ) {
+        value.value = 'babel-button';
+      }
+    },
+  },
+});
 
 const buildFixture = (
   build: (options?: BuildOptions) => Promise<BuildResult>,
@@ -44,6 +65,38 @@ test('should support Babel compiler', async ({ page, build }) => {
   await button.click();
   await expect(button).toHaveText('count: 1');
 });
+
+for (const [name, include, compiler] of [
+  ['embedded Babel loader', undefined, 'native'],
+  ['standalone Babel rule', /\.(?:jsx|tsx)$/, 'babel'],
+] as const) {
+  test(`should run ${name} before Solid compilation`, async ({
+    page,
+    build,
+  }) => {
+    const rsbuild = await build({
+      cwd: path.join(import.meta.dirname, 'ts'),
+      runServer: true,
+      config: {
+        performance: {
+          buildCache: false,
+        },
+        plugins: [
+          pluginBabel({
+            include,
+            babelLoaderOptions: {
+              plugins: [renameButtonId],
+            },
+          }),
+          pluginSolid({ compiler }),
+        ],
+      },
+    });
+
+    await gotoPage(page, rsbuild);
+    await expect(page.locator('#babel-button')).toHaveText('count: 0');
+  });
+}
 
 test('should build solid component with typescript', async ({
   page,

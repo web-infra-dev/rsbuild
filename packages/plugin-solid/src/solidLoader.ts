@@ -25,11 +25,11 @@ export type SolidLoaderOptions = {
 };
 
 const normalizeSourceMap = (
-  sourceMap: Rspack.RawSourceMap | string | undefined,
+  sourceMap: Rspack.RawSourceMap | string | null | undefined,
 ): Rspack.RawSourceMap | undefined =>
   typeof sourceMap === 'string'
     ? (JSON.parse(sourceMap) as Rspack.RawSourceMap)
-    : sourceMap;
+    : (sourceMap ?? undefined);
 
 const mergeSourceMaps = (
   sourceMap: Rspack.RawSourceMap | undefined,

@@ -117,20 +117,17 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             ...solid,
           };
 
-          const solidRule = chain.module
-            .rule('solid')
-            .after(CHAIN_ID.RULE.JS)
-            .test(SCRIPT_REGEX)
-            .dependency({ not: 'url' })
-            .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
-            .with({ type: { not: 'text' } });
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+          const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
+          const solidUse = jsMainRule.use('solid');
 
-          solidRule.include.merge(jsRule.include.values());
-          solidRule.exclude.merge(jsRule.exclude.values());
+          if (jsMainRule.uses.has(CHAIN_ID.USE.BABEL)) {
+            solidUse.before(CHAIN_ID.USE.BABEL);
+          } else {
+            solidUse.after(CHAIN_ID.USE.SWC);
+          }
 
-          solidRule
-            .use('solid')
+          solidUse
             .loader(path.join(import.meta.dirname, 'solidLoader.mjs'))
             .options({
               compiler,
@@ -138,9 +135,20 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             });
 
           if (usingHMR) {
-            const refreshUse = solidRule
+            const refreshRule = chain.module
+              .rule('solid-refresh')
+              .after(CHAIN_ID.RULE.JS)
+              .enforce('pre')
+              .test(SCRIPT_REGEX)
+              .dependency({ not: 'url' })
+              .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
+              .with({ type: { not: 'text' } });
+
+            refreshRule.include.merge(jsRule.include.values());
+            refreshRule.exclude.merge(jsRule.exclude.values());
+
+            const refreshUse = refreshRule
               .use('solid-refresh')
-              .after('solid')
               .loader(path.join(import.meta.dirname, 'refreshLoader.mjs'));
 
             if (typeof options.refresh?.granular === 'boolean') {
