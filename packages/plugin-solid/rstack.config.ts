@@ -1,18 +1,11 @@
 import { define } from 'rstack';
 
 define.lib(async () => {
-  const { esmConfig, nodeMinifyConfig } = await import('@scripts/config/lib');
+  const { esmConfig } = await import('@scripts/config/lib');
 
   return {
     lib: [
       esmConfig,
-      {
-        format: 'cjs',
-        syntax: 'es2023',
-        output: {
-          minify: nodeMinifyConfig,
-        },
-      },
       {
         source: {
           entry: {
