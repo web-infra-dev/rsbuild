@@ -121,6 +121,8 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
           const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
           const solidUse = jsMainRule.use('solid');
 
+          // Rspack executes loaders in reverse declaration order. Position the
+          // Solid loader so transforms run as: user Babel -> Solid JSX -> SWC.
           if (jsMainRule.uses.has(CHAIN_ID.USE.BABEL)) {
             solidUse.before(CHAIN_ID.USE.BABEL);
           } else {
