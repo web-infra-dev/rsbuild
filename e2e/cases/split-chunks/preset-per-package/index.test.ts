@@ -27,3 +27,23 @@ test('should generate chunks for each package when preset is "per-package"', asy
   expect(jsFiles.find((file) => file.includes('npm-react-dom'))).toBeTruthy();
   expect(jsFiles.find((file) => file.includes('npm-scheduler'))).toBeTruthy();
 });
+
+test('should generate package chunks for a single-entry Node.js build', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      output: {
+        target: 'node',
+      },
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+  const reactFile = findFile(
+    files,
+    (name) => name.includes('npm-react') && files[name].includes('React'),
+  );
+
+  expect(reactFile).toBeTruthy();
+});

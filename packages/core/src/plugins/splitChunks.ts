@@ -65,6 +65,7 @@ function resolveDefaultPreset(
 
 function resolvePerPackagePreset(): Rspack.OptimizationSplitChunksOptions {
   return {
+    chunks: 'all',
     minSize: 0,
     maxInitialRequests: Number.POSITIVE_INFINITY,
     cacheGroups: {

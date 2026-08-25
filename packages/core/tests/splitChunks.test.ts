@@ -87,6 +87,26 @@ describe('plugin-split-chunks', () => {
     });
   });
 
+  it('should allow overriding chunks for the per-package preset in Node.js builds', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          target: 'node',
+        },
+        splitChunks: {
+          preset: 'per-package',
+          chunks: 'async',
+        },
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchObject({
+      chunks: 'async',
+      minSize: 0,
+    });
+  });
+
   it('should allow overriding minSize for Node.js builds', async () => {
     const rsbuild = await createRsbuild({
       config: {
