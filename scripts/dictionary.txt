@@ -87,6 +87,7 @@ nosniff
 nosources
 ntqry
 nuxt
+nwjs
 octanejs
 oklab
 onclosetag

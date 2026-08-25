@@ -61,6 +61,22 @@ const normalizeLiveReload = (liveReload: LiveReload): NormalizedLiveReload => {
   };
 };
 
+const isWebPageCompiler = (compiler: Compiler): boolean => {
+  const { platform } = compiler;
+
+  // `output.target` only reflects Rsbuild's target. `tools.rspack` can override
+  // the final Rspack target, and Browserslist targets can resolve to either a
+  // browser or Node.js environment. The HMR client runs in a page context and
+  // its overlay requires `document`, so use Rspack's normalized capabilities.
+  // Do not exclude Node.js or Electron flags directly because hybrid targets,
+  // such as `electron-renderer`, support both web and Node.js APIs.
+  return Boolean(
+    platform.web &&
+    !platform.webworker &&
+    compiler.options.output.environment?.document,
+  );
+};
+
 const isNodeCompiler = (compiler: Compiler) => {
   const { target } = compiler.options;
   if (target) {
@@ -183,7 +199,7 @@ function applyHMREntry({
   resolvedPort: number;
 }) {
   if (
-    config.output.target !== 'web' ||
+    !isWebPageCompiler(compiler) ||
     (!config.dev.hmr && !config.dev.liveReload)
   ) {
     return;
