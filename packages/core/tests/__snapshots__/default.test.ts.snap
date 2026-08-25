@@ -1689,6 +1689,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
     "minimize": false,
     "splitChunks": {
       "chunks": "all",
+      "minSize": 0,
     },
   },
   "output": {
