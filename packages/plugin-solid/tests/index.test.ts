@@ -332,30 +332,4 @@ describe('plugin-solid', () => {
       }),
     );
   });
-
-  it('should allow deprecated solidPresetOptions alias', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [
-          pluginSolid({
-            solidPresetOptions: {
-              generate: 'ssr',
-              hydratable: true,
-            },
-          }),
-        ],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(getSolidLoaderOptions(config[0])).toEqual(
-      expect.objectContaining({
-        solid: expect.objectContaining({
-          generate: 'ssr',
-          hydratable: true,
-        }),
-      }),
-    );
-  });
 });
