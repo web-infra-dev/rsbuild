@@ -14,6 +14,7 @@ import type { SolidCompiler, SolidPresetOptions } from './types.js';
 const require = createRequire(import.meta.url);
 const BABEL_PRESET_SOLID_PATH = require.resolve('babel-preset-solid');
 const JS_REGEX = /\.[cm]?js$/;
+const JSX_REGEX = /\.(?:js|jsx|mjs|cjs|tsx)$/;
 const TS_REGEX = /\.(?:ts|tsx|mts|cts)$/;
 
 const getTransformFilename = (filename: string): string =>
@@ -63,7 +64,11 @@ const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
       if (compiler === 'babel') {
         const parserPlugins: NonNullable<
           NonNullable<TransformOptions['parserOpts']>['plugins']
-        > = ['jsx', 'decorators'];
+        > = ['decorators'];
+
+        if (JSX_REGEX.test(filename)) {
+          parserPlugins.push('jsx');
+        }
 
         if (TS_REGEX.test(filename)) {
           parserPlugins.push('typescript');
