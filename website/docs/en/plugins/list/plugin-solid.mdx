@@ -53,9 +53,19 @@ Babel compilation will introduce extra overhead, in the example above, we use `i
 
 ## Solid v2
 
-Solid v2 support is currently in beta. To use Solid v2, install the beta version of `@rsbuild/plugin-solid`:
+Solid v2 support is currently in beta. It uses the native Solid compiler by default and does not require `@rsbuild/plugin-babel`.
 
-<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid@beta -D" />
+Install and register the beta version of `@rsbuild/plugin-solid`:
+
+<PackageManagerTabs command="add @rsbuild/plugin-solid@beta -D" />
+
+```ts title="rsbuild.config.ts"
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default {
+  plugins: [pluginSolid()],
+};
+```
 
 ## Resolution behavior
 
@@ -68,6 +78,21 @@ If you configure `resolve.conditionNames`, the plugin preserves your configured 
 ## Options
 
 To customize the compilation behavior of Solid, use the following options.
+
+### compiler
+
+The JSX compiler backend. The native compiler is used by default. Set this option to `'babel'` to compile JSX with `babel-preset-solid` instead.
+
+- **Type:** `'native' | 'babel'`
+- **Default:** `'native'`
+- **Version:** `>= 2.0.0`
+- **Example:**
+
+```ts
+pluginSolid({
+  compiler: 'babel',
+});
+```
 
 ### dev
 
@@ -136,7 +161,7 @@ pluginSolid({
 
 ### solid
 
-These options are passed to `babel-preset-solid`. For details, see the [babel-preset-solid documentation](https://npmjs.com/package/babel-preset-solid).
+Solid compiler options passed to the selected JSX compiler.
 
 - **Type:** `SolidPresetOptions`
 - **Default:** `{}`

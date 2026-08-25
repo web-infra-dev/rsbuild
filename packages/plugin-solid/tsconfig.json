@@ -9,9 +9,6 @@
   "references": [
     {
       "path": "../core"
-    },
-    {
-      "path": "../plugin-babel"
     }
   ],
   "include": ["src"]

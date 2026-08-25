@@ -3,7 +3,6 @@ import {
   type RequestHandler,
   type RsbuildDevServer,
 } from '@rsbuild/core';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 
 const serverRender =
@@ -29,12 +28,7 @@ const serverRender =
   };
 
 export default defineConfig({
-  plugins: [
-    pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
-    }),
-    pluginSolid({ ssr: true }),
-  ],
+  plugins: [pluginSolid({ ssr: true })],
   server: {
     setup: ({ action, server }) => {
       if (action !== 'dev') {

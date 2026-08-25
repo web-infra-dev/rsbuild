@@ -1,12 +1,29 @@
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import type { RsbuildMode, RsbuildPlugin } from '@rsbuild/core';
-import { modifyBabelLoaders } from '@rsbuild/plugin-babel';
-import type { SolidPresetOptions } from './types.js';
+import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
-const require = createRequire(import.meta.url);
+export type { SolidCompiler, SolidPresetOptions } from './types.js';
+
+const SOLID_BUILT_INS = [
+  'For',
+  'Show',
+  'Switch',
+  'Match',
+  'Loading',
+  'Reveal',
+  'Portal',
+  'Repeat',
+  'Dynamic',
+  'Errored',
+];
+const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 
 export type PluginSolidOptions = {
+  /**
+   * JSX compiler backend to use.
+   * @default 'native'
+   */
+  compiler?: SolidCompiler;
   /**
    * Whether to enable Solid's development runtime and compiler transforms.
    * @default `true` in development mode, `false` in production mode
@@ -34,13 +51,12 @@ export type PluginSolidOptions = {
     granular?: boolean;
   };
   /**
-   * Options passed to `babel-preset-solid`.
+   * Options passed to the selected JSX compiler.
    * `solid.dev` overrides compiler transforms without changing runtime resolution.
-   * @see https://npmjs.com/package/babel-preset-solid
    */
   solid?: SolidPresetOptions;
   /**
-   * Options passed to `babel-preset-solid`.
+   * Options passed to the selected JSX compiler.
    * If both `solid` and `solidPresetOptions` are set, `solid` takes precedence.
    * @deprecated Use `solid` instead.
    */
@@ -50,7 +66,7 @@ export type PluginSolidOptions = {
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
-  const { dev, solid, solidPresetOptions, ssr } = options;
+  const { compiler = 'native', dev, solid, solidPresetOptions, ssr } = options;
   const isDevModeEnabled = (mode: RsbuildMode) => dev ?? mode === 'development';
 
   return {
@@ -81,51 +97,68 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             environmentConfig.dev.hmr &&
             target === 'web';
 
-          modifyBabelLoaders({
-            chain,
-            CHAIN_ID,
-            modifyOptions: (babelOptions) => {
-              // Apply SSR defaults before user options so explicit values can override them.
-              const defaultPresetOptions: SolidPresetOptions = {
-                dev: useDevMode,
-                ...(ssr
-                  ? target === 'node'
-                    ? { generate: 'ssr', hydratable: true }
-                    : { generate: 'dom', hydratable: true }
-                  : {}),
-              };
+          const defaultPresetOptions: SolidPresetOptions = {
+            moduleName: '@solidjs/web',
+            builtIns: SOLID_BUILT_INS,
+            contextToCustomElements: true,
+            wrapConditionals: true,
+            generate: 'dom',
+            hydratable: false,
+            dev: useDevMode,
+            ...(ssr
+              ? target === 'node'
+                ? { generate: 'ssr', hydratable: true }
+                : { generate: 'dom', hydratable: true }
+              : {}),
+          };
+          const solidOptions = {
+            ...defaultPresetOptions,
+            ...solidPresetOptions,
+            ...solid,
+          };
 
-              babelOptions.presets = [
-                [
-                  require.resolve('babel-preset-solid'),
-                  {
-                    ...defaultPresetOptions,
-                    ...solidPresetOptions,
-                    ...solid,
-                  },
-                ],
-              ];
-              babelOptions.parserOpts = { plugins: ['jsx', 'typescript'] };
+          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+          const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
+          const solidUse = jsMainRule.use('solid');
 
-              return babelOptions;
-            },
-            modifyRule: usingHMR
-              ? (rule, { babelUseId }) => {
-                  const refreshUse = rule
-                    .use('solid-refresh')
-                    .after(babelUseId)
-                    .loader(
-                      path.join(import.meta.dirname, 'refreshLoader.mjs'),
-                    );
+          // Rspack executes loaders in reverse declaration order. Position the
+          // Solid loader so transforms run as: user Babel -> Solid JSX -> SWC.
+          if (jsMainRule.uses.has(CHAIN_ID.USE.BABEL)) {
+            solidUse.before(CHAIN_ID.USE.BABEL);
+          } else {
+            solidUse.after(CHAIN_ID.USE.SWC);
+          }
 
-                  if (typeof options.refresh?.granular === 'boolean') {
-                    refreshUse.options({
-                      granular: options.refresh.granular,
-                    });
-                  }
-                }
-              : undefined,
-          });
+          solidUse
+            .loader(path.join(import.meta.dirname, 'solidLoader.mjs'))
+            .options({
+              compiler,
+              solid: solidOptions,
+            });
+
+          if (usingHMR) {
+            const refreshRule = chain.module
+              .rule('solid-refresh')
+              .after(CHAIN_ID.RULE.JS)
+              .enforce('pre')
+              .test(SCRIPT_REGEX)
+              .dependency({ not: 'url' })
+              .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
+              .with({ type: { not: 'text' } });
+
+            refreshRule.include.merge(jsRule.include.values());
+            refreshRule.exclude.merge(jsRule.exclude.values());
+
+            const refreshUse = refreshRule
+              .use('solid-refresh')
+              .loader(path.join(import.meta.dirname, 'refreshLoader.mjs'));
+
+            if (typeof options.refresh?.granular === 'boolean') {
+              refreshUse.options({
+                granular: options.refresh.granular,
+              });
+            }
+          }
         },
       );
     },

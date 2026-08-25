@@ -17,6 +17,7 @@ define.lib(async () => {
         source: {
           entry: {
             refreshLoader: './src/refreshLoader.ts',
+            solidLoader: './src/solidLoader.ts',
           },
         },
         output: {

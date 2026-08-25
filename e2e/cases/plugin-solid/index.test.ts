@@ -1,7 +1,6 @@
 import path from 'node:path';
 import type { BuildOptions, BuildResult } from '@e2e/helper';
 import { expect, gotoPage, test } from '@e2e/helper';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 
 const buildFixture = (
@@ -9,18 +8,12 @@ const buildFixture = (
   rootDir: string,
 ): Promise<BuildResult> => {
   const root = path.join(import.meta.dirname, rootDir);
-  const plugins = [
-    pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
-    }),
-    pluginSolid(),
-  ];
 
   return build({
     cwd: root,
     runServer: true,
     config: {
-      plugins,
+      plugins: [pluginSolid()],
     },
   });
 };

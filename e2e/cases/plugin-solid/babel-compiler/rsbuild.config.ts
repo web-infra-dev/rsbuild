@@ -1,5 +1,5 @@
 import { pluginSolid } from '@rsbuild/plugin-solid';
 
 export default {
-  plugins: [pluginSolid()],
+  plugins: [pluginSolid({ compiler: 'babel' })],
 };

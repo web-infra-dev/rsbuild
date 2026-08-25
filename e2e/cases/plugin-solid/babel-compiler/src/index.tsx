@@ -1,3 +1,4 @@
+import { render } from '@solidjs/web';
 import { createSignal } from 'solid-js';
 
 const App = () => {
@@ -10,4 +11,4 @@ const App = () => {
   );
 };
 
-export default App;
+render(App, document.getElementById('root')!);
