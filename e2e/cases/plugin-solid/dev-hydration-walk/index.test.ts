@@ -11,11 +11,14 @@ for (const compiler of ['native', 'babel'] as const) {
         output: {
           minify: false,
         },
-        performance: {
-          chunkSplit: {
-            strategy: 'single-vendor',
-            forceSplitting: {
-              'solid-runtime': /node_modules[\\/]@solidjs[\\/]web[\\/]/,
+        splitChunks: {
+          preset: 'none',
+          cacheGroups: {
+            'solid-runtime': {
+              test: /node_modules[\\/]@solidjs[\\/]web[\\/]/,
+              name: 'solid-runtime',
+              chunks: 'all',
+              enforce: true,
             },
           },
         },
@@ -43,11 +46,14 @@ for (const compiler of ['native', 'babel'] as const) {
         output: {
           minify: false,
         },
-        performance: {
-          chunkSplit: {
-            strategy: 'single-vendor',
-            forceSplitting: {
-              'solid-runtime': /node_modules[\\/]@solidjs[\\/]web[\\/]/,
+        splitChunks: {
+          preset: 'none',
+          cacheGroups: {
+            'solid-runtime': {
+              test: /node_modules[\\/]@solidjs[\\/]web[\\/]/,
+              name: 'solid-runtime',
+              chunks: 'all',
+              enforce: true,
             },
           },
         },
