@@ -2,7 +2,7 @@
  * Options passed to the Solid JSX compiler.
  *
  * The option types are aligned with `@dom-expressions/compiler` and adjusted
- * for the Babel backend.
+ * for `babel-preset-solid`.
  *
  * https://github.com/solidjs/solid/blob/next/packages/babel-preset-solid/index.js
  * https://github.com/ryansolid/dom-expressions/blob/main/packages/babel-plugin-jsx/README.md
