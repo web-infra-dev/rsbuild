@@ -9,11 +9,13 @@ test('should generate manifest file when target is node', async ({ build }) => {
   expect(manifestContent).toBeDefined();
 
   const manifest = JSON.parse(manifestContent);
-  expect(Object.keys(manifest.allFiles).length).toBe(1);
+  expect(manifest.allFiles).toEqual(['/index.js', expect.any(String)]);
+  const sharedChunk = manifest.allFiles[1];
+  expect(sharedChunk).toMatch(/^\/\d+\.js$/);
 
   expect(manifest.entries.index).toMatchObject({
     initial: {
-      js: ['/index.js'],
+      js: [sharedChunk, '/index.js'],
     },
   });
 });

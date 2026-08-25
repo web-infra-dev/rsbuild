@@ -5,6 +5,41 @@ import {
 } from '../src/plugins/splitChunks';
 
 describe('plugin-split-chunks', () => {
+  it('should set minSize to 0 by default for Node.js builds', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          target: 'node',
+        },
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchObject({
+      chunks: 'all',
+      minSize: 0,
+    });
+  });
+
+  it('should allow overriding minSize for Node.js builds', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          target: 'node',
+        },
+        splitChunks: {
+          minSize: 5000,
+        },
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchObject({
+      chunks: 'all',
+      minSize: 5000,
+    });
+  });
+
   it('should set `default` preset by default', async () => {
     const rsbuild = await createRsbuild({
       config: {

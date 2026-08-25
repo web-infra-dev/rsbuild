@@ -16,7 +16,7 @@ type SplitChunksConfig =
 
 - **Default:** depends on [output.target](/config/output/target):
   - When `output.target` is `'web'`, the default is `{ preset: 'default', chunks: 'all' }`
-  - When `output.target` is `'node'`, the default is `{ preset: 'none', chunks: 'all' }`
+  - When `output.target` is `'node'`, the default is `{ preset: 'none', chunks: 'all', minSize: 0 }`
   - When `output.target` is `'web-worker'`, the default is `false`
 - **Version:** `>= 2.0.0`
 
@@ -28,7 +28,8 @@ It is built on top of Rspack's [optimization.splitChunks](https://rspack.rs/plug
 
 When `output.target` is `'web'` or `'node'`, Rsbuild enables chunk splitting by default and sets `chunks` to `'all'`. This allows eligible modules in both initial and async chunks to be extracted into separate chunks, helping reduce duplicated code across output chunks.
 
-Apart from `chunks` and the splitting rules provided by the selected `preset` or Rsbuild plugins, unspecified options such as `minSize` and `minChunks` use the defaults from Rspack's [`optimization.splitChunks`](https://rspack.rs/plugins/webpack/split-chunks-plugin).
+- For web builds, unspecified options such as `minSize` and `minChunks` use the defaults from Rspack's [`optimization.splitChunks`](https://rspack.rs/plugins/webpack/split-chunks-plugin).
+- For Node.js builds, Rsbuild also sets `minSize` to `0` so that small shared modules can be extracted instead of being duplicated across chunks.
 
 Because Web Worker outputs do not support dynamic imports, Rsbuild disables chunk splitting by default when `output.target` is `'web-worker'`.
 
@@ -134,6 +135,6 @@ export default {
 
 ## Version history
 
-| Version | Changes                                                                                                   |
-| ------- | --------------------------------------------------------------------------------------------------------- |
-| v2.2.0  | When `output.target` is `'node'`, the default changed from `false` to `{ preset: 'none', chunks: 'all' }` |
+| Version | Changes                                                                                                               |
+| ------- | --------------------------------------------------------------------------------------------------------------------- |
+| v2.2.0  | When `output.target` is `'node'`, the default changed from `false` to `{ preset: 'none', chunks: 'all', minSize: 0 }` |
