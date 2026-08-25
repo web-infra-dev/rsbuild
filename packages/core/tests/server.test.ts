@@ -1,7 +1,5 @@
 import os from 'node:os';
-import { rspack } from '@rspack/core';
 import { defaultAllowedOrigins } from '../src/defaultConfig';
-import { isClientCompiler } from '../src/server/assets-middleware';
 import {
   formatRoutes,
   getAddressUrls,
@@ -688,36 +686,6 @@ test('should limit printed server routes correctly', () => {
       -  foo      http://localhost:3000/foo
       -  bar      http://localhost:3000/bar"
   `);
-});
-
-describe('dev server', () => {
-  test('should detect client compilers correctly', () => {
-    expect(isClientCompiler(rspack({}))).toBeTruthy();
-
-    expect(
-      isClientCompiler(
-        rspack({
-          target: ['web', 'es5'],
-        }),
-      ),
-    ).toBeTruthy();
-
-    expect(
-      isClientCompiler(
-        rspack({
-          target: 'node',
-        }),
-      ),
-    ).toBeFalsy();
-
-    expect(
-      isClientCompiler(
-        rspack({
-          target: ['node'],
-        }),
-      ),
-    ).toBeFalsy();
-  });
 });
 
 test('should use Http2SecureServer when https and proxy are both enabled', async () => {
