@@ -14,10 +14,6 @@ type SplitChunksConfig =
   | false;
 ```
 
-- **Default:** depends on [output.target](/config/output/target):
-  - When `output.target` is `'web'`, the default is `{ preset: 'default', chunks: 'all' }`
-  - When `output.target` is `'node'`, the default is `{ preset: 'none', chunks: 'all', minSize: 0 }`
-  - When `output.target` is `'web-worker'`, the default is `false`
 - **Version:** `>= 2.0.0`
 
 `splitChunks` is used to configure Rsbuild's chunk splitting strategy.
@@ -26,16 +22,33 @@ It is built on top of Rspack's [optimization.splitChunks](https://rspack.rs/plug
 
 ## Default behavior
 
-When `output.target` is `'web'` or `'node'`, Rsbuild enables chunk splitting by default and sets `chunks` to `'all'`. This allows eligible modules in both initial and async chunks to be extracted into separate chunks, helping reduce duplicated code across output chunks.
+The default value of `splitChunks` depends on [output.target](/config/output/target).
 
-- For web builds, unspecified options such as `minSize` and `minChunks` use the defaults from Rspack's [`optimization.splitChunks`](https://rspack.rs/plugins/webpack/split-chunks-plugin).
-- For Node.js builds, Rsbuild also sets `minSize` to `0` so that small shared modules can be extracted instead of being duplicated across chunks.
+### Web
 
-Because Web Worker outputs do not support dynamic imports, Rsbuild disables chunk splitting by default when `output.target` is `'web-worker'`.
+- **Default:** `{ preset: 'default', chunks: 'all' }`
+
+For web builds, Rsbuild sets `chunks` to `'all'`. Unspecified options such as `minSize` and `minChunks` use the defaults from Rspack's [`optimization.splitChunks`](https://rspack.rs/plugins/webpack/split-chunks-plugin).
 
 :::tip
 When a project acts as a Module Federation provider and configures [`moduleFederation.options.exposes`](/config/module-federation/options), Rsbuild sets `chunks` to `'async'` to prevent chunk splitting from affecting the remote entry.
 :::
+
+### Node.js
+
+- **Default:**
+  - With one entry: `{ preset: 'none', chunks: 'async', minSize: 0 }`
+  - With multiple entries: `{ preset: 'none', chunks: 'all', minSize: 0 }`
+
+For Node.js builds with one entry, Rsbuild sets `chunks` to `'async'`, allowing shared modules in async chunks to be extracted without splitting the initial entry chunk. With multiple entries, Rsbuild sets `chunks` to `'all'`, allowing shared modules used by different entry chunks to be extracted.
+
+Rsbuild also sets `minSize` to `0` so that small shared modules can be extracted instead of being duplicated across chunks.
+
+### Web Worker
+
+- **Default:** `false`
+
+Because Web Worker outputs do not support dynamic imports, Rsbuild disables chunk splitting by default when `output.target` is `'web-worker'`.
 
 ## splitChunks.preset
 
@@ -135,6 +148,6 @@ export default {
 
 ## Version history
 
-| Version | Changes                                                                                                               |
-| ------- | --------------------------------------------------------------------------------------------------------------------- |
-| v2.2.0  | When `output.target` is `'node'`, the default changed from `false` to `{ preset: 'none', chunks: 'all', minSize: 0 }` |
+| Version | Changes                                                                         |
+| ------- | ------------------------------------------------------------------------------- |
+| v2.2.0  | Enabled chunk splitting by default for Node.js builds and set `minSize` to `0`. |
