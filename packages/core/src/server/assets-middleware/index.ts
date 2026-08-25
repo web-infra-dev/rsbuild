@@ -61,14 +61,6 @@ const normalizeLiveReload = (liveReload: LiveReload): NormalizedLiveReload => {
   };
 };
 
-export const isClientCompiler = (compiler: Compiler): boolean => {
-  const { target } = compiler.options;
-  if (target) {
-    return Array.isArray(target) ? target.includes('web') : target === 'web';
-  }
-  return false;
-};
-
 const isNodeCompiler = (compiler: Compiler) => {
   const { target } = compiler.options;
   if (target) {
@@ -191,7 +183,7 @@ function applyHMREntry({
   resolvedPort: number;
 }) {
   if (
-    !isClientCompiler(compiler) ||
+    config.output.target !== 'web' ||
     (!config.dev.hmr && !config.dev.liveReload)
   ) {
     return;
