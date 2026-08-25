@@ -1,4 +1,3 @@
-// cspell:ignore nwjs
 import { expect, test } from '@e2e/helper';
 import type { Rspack } from '@rsbuild/core';
 import { findFile } from '@rstackjs/test-utils';
