@@ -185,6 +185,9 @@ define.doc({
     exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
   themeConfig: {
+    llmsUI: {
+      placement: 'outline',
+    },
     socialLinks: [
       {
         icon: 'github',
