@@ -84,5 +84,5 @@
       "enabled": false
     }
   ],
-  "ignoreDeps": ["loader-utils", "@rsbuild/core-v1"]
+  "ignoreDeps": ["loader-utils"]
 }

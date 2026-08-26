@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createRsbuild } from '@rsbuild/core';
-import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { matchRules } from '@scripts/test-helper';
 import { type PluginSvgrOptions, pluginSvgr } from '../src';
@@ -67,18 +66,6 @@ describe('svgr', () => {
 
     const config = await rsbuild.initConfigs();
     expect(matchRules(config[0], 'a.svg')[0]).toMatchSnapshot();
-  });
-
-  it('should throw an error when using Rsbuild v1', async () => {
-    const rsbuild = await createRsbuildV1({
-      config: {
-        plugins: [pluginSvgr()],
-      },
-    });
-
-    await expect(() => rsbuild.initConfigs()).rejects.toThrow(
-      /"@rsbuild\/plugin-svgr" v2 requires "@rsbuild\/core" >= 2\.0\. Please upgrade "@rsbuild\/core" or use "@rsbuild\/plugin-svgr" v1\./,
-    );
   });
 
   it('should publish as a pure ESM package', async () => {

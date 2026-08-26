@@ -1,5 +1,4 @@
 import { createRsbuild } from '@rsbuild/core';
-import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { matchPlugin, matchRules } from '@scripts/test-helper';
 import { pluginReact } from '../src';
 
@@ -116,18 +115,6 @@ describe('plugins/react', () => {
 
     const config = await rsbuild.initConfigs();
     expect(matchPlugin(config[0], 'ReactRefreshRspackPlugin')).toBeFalsy();
-  });
-
-  it('should throw an error when using Rsbuild v1', async () => {
-    const rsbuild = await createRsbuildV1({
-      config: {
-        plugins: [pluginReact()],
-      },
-    });
-
-    await expect(() => rsbuild.initConfigs()).rejects.toThrow(
-      /"@rsbuild\/plugin-react" v2 requires "@rsbuild\/core" >= 2\.0\. Please upgrade "@rsbuild\/core" or use "@rsbuild\/plugin-react" v1\./,
-    );
   });
 
   it('should not apply splitChunks rule when strategy is not split-by-experience', async () => {
