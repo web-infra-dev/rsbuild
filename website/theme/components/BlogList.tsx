@@ -20,6 +20,39 @@ type BlogFrontmatter = {
   authors?: BlogAvatarAuthor[];
 };
 
+const EXTERNAL_BLOG_PAGES: Record<string, BlogListItem[]> = {
+  en: [
+    {
+      title: 'Announcing Rsbuild 2.2',
+      description:
+        'Rsbuild 2.2 adds source text imports, enables chunk splitting by default for Node.js builds, supports Solid v2 and Octane, and adds dynamic ports, and custom restart handling.',
+      date: '2026-08-26',
+      href: 'https://rspack.rs/blog/announcing-2-2#rsbuild',
+      authors: [
+        {
+          name: 'Jiahan Chen',
+          avatar: 'https://github.com/chenjiahan.png',
+        },
+      ],
+    },
+  ],
+  zh: [
+    {
+      title: 'Rsbuild 2.2 发布',
+      description:
+        'Rsbuild 2.2 新增源文本导入，优化 Node.js 构建拆包，支持 Solid v2 和 Octane，并带来动态端口和自定义重启流程。',
+      date: '2026-08-26',
+      href: 'https://rspack.rs/zh/blog/announcing-2-2#rsbuild',
+      authors: [
+        {
+          name: 'Jiahan Chen',
+          avatar: 'https://github.com/chenjiahan.png',
+        },
+      ],
+    },
+  ],
+};
+
 const getDateValue = (date?: BlogListItem['date']): number => {
   if (!date) {
     return 0;
@@ -57,7 +90,11 @@ export const useBlogPages = (): BlogListItem[] => {
       });
     });
 
-  return localBlogPages.sort(
+  const externalBlogPages = (EXTERNAL_BLOG_PAGES[lang] ?? []).map((page) =>
+    withDefaultAuthor(page),
+  );
+
+  return [...localBlogPages, ...externalBlogPages].sort(
     (a, b) => getDateValue(b.date) - getDateValue(a.date),
   );
 };
