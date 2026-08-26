@@ -1,5 +1,15 @@
 # @rsbuild/plugin-preact
 
+## 2.1.0 (2026-08-26)
+
+### New features
+
+- feat(plugin-preact): update @swc/plugin-prefresh to v13 by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8308
+
+### Bug fixes
+
+- fix(plugin-preact): use environment HMR config by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8204
+
 ## 2.0.0 (2026-06-02)
 
 ### Breaking changes
