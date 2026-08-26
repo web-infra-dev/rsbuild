@@ -4,10 +4,11 @@ import {
   Link,
   type DocLayoutProps,
 } from '@rspress/core/theme-original';
-// import { Announcement } from '@rstack-dev/doc-ui/announcement';
-import { BlogBackButton } from '@rstack-dev/doc-ui/blog-back-button';
-import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
+// import { Announcement } from '@rstackjs/doc-ui/announcement';
+import { BlogBackButton } from '@rstackjs/doc-ui/blog-back-button';
+import { NavIcon } from '@rstackjs/doc-ui/nav-icon';
 import { HomeLayout } from './pages';
+import '@rstackjs/doc-ui/theme.css';
 import './index.scss';
 import { useLang, usePage } from '@rspress/core/runtime';
 import {

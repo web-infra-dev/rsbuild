@@ -15,7 +15,7 @@
     "@rspress/plugin-client-redirects": "catalog:",
     "@rspress/plugin-rss": "catalog:",
     "@rspress/plugin-sitemap": "catalog:",
-    "@rstack-dev/doc-ui": "catalog:",
+    "@rstackjs/doc-ui": "catalog:",
     "@shikijs/transformers": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

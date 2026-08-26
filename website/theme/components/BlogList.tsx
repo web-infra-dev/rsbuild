@@ -2,9 +2,9 @@ import { Link, renderInlineMarkdown } from '@rspress/core/theme';
 import {
   BlogList as BaseBlogList,
   type BlogListItem,
-} from '@rstack-dev/doc-ui/blog-list';
-import { BlogBackground } from '@rstack-dev/doc-ui/blog-background';
-import type { BlogAvatarAuthor } from '@rstack-dev/doc-ui/blog-avatar';
+} from '@rstackjs/doc-ui/blog-list';
+import { BlogBackground } from '@rstackjs/doc-ui/blog-background';
+import type { BlogAvatarAuthor } from '@rstackjs/doc-ui/blog-avatar';
 import { useLang, usePages } from '@rspress/core/runtime';
 
 const DEFAULT_AUTHOR: BlogAvatarAuthor = {
