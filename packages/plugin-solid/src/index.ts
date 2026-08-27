@@ -112,23 +112,34 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
 
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
-          const solidUse = jsMainRule.use('solid');
+          const solidRules = [
+            { rule: jsMainRule },
+            {
+              rule: chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI),
+              transformFilename: 'data-uri.jsx',
+            },
+          ];
 
-          // Rspack executes loaders in reverse declaration order. Position the
-          // Solid loader so transforms run as: user Babel -> Solid JSX -> SWC.
-          if (jsMainRule.uses.has(CHAIN_ID.USE.BABEL)) {
-            solidUse.before(CHAIN_ID.USE.BABEL);
-          } else {
-            solidUse.after(CHAIN_ID.USE.SWC);
+          for (const { rule, transformFilename } of solidRules) {
+            const solidUse = rule.use('solid');
+
+            // Rspack executes loaders in reverse declaration order. Position the
+            // Solid loader so transforms run as: user Babel -> Solid JSX -> SWC.
+            if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
+              solidUse.before(CHAIN_ID.USE.BABEL);
+            } else {
+              solidUse.after(CHAIN_ID.USE.SWC);
+            }
+
+            solidUse
+              .loader(path.join(import.meta.dirname, 'solidLoader.mjs'))
+              .options({
+                compiler,
+                decoratorVersion: environmentConfig.source.decorators.version,
+                solid: solidOptions,
+                ...(transformFilename ? { transformFilename } : {}),
+              });
           }
-
-          solidUse
-            .loader(path.join(import.meta.dirname, 'solidLoader.mjs'))
-            .options({
-              compiler,
-              decoratorVersion: environmentConfig.source.decorators.version,
-              solid: solidOptions,
-            });
 
           if (usingHMR) {
             const refreshRule = chain.module
