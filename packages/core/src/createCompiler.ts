@@ -119,6 +119,26 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
   let isVersionLogged = false;
   let isCompiling = false;
+  let hasFatalError = false;
+
+  const compilers = isMultiCompiler
+    ? (compiler as Rspack.MultiCompiler).compilers
+    : [compiler as Rspack.Compiler];
+
+  const finishFatalBuild = () => {
+    if (
+      !hasFatalError ||
+      compilers.some((item) =>
+        item.watching ? item.watching.running : item.running,
+      )
+    ) {
+      return;
+    }
+
+    context.buildState.status = 'failed';
+    context.buildState.hasErrors = true;
+    isCompiling = false;
+  };
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
@@ -176,21 +196,20 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   });
 
   compiler.hooks.invalid.tap(HOOK_NAME, () => {
+    hasFatalError = false;
     context.buildState.stats = null;
     context.buildState.status = 'idle';
     context.buildState.hasErrors = false;
   });
 
-  const compilers = isMultiCompiler
-    ? (compiler as Rspack.MultiCompiler).compilers
-    : [compiler as Rspack.Compiler];
-
   for (const item of compilers) {
     item.hooks.failed.tap(HOOK_NAME, () => {
-      context.buildState.status = 'failed';
+      hasFatalError = true;
       context.buildState.hasErrors = true;
-      isCompiling = false;
+      finishFatalBuild();
     });
+    item.hooks.afterDone.tap(HOOK_NAME, finishFatalBuild);
+    item.hooks.watchClose.tap(HOOK_NAME, finishFatalBuild);
   }
 
   if (context.action === 'build') {
@@ -236,6 +255,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler.hooks.done.tap(
     HOOK_NAME,
     (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
+      hasFatalError = false;
       const stats = getRsbuildStats(
         statsInstance,
         compiler,
