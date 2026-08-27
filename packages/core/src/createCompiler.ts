@@ -181,6 +181,18 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     context.buildState.hasErrors = false;
   });
 
+  const compilers = isMultiCompiler
+    ? (compiler as Rspack.MultiCompiler).compilers
+    : [compiler as Rspack.Compiler];
+
+  for (const item of compilers) {
+    item.hooks.failed.tap(HOOK_NAME, () => {
+      context.buildState.status = 'failed';
+      context.buildState.hasErrors = true;
+      isCompiling = false;
+    });
+  }
+
   if (context.action === 'build') {
     // When there are multiple compilers, we only need to print the start log once
     const firstCompiler = isMultiCompiler

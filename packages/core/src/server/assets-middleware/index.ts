@@ -296,16 +296,19 @@ export const assetsMiddleware = async ({
   const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
   const callbacks: (() => void)[] = [];
 
+  const flushCallbacks = () => {
+    for (const callback of callbacks.splice(0)) {
+      callback();
+    }
+  };
+
   compiler.hooks.done.tap('rsbuild-dev-middleware', () => {
     process.nextTick(() => {
       if (!(context.buildState.status === 'done')) {
         return;
       }
 
-      callbacks.forEach((callback) => {
-        callback();
-      });
-      callbacks.length = 0;
+      flushCallbacks();
     });
   });
 
@@ -321,7 +324,10 @@ export const assetsMiddleware = async ({
   const outputFileSystem = await setupOutputFileSystem(writeToDisk, compilers);
 
   const ready = (callback: () => void) => {
-    if (context.buildState.status === 'done') {
+    if (
+      context.buildState.status === 'done' ||
+      context.buildState.status === 'failed'
+    ) {
       callback();
     } else {
       callbacks.push(callback);
@@ -348,6 +354,13 @@ export const assetsMiddleware = async ({
 
       watching = compiler.watch(watchOptions, (error) => {
         if (error) {
+          context.buildState.status = 'failed';
+          context.buildState.hasErrors = true;
+
+          // Fatal compiler errors do not trigger the `done` hook. Release
+          // pending requests so the server can keep serving previous output.
+          process.nextTick(flushCallbacks);
+
           if (error.message?.includes('× Error:')) {
             error.message = error.message.replace('× Error:', '').trim();
           }
