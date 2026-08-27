@@ -24,6 +24,7 @@ export type SolidLoaderOptions = {
   compiler: SolidCompiler;
   decoratorVersion: NonNullable<Decorators['version']>;
   solid: SolidPresetOptions;
+  transformFilename?: string;
 };
 
 const normalizeSourceMap = (
@@ -57,8 +58,14 @@ const mergeSourceMaps = (
 const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
   async function (source, sourceMap): Promise<void> {
     const callback = this.async();
-    const { compiler, decoratorVersion, solid } = this.getOptions();
-    const filename = this.resourcePath;
+    const { compiler, decoratorVersion, solid, transformFilename } =
+      this.getOptions();
+    const sourceFilename = this.resourcePath;
+    const filename =
+      transformFilename ??
+      (compiler === 'native'
+        ? getTransformFilename(sourceFilename)
+        : sourceFilename);
     const inputSourceMap = normalizeSourceMap(sourceMap);
 
     try {
@@ -79,7 +86,7 @@ const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
 
         const result = await babelTransformAsync(String(source), {
           filename,
-          sourceFileName: filename,
+          sourceFileName: sourceFilename,
           sourceMaps: true,
           inputSourceMap,
           ast: false,
@@ -97,14 +104,14 @@ const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
 
       const result = await nativeTransformAsync(String(source), {
         ...solid,
-        filename: getTransformFilename(filename),
+        filename,
         sourceMap: true,
       } as NativeTransformOptions);
 
       callback(
         null,
         result.code,
-        mergeSourceMaps(inputSourceMap, result.map, filename),
+        mergeSourceMaps(inputSourceMap, result.map, sourceFilename),
       );
     } catch (error) {
       callback(error instanceof Error ? error : new Error(String(error)));
