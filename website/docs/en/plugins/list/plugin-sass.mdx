@@ -20,13 +20,6 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-sass -D" />
 
-:::tip
-
-- The Sass plugin only supports @rsbuild/core versions >= 0.7.0.
-- If the @rsbuild/core version is lower than 0.7.0, it has built-in support for the Sass plugin; you don't need to install it.
-
-:::
-
 ### Register plugin
 
 Register the plugin in Rsbuild config:
@@ -80,7 +73,6 @@ pluginSass({
 
 - **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
 - **Default:** `/\.s(?:a|c)ss$/`
-- **Version:** `>= 1.1.0`
 
 Include some `.scss` or `.sass` files, they will be transformed by `sass-loader`. The value is the same as the [rules[].test](https://rspack.rs/config/module-rules#rulestest) option in Rspack.
 
