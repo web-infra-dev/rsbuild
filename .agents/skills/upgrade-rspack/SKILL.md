@@ -15,8 +15,7 @@ If the version is missing, ask for it before making changes.
 
 1. Check the worktree with `git status --short`. If there are uncommitted edits, stop and ask the user how to proceed.
 
-2. Update the `@rspack/core` entry in the default catalog in
-   `pnpm-workspace.yaml` to `~<version>`, preserving package dependencies as `catalog:`, then run `pnpm update @rspack/core --recursive`.
+2. Update the `@rspack/core` entry in the default catalog in `pnpm-workspace.yaml` to `~<version>`, preserving package dependencies as `catalog:`, then run `pnpm update @rspack/core --recursive`.
 
 3. Run `pnpm i` at the repository root.
 
