@@ -119,6 +119,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
   let isVersionLogged = false;
   let isCompiling = false;
+  // Fatal errors abort compilation and trigger `failed` instead of producing stats via `done`.
   let hasFatalError = false;
 
   const compilers = isMultiCompiler
