@@ -56,7 +56,7 @@ catalogs:
       specifier: ^1.6.0
       version: 1.6.0
     '@rspack/core':
-      specifier: 2.2.1
+      specifier: ~2.2.1
       version: 2.2.1
     '@rspack/plugin-preact-refresh':
       specifier: ^2.0.1
