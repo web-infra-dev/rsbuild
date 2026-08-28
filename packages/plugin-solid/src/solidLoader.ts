@@ -9,16 +9,12 @@ import {
 } from '@dom-expressions/compiler';
 import remapping from '@jridgewell/remapping';
 import type { Decorators, Rspack } from '@rsbuild/core';
+import { isDefaultSolidScript } from './helpers.js';
 import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 const require = createRequire(import.meta.url);
 const BABEL_PRESET_SOLID_PATH = require.resolve('babel-preset-solid');
-const JS_REGEX = /\.[cm]?js$/;
-const JSX_REGEX = /\.(?:js|jsx|mjs|cjs|tsx)$/;
-const TS_REGEX = /\.(?:ts|tsx|mts|cts)$/;
-
-const getTransformFilename = (filename: string): string =>
-  JS_REGEX.test(filename) ? `${filename}.jsx` : filename;
+const TSX_REGEX = /\.tsx$/i;
 
 export type SolidLoaderOptions = {
   compiler: SolidCompiler;
@@ -58,14 +54,16 @@ const mergeSourceMaps = (
 const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
   async function (source, sourceMap): Promise<void> {
     const callback = this.async();
-    const { compiler, decoratorVersion, solid, transformFilename } =
-      this.getOptions();
+    const options = this.getOptions();
     const sourceFilename = this.resourcePath;
-    const filename =
-      transformFilename ??
-      (compiler === 'native'
-        ? getTransformFilename(sourceFilename)
-        : sourceFilename);
+    const filename = options.transformFilename ?? sourceFilename;
+
+    if (!isDefaultSolidScript(filename)) {
+      callback(null, source, sourceMap);
+      return;
+    }
+
+    const { compiler, decoratorVersion, solid } = options;
     const inputSourceMap = normalizeSourceMap(sourceMap);
 
     try {
@@ -76,11 +74,9 @@ const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
           decoratorVersion === 'legacy' ? 'decorators-legacy' : 'decorators',
         ];
 
-        if (JSX_REGEX.test(filename)) {
-          parserPlugins.push('jsx');
-        }
+        parserPlugins.push('jsx');
 
-        if (TS_REGEX.test(filename)) {
+        if (TSX_REGEX.test(filename)) {
           parserPlugins.push('typescript');
         }
 

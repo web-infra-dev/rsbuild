@@ -258,6 +258,25 @@ describe('plugin-solid', () => {
     expect(JSON.stringify(refreshRule)).toContain('"granular":false');
   });
 
+  it('should only apply solid refresh to JSX and TSX by default', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    const hasRefreshLoader = (filename: string) =>
+      JSON.stringify(matchRules(config[0], filename)).includes(
+        'refreshLoader.mjs',
+      );
+
+    expect(hasRefreshLoader('a.js')).toBe(false);
+    expect(hasRefreshLoader('a.ts')).toBe(false);
+    expect(hasRefreshLoader('a.jsx')).toBe(true);
+    expect(hasRefreshLoader('a.tsx')).toBe(true);
+  });
+
   it('should use hydratable dom output for ssr option on web target', async () => {
     const rsbuild = await createRsbuild({
       config: {
