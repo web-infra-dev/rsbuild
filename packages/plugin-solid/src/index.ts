@@ -1,5 +1,6 @@
 import path from 'node:path';
 import type { RsbuildMode, RsbuildPlugin } from '@rsbuild/core';
+import { DEFAULT_SOLID_SCRIPT_REGEX } from './helpers.js';
 import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 export type { SolidCompiler, SolidPresetOptions } from './types.js';
@@ -16,8 +17,6 @@ const SOLID_BUILT_INS = [
   'Dynamic',
   'Errored',
 ];
-const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
-
 export type PluginSolidOptions = {
   /**
    * JSX compiler backend to use.
@@ -146,7 +145,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               .rule('solid-refresh')
               .after(CHAIN_ID.RULE.JS)
               .enforce('pre')
-              .test(SCRIPT_REGEX)
+              .test(DEFAULT_SOLID_SCRIPT_REGEX)
               .dependency({ not: 'url' })
               .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
               .with({ type: { not: 'text' } });
