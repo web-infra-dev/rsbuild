@@ -73,7 +73,15 @@ export type RsbuildContext = {
   callerName: string;
 };
 
-export type BuildStatus = 'idle' | 'building' | 'done' | 'failed';
+export type BuildStatus =
+  /** No build is running yet, or the previous result has been invalidated. */
+  | 'idle'
+  /** The compiler is currently building or rebuilding. */
+  | 'building'
+  /** The compiler completed and produced stats, which may contain errors. */
+  | 'done'
+  /** The compiler aborted due to a fatal error without producing stats. */
+  | 'failed';
 
 export type BuildState = {
   /**
