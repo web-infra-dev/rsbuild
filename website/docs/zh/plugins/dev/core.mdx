@@ -550,7 +550,6 @@ api.transform({ test: /\.js$/ }, async ({ code }) => {
 
 在模块解析开始之前，拦截并修改模块的请求信息。等价于 Rspack 的 [normalModuleFactory.hooks.resolve](https://rspack.rs/zh/api/plugin-api/normal-module-factory-hooks#resolve) hook。
 
-- **版本：** `>= 1.0.17`
 - **类型：**
 
 ```ts
@@ -595,7 +594,6 @@ handler 函数提供以下参数：
 
 在输出产物之前对 assets 进行修改，等价于 Rspack 的 [compilation.hooks.processAssets](https://rspack.rs/zh/api/plugin-api/compilation-hooks#processassets) hook。
 
-- **版本：** `>= 1.0.0`
 - **类型：**
 
 ```ts

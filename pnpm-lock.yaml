@@ -83,8 +83,8 @@ catalogs:
       specifier: 2.2.4
       version: 2.2.4
     '@rstackjs/doc-ui':
-      specifier: 1.14.9
-      version: 1.14.9
+      specifier: 1.14.11
+      version: 1.14.11
     '@rstackjs/load-config':
       specifier: ^0.1.2
       version: 0.1.2
@@ -1381,7 +1381,7 @@ importers:
         version: 2.0.19(@rspress/core@2.0.19)
       '@rstackjs/doc-ui':
         specifier: 'catalog:'
-        version: 1.14.9(@rspress/core@2.0.19)
+        version: 1.14.11(@rspress/core@2.0.19)
       '@shikijs/transformers':
         specifier: 'catalog:'
         version: 4.4.3
@@ -2960,8 +2960,8 @@ packages:
     resolution: {integrity: sha512-YVnA9aTZKPTql8Hzyf9o5chWAICNJ46CYoPwADrSObyBxF1jlvB5gO5M+yXYoZT/VNWh1Abm0TvTtmAh4EeT3A==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  '@rstackjs/doc-ui@1.14.9':
-    resolution: {integrity: sha512-Te7Wx4K9JuvluP7HsH/Dpdju5QhClUe17/9YBzHlul+x2wg63jOkngv79DlMXyYDJgHQ+11vZfz18B+bnPhttw==}
+  '@rstackjs/doc-ui@1.14.11':
+    resolution: {integrity: sha512-VJ7trL69YzClO/zFPIgKu3l6b9pvKcUIurniWyirH5JcELqKcmlH7RAI6esfnJglHFqk7xONyqKa7bqsnBCruA==}
     peerDependencies:
       '@rspress/core': '>=2.0.0'
     peerDependenciesMeta:
@@ -7206,7 +7206,7 @@ snapshots:
 
   '@rstackjs/create-toolkit@2.2.4': {}
 
-  '@rstackjs/doc-ui@1.14.9(@rspress/core@2.0.19)':
+  '@rstackjs/doc-ui@1.14.11(@rspress/core@2.0.19)':
     optionalDependencies:
       '@rspress/core': 2.0.19(@module-federation/runtime-tools@2.9.0)(@rspack/core@2.2.1)(core-js@3.50.0)(micromark-util-types@2.0.2)(micromark@4.0.2)(supports-color@8.1.1)
 
