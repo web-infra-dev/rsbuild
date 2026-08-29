@@ -7,7 +7,7 @@
     "@rstest/adapter-rsbuild": "^0.11.9",
     "@rstest/core": "^0.11.9",
     "@testing-library/jest-dom": "^7.0.1",
-    "@vue/test-utils": "^2.4.11",
+    "@vue/test-utils": "^2.5.0",
     "happy-dom": "^20.11.6"
   }
 }
