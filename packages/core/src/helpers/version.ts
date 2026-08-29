@@ -1,4 +1,5 @@
-export const rspackMinVersion = '2.0.0';
+// Rspack 2.2.1 is required for `compact-hashed` module and chunk IDs.
+export const rspackMinVersion = '2.2.1';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);
