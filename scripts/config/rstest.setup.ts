@@ -5,7 +5,7 @@ import { createSnapshotSerializer } from 'path-serializer';
 const repoRoot = path.join(__dirname, '../..');
 
 const GLOBAL_VIRTUAL_STORE_PATH =
-  /(?:file:\/{2})?(?:[a-zA-Z]:)?\/(?:[^/"'\r\n]+\/)*store\/v\d+\/links\/.+?\/node_modules(?=\/)/g;
+  /(?:file:\/{2})?(?:[a-zA-Z]:)?\/(?:[^/"'\r\n]+\/)*v\d+\/links\/.+?\/node_modules(?=\/)/g;
 
 process.chdir(repoRoot);
 
