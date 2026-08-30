@@ -148,6 +148,8 @@ allowBuilds:
 
 dedupePeers: true
 
+enableGlobalVirtualStore: true
+
 autoInstallPeers: false
 
 peerDependencyRules:
