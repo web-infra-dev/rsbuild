@@ -20,6 +20,8 @@ expect.addSnapshotSerializer(
     workspace: path.join(__dirname, '..'),
     replace: [
       {
+        // TODO: Remove after path-serializer supports custom store directories.
+        // https://github.com/rstackjs/path-serializer/pull/27
         match: GLOBAL_VIRTUAL_STORE_PATH,
         mark: 'pnpm-inner',
       },
