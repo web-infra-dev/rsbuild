@@ -1,4 +1,5 @@
 import { define } from 'rstack';
+import skillsLock from './skills-lock.json' with { type: 'json' };
 
 define.fmt({
   singleQuote: true,
@@ -10,12 +11,8 @@ define.fmt({
     'e2e/cases/syntax-es/using-declaration/src/index.ts',
     // Preserve uppercase DOCTYPE in create-rsbuild templates.
     'packages/create-rsbuild/**/*.html',
-    // Installed Skills
-    '.agents/skills/rstack-cli-docs',
-    '.agents/skills/rspress-description-generator',
-    '.agents/skills/release-blog-writer',
-    '.agents/skills/pr-creator',
-    '.agents/skills/create-draft-release-notes',
+    // Ignore installed Skills because their formatting may differ from this repository.
+    ...Object.keys(skillsLock.skills).map((name) => `.agents/skills/${name}`),
   ],
   plugins: ['heading-case'],
 });
