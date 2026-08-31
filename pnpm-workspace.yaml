@@ -166,7 +166,6 @@ hoistPattern: []
 # Reduce the risk of installing compromised packages
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
-  - 'path-serializer@0.7.0'
   - '@rspack/*'
   - 'rspack-chain'
   - '@rsbuild/*'
