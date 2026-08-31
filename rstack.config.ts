@@ -1,23 +1,27 @@
 import { define } from 'rstack';
 
-define.fmt({
-  singleQuote: true,
-  sortPackageJson: true,
-  ignorePatterns: [
-    // Avoid parser errors in intentionally invalid or unsupported fixtures.
-    'e2e/cases/plugin-less/inline-js/src/*.less',
-    'e2e/cases/browser-logs/skip-build-error/src/**',
-    'e2e/cases/syntax-es/using-declaration/src/index.ts',
-    // Preserve uppercase DOCTYPE in create-rsbuild templates.
-    'packages/create-rsbuild/**/*.html',
-    // Installed Skills
-    '.agents/skills/rstack-cli-docs',
-    '.agents/skills/rspress-description-generator',
-    '.agents/skills/release-blog-writer',
-    '.agents/skills/pr-creator',
-    '.agents/skills/create-draft-release-notes',
-  ],
-  plugins: ['heading-case'],
+define.fmt(async () => {
+  const { default: skillsLock } = await import('./skills-lock.json', {
+    with: { type: 'json' },
+  });
+
+  return {
+    singleQuote: true,
+    sortPackageJson: true,
+    ignorePatterns: [
+      // Avoid parser errors in intentionally invalid or unsupported fixtures.
+      'e2e/cases/plugin-less/inline-js/src/*.less',
+      'e2e/cases/browser-logs/skip-build-error/src/**',
+      'e2e/cases/syntax-es/using-declaration/src/index.ts',
+      // Preserve uppercase DOCTYPE in create-rsbuild templates.
+      'packages/create-rsbuild/**/*.html',
+      // Ignore installed Skills because their formatting may differ from this repository.
+      ...Object.keys(skillsLock.skills).map(
+        (name) => `.agents/skills/${name}/**`,
+      ),
+    ],
+    plugins: ['heading-case'],
+  };
 });
 
 define.staged({
