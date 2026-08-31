@@ -3,7 +3,7 @@ name: add-doc-anchor-ids
 description: Align Rspress heading anchor IDs between English and Chinese docs. Use for MDX `\{#...}` anchors, shortened hashes, redundant anchors, or dead links.
 ---
 
-# Add Doc Anchor IDs
+# Add doc anchor IDs
 
 Use this skill for Rspress docs mirrored under `website/docs/en` and `website/docs/zh`.
 
@@ -80,7 +80,7 @@ Use this skill for Rspress docs mirrored under `website/docs/en` and `website/do
 
 8. If there is an existing repository command for docs link checking or docs build, run it. Otherwise, inspect changed hashes with `rg` and verify each target heading exists in the target file.
 
-## Rspress Anchor Notes
+## Rspress anchor notes
 
 - Rspress/GitHub-style anchors lowercase headings and remove punctuation such as `.` from API names; verify these IDs instead of guessing.
 - Some characters are preserved by the actual Rspress slugger, such as underscores in `BASE_URL`; avoid guessing when a link already works.

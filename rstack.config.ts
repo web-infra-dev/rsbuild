@@ -10,7 +10,14 @@ define.fmt({
     'e2e/cases/syntax-es/using-declaration/src/index.ts',
     // Preserve uppercase DOCTYPE in create-rsbuild templates.
     'packages/create-rsbuild/**/*.html',
+    // Installed Skills
+    '.agents/skills/rstack-cli-docs',
+    '.agents/skills/rspress-description-generator',
+    '.agents/skills/release-blog-writer',
+    '.agents/skills/pr-creator',
+    '.agents/skills/create-draft-release-notes',
   ],
+  plugins: ['heading-case'],
 });
 
 define.staged({

@@ -209,8 +209,8 @@ catalogs:
       specifier: ^11.4.0
       version: 11.4.0
     heading-case:
-      specifier: ^1.1.8
-      version: 1.1.8
+      specifier: ^2.0.0
+      version: 2.0.0
     hono:
       specifier: ^4.13.5
       version: 4.13.5
@@ -398,7 +398,7 @@ importers:
         version: 0.0.4
       heading-case:
         specifier: 'catalog:'
-        version: 1.1.8
+        version: 2.0.0(prettier@3.9.6)
       rstack:
         specifier: 'catalog:'
         version: 0.6.5(@module-federation/runtime-tools@2.9.0)(@rspress/core@2.0.21)(core-js@3.50.0)(jiti@2.7.0)(typescript@6.0.3)
@@ -3893,9 +3893,11 @@ packages:
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
 
-  heading-case@1.1.8:
-    resolution: {integrity: sha512-zGhfkYlKqTbkXyu6RluO4DFyD3fEGHOMl/16UZcXX315drkUa/sg8vlvQXm3trqpnoj8LhPsYCrg5R6oP9mtyQ==}
+  heading-case@2.0.0:
+    resolution: {integrity: sha512-yznMB5NlBOlCqGL68oRa9gvA8vINQB56D1rTQwCRNoh2aLjtEAK4UKYD5mZ4rXJ0GCuyRmzGCgP1/3To1Mj/vA==}
     hasBin: true
+    peerDependencies:
+      prettier: ^3.0.0
 
   hono@4.13.5:
     resolution: {integrity: sha512-O6+/eCYRkzzzy0rPWwKLiGBR1nFuUPZynnwjxN1MBA62NNqbT0wQEzQyK2gSO5yDIDB336sXQleAhOHrzlYyKw==}
@@ -6495,7 +6497,6 @@ snapshots:
       core-js: 3.50.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
-    optional: true
 
   '@rsbuild/plugin-check-syntax@2.0.1(@rsbuild/core@packages+core)':
     dependencies:
@@ -6506,12 +6507,12 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  '@rsbuild/plugin-react@2.1.0(@rsbuild/core@2.2.0)(@rspack/core@2.2.1)':
+  '@rsbuild/plugin-react@2.1.0(@rsbuild/core@2.2.1)(@rspack/core@2.2.1)':
     dependencies:
       '@rspack/plugin-react-refresh': 2.0.2(@rspack/core@2.2.1)(react-refresh@0.18.0)
       react-refresh: 0.18.0
     optionalDependencies:
-      '@rsbuild/core': 2.2.0(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.1(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
     transitivePeerDependencies:
       - '@rspack/core'
 
@@ -6741,8 +6742,8 @@ snapshots:
     dependencies:
       '@mdx-js/mdx': 3.1.1(supports-color@8.1.1)
       '@mdx-js/react': 3.1.1(@types/react@19.2.18)(react@19.2.8)
-      '@rsbuild/core': 2.2.0(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
-      '@rsbuild/plugin-react': 2.1.0(@rsbuild/core@2.2.0)(@rspack/core@2.2.1)
+      '@rsbuild/core': 2.2.1(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
+      '@rsbuild/plugin-react': 2.1.0(@rsbuild/core@2.2.1)(@rspack/core@2.2.1)
       '@rspress/shared': 2.0.21(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)(supports-color@8.1.1)
       '@shikijs/rehype': 4.3.0
       '@types/mdast': 4.0.4
@@ -6813,7 +6814,7 @@ snapshots:
 
   '@rspress/shared@2.0.21(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)(supports-color@8.1.1)':
     dependencies:
-      '@rsbuild/core': 2.2.0(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.1(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
       '@shikijs/rehype': 4.3.0
       '@types/react': 19.2.18
       mdast-util-mdx-jsx: 3.2.0(supports-color@8.1.1)
@@ -8017,7 +8018,9 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
-  heading-case@1.1.8: {}
+  heading-case@2.0.0(prettier@3.9.6):
+    dependencies:
+      prettier: 3.9.6
 
   hono@4.13.5: {}
 

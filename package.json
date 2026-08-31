@@ -9,10 +9,10 @@
   "scripts": {
     "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
     "check": "rs check --type-check",
-    "check-spell": "pnpx cspell && heading-case",
+    "check-spell": "pnpx cspell",
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
-    "format": "rs fmt && heading-case --write",
+    "format": "rs fmt",
     "lint": "rs lint",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
     "prepare": "rs hooks && node --run prebundle",

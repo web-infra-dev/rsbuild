@@ -3,7 +3,7 @@ name: release-plugin-package
 description: Use when asked to create a release PR for an official Rsbuild plugin package under `packages/plugin-*`, such as `@rsbuild/plugin-react v2.1.0` or `@rsbuild/plugin-sass v2.0.0`.
 ---
 
-# Release Plugin Package
+# Release plugin package
 
 ## Input
 
@@ -146,7 +146,7 @@ To collect changelog items:
 
 11. If running in Codex, create the PR with the GitHub connector/plugin. Otherwise, use the GitHub workflow available in the current environment.
 
-## PR Body
+## PR body
 
 Use the repository PR template. Keep the body concise.
 
