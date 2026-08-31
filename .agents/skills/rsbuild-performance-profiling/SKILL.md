@@ -3,7 +3,7 @@ name: rsbuild-performance-profiling
 description: Use when profiling, analyzing, reporting, or optimizing Rsbuild performance, including build, dev server, rebuild, static asset serving, memory usage, and CPU profile analysis.
 ---
 
-# Rsbuild Performance Profiling
+# Rsbuild performance profiling
 
 ## Workflow
 
@@ -31,7 +31,7 @@ description: Use when profiling, analyzing, reporting, or optimizing Rsbuild per
 
 7. Re-run the same benchmark after changes. Report before/after numbers, absolute delta, percentage delta, and any variance or confidence limits you can observe.
 
-## Analysis Rules
+## Analysis rules
 
 - Treat the user's supplied profiles, reports, and benchmark numbers as the source of truth for that task.
 - Do not claim a performance win without comparable before/after measurements.

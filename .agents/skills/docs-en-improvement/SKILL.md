@@ -3,7 +3,7 @@ name: docs-en-improvement
 description: Improve English documentation under `website/docs/en` by rewriting unnatural translated sentences into clear, professional English while preserving meaning. Use when editing or polishing English docs.
 ---
 
-# Docs En Improvement
+# Docs en improvement
 
 ## Steps
 
