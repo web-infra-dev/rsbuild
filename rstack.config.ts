@@ -12,9 +12,7 @@ define.fmt({
     // Preserve uppercase DOCTYPE in create-rsbuild templates.
     'packages/create-rsbuild/**/*.html',
     // Ignore installed Skills because their formatting may differ from this repository.
-    ...Object.keys(skillsLock.skills).map(
-      (name) => `.agents/skills/${name}/**`,
-    ),
+    ...Object.keys(skillsLock.skills).map((name) => `.agents/skills/${name}`),
   ],
   plugins: ['heading-case'],
 });
