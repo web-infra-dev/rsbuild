@@ -254,8 +254,8 @@ catalogs:
       specifier: ^11.0.2
       version: 11.0.2
     path-serializer:
-      specifier: 0.6.0
-      version: 0.6.0
+      specifier: 0.7.0
+      version: 0.7.0
     playwright:
       specifier: 1.61.1
       version: 1.61.1
@@ -1339,7 +1339,7 @@ importers:
         version: 24.13.3
       path-serializer:
         specifier: 'catalog:'
-        version: 0.6.0
+        version: 0.7.0
       rstack:
         specifier: 'catalog:'
         version: 0.6.5(@module-federation/runtime-tools@2.9.0)(@rspress/core@2.0.21)(core-js@3.50.0)(jiti@2.7.0)(typescript@6.0.3)
@@ -4579,8 +4579,8 @@ packages:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
     engines: {node: '>=8'}
 
-  path-serializer@0.6.0:
-    resolution: {integrity: sha512-LlnjpuCARGnJ4X3IirMg0qozvqyTQHmM5ZqUDYmz+yanhjHSP5BqpmgHkOjiFHad9+bYNW9f5ECXv1tUyw2B9A==}
+  path-serializer@0.7.0:
+    resolution: {integrity: sha512-QlO3NuhGp1ZjOojCEfe2x6dZ+OOw70ugmjwvETPlWrsllhZouPNRQAKXNs9zTA1CnKVWTtBA5n6V6xtbA9Me5A==}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -8963,7 +8963,7 @@ snapshots:
 
   path-key@3.1.1: {}
 
-  path-serializer@0.6.0: {}
+  path-serializer@0.7.0: {}
 
   path-type@4.0.0: {}
 
