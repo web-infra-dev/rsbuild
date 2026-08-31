@@ -4,8 +4,8 @@
     "test:watch": "rstest --watch"
   },
   "devDependencies": {
-    "@rstest/adapter-rsbuild": "^0.11.9",
-    "@rstest/core": "^0.11.9",
+    "@rstest/adapter-rsbuild": "^0.11.10",
+    "@rstest/core": "^0.11.10",
     "@testing-library/jest-dom": "^7.0.1",
     "@vue/test-utils": "^2.5.0",
     "happy-dom": "^20.12.0"
