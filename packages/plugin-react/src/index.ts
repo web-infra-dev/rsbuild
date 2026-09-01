@@ -42,7 +42,7 @@ export type PluginReactOptions = {
    * Enable or configure React Compiler via `builtin:swc-loader`,
    * the same as Rspack's `jsc.transform.reactCompiler` option.
    *
-   * @see https://rspack.rs/guide/tech/react#using-builtinswc-loader
+   * @see https://rspack.rs/guide/integrations/react#using-builtinswc-loader
    */
   reactCompiler?: Rspack.SwcLoaderTransformConfig['reactCompiler'];
   /**
@@ -64,7 +64,7 @@ export type PluginReactOptions = {
    *   exclude: [/[\\/]node_modules[\\/]/],
    *   resourceQuery: { not: /^\?raw$/ },
    * }
-   * @see https://rspack.rs/guide/tech/react#rspackplugin-react-refresh
+   * @see https://rspack.rs/guide/integrations/react#fast-refresh
    */
   reactRefreshOptions?: ReactRefreshOptions;
   /**

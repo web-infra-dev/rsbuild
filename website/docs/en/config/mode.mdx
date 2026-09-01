@@ -50,7 +50,7 @@ When using the Rsbuild JavaScript API:
 
 If `mode` is `development`:
 
-- Enable HMR and register the [HotModuleReplacementPlugin](https://rspack.rs/plugins/webpack/hot-module-replacement-plugin).
+- Enable HMR and register the [HotModuleReplacementPlugin](https://rspack.rs/plugins/hot-module-replacement-plugin).
 - Generate JavaScript source maps, but do not generate CSS source maps. See [output.sourceMap](/config/output/source-map) for details.
 - The `process.env.NODE_ENV` in the source code will be replaced with `'development'`.
 - The `import.meta.env.MODE` in the source code will be replaced with `'development'`.
@@ -62,8 +62,8 @@ If `mode` is `development`:
 
 If `mode` is `production`:
 
-- Enable JavaScript code minification and register the [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin).
-- Enable CSS code minification and register the [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin).
+- Enable JavaScript code minification and register the [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/swc-js-minimizer-rspack-plugin).
+- Enable CSS code minification and register the [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/lightning-css-minimizer-rspack-plugin).
 - JavaScript and CSS filenames include hash suffixes. See [output.filenameHash](/config/output/filename-hash).
 - CSS Modules class names are shorter. See [cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname).
 - JavaScript and CSS source maps are disabled. See [output.sourceMap](/config/output/source-map).

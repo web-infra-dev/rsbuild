@@ -6,7 +6,7 @@ import { PackageManagerTabs } from '@theme';
 
 # moduleFederation.options
 
-- **Type:** [Rspack.ModuleFederationPluginOptions](https://rspack.rs/plugins/webpack/module-federation-plugin#options)
+- **Type:** [Rspack.ModuleFederationPluginOptions](https://rspack.rs/plugins/module-federation-plugin#options)
 - **Default:** `undefined`
 
 Used to configure the Rspack's Module Federation plugin (Module Federation v1.5).
@@ -21,7 +21,7 @@ When using Module Federation, it is recommended that you use the `moduleFederati
 
 When you set the `moduleFederation.options` option, Rsbuild will take the following actions:
 
-- Automatically register the [ModuleFederationPlugin](https://rspack.rs/plugins/webpack/module-federation-plugin) plugin, and pass the value of `options` to the plugin.
+- Automatically register the [ModuleFederationPlugin](https://rspack.rs/plugins/module-federation-plugin) plugin, and pass the value of `options` to the plugin.
 - Set the default value of the provider's [dev.assetPrefix](/config/dev/asset-prefix) configuration to `true`. This will ensure that the static asset URL is correct for remote modules.
 - Set the default value of Rspack's [output.uniqueName](https://rspack.rs/config/output#outputuniquename) configuration to `moduleFederation.options.name`, this allows HMR to work as expected.
 
@@ -44,7 +44,7 @@ This option depends on the runtime package [@module-federation/runtime-tools](ht
 
 <PackageManagerTabs command="add @module-federation/runtime-tools" />
 
-> Refer to the [ModuleFederationPlugin](https://rspack.rs/plugins/webpack/module-federation-plugin) document for all available options.
+> Refer to the [ModuleFederationPlugin](https://rspack.rs/plugins/module-federation-plugin) document for all available options.
 
 ## Example
 
