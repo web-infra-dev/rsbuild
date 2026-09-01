@@ -8,7 +8,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { isDev, isProd, target, rspack, environment, CHAIN_ID }) => {
+      (chain, { isDev, target, rspack, environment, CHAIN_ID }) => {
         const { config } = environment;
 
         chain.name(environment.name);
@@ -41,12 +41,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
             typeReexportsPresence: 'tolerant',
           },
         });
-
-        if (isProd) {
-          chain.optimization
-            .chunkIds('compact-hashed')
-            .moduleIds('compact-hashed');
-        }
 
         const usingHMR = isDev && config.dev.hmr && target === 'web';
 
