@@ -18,7 +18,7 @@ type SplitChunksConfig =
 
 `splitChunks` is used to configure Rsbuild's chunk splitting strategy.
 
-It is built on top of Rspack's [optimization.splitChunks](https://rspack.rs/plugins/webpack/split-chunks-plugin) and extends it with an additional `preset` option, which provides several Rsbuild-specific presets for common use cases.
+It is built on top of Rspack's [optimization.splitChunks](https://rspack.rs/plugins/split-chunks-plugin) and extends it with an additional `preset` option, which provides several Rsbuild-specific presets for common use cases.
 
 ## Default behavior
 
@@ -28,7 +28,7 @@ The default value of `splitChunks` depends on [output.target](/config/output/tar
 
 - **Default:** `{ preset: 'default', chunks: 'all' }`
 
-For web builds, Rsbuild sets `chunks` to `'all'`. Unspecified options such as `minSize` and `minChunks` use the defaults from Rspack's [`optimization.splitChunks`](https://rspack.rs/plugins/webpack/split-chunks-plugin).
+For web builds, Rsbuild sets `chunks` to `'all'`. Unspecified options such as `minSize` and `minChunks` use the defaults from Rspack's [`optimization.splitChunks`](https://rspack.rs/plugins/split-chunks-plugin).
 
 :::tip
 When a project acts as a Module Federation provider and configures [`moduleFederation.options.exposes`](/config/module-federation/options), Rsbuild sets `chunks` to `'async'` to prevent chunk splitting from affecting the remote entry.
@@ -111,7 +111,7 @@ export default {
 
 ## Other options
 
-Apart from the `preset` option, all other options behave the same as in Rspack. For detailed usage, see the [Rspack documentation](https://rspack.rs/plugins/webpack/split-chunks-plugin).
+Apart from the `preset` option, all other options behave the same as in Rspack. For detailed usage, see the [Rspack documentation](https://rspack.rs/plugins/split-chunks-plugin).
 
 ```ts title="rsbuild.config.ts"
 export default {

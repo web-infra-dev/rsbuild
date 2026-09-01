@@ -50,7 +50,7 @@ export default {
 
 当 `mode` 的值为 `development` 时：
 
-- 开启 HMR，注册 [HotModuleReplacementPlugin](https://rspack.rs/zh/plugins/webpack/hot-module-replacement-plugin)。
+- 开启 HMR，注册 [HotModuleReplacementPlugin](https://rspack.rs/zh/plugins/hot-module-replacement-plugin)。
 - 生成 JavaScript 的 source map，不生成 CSS 的 source map，详见 [output.sourceMap](/config/output/source-map)。
 - 源代码中的 `process.env.NODE_ENV` 会被替换为 `'development'`。
 - 源代码中的 `import.meta.env.MODE` 会被替换为 `'development'`。
@@ -62,8 +62,8 @@ export default {
 
 当 `mode` 的值为 `production` 时：
 
-- 开启 JavaScript 代码压缩，注册 [SwcJsMinimizerRspackPlugin](https://rspack.rs/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)。
-- 开启 CSS 代码压缩，注册 [LightningCssMinimizerRspackPlugin](https://rspack.rs/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin)。
+- 开启 JavaScript 代码压缩，注册 [SwcJsMinimizerRspackPlugin](https://rspack.rs/zh/plugins/swc-js-minimizer-rspack-plugin)。
+- 开启 CSS 代码压缩，注册 [LightningCssMinimizerRspackPlugin](https://rspack.rs/zh/plugins/lightning-css-minimizer-rspack-plugin)。
 - 生成的 JavaScript 和 CSS 文件名会带有 hash 后缀，详见 [output.filenameHash](/config/output/filename-hash)。
 - 生成的 CSS Modules 类名更简短，详见 [cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname)。
 - 不生成 JavaScript 和 CSS 的 source map，详见 [output.sourceMap](/config/output/source-map)。

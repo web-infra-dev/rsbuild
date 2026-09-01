@@ -6,7 +6,7 @@ import { PackageManagerTabs } from '@theme';
 
 # moduleFederation.options
 
-- **类型：** [Rspack.ModuleFederationPluginOptions](https://rspack.rs/zh/plugins/webpack/module-federation-plugin#选项)
+- **类型：** [Rspack.ModuleFederationPluginOptions](https://rspack.rs/zh/plugins/module-federation-plugin#选项)
 - **默认值：** `undefined`
 
 用于配置 Rspack 模块联邦插件（对应模块联邦 v1.5）。
@@ -21,7 +21,7 @@ import { PackageManagerTabs } from '@theme';
 
 当你设置 `moduleFederation.options` 选项后，Rsbuild 会执行以下操作：
 
-- 自动注册 [ModuleFederationPlugin](https://rspack.rs/zh/plugins/webpack/module-federation-plugin) 插件，并将 `options` 的值透传给插件。
+- 自动注册 [ModuleFederationPlugin](https://rspack.rs/zh/plugins/module-federation-plugin) 插件，并将 `options` 的值透传给插件。
 - 将 provider 的 [dev.assetPrefix](/config/dev/asset-prefix) 配置的默认值设置为 `true`，这可以确保 remote modules 的静态资源 URL 是正确的。
 - 将 Rspack [output.uniqueName](https://rspack.rs/zh/config/output#outputuniquename) 配置的默认值设置为 `moduleFederation.options.name`，使 HMR 可以正常工作。
 
@@ -44,7 +44,7 @@ export default defineConfig({
 
 <PackageManagerTabs command="add @module-federation/runtime-tools" />
 
-> 参考 [ModuleFederationPlugin](https://rspack.rs/zh/plugins/webpack/module-federation-plugin) 文档来了解所有可用的选项。
+> 参考 [ModuleFederationPlugin](https://rspack.rs/zh/plugins/module-federation-plugin) 文档来了解所有可用的选项。
 
 ## 示例
 

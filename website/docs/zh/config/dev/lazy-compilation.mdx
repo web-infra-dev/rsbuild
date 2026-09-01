@@ -47,7 +47,7 @@ const defaultOptions = {
 };
 ```
 
-用于开启 lazy compilation（即按需编译），基于 Rspack 的 [lazy compilation](https://rspack.rs/zh/guide/features/lazy-compilation) 特性实现。
+用于开启 lazy compilation（即按需编译），基于 Rspack 的 [lazy compilation](https://rspack.rs/zh/guide/advanced/lazy-compilation) 特性实现。
 
 ## 介绍
 
@@ -140,7 +140,7 @@ export default {
 
 ### Server URL
 
-通过 [lazyCompilation.serverUrl](https://rspack.rs/zh/config/lazy-compilation#lazycompilationserverurl) 可以指定 client 需要请求的 server URL。
+通过 [lazyCompilation.serverUrl](https://rspack.rs/zh/config/lazy-compilation#serverurl) 可以指定 client 需要请求的 server URL。
 
 如果未显式配置 `lazyCompilation.serverUrl`，Rsbuild 会在同时满足以下条件时，根据 [dev.client](/config/dev/client) 推导默认的 `serverUrl`：
 

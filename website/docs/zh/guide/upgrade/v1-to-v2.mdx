@@ -268,7 +268,7 @@ export default {
 
 `performance.chunkSplit` 已在 Rsbuild 2.0 中废弃，但暂未移除，仍可继续使用。
 
-我们推荐使用新的 [splitChunks](/config/split-chunks) 选项代替它，新选项对齐了 Rspack 的 [optimization.splitChunks](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin) 配置，并提供了与 `performance.chunkSplit.strategy` 相似的预设选项。
+我们推荐使用新的 [splitChunks](/config/split-chunks) 选项代替它，新选项对齐了 Rspack 的 [optimization.splitChunks](https://rspack.rs/zh/plugins/split-chunks-plugin) 配置，并提供了与 `performance.chunkSplit.strategy` 相似的预设选项。
 
 #### strategy
 
@@ -505,7 +505,7 @@ Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild v1 版�
 
 ## 内置规则变化
 
-Rsbuild 内置的 JS 和 CSS 转换规则现在使用了 [oneOf](https://rspack.rs/config/module-rules#rulesoneof) 来区分不同的分支，如果你使用 [tools.bundlerChain](/config/tools/bundler-chain#toolsbundlerchain) 或 [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain) 修改了 JS 或 CSS 规则，可能需要进行相应调整。
+Rsbuild 内置的 JS 和 CSS 转换规则现在使用了 [oneOf](https://rspack.rs/zh/config/module-rules#rulesoneof) 来区分不同的分支，如果你使用 [tools.bundlerChain](/config/tools/bundler-chain#toolsbundlerchain) 或 [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain) 修改了 JS 或 CSS 规则，可能需要进行相应调整。
 
 ### JS 规则
 
