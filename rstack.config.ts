@@ -22,7 +22,7 @@ define.staged({
   '*.{js,jsx,ts,tsx,mjs,cjs}': ['rs lint --type-check', 'rs fmt'],
 });
 
-define.lint(({ globals, globalIgnores, js, rstestPlugin, ts }) => [
+define.lint(({ globalIgnores, js, rstestPlugin, ts }) => [
   globalIgnores([
     'e2e/cases/browser-logs/skip-build-error/src/index.js',
     'e2e/cases/wasm/wasm-source-import/src/index.js',
@@ -32,22 +32,6 @@ define.lint(({ globals, globalIgnores, js, rstestPlugin, ts }) => [
   {
     files: ['**/*.test.{ts,tsx}'],
     ...rstestPlugin.configs.recommended,
-  },
-  {
-    files: ['**/*.{js,jsx,cjs,mjs}'],
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.nodeBuiltin,
-        __dirname: 'readonly',
-        __filename: 'readonly',
-        CONFIG_VALUE: 'readonly',
-        CONTENT: 'readonly',
-        DEFINED_VALUE: 'readonly',
-        ENABLE_TEST: 'readonly',
-        undefinedValue: 'readonly',
-      },
-    },
   },
   {
     languageOptions: {
