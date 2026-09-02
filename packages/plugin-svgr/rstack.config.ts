@@ -1,30 +1,24 @@
+import { esmConfig } from '@scripts/config/lib';
+import { baseConfig } from '@scripts/config/test';
 import { define } from 'rstack';
 
-define.lib(async () => {
-  const { esmConfig } = await import('@scripts/config/lib');
-
-  return {
-    lib: [
-      esmConfig,
-      {
-        source: {
-          entry: {
-            assetLoader: './src/assetLoader.ts',
-            loader: './src/loader.ts',
-          },
-        },
-        output: {
-          filename: {
-            js: '[name].mjs',
-          },
+define.lib({
+  lib: [
+    esmConfig,
+    {
+      source: {
+        entry: {
+          assetLoader: './src/assetLoader.ts',
+          loader: './src/loader.ts',
         },
       },
-    ],
-  };
+      output: {
+        filename: {
+          js: '[name].mjs',
+        },
+      },
+    },
+  ],
 });
 
-define.test(async () => {
-  const { baseConfig } = await import('@scripts/config/test');
-
-  return baseConfig;
-});
+define.test(baseConfig);
