@@ -1,4 +1,6 @@
 import path from 'node:path';
+import { nodeMinifyConfig } from '@scripts/config/lib';
+import { baseConfig } from '@scripts/config/test';
 import { define as rstack } from 'rstack';
 import type { Rsbuild, Rspack } from 'rstack/lib';
 import pkgJson from './package.json' with { type: 'json' };
@@ -101,134 +103,126 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
   },
 };
 
-rstack.lib(async () => {
-  const { nodeMinifyConfig } = await import('@scripts/config/lib');
-
-  return {
-    source: {
-      define,
-    },
-    output: {
-      externals,
-    },
-    tools: {
-      rspack: {
-        experiments: {
-          nativeWatcher: true,
-        },
+rstack.lib({
+  source: {
+    define,
+  },
+  output: {
+    externals,
+  },
+  tools: {
+    rspack: {
+      experiments: {
+        nativeWatcher: true,
       },
     },
-    lib: [
-      // Build client modules and copy dependencies to compiled folder
-      {
-        id: 'prepare',
-        syntax: 'es2017',
-        source: {
-          entry: {
-            hmr: 'src/client/hmr.ts',
-            overlay: 'src/client/overlay.ts',
-          },
-          define: {
-            // use define to avoid compile time evaluation of import.meta.rspackHash
-            BUILD_HASH: 'import.meta.rspackHash',
-          },
+  },
+  lib: [
+    // Build client modules and copy dependencies to compiled folder
+    {
+      id: 'prepare',
+      syntax: 'es2017',
+      source: {
+        entry: {
+          hmr: 'src/client/hmr.ts',
+          overlay: 'src/client/overlay.ts',
         },
-        output: {
-          target: 'web',
-          externals: ['./hmr.js'],
-          distPath: {
-            root: './dist/client',
-          },
-          copy: {
-            patterns: [
-              {
-                from: './node_modules/jiti',
-                to: path.join(import.meta.dirname, 'compiled/jiti'),
-                globOptions: {
-                  dot: false,
-                },
-              },
-            ],
-          },
+        define: {
+          // use define to avoid compile time evaluation of import.meta.rspackHash
+          BUILD_HASH: 'import.meta.rspackHash',
         },
-        performance: {
-          printFileSize: {
-            exclude: (asset) => /compiled/.test(asset.name),
-          },
-        },
-        plugins: [replacePlugin],
       },
-      {
-        id: 'node',
-        syntax: 'es2023',
-        source: {
-          entry: {
-            index: './src/index.ts',
-            cssUrlLoader: './src/loader/cssUrlLoader.ts',
-            ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
-            transformLoader: './src/loader/transformLoader.ts',
-            transformRawLoader: './src/loader/transformRawLoader.ts',
-            workerLoader: './src/loader/workerLoader.ts',
-          },
+      output: {
+        target: 'web',
+        externals: ['./hmr.js'],
+        distPath: {
+          root: './dist/client',
         },
-        dts: {
-          isolated: true,
-          alias: {
-            // alias to pre-bundled types as they are public API
-            cors: './compiled/cors',
-            rslog: './compiled/rslog',
-            postcss: './compiled/postcss/lib/postcss',
-            chokidar: './compiled/chokidar',
-            'connect-next': './compiled/connect-next',
-            '@rstackjs/load-config': './compiled/@rstackjs/load-config',
-            'rspack-chain': './compiled/rspack-chain/types',
-            'html-rspack-plugin': './compiled/html-rspack-plugin',
-            'http-proxy-middleware': './compiled/http-proxy-middleware',
-            'rspack-manifest-plugin': './compiled/rspack-manifest-plugin',
-          },
-        },
-        output: {
-          minify: {
-            jsOptions: [
-              {
-                // Fully minify large chunks composed primarily of third-party code.
-                include: fullyMinifiedChunks,
+        copy: {
+          patterns: [
+            {
+              from: './node_modules/jiti',
+              to: path.join(import.meta.dirname, 'compiled/jiti'),
+              globOptions: {
+                dot: false,
               },
-              {
-                ...nodeMinifyConfig.jsOptions,
-                exclude: fullyMinifiedChunks,
-              },
-            ],
-          },
-          filename: {
-            js: ({ chunk }) => {
-              // Use `.mjs` for Rspack loaders
-              if (chunk?.name?.endsWith('Loader')) {
-                return '[name].mjs';
-              }
-              return `[name].js`;
             },
-          },
+          ],
         },
-        shims: {
-          esm: {
-            // For `postcss-load-config`
-            __filename: true,
-          },
+      },
+      performance: {
+        printFileSize: {
+          exclude: (asset) => /compiled/.test(asset.name),
         },
-        tools: {
-          rspack: {
-            // Wait the pre compiler to copy jiti to compiled folder
-            dependencies: ['prepare'],
+      },
+      plugins: [replacePlugin],
+    },
+    {
+      id: 'node',
+      syntax: 'es2023',
+      source: {
+        entry: {
+          index: './src/index.ts',
+          cssUrlLoader: './src/loader/cssUrlLoader.ts',
+          ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
+          transformLoader: './src/loader/transformLoader.ts',
+          transformRawLoader: './src/loader/transformRawLoader.ts',
+          workerLoader: './src/loader/workerLoader.ts',
+        },
+      },
+      dts: {
+        isolated: true,
+        alias: {
+          // alias to pre-bundled types as they are public API
+          cors: './compiled/cors',
+          rslog: './compiled/rslog',
+          postcss: './compiled/postcss/lib/postcss',
+          chokidar: './compiled/chokidar',
+          'connect-next': './compiled/connect-next',
+          '@rstackjs/load-config': './compiled/@rstackjs/load-config',
+          'rspack-chain': './compiled/rspack-chain/types',
+          'html-rspack-plugin': './compiled/html-rspack-plugin',
+          'http-proxy-middleware': './compiled/http-proxy-middleware',
+          'rspack-manifest-plugin': './compiled/rspack-manifest-plugin',
+        },
+      },
+      output: {
+        minify: {
+          jsOptions: [
+            {
+              // Fully minify large chunks composed primarily of third-party code.
+              include: fullyMinifiedChunks,
+            },
+            {
+              ...nodeMinifyConfig.jsOptions,
+              exclude: fullyMinifiedChunks,
+            },
+          ],
+        },
+        filename: {
+          js: ({ chunk }) => {
+            // Use `.mjs` for Rspack loaders
+            if (chunk?.name?.endsWith('Loader')) {
+              return '[name].mjs';
+            }
+            return `[name].js`;
           },
         },
       },
-    ],
-  };
+      shims: {
+        esm: {
+          // For `postcss-load-config`
+          __filename: true,
+        },
+      },
+      tools: {
+        rspack: {
+          // Wait the pre compiler to copy jiti to compiled folder
+          dependencies: ['prepare'],
+        },
+      },
+    },
+  ],
 });
 
-rstack.test(async () => {
-  const { baseConfig } = await import('@scripts/config/test');
-
-  return baseConfig;
-});
+rstack.test(baseConfig);

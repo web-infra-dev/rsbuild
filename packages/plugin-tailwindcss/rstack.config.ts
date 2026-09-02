@@ -1,13 +1,7 @@
+import { esmConfig } from '@scripts/config/lib';
+import { baseConfig } from '@scripts/config/test';
 import { define } from 'rstack';
 
-define.lib(async () => {
-  const { esmConfig } = await import('@scripts/config/lib');
+define.lib(esmConfig);
 
-  return esmConfig;
-});
-
-define.test(async () => {
-  const { baseConfig } = await import('@scripts/config/test');
-
-  return baseConfig;
-});
+define.test(baseConfig);
