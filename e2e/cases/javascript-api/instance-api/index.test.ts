@@ -45,8 +45,8 @@ test('should allow to call `expose` via Rsbuild instance', async () => {
   const plugin: RsbuildPlugin = {
     name: 'test-plugin',
     setup(api) {
-      const exposed = api.useExposed('test');
-      result = exposed.sayHello();
+      const exposed = api.useExposed<{ sayHello: () => string }>('test');
+      result = exposed?.sayHello() ?? '';
     },
   };
 

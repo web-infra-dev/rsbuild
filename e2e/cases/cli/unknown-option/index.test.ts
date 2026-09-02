@@ -8,7 +8,8 @@ test('should exit with error code 1 when unknown options are provided', ({
       stdio: ['ignore', 'ignore', 'pipe'],
     });
     throw new Error('execCliSync was expected to throw but did not.');
-  } catch (err: any) {
+  } catch (error) {
+    const err = error as { status: number; stderr: Buffer };
     expect(err.status).toBe(1);
     expect(err.stderr.toString()).toContain('Unknown option `--unknownOption`');
   }

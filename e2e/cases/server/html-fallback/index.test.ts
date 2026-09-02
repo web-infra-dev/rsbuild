@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import type { RsbuildPluginAPI } from '@rsbuild/core';
 import { getFileContent } from '@rstackjs/test-utils';
 
 test('should access / success and htmlFallback success by default', async ({
@@ -258,8 +259,8 @@ test('should access /main success when modify publicPath in compiler', async ({
       plugins: [
         {
           name: 'foo',
-          setup(api: any) {
-            api.modifyBundlerChain((chain: any) => {
+          setup(api: RsbuildPluginAPI) {
+            api.modifyBundlerChain((chain) => {
               chain.output.publicPath('/aaaa/');
             });
           },

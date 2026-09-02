@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { type Build, expect, test } from '@e2e/helper';
 
-const buildAndRead = async (build: any) => {
+const buildAndRead = async (build: Build) => {
   const rsbuild = await build();
 
   const mainContent = await fs.promises.readFile(

@@ -20,7 +20,7 @@ export default defineConfig({
             result: string;
           }>('index');
           const nativeModule = await import('esm-pkg' as string);
-          const nativeDefault = nativeModule.default;
+          const nativeDefault: unknown = nativeModule.default;
 
           const payload = {
             loadBundleType: bundle.helloType,
@@ -28,7 +28,7 @@ export default defineConfig({
             loadBundleResult: bundle.result,
             nativeResult:
               typeof nativeDefault === 'function'
-                ? nativeDefault()
+                ? (nativeDefault as () => unknown)()
                 : `BUG: native default is ${typeof nativeDefault}`,
             loadBundleUndefinedType: bundle.undefinedType,
           };
