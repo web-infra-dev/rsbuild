@@ -69,10 +69,10 @@ test('should not register Rsdoctor plugin when process.env.RSDOCTOR is true and 
   await copyNodeModules();
   process.env.RSDOCTOR = 'true';
 
-  // rslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const { RsdoctorRspackPlugin } =
-    (await import('@rsdoctor/rspack-plugin')) as RsdoctorExports;
+  const rsdoctorPackageName = '@rsdoctor/rspack-plugin';
+  const { RsdoctorRspackPlugin } = (await import(
+    rsdoctorPackageName
+  )) as RsdoctorExports;
 
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
