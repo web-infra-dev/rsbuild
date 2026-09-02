@@ -1,9 +1,10 @@
+import type { Server as HttpServer } from 'node:http';
 import { createConnectHandler } from '@e2e/helper/server';
 import { createAdaptorServer } from '@hono/node-server';
 import { createRsbuild } from '@rsbuild/core';
 import { Hono } from 'hono';
 
-export async function startDevServer(fixtures) {
+export async function startDevServer(fixtures: string) {
   const rsbuild = await createRsbuild({
     cwd: fixtures,
     config: {
@@ -25,9 +26,9 @@ export async function startDevServer(fixtures) {
   app.get('/bbb', (c) => c.text('Hello hono!'));
   app.all('*', createConnectHandler(middlewares));
 
-  const server = createAdaptorServer({ fetch: app.fetch });
+  const server = createAdaptorServer({ fetch: app.fetch }) as HttpServer;
 
-  await new Promise((resolve) => {
+  await new Promise<void>((resolve) => {
     server.listen({ host: 'localhost', port }, resolve);
   });
   await rsbuildServer.afterListen();

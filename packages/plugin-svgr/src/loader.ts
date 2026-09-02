@@ -43,7 +43,10 @@ const svgrLoader: Rspack.LoaderDefinition<Config> = function (contents): void {
   if (!previousExport) {
     transformSvg(contents, options, state, callback);
   } else {
-    this.fs.readFile(this.resourcePath, (err: Error, result: unknown) => {
+    const loaderFileSystem = this.fs as NonNullable<
+      Rspack.Compiler['inputFileSystem']
+    >;
+    loaderFileSystem.readFile(this.resourcePath, (err, result) => {
       if (err) {
         callback(err);
         return;

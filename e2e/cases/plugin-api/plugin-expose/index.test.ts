@@ -1,5 +1,9 @@
 import { expect, test } from '@e2e/helper';
-import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
+import {
+  createRsbuild,
+  type RsbuildPlugin,
+  type RsbuildPluginAPI,
+} from '@rsbuild/core';
 
 type ParentAPI = {
   initial: number;
@@ -74,9 +78,8 @@ test('should allow exposed API to be scoped by environment', async () => {
           plugins: [
             {
               name: 'plugin-child-web',
-              setup(api) {
-                const exposed = api.useExposed('test') as
-                  { name: string } | undefined;
+              setup(api: RsbuildPluginAPI) {
+                const exposed = api.useExposed<{ name: string }>('test');
                 results.push(`web:${exposed?.name}`);
               },
             },
@@ -89,9 +92,8 @@ test('should allow exposed API to be scoped by environment', async () => {
           plugins: [
             {
               name: 'plugin-child-node',
-              setup(api) {
-                const exposed = api.useExposed('test') as
-                  { name: string } | undefined;
+              setup(api: RsbuildPluginAPI) {
+                const exposed = api.useExposed<{ name: string }>('test');
                 results.push(`node:${exposed?.name}`);
               },
             },
@@ -119,9 +121,8 @@ test('should prefer environment exposed API and fallback to global exposed API',
           plugins: [
             {
               name: 'plugin-child-web',
-              setup(api) {
-                const exposed = api.useExposed('test') as
-                  { name: string } | undefined;
+              setup(api: RsbuildPluginAPI) {
+                const exposed = api.useExposed<{ name: string }>('test');
                 results.push(`web:${exposed?.name}`);
               },
             },
@@ -134,9 +135,8 @@ test('should prefer environment exposed API and fallback to global exposed API',
           plugins: [
             {
               name: 'plugin-child-node',
-              setup(api) {
-                const exposed = api.useExposed('test') as
-                  { name: string } | undefined;
+              setup(api: RsbuildPluginAPI) {
+                const exposed = api.useExposed<{ name: string }>('test');
                 results.push(`node:${exposed?.name}`);
               },
             },
@@ -185,10 +185,8 @@ test('should override the previous exposed API in the same environment', async (
           plugins: [
             {
               name: 'plugin-child-web',
-              setup(api) {
-                result =
-                  (api.useExposed('test') as { name: string } | undefined)
-                    ?.name ?? '';
+              setup(api: RsbuildPluginAPI) {
+                result = api.useExposed<{ name: string }>('test')?.name ?? '';
               },
             },
           ],

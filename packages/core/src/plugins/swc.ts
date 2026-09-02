@@ -229,7 +229,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
 const getCoreJsVersion = (corejsPkgPath: string) => {
   try {
     const rawJson = fs.readFileSync(corejsPkgPath, 'utf-8');
-    const { version } = JSON.parse(rawJson);
+    const { version } = JSON.parse(rawJson) as { version: string };
     const [major, minor] = version.split('.');
     return `${major}.${minor}`;
   } catch {

@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node ./scripts/index.js",
-    "dev:pure": "node ./scripts/index.js pure"
+    "dev": "node ./scripts/index.ts",
+    "dev:pure": "node ./scripts/index.ts pure"
   }
 }

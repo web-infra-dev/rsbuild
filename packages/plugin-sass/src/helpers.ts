@@ -50,6 +50,21 @@ type ResolveUrlJoinItem = {
   [key: string]: unknown;
 };
 
+type ResolveUrlJoinGenerator = (
+  item: ResolveUrlJoinItem,
+  ...rest: unknown[]
+) => unknown;
+
+type ResolveUrlHelpers = {
+  asGenerator: (generator: ResolveUrlJoinGenerator) => ResolveUrlJoinGenerator;
+  createJoinImplementation: (generator: ResolveUrlJoinGenerator) => unknown;
+  createJoinFunction: (
+    name: string,
+    implementation: unknown,
+  ) => (...args: unknown[]) => void;
+  defaultJoinGenerator: ResolveUrlJoinGenerator;
+};
+
 /**
  * fix resolve-url-loader can't deal with resolve.alias config
  *
@@ -61,7 +76,7 @@ export const getResolveUrlJoinFn = () => {
     asGenerator,
     createJoinImplementation,
     defaultJoinGenerator,
-  } = resolveUrlHelpers;
+  } = resolveUrlHelpers as ResolveUrlHelpers;
 
   const rsbuildGenerator = asGenerator(
     (item: ResolveUrlJoinItem, ...rest: unknown[]) => {
@@ -69,7 +84,7 @@ export const getResolveUrlJoinFn = () => {
       if (!item.uri.startsWith('.')) {
         return [null];
       }
-      return defaultJoinGenerator(item, ...rest) as unknown;
+      return defaultJoinGenerator(item, ...rest);
     },
   );
   return createJoinFunction(

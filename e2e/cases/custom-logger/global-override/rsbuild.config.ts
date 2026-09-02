@@ -1,4 +1,4 @@
-import { defineConfig, logger } from '@rsbuild/core';
+import { defineConfig, logger, type RsbuildPluginAPI } from '@rsbuild/core';
 
 logger.override({
   info: (message) => {
@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     {
       name: 'restore-global-logger',
-      setup(api) {
+      setup(api: RsbuildPluginAPI) {
         api.onAfterBuild(() => {
           logger.info('hello world');
         });
