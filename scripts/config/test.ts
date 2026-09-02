@@ -1,9 +1,10 @@
 import path from 'node:path';
 import type { RstestConfig } from 'rstack/test';
 
-process.env.NO_COLOR = '1';
-
 export const baseConfig: RstestConfig = {
+  env: {
+    FORCE_COLOR: '0',
+  },
   globals: true,
   output: {
     externals: ['@rsbuild/core'],
