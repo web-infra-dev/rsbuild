@@ -5,7 +5,7 @@ import { createRsbuild } from '@rsbuild/core';
 import { Hono } from 'hono';
 
 // Start custom dev server without compile
-export async function startDevServerPure(fixtures) {
+export async function startDevServerPure(fixtures: string) {
   const customServerPort = await getRandomPort();
 
   const rsbuild = await createRsbuild({
@@ -45,7 +45,7 @@ export async function startDevServerPure(fixtures) {
 
   const server = createAdaptorServer({ fetch: app.fetch });
 
-  await new Promise((resolve) => {
+  await new Promise<void>((resolve) => {
     server.listen({ host: 'localhost', port: rsbuildServer.port }, resolve);
   });
   await rsbuildServer.afterListen();
