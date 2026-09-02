@@ -2,6 +2,12 @@ import { expect, test } from '@e2e/helper';
 import { createRsbuild, type Rspack } from '@rsbuild/core';
 import { matchPlugin } from '@scripts/test-helper';
 
+type RsdoctorExports = {
+  RsdoctorRspackPlugin: new (
+    options?: Record<string, unknown>,
+  ) => Rspack.RspackPluginInstance;
+};
+
 const RSDOCTOR_LOG = '@rsdoctor/rspack-plugin enabled';
 
 test.afterEach(() => {
@@ -65,7 +71,8 @@ test('should not register Rsdoctor plugin when process.env.RSDOCTOR is true and 
 
   // rslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { RsdoctorRspackPlugin } = await import('@rsdoctor/rspack-plugin');
+  const { RsdoctorRspackPlugin } =
+    (await import('@rsdoctor/rspack-plugin')) as RsdoctorExports;
 
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
