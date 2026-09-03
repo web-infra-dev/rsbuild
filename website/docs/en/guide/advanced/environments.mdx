@@ -40,6 +40,9 @@ export default {
       output: {
         // Use 'web' target for the browser outputs
         target: 'web',
+        distPath: {
+          root: 'dist/client',
+        },
       },
       resolve: {
         alias: {
@@ -158,6 +161,9 @@ export default {
     web: {
       output: {
         target: 'web',
+        distPath: {
+          root: 'dist/client',
+        },
       },
       plugins: [pluginReact()],
     },
@@ -177,11 +183,11 @@ If you are a plugin developer, you can view [Developing environment plugins](/pl
 
 ## Configuring output directories
 
-When building for multiple environments, it's recommended to configure different output directories for each environment to prevent dist files with the same name from overwriting each other.
+When building for multiple environments, we recommend configuring separate, non-overlapping output directories for each environment. This prevents output files with the same name from overwriting each other and keeps server output outside the web asset directory.
 
 You can use [output.distPath.root](/config/output/dist-path) to set independent output root directories for each environment.
 
-For example, output the web bundles to the default `dist` directory, and the node bundles to `dist/server`:
+For example, output the web bundles to `dist/client` and the node bundles to `dist/server`:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -190,6 +196,11 @@ export default {
       source: {
         entry: {
           index: './src/index.client.js',
+        },
+      },
+      output: {
+        distPath: {
+          root: 'dist/client',
         },
       },
     },

@@ -61,6 +61,9 @@ export default {
       output: {
         // Use 'web' target for the browser outputs
         target: 'web',
+        distPath: {
+          root: 'dist/client',
+        },
       },
       html: {
         // Custom HTML template
@@ -198,7 +201,10 @@ export default {
 
 ```ts title="server.ts"
 async function renderHtmlPage(): Promise<string> {
-  const manifest = await fs.promises.readFile('./dist/manifest.json', 'utf-8');
+  const manifest = await fs.promises.readFile(
+    './dist/client/manifest.json',
+    'utf-8',
+  );
   const { entries } = JSON.parse(manifest);
 
   const { js, css } = entries['index'].initial;
