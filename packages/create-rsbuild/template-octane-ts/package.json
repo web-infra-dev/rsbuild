@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@octanejs/rsbuild-plugin": "^0.1.44",
-    "@rsbuild/core": "^2.2.2",
+    "@rsbuild/core": "^2.2.3",
     "@tsrx/typescript-plugin": "^0.3.128",
     "@types/node": "^24.13.3",
     "typescript": "^5.9.3"
