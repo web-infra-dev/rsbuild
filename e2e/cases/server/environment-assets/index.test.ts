@@ -1,29 +1,7 @@
-import { request as httpRequest } from 'node:http';
 import { expect, test } from '@e2e/helper';
 
+// Decodes to `../`.
 const encodedUpPath = '%2e%2e%2f';
-
-const requestRawPath = (
-  port: number,
-  path: string,
-): Promise<{ body: string; statusCode: number | undefined }> =>
-  new Promise((resolve, reject) => {
-    const request = httpRequest(
-      { hostname: 'localhost', port, path },
-      (res) => {
-        let body = '';
-        res.setEncoding('utf8');
-        res.on('data', (chunk) => {
-          body += chunk;
-        });
-        res.on('end', () => {
-          resolve({ body, statusCode: res.statusCode });
-        });
-      },
-    );
-    request.on('error', reject);
-    request.end();
-  });
 
 test('should only serve assets from web environments', async ({
   devOnly,
@@ -57,15 +35,15 @@ test('should only serve assets from web environments', async ({
 });
 
 test('should reject path traversal after stripping the asset prefix', async ({
+  request,
   runBothServe,
 }) => {
   await runBothServe(async ({ result }) => {
-    const response = await requestRawPath(
-      result.port,
-      `/browser-assets/${encodedUpPath}server/server.js?probe=1`,
+    const response = await request.get(
+      `http://localhost:${result.port}/browser-assets/${encodedUpPath}server/server.js?probe=1`,
     );
 
-    expect(response.statusCode).toBe(403);
-    expect(response.body).toContain('Forbidden');
+    expect(response.status()).toBe(403);
+    expect(await response.text()).toContain('Forbidden');
   });
 });
