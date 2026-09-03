@@ -1,10 +1,6 @@
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  dev: {
-    hmr: false,
-    liveReload: false,
-  },
   server: {
     htmlFallback: false,
   },
@@ -15,7 +11,6 @@ export default defineConfig({
       },
       output: {
         target: 'node',
-        filenameHash: false,
       },
       source: {
         entry: {
