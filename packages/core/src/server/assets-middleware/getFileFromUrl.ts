@@ -74,10 +74,7 @@ export async function getFileFromUrl(
         // Whole-path normalization can hide traversal after the public prefix
         // is removed, so validate the final candidate against its output path.
         const relativePath = path.relative(distPath, candidatePath);
-        if (
-          path.isAbsolute(relativePath) ||
-          UP_PATH_REGEXP.test(relativePath)
-        ) {
+        if (UP_PATH_REGEXP.test(relativePath)) {
           return { errorCode: HttpCode.Forbidden };
         }
       }
