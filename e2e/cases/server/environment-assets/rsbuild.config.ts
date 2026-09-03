@@ -10,6 +10,7 @@ export default defineConfig({
         assetPrefix: '/server-assets/',
       },
       output: {
+        assetPrefix: '/server-assets/',
         target: 'node',
         distPath: 'dist/server',
       },
@@ -25,6 +26,7 @@ export default defineConfig({
         assetPrefix: '/browser-assets/',
       },
       output: {
+        assetPrefix: '/browser-assets/',
         distPath: 'dist/client',
       },
       source: {
