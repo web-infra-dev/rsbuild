@@ -40,10 +40,24 @@ test('should reject path traversal after stripping the asset prefix', async ({
 }) => {
   await runBothServe(async ({ result }) => {
     const response = await request.get(
-      `http://localhost:${result.port}/browser-assets/${encodedUpPath}server/server.js?probe=1`,
+      `http://localhost:${result.port}/browser-assets/${encodedUpPath}server/server.js`,
     );
 
     expect(response.status()).toBe(403);
     expect(await response.text()).toContain('Forbidden');
+  });
+});
+
+test('should not match sibling paths sharing the asset prefix', async ({
+  request,
+  runBothServe,
+}) => {
+  await runBothServe(async ({ result }) => {
+    const response = await request.get(
+      `http://localhost:${result.port}/browser-assets../server/server.js`,
+    );
+
+    expect(response.status()).toBe(404);
+    expect(await response.text()).not.toContain('node-environment');
   });
 });
