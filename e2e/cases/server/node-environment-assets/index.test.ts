@@ -7,11 +7,11 @@ test('should not serve assets when only a node environment exists', async ({
   const rsbuild = await devOnly();
   const baseUrl = `http://localhost:${rsbuild.port}`;
 
-  const nodeAsset = await request.get(`${baseUrl}/static/js/server.js`);
+  const nodeAsset = await request.get(`${baseUrl}/server.js`);
   expect(nodeAsset.status()).toBe(404);
 
   const prefixedNodeAsset = await request.get(
-    `${baseUrl}/server-assets/static/js/server.js`,
+    `${baseUrl}/server-assets/server.js`,
   );
   expect(prefixedNodeAsset.status()).toBe(404);
 

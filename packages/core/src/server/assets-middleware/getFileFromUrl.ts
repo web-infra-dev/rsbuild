@@ -48,8 +48,12 @@ export async function getFileFromUrl(
     return { errorCode: HttpCode.BadRequest };
   }
 
+  // Avoid normalizing ordinary asset requests. Only paths containing a parent
+  // directory segment can escape an output directory through `path.join`.
+  const hasUpPath = UP_PATH_REGEXP.test(pathname);
+
   // Prevent path traversal attacks by checking for ".." patterns
-  if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
+  if (hasUpPath && UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
     return { errorCode: HttpCode.Forbidden };
   }
 
@@ -64,7 +68,18 @@ export async function getFileFromUrl(
       // Strip the `pathname` property from the `publicPath` option from the start
       // of requested url. (`/prefix/foo.js` => `foo.js`)
       // And add outputPath (`foo.js` => `/home/user/my-project/dist/foo.js`)
-      possibleFilenames.add(path.join(distPath, pathname.slice(prefix.length)));
+      const candidatePath = path.join(distPath, pathname.slice(prefix.length));
+
+      if (hasUpPath) {
+        // Whole-path normalization can hide traversal after the public prefix
+        // is removed, so validate the final candidate against its output path.
+        const relativePath = path.relative(distPath, candidatePath);
+        if (UP_PATH_REGEXP.test(relativePath)) {
+          return { errorCode: HttpCode.Forbidden };
+        }
+      }
+
+      possibleFilenames.add(candidatePath);
     }
   }
 
