@@ -40,6 +40,9 @@ export default {
       output: {
         // 浏览器产物的 target 类型为 'web'
         target: 'web',
+        distPath: {
+          root: 'dist/client',
+        },
       },
       resolve: {
         alias: {
@@ -158,6 +161,9 @@ export default {
     web: {
       output: {
         target: 'web',
+        distPath: {
+          root: 'dist/client',
+        },
       },
       plugins: [pluginReact()],
     },
@@ -177,11 +183,11 @@ export default {
 
 ## 配置输出目录
 
-在多环境构建时，建议为不同的环境配置不同的输出目录，以避免不同环境的同名构建产物互相覆盖。
+在多环境构建时，建议为不同的环境配置相互独立且不存在包含关系的输出目录。这样既可以避免不同环境的同名构建产物互相覆盖，也可以避免服务端产物位于 Web 资源目录中。
 
 你可以通过 [output.distPath.root](/config/output/dist-path) 来为每个环境设置独立的输出根目录。
 
-比如，将 web 产物输出到默认的 `dist`，将 node 产物输出到 `dist/server`：
+比如，将 web 产物输出到 `dist/client`，将 node 产物输出到 `dist/server`：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -190,6 +196,11 @@ export default {
       source: {
         entry: {
           index: './src/index.client.js',
+        },
+      },
+      output: {
+        distPath: {
+          root: 'dist/client',
         },
       },
     },

@@ -122,9 +122,9 @@ dist
 
 Node.js outputs typically contain only JS files, without HTML or CSS. JS filenames do not include hash values.
 
-You can modify the output path for Node.js files using the [environments](/config/environments) configuration.
+You can configure separate output paths for web and Node.js files using the [environments](/config/environments) configuration.
 
-For example, to write Node.js files to the `server` directory:
+For example, output web files to `dist/client` and Node.js files to `dist/server`:
 
 ```ts
 export default {
@@ -132,6 +132,9 @@ export default {
     web: {
       output: {
         target: 'web',
+        distPath: {
+          root: 'dist/client',
+        },
       },
     },
     node: {
