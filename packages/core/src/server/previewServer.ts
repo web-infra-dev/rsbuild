@@ -1,13 +1,15 @@
 import { once } from 'node:events';
 import fs from 'node:fs';
-import { isWebTarget } from '../helpers';
 import { isVerbose } from '../logger';
 import type {
   InternalContext,
   NormalizedConfig,
   PreviewOptions,
 } from '../types';
-import { createAssetsMiddleware } from './assets-middleware/middleware';
+import {
+  createAssetsMiddleware,
+  filterWebEnvironments,
+} from './assets-middleware/middleware';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import {
   registerCleanup,
@@ -41,20 +43,6 @@ import { createProxyMiddleware } from './proxy';
 import { applyServerSetup } from './serverSetup';
 
 export type RsbuildPreviewServer = RsbuildServerBase;
-
-const getPreviewAssetContext = (context: InternalContext): InternalContext => {
-  const environmentList = context.environmentList.filter((environment) =>
-    isWebTarget(environment.config.output.target),
-  );
-
-  return {
-    ...context,
-    environmentList,
-    publicPathnames: environmentList.map(
-      (environment) => context.publicPathnames[environment.index],
-    ),
-  };
-};
 
 export async function startPreviewServer(
   context: InternalContext,
@@ -150,17 +138,15 @@ export async function startPreviewServer(
     environments: context.environments,
   });
 
-  const assetContext = getPreviewAssetContext(context);
+  const webEnvironments = filterWebEnvironments(context.environmentList);
   const assetsMiddleware = createAssetsMiddleware(
-    assetContext,
+    context,
     (callback) => callback(),
     fs,
   );
   const htmlMiddlewareOptions = {
     assetsMiddleware,
-    distPaths: assetContext.environmentList.map(
-      (environment) => environment.distPath,
-    ),
+    distPaths: webEnvironments.map((environment) => environment.distPath),
     outputFileSystem: fs,
   };
 

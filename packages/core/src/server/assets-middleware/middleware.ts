@@ -7,6 +7,7 @@ import type {
 import { lookup } from 'mrmime';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
+import { isWebTarget } from '../../helpers';
 import type { InternalContext, RequestHandler, Rspack } from '../../types';
 import { HttpCode } from '../helper';
 import { getFileFromUrl } from './getFileFromUrl';
@@ -311,12 +312,32 @@ function sendError(res: ServerResponse, code: number): void {
   res.end(document);
 }
 
+/**
+ * Filters environments to those whose outputs may be exposed by the HTTP assets
+ * middleware. Node-targeted outputs are intended for server-side execution,
+ * such as through `loadBundle`, and must not participate in URL resolution.
+ */
+export const filterWebEnvironments = (
+  environmentList: InternalContext['environmentList'],
+): InternalContext['environmentList'] =>
+  environmentList.filter((environment) =>
+    isWebTarget(environment.config.output.target),
+  );
+
 export function createAssetsMiddleware(
   context: InternalContext,
   ready: (callback: () => void) => void,
   outputFileSystem: Rspack.OutputFileSystem,
 ): RequestHandler {
   const { logger } = context;
+  const webEnvironments = filterWebEnvironments(context.environmentList);
+  const assetContext: InternalContext = {
+    ...context,
+    environmentList: webEnvironments,
+    publicPathnames: webEnvironments.map(
+      (environment) => context.publicPathnames[environment.index],
+    ),
+  };
 
   return async function assetsMiddleware(req, res, next) {
     async function goNext() {
@@ -339,7 +360,11 @@ export function createAssetsMiddleware(
         return;
       }
 
-      const resolved = await getFileFromUrl(req.url, outputFileSystem, context);
+      const resolved = await getFileFromUrl(
+        req.url,
+        outputFileSystem,
+        assetContext,
+      );
 
       if (!resolved) {
         await goNext();
