@@ -68,12 +68,12 @@ export async function getFileFromUrl(
       // Strip the `pathname` property from the `publicPath` option from the start
       // of requested url. (`/prefix/foo.js` => `foo.js`)
       // And add outputPath (`foo.js` => `/home/user/my-project/dist/foo.js`)
-      const filename = path.join(distPath, pathname.slice(prefix.length));
+      const candidatePath = path.join(distPath, pathname.slice(prefix.length));
 
       if (hasUpPath) {
         // Whole-path normalization can hide traversal after the public prefix
         // is removed, so validate the final candidate against its output path.
-        const relativePath = path.relative(distPath, filename);
+        const relativePath = path.relative(distPath, candidatePath);
         if (
           path.isAbsolute(relativePath) ||
           UP_PATH_REGEXP.test(relativePath)
@@ -82,7 +82,7 @@ export async function getFileFromUrl(
         }
       }
 
-      possibleFilenames.add(filename);
+      possibleFilenames.add(candidatePath);
     }
   }
 
