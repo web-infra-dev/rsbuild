@@ -1,6 +1,8 @@
 import { request as httpRequest } from 'node:http';
 import { expect, test } from '@e2e/helper';
 
+const encodedUpPath = '%2e%2e%2f';
+
 const requestRawPath = (
   port: number,
   path: string,
@@ -60,7 +62,7 @@ test('should reject path traversal after stripping the asset prefix', async ({
   await runBothServe(async ({ result }) => {
     const response = await requestRawPath(
       result.port,
-      '/browser-assets/%2e%2e%2fserver/server.js?probe=1',
+      `/browser-assets/${encodedUpPath}server/server.js?probe=1`,
     );
 
     expect(response.statusCode).toBe(403);
