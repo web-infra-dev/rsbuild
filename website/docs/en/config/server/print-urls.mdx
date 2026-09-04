@@ -7,9 +7,9 @@ description: 'Controls whether and how server URLs are printed when the server s
 - **Type:**
 
 ```ts
-type Routes = Array<{
-  entryName: string;
-  pathname: string;
+type ReadonlyRoutes = ReadonlyArray<{
+  readonly entryName: string;
+  readonly pathname: string;
 }>;
 
 type PrintUrlsOptions = {
@@ -22,7 +22,7 @@ type PrintUrls =
   | ((params: {
       urls: string[];
       port: number;
-      routes: Routes;
+      routes: ReadonlyRoutes;
       protocol: string;
     }) => (string | { url: string; label?: string })[] | void);
 ```

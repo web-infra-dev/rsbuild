@@ -170,6 +170,7 @@ export type {
   ProxyOptions,
   PublicDir,
   PublicDirOptions,
+  ReadonlyRoutes,
   RequestHandler,
   ResolveConfig,
   ResolvedCreateRsbuildOptions,
