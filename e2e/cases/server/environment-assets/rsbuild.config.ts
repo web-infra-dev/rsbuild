@@ -23,10 +23,10 @@ export default defineConfig({
     },
     web: {
       dev: {
-        assetPrefix: '/browser-assets/',
+        assetPrefix: '/browser-assets',
       },
       output: {
-        assetPrefix: '/browser-assets/',
+        assetPrefix: '/browser-assets',
         distPath: 'dist/client',
       },
       source: {
