@@ -146,6 +146,23 @@ export default {
 };
 ```
 
+With `splitChunks: false`, modules loaded with dynamic `import()` are still emitted as separate async chunks. To bundle these modules into existing chunks as well, also set Rspack's [output.asyncChunks](https://rspack.rs/config/output#outputasyncchunks) to `false`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  splitChunks: false,
+  tools: {
+    rspack: {
+      output: {
+        asyncChunks: false,
+      },
+    },
+  },
+};
+```
+
+For single-entry applications, this bundles application code and dynamically imported modules into the same JavaScript chunk. Multi-entry applications still produce a separate chunk for each entry.
+
 ## Version history
 
 | Version | Changes                                                                         |

@@ -137,7 +137,7 @@ export default {
 Rsbuild 会先将预设规则转换为配置对象，再与你配置的 `splitChunks` 选项进行合并，用户配置的优先级更高。
 :::
 
-## 关闭 chunk 拆分
+## 关闭 chunk 拆分 \{#disable-chunk-splitting}
 
 如果你希望关闭 chunk 拆分，可以将 `splitChunks` 设置为 `false`：
 
@@ -146,6 +146,23 @@ export default {
   splitChunks: false,
 };
 ```
+
+设置 `splitChunks: false` 后，动态 `import()` 引入的模块仍会生成独立的异步 chunk。若要将这些模块也打包到已有的 chunk 中，可以同时将 Rspack 的 [output.asyncChunks](https://rspack.rs/zh/config/output#outputasyncchunks) 设置为 `false`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  splitChunks: false,
+  tools: {
+    rspack: {
+      output: {
+        asyncChunks: false,
+      },
+    },
+  },
+};
+```
+
+对于单入口应用，这会将应用代码和动态导入的模块打包到同一个 JavaScript chunk 中。多入口应用仍会为每个入口生成独立的 chunk。
 
 ## 版本历史 \{#version-history}
 
