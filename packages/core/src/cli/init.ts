@@ -12,7 +12,7 @@ const cliState: {
   options: CommonOptions;
   command?: CommandName;
 } = {
-  options: {} as CommonOptions,
+  options: {},
 };
 
 export const initCliAction = (

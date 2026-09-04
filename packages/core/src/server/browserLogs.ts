@@ -41,10 +41,7 @@ const findFirstUserFrame = (parsed: StackFrame[]) => {
       frame.column !== null &&
       frame.lineNumber !== null &&
       SCRIPT_REGEX.test(frame.file),
-  ) as
-    | (StackFrame &
-        Pick<Required<StackFrame>, 'file' | 'column' | 'lineNumber'>)
-    | undefined;
+  );
 };
 
 /**

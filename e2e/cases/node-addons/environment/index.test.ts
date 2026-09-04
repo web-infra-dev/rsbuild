@@ -21,7 +21,8 @@ test('should compile Node addons in ESM and CJS environments', async ({
 
   // the `test.darwin.node` is only compatible with darwin arm64
   if (process.platform === 'darwin' && process.arch === 'arm64') {
-    const { addon: esmAddon } = await import('./dist/esm/index.js' as string);
+    const esmEntry = './dist/esm/index.js';
+    const { addon: esmAddon } = await import(esmEntry);
     const { addon: cjsAddon } = require('./dist/cjs/index.cjs');
     expect(typeof esmAddon.readLength).toEqual('function');
     expect(typeof cjsAddon.readLength).toEqual('function');

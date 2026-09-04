@@ -52,7 +52,7 @@ const applyExcludes = <T extends PrefetchOptions | PreloadOptions>(
     return {
       ...option,
       exclude: excludes.length ? [...castArray(exclude), ...excludes] : exclude,
-    } as T;
+    };
   });
 
   return Array.isArray(options) ? optionsList : optionsList[0];

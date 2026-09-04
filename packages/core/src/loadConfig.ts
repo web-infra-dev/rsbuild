@@ -111,7 +111,7 @@ export async function loadConfig<Config = RsbuildConfig>({
 
   if (!result.filePath) {
     defaultLogger.debug('no config file found.');
-    return result as LoadConfigResult<Config>;
+    return result;
   }
 
   if (!isObject(result.content)) {
