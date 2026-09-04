@@ -181,7 +181,7 @@ const initEnvironmentConfigs = (
 
   return {
     [defaultEnvironmentName]: applyEnvironmentDefaultConfig(
-      baseEnvironmentConfig as MergedEnvironmentConfig,
+      baseEnvironmentConfig,
     ),
   };
 };

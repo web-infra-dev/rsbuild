@@ -97,8 +97,7 @@ async function applyAlias({
 
     chain.resolve.alias.set(
       name,
-      (formattedValues.length === 1 ? formattedValues[0] : formattedValues) as
-        string | string[],
+      formattedValues.length === 1 ? formattedValues[0] : formattedValues,
     );
   }
 }

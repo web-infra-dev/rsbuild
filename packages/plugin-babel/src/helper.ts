@@ -188,7 +188,7 @@ export const applyUserBabelConfig = (
     const babelUtils = {
       ...getBabelUtils(defaultOptions),
       ...extraBabelUtils,
-    } as BabelConfigUtils;
+    };
 
     return reduceConfigsWithContext({
       initial: defaultOptions,

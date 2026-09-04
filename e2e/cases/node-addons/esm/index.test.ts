@@ -14,7 +14,8 @@ test('should compile Node addons correctly for ESM output', async ({
 
   // the `test.darwin.node` is only compatible with darwin
   if (process.platform === 'darwin') {
-    const { addon } = await import('./dist/index.js' as string);
+    const entry = './dist/index.js';
+    const { addon } = await import(entry);
     expect(typeof addon.readLength).toEqual('function');
   }
 });
@@ -55,7 +56,8 @@ test('should compile Node addons in the node_modules for ESM output', async ({
   expect(fs.existsSync(addonFile)).toBeTruthy();
 
   if (process.platform === 'darwin') {
-    const { addon } = await import('./dist/index.js' as string);
+    const entry = './dist/index.js';
+    const { addon } = await import(entry);
     expect(typeof addon.readLength).toEqual('function');
   }
 });

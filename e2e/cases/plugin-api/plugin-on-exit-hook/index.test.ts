@@ -19,21 +19,16 @@ test('should run onExit hook before process exit', async () => {
       'node ./run.js',
       { cwd: import.meta.dirname },
       (error) => {
+        clearTimeout(timeoutId);
         if (error) {
-          clearTimeout(timeoutId);
           reject(error);
           return;
         }
 
-        try {
-          expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
-          clearTimeout(timeoutId);
-          resolve();
-        } catch (error) {
-          clearTimeout(timeoutId);
-          reject(error as Error);
-        }
+        resolve();
       },
     );
   });
+
+  expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
 });
