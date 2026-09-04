@@ -1,4 +1,5 @@
 import os, { type NetworkInterfaceInfo } from 'node:os';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { expect, NETWORK_LOG_REGEX, test } from '@e2e/helper';
 import { rs } from 'rstack/test';
 
@@ -370,4 +371,43 @@ test('should print server urls for web and node environments with custom distPat
   await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}/`, {
     strict: true,
   });
+});
+
+const addRoutePlugin = (
+  hook: 'onAfterStartDevServer' | 'onAfterStartPreviewServer',
+): RsbuildPlugin => ({
+  name: 'test:add-route',
+  setup(api) {
+    api[hook](({ routes }) => {
+      routes.push({ entryName: 'added', pathname: '/added' });
+    });
+  },
+});
+
+test('should print routes added by a plugin in onAfterStartDevServer', async ({
+  devOnly,
+}) => {
+  const rsbuild = await devOnly({
+    config: {
+      plugins: [addRoutePlugin('onAfterStartDevServer')],
+    },
+  });
+
+  await rsbuild.expectLog(
+    new RegExp(`-\\s+added\\s+http://localhost:${rsbuild.port}/added`),
+  );
+});
+
+test('should print routes added by a plugin in onAfterStartPreviewServer', async ({
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
+    config: {
+      plugins: [addRoutePlugin('onAfterStartPreviewServer')],
+    },
+  });
+
+  await rsbuild.expectLog(
+    new RegExp(`-\\s+added\\s+http://localhost:${rsbuild.port}/added`),
+  );
 });

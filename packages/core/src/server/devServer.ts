@@ -280,7 +280,7 @@ export async function createDevServer<
     registerCleanup(closeServer);
   }
 
-  const beforeCreateCompiler = async () => {
+  const logStartedServer = async () => {
     printUrls();
 
     if (cliShortcutsEnabled) {
@@ -442,6 +442,10 @@ export async function createDevServer<
         routes,
         environments: context.environments,
       });
+
+      // Print after the hook, so a plugin that adds its own routes there sees
+      // them printed. The preview server already prints in this order.
+      await logStartedServer();
     },
     connectWebSocket: ({ server }: { server: HTTPServer }) => {
       if (state.devMiddlewares) {
@@ -467,13 +471,6 @@ export async function createDevServer<
   ).filter((item) => typeof item === 'function');
 
   const postCallbacks = [...hookPostCallbacks, ...setupPostCallbacks];
-
-  if (runCompile) {
-    // print server url should between listen and beforeCompile
-    context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
-  } else {
-    await beforeCreateCompiler();
-  }
 
   state.buildManager = runCompile ? await startCompile() : undefined;
 
