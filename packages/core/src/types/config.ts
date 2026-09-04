@@ -27,7 +27,7 @@ import type {
   EnvironmentContext,
   ModifyBundlerChainUtils,
   ModifyChainUtils,
-  Routes,
+  ReadonlyRoutes,
   WatchFileEvent,
 } from './hooks';
 import type { RsbuildPlugins } from './plugin';
@@ -385,7 +385,7 @@ export type HistoryApiFallbackOptions = {
 export type PrintUrlsParams = {
   urls: string[];
   port: number;
-  routes: Routes;
+  routes: ReadonlyRoutes;
   protocol: string;
 };
 

@@ -118,9 +118,11 @@ export type Routes = {
   pathname: string;
 }[];
 
+export type ReadonlyRoutes = ReadonlyArray<Readonly<Routes[number]>>;
+
 export type OnAfterStartDevServerFn = (params: {
   port: number;
-  routes: Routes;
+  routes: ReadonlyRoutes;
   /**
    * Context information for all environments.
    */
@@ -129,7 +131,7 @@ export type OnAfterStartDevServerFn = (params: {
 
 export type OnAfterStartPreviewServerFn = (params: {
   port: number;
-  routes: Routes;
+  routes: ReadonlyRoutes;
   /**
    * Context information for all environments.
    */

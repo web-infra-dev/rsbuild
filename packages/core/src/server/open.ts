@@ -2,7 +2,7 @@ import { URL } from 'node:url';
 import { STATIC_PATH } from '../constants';
 import { castArray, color } from '../helpers';
 import type { Logger } from '../logger';
-import type { NormalizedConfig, Routes } from '../types';
+import type { NormalizedConfig, ReadonlyRoutes } from '../types';
 import { getHostInUrl } from './helper';
 
 /**
@@ -186,7 +186,7 @@ export async function open({
   logger,
 }: {
   port: number;
-  routes: Routes;
+  routes: ReadonlyRoutes;
   config: NormalizedConfig;
   protocol: string;
   clearCache?: boolean;

@@ -7,9 +7,9 @@ description: '控制是否以及如何打印 server 的 URL 地址。'
 - **类型：**
 
 ```ts
-type Routes = Array<{
-  entryName: string;
-  pathname: string;
+type ReadonlyRoutes = ReadonlyArray<{
+  readonly entryName: string;
+  readonly pathname: string;
 }>;
 
 type PrintUrlsOptions = {
@@ -22,7 +22,7 @@ type PrintUrls =
   | ((params: {
       urls: string[];
       port: number;
-      routes: Routes;
+      routes: ReadonlyRoutes;
       protocol: string;
     }) => (string | { url: string; label?: string })[] | void);
 ```

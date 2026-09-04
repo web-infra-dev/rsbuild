@@ -3,15 +3,15 @@
 - **类型：**
 
 ```ts
-type Routes = Array<{
-  entryName: string;
-  pathname: string;
+type ReadonlyRoutes = ReadonlyArray<{
+  readonly entryName: string;
+  readonly pathname: string;
 }>;
 
 function OnAfterStartPreviewServer(
   callback: (params: {
     port: number;
-    routes: Routes;
+    routes: ReadonlyRoutes;
     environments: Record<string, EnvironmentContext>;
   }) => Promise<void> | void,
 ): void;

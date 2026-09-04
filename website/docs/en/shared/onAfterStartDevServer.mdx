@@ -3,15 +3,15 @@ Called after starting the dev server, you can get the port number with the `port
 - **Type:**
 
 ```ts
-type Routes = Array<{
-  entryName: string;
-  pathname: string;
+type ReadonlyRoutes = ReadonlyArray<{
+  readonly entryName: string;
+  readonly pathname: string;
 }>;
 
 function OnAfterStartDevServer(
   callback: (params: {
     port: number;
-    routes: Routes;
+    routes: ReadonlyRoutes;
     environments: Record<string, EnvironmentContext>;
   }) => Promise<void> | void,
 ): void;
