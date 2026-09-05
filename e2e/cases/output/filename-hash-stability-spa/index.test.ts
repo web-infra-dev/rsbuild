@@ -1,10 +1,9 @@
 import { basename, join } from 'node:path';
 import { expect, test } from '@e2e/helper';
+import { findFiles } from '@rstackjs/test-utils';
 
 const getJsFilenames = (files: Record<string, string>) =>
-  Object.keys(files)
-    .filter((filename) => filename.endsWith('.js'))
-    .map((filename) => basename(filename));
+  findFiles(files, '.js').map((filename) => basename(filename));
 
 const findChunk = (filenames: string[], name: string) =>
   filenames.find((filename) =>

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { test } from '@e2e/helper';
 
 const defaultFile = path.join(import.meta.dirname, 'test-temp-default.txt');
 const customFile = path.join(import.meta.dirname, 'test-temp-custom.txt');
@@ -14,7 +14,7 @@ test('should restart once with multiple restart watchers', async ({
   fs.writeFileSync(customFile, '1');
   execCli('build --watch');
 
-  const { clearLogs, expectBuildEnd, expectLog } = logHelper;
+  const { clearLogs, expectBuildEnd, expectLog, expectLogTimes } = logHelper;
   await expectBuildEnd();
 
   clearLogs();
@@ -27,7 +27,5 @@ test('should restart once with multiple restart watchers', async ({
   await expectLog(defaultRestartLog);
   await expectBuildEnd();
 
-  expect(
-    logHelper.logs.filter((log) => log.includes(defaultRestartLog)),
-  ).toHaveLength(1);
+  expectLogTimes(defaultRestartLog, 1);
 });

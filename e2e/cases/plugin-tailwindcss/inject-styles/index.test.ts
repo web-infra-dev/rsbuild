@@ -1,5 +1,5 @@
 import { expect, test } from '@e2e/helper';
-import { getFileContent } from '@rstackjs/test-utils';
+import { findFiles, getFileContent } from '@rstackjs/test-utils';
 
 test('should inject transformed Tailwind CSS when injectStyles is enabled', async ({
   page,
@@ -8,7 +8,7 @@ test('should inject transformed Tailwind CSS when injectStyles is enabled', asyn
   const rsbuild = await buildPreview();
 
   const files = rsbuild.getDistFiles();
-  const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
+  const cssFiles = findFiles(files, '.css');
   expect(cssFiles).toHaveLength(0);
 
   const indexJs = getFileContent(files, 'index.js');

@@ -1,32 +1,13 @@
-import net from 'node:net';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, test } from '@e2e/helper';
-import { getRandomPort } from '@rstackjs/test-utils';
+import { occupyPort } from '@rstackjs/test-utils';
 
 const HOST = '0.0.0.0';
-
-const occupyPort = async () => {
-  const port = await getRandomPort();
-  const blocker = net.createServer();
-
-  await new Promise<void>((resolve, reject) => {
-    blocker.once('error', reject);
-    blocker.listen({ port, host: HOST }, resolve);
-  });
-
-  return {
-    port,
-    close: () =>
-      new Promise<void>((resolve) => {
-        blocker.close(() => resolve());
-      }),
-  };
-};
 
 test('should exit when port is occupied and --strict-port is used', async ({
   execCliSync,
 }) => {
-  const blocker = await occupyPort();
+  const blocker = await occupyPort(HOST);
 
   let message = '';
   try {

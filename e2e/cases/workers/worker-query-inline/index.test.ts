@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import { findFiles } from '@rstackjs/test-utils';
 
 test('should support inline worker query imports', async ({
   page,
@@ -13,11 +14,11 @@ test('should support inline worker query imports', async ({
 
     if (mode === 'build') {
       const files = result.getDistFiles();
-      const jsFiles = Object.keys(files).filter((filename) =>
-        filename.endsWith('.js'),
-      );
-      const emittedInlineWorkerFiles = Object.keys(files).filter((filename) =>
-        /inline-worker\.[\w-]+\.js$/.test(filename),
+      const jsFiles = findFiles(files, '.js');
+      const emittedInlineWorkerFiles = findFiles(
+        files,
+        /inline-worker\.[\w-]+\.js$/,
+        { ignoreHash: false },
       );
 
       expect(jsFiles).toHaveLength(1);

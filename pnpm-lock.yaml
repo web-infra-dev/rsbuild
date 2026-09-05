@@ -89,8 +89,8 @@ catalogs:
       specifier: ^0.1.2
       version: 0.1.2
     '@rstackjs/test-utils':
-      specifier: ^0.2.0
-      version: 0.2.0
+      specifier: ^1.0.0
+      version: 1.0.0
     '@rstest/core':
       specifier: ^0.11.10
       version: 0.11.10
@@ -495,7 +495,7 @@ importers:
         version: link:../packages/plugin-vue
       '@rstackjs/test-utils':
         specifier: 'catalog:'
-        version: 0.2.0
+        version: 1.0.0
       '@rstest/core':
         specifier: 'catalog:'
         version: 0.11.10(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
@@ -664,7 +664,7 @@ importers:
         version: 0.3.31
       '@rstackjs/test-utils':
         specifier: 'catalog:'
-        version: 0.2.0
+        version: 1.0.0
 
   e2e/type-tests/core-types: {}
 
@@ -2633,8 +2633,8 @@ packages:
       jiti:
         optional: true
 
-  '@rstackjs/test-utils@0.2.0':
-    resolution: {integrity: sha512-P+LOo1WE3xYeGkHmEthyq2cIpN69k4LhiB/4UBSceD+nW9hDlhWv8MC0LTLWokZXccWl4ntcfOBjQFllkcBlPA==}
+  '@rstackjs/test-utils@1.0.0':
+    resolution: {integrity: sha512-g7oEZzqwke/pRVGAsvEpML+37PDOo9BwR8nKignbtXlKmW9Cb202pRRUSVEsWG//7pnyIi+q4P7b1H/h1ianGA==}
 
   '@rstest/core@0.11.10':
     resolution: {integrity: sha512-x/PNGPdyKQWbiVhpoOQco8xXevh4P/QamuyJ0/YdTrdEiUcUglT6tGSnxaudwyrQr8e/5gwWuOt6zykZKWmSUg==}
@@ -6575,7 +6575,7 @@ snapshots:
     optionalDependencies:
       jiti: 2.7.0
 
-  '@rstackjs/test-utils@0.2.0': {}
+  '@rstackjs/test-utils@1.0.0': {}
 
   '@rstest/core@0.11.10(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)':
     dependencies:

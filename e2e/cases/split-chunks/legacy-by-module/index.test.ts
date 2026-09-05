@@ -1,6 +1,6 @@
 import { basename } from 'node:path';
 import { expect, test } from '@e2e/helper';
-import { findFile } from '@rstackjs/test-utils';
+import { findFile, findFiles } from '@rstackjs/test-utils';
 
 test('should generate module chunks when chunkSplit is "split-by-module"', async ({
   build,
@@ -17,9 +17,7 @@ test('should generate module chunks when chunkSplit is "split-by-module"', async
   );
   expect(reactFile).toBeTruthy();
 
-  const jsFiles = Object.keys(files)
-    .filter((name) => name.endsWith('.js'))
-    .map((name) => basename(name));
+  const jsFiles = findFiles(files, '.js').map((name) => basename(name));
 
   expect(jsFiles.length).toEqual(4);
   expect(jsFiles).toContain('index.js');

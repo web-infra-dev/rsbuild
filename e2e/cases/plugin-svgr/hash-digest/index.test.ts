@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import { findFiles } from '@rstackjs/test-utils';
 
 // https://github.com/web-infra-dev/rsbuild/issues/4610
 test('should generate the same hash digest for the same SVG', async ({
@@ -8,7 +9,5 @@ test('should generate the same hash digest for the same SVG', async ({
 
   const files = rsbuild.getDistFiles();
 
-  expect(
-    Object.keys(files).filter((key) => key.endsWith('.svg')).length,
-  ).toEqual(1);
+  expect(findFiles(files, '.svg').length).toEqual(1);
 });

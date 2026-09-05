@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { test } from '@e2e/helper';
 import { getRandomPort } from '@rstackjs/test-utils';
 
 const watchedFile = path.join(import.meta.dirname, 'test-temp-watch.txt');
@@ -24,7 +24,7 @@ test('should close the old watcher after a shortcut restart', async ({
       PORT: String(port),
     },
   });
-  const { clearLogs, expectBuildEnd, expectLog, logs } = logHelper;
+  const { clearLogs, expectBuildEnd, expectLog, expectLogTimes } = logHelper;
 
   await expectBuildEnd();
   clearLogs();
@@ -37,5 +37,5 @@ test('should close the old watcher after a shortcut restart', async ({
   await expectLog(restartLog);
   await expectBuildEnd();
 
-  expect(logs.filter((log) => log.includes(restartLog))).toHaveLength(1);
+  expectLogTimes(restartLog, 1);
 });
