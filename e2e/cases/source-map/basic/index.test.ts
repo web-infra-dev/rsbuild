@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import path, { join } from 'node:path';
 import { type Build, expect, mapSourceMapPositions, test } from '@e2e/helper';
-import { findFile, getFileContent } from '@rstackjs/test-utils';
+import { findFile, findFiles, getFileContent } from '@rstackjs/test-utils';
 import type { Rspack } from '@rsbuild/core';
 
 const cwd = import.meta.dirname;
@@ -87,12 +87,8 @@ test('should not generate source map by default in build', async ({
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMapPaths = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
+  const jsMapPaths = findFiles(files, '.js.map');
+  const cssMapFiles = findFiles(files, '.css.map');
   expect(jsMapPaths.length).toEqual(0);
   expect(cssMapFiles.length).toEqual(0);
 });
@@ -110,12 +106,8 @@ test('should generate source map if `output.sourceMap` is true', async ({
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMapPaths = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
+  const jsMapPaths = findFiles(files, '.js.map');
+  const cssMapFiles = findFiles(files, '.css.map');
   expect(jsMapPaths.length).toBeGreaterThan(0);
   expect(cssMapFiles.length).toBeGreaterThan(0);
 });
@@ -133,12 +125,8 @@ test('should not generate source map if `output.sourceMap` is false', async ({
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMapPaths = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
+  const jsMapPaths = findFiles(files, '.js.map');
+  const cssMapFiles = findFiles(files, '.css.map');
   expect(jsMapPaths.length).toEqual(0);
   expect(cssMapFiles.length).toEqual(0);
 });
@@ -174,12 +162,8 @@ test('should generate source maps only for CSS files', async ({ build }) => {
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMapPaths = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
+  const jsMapPaths = findFiles(files, '.js.map');
+  const cssMapFiles = findFiles(files, '.css.map');
   expect(jsMapPaths.length).toEqual(0);
   expect(cssMapFiles.length).toBeGreaterThan(0);
 

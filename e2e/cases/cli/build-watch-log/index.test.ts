@@ -27,9 +27,7 @@ for (const environment of [['web'], ['web', 'node']]) {
     for (const bundle of bundles) {
       expect(fs.readFileSync(bundle, 'utf8')).toContain('initial');
     }
-    expect(
-      logHelper.logs.join('').match(/watching for changes\.\.\./g),
-    ).toHaveLength(1);
+    logHelper.expectLogTimes(watchingLog, 1);
 
     logHelper.clearLogs();
     await editFile('test-temp-src/index.js', (code) =>

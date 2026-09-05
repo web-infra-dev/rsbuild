@@ -1,5 +1,5 @@
 import { expect, test } from '@e2e/helper';
-import { getFileContent } from '@rstackjs/test-utils';
+import { findFiles, getFileContent } from '@rstackjs/test-utils';
 
 test('should inline scripts in web ESM bundles', async ({
   page,
@@ -21,9 +21,7 @@ test('should inline scripts in web ESM bundles', async ({
 
     expect(html.match(/<script type="module">/g)).toHaveLength(1);
     expect(html).not.toContain('<script type="module" src="');
-    expect(
-      Object.keys(files).filter((filename) => filename.endsWith('.js')),
-    ).toEqual([]);
+    expect(findFiles(files, '.js')).toEqual([]);
   });
 
   expect(pageErrors).toEqual([]);

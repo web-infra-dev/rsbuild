@@ -14,7 +14,5 @@ test('should load CJS bundle with runtime globals', async ({
   expect(await response1.text()).toBe('index.js:function');
   expect(await response2.text()).toBe('index.js:function');
 
-  expect(
-    rsbuild.logs.filter((log) => log.includes('load bundle cjs')).length,
-  ).toBe(1);
+  rsbuild.expectLogTimes('load bundle cjs', 1);
 });

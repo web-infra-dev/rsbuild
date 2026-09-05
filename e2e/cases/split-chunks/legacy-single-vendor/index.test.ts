@@ -1,6 +1,6 @@
 import { basename } from 'node:path';
 import { expect, test } from '@e2e/helper';
-import { findFile } from '@rstackjs/test-utils';
+import { findFile, findFiles } from '@rstackjs/test-utils';
 
 test('should generate vendor chunk when chunkSplit is "single-vendor"', async ({
   build,
@@ -15,9 +15,7 @@ test('should generate vendor chunk when chunkSplit is "single-vendor"', async ({
   );
   expect(vendorFile).toBeTruthy();
 
-  const jsFiles = Object.keys(files)
-    .filter((name) => name.endsWith('.js'))
-    .map((name) => basename(name));
+  const jsFiles = findFiles(files, '.js').map((name) => basename(name));
 
   expect(jsFiles.length).toEqual(2);
   expect(jsFiles).toContain('index.js');

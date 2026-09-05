@@ -1,5 +1,5 @@
 import { expect, test } from '@e2e/helper';
-import { getFileContent } from '@rstackjs/test-utils';
+import { findFiles, getFileContent } from '@rstackjs/test-utils';
 import type { RspackChain } from '@rsbuild/core';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
@@ -42,16 +42,14 @@ test('should inline all scripts and emit all source maps', async ({
 
   // no entry chunks or runtime chunks in output
   expect(
-    Object.keys(files).filter(
+    findFiles(
+      files,
       (fileName) => fileName.endsWith('.js') && !fileName.includes('/async/'),
     ).length,
   ).toEqual(0);
 
   // all source maps in output
-  expect(
-    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
-      .length,
-  ).toEqual(3);
+  expect(findFiles(files, '.js.map')).toHaveLength(3);
 });
 
 test('should inline scripts when matching a RegExp', async ({ build }) => {
@@ -66,17 +64,10 @@ test('should inline scripts when matching a RegExp', async ({ build }) => {
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.js in output
-  expect(
-    Object.keys(files).filter(
-      (fileName) => fileName.endsWith('.js') && fileName.includes('/index.'),
-    ).length,
-  ).toEqual(0);
+  expect(findFiles(files, '/index.js')).toHaveLength(0);
 
   // all source maps in output
-  expect(
-    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
-      .length,
-  ).toBeGreaterThanOrEqual(2);
+  expect(findFiles(files, '.js.map').length).toBeGreaterThanOrEqual(2);
 });
 
 test('should inline scripts based on filename and size', async ({ build }) => {
@@ -93,17 +84,10 @@ test('should inline scripts based on filename and size', async ({ build }) => {
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.js in output
-  expect(
-    Object.keys(files).filter(
-      (fileName) => fileName.endsWith('.js') && fileName.includes('/index.'),
-    ).length,
-  ).toEqual(0);
+  expect(findFiles(files, '/index.js')).toHaveLength(0);
 
   // all source maps in output
-  expect(
-    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
-      .length,
-  ).toBeGreaterThanOrEqual(2);
+  expect(findFiles(files, '.js.map').length).toBeGreaterThanOrEqual(2);
 });
 
 test('should inline styles when matching a RegExp', async ({ build }) => {
@@ -118,11 +102,7 @@ test('should inline styles when matching a RegExp', async ({ build }) => {
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.css in output
-  expect(
-    Object.keys(files).filter(
-      (fileName) => fileName.endsWith('.css') && fileName.includes('/index.'),
-    ).length,
-  ).toEqual(0);
+  expect(findFiles(files, '/index.css')).toHaveLength(0);
 });
 
 test('should inline styles based on filename and size', async ({ build }) => {
@@ -139,11 +119,7 @@ test('should inline styles based on filename and size', async ({ build }) => {
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.css in output
-  expect(
-    Object.keys(files).filter(
-      (fileName) => fileName.endsWith('.css') && fileName.includes('/index.'),
-    ).length,
-  ).toEqual(0);
+  expect(findFiles(files, '/index.css')).toHaveLength(0);
 });
 
 test('should not inline styles by default in dev', async ({ page, dev }) => {
@@ -226,17 +202,10 @@ test('should not inline scripts when disabled', async ({ build }) => {
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // all index.js in output
-  expect(
-    Object.keys(files).filter(
-      (fileName) => fileName.endsWith('.js') && fileName.includes('/index.'),
-    ).length,
-  ).toEqual(1);
+  expect(findFiles(files, '/index.js')).toHaveLength(1);
 
   // all source maps in output
-  expect(
-    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
-      .length,
-  ).toBeGreaterThanOrEqual(2);
+  expect(findFiles(files, '.js.map').length).toBeGreaterThanOrEqual(2);
 });
 
 test('should not inline styles when disabled', async ({ build }) => {
@@ -254,11 +223,7 @@ test('should not inline styles when disabled', async ({ build }) => {
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // all index.css in output
-  expect(
-    Object.keys(files).filter(
-      (fileName) => fileName.endsWith('.css') && fileName.includes('/index.'),
-    ).length,
-  ).toEqual(1);
+  expect(findFiles(files, '/index.css')).toHaveLength(1);
 });
 
 test('should inline assets in build when enable is auto', async ({ build }) => {
@@ -280,24 +245,13 @@ test('should inline assets in build when enable is auto', async ({ build }) => {
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.js in output
-  expect(
-    Object.keys(files).filter(
-      (fileName) => fileName.endsWith('.js') && fileName.includes('/index.'),
-    ).length,
-  ).toEqual(0);
+  expect(findFiles(files, '/index.js')).toHaveLength(0);
 
   // all source maps in output
-  expect(
-    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
-      .length,
-  ).toBeGreaterThanOrEqual(2);
+  expect(findFiles(files, '.js.map').length).toBeGreaterThanOrEqual(2);
 
   // no index.css in output
-  expect(
-    Object.keys(files).filter(
-      (fileName) => fileName.endsWith('.css') && fileName.includes('/index.'),
-    ).length,
-  ).toEqual(0);
+  expect(findFiles(files, '/index.css')).toHaveLength(0);
 });
 
 test('should not inline assets in dev when enable is auto', async ({
@@ -418,7 +372,8 @@ test('should inline assets independently for multiple environments', async ({
   expect(web1Html).toContain('window.test');
 
   const countJs = (root: string) =>
-    Object.keys(files).filter(
+    findFiles(
+      files,
       (file) =>
         file.includes(root) &&
         file.endsWith('.js') &&
@@ -426,9 +381,8 @@ test('should inline assets independently for multiple environments', async ({
     ).length;
 
   const countCss = (root: string) =>
-    Object.keys(files).filter(
-      (file) => file.includes(root) && file.endsWith('.css'),
-    ).length;
+    findFiles(files, (file) => file.includes(root) && file.endsWith('.css'))
+      .length;
 
   expect(countJs('/dist/web/')).toEqual(0);
   expect(countJs('/dist/web1/')).toEqual(0);

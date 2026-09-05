@@ -12,7 +12,7 @@ test('support SSR', async ({ page, devOnly }) => {
   await page.goto(url.href);
 
   // bundle result should cacheable and only load once.
-  expect(rsbuild.logs.filter((log) => log.includes('load SSR')).length).toBe(1);
+  rsbuild.expectLogTimes('load SSR', 1);
 });
 
 test('support SSR with autoExternal', async ({ page, devOnly }) => {
@@ -41,7 +41,7 @@ test('support SSR with autoExternal', async ({ page, devOnly }) => {
   await page.goto(url.href);
 
   // bundle result should cacheable and only load once.
-  expect(rsbuild.logs.filter((log) => log.includes('load SSR')).length).toBe(1);
+  rsbuild.expectLogTimes('load SSR', 1);
 });
 
 test('support SSR with esm target', async ({ page, devOnly }) => {

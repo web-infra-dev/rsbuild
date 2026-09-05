@@ -1,6 +1,7 @@
 import { basename } from 'node:path';
 
 import { expect, test } from '@e2e/helper';
+import { findFiles } from '@rstackjs/test-utils';
 
 test('should support `forceSplitting` when chunkSplit is "single-vendor"', async ({
   build,
@@ -9,9 +10,7 @@ test('should support `forceSplitting` when chunkSplit is "single-vendor"', async
 
   const files = rsbuild.getDistFiles();
 
-  const jsFiles = Object.keys(files)
-    .filter((name) => name.endsWith('.js'))
-    .map((name) => basename(name));
+  const jsFiles = findFiles(files, '.js').map((name) => basename(name));
 
   expect(jsFiles.length).toEqual(3);
   expect(jsFiles).toContain('index.js');

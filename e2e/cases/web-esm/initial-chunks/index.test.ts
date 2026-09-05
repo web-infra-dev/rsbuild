@@ -1,5 +1,5 @@
 import { expect, test } from '@e2e/helper';
-import { findFile, getFileContent } from '@rstackjs/test-utils';
+import { findFile, findFiles, getFileContent } from '@rstackjs/test-utils';
 
 test('should load split and runtime chunks in web ESM bundles', async ({
   page,
@@ -13,7 +13,8 @@ test('should load split and runtime chunks in web ESM bundles', async ({
 
     if (mode === 'build') {
       const files = result.getDistFiles();
-      const initialJsFiles = Object.keys(files).filter(
+      const initialJsFiles = findFiles(
+        files,
         (filename) =>
           filename.endsWith('.js') &&
           filename.includes('/static/js/') &&
