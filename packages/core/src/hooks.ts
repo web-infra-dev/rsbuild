@@ -394,6 +394,7 @@ export const registerBuildHook = ({
   };
 
   const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
+    const shouldLogWatching = isWatch && isFirstCompile;
     const promise = context.hooks.onAfterBuild.callBatch({
       isFirstCompile,
       stats,
@@ -402,6 +403,10 @@ export const registerBuildHook = ({
     });
     isFirstCompile = false;
     await promise;
+
+    if (shouldLogWatching) {
+      context.logger.info('watching for changes...');
+    }
   };
 
   const onEnvironmentDone = async (index: number, stats: Rspack.Stats) => {
