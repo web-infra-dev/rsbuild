@@ -84,9 +84,7 @@ const parseFrame = async (
     return { sourceMapPath, originalPosition };
   } catch (error) {
     if (error instanceof Error) {
-      context.logger.debug(
-        `failed to map source map position: ${error.message}`,
-      );
+      context.logger.debug('failed to map source map position:', error);
     }
   }
 };
@@ -149,11 +147,8 @@ const formatOriginalLocation = (
     return;
   }
 
-  let result = resolveSourceRelativeToRoot(source, sourceMapPath, context);
-  if (line !== null) {
-    result += column === null ? `:${line}` : `:${line}:${column}`;
-  }
-  return result;
+  const result = resolveSourceRelativeToRoot(source, sourceMapPath, context);
+  return `${result}:${line}:${column}`;
 };
 
 const formatFrameLocation = (frame: StackFrame) => {

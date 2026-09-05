@@ -253,7 +253,9 @@ function getSplitChunksByPreset(
     case 'none':
       return {};
     default:
-      throw new Error(`[rsbuild] Unknown splitChunks preset: ${preset}`);
+      throw new Error(
+        `[rsbuild] Unknown splitChunks preset: ${String(preset)}`,
+      );
   }
 }
 

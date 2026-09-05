@@ -2,10 +2,7 @@ import { expect, test } from '@e2e/helper';
 import type { Rspack } from '@rsbuild/core';
 import { findFile } from '@rstackjs/test-utils';
 
-const targetCases: {
-  target: NonNullable<Rspack.Configuration['target']>;
-  injectHMRClient: boolean;
-}[] = [
+const targetCases = [
   {
     target: 'browserslist:last 2 node versions',
     injectHMRClient: false,
@@ -15,7 +12,10 @@ const targetCases: {
   { target: 'electron-preload', injectHMRClient: false },
   { target: 'electron-renderer', injectHMRClient: true },
   { target: 'nwjs', injectHMRClient: false },
-];
+] satisfies {
+  target: NonNullable<Rspack.Configuration['target']>;
+  injectHMRClient: boolean;
+}[];
 
 for (const { target, injectHMRClient } of targetCases) {
   test(`should ${injectHMRClient ? '' : 'not '}inject HMR client when Rspack target is ${target}`, async ({

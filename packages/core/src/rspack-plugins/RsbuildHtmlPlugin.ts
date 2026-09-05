@@ -308,7 +308,7 @@ export class RsbuildHtmlPlugin {
       try {
         fileContent = await readFileAsync(inputFs, inputFilename);
       } catch (error) {
-        logger.debug(`read favicon error: ${error}`);
+        logger.debug('read favicon error:', error);
 
         addCompilationError(
           compilation,

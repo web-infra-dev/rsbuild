@@ -137,7 +137,7 @@ function parseReqUrl(req: IncomingMessage) {
   const proto = req.headers['x-forwarded-proto'] || 'http';
   const host = req.headers['x-forwarded-host'] || req.headers.host || LOCALHOST;
   try {
-    return new URL(req.url || '/', `${proto}://${host}`);
+    return new URL(req.url || '/', `${String(proto)}://${String(host)}`);
   } catch {
     return null;
   }

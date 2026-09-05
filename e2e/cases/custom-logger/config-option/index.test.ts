@@ -73,7 +73,7 @@ test('should use customLogger for build logs', async ({ build }) => {
 
   customLogger.override({
     ready(message) {
-      console.log(`[CUSTOM_READY] ${message}`);
+      console.log('[CUSTOM_READY]', message);
     },
   });
 
@@ -93,7 +93,7 @@ test('should use customLogger for dev server logs', async ({ devOnly }) => {
 
   customLogger.override({
     log(message) {
-      console.log(`[CUSTOM_LOG] ${message}`);
+      console.log('[CUSTOM_LOG]', message);
     },
   });
 
@@ -113,7 +113,7 @@ test('should use customLogger for preview server logs', async ({ build }) => {
 
   customLogger.override({
     log(message) {
-      console.log(`[CUSTOM_LOG] ${message}`);
+      console.log('[CUSTOM_LOG]', message);
     },
   });
 
