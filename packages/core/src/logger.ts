@@ -59,11 +59,12 @@ function applyDebugOverride(targetLogger: Logger) {
       }
       const time = color.gray(getTime());
       const loggerConsole = targetLogger.options.console ?? console;
-      loggerConsole.log(
-        `  ${color.magenta('rsbuild')} ${time}`,
-        message,
-        ...args,
-      );
+      const prefix = `  ${color.magenta('rsbuild')} ${time}`;
+      if (typeof message === 'string') {
+        loggerConsole.log(`${prefix} ${message}`, ...args);
+      } else {
+        loggerConsole.log(prefix, message, ...args);
+      }
     },
   });
 }

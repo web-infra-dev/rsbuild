@@ -85,12 +85,13 @@ it('should use the custom console for debug override', () => {
     level: 'verbose',
   });
 
-  customLogger.debug('hello');
+  customLogger.debug('built %s in %d ms', 'app', 42);
 
   expect(customConsole.log).toHaveBeenCalledTimes(1);
   expect(customConsole.log).toHaveBeenCalledWith(
-    expect.stringContaining('rsbuild'),
-    'hello',
+    expect.stringContaining('built %s in %d ms'),
+    'app',
+    42,
   );
 
   const error = new Error('debug failure');
