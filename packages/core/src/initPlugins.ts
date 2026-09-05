@@ -79,7 +79,7 @@ const mapProcessAssetsStage = (stage: ProcessAssetsStage) => {
       return Compilation.PROCESS_ASSETS_STAGE_REPORT;
     default:
       throw new Error(
-        `${color.dim('[rsbuild]')} Invalid process assets stage: ${stage}`,
+        `${color.dim('[rsbuild]')} Invalid process assets stage: ${String(stage)}`,
       );
   }
 };

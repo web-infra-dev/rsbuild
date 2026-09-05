@@ -108,7 +108,9 @@ function isPreconditionFailure(
       (ifMatch !== '*' &&
         parseTokenList(ifMatch).every(
           (match: string) =>
-            match !== etag && match !== `W/${etag}` && `W/${match}` !== etag,
+            match !== etag &&
+            match !== `W/${String(etag)}` &&
+            `W/${match}` !== etag,
         ))
     );
   }

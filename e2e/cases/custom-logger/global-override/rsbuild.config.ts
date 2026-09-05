@@ -2,7 +2,7 @@ import { defineConfig, logger, type RsbuildPluginAPI } from '@rsbuild/core';
 
 logger.override({
   info: (message) => {
-    console.log(`[TEST] ${message}`);
+    console.log('[TEST]', message);
   },
 });
 

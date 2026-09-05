@@ -50,7 +50,7 @@ async function applyProfile(
   traceOutput?: string,
 ) {
   if (traceLayer !== 'perfetto' && traceLayer !== 'logger') {
-    throw new Error(`unsupported trace layer: ${traceLayer}`);
+    throw new Error(`unsupported trace layer: ${String(traceLayer)}`);
   }
 
   if (
