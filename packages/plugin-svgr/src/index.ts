@@ -103,7 +103,7 @@ const dedupeSvgoPlugins = (config: SvgoConfig): SvgoConfig => {
 
   for (const plugin of config.plugins) {
     if (typeof plugin === 'string') {
-      const exist = mergedPlugins.find(
+      const exist = mergedPlugins.some(
         (item) =>
           item === plugin || (typeof item === 'object' && item.name === plugin),
       );

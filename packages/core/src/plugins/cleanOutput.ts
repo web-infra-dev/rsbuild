@@ -117,7 +117,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       const environments = Object.values(params.environments).reduce<
         EnvironmentContext[]
       >((result, curr) => {
-        if (!result.find((item) => item.distPath === curr.distPath)) {
+        if (!result.some((item) => item.distPath === curr.distPath)) {
           result.push(curr);
         }
         return result;
