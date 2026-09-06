@@ -8,6 +8,6 @@
     "@rstest/core": "^0.11.10",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^7.0.1",
-    "happy-dom": "^20.12.0"
+    "happy-dom": "^20.14.0"
   }
 }
