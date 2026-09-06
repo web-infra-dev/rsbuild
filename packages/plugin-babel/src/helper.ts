@@ -94,7 +94,7 @@ const removePlugins = (
   config.plugins = config.plugins.filter((item: BabelPlugin) => {
     const name = getPluginItemName(item);
     if (name) {
-      return !removeList.find((removeItem) => name.includes(removeItem));
+      return !removeList.some((removeItem) => name.includes(removeItem));
     }
     return true;
   });
@@ -113,7 +113,7 @@ const removePresets = (
   config.presets = config.presets.filter((item: BabelPlugin) => {
     const name = getPluginItemName(item);
     if (name) {
-      return !removeList.find((removeItem) => name.includes(removeItem));
+      return !removeList.some((removeItem) => name.includes(removeItem));
     }
     return true;
   });
