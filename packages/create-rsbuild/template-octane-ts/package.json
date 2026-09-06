@@ -10,7 +10,7 @@
     "typecheck": "tsrx-tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "octane": "^0.1.49"
+    "octane": "^0.2.3"
   },
   "devDependencies": {
     "@octanejs/rsbuild-plugin": "^0.1.44",
