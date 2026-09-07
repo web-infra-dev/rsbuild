@@ -80,8 +80,8 @@ catalogs:
       specifier: ^2.0.21
       version: 2.0.21
     '@rstackjs/create-toolkit':
-      specifier: 2.2.4
-      version: 2.2.4
+      specifier: 2.2.5
+      version: 2.2.5
     '@rstackjs/doc-ui':
       specifier: 1.14.11
       version: 1.14.11
@@ -92,11 +92,11 @@ catalogs:
       specifier: ^1.0.0
       version: 1.0.0
     '@rstest/core':
-      specifier: ^0.11.10
-      version: 0.11.10
+      specifier: ^0.11.12
+      version: 0.11.12
     '@rstest/playwright':
-      specifier: ^0.11.10
-      version: 0.11.10
+      specifier: ^0.11.12
+      version: 0.11.12
     '@shikijs/transformers':
       specifier: ^4.4.3
       version: 4.4.3
@@ -152,8 +152,8 @@ catalogs:
       specifier: ^19.2.18
       version: 19.2.18
     '@types/react-dom':
-      specifier: ^19.2.5
-      version: 19.2.5
+      specifier: ^19.2.7
+      version: 19.2.7
     '@types/sass-loader':
       specifier: ^8.0.10
       version: 8.0.10
@@ -209,11 +209,11 @@ catalogs:
       specifier: ^11.4.0
       version: 11.4.0
     heading-case:
-      specifier: ^2.0.0
-      version: 2.0.0
+      specifier: ^2.0.1
+      version: 2.0.1
     hono:
-      specifier: ^4.13.5
-      version: 4.13.5
+      specifier: ^4.13.7
+      version: 4.13.7
     html-loader:
       specifier: ^5.1.0
       version: 5.1.0
@@ -230,8 +230,8 @@ catalogs:
       specifier: ^2.14.1
       version: 2.14.1
     less:
-      specifier: ^4.9.0
-      version: 4.9.0
+      specifier: ^4.9.1
+      version: 4.9.1
     less-loader:
       specifier: ^12.3.3
       version: 12.3.3
@@ -260,8 +260,8 @@ catalogs:
       specifier: 1.61.1
       version: 1.61.1
     postcss:
-      specifier: ^8.5.26
-      version: 8.5.26
+      specifier: ^8.5.28
+      version: 8.5.28
     postcss-load-config:
       specifier: 6.0.1
       version: 6.0.1
@@ -332,8 +332,8 @@ catalogs:
       specifier: ^3.0.2
       version: 3.0.2
     solid-js:
-      specifier: ^2.0.0-rc.4
-      version: 2.0.0-rc.4
+      specifier: ^2.0.0-rc.6
+      version: 2.0.0-rc.6
     stacktrace-parser:
       specifier: ^0.1.11
       version: 0.1.11
@@ -398,7 +398,7 @@ importers:
         version: 0.0.4
       heading-case:
         specifier: 'catalog:'
-        version: 2.0.0(prettier@3.9.6)
+        version: 2.0.1(prettier@3.9.6)
       rstack:
         specifier: 'catalog:'
         version: 0.7.3(@module-federation/runtime-tools@2.9.0)(@rspress/core@2.0.21)(core-js@3.50.0)(jiti@2.7.0)(typescript@6.0.3)
@@ -413,7 +413,7 @@ importers:
         version: 2.9.0
       '@solidjs/web':
         specifier: 'catalog:'
-        version: 2.0.0-rc.0(solid-js@2.0.0-rc.4)
+        version: 2.0.0-rc.0(solid-js@2.0.0-rc.6)
       core-js:
         specifier: 'catalog:'
         version: 3.50.0
@@ -428,7 +428,7 @@ importers:
         version: 19.2.8(react@19.2.8)
       solid-js:
         specifier: 'catalog:'
-        version: 2.0.0-rc.4
+        version: 2.0.0-rc.6
       svelte:
         specifier: 'catalog:'
         version: 5.56.10
@@ -444,7 +444,7 @@ importers:
         version: link:helper
       '@hono/node-server':
         specifier: 'catalog:'
-        version: 2.1.1(hono@4.13.5)
+        version: 2.1.1(hono@4.13.7)
       '@module-federation/enhanced':
         specifier: 'catalog:'
         version: 2.9.0(@rspack/core@2.2.2)(typescript@6.0.3)
@@ -498,10 +498,10 @@ importers:
         version: 1.0.0
       '@rstest/core':
         specifier: 'catalog:'
-        version: 0.11.10(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
+        version: 0.11.12(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
       '@rstest/playwright':
         specifier: 'catalog:'
-        version: 0.11.10(@rstest/core@0.11.10)(playwright@1.61.1)
+        version: 0.11.12(@rstest/core@0.11.12)(playwright@1.61.1)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../scripts/test-helper
@@ -522,7 +522,7 @@ importers:
         version: 19.2.18
       '@types/react-dom':
         specifier: 'catalog:'
-        version: 19.2.5(@types/react@19.2.18)
+        version: 19.2.7(@types/react@19.2.18)
       create-rsbuild:
         specifier: workspace:*
         version: link:../packages/create-rsbuild
@@ -531,7 +531,7 @@ importers:
         version: 11.4.0
       hono:
         specifier: 'catalog:'
-        version: 4.13.5
+        version: 4.13.7
       playwright:
         specifier: 'catalog:'
         version: 1.61.1
@@ -613,7 +613,7 @@ importers:
     devDependencies:
       less:
         specifier: 'catalog:'
-        version: 4.9.0(supports-color@8.1.1)
+        version: 4.9.1(supports-color@8.1.1)
       sass:
         specifier: 'catalog:'
         version: 1.103.1
@@ -814,7 +814,7 @@ importers:
         version: 19.2.18
       '@types/react-dom':
         specifier: 'catalog:'
-        version: 19.2.5(@types/react@19.2.18)
+        version: 19.2.7(@types/react@19.2.18)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -823,10 +823,10 @@ importers:
     dependencies:
       '@solidjs/web':
         specifier: 'catalog:'
-        version: 2.0.0-rc.0(solid-js@2.0.0-rc.4)
+        version: 2.0.0-rc.0(solid-js@2.0.0-rc.6)
       solid-js:
         specifier: 'catalog:'
-        version: 2.0.0-rc.4
+        version: 2.0.0-rc.6
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -959,13 +959,13 @@ importers:
         version: 11.0.2
       postcss:
         specifier: 'catalog:'
-        version: 8.5.26
+        version: 8.5.28
       postcss-load-config:
         specifier: 'catalog:'
-        version: 6.0.1(jiti@2.7.0)(postcss@8.5.26)
+        version: 6.0.1(jiti@2.7.0)(postcss@8.5.28)
       postcss-loader:
         specifier: 'catalog:'
-        version: 8.2.1(patch_hash=4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14)(@rspack/core@2.2.2)(postcss@8.5.26)(typescript@6.0.3)
+        version: 8.2.1(patch_hash=4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14)(@rspack/core@2.2.2)(postcss@8.5.28)(typescript@6.0.3)
       prebundle:
         specifier: 'catalog:'
         version: 1.6.5(typescript@6.0.3)
@@ -1010,7 +1010,7 @@ importers:
     dependencies:
       '@rstackjs/create-toolkit':
         specifier: 'catalog:'
-        version: 2.2.4
+        version: 2.2.5
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1084,10 +1084,10 @@ importers:
         version: 4.3.1
       less:
         specifier: 'catalog:'
-        version: 4.9.0(supports-color@8.1.1)
+        version: 4.9.1(supports-color@8.1.1)
       less-loader:
         specifier: 'catalog:'
-        version: 12.3.3(@rspack/core@2.2.2)(less@4.9.0)
+        version: 12.3.3(@rspack/core@2.2.2)(less@4.9.1)
       reduce-configs:
         specifier: 'catalog:'
         version: 2.0.1
@@ -1168,7 +1168,7 @@ importers:
         version: 2.0.4
       postcss:
         specifier: 'catalog:'
-        version: 8.5.26
+        version: 8.5.28
       reduce-configs:
         specifier: 'catalog:'
         version: 2.0.1
@@ -1214,7 +1214,7 @@ importers:
         version: 2.3.5
       babel-preset-solid:
         specifier: 'catalog:'
-        version: 2.0.0-rc.2(@babel/core@7.29.7)(solid-js@2.0.0-rc.4)
+        version: 2.0.0-rc.2(@babel/core@7.29.7)(solid-js@2.0.0-rc.6)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1236,7 +1236,7 @@ importers:
         version: 3.2.4(svelte@5.56.10)
       svelte-preprocess:
         specifier: 'catalog:'
-        version: 6.0.5(@babel/core@7.29.7)(less@4.9.0)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3)
+        version: 6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1393,7 +1393,7 @@ importers:
         version: 19.2.18
       '@types/react-dom':
         specifier: 'catalog:'
-        version: 19.2.5(@types/react@19.2.18)
+        version: 19.2.7(@types/react@19.2.18)
       fast-glob:
         specifier: 'catalog:'
         version: 3.3.3
@@ -2305,16 +2305,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@2.2.2':
-    resolution: {integrity: sha512-T82jUaeMUFhcBqpmKvRiNAcWMp6abxkvMEwiZi4x+gf7NAbyiF5jrbLnQLm1y4909eANsTSHenp99HlRPIByLw==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      core-js: '>= 3.0.0'
-    peerDependenciesMeta:
-      core-js:
-        optional: true
-
   '@rsbuild/core@2.2.3':
     resolution: {integrity: sha512-oJrYtYDhb7AMwY8HIda2hgMuuxHkYPYar4svdS5uTq0fXY0M1wLfllkTQz0d729pNJ4S//6GUM1WX5LsW2mFLw==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -2661,8 +2651,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rstackjs/create-toolkit@2.2.4':
-    resolution: {integrity: sha512-YVnA9aTZKPTql8Hzyf9o5chWAICNJ46CYoPwADrSObyBxF1jlvB5gO5M+yXYoZT/VNWh1Abm0TvTtmAh4EeT3A==}
+  '@rstackjs/create-toolkit@2.2.5':
+    resolution: {integrity: sha512-RVPaqOi2FDlHQT/z/zRyhJ650Zo/w+M3Aa5bYq92Rri2VOh46OIWFzaJGqAHF2/qeP+Ns7+JsRnVSk4H/4otUg==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
   '@rstackjs/doc-ui@1.14.11':
@@ -2684,19 +2674,6 @@ packages:
   '@rstackjs/test-utils@1.0.0':
     resolution: {integrity: sha512-g7oEZzqwke/pRVGAsvEpML+37PDOo9BwR8nKignbtXlKmW9Cb202pRRUSVEsWG//7pnyIi+q4P7b1H/h1ianGA==}
 
-  '@rstest/core@0.11.10':
-    resolution: {integrity: sha512-x/PNGPdyKQWbiVhpoOQco8xXevh4P/QamuyJ0/YdTrdEiUcUglT6tGSnxaudwyrQr8e/5gwWuOt6zykZKWmSUg==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      happy-dom: ^20.8.3
-      jsdom: '>=15.0.0'
-    peerDependenciesMeta:
-      happy-dom:
-        optional: true
-      jsdom:
-        optional: true
-
   '@rstest/core@0.11.12':
     resolution: {integrity: sha512-dklEYLtL1eip/11K+o3xEchEs2nCGua2u2W8Pycf6PS8TE0PDJH2Bn9y/txuQI4YVHyIQ88PISWtS6fVnxSyXQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -2710,8 +2687,8 @@ packages:
       jsdom:
         optional: true
 
-  '@rstest/playwright@0.11.10':
-    resolution: {integrity: sha512-GY8aE9oNavl7m5hbdpxvO5ot0cH3rSISnzeZU5IeO3lgd7+2OszfWS/EbohwjEq5qr6W64ByQ3sDZBboq6vMEQ==}
+  '@rstest/playwright@0.11.12':
+    resolution: {integrity: sha512-fU9BjRnCTsJNw2oEOY1aq/ozSt5gGuZMW6NwVHZrdxmi/uwypoYIcWSAE/kWukRzAazaSdO+wYZ4fB2IC8kLCA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rstest/core': ^0.11.9
@@ -2768,8 +2745,8 @@ packages:
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
 
-  '@solidjs/signals@2.0.0-rc.4':
-    resolution: {integrity: sha512-l7P0g8+2pnNscaIPOGDMhv0boaidGAsvR8QN66JySIWNMvVnuq2ayv7ZnvP+IR00DJC+RqCNnnTG/UCdxf+h8g==}
+  '@solidjs/signals@2.0.0-rc.6':
+    resolution: {integrity: sha512-lPqwZNLPq1Z9CBvgXkMvi1ZFr5OHUiFNz1X40+yehszDWEbJkneZx7BGKIe9eMT/AN1NSL+PMjOiMyZaqVB2xw==}
 
   '@solidjs/web@2.0.0-rc.0':
     resolution: {integrity: sha512-pYSaA9+dH8H1h/d/ZF/P2kR6omfzFGNcdzKhWTcg9fJghXhn8+5UrXUr2iYxDdYNOXZzxxFQhYHSJ7P4HKDqgw==}
@@ -3042,8 +3019,8 @@ packages:
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
 
-  '@types/react-dom@19.2.5':
-    resolution: {integrity: sha512-fMPwH9v7r/pp43yUd2/Mbiex5KouJwwR3dzHkhLREUC6764VyDsqxhAxv6OFEYR1RhjOyD1naqba8ECDBe7ZQg==}
+  '@types/react-dom@19.2.7':
+    resolution: {integrity: sha512-I8bPpDLcHBv1qiIiXDCy71Rt8eQDKJP0sMSWJphDdAcdqiJ1sGpZamavoEIRZmYzjia9LuEb2HlYdDpmoENpvQ==}
     peerDependencies:
       '@types/react': ^19.2.0
 
@@ -3805,14 +3782,14 @@ packages:
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
 
-  heading-case@2.0.0:
-    resolution: {integrity: sha512-yznMB5NlBOlCqGL68oRa9gvA8vINQB56D1rTQwCRNoh2aLjtEAK4UKYD5mZ4rXJ0GCuyRmzGCgP1/3To1Mj/vA==}
+  heading-case@2.0.1:
+    resolution: {integrity: sha512-vt+RLPiDTw0BHXX/7pfChw8sFh17PjfJP72mHJ8tCEi4Dy30ASuWNx9px9VtRWzvmGtnAjfQDp/bz3ODQ2YpwA==}
     hasBin: true
     peerDependencies:
       prettier: ^3.0.0
 
-  hono@4.13.5:
-    resolution: {integrity: sha512-O6+/eCYRkzzzy0rPWwKLiGBR1nFuUPZynnwjxN1MBA62NNqbT0wQEzQyK2gSO5yDIDB336sXQleAhOHrzlYyKw==}
+  hono@4.13.7:
+    resolution: {integrity: sha512-c8/gF9ac8Y78/agExVocyLevgR+JlpNB444Py0FSX8pJoPdYUfUzRcXtYEYGwt6l19qIlVZPN5Mfsw9jFShmQQ==}
     engines: {node: '>=16.9.0'}
 
   hookable@6.1.1:
@@ -4008,8 +3985,8 @@ packages:
       webpack:
         optional: true
 
-  less@4.9.0:
-    resolution: {integrity: sha512-umRhrCH7fCi8Uj2RcwKjJdvUORTjeWqkdKx0LbcZvjIwsAVsnIAGcxHaqowPeBFBjQuWOeC/bve0AlpFzF/+SQ==}
+  less@4.9.1:
+    resolution: {integrity: sha512-orp15PfJvvNDIqJdVWzMI9Sjpjp3VTiw3sfvbB+67LlISTEn8uVT2EdYSuyl02BLvaftv6sdk9Umnxmm5rckmg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4580,6 +4557,10 @@ packages:
     resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
 
+  postcss@8.5.28:
+    resolution: {integrity: sha512-RRuzqDtt5Y9h3quz5hWhK+TPnsmVs6WwSU6LkJMeY4HstUEDuYTG8UJSdawMRzmzAtV+KEoG8N3Qg2qLy5vM/A==}
+    engines: {node: ^10 || ^12 || >=14}
+
   powershell-utils@0.1.0:
     resolution: {integrity: sha512-dM0jVuXJPsDN6DvRpea484tCUaMiXWjuCn++HGTqUWzGDjv5tZkEZldAJ/UMlqRYGFrD/etByo4/xOuC/snX2A==}
     engines: {node: '>=20'}
@@ -5077,8 +5058,8 @@ packages:
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
-  solid-js@2.0.0-rc.4:
-    resolution: {integrity: sha512-hSkDmtduesjFtvzjNyqLphrqiSvhSD5+njkPQUR+9YEoR60MMWtuv36SbLL4OucI0Ronof3Jc+AsUp0oWffwMg==}
+  solid-js@2.0.0-rc.6:
+    resolution: {integrity: sha512-Z/M8s9ypLBf+6Bl3AAb5upgkYCl73HkpM+UxdUJ5uFGctTwpOQVCM9Gpj3Mjbiaki270HHUfA3Z0Lyn4w+fDtg==}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -5789,9 +5770,9 @@ snapshots:
 
   '@epic-web/invariant@1.0.0': {}
 
-  '@hono/node-server@2.1.1(hono@4.13.5)':
+  '@hono/node-server@2.1.1(hono@4.13.7)':
     dependencies:
-      hono: 4.13.5
+      hono: 4.13.7
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -6360,15 +6341,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.60.4':
     optional: true
 
-  '@rsbuild/core@2.2.2(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)':
-    dependencies:
-      '@rspack/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
-      '@swc/helpers': 0.5.23
-    optionalDependencies:
-      core-js: 3.50.0
-    transitivePeerDependencies:
-      - '@module-federation/runtime-tools'
-
   '@rsbuild/core@2.2.3(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)':
     dependencies:
       '@rspack/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
@@ -6417,8 +6389,8 @@ snapshots:
 
   '@rslib/core@1.0.0(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)(typescript@6.0.3)':
     dependencies:
-      '@rsbuild/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
-      rsbuild-plugin-dts: 1.0.0(@rsbuild/core@2.2.2)(typescript@6.0.3)
+      '@rsbuild/core': 2.2.3(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
+      rsbuild-plugin-dts: 1.0.0(@rsbuild/core@2.2.3)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -6673,7 +6645,7 @@ snapshots:
   '@rstackjs/cli-win32-x64-msvc@0.7.3':
     optional: true
 
-  '@rstackjs/create-toolkit@2.2.4': {}
+  '@rstackjs/create-toolkit@2.2.5': {}
 
   '@rstackjs/doc-ui@1.14.11(@rspress/core@2.0.21)':
     optionalDependencies:
@@ -6685,25 +6657,17 @@ snapshots:
 
   '@rstackjs/test-utils@1.0.0': {}
 
-  '@rstest/core@0.11.10(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)':
-    dependencies:
-      '@rsbuild/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
-      '@types/chai': 5.2.3
-    transitivePeerDependencies:
-      - '@module-federation/runtime-tools'
-      - core-js
-
   '@rstest/core@0.11.12(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)':
     dependencies:
-      '@rsbuild/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.3(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
       '@types/chai': 5.2.3
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstest/playwright@0.11.10(@rstest/core@0.11.10)(playwright@1.61.1)':
+  '@rstest/playwright@0.11.12(@rstest/core@0.11.12)(playwright@1.61.1)':
     dependencies:
-      '@rstest/core': 0.11.10(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
+      '@rstest/core': 0.11.12(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
       playwright: 1.61.1
 
   '@shikijs/core@4.3.0':
@@ -6779,13 +6743,13 @@ snapshots:
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
-  '@solidjs/signals@2.0.0-rc.4': {}
+  '@solidjs/signals@2.0.0-rc.6': {}
 
-  '@solidjs/web@2.0.0-rc.0(solid-js@2.0.0-rc.4)':
+  '@solidjs/web@2.0.0-rc.0(solid-js@2.0.0-rc.6)':
     dependencies:
       seroval: 1.5.4
       seroval-plugins: 1.5.4(seroval@1.5.4)
-      solid-js: 2.0.0-rc.4
+      solid-js: 2.0.0-rc.6
 
   '@sveltejs/acorn-typescript@1.0.10(acorn@8.17.0)':
     dependencies:
@@ -7050,7 +7014,7 @@ snapshots:
 
   '@types/range-parser@1.2.7': {}
 
-  '@types/react-dom@19.2.5(@types/react@19.2.18)':
+  '@types/react-dom@19.2.7(@types/react@19.2.18)':
     dependencies:
       '@types/react': 19.2.18
 
@@ -7254,12 +7218,12 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
 
-  babel-preset-solid@2.0.0-rc.2(@babel/core@7.29.7)(solid-js@2.0.0-rc.4):
+  babel-preset-solid@2.0.0-rc.2(@babel/core@7.29.7)(solid-js@2.0.0-rc.6):
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       '@dom-expressions/babel-plugin-jsx': 0.50.0-next.44(@babel/core@7.29.7)
     optionalDependencies:
-      solid-js: 2.0.0-rc.4
+      solid-js: 2.0.0-rc.6
 
   bail@2.0.2: {}
 
@@ -7425,12 +7389,12 @@ snapshots:
 
   css-loader@7.1.5(patch_hash=b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019)(@rspack/core@2.2.2):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.26)
-      postcss: 8.5.26
-      postcss-modules-extract-imports: 3.1.0(postcss@8.5.26)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.5.26)
-      postcss-modules-scope: 3.2.1(postcss@8.5.26)
-      postcss-modules-values: 4.0.0(postcss@8.5.26)
+      icss-utils: 5.1.0(postcss@8.5.28)
+      postcss: 8.5.28
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.28)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.28)
+      postcss-modules-scope: 3.2.1(postcss@8.5.28)
+      postcss-modules-values: 4.0.0(postcss@8.5.28)
       postcss-value-parser: 4.2.0
       semver: 7.7.4
     optionalDependencies:
@@ -7836,11 +7800,11 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
-  heading-case@2.0.0(prettier@3.9.6):
+  heading-case@2.0.1(prettier@3.9.6):
     dependencies:
       prettier: 3.9.6
 
-  hono@4.13.5: {}
+  hono@4.13.7: {}
 
   hookable@6.1.1: {}
 
@@ -7899,9 +7863,9 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  icss-utils@5.1.0(postcss@8.5.26):
+  icss-utils@5.1.0(postcss@8.5.28):
     dependencies:
-      postcss: 8.5.26
+      postcss: 8.5.28
 
   immutable@5.1.9: {}
 
@@ -7998,13 +7962,13 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.10.0
 
-  less-loader@12.3.3(@rspack/core@2.2.2)(less@4.9.0):
+  less-loader@12.3.3(@rspack/core@2.2.2)(less@4.9.1):
     dependencies:
-      less: 4.9.0(supports-color@8.1.1)
+      less: 4.9.1(supports-color@8.1.1)
     optionalDependencies:
       '@rspack/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
 
-  less@4.9.0(supports-color@8.1.1):
+  less@4.9.1(supports-color@8.1.1):
     dependencies:
       copy-anything: 3.0.5
       parse-node-version: 1.0.1
@@ -8797,44 +8761,44 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.26):
+  postcss-load-config@6.0.1(jiti@2.7.0)(postcss@8.5.28):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
       jiti: 2.7.0
-      postcss: 8.5.26
+      postcss: 8.5.28
 
-  postcss-loader@8.2.1(patch_hash=4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14)(@rspack/core@2.2.2)(postcss@8.5.26)(typescript@6.0.3):
+  postcss-loader@8.2.1(patch_hash=4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14)(@rspack/core@2.2.2)(postcss@8.5.28)(typescript@6.0.3):
     dependencies:
       cosmiconfig: 9.0.1(typescript@6.0.3)
       jiti: 2.7.0
-      postcss: 8.5.26
+      postcss: 8.5.28
       semver: 7.7.4
     optionalDependencies:
       '@rspack/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
     transitivePeerDependencies:
       - typescript
 
-  postcss-modules-extract-imports@3.1.0(postcss@8.5.26):
+  postcss-modules-extract-imports@3.1.0(postcss@8.5.28):
     dependencies:
-      postcss: 8.5.26
+      postcss: 8.5.28
 
-  postcss-modules-local-by-default@4.2.0(postcss@8.5.26):
+  postcss-modules-local-by-default@4.2.0(postcss@8.5.28):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.26)
-      postcss: 8.5.26
+      icss-utils: 5.1.0(postcss@8.5.28)
+      postcss: 8.5.28
       postcss-selector-parser: 7.1.1
       postcss-value-parser: 4.2.0
 
-  postcss-modules-scope@3.2.1(postcss@8.5.26):
+  postcss-modules-scope@3.2.1(postcss@8.5.28):
     dependencies:
-      postcss: 8.5.26
+      postcss: 8.5.28
       postcss-selector-parser: 7.1.1
 
-  postcss-modules-values@4.0.0(postcss@8.5.26):
+  postcss-modules-values@4.0.0(postcss@8.5.28):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.26)
-      postcss: 8.5.26
+      icss-utils: 5.1.0(postcss@8.5.28)
+      postcss: 8.5.28
 
   postcss-selector-parser@7.1.1:
     dependencies:
@@ -8844,6 +8808,12 @@ snapshots:
   postcss-value-parser@4.2.0: {}
 
   postcss@8.5.26:
+    dependencies:
+      nanoid: 3.3.18
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+
+  postcss@8.5.28:
     dependencies:
       nanoid: 3.3.18
       picocolors: 1.1.1
@@ -9070,7 +9040,7 @@ snapshots:
       adjust-sourcemap-loader: 4.0.0
       convert-source-map: 1.9.0
       loader-utils: 2.0.4
-      postcss: 8.5.26
+      postcss: 8.5.28
       source-map: 0.6.1
 
   reusify@1.1.0: {}
@@ -9117,10 +9087,10 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.4
       fsevents: 2.3.3
 
-  rsbuild-plugin-dts@1.0.0(@rsbuild/core@2.2.2)(typescript@6.0.3):
+  rsbuild-plugin-dts@1.0.0(@rsbuild/core@2.2.3)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.45.2
-      '@rsbuild/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.3(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)
     optionalDependencies:
       typescript: 6.0.3
 
@@ -9364,9 +9334,9 @@ snapshots:
       dot-case: 3.0.4
       tslib: 2.8.1
 
-  solid-js@2.0.0-rc.4:
+  solid-js@2.0.0-rc.6:
     dependencies:
-      '@solidjs/signals': 2.0.0-rc.4
+      '@solidjs/signals': 2.0.0-rc.6
       csstype: 3.2.3
       seroval: 1.5.4
       seroval-plugins: 1.5.4(seroval@1.5.4)
@@ -9431,14 +9401,14 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@5.56.10)
 
-  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.9.0)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3):
+  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3):
     dependencies:
       svelte: 5.56.10
     optionalDependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
-      less: 4.9.0(supports-color@8.1.1)
+      less: 4.9.1(supports-color@8.1.1)
       postcss: 8.5.26
-      postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.26)
+      postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.28)
       sass: 1.103.1
       typescript: 6.0.3
 
