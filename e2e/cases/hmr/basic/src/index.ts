@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
@@ -13,5 +13,5 @@ document.body.appendChild(testEl);
 const container = document.getElementById('root');
 if (container) {
   const root = createRoot(container);
-  root.render(React.createElement(App));
+  root.render(createElement(App));
 }

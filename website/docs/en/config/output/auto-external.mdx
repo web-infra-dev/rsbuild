@@ -67,7 +67,7 @@ export default {
 When `output.autoExternal` is applied, Rsbuild also externalizes subpath imports of matched dependencies. For example, if `react` is declared in `dependencies`, both of the following imports will be externalized:
 
 ```ts
-import React from 'react';
+import { createElement } from 'react';
 import { jsx } from 'react/jsx-runtime';
 ```
 

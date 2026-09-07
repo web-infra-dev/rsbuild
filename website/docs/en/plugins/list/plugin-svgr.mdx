@@ -395,7 +395,8 @@ declare module '*.svg' {
   export default content;
 }
 declare module '*.svg?react' {
-  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 ```
@@ -404,11 +405,13 @@ declare module '*.svg?react' {
 
 ```ts
 declare module '*.svg' {
-  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 declare module '*.svg?react' {
-  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 ```
@@ -417,12 +420,12 @@ declare module '*.svg?react' {
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement>
-  >;
+  import type { FunctionComponent, SVGProps } from 'react';
+  export const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
 }
 declare module '*.svg?react' {
-  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 ```
@@ -431,14 +434,14 @@ declare module '*.svg?react' {
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement>
-  >;
+  import type { FunctionComponent, SVGProps } from 'react';
+  export const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
   const content: string;
   export default content;
 }
 declare module '*.svg?react' {
-  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  import type { FunctionComponent, SVGProps } from 'react';
+  const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 ```

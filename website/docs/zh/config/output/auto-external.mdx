@@ -67,7 +67,7 @@ export default {
 当 `output.autoExternal` 生效时，Rsbuild 也会 external 匹配依赖的子路径导入。例如，如果 `react` 声明在 `dependencies` 中，下面两个导入都会被 external：
 
 ```ts
-import React from 'react';
+import { createElement } from 'react';
 import { jsx } from 'react/jsx-runtime';
 ```
 
