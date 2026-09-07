@@ -1,0 +1,20 @@
+{
+  "name": "rsbuild-lynx-js",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "rsbuild dev",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@lynx-js/react": "^0.126.0"
+  },
+  "devDependencies": {
+    "@lynx-js/qrcode-rsbuild-plugin": "^0.7.1",
+    "@lynx-js/react-rsbuild-plugin": "^0.20.1",
+    "@lynx-js/rsbuild-plugin": "^0.1.1",
+    "@rsbuild/core": "^2.2.3"
+  }
+}

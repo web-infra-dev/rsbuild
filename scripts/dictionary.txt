@@ -114,6 +114,7 @@ preflights
 prefresh
 preprocessors
 pxtorem
+qrcode
 rebranded
 rolldown
 rsbuild

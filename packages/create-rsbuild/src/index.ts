@@ -15,6 +15,8 @@ import {
   tailwindcssPlugin,
 } from './rsbuildConfig.js';
 
+const isLynx = (templateName: string) => templateName.startsWith('lynx-');
+
 const frameworkAlias: Record<string, string> = {
   vue3: 'vue',
   'solid-js': 'solid',
@@ -42,6 +44,7 @@ async function getTemplateName({ template }: Argv) {
         { value: 'solid', label: 'Solid 1' },
         { value: 'solid2', label: 'Solid 2' },
         { value: 'octane', label: 'Octane' },
+        { value: 'lynx', label: 'Lynx' },
       ],
     }),
   );
@@ -128,6 +131,8 @@ await create({
     'solid2-ts',
     'octane-js',
     'octane-ts',
+    'lynx-js',
+    'lynx-ts',
   ],
   getTemplateName,
   mapESLintTemplate,
@@ -137,6 +142,7 @@ await create({
       value: 'rstest',
       label: 'Rstest - testing',
       order: 'pre',
+      when: ({ templateName }) => !isLynx(templateName),
       action: ({ templateName, distFolder, addAgentsMdSearchDirs }) => {
         const rstestTemplate = mapRstestTemplate(templateName);
         const toolFolder = path.join(root, 'template-rstest');
@@ -163,6 +169,7 @@ await create({
     {
       value: 'tailwindcss',
       label: 'Tailwind CSS - styling',
+      when: ({ templateName }) => !isLynx(templateName),
       action: async ({ distFolder }) => {
         const from = path.join(root, 'template-tailwindcss');
         copyFolder({
@@ -191,6 +198,7 @@ await create({
     {
       value: 'storybook',
       label: 'Storybook - component development',
+      when: ({ templateName }) => !isLynx(templateName),
       command: 'npm create storybook@latest -- --skip-install --features docs',
     },
   ],
