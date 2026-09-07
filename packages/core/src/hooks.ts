@@ -126,7 +126,7 @@ export function createEnvironmentAsyncHook<
         continue;
       }
 
-      const result = await callback.handler(...params);
+      const result: T = await callback.handler(...params);
       results.push(result);
     }
 
@@ -181,7 +181,7 @@ export function createAsyncHook<
     const results: T[] = [];
 
     for (const callback of callbacks) {
-      const result = await callback(...params);
+      const result: T = await callback(...params);
       results.push(result);
     }
 

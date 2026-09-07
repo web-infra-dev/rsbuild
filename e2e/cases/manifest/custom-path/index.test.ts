@@ -12,5 +12,5 @@ test('should generate manifest file at specified path', async ({ build }) => {
   const parsed = JSON.parse(manifestContent);
 
   // index.js, index.html
-  expect(Object.keys(parsed.allFiles).length).toBe(2);
+  expect(parsed.allFiles).toHaveLength(2);
 });

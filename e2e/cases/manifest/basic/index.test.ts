@@ -21,7 +21,7 @@ test('should generate manifest file in output', async ({ build }) => {
   const manifest = JSON.parse(manifestContent);
 
   // index.js, index.html
-  expect(Object.keys(manifest.allFiles).length).toBe(2);
+  expect(manifest.allFiles).toHaveLength(2);
 
   expect(manifest.entries.index).toMatchObject({
     initial: {

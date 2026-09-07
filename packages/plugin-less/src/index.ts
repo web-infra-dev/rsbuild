@@ -1,6 +1,7 @@
 import path from 'node:path';
 import type {
   ConfigChainWithContext,
+  CSSLoaderOptions,
   RsbuildPlugin,
   Rspack,
   RspackChain,
@@ -285,16 +286,23 @@ export const pluginLess = (
         rule.resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
-          const loader = cssBranchRule.uses.get(id);
+          const loader = cssBranchRule.use<CSSLoaderOptions>(id);
+          const cssLoaderPath = loader.get('loader');
+
+          if (!cssLoaderPath) {
+            continue;
+          }
+
           const options = loader.get('options') ?? {};
-          const clonedOptions = deepmerge<Record<string, any>>({}, options);
+          const clonedOptions = deepmerge({}, options);
 
           if (id === CHAIN_ID.USE.CSS) {
             // add less-loader
-            clonedOptions.importLoaders += 1;
+            clonedOptions.importLoaders =
+              (clonedOptions.importLoaders ?? 0) + 1;
           }
 
-          rule.use(id).loader(loader.get('loader')).options(clonedOptions);
+          rule.use(id).loader(cssLoaderPath).options(clonedOptions);
         }
 
         const loader = rule

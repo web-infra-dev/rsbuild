@@ -32,7 +32,7 @@ import type { RsbuildPreviewServer } from './previewServer';
 export type UpgradeEvent = (
   req: IncomingMessage,
   socket: Socket,
-  head: any,
+  head: Buffer,
 ) => void;
 
 export type ServerStartResult<T> = {

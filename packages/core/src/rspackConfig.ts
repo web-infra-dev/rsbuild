@@ -157,7 +157,7 @@ function validateRspackConfig(config: Rspack.Configuration, logger: Logger) {
         'name' in plugin &&
         'setup' in plugin
       ) {
-        const name = color.bold(color.yellow(plugin.name));
+        const name = color.bold(color.yellow(plugin.name as string));
         throw new Error(
           `${color.dim('[rsbuild:plugin]')} "${color.yellow(name)}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
         );

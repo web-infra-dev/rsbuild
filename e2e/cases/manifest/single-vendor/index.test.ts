@@ -14,7 +14,7 @@ test('should generate manifest with single vendor as expected', async ({
 
   const manifest = JSON.parse(manifestContent);
 
-  expect(Object.keys(manifest.allFiles).length).toBe(3);
+  expect(manifest.allFiles).toHaveLength(3);
 
   expect(manifest.entries.index).toMatchObject({
     html: ['/index.html'],

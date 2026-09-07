@@ -1,7 +1,11 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { RsbuildPlugin, RspackChain } from '@rsbuild/core';
+import type {
+  CSSLoaderOptions,
+  RsbuildPlugin,
+  RspackChain,
+} from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers.js';
@@ -222,16 +226,23 @@ export const pluginSass = (
         rule.resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
-          const loader = cssBranchRule.uses.get(id);
+          const loader = cssBranchRule.use<CSSLoaderOptions>(id);
+          const cssLoaderPath = loader.get('loader');
+
+          if (!cssLoaderPath) {
+            continue;
+          }
+
           const options = loader.get('options') ?? {};
-          const clonedOptions = deepmerge<Record<string, any>>({}, options);
+          const clonedOptions = deepmerge({}, options);
 
           if (id === CHAIN_ID.USE.CSS) {
             // add sass-loader and resolve-url-loader
-            clonedOptions.importLoaders += rewriteUrls ? 2 : 1;
+            clonedOptions.importLoaders =
+              (clonedOptions.importLoaders ?? 0) + (rewriteUrls ? 2 : 1);
           }
 
-          rule.use(id).loader(loader.get('loader')).options(clonedOptions);
+          rule.use(id).loader(cssLoaderPath).options(clonedOptions);
         }
 
         // use `resolve-url-loader` to rewrite urls

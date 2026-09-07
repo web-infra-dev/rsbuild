@@ -14,7 +14,7 @@ test('should generate manifest for async chunks correctly', async ({
 
   const manifest = JSON.parse(manifestContent);
 
-  expect(Object.keys(manifest.allFiles).length).toBe(4);
+  expect(manifest.allFiles).toHaveLength(4);
 
   expect(manifest.entries.index).toMatchObject({
     html: ['/index.html'],

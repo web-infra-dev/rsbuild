@@ -49,7 +49,9 @@ export const createAndValidate = async (
     });
   });
 
-  const pkgJson = await fse.readJSON(path.join(dir, 'package.json'));
+  const pkgJson: Record<string, any> = await fse.readJSON(
+    path.join(dir, 'package.json'),
+  );
   expectPackageJson(pkgJson, path.basename(name), expectedBuildScript);
 
   if (template.endsWith('-ts')) {

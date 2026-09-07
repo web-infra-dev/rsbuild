@@ -302,8 +302,8 @@ catalogs:
       specifier: ^2.3.0
       version: 2.3.0
     rspack-chain:
-      specifier: ^2.2.0
-      version: 2.2.0
+      specifier: ^2.3.1
+      version: 2.3.1
     rspack-manifest-plugin:
       specifier: 5.2.2
       version: 5.2.2
@@ -980,7 +980,7 @@ importers:
         version: 2.3.0
       rspack-chain:
         specifier: 'catalog:'
-        version: 2.2.0(@rspack/core@2.2.2)
+        version: 2.3.1(@rspack/core@2.2.2)
       rspack-manifest-plugin:
         specifier: 'catalog:'
         version: 5.2.2(@rspack/core@2.2.2)
@@ -4763,8 +4763,8 @@ packages:
     resolution: {integrity: sha512-g2wW/ermwzGTLlzGdJBDRc4YKz2/yPBjf57w9g5CvhtpZ91Xq95OaWku0oNHYi+XsuV6v8QrCo2oJJR/pCUR8g==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  rspack-chain@2.2.0:
-    resolution: {integrity: sha512-5h/5duc5uZwygmuX0X41ROovPy358t2L0mvV55e9os6GEw1LnvbhzzHaps2VXu60oEByllVp0+0mKHcFD51fNQ==}
+  rspack-chain@2.3.1:
+    resolution: {integrity: sha512-EvQA6S13FAV2bhdYUpemsPgEeuEpeEcsd6qaTiOfQ33U/pBRSplewUBH5+AV2Dg8CRtffi7/7GKnHeXTgKeleg==}
     peerDependencies:
       '@rspack/core': ^2.0.0
     peerDependenciesMeta:
@@ -9009,7 +9009,7 @@ snapshots:
 
   rslog@2.3.0: {}
 
-  rspack-chain@2.2.0(@rspack/core@2.2.2):
+  rspack-chain@2.3.1(@rspack/core@2.2.2):
     optionalDependencies:
       '@rspack/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
 

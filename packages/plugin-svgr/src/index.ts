@@ -305,9 +305,13 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
 
       [CHAIN_ID.USE.SWC, CHAIN_ID.USE.BABEL].some((jsUseId) => {
-        const use = jsMainRule.uses.get(jsUseId);
+        if (!jsMainRule.uses.has(jsUseId)) {
+          return false;
+        }
+        const use = jsMainRule.use<Record<string, unknown>>(jsUseId);
+        const loaderPath = use.get('loader');
 
-        if (!use) {
+        if (!loaderPath) {
           return false;
         }
 
@@ -323,7 +327,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
           // disable React refresh runtime for SVGR transformed components
           if (jsUseId === CHAIN_ID.USE.SWC) {
-            loaderOptions = deepmerge(loaderOptions, {
+            loaderOptions = deepmerge(loaderOptions ?? {}, {
               jsc: {
                 transform: {
                   react: {
@@ -339,7 +343,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
             .oneOf(oneOfId)
             .use(jsUseId)
             .before(CHAIN_ID.USE.SVGR)
-            .loader(use.get('loader'))
+            .loader(loaderPath)
             .options(loaderOptions);
         }
 
