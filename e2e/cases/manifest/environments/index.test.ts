@@ -44,7 +44,7 @@ test('should allow to access manifest data in environment context after build', 
   });
 
   // index.js, index.html
-  expect(Object.keys(webManifest.allFiles).length).toBe(2);
+  expect(webManifest.allFiles).toHaveLength(2);
   expect(webManifest.entries.index).toMatchObject({
     initial: {
       js: ['/static/js/index.js'],
@@ -53,7 +53,7 @@ test('should allow to access manifest data in environment context after build', 
   });
 
   // index.js
-  expect(Object.keys(nodeManifest.allFiles).length).toBe(1);
+  expect(nodeManifest.allFiles).toHaveLength(1);
   expect(nodeManifest.entries.index).toMatchObject({
     initial: {
       js: ['/index.js'],
@@ -104,7 +104,7 @@ test('should allow to access manifest data in environment context after dev buil
   });
 
   // index.js, index.js.map, index.html
-  expect(Object.keys(webManifest.allFiles).length).toBe(3);
+  expect(webManifest.allFiles).toHaveLength(3);
   expect(webManifest.entries.index).toMatchObject({
     initial: {
       js: ['/static/js/index.js'],
@@ -113,7 +113,7 @@ test('should allow to access manifest data in environment context after dev buil
   });
 
   // index.js, index.js.map
-  expect(Object.keys(nodeManifest.allFiles).length).toBe(2);
+  expect(nodeManifest.allFiles).toHaveLength(2);
   expect(nodeManifest.entries.index).toMatchObject({
     initial: {
       js: ['/index.js'],
@@ -165,7 +165,7 @@ test('should allow to access manifest data in environment API', async ({
   await page.goto(`http://localhost:${rsbuild.port}`);
 
   // index.js, index.js.map, index.html
-  expect(Object.keys(webManifest.allFiles).length).toBe(3);
+  expect(webManifest.allFiles).toHaveLength(3);
   expect(webManifest.entries.index).toMatchObject({
     initial: {
       js: ['/static/js/index.js'],
@@ -174,7 +174,7 @@ test('should allow to access manifest data in environment API', async ({
   });
 
   // index.js, index.js.map
-  expect(Object.keys(nodeManifest.allFiles).length).toBe(2);
+  expect(nodeManifest.allFiles).toHaveLength(2);
   expect(nodeManifest.entries.index).toMatchObject({
     initial: {
       js: ['/index.js'],

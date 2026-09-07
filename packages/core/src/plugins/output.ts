@@ -131,9 +131,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
         const isESM = config.output.module;
 
         if (isServer) {
-          chain.output.library({
-            ...(chain.output.get('library') || {}),
-            type: isESM ? 'module' : 'commonjs2',
+          chain.output.merge({
+            library: { type: isESM ? 'module' : 'commonjs2' },
           });
         }
 

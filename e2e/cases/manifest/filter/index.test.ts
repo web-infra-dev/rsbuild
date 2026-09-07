@@ -20,7 +20,7 @@ test('should allow to filter files in manifest', async ({ build }) => {
   const manifest = JSON.parse(manifestContent);
 
   // index.js
-  expect(Object.keys(manifest.allFiles).length).toBe(1);
+  expect(manifest.allFiles).toHaveLength(1);
 
   expect(manifest.entries.index).toMatchObject({
     initial: {
@@ -47,7 +47,7 @@ test('should allow to include license files in manifest', async ({ build }) => {
   const manifestContent = getFileContent(files, 'manifest.json');
   const manifest = JSON.parse(manifestContent);
 
-  expect(Object.keys(manifest.allFiles).length).toBe(3);
+  expect(manifest.allFiles).toHaveLength(3);
 
   expect(manifest.entries.index).toMatchObject({
     initial: {

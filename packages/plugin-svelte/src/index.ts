@@ -117,6 +117,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
           const swcUse = jsMainRule.uses.get(CHAIN_ID.USE.SWC);
+          const swcLoaderPath = swcUse?.get('loader');
 
           // TODO: Use a oneOf-based rule structure in the next major version.
           const svelteRule = chain.module
@@ -124,10 +125,12 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             .test(/\.svelte$/)
             .with({ type: { not: 'text' } });
 
-          svelteRule
-            .use(CHAIN_ID.USE.SWC)
-            .loader(swcUse.get('loader'))
-            .options(swcUse.get('options'));
+          if (swcLoaderPath) {
+            svelteRule
+              .use(CHAIN_ID.USE.SWC)
+              .loader(swcLoaderPath)
+              .options(swcUse.get('options'));
+          }
 
           svelteRule
             .use(CHAIN_ID.USE.SVELTE)
@@ -146,17 +149,21 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
 
           jsRule.exclude.add(regexp);
 
-          chain.module
+          const svelteJsRule = chain.module
             .rule('svelte-js')
             .test(regexp)
             .with({ type: { not: 'text' } })
             .use(CHAIN_ID.USE.SVELTE)
             .loader(loaderPath)
             .options(svelteLoaderOptions)
-            .end()
-            .use(CHAIN_ID.USE.SWC)
-            .loader(swcUse.get('loader'))
-            .options(swcUse.get('options'));
+            .end();
+
+          if (swcLoaderPath) {
+            svelteJsRule
+              .use(CHAIN_ID.USE.SWC)
+              .loader(swcLoaderPath)
+              .options(swcUse.get('options'));
+          }
 
           chain.module
             .rule('svelte-js-text')

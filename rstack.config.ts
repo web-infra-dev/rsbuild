@@ -50,7 +50,6 @@ define.lint(({ globalIgnores, js, rstestPlugin, ts }) => [
       'unicorn/prefer-array-some': 'error',
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },

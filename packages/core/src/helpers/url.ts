@@ -77,7 +77,7 @@ export const getPublicPathFromChain = (
   chain: RspackChain,
   withSlash = true,
 ): string => {
-  const publicPath: Rspack.PublicPath = chain.output.get('publicPath');
+  const publicPath = chain.output.get('publicPath');
 
   if (typeof publicPath === 'string') {
     return formatPublicPath(publicPath, withSlash);

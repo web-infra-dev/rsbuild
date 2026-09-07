@@ -39,7 +39,7 @@ function checkProcessEnvSecurity(define: DefinePluginOptions, logger: Logger) {
   // Check `{ 'process.env': JSON.stringify(process.env) }`
   if (typeof value === 'string') {
     try {
-      check(JSON.parse(value));
+      check(JSON.parse(value) as Record<string, unknown>);
     } catch {
       // ignore
     }

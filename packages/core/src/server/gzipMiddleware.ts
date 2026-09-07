@@ -171,7 +171,7 @@ export function gzipMiddleware({
     res.end = (...args: any[]) => {
       start();
       if (gzip) {
-        (gzip.end as (...args: any[]) => void)(...args);
+        gzip.end(...(args as Parameters<typeof gzip.end>));
         return res;
       }
 
