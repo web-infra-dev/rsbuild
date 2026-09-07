@@ -22,12 +22,13 @@ define.staged({
   '*.{js,jsx,ts,tsx,mjs,cjs}': ['rs lint --type-check', 'rs fmt'],
 });
 
-define.lint(({ globalIgnores, js, rstestPlugin, ts }) => [
+define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
   globalIgnores([
     'e2e/cases/browser-logs/skip-build-error/src/index.js',
     'e2e/cases/wasm/wasm-source-import/src/index.js',
   ]),
   js.configs.recommended,
+  importPlugin.configs.recommended,
   ts.configs.recommendedTypeChecked,
   {
     files: ['**/*.test.{ts,tsx}'],
@@ -47,6 +48,10 @@ define.lint(({ globalIgnores, js, rstestPlugin, ts }) => [
       },
     },
     rules: {
+      // Rslint does not recognize default exports from text imports yet.
+      // https://github.com/web-infra-dev/rslint/issues/2083
+      'import/default': 'off',
+      'import/no-duplicates': 'off',
       'unicorn/prefer-array-some': 'error',
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
