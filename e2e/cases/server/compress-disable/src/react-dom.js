@@ -1,3 +1,3 @@
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
-console.log(ReactDOM);
+console.log(createRoot);

@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 
-console.log(React, createRoot);
+console.log(createElement, createRoot);

@@ -1,6 +1,6 @@
-import React from 'react';
+import { createElement } from 'react';
 
-console.log(React);
+console.log(createElement);
 
 import(
   /* rspackChunkName: "react-dom" */

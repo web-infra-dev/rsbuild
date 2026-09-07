@@ -27,10 +27,10 @@ test('should print file size diff as expected', async ({
   await editFile(
     join(srcDir, 'index.js'),
     () => `import "./App.css";
-import React from 'react';
-import ReactDOM from 'react-dom';
-console.log(React);
-console.log(ReactDOM);
+import { createElement } from 'react';
+import { flushSync } from 'react-dom';
+console.log(createElement);
+console.log(flushSync);
 `,
   );
 

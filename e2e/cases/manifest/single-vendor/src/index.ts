@@ -1,4 +1,4 @@
-import React from 'react';
-import ReactDOM from './foo';
+import { createElement } from 'react';
+import flushSync from './foo';
 
-console.log(React, ReactDOM);
+console.log(createElement, flushSync);

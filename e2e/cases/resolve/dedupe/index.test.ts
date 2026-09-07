@@ -11,7 +11,7 @@ function writeDuplicatedPackage(flag: string) {
   );
   fse.outputFileSync(
     join(fooPath, 'index.js'),
-    'import React from "react";export default React;',
+    'import { createElement } from "react";export default createElement;',
   );
   fse.outputFileSync(
     join(fooPath, 'node_modules', 'react', 'package.json'),
