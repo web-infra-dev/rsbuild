@@ -126,6 +126,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     ? (compiler as Rspack.MultiCompiler).compilers
     : [compiler as Rspack.Compiler];
 
+  const deferBuildLogs =
+    isMultiCompiler &&
+    context.environmentList.some(({ config }) => config.dev.progressBar);
+  const pendingBuildLogs: (() => void)[] = [];
+
   const finishFatalBuild = () => {
     if (
       !hasFatalError ||
@@ -139,6 +144,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     context.buildState.status = 'failed';
     context.buildState.hasErrors = true;
     isCompiling = false;
+    pendingBuildLogs.length = 0;
   };
 
   const logRspackVersion = () => {
@@ -213,6 +219,10 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     item.hooks.watchClose.tap(HOOK_NAME, finishFatalBuild);
   }
 
+  compiler.hooks.shutdown.tap(HOOK_NAME, () => {
+    pendingBuildLogs.length = 0;
+  });
+
   if (context.action === 'build') {
     // When there are multiple compilers, we only need to print the start log once
     const firstCompiler = isMultiCompiler
@@ -238,18 +248,35 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     const suffix = isMultiCompiler ? color.dim(` (${name})`) : '';
     const timeStr = `${prettyTime(time / 1000)}${suffix}`;
 
-    if (hasErrors) {
-      logger.error(`build failed in ${timeStr}`);
+    const log = () => {
+      if (hasErrors) {
+        logger.error(`build failed in ${timeStr}`);
+      } else {
+        logger.ready(`built in ${timeStr}`);
+      }
+    };
+
+    // Logging while another environment's progress bar is drawing moves the
+    // cursor and breaks subsequent redraws. Record the time now, but log later.
+    if (deferBuildLogs) {
+      pendingBuildLogs.push(log);
     } else {
-      logger.ready(`built in ${timeStr}`);
+      log();
     }
   };
 
   if (isMultiCompiler) {
     (compiler as Rspack.MultiCompiler).compilers.forEach((item, index) => {
-      item.hooks.done.tap(HOOK_NAME, (stats) => {
-        printTime(index, stats.hasErrors());
-      });
+      item.hooks.done.tap(
+        {
+          name: HOOK_NAME,
+          // Collect the last environment's log before Rspack fires MultiCompiler.done.
+          stage: -1,
+        },
+        (stats) => {
+          printTime(index, stats.hasErrors());
+        },
+      );
     });
   }
 
@@ -257,6 +284,9 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     HOOK_NAME,
     (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
       hasFatalError = false;
+      for (const log of pendingBuildLogs.splice(0)) {
+        log();
+      }
       const stats = getRsbuildStats(
         statsInstance,
         compiler,
