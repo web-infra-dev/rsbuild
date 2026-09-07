@@ -1,3 +1,3 @@
-import ReactDOM from 'react-dom';
+import { flushSync } from 'react-dom';
 
-export default ReactDOM;
+export default flushSync;

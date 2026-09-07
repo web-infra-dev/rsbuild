@@ -41,11 +41,13 @@ After compilation:
 
 After modifying `mountId`, if there is logic in your code to obtain the `root` root node, please update the corresponding value:
 
-```ts
+```tsx
+import { createRoot } from 'react-dom/client';
+
 const domNode = document.getElementById('root'); // [!code --]
 const domNode = document.getElementById('app'); // [!code ++]
 
-ReactDOM.createRoot(domNode).render(<App />);
+createRoot(domNode).render(<App />);
 ```
 
 ### Custom templates

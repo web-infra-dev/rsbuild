@@ -1,3 +1,3 @@
-import React from 'react';
+import { createElement } from 'react';
 
-console.log('hello!', React);
+console.log('hello!', createElement);

@@ -152,9 +152,9 @@ Replace Vite's preset types in `tsconfig.json` with Rsbuild's preset types. If y
 
 ```ts title="src/types/svg.d.ts"
 declare module '*.svg?react' {
-  import type React from 'react';
+  import type { FunctionComponent, SVGProps } from 'react';
 
-  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 ```

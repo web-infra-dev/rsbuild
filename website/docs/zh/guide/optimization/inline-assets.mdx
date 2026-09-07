@@ -38,7 +38,6 @@ export default {
 你可以通过在引入资源时添加 `inline` URL 参数来强制内联该资源，无论该资源的体积是否小于阈值。
 
 ```tsx
-import React from 'react';
 import img from './foo.png?inline';
 
 export default function Foo() {
@@ -67,7 +66,6 @@ export default function Foo() {
 当你想要阻止资源被内联，并确保它们始终作为单独的文件加载（无论文件大小如何），你可以添加 `url` query 参数。
 
 ```tsx
-import React from 'react';
 import img from './foo.png?url';
 
 export default function Foo() {

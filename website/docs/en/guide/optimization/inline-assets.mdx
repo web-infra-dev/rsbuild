@@ -38,7 +38,6 @@ export default {
 You can force an asset to be inlined by adding the `inline` query parameter when importing it, regardless of the asset's size.
 
 ```tsx
-import React from 'react';
 import img from './foo.png?inline';
 
 export default function Foo() {
@@ -67,7 +66,6 @@ Inlining large assets will significantly increase the first paint time or first 
 To prevent assets from being inlined and ensure they're always loaded as separate files (regardless of their size), add the `url` query parameter.
 
 ```tsx
-import React from 'react';
 import img from './foo.png?url';
 
 export default function Foo() {

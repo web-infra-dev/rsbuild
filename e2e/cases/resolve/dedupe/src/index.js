@@ -1,5 +1,5 @@
 import foo from 'foo';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { createElement } from 'react';
+import { flushSync } from 'react-dom';
 
-console.log(React, ReactDOM, foo);
+console.log(createElement, flushSync, foo);

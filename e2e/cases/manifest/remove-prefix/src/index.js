@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement } from 'react';
 import './index.css';
 
-console.log('hello!', React);
+console.log('hello!', createElement);
