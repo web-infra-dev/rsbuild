@@ -6,14 +6,14 @@ import {
 import {
   transformAsync as nativeTransformAsync,
   type TransformOptions as NativeTransformOptions,
-} from '@dom-expressions/compiler';
+} from '@solidjs/compiler';
 import remapping from '@jridgewell/remapping';
 import type { Decorators, Rspack } from '@rsbuild/core';
 import { getTransformFilename } from './helpers.js';
 import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 const require = createRequire(import.meta.url);
-const BABEL_PRESET_SOLID_PATH = require.resolve('babel-preset-solid');
+const BABEL_PLUGIN_SOLID_PATH = require.resolve('@solidjs/babel-plugin');
 const TSX_REGEX = /\.tsx$/i;
 
 export type SolidLoaderOptions = {
@@ -93,7 +93,7 @@ const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
           parserOpts: {
             plugins: parserPlugins,
           },
-          presets: [[BABEL_PRESET_SOLID_PATH, solid]],
+          plugins: [[BABEL_PLUGIN_SOLID_PATH, solid]],
         });
 
         callback(null, result?.code ?? source, result?.map ?? inputSourceMap);

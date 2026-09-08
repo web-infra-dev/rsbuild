@@ -1,11 +1,11 @@
 /**
  * Options passed to the Solid JSX compiler.
  *
- * The option types are aligned with `@dom-expressions/compiler` and adjusted
- * for `babel-preset-solid`.
+ * The option types are aligned with `@solidjs/compiler` and adjusted
+ * for `@solidjs/babel-plugin`.
  *
- * https://github.com/solidjs/solid/blob/next/packages/babel-preset-solid/index.js
- * https://github.com/ryansolid/dom-expressions/blob/main/packages/babel-plugin-jsx/README.md
+ * https://github.com/solidjs/solid/blob/next/packages/compiler/types.d.ts
+ * https://github.com/solidjs/solid/tree/next/packages/babel-plugin
  */
 export type SolidCompiler = 'babel' | 'native';
 

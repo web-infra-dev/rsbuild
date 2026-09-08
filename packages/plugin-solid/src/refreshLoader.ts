@@ -1,4 +1,4 @@
-import { transformRefreshAsync } from '@dom-expressions/compiler';
+import { transformRefreshAsync } from '@solidjs/compiler';
 import type { Rspack } from '@rsbuild/core';
 import { getTransformFilename } from './helpers.js';
 

@@ -53,7 +53,7 @@ Babel compilation will introduce extra overhead, in the example above, we use `i
 
 ## Solid v2
 
-Solid v2 support is currently in beta. It uses the native Solid compiler by default and does not require `@rsbuild/plugin-babel`.
+Solid v2 support is currently in beta and requires `solid-js` and `@solidjs/web` version `2.0.0-rc.6` or later. It uses `@solidjs/compiler` by default and does not require `@rsbuild/plugin-babel`.
 
 Install and register the beta version of `@rsbuild/plugin-solid`:
 
@@ -81,7 +81,7 @@ To customize the compilation behavior of Solid, use the following options.
 
 ### compiler
 
-The JSX compiler backend. The native compiler is used by default. Set this option to `'babel'` to compile JSX with `babel-preset-solid` instead.
+The JSX compiler backend. The native compiler is used by default. Set this option to `'babel'` to compile JSX with `@solidjs/babel-plugin` instead.
 
 - **Type:** `'native' | 'babel'`
 - **Default:** `'native'`
