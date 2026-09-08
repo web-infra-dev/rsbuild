@@ -8,5 +8,9 @@
   </head>
   <body>
     <div id="root"><!--app-content--></div>
+    <script>
+      // Capture the server-rendered node before the client bundle hydrates it.
+      window.ssrButton = document.getElementById('button');
+    </script>
   </body>
 </html>
