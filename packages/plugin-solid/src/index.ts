@@ -4,18 +4,6 @@ import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 export type { SolidCompiler, SolidPresetOptions } from './types.js';
 
-const SOLID_BUILT_INS = [
-  'For',
-  'Show',
-  'Switch',
-  'Match',
-  'Loading',
-  'Reveal',
-  'Portal',
-  'Repeat',
-  'Dynamic',
-  'Errored',
-];
 export type PluginSolidOptions = {
   /**
    * JSX compiler backend to use.
@@ -100,22 +88,10 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             environmentConfig.dev.hmr &&
             target === 'web';
 
-          const defaultPresetOptions: SolidPresetOptions = {
-            moduleName: '@solidjs/web',
-            builtIns: SOLID_BUILT_INS,
-            contextToCustomElements: true,
-            wrapConditionals: true,
-            generate: 'dom',
-            hydratable: false,
+          const solidOptions: SolidPresetOptions = {
+            generate: ssr && target === 'node' ? 'ssr' : 'dom',
+            hydratable: Boolean(ssr),
             dev: useDevMode,
-            ...(ssr
-              ? target === 'node'
-                ? { generate: 'ssr', hydratable: true }
-                : { generate: 'dom', hydratable: true }
-              : {}),
-          };
-          const solidOptions = {
-            ...defaultPresetOptions,
             ...solid,
           };
 

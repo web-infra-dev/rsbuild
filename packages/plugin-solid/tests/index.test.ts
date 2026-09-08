@@ -50,24 +50,9 @@ describe('plugin-solid', () => {
       scriptRegex: /(?:\.jsx|\.tsx)$/i,
       decoratorVersion: '2023-11',
       solid: {
-        builtIns: [
-          'For',
-          'Show',
-          'Switch',
-          'Match',
-          'Loading',
-          'Reveal',
-          'Portal',
-          'Repeat',
-          'Dynamic',
-          'Errored',
-        ],
-        contextToCustomElements: true,
         dev: false,
         generate: 'dom',
         hydratable: false,
-        moduleName: '@solidjs/web',
-        wrapConditionals: true,
       },
     });
   });
