@@ -1,48 +1,43 @@
-import {
-  defineConfig,
-  type RequestHandler,
-  type RsbuildDevServer,
-} from '@rsbuild/core';
-import { pluginSolid } from '@rsbuild/plugin-solid';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { defineConfig } from '@rsbuild/core';
 
-const serverRender =
-  ({ environments }: RsbuildDevServer): RequestHandler =>
-  async (_req, res) => {
-    const bundle = await environments.node.loadBundle<{
-      render: () => {
-        app: string;
-        hydrationScript: string;
-      };
-    }>('index');
-    const { app, hydrationScript } = bundle.render();
-    const template = await environments.web.getTransformedHtml('index');
-
-    res.writeHead(200, {
-      'Content-Type': 'text/html',
-    });
-    res.end(
-      template
-        .replace('<!--hydration-script-->', hydrationScript)
-        .replace('<!--app-content-->', app),
-    );
-  };
+type ServerBundle = {
+  render: () => { app: string; hydrationScript: string };
+};
 
 export default defineConfig({
-  plugins: [pluginSolid({ ssr: true })],
   server: {
-    setup: ({ action, server }) => {
-      if (action !== 'dev') {
-        return;
-      }
-
-      const render = serverRender(server);
-
-      server.middlewares.use((req, res, next) => {
-        if (req.method === 'GET' && req.url === '/') {
-          return render(req, res, next);
+    setup: ({ action, server, environments }) => {
+      server.middlewares.use(async (req, res, next) => {
+        if (req.method !== 'GET' || req.url !== '/') {
+          return next();
         }
 
-        next();
+        const bundle: ServerBundle =
+          action === 'dev'
+            ? await server.environments.node.loadBundle<ServerBundle>('index')
+            : await import(
+                pathToFileURL(
+                  path.join(environments.node.distPath, 'index.mjs'),
+                ).href
+              );
+        const template =
+          action === 'dev'
+            ? await server.environments.web.getTransformedHtml('index')
+            : await readFile(
+                path.join(environments.web.distPath, 'index.html'),
+                'utf8',
+              );
+        const { app, hydrationScript } = bundle.render();
+
+        res.setHeader('Content-Type', 'text/html');
+        res.end(
+          template
+            .replace('<!--hydration-script-->', hydrationScript)
+            .replace('<!--app-content-->', app),
+        );
       });
     },
   },
@@ -57,6 +52,7 @@ export default defineConfig({
     node: {
       output: {
         target: 'node',
+        filename: { js: '[name].mjs' },
       },
       source: {
         entry: {
