@@ -1,5 +1,43 @@
 # @rsbuild/plugin-solid
 
+## 2.0.0-rc.0 (2026-09-08)
+
+### Breaking changes
+
+- feat(plugin-solid)!: publish as pure ESM package by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8371
+- feat(plugin-solid)!: drop Rsbuild v1 support by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8372
+
+### New features
+
+- feat(plugin-solid): add extensions option by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8443
+
+### Performance
+
+- perf(plugin-solid): skip transforms for plain JS and TS by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8391
+
+### Bug fixes
+
+- fix(plugin-solid): respect legacy decorator config by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8374
+- fix(plugin-solid): support JSX in JavaScript data URIs by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8386
+- fix(plugin-solid): preserve native hydration module imports by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8444
+
+### Refactor
+
+- refactor(plugin-solid): migrate to Solid compiler packages by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8445
+- refactor(plugin-solid): simplify compiler defaults by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8446
+
+### Document
+
+- docs: clarify Solid plugin setup and capabilities by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8450
+
+### Other changes
+
+- test(plugin-solid): cover dev hydration walk output by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8375
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8396
+- chore: update Rstack config by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8411
+- test(plugin-solid): expand SSR and hydration coverage by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8447
+- chore(build): enable Rspack runtime mode by @Timeless0911 in https://github.com/web-infra-dev/rsbuild/pull/8448
+
 ## 2.0.0-beta.2 (2026-08-25)
 
 ### Breaking changes
