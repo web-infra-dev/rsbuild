@@ -52,5 +52,3 @@ test('should report the expected warning', async ({ build }) => {
   await rsbuild.expectWarning('Expected warning message');
 });
 ```
-
-You can use the local skill at [`write-e2e-cases`](../.agents/skills/write-e2e-cases/SKILL.md) to add new test cases.
