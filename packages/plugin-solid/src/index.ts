@@ -122,7 +122,8 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
           if (extensions.length) {
-            jsRule.test({ or: [jsRule.get('test'), scriptRegex] });
+            const test = jsRule.get('test');
+            jsRule.test(test ? { or: [test, scriptRegex] } : scriptRegex);
             jsRule.include.add(scriptRegex);
             chain.resolve.extensions.merge(extensions);
           }

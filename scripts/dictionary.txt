@@ -16,6 +16,7 @@ caniuse
 chenjiahan
 chunkhash
 Chunktmp
+cjsx
 classname
 codegen
 codesandbox
@@ -27,6 +28,7 @@ corejs
 corepack
 craco
 crossorigin
+ctsx
 darkgrey
 datauri
 deepmerge
@@ -76,8 +78,10 @@ microfrontend
 microfrontends
 minifiers
 miniflare
+mjsx
 modularly
 mrmime
+mtsx
 mYbzBtlg6o
 napi
 nolyfill
