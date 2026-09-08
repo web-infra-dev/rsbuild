@@ -1236,7 +1236,7 @@ importers:
         version: 3.2.4(svelte@5.56.10)
       svelte-preprocess:
         specifier: 'catalog:'
-        version: 6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3)
+        version: 6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.28)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1762,20 +1762,8 @@ packages:
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-core@4.68.2':
-    resolution: {integrity: sha512-PoBeUNEbjyLKKwCap2z8LkkqdhdfttS4rTHCALVuP65BdF+sAoyBqHo1m+uGTRBiQWv3H7MGfr8f7lY4pDwanw==}
-    engines: {node: '>=10.0'}
-    peerDependencies:
-      tslib: '2'
-
   '@jsonjoy.com/fs-core@4.71.0':
     resolution: {integrity: sha512-9DFR/j+bm+tig1abs1CWS1/r0IVjNUdTp/+q6R/PXayXpO1rgbUh7tkanGYP40I0zdxbOreN3tmzBpVHgfMKzg==}
-    engines: {node: '>=10.0'}
-    peerDependencies:
-      tslib: '2'
-
-  '@jsonjoy.com/fs-fsa@4.68.2':
-    resolution: {integrity: sha512-h6eGXlLGGMyPfNliDQrbuHKTB9Z29ksCLjreAmdBqrDOBdfrTrHssi+b9WLfrF+J2KzAbIt9OMjJu6AEpTnYkg==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
@@ -1786,20 +1774,8 @@ packages:
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-node-builtins@4.68.2':
-    resolution: {integrity: sha512-V8WzQsW2YIrH3RxBGY6HZisxn+dDUltHgksVRuCdPEOXEkAfXuhL/01eHFrabNu84Dn13XuLqvcQUKOYVKAUOA==}
-    engines: {node: '>=10.0'}
-    peerDependencies:
-      tslib: '2'
-
   '@jsonjoy.com/fs-node-builtins@4.71.0':
     resolution: {integrity: sha512-BSzl+QFSxZF58BxGjV1wqCJ+qSn3b2IZnb+z3hDQq6goqOO5RuxF8gRihjsFx17AfpEpa7XjYcP8XpQtDU8RrQ==}
-    engines: {node: '>=10.0'}
-    peerDependencies:
-      tslib: '2'
-
-  '@jsonjoy.com/fs-node-to-fsa@4.68.2':
-    resolution: {integrity: sha512-4O1K4w5G4oJIpKpoa3WSLG83AsQYVnGv+aUSBGOvIUph9Axm6bB1mPlvldkNg2tBx/4dkiTlZnqNrK5SQ21Wtg==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
@@ -1810,20 +1786,8 @@ packages:
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-node-utils@4.68.2':
-    resolution: {integrity: sha512-CxFwyG9fJr7dAKAd1uanNRNrRMtDDqbYJA8do53+M4LY7SxcBEEmMjC1zi9MOsBlVLHTXvA7OP9+n639UqtIcw==}
-    engines: {node: '>=10.0'}
-    peerDependencies:
-      tslib: '2'
-
   '@jsonjoy.com/fs-node-utils@4.71.0':
     resolution: {integrity: sha512-YtzCL3jbKYx6LHxqS9ymJ9Ob7SO9cucI+kpNO3LijGNFEjFbvNsTlHkvFgocAMAjUk96TpQTCsYkzFQi1CdlAA==}
-    engines: {node: '>=10.0'}
-    peerDependencies:
-      tslib: '2'
-
-  '@jsonjoy.com/fs-node@4.68.2':
-    resolution: {integrity: sha512-Kpj519Qk4OXG4+mZ8vTf9BEflliJrPueIDEVcbx8tAOufMJJ8IxR0WwdbcEvJol2KQog3PJjtALXVclorE+xbQ==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
@@ -1834,20 +1798,8 @@ packages:
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-print@4.68.2':
-    resolution: {integrity: sha512-cBABQmZJXig6bahwNka3+yPNGUF1GeMWbR76ZM1N2ajgCd+S+twZigCoe9+0ueZmkhM9xd2a7688Gy/ch7T+2w==}
-    engines: {node: '>=10.0'}
-    peerDependencies:
-      tslib: '2'
-
   '@jsonjoy.com/fs-print@4.71.0':
     resolution: {integrity: sha512-OhfDSdvyO8uGV0U11OP+mOeVCPgjuP1HqCGR/TdBQLxHoDEWJAK3KOP5fPXo57H7i3G0x0Vmv8xPRHDle4XGzA==}
-    engines: {node: '>=10.0'}
-    peerDependencies:
-      tslib: '2'
-
-  '@jsonjoy.com/fs-snapshot@4.68.2':
-    resolution: {integrity: sha512-Aix7+NM38LzvewM0T3PICSgFdF5BVCtVgsjNsrlDPGc9hiMgJzReTDDl2/elgl0A9USMl3QP27x5WwxZSOtrfw==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
@@ -2369,19 +2321,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rspack/binding-darwin-arm64@2.2.2':
-    resolution: {integrity: sha512-/le/AvV4HSinXTPs2Lqpujxt189Z5T10Ggt96QzckLRPvIchzqoavVDDjltzC7XcaZ87XCH/X06jNKgzkcBBNA==}
-    cpu: [arm64]
-    os: [darwin]
-
   '@rspack/binding-darwin-arm64@2.2.3':
     resolution: {integrity: sha512-MGLx4lMTY6XEtJi55S+fk83+683GeUDuoqzjixbq6ehHdr/l6nGiHhgvMtV5DYt9sCytUDzyrCkcJ0AWqJxnTA==}
     cpu: [arm64]
-    os: [darwin]
-
-  '@rspack/binding-darwin-x64@2.2.2':
-    resolution: {integrity: sha512-uFIcUPUXiPxM6ljenLafp5TemT8eLZm1riRn8fJYmpqNCK+aCcTaud18XHZpI5SjzzcY+xUHfVShgvNzKXuf2g==}
-    cpu: [x64]
     os: [darwin]
 
   '@rspack/binding-darwin-x64@2.2.3':
@@ -2389,23 +2331,11 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@rspack/binding-linux-arm64-gnu@2.2.2':
-    resolution: {integrity: sha512-Pjby4pDSMNJQK2VBzpgCj6lb+DGuenS1fEDb6xi5/apbJb9v5WE+e43Mz7i+XqgXS8e846pjaONV3KM5WKB1LQ==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [glibc]
-
   '@rspack/binding-linux-arm64-gnu@2.2.3':
     resolution: {integrity: sha512-sU+jPGD2xz3BxFvsdBQVGce538YHqrSKMB4ZSfKhj6RSKjeGzpJ1BVl8+IndiQsfTgaUxi7N+r5cs/ezGy1TVQ==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
-
-  '@rspack/binding-linux-arm64-musl@2.2.2':
-    resolution: {integrity: sha512-0u9O7tTVT2z+F6o/eEY6f6+My8Jn9U56QiBwkfy90ZaoAfZyQSSTxqaK/zA7W43oFxQefeCpiPas27VUzrSakw==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [musl]
 
   '@rspack/binding-linux-arm64-musl@2.2.3':
     resolution: {integrity: sha512-EQuADbqWbVgNAh5ep/u/B7Z/8UUkZjMLzHAOKZJklBpe4Y8mnhFNjieX0xc9NadR+drj9tqmEANxzTOkFtVPyQ==}
@@ -2413,21 +2343,9 @@ packages:
     os: [linux]
     libc: [musl]
 
-  '@rspack/binding-linux-ppc64-gnu@2.2.2':
-    resolution: {integrity: sha512-N3lVnhq5qOvpmP5n386JzR1GcE8HzAqq4/r440Z6yle9m7PhVFJ6oXVWxgaDTYV0mtv9YLJmaG+YrjYfUa1vuA==}
-    cpu: [ppc64]
-    os: [linux]
-    libc: [glibc]
-
   '@rspack/binding-linux-ppc64-gnu@2.2.3':
     resolution: {integrity: sha512-kyXROzr519a5juBII9ysuc5ZD2apEZ0DJqL5PPCAOVHjzMfThEIBwnX3gicNCmp+kY0CCIOl2LagwbtFaOzoiA==}
     cpu: [ppc64]
-    os: [linux]
-    libc: [glibc]
-
-  '@rspack/binding-linux-riscv64-gnu@2.2.2':
-    resolution: {integrity: sha512-ReClZyp32/rJkUDV/oGDU0X6BCFyEkTR6r4stFwm/qOOaG6mUMRzZe4gur8Yh979p4Hiz9EdkmfEHY02GBXcaQ==}
-    cpu: [riscv64]
     os: [linux]
     libc: [glibc]
 
@@ -2437,33 +2355,15 @@ packages:
     os: [linux]
     libc: [glibc]
 
-  '@rspack/binding-linux-riscv64-musl@2.2.2':
-    resolution: {integrity: sha512-mqsorvTNerr3r8zI35NFTPYATPDlhepdiUhZjKT6ylqpHlP7vLU9fp4aEMK/CuTv2f+IVsa0+iZqtMxHs2tSjw==}
-    cpu: [riscv64]
-    os: [linux]
-    libc: [musl]
-
   '@rspack/binding-linux-riscv64-musl@2.2.3':
     resolution: {integrity: sha512-O3HK7OnPvoBxZu4MX2j+t3gk4qiUsFYqj/29L3WgU1iQsdUSIN6PInW2JvbiLqyuzt09VltIEXTKayY8EysCpQ==}
     cpu: [riscv64]
     os: [linux]
     libc: [musl]
 
-  '@rspack/binding-linux-s390x-gnu@2.2.2':
-    resolution: {integrity: sha512-ql2Jub8QYWSugBppmj2u0SjcIj6fOQuAaLCYQOqU7zbvz/uuWTfoqmdWKExwrxeCU9Tzt7emVM0ETuVEpoca+A==}
-    cpu: [s390x]
-    os: [linux]
-    libc: [glibc]
-
   '@rspack/binding-linux-s390x-gnu@2.2.3':
     resolution: {integrity: sha512-SIxfGdwBdAjwJ8pDlPTb8MPIZIv/i2lKHn4/ywuDpFOxlUA4Bo/OKqQOenHx2MFD2mN8jigBZQTF0KVe5YP1uQ==}
     cpu: [s390x]
-    os: [linux]
-    libc: [glibc]
-
-  '@rspack/binding-linux-x64-gnu@2.2.2':
-    resolution: {integrity: sha512-MNYKYEHrtIVEno2q5rgpou/JVffRwn109xPK3kxct95EojHsniNa8jwy6eEHeOazP4EN60Si7NElE3aQ6JssHw==}
-    cpu: [x64]
     os: [linux]
     libc: [glibc]
 
@@ -2473,39 +2373,19 @@ packages:
     os: [linux]
     libc: [glibc]
 
-  '@rspack/binding-linux-x64-musl@2.2.2':
-    resolution: {integrity: sha512-y9/9CmE8lrECaF17GAhacibTL+SvlEPEotQnUuBFC/WFtXh8hU2E7a7bAkpYGSLH6kM0nrJZHO3hTvM1wdWOJw==}
-    cpu: [x64]
-    os: [linux]
-    libc: [musl]
-
   '@rspack/binding-linux-x64-musl@2.2.3':
     resolution: {integrity: sha512-9OKSx2ickrR+PFal94XE6Hkj49AQ2HI3KuR9XeRkKOwSxjwrskV/Pn1wc2itDOHkm/QHP7k+MttsYb4FGuNIqw==}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@rspack/binding-wasm32-wasi@2.2.2':
-    resolution: {integrity: sha512-VbDIjjeFwZvMSKAOGY5IbU6lLzt6AHHHncTdMMkZ94Xk7O2BOHe9BXDV32Ln29TIW2C8m1fdxfPZWDiecVghUQ==}
-    cpu: [wasm32]
-
   '@rspack/binding-wasm32-wasi@2.2.3':
     resolution: {integrity: sha512-gici3jWJi0GDy9kbYh57LoA57H8A2EAD9cV2jFKp1YoJ2aX2U9lANh4L+xoKPTvVQYpRvleoA5jkAvyfeLQ5bw==}
     cpu: [wasm32]
 
-  '@rspack/binding-win32-arm64-msvc@2.2.2':
-    resolution: {integrity: sha512-rfcNg0W3ZPZvXma1gTyEt9/Z8FxASIaQr+sMWTSaTPPaeU3xY1+0hYcrD0kUFNs3/5L4u63myI4R8qRXiuW3pA==}
-    cpu: [arm64]
-    os: [win32]
-
   '@rspack/binding-win32-arm64-msvc@2.2.3':
     resolution: {integrity: sha512-1MG66kcuqAGFs9ewiBc+/NJSTQr1jHrkZ2nCVMyhukl1o8embmFZa3BCibYgBYs5P7FRc6Sa+CDXcrfDZOLInQ==}
     cpu: [arm64]
-    os: [win32]
-
-  '@rspack/binding-win32-ia32-msvc@2.2.2':
-    resolution: {integrity: sha512-TFPvr9RZw9oHIhooDhXHzWjKcHpGPTxkznSeM2poIWU0CdEuua2rVUfsrriTF1Dmx+9kMly61DQmyOHCbb+b2g==}
-    cpu: [ia32]
     os: [win32]
 
   '@rspack/binding-win32-ia32-msvc@2.2.3':
@@ -2513,33 +2393,13 @@ packages:
     cpu: [ia32]
     os: [win32]
 
-  '@rspack/binding-win32-x64-msvc@2.2.2':
-    resolution: {integrity: sha512-GvEGyL594dtWN9SoVnKWh0exrM8WLInaUjwcuA2JKbCi1ak/9iHxip/U1dY3DuVqBYBhmvYq96JPbl91xnzFjg==}
-    cpu: [x64]
-    os: [win32]
-
   '@rspack/binding-win32-x64-msvc@2.2.3':
     resolution: {integrity: sha512-qa5Wc34a+Uux5foZ1Z+9fPQceVRbgTunaIulHezVF/ZxvqKO4DkAC7tFl53shB0YRVBAPg8R78MGd8cByfoxLQ==}
     cpu: [x64]
     os: [win32]
 
-  '@rspack/binding@2.2.2':
-    resolution: {integrity: sha512-gWjKDQfVQJSBh/I+y9WTlyERsiShSJ7eI6Yl0SJs/6gjx8t4ixuwWCsaEFFjwSL4nSn6ML5hNQ7UFY3gj72BWA==}
-
   '@rspack/binding@2.2.3':
     resolution: {integrity: sha512-532+T5N6yIdukChiL85H4NFN2vn9oi8wlLa1ByPNtpNYriE9s24fUhn0RiK7w/xACqnNpYmXCqLYCvjOzyCy+w==}
-
-  '@rspack/core@2.2.2':
-    resolution: {integrity: sha512-/yztfDZR5syIPBrUpzBpL+6fhhl0IHBPcXlNr4tOMBULbocFIz7Z4/cqvf1ix0DBbKpIGx99v6N1IDbk2gi8hw==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    peerDependencies:
-      '@module-federation/runtime-tools': ^0.24.1 || ^2.0.0
-      '@swc/helpers': ^0.5.23
-    peerDependenciesMeta:
-      '@module-federation/runtime-tools':
-        optional: true
-      '@swc/helpers':
-        optional: true
 
   '@rspack/core@2.2.3':
     resolution: {integrity: sha512-VHejw+PDd5B5v6VduFyjLSTIFaHBMNGPMKw+Y0zjkMqjYhDD1hjLOBC5frRKjTWcfYdk+Q73auWPp9k/H9PfIQ==}
@@ -4274,9 +4134,6 @@ packages:
   medium-zoom@1.1.0:
     resolution: {integrity: sha512-ewyDsp7k4InCUp3jRmwHBRFGyjBimKps/AJLjRSox+2q/2H4p/PNpQf+pwONWlJiOudkBXtbdmVbFjqyybfTmQ==}
 
-  memfs@4.68.2:
-    resolution: {integrity: sha512-Un1ElEBoIdPI9kg0sm3LebVEuEViodfIvlaG8Z1MFXa7ZnR9vWuPKUo3dt/vuWY2ivc05l76B5QOjdgCzAzmGw==}
-
   memfs@4.71.0:
     resolution: {integrity: sha512-Zwrk7TpTXBkic7taZL+2QeppbauG0QOufRsT1zuXDYLW8jCajH0W1VSZ17+I7ODqiNbH9J1Vf1QJCqFlCfurDg==}
 
@@ -4630,10 +4487,6 @@ packages:
 
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
-
-  postcss@8.5.26:
-    resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
-    engines: {node: ^10 || ^12 || >=14}
 
   postcss@8.5.28:
     resolution: {integrity: sha512-RRuzqDtt5Y9h3quz5hWhK+TPnsmVs6WwSU6LkJMeY4HstUEDuYTG8UJSdawMRzmzAtV+KEoG8N3Qg2qLy5vM/A==}
@@ -5843,25 +5696,10 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-core@4.68.2(tslib@2.8.1)':
-    dependencies:
-      '@jsonjoy.com/fs-node-builtins': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.68.2(tslib@2.8.1)
-      thingies: 2.6.0(tslib@2.8.1)
-      tslib: 2.8.1
-
   '@jsonjoy.com/fs-core@4.71.0(tslib@2.8.1)':
     dependencies:
       '@jsonjoy.com/fs-node-builtins': 4.71.0(tslib@2.8.1)
       '@jsonjoy.com/fs-node-utils': 4.71.0(tslib@2.8.1)
-      thingies: 2.6.0(tslib@2.8.1)
-      tslib: 2.8.1
-
-  '@jsonjoy.com/fs-fsa@4.68.2(tslib@2.8.1)':
-    dependencies:
-      '@jsonjoy.com/fs-core': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-builtins': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.68.2(tslib@2.8.1)
       thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
@@ -5873,19 +5711,8 @@ snapshots:
       thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-node-builtins@4.68.2(tslib@2.8.1)':
-    dependencies:
-      tslib: 2.8.1
-
   '@jsonjoy.com/fs-node-builtins@4.71.0(tslib@2.8.1)':
     dependencies:
-      tslib: 2.8.1
-
-  '@jsonjoy.com/fs-node-to-fsa@4.68.2(tslib@2.8.1)':
-    dependencies:
-      '@jsonjoy.com/fs-fsa': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-builtins': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.68.2(tslib@2.8.1)
       tslib: 2.8.1
 
   '@jsonjoy.com/fs-node-to-fsa@4.71.0(tslib@2.8.1)':
@@ -5895,27 +5722,10 @@ snapshots:
       '@jsonjoy.com/fs-node-utils': 4.71.0(tslib@2.8.1)
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-node-utils@4.68.2(tslib@2.8.1)':
-    dependencies:
-      '@jsonjoy.com/fs-node-builtins': 4.68.2(tslib@2.8.1)
-      glob-to-regex.js: 1.2.0(tslib@2.8.1)
-      tslib: 2.8.1
-
   '@jsonjoy.com/fs-node-utils@4.71.0(tslib@2.8.1)':
     dependencies:
       '@jsonjoy.com/fs-node-builtins': 4.71.0(tslib@2.8.1)
       glob-to-regex.js: 1.2.0(tslib@2.8.1)
-      tslib: 2.8.1
-
-  '@jsonjoy.com/fs-node@4.68.2(tslib@2.8.1)':
-    dependencies:
-      '@jsonjoy.com/fs-core': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-builtins': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-print': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-snapshot': 4.68.2(tslib@2.8.1)
-      glob-to-regex.js: 1.2.0(tslib@2.8.1)
-      thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
   '@jsonjoy.com/fs-node@4.71.0(tslib@2.8.1)':
@@ -5929,24 +5739,10 @@ snapshots:
       thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-print@4.68.2(tslib@2.8.1)':
-    dependencies:
-      '@jsonjoy.com/fs-node-utils': 4.68.2(tslib@2.8.1)
-      tree-dump: 1.1.0(tslib@2.8.1)
-      tslib: 2.8.1
-
   '@jsonjoy.com/fs-print@4.71.0(tslib@2.8.1)':
     dependencies:
       '@jsonjoy.com/fs-node-utils': 4.71.0(tslib@2.8.1)
       tree-dump: 1.1.0(tslib@2.8.1)
-      tslib: 2.8.1
-
-  '@jsonjoy.com/fs-snapshot@4.68.2(tslib@2.8.1)':
-    dependencies:
-      '@jsonjoy.com/buffers': 17.67.0(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/json-pack': 17.67.0(tslib@2.8.1)
-      '@jsonjoy.com/util': 17.67.0(tslib@2.8.1)
       tslib: 2.8.1
 
   '@jsonjoy.com/fs-snapshot@4.71.0(tslib@2.8.1)':
@@ -6357,7 +6153,7 @@ snapshots:
 
   '@rsbuild/core@2.2.3(@module-federation/runtime-tools@2.9.0)(core-js@3.50.0)':
     dependencies:
-      '@rspack/core': 2.2.2(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
+      '@rspack/core': 2.2.3(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
       '@swc/helpers': 0.5.23
     optionalDependencies:
       core-js: 3.50.0
@@ -6449,71 +6245,34 @@ snapshots:
   '@rslint/native-win32-x64-msvc@0.9.1':
     optional: true
 
-  '@rspack/binding-darwin-arm64@2.2.2':
-    optional: true
-
   '@rspack/binding-darwin-arm64@2.2.3':
-    optional: true
-
-  '@rspack/binding-darwin-x64@2.2.2':
     optional: true
 
   '@rspack/binding-darwin-x64@2.2.3':
     optional: true
 
-  '@rspack/binding-linux-arm64-gnu@2.2.2':
-    optional: true
-
   '@rspack/binding-linux-arm64-gnu@2.2.3':
-    optional: true
-
-  '@rspack/binding-linux-arm64-musl@2.2.2':
     optional: true
 
   '@rspack/binding-linux-arm64-musl@2.2.3':
     optional: true
 
-  '@rspack/binding-linux-ppc64-gnu@2.2.2':
-    optional: true
-
   '@rspack/binding-linux-ppc64-gnu@2.2.3':
-    optional: true
-
-  '@rspack/binding-linux-riscv64-gnu@2.2.2':
     optional: true
 
   '@rspack/binding-linux-riscv64-gnu@2.2.3':
     optional: true
 
-  '@rspack/binding-linux-riscv64-musl@2.2.2':
-    optional: true
-
   '@rspack/binding-linux-riscv64-musl@2.2.3':
-    optional: true
-
-  '@rspack/binding-linux-s390x-gnu@2.2.2':
     optional: true
 
   '@rspack/binding-linux-s390x-gnu@2.2.3':
     optional: true
 
-  '@rspack/binding-linux-x64-gnu@2.2.2':
-    optional: true
-
   '@rspack/binding-linux-x64-gnu@2.2.3':
     optional: true
 
-  '@rspack/binding-linux-x64-musl@2.2.2':
-    optional: true
-
   '@rspack/binding-linux-x64-musl@2.2.3':
-    optional: true
-
-  '@rspack/binding-wasm32-wasi@2.2.2':
-    dependencies:
-      '@emnapi/core': 1.11.3
-      '@emnapi/runtime': 1.11.3
-      '@napi-rs/wasm-runtime': 1.1.6(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)
     optional: true
 
   '@rspack/binding-wasm32-wasi@2.2.3':
@@ -6523,40 +6282,14 @@ snapshots:
       '@napi-rs/wasm-runtime': 1.1.6(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)
     optional: true
 
-  '@rspack/binding-win32-arm64-msvc@2.2.2':
-    optional: true
-
   '@rspack/binding-win32-arm64-msvc@2.2.3':
-    optional: true
-
-  '@rspack/binding-win32-ia32-msvc@2.2.2':
     optional: true
 
   '@rspack/binding-win32-ia32-msvc@2.2.3':
     optional: true
 
-  '@rspack/binding-win32-x64-msvc@2.2.2':
-    optional: true
-
   '@rspack/binding-win32-x64-msvc@2.2.3':
     optional: true
-
-  '@rspack/binding@2.2.2':
-    optionalDependencies:
-      '@rspack/binding-darwin-arm64': 2.2.2
-      '@rspack/binding-darwin-x64': 2.2.2
-      '@rspack/binding-linux-arm64-gnu': 2.2.2
-      '@rspack/binding-linux-arm64-musl': 2.2.2
-      '@rspack/binding-linux-ppc64-gnu': 2.2.2
-      '@rspack/binding-linux-riscv64-gnu': 2.2.2
-      '@rspack/binding-linux-riscv64-musl': 2.2.2
-      '@rspack/binding-linux-s390x-gnu': 2.2.2
-      '@rspack/binding-linux-x64-gnu': 2.2.2
-      '@rspack/binding-linux-x64-musl': 2.2.2
-      '@rspack/binding-wasm32-wasi': 2.2.2
-      '@rspack/binding-win32-arm64-msvc': 2.2.2
-      '@rspack/binding-win32-ia32-msvc': 2.2.2
-      '@rspack/binding-win32-x64-msvc': 2.2.2
 
   '@rspack/binding@2.2.3':
     optionalDependencies:
@@ -6574,13 +6307,6 @@ snapshots:
       '@rspack/binding-win32-arm64-msvc': 2.2.3
       '@rspack/binding-win32-ia32-msvc': 2.2.3
       '@rspack/binding-win32-x64-msvc': 2.2.3
-
-  '@rspack/core@2.2.2(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)':
-    dependencies:
-      '@rspack/binding': 2.2.2
-    optionalDependencies:
-      '@module-federation/runtime-tools': 2.9.0
-      '@swc/helpers': 0.5.23
 
   '@rspack/core@2.2.3(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)':
     dependencies:
@@ -7039,7 +6765,7 @@ snapshots:
       '@alloc/quick-lru': 5.2.0
       '@tailwindcss/node': 4.3.3
       '@tailwindcss/oxide': 4.3.3
-      postcss: 8.5.26
+      postcss: 8.5.28
       tailwindcss: 4.3.3
 
   '@tailwindcss/webpack@4.3.3(@rspack/core@2.2.3)':
@@ -8399,23 +8125,6 @@ snapshots:
 
   medium-zoom@1.1.0: {}
 
-  memfs@4.68.2:
-    dependencies:
-      '@jsonjoy.com/fs-core': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-fsa': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-builtins': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-to-fsa': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-print': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/fs-snapshot': 4.68.2(tslib@2.8.1)
-      '@jsonjoy.com/json-pack': 1.21.0(tslib@2.8.1)
-      '@jsonjoy.com/util': 1.9.0(tslib@2.8.1)
-      glob-to-regex.js: 1.2.0(tslib@2.8.1)
-      thingies: 2.6.0(tslib@2.8.1)
-      tree-dump: 1.1.0(tslib@2.8.1)
-      tslib: 2.8.1
-
   memfs@4.71.0:
     dependencies:
       '@jsonjoy.com/fs-core': 4.71.0(tslib@2.8.1)
@@ -8924,12 +8633,6 @@ snapshots:
       util-deprecate: 1.0.2
 
   postcss-value-parser@4.2.0: {}
-
-  postcss@8.5.26:
-    dependencies:
-      nanoid: 3.3.18
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
 
   postcss@8.5.28:
     dependencies:
@@ -9519,13 +9222,13 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@5.56.10)
 
-  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.26)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3):
+  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.28)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3):
     dependencies:
       svelte: 5.56.10
     optionalDependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       less: 4.9.1(supports-color@8.1.1)
-      postcss: 8.5.26
+      postcss: 8.5.28
       postcss-load-config: 6.0.1(jiti@2.7.0)(postcss@8.5.28)
       sass: 1.103.1
       typescript: 6.0.3
@@ -9615,7 +9318,7 @@ snapshots:
     dependencies:
       '@rspack/lite-tapable': 1.1.2
       chokidar: 3.6.0
-      memfs: 4.68.2
+      memfs: 4.71.0
       picocolors: 1.1.1
       typescript: 6.0.3
     optionalDependencies:
