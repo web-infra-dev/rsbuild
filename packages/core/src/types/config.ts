@@ -718,9 +718,15 @@ export type PrintFileSizeOptions = {
     | {
         /**
          * The compression algorithm used to calculate file sizes.
-         * Brotli uses quality 6.
+         * @default 'gzip'
          */
         type: 'gzip' | 'brotli';
+        /**
+         * The compression level: an integer from 0 to 9 for gzip, or 0 to 11 for Brotli.
+         * Higher levels generally produce smaller sizes but take longer to calculate.
+         * @default 6
+         */
+        level?: number;
       };
   /**
    * A filter function to determine which static assets to print.

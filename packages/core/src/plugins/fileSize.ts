@@ -50,10 +50,13 @@ type FormattedAsset = {
 };
 
 function getCompression(compressed: PrintFileSizeOptions['compressed']) {
-  const type = typeof compressed === 'object' ? compressed.type : 'gzip';
+  const { type = 'gzip', level = 6 } =
+    typeof compressed === 'object' ? compressed : {};
+
   return type === 'brotli'
     ? ({
         type,
+        level,
         header: 'Br',
         label: 'brotli',
         sizeKey: 'brotliSize',
@@ -61,6 +64,7 @@ function getCompression(compressed: PrintFileSizeOptions['compressed']) {
       } as const)
     : ({
         type,
+        level,
         header: 'Gzip',
         label: 'gzipped',
         sizeKey: 'gzippedSize',
@@ -71,6 +75,7 @@ function getCompression(compressed: PrintFileSizeOptions['compressed']) {
 async function calcCompressedSize(
   input: Buffer | string,
   type: CompressionType,
+  level: number,
 ) {
   const data = await new Promise<Buffer>((resolve, reject) => {
     const callback = (err: Error | null, result: Buffer) => {
@@ -83,11 +88,11 @@ async function calcCompressedSize(
     if (type === 'brotli') {
       zlib.brotliCompress(
         input,
-        { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 6 } },
+        { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: level } },
         callback,
       );
     } else {
-      zlib.gzip(input, callback);
+      zlib.gzip(input, { level }, callback);
     }
   });
   return data.length;
@@ -384,8 +389,8 @@ async function printFileSizes(
         formattedAssets.push(formatAsset(filePath, size, null));
       } else {
         formattedAssets.push(
-          calcCompressedSize(content, compression.type).then((compressedSize) =>
-            formatAsset(filePath, size, compressedSize),
+          calcCompressedSize(content, compression.type, compression.level).then(
+            (compressedSize) => formatAsset(filePath, size, compressedSize),
           ),
         );
       }

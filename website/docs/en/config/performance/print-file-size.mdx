@@ -12,7 +12,7 @@ type PrintFileSizeOptions =
   | {
       total?: boolean | Function;
       detail?: boolean;
-      compressed?: boolean | { type: 'gzip' | 'brotli' };
+      compressed?: boolean | { type: 'gzip' | 'brotli'; level?: number };
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
       diff?: boolean;
@@ -134,32 +134,12 @@ export default {
 
 ### compressed
 
-- **Type:** `boolean | { type: 'gzip' | 'brotli' }`
+- **Type:** `boolean | { type: 'gzip' | 'brotli'; level?: number }`
 - **Default:** `false` when [output.target](/config/output/target) is `node`, otherwise `true`
 
-Controls whether to calculate and print compressed asset sizes after a build.
+Controls whether to calculate and print compressed asset sizes after a build. Set to `true` to report gzip sizes, `false` to skip compression calculations, or an object to configure the algorithm and level.
 
-| Value                        | Behavior                                                          |
-| ---------------------------- | ----------------------------------------------------------------- |
-| `true` or `{ type: 'gzip' }` | Report gzip sizes in the `Gzip` column.                           |
-| `{ type: 'brotli' }`         | Report Brotli sizes in the `Br` column, using quality level 6.    |
-| `false`                      | Skip compression calculations and report only uncompressed sizes. |
-
-For example, to report Brotli sizes:
-
-```ts title="rsbuild.config.ts"
-export default {
-  performance: {
-    printFileSize: {
-      compressed: {
-        type: 'brotli',
-      },
-    },
-  },
-};
-```
-
-Calculating compressed sizes adds to build time. Brotli can take longer than gzip, especially when the build produces many assets or large files. If you do not need compressed size reporting, set `compressed` to `false` to skip these calculations:
+Calculating compressed sizes adds to build time. If you do not need compressed size reporting, set `compressed` to `false` to skip these calculations:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -175,9 +155,64 @@ export default {
 
 - This option only reports sizes; it does not generate compressed files. To serve compressed assets, you typically need to configure compression on your server or CDN. Actual transfer sizes depend on those compression settings.
 - For non-compressible assets (such as images), the compressed size is not shown in the detailed list, but their original size is included in the total compressed size.
-- When `diff` is enabled, Rsbuild compares compressed sizes only when both builds use the same algorithm. Switching algorithms does not affect comparisons of uncompressed sizes.
+- When `diff` is enabled, Rsbuild compares compressed sizes only when both builds use the same algorithm. Changes caused by adjusting `level` are included in the compressed size diff. Comparisons of uncompressed sizes are unaffected by these settings.
 
 :::
+
+#### type
+
+- **Type:** `'gzip' | 'brotli'`
+- **Default:** `'gzip'`
+
+Selects the compression algorithm used to calculate asset sizes:
+
+| Value      | Behavior                                |
+| ---------- | --------------------------------------- |
+| `'gzip'`   | Report gzip sizes in the `Gzip` column. |
+| `'brotli'` | Report Brotli sizes in the `Br` column. |
+
+For example, to report Brotli sizes:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      compressed: {
+        type: 'brotli',
+      },
+    },
+  },
+};
+```
+
+Brotli can take longer than gzip, especially when the build produces many assets or large files.
+
+#### level
+
+- **Type:** `number`
+- **Default:** `6`
+
+Sets the compression level. The valid range depends on the algorithm:
+
+- **gzip**: An integer from `0` to `9`.
+- **Brotli**: An integer from `0` to `11`, corresponding to Brotli's quality parameter.
+
+For example, use Brotli's highest level to estimate the size of assets precompressed at level 11:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      compressed: {
+        type: 'brotli',
+        level: 11,
+      },
+    },
+  },
+};
+```
+
+Higher levels generally produce smaller files but take longer to calculate. Brotli level 11 can be particularly slow. To estimate production transfer sizes, use the same algorithm and level as your server or CDN.
 
 ### include
 
@@ -298,7 +333,7 @@ Snapshots are stored at `<root>/node_modules/.cache/rsbuild/file-sizes-[hash].js
 
 ## Version history
 
-| Version | Changes                                                         |
-| ------- | --------------------------------------------------------------- |
-| v2.2.5  | Added `compressed.type` option to support Brotli size reporting |
-| v1.6.13 | Added `diff` option                                             |
+| Version | Changes                                                                                              |
+| ------- | ---------------------------------------------------------------------------------------------------- |
+| v2.2.5  | Added `compressed.type` and `compressed.level` options to select the compression algorithm and level |
+| v1.6.13 | Added `diff` option                                                                                  |

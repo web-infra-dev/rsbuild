@@ -12,7 +12,7 @@ type PrintFileSizeOptions =
   | {
       total?: boolean | Function;
       detail?: boolean;
-      compressed?: boolean | { type: 'gzip' | 'brotli' };
+      compressed?: boolean | { type: 'gzip' | 'brotli'; level?: number };
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
       diff?: boolean;
@@ -134,32 +134,12 @@ export default {
 
 ### compressed
 
-- **类型：** `boolean | { type: 'gzip' | 'brotli' }`
+- **类型：** `boolean | { type: 'gzip' | 'brotli'; level?: number }`
 - **默认值：** 当 [output.target](/config/output/target) 为 `node` 时为 `false`，否则为 `true`
 
-控制是否在构建结束后计算并输出静态资源压缩后的体积。
+控制是否在构建结束后计算并输出静态资源压缩后的体积。设置为 `true` 时统计 gzip 体积，`false` 时跳过压缩计算，也可以通过对象配置压缩算法和等级。
 
-| 配置值                       | 行为                                                  |
-| ---------------------------- | ----------------------------------------------------- |
-| `true` 或 `{ type: 'gzip' }` | 计算 gzip 体积，并在 `Gzip` 列中显示。                |
-| `{ type: 'brotli' }`         | 使用压缩等级 6 计算 Brotli 体积，并在 `Br` 列中显示。 |
-| `false`                      | 跳过压缩计算，仅输出未压缩的体积。                    |
-
-例如，以下配置会输出 Brotli 体积：
-
-```ts title="rsbuild.config.ts"
-export default {
-  performance: {
-    printFileSize: {
-      compressed: {
-        type: 'brotli',
-      },
-    },
-  },
-};
-```
-
-计算压缩体积需要额外时间。Brotli 压缩可能比 gzip 更耗时，因此开启 Brotli 体积统计可能使构建变慢，尤其是产物较多或文件较大时。如果你不需要查看压缩后的体积，可以将 `compressed` 设置为 `false`，跳过这部分计算：
+计算压缩体积需要额外时间。如果你不需要查看压缩后的体积，可以将 `compressed` 设置为 `false`，跳过这部分计算：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -175,9 +155,64 @@ export default {
 
 - 此选项仅用于体积统计，不会生成压缩文件。要向浏览器提供压缩后的资源，通常需要在服务器或 CDN 中配置压缩，实际传输体积取决于这些压缩配置。
 - 对于不适合压缩的静态资源（如图片文件），详细列表中不会显示其压缩体积，但计算压缩后的总体积时会计入这些资源的原始大小。
-- 开启 `diff` 时，Rsbuild 仅在前后两次构建使用相同算法时比较压缩体积。切换算法不影响未压缩体积的比较。
+- 开启 `diff` 时，Rsbuild 仅在前后两次构建使用相同算法时比较压缩体积，调整 `level` 带来的体积变化也会计入差值。修改算法或等级不影响未压缩体积的比较。
 
 :::
+
+#### type
+
+- **类型：** `'gzip' | 'brotli'`
+- **默认值：** `'gzip'`
+
+指定计算资源体积时使用的压缩算法：
+
+| 配置值     | 行为                                   |
+| ---------- | -------------------------------------- |
+| `'gzip'`   | 计算 gzip 体积，并在 `Gzip` 列中显示。 |
+| `'brotli'` | 计算 Brotli 体积，并在 `Br` 列中显示。 |
+
+例如，以下配置会输出 Brotli 体积：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      compressed: {
+        type: 'brotli',
+      },
+    },
+  },
+};
+```
+
+Brotli 压缩可能比 gzip 更耗时，因此开启 Brotli 体积统计可能使构建变慢，尤其是产物较多或文件较大时。
+
+#### level
+
+- **类型：** `number`
+- **默认值：** `6`
+
+设置压缩等级，取值范围取决于所选算法：
+
+- **gzip**：`0` 到 `9` 之间的整数。
+- **Brotli**：`0` 到 `11` 之间的整数，对应 Brotli 的 quality 参数。
+
+例如，使用 Brotli 的最高等级，估算以等级 11 预压缩的产物体积：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      compressed: {
+        type: 'brotli',
+        level: 11,
+      },
+    },
+  },
+};
+```
+
+等级越高，压缩后的文件通常越小，但计算耗时也越长，Brotli 等级 11 尤其耗时。要估算生产环境中的传输体积，建议使用与服务器或 CDN 相同的压缩算法和等级。
 
 ### include
 
@@ -298,7 +333,7 @@ dist/static/css/index.2960ac62ab.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 k
 
 ## 版本历史
 
-| 版本    | 变更内容                                              |
-| ------- | ----------------------------------------------------- |
-| v2.2.5  | 新增 `compressed.type` 选项，支持输出 Brotli 压缩体积 |
-| v1.6.13 | 新增 `diff` 选项                                      |
+| 版本    | 变更内容                                                                  |
+| ------- | ------------------------------------------------------------------------- |
+| v2.2.5  | 新增 `compressed.type` 和 `compressed.level` 选项，支持选择压缩算法和等级 |
+| v1.6.13 | 新增 `diff` 选项                                                          |
