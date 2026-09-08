@@ -2,7 +2,8 @@ import { test } from '@e2e/helper';
 
 const WARNING_MSG = 'Using / for division outside of calc() is deprecated';
 
-test('should log warning by default', async ({ build }) => {
+test('should log warning by default', async ({ build, logHelper }) => {
+  logHelper.allowBuildWarnings();
   const rsbuild = await build();
 
   await rsbuild.expectLog(WARNING_MSG);

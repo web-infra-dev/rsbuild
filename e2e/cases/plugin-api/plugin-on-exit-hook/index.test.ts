@@ -6,7 +6,7 @@ import fse from 'fs-extra';
 
 const distFile = path.join(import.meta.dirname, 'node_modules/hooksTempFile');
 
-test('should run onExit hook before process exit', async () => {
+test('should run onExit hook before process exit', async ({ logHelper }) => {
   await fse.remove(distFile);
 
   await new Promise<void>((resolve, reject) => {
@@ -18,8 +18,10 @@ test('should run onExit hook before process exit', async () => {
     const childProcess = exec(
       'node ./run.js',
       { cwd: import.meta.dirname },
-      (error) => {
+      (error, stdout, stderr) => {
         clearTimeout(timeoutId);
+        logHelper.addLog(stdout);
+        logHelper.addLog(stderr);
         if (error) {
           reject(error);
           return;
