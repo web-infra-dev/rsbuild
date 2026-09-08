@@ -1,34 +1,29 @@
 ---
 name: upgrade-rspack
-description: Use when asked to upgrade `@rspack/core` in this repository to a specific version, run dependency installation and validation, then commit and create a pull request.
+description: Upgrade `@rspack/core` in this repository, validate compatibility, and prepare a pull request.
 ---
 
 # Upgrade Rspack
 
-## Input
+Resolve the requested target version; ask if it is unspecified and cannot be inferred from the request. If the user limits the task to local changes or inspection, honor that scope.
 
-- Target version, for example `2.0.0`
+## Dependency update
 
-If the version is missing, ask for it before making changes.
+- Inspect the branch and worktree. Preserve unrelated edits and use an isolated checkout if needed. Create a task branch before committing when on the default branch; never commit directly to it.
+- Change the default catalog's `@rspack/core` entry in `pnpm-workspace.yaml` to `~<version>`, preserving package dependencies as `catalog:`.
+- Run `pnpm update @rspack/core --recursive` to update dependencies and the lockfile. A separate install is only needed if dependency resolution or installation remains incomplete.
+- Review the catalog and lockfile diff for unintended dependency changes. If already at the requested version with no changes, report that instead of creating an empty commit or PR.
 
-## Steps
+## Validation
 
-1. Check the worktree with `git status --short`. If there are uncommitted edits, stop and ask the user how to proceed.
+Rspack affects the entire build pipeline, so run `pnpm build`, `pnpm test`, and `pnpm e2e` once for the upgrade. Investigate failures and fix compatibility issues within the requested scope, then rerun the affected checks. Rebuild when source changes require fresh outputs.
 
-2. Update the `@rspack/core` entry in the default catalog in `pnpm-workspace.yaml` to `~<version>`, preserving package dependencies as `catalog:`, then run `pnpm update @rspack/core --recursive`.
+Do not commit or create the PR while required checks remain failed or incomplete. Report an unresolved blocker with its evidence; ask only when resolution requires a scope or compatibility decision from the user.
 
-3. Run `pnpm i` at the repository root.
+## Pull request
 
-4. Run `pnpm build`, `pnpm test`, and then `pnpm e2e`. If any command fails, stop, report the failure, and do not commit or create a PR.
+Commit only the task changes, push the task branch, and create the PR using `.github/PULL_REQUEST_TEMPLATE.md`. Prefer the Codex GitHub connector when available; otherwise use `gh`. Consult [pr-creator](../pr-creator/SKILL.md) only when additional PR guidance is needed. Use:
 
-5. Review the diff and confirm it only contains the intended dependency upgrade and lockfile changes. If `@rspack/core` is already at the target version and there is no diff, report that nothing changed and stop.
-
-6. Commit with this exact message: `feat(deps): update @rspack/core to <version>`
-
-7. Before pushing, confirm the current branch with `git branch --show-current`. If it is the default branch, create and switch to a dedicated branch first. Never push the default branch directly.
-
-8. If `.github/PULL_REQUEST_TEMPLATE.md` exists, keep its structure exactly.
-   Create the PR with:
-   - Title: `feat(deps): update @rspack/core to <version>`
-   - `Summary`: `Update @rspack/core to <version>.`
-   - `Related Links`: `https://github.com/web-infra-dev/rspack/releases/tag/v<version>`
+- Commit and PR title: `feat(deps): update @rspack/core to <version>`
+- `Summary`: `Update @rspack/core to <version>.` Add relevant compatibility changes if needed.
+- `Related links`: `https://github.com/web-infra-dev/rspack/releases/tag/v<version>`

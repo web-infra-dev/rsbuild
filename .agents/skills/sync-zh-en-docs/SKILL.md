@@ -1,22 +1,14 @@
 ---
 name: sync-zh-en-docs
-description: Sync uncommitted docs between `website/docs/zh` and `website/docs/en`. Use when authors update docs in one language and need to align the mirrored `.md`/`.mdx` file in the other language.
+description: Sync uncommitted documentation changes between `website/docs/zh` and `website/docs/en`.
 ---
 
-# Sync Zh/En documentation
+# Documentation sync
 
-## Steps
+Inspect staged, unstaged, and new docs in the requested scope. Map each source file to the same locale-relative path in the other language.
 
-1. Check uncommitted changes under `website/docs/zh` and `website/docs/en`.
+Translate the changed content, preserving technical meaning, structure, commands, and code unless localization is needed. Preserve unrelated edits in both languages. If both counterparts changed, reconcile compatible edits; ask only when conflicting technical meanings cannot be resolved from the request and context.
 
-2. Translate each changed file to the counterpart path (`zh` <-> `en`), and keep:
+Keep corresponding heading IDs and links aligned. Use [add-doc-anchor-ids](../add-doc-anchor-ids/SKILL.md) when headings or hashes change.
 
-- meaning and structure consistent
-- technical terms / commands / code blocks unchanged unless localization is required
-- concise, clear, professional technical-doc style
-
-3. Format and verify:
-
-```bash
-node --run format
-```
+Format only the edited files with `pnpm exec rs fmt <edited-files>` and review the paired diff for omissions or accidental changes to code examples.
