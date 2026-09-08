@@ -1,0 +1,4 @@
+export default function Component() {
+  const text = 'mjsx';
+  return <p id="mjsx">{text}</p>;
+}

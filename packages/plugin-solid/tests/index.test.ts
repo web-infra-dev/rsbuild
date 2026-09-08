@@ -47,6 +47,7 @@ describe('plugin-solid', () => {
 
     expect(getSolidLoaderOptions(config[0])).toEqual({
       compiler: 'native',
+      scriptRegex: /(?:\.jsx|\.tsx)$/i,
       decoratorVersion: '2023-11',
       solid: {
         builtIns: [
@@ -273,6 +274,28 @@ describe('plugin-solid', () => {
 
     expect(hasRefreshLoader('a.js')).toBe(false);
     expect(hasRefreshLoader('a.ts')).toBe(false);
+    expect(hasRefreshLoader('a.jsx')).toBe(true);
+    expect(hasRefreshLoader('a.tsx')).toBe(true);
+  });
+
+  it('should match additional extensions literally', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid({ extensions: ['.solid+jsx'] })],
+      },
+    });
+    const [config] = await rsbuild.initConfigs();
+    const hasRefreshLoader = (filename: string) =>
+      JSON.stringify(matchRules(config, filename)).includes(
+        'refreshLoader.mjs',
+      );
+
+    expect(config.resolve?.extensions).toContain('.solid+jsx');
+    expect(hasRefreshLoader('a.solid+jsx')).toBe(true);
+    // cspell:disable-next-line
+    expect(hasRefreshLoader('a.solidddjsx')).toBe(false);
+    expect(hasRefreshLoader('a.solid+jsx.js')).toBe(false);
     expect(hasRefreshLoader('a.jsx')).toBe(true);
     expect(hasRefreshLoader('a.tsx')).toBe(true);
   });

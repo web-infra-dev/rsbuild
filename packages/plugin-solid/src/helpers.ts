@@ -1,4 +1,7 @@
-export const DEFAULT_SOLID_SCRIPT_REGEX: RegExp = /\.(?:jsx|tsx)$/i;
+const DEFAULT_SOLID_SCRIPT_REGEX = /\.(?:jsx|tsx)$/i;
 
-export const isDefaultSolidScript = (filename: string): boolean =>
-  DEFAULT_SOLID_SCRIPT_REGEX.test(filename);
+// Native transforms infer the parser from a standard JSX/TSX extension.
+export const getTransformFilename = (filename: string): string =>
+  DEFAULT_SOLID_SCRIPT_REGEX.test(filename)
+    ? filename
+    : `${filename}${/\.[mc]?tsx$/i.test(filename) ? '.tsx' : '.jsx'}`;

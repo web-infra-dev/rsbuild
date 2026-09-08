@@ -1,6 +1,5 @@
 import path from 'node:path';
 import type { RsbuildMode, RsbuildPlugin } from '@rsbuild/core';
-import { DEFAULT_SOLID_SCRIPT_REGEX } from './helpers.js';
 import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 export type { SolidCompiler, SolidPresetOptions } from './types.js';
@@ -23,6 +22,12 @@ export type PluginSolidOptions = {
    * @default 'native'
    */
   compiler?: SolidCompiler;
+  /**
+   * Additional file extensions to compile as Solid JSX, including the leading dot.
+   * `.mtsx` and `.ctsx` are parsed as TypeScript.
+   * @default []
+   */
+  extensions?: string[];
   /**
    * Whether to enable Solid's development runtime and compiler transforms.
    * @default `true` in development mode, `false` in production mode
@@ -60,6 +65,11 @@ export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
   const { compiler = 'native', dev, solid, ssr } = options;
+  const extensions = options.extensions ?? [];
+  const scriptPattern = ['.jsx', '.tsx', ...extensions]
+    .map((ext) => ext.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .join('|');
+  const scriptRegex = new RegExp(`(?:${scriptPattern})$`, 'i');
   const isDevModeEnabled = (mode: RsbuildMode) => dev ?? mode === 'development';
 
   return {
@@ -111,6 +121,12 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
 
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
+          if (extensions.length) {
+            const test = jsRule.get('test');
+            jsRule.test(test ? { or: [test, scriptRegex] } : scriptRegex);
+            jsRule.include.add(scriptRegex);
+            chain.resolve.extensions.merge(extensions);
+          }
           const solidRules = [
             { rule: jsMainRule },
             {
@@ -134,6 +150,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               .loader(path.join(import.meta.dirname, 'solidLoader.mjs'))
               .options({
                 compiler,
+                scriptRegex,
                 decoratorVersion: environmentConfig.source.decorators.version,
                 solid: solidOptions,
                 ...(transformFilename ? { transformFilename } : {}),
@@ -145,7 +162,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               .rule('solid-refresh')
               .after(CHAIN_ID.RULE.JS)
               .enforce('pre')
-              .test(DEFAULT_SOLID_SCRIPT_REGEX)
+              .test(scriptRegex)
               .dependency({ not: 'url' })
               .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
               .with({ type: { not: 'text' } });

@@ -90,6 +90,23 @@ pluginSolid({
 });
 ```
 
+### extensions
+
+需要作为 Solid JSX 编译的额外文件扩展名。默认的 `.jsx` 和 `.tsx` 扩展名始终保留。扩展名必须以点开头，并会添加到模块解析配置中，因此导入时可以省略扩展名。
+
+`.mtsx` 和 `.ctsx` 文件按 TypeScript JSX 解析，其他额外扩展名按 JavaScript JSX 解析。此选项同时作用于 JSX 编译和 Solid Refresh。
+
+- **类型：** `string[]`
+- **默认值：** `[]`
+- **版本：** `>= 2.0.0`
+- **示例：**
+
+```ts
+pluginSolid({
+  extensions: ['.mjsx', '.cjsx', '.mtsx', '.ctsx', '.solid'],
+});
+```
+
 ### dev
 
 是否启用 Solid 的开发环境运行时和编译转换。设置为 `false` 可以在开发模式下同时禁用两者，设置为 `true` 可以在生产模式下同时启用两者。
