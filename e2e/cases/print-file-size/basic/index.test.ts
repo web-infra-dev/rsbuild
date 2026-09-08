@@ -1,3 +1,6 @@
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import zlib from 'node:zlib';
 import { expect, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { extractFileSizeLogs } from '../helper';
@@ -203,4 +206,60 @@ test('should respect a custom total function for printFileSize', async ({
   });
 
   await rsbuild.expectLog('Generated 5 files.');
+});
+
+for (const type of ['gzip', 'brotli'] as const) {
+  test(`should report accurate ${type} sizes with compressed.type`, async ({
+    build,
+  }) => {
+    const rsbuild = await build({
+      config: {
+        performance: {
+          printFileSize: {
+            compressed: { type },
+            detail: false,
+            include: ({ name }) => name === 'index.html',
+            total: ({ totalGzipSize, totalBrotliSize }) =>
+              `Sizes: ${totalGzipSize}/${totalBrotliSize}`,
+          },
+        },
+      },
+    });
+    const html = await readFile(join(rsbuild.distPath, 'index.html'));
+    const size =
+      type === 'brotli'
+        ? zlib.brotliCompressSync(html, {
+            params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 6 },
+          }).length
+        : zlib.gzipSync(html).length;
+    await rsbuild.expectLog(
+      type === 'brotli' ? `Sizes: 0/${size}` : `Sizes: ${size}/undefined`,
+    );
+  });
+}
+
+test('should print Brotli details and total', async ({ build }) => {
+  const rsbuild = await build({
+    config: {
+      performance: {
+        printFileSize: { compressed: { type: 'brotli' } },
+      },
+    },
+  });
+  expect(extractFileSizeLogs(rsbuild.logs)).toMatchSnapshot();
+});
+
+test('should print Brotli total without details', async ({ build }) => {
+  const rsbuild = await build({
+    config: {
+      performance: {
+        printFileSize: {
+          compressed: { type: 'brotli' },
+          detail: false,
+        },
+      },
+    },
+  });
+  expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
+Total size (web): X.X kB (X.X kB brotli)`);
 });

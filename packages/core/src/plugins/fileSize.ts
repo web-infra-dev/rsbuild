@@ -17,11 +17,14 @@ import type {
   Rspack,
 } from '../types';
 
+type CompressionType = 'gzip' | 'brotli';
+
 type SizeMap = Record<
   string,
   {
     size: number;
     gzippedSize?: number;
+    brotliSize?: number;
   }
 >;
 
@@ -29,6 +32,8 @@ type SizeSnapshot = {
   files: SizeMap;
   totalSize: number;
   totalGzipSize: number;
+  totalBrotliSize?: number;
+  compressionType?: CompressionType | false;
 };
 
 type SizeSnapshots = Record<string, SizeSnapshot>;
@@ -40,19 +45,50 @@ type FormattedAsset = {
   size: number;
   sizeLabel: string;
   sizeLabelLength: number;
-  gzippedSize: number | null;
-  gzipSizeLabel: string | null;
+  compressedSize: number | null;
+  compressedSizeLabel: string | null;
 };
 
-async function gzipSize(input: Buffer | string) {
+function getCompression(compressed: PrintFileSizeOptions['compressed']) {
+  const type = typeof compressed === 'object' ? compressed.type : 'gzip';
+  return type === 'brotli'
+    ? ({
+        type,
+        header: 'Br',
+        label: 'brotli',
+        sizeKey: 'brotliSize',
+        totalKey: 'totalBrotliSize',
+      } as const)
+    : ({
+        type,
+        header: 'Gzip',
+        label: 'gzipped',
+        sizeKey: 'gzippedSize',
+        totalKey: 'totalGzipSize',
+      } as const);
+}
+
+async function calcCompressedSize(
+  input: Buffer | string,
+  type: CompressionType,
+) {
   const data = await new Promise<Buffer>((resolve, reject) => {
-    zlib.gzip(input, (err, result) => {
+    const callback = (err: Error | null, result: Buffer) => {
       if (err) {
         reject(err);
         return;
       }
       resolve(result);
-    });
+    };
+    if (type === 'brotli') {
+      zlib.brotliCompress(
+        input,
+        { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 6 } },
+        callback,
+      );
+    } else {
+      zlib.gzip(input, callback);
+    }
   });
   return data.length;
 }
@@ -134,13 +170,13 @@ function getHeader(
   maxFileLength: number,
   maxSizeLength: number,
   fileHeader: string,
-  showGzipHeader: boolean,
+  compressionHeader: string | false,
 ) {
   const lengths = [maxFileLength, maxSizeLength];
   const rowTypes = [fileHeader, 'Size'];
 
-  if (showGzipHeader) {
-    rowTypes.push('Gzip');
+  if (compressionHeader) {
+    rowTypes.push(compressionHeader);
   }
 
   const headerRow = rowTypes.reduce((prev, cur, index) => {
@@ -189,18 +225,18 @@ const getFilePath = (assetName: string) => {
 
 const calcTotalSize = (assets: FormattedAsset[], compressed?: boolean) => {
   let totalSize = 0;
-  let totalGzipSize = 0;
+  let totalCompressedSize = 0;
 
-  for (const { size, gzippedSize } of assets) {
+  for (const { size, compressedSize } of assets) {
     totalSize += size;
     if (compressed) {
-      totalGzipSize += gzippedSize ?? size;
+      totalCompressedSize += compressedSize ?? size;
     }
   }
 
   return {
     totalSize,
-    totalGzipSize,
+    totalCompressedSize,
   };
 };
 
@@ -214,8 +250,13 @@ async function printFileSizes(
   saveSnapshot: boolean,
 ) {
   const logs: string[] = [];
+  const compression = getCompression(options.compressed);
+  const prev = previousSizes?.[environmentName];
   const showDetail = options.detail !== false;
   const showDiff = options.diff !== false && previousSizes !== null;
+  // Older snapshots only contain gzip sizes. Never compare different algorithms.
+  const showCompressedDiff =
+    showDiff && prev && (prev.compressionType ?? 'gzip') === compression.type;
   let showTotal = options.total !== false;
 
   if (!showTotal && !showDetail) {
@@ -229,13 +270,14 @@ async function printFileSizes(
         files: {},
         totalSize: 0,
         totalGzipSize: 0,
+        compressionType: options.compressed ? compression.type : false,
       }
     : null;
 
   const formatAsset = (
     filePath: string,
     size: number,
-    gzippedSize: number | null,
+    compressedSize: number | null,
   ): FormattedAsset => {
     let normalizedPath = '';
 
@@ -247,7 +289,7 @@ async function printFileSizes(
       if (snapshot) {
         snapshot.files[normalizedPath] = {
           size,
-          gzippedSize: gzippedSize ?? undefined,
+          [compression.sizeKey]: compressedSize ?? undefined,
         };
       }
     }
@@ -255,13 +297,13 @@ async function printFileSizes(
     // Append inline diff to sizeLabel
     let sizeLabel = calcFileSize(size);
     let sizeLabelLength = sizeLabel.length;
-    let gzipSizeLabel = gzippedSize
-      ? getAssetColor(gzippedSize)(calcFileSize(gzippedSize))
+    let compressedSizeLabel = compressedSize
+      ? getAssetColor(compressedSize)(calcFileSize(compressedSize))
       : null;
 
     // Calculate size differences for inline display
     if (showDiff) {
-      const sizeData = previousSizes[environmentName]?.files[normalizedPath];
+      const sizeData = prev?.files[normalizedPath];
       const sizeDiff = size - (sizeData?.size ?? 0);
       if (isSignificantDiff(sizeDiff)) {
         const { label, length } = formatDiff(sizeDiff);
@@ -269,10 +311,11 @@ async function printFileSizes(
         sizeLabelLength += length + 1;
       }
 
-      if (gzippedSize !== null) {
-        const gzipDiff = gzippedSize - (sizeData?.gzippedSize ?? 0);
-        if (isSignificantDiff(gzipDiff)) {
-          gzipSizeLabel += ` ${formatDiff(gzipDiff).label}`;
+      if (compressedSize !== null && showCompressedDiff) {
+        const compressedDiff =
+          compressedSize - (sizeData?.[compression.sizeKey] ?? 0);
+        if (isSignificantDiff(compressedDiff)) {
+          compressedSizeLabel += ` ${formatDiff(compressedDiff).label}`;
         }
       }
     }
@@ -294,8 +337,8 @@ async function printFileSizes(
       size,
       sizeLabel,
       sizeLabelLength,
-      gzippedSize,
-      gzipSizeLabel,
+      compressedSize,
+      compressedSizeLabel,
     };
   };
 
@@ -340,8 +383,8 @@ async function printFileSizes(
         formattedAssets.push(formatAsset(filePath, size, null));
       } else {
         formattedAssets.push(
-          gzipSize(content).then((gzippedSize) =>
-            formatAsset(filePath, size, gzippedSize),
+          calcCompressedSize(content, compression.type).then((compressedSize) =>
+            formatAsset(filePath, size, compressedSize),
           ),
         );
       }
@@ -363,14 +406,16 @@ async function printFileSizes(
     showTotal = false;
   }
 
-  const { totalSize, totalGzipSize } = calcTotalSize(
+  const { totalSize, totalCompressedSize } = calcTotalSize(
     assets,
-    options.compressed,
+    Boolean(options.compressed),
   );
 
   if (snapshot) {
     snapshot.totalSize = totalSize;
-    snapshot.totalGzipSize = totalGzipSize;
+    if (options.compressed) {
+      snapshot[compression.totalKey] = totalCompressedSize;
+    }
   }
 
   const fileHeader = showDetail ? `File (${environmentName})` : '';
@@ -391,8 +436,7 @@ async function printFileSizes(
     let totalSizeLabel = calcFileSize(totalSize);
     let totalSizeLabelLength = totalSizeLabel.length;
     if (showDiff) {
-      const totalSizeDiff =
-        totalSize - (previousSizes[environmentName]?.totalSize ?? 0);
+      const totalSizeDiff = totalSize - (prev?.totalSize ?? 0);
       if (isSignificantDiff(totalSizeDiff)) {
         const { label, length } = formatDiff(totalSizeDiff);
         totalSizeLabel += ` ${label}`;
@@ -416,7 +460,11 @@ async function printFileSizes(
           size: asset.size,
         })),
         totalSize,
-        totalGzipSize,
+        totalGzipSize: compression.type === 'gzip' ? totalCompressedSize : 0,
+        totalBrotliSize:
+          options.compressed && compression.type === 'brotli'
+            ? totalCompressedSize
+            : undefined,
       });
     }
     return null;
@@ -428,7 +476,7 @@ async function printFileSizes(
       fileHeader.length,
     );
     let maxSizeLength = totalSizeLabelLength;
-    let hasGzipSize = false;
+    let hasCompressedSize = false;
 
     for (const asset of assets) {
       if (asset.filenameLength > maxFileLength) {
@@ -437,20 +485,27 @@ async function printFileSizes(
       if (asset.sizeLabelLength > maxSizeLength) {
         maxSizeLength = asset.sizeLabelLength;
       }
-      if (asset.gzippedSize !== null) {
-        hasGzipSize = true;
+      if (asset.compressedSize !== null) {
+        hasCompressedSize = true;
       }
     }
 
-    const showGzipHeader = Boolean(options.compressed && hasGzipSize);
+    const showCompressedHeader = Boolean(
+      options.compressed && hasCompressedSize,
+    );
 
     logs.push(
-      getHeader(maxFileLength, maxSizeLength, fileHeader, showGzipHeader),
+      getHeader(
+        maxFileLength,
+        maxSizeLength,
+        fileHeader,
+        showCompressedHeader && compression.header,
+      ),
     );
 
     for (const asset of assets) {
       let { sizeLabel, filenameLabel } = asset;
-      const { sizeLabelLength, gzipSizeLabel, filenameLength } = asset;
+      const { sizeLabelLength, compressedSizeLabel, filenameLength } = asset;
 
       if (sizeLabelLength < maxSizeLength) {
         const rightPadding = ' '.repeat(maxSizeLength - sizeLabelLength);
@@ -464,8 +519,8 @@ async function printFileSizes(
 
       let log = `${filenameLabel}   ${sizeLabel}`;
 
-      if (gzipSizeLabel) {
-        log += `   ${gzipSizeLabel}`;
+      if (compressedSizeLabel) {
+        log += `   ${compressedSizeLabel}`;
       }
 
       logs.push(log);
@@ -486,16 +541,15 @@ async function printFileSizes(
         log += `   ${totalSizeLabel}`;
 
         if (options.compressed) {
-          const colorFn = getAssetColor(totalGzipSize / assets.length);
+          const colorFn = getAssetColor(totalCompressedSize / assets.length);
           log += ' '.repeat(maxSizeLength - totalSizeLabelLength);
-          log += `   ${colorFn(calcFileSize(totalGzipSize))}`;
+          log += `   ${colorFn(calcFileSize(totalCompressedSize))}`;
 
-          if (showDiff) {
-            const totalGzipSizeDiff =
-              totalGzipSize -
-              (previousSizes[environmentName]?.totalGzipSize ?? 0);
-            if (isSignificantDiff(totalGzipSizeDiff)) {
-              log += ` ${formatDiff(totalGzipSizeDiff).label}`;
+          if (showCompressedDiff) {
+            const totalCompressedSizeDiff =
+              totalCompressedSize - (prev?.[compression.totalKey] ?? 0);
+            if (isSignificantDiff(totalCompressedSizeDiff)) {
+              log += ` ${formatDiff(totalCompressedSizeDiff).label}`;
             }
           }
         }
@@ -513,7 +567,9 @@ async function printFileSizes(
       let log = `${color.magenta(totalSizeTitle)} ${totalSizeLabel}`;
 
       if (options.compressed) {
-        log += color.green(` (${calcFileSize(totalGzipSize)} gzipped)`);
+        log += color.green(
+          ` (${calcFileSize(totalCompressedSize)} ${compression.label})`,
+        );
       }
 
       logs.push(log);

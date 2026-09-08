@@ -3,46 +3,49 @@ import { expect, test } from '@e2e/helper';
 import fse from 'fs-extra';
 import { extractFileSizeLogs } from '../helper';
 
-test('should print file size diff as expected', async ({
-  cwd,
-  build,
-  editFile,
-  copySrcDir,
-}) => {
-  const cacheDir = join(cwd, 'node_modules/.cache');
-  await fse.remove(cacheDir);
-  const srcDir = await copySrcDir();
-  const config = {
-    source: {
-      entry: {
-        index: join(srcDir, 'index.js'),
+for (const type of ['gzip', 'brotli'] as const) {
+  test(`should print ${type} size differences`, async ({
+    cwd,
+    build,
+    editFile,
+    copySrcDir,
+  }) => {
+    const cacheDir = join(cwd, 'node_modules/.cache');
+    await fse.remove(cacheDir);
+    const srcDir = await copySrcDir();
+    const config = {
+      performance: { printFileSize: { compressed: { type } } },
+      source: {
+        entry: {
+          index: join(srcDir, 'index.js'),
+        },
       },
-    },
-  };
+    };
 
-  const rsbuild1 = await build({ config });
-  expect(extractFileSizeLogs(rsbuild1.logs)).toMatchSnapshot();
-  rsbuild1.clearLogs();
+    const rsbuild1 = await build({ config });
+    expect(extractFileSizeLogs(rsbuild1.logs)).toMatchSnapshot();
+    rsbuild1.clearLogs();
 
-  await editFile(
-    join(srcDir, 'index.js'),
-    () => `import "./App.css";
+    await editFile(
+      join(srcDir, 'index.js'),
+      () => `import "./App.css";
 import { createElement } from 'react';
 import { flushSync } from 'react-dom';
 console.log(createElement);
 console.log(flushSync);
 `,
-  );
+    );
 
-  const rsbuild2 = await build({ config });
-  expect(extractFileSizeLogs(rsbuild2.logs)).toMatchSnapshot();
-  rsbuild2.clearLogs();
+    const rsbuild2 = await build({ config });
+    expect(extractFileSizeLogs(rsbuild2.logs)).toMatchSnapshot();
+    rsbuild2.clearLogs();
 
-  await editFile(join(srcDir, 'index.js'), () => `import "./App.css";`);
+    await editFile(join(srcDir, 'index.js'), () => `import "./App.css";`);
 
-  const rsbuild3 = await build({ config });
-  expect(extractFileSizeLogs(rsbuild3.logs)).toMatchSnapshot();
-});
+    const rsbuild3 = await build({ config });
+    expect(extractFileSizeLogs(rsbuild3.logs)).toMatchSnapshot();
+  });
+}
 
 test('should not print gzip total diff when change is below threshold', async ({
   cwd,
@@ -82,4 +85,25 @@ test('should not print gzip total diff when change is below threshold', async ({
   const rsbuild2 = await build({ config });
 
   expect(extractFileSizeLogs(rsbuild2.logs)).toMatchSnapshot();
+});
+
+test('should not compare compressed sizes across algorithms', async ({
+  cwd,
+  build,
+}) => {
+  await fse.remove(join(cwd, 'node_modules/.cache'));
+  const compressions = [
+    true,
+    { type: 'brotli' },
+    { type: 'gzip' },
+    false,
+    { type: 'brotli' },
+  ] as const;
+  for (const compressed of compressions) {
+    const result = await build({
+      config: { performance: { printFileSize: { compressed } } },
+    });
+    expect(extractFileSizeLogs(result.logs)).not.toMatch(/\([+-]/);
+    result.clearLogs();
+  }
 });

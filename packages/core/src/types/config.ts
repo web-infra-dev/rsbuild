@@ -700,6 +700,7 @@ export type PrintFileSizeOptions = {
         assets: PrintFileSizeAsset[];
         totalSize: number;
         totalGzipSize: number;
+        totalBrotliSize?: number;
       }) => string);
   /**
    * Whether to print the size of each static asset.
@@ -707,11 +708,20 @@ export type PrintFileSizeOptions = {
    */
   detail?: boolean;
   /**
-   * Whether to print the gzip-compressed size of each static asset.
-   * Disable this option can save some gzip computation time for large projects.
+   * Whether to print the compressed size of each static asset.
+   * Set to `true` to use gzip, or specify `type` to select gzip or Brotli.
+   * Disabling this option saves compression computation time for large projects.
    * @default true
    */
-  compressed?: boolean;
+  compressed?:
+    | boolean
+    | {
+        /**
+         * The compression algorithm used to calculate file sizes.
+         * Brotli uses quality 6.
+         */
+        type: 'gzip' | 'brotli';
+      };
   /**
    * A filter function to determine which static assets to print.
    * If returned `false`, the static asset will be excluded and not included in the

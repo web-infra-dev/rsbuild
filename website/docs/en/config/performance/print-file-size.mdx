@@ -12,7 +12,7 @@ type PrintFileSizeOptions =
   | {
       total?: boolean | Function;
       detail?: boolean;
-      compressed?: boolean;
+      compressed?: boolean | { type: 'gzip' | 'brotli' };
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
       diff?: boolean;
@@ -66,6 +66,7 @@ type Total =
       assets: PrintFileSizeAsset[];
       totalSize: number;
       totalGzipSize: number;
+      totalBrotliSize?: number;
     }) => string);
 ```
 
@@ -109,7 +110,8 @@ Function parameters:
 - `distPath`: The output directory relative to the project root
 - `assets`: Array of static assets, each containing `name` and `size` properties
 - `totalSize`: Total size of all static assets in bytes
-- `totalGzipSize`: Total gzip-compressed size of all static assets in bytes
+- `totalGzipSize`: Total gzip-compressed size of all static assets in bytes. Set to `0` when gzip size reporting is disabled.
+- `totalBrotliSize`: Total Brotli-compressed size of all static assets in bytes. Set to `undefined` when Brotli size reporting is disabled.
 
 ### detail
 
@@ -132,12 +134,32 @@ export default {
 
 ### compressed
 
-- **Type:** `boolean`
+- **Type:** `boolean | { type: 'gzip' | 'brotli' }`
 - **Default:** `false` when [output.target](/config/output/target) is `node`, otherwise `true`
 
-Whether to output the gzip-compressed size of each static asset.
+Controls whether to calculate and print compressed asset sizes after a build.
 
-If you do not need to view the gzipped size, you can set `compressed` to false. This can save some gzip computation time for large projects:
+| Value                        | Behavior                                                          |
+| ---------------------------- | ----------------------------------------------------------------- |
+| `true` or `{ type: 'gzip' }` | Report gzip sizes in the `Gzip` column.                           |
+| `{ type: 'brotli' }`         | Report Brotli sizes in the `Br` column, using quality level 6.    |
+| `false`                      | Skip compression calculations and report only uncompressed sizes. |
+
+For example, to report Brotli sizes:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      compressed: {
+        type: 'brotli',
+      },
+    },
+  },
+};
+```
+
+Calculating compressed sizes adds to build time. Brotli can take longer than gzip, especially when the build produces many assets or large files. If you do not need compressed size reporting, set `compressed` to `false` to skip these calculations:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -151,8 +173,9 @@ export default {
 
 :::tip
 
-- This data is only for reference to the size after gzip compression. Rsbuild does not enable gzip compression for static assets. Usually, you need to enable gzip compression on the server side, for example, using the [gzip module](https://nginx.org/en/docs/http/ngx_http_gzip_module.html) of nginx.
-- For non-compressible assets (such as images), the gzip size will not be shown in the detailed list, but their original size will be included in the total gzip size calculation.
+- This option only reports sizes; it does not generate compressed files. To serve compressed assets, you typically need to configure compression on your server or CDN. Actual transfer sizes depend on those compression settings.
+- For non-compressible assets (such as images), the compressed size is not shown in the detailed list, but their original size is included in the total compressed size.
+- When `diff` is enabled, Rsbuild compares compressed sizes only when both builds use the same algorithm. Switching algorithms does not affect comparisons of uncompressed sizes.
 
 :::
 
