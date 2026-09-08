@@ -9,7 +9,9 @@ import { BUILD_END_LOG } from './constants.ts';
 
 type BuildLogHelper = {
   expectBuildEnd: () => Promise<boolean>;
-  /** Allow build warnings for this test. Expected warnings should still be asserted. */
+  /** Assert an expected warning and allow build warnings for this test. */
+  expectWarning: BaseLogHelper['expectLog'];
+  /** Allow build warnings without asserting a specific message. Prefer expectWarning(). */
   allowBuildWarnings: () => void;
   expectNoBuildWarnings: () => void;
 };
@@ -27,6 +29,10 @@ export const proxyConsole = (
   return {
     ...logHelper,
     expectBuildEnd: async () => logHelper.expectLog(BUILD_END_LOG),
+    expectWarning: (...args) => {
+      buildWarningsAllowed = true;
+      return logHelper.expectLog(...args);
+    },
     allowBuildWarnings: () => {
       buildWarningsAllowed = true;
     },
@@ -35,7 +41,7 @@ export const proxyConsole = (
       const output = stripVTControlCharacters(logHelper.originalLogs.join(''));
       if (!buildWarningsAllowed && /\bBuild warnings?:/.test(output)) {
         throw new Error(
-          `Unexpected build warning. Call logHelper.allowBuildWarnings() only in tests that intentionally verify warnings.\n\n${output}`,
+          `Unexpected build warning. Use expectWarning() to assert intentional warnings.\n\n${output}`,
         );
       }
     },

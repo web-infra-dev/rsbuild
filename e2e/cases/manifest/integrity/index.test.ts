@@ -16,15 +16,11 @@ const checkManifestIntegrity = (rsbuild: {
   });
 };
 
-test('should generate manifest file with integrity', async ({
-  runBoth,
-  logHelper,
-}) => {
-  logHelper.allowBuildWarnings();
+test('should generate manifest file with integrity', async ({ runBoth }) => {
   await runBoth(async ({ result, mode }) => {
     checkManifestIntegrity(result);
     if (mode === 'dev') {
-      await result.expectLog(
+      await result.expectWarning(
         'SubResourceIntegrityPlugin may interfere with hot reloading',
       );
     }
@@ -33,14 +29,12 @@ test('should generate manifest file with integrity', async ({
 
 test('should generate manifest file with integrity when html plugin is disabled', async ({
   runBoth,
-  logHelper,
 }) => {
-  logHelper.allowBuildWarnings();
   await runBoth(
     async ({ result, mode }) => {
       checkManifestIntegrity(result);
       if (mode === 'dev') {
-        await result.expectLog(
+        await result.expectWarning(
           'SubResourceIntegrityPlugin may interfere with hot reloading',
         );
       }

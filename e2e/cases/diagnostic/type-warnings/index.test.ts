@@ -6,12 +6,11 @@ test('should print async build warnings in browser console', async ({
   dev,
   logHelper,
 }) => {
-  logHelper.allowBuildWarnings();
-  const { addLog, expectLog } = logHelper;
+  const { addLog, expectWarning } = logHelper;
   page.on('console', (consoleMessage) => {
     addLog(consoleMessage.text());
   });
 
   await dev();
-  await expectLog('TS2322:');
+  await expectWarning('TS2322:');
 });
