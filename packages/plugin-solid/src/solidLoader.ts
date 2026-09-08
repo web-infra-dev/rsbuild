@@ -9,7 +9,7 @@ import {
 } from '@dom-expressions/compiler';
 import remapping from '@jridgewell/remapping';
 import type { Decorators, Rspack } from '@rsbuild/core';
-import { isDefaultSolidScript } from './helpers.js';
+import { getTransformFilename } from './helpers.js';
 import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 const require = createRequire(import.meta.url);
@@ -18,6 +18,7 @@ const TSX_REGEX = /\.tsx$/i;
 
 export type SolidLoaderOptions = {
   compiler: SolidCompiler;
+  scriptRegex: RegExp;
   decoratorVersion: NonNullable<Decorators['version']>;
   solid: SolidPresetOptions;
   transformFilename?: string;
@@ -56,13 +57,14 @@ const solidLoader: Rspack.LoaderDefinition<SolidLoaderOptions> =
     const callback = this.async();
     const options = this.getOptions();
     const sourceFilename = this.resourcePath;
-    const filename = options.transformFilename ?? sourceFilename;
+    const resourceFilename = options.transformFilename ?? sourceFilename;
 
-    if (!isDefaultSolidScript(filename)) {
+    if (!options.scriptRegex.test(resourceFilename)) {
       callback(null, source, sourceMap);
       return;
     }
 
+    const filename = getTransformFilename(resourceFilename);
     const { compiler, decoratorVersion, solid } = options;
     const inputSourceMap = normalizeSourceMap(sourceMap);
 

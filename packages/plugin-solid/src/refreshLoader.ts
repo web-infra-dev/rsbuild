@@ -1,6 +1,6 @@
 import { transformRefreshAsync } from '@dom-expressions/compiler';
 import type { Rspack } from '@rsbuild/core';
-import { isDefaultSolidScript } from './helpers.js';
+import { getTransformFilename } from './helpers.js';
 
 const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
 
@@ -13,17 +13,14 @@ const solidRefreshLoader: Rspack.LoaderDefinition<SolidRefreshLoaderOptions> =
     const callback = this.async();
     const { granular } = this.getOptions();
 
-    if (
-      NODE_MODULES_REGEX.test(this.resourcePath) ||
-      !isDefaultSolidScript(this.resourcePath)
-    ) {
+    if (NODE_MODULES_REGEX.test(this.resourcePath)) {
       callback(null, source, sourceMap);
       return;
     }
 
     try {
       const result = await transformRefreshAsync(String(source), {
-        filename: this.resourcePath,
+        filename: getTransformFilename(this.resourcePath),
         bundler: 'rspack-esm',
         fixRender: true,
         ...(typeof granular === 'boolean' ? { granular } : {}),

@@ -94,6 +94,23 @@ pluginSolid({
 });
 ```
 
+### extensions
+
+Additional file extensions to compile as Solid JSX. The default `.jsx` and `.tsx` extensions are always included. Extensions must include the leading dot and are also added to module resolution, so imports can omit them.
+
+`.mtsx` and `.ctsx` files are parsed as TypeScript with JSX; other additional extensions are parsed as JavaScript with JSX. This option applies to both JSX compilation and Solid Refresh.
+
+- **Type:** `string[]`
+- **Default:** `[]`
+- **Version:** `>= 2.0.0`
+- **Example:**
+
+```ts
+pluginSolid({
+  extensions: ['.mjsx', '.cjsx', '.mtsx', '.ctsx', '.solid'],
+});
+```
+
 ### dev
 
 Whether to enable Solid's development runtime and development-only compiler transforms. Set it to `false` to disable both behaviors in development mode, or set it to `true` to enable them in production mode.

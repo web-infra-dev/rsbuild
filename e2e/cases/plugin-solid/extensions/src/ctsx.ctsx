@@ -1,0 +1,4 @@
+export default function Component() {
+  const text: string = 'ctsx';
+  return <p id="ctsx">{text}</p>;
+}
