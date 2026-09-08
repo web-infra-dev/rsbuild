@@ -12,13 +12,17 @@ Use Rsdoctor to debug build outputs or the build process.
 
 ## Quick start
 
+Rsdoctor 2.0 requires Node.js 22.18 or later and Rspack 2.x. Use Rsbuild 2.x to meet the Rspack requirement.
+
 In an Rsbuild project, enable Rsdoctor as follows:
 
 1. Install the Rsdoctor plugin:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsdoctor/rspack-plugin -D" />
+<PackageManagerTabs command="add @rsdoctor/core -D" />
+
+When upgrading from Rsdoctor 1.x, remove `@rsdoctor/rspack-plugin` and update any plugin imports to `@rsdoctor/core`. See the [Rsdoctor 1.x to 2.x migration guide](https://v2.rsdoctor.rs/guide/migration/migration-v2) for the full migration steps.
 
 2. Set the `RSDOCTOR=true` environment variable before running the CLI command:
 
@@ -47,12 +51,16 @@ Because Windows does not support this syntax, you can use [cross-env](https://np
 
 After running these scripts, Rsbuild automatically registers the Rsdoctor plugin and opens the build analysis page when the build finishes. See the [Rsdoctor documentation](https://rsdoctor.rs/) for all features.
 
+Rsbuild prefers `@rsdoctor/core` when both packages are installed. Rsdoctor 1.x remains supported through `@rsdoctor/rspack-plugin`, but Rsbuild logs a warning recommending an upgrade to v2 when automatically loading the old plugin.
+
+If your Rsbuild version does not support automatically loading `@rsdoctor/core`, register the plugin manually as shown below.
+
 ## Options
 
 To configure the [options](https://rsdoctor.rs/config/options/options) exposed by the Rsdoctor plugin, manually register the plugin:
 
 ```ts title="rsbuild.config.ts"
-import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { RsdoctorRspackPlugin } from '@rsdoctor/core';
 
 export default {
   tools: {
