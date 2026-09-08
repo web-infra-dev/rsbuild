@@ -1,6 +1,6 @@
 ---
 name: rspress-description-generator
-description: Generate and maintain description frontmatter for Rspress documentation files (.md/.mdx). Use when a user wants to add SEO descriptions, improve search engine snippets, generate llms.txt metadata, prepare docs for AI summarization, or batch-update frontmatter across an Rspress doc site. Also use when adding new documentation pages to an Rspress project — every new doc file needs a description.
+description: Generate missing description frontmatter for Rspress Markdown/MDX pages, including new docs pages and site-wide SEO metadata updates.
 ---
 
 # Rspress Description Generator

@@ -1,37 +1,31 @@
 ---
 name: release-plugin-package
-description: Use when asked to create a release PR for an official Rsbuild plugin package under `packages/plugin-*`, such as `@rsbuild/plugin-react v2.1.0` or `@rsbuild/plugin-sass v2.0.0`.
+description: Prepare a release PR and changelog for an official package under `packages/plugin-*`.
 ---
 
 # Release plugin package
 
-## Input
+Resolve the package and target version from the request; ask only for missing required inputs. This skill prepares a PR, not an npm publication. Use [release-core](../release-core/SKILL.md) for the coupled core/create-rsbuild release.
 
-- Plugin package name or short name, for example `@rsbuild/plugin-react` or `plugin-react`.
-- Target version, for example `2.1.0`.
+## Release changes
 
-If the package or version is missing, ask for it before making changes.
+Inspect the branch and worktree, preserving unrelated changes. Isolate work when needed, and use a task branch before committing. Follow the user's or environment's branch naming convention; otherwise `release/plugin-<name>-v<version>` is a useful name.
 
-## Scope
+Confirm that `packages/plugin-<name>/package.json` names the intended package. If this release already has version edits, a changelog entry, or a PR, read [references/resume-release.md](references/resume-release.md) before choosing the baseline or editing.
 
-Use this skill only for official plugin packages in `packages/plugin-*`.
+For a new release, use the user-specified changelog baseline, or record the current package version and its release commit or tag before bumping it. Resolve an ambiguous range before generating the changelog.
 
-Do not use it for:
+Update:
 
-- `@rsbuild/core` or `create-rsbuild` releases. Use `release-core` instead.
-- Publishing npm packages directly. This skill creates the release PR only.
+- The plugin's package version.
+- Its `CHANGELOG.md`, following the changelog rules below.
+- Matching `@rsbuild/plugin-<name>` ranges in `packages/create-rsbuild/template-*/package.json` to `^<version>`. Preserve `workspace:*` dependencies in `packages/create-rsbuild/package.json`.
 
-## Changelog requirements
+Review the task diff against these fields and files. Preserve pre-existing unrelated changes. Investigate unexpected edits caused by the release work before committing.
 
-Every plugin release PR must update the plugin changelog:
+## Changelog
 
-```text
-packages/plugin-<name>/CHANGELOG.md
-```
-
-If `CHANGELOG.md` does not exist, create it with `# @rsbuild/plugin-<name>` as the title.
-Insert the new entry immediately below the title. If an entry for the target version already exists, update that entry instead of adding a duplicate.
-Use this format:
+Create `packages/plugin-<name>/CHANGELOG.md` if missing, titled `# @rsbuild/plugin-<name>`. Add the version entry immediately below the title, or update an existing entry for that version.
 
 ```markdown
 ## <version> (<YYYY-MM-DD>)
@@ -41,129 +35,30 @@ Use this format:
 - feat(plugin-<name>): change summary by @user in https://github.com/web-infra-dev/rsbuild/pull/<number>
 ```
 
-Rules:
+Use the current date unless the user supplies one. Do not add compare links to version headings. Use `-` bullets and non-empty, sentence-case sections in this order:
 
-- Use the current date in `YYYY-MM-DD` format unless the user provides a release date.
-- Do not add version compare links to version headings.
-- Use `-` bullets.
-- Use sentence-case section headings.
-- Use this section order when sections are present: `Breaking changes`, `New features`, `Performance`, `Bug fixes`, `Refactor`, `Document`, `Other changes`.
-- Add a section heading only when it has at least one bullet.
-- If there are no plugin-specific changes, add `- No plugin-specific changes.` directly under the version heading and do not add `### Other changes`.
-- Preserve change item wording, author, and PR URL as much as possible.
-- Exclude the plugin release or version-bump PR itself from changelog items.
+- `Breaking changes`: `!` or `BREAKING CHANGE`
+- `New features`: `feat`
+- `Performance`: `perf`
+- `Bug fixes`: `fix`
+- `Refactor`: `refactor`
+- `Document`: `docs`
+- `Other changes`: remaining types
 
-To collect changelog items:
+Prefer change PRs supplied by the user or identified in the release context. Supplement incomplete lists with commits and merged PRs since the resolved baseline. Include plugin code and directly relevant shared code, build configuration, dependencies, docs, or templates. Exclude the release/version-bump PR itself. Preserve item wording, authors, and PR URLs as much as possible.
 
-1. Prefer related change PRs provided by the user or already listed in the release PR context.
-2. If related PRs are missing or incomplete, inspect commits and merged PRs since the previous package version recorded before editing `package.json`.
-3. Keep only changes that affect the released plugin, including:
-   - files under `packages/plugin-<name>`
-   - shared code, build config, or dependencies that directly affect the plugin
-   - docs or template changes that are specifically about that plugin
-4. Categorize items by conventional commit type:
-   - `feat` -> `New features`
-   - `perf` -> `Performance`
-   - `fix` -> `Bug fixes`
-   - `refactor` -> `Refactor`
-   - `docs` -> `Document`
-   - breaking changes marked with `!` or `BREAKING CHANGE` -> `Breaking changes`
-   - everything else -> `Other changes`
+If there are no plugin-specific changes, write `- No plugin-specific changes.` directly under the version heading, without a category heading.
 
-## Workflow
+## Validation
 
-1. Check the worktree:
+For version/changelog-only edits, validate edited JSON, matching template ranges, and changelog content. Use a focused plugin build or create-rsbuild e2e case when executable template or package behavior also changes; follow the root `AGENTS.md` build prerequisite before e2e. Avoid repository-wide spelling and e2e runs for a metadata-only bump.
 
-   ```bash
-   git status --short
-   git branch --show-current
-   ```
+## Pull request
 
-   If there are uncommitted edits, stop and ask the user how to proceed.
+Commit only the task changes, push the task branch, and create the PR using `.github/PULL_REQUEST_TEMPLATE.md`. Prefer the Codex GitHub connector when available; otherwise use `gh`. Consult [pr-creator](../pr-creator/SKILL.md) only when additional PR guidance is needed. Use:
 
-2. Resolve the package directory:
+- Commit and PR title: `release: @rsbuild/plugin-<name> v<version>`
+- `Summary`: `Release @rsbuild/plugin-<name> v<version>.`
+- An optional `Changes` section linking the same verified change PRs used in the changelog; omit it when no links are known.
 
-   - `@rsbuild/plugin-react` -> `packages/plugin-react`
-   - `plugin-react` -> `packages/plugin-react`
-
-   Confirm that `packages/plugin-<name>/package.json` exists and its `name` field matches the target package.
-   Record the current package `version` before editing it; use that as the previous package version for changelog collection unless the user provides a different baseline.
-
-3. Create and switch to a dedicated branch if the current branch is the default branch. Prefer:
-
-   ```text
-   release/plugin-<name>-v<version>
-   ```
-
-4. Update only the plugin package version first:
-
-   ```text
-   packages/plugin-<name>/package.json
-   ```
-
-5. Update `packages/plugin-<name>/CHANGELOG.md` for the target version using the changelog requirements above.
-
-6. Sync `create-rsbuild` template dependency versions only when that plugin appears in template `package.json` files:
-
-   ```bash
-   rg -n '@rsbuild/plugin-<name>' packages/create-rsbuild --glob 'package.json'
-   ```
-
-   Update matching template dependency ranges to `^<version>`. Do not change `workspace:*` dev dependencies in `packages/create-rsbuild/package.json`.
-
-7. Review the diff and confirm it is limited to:
-
-   - the released plugin package version
-   - the released plugin changelog
-   - matching `packages/create-rsbuild/template-*/package.json` dependency ranges, if any
-
-   If other files changed, stop and explain the unexpected diff.
-
-8. Validate JSON and run focused checks:
-
-   ```bash
-   node -e "for (const f of process.argv.slice(1)) JSON.parse(require('fs').readFileSync(f, 'utf8'))" <edited-package-json-files>
-   node --run check-spell
-   pnpm --filter @rsbuild/plugin-<name> run build
-   ```
-
-   If `create-rsbuild` templates changed, also run `pnpm build` once and then the focused create-rsbuild e2e case when practical:
-
-   ```bash
-   pnpm build
-   pnpm e2e create-rsbuild
-   ```
-
-   Report any skipped validation in the final response.
-
-9. Commit with this exact title:
-
-   ```text
-   release: @rsbuild/plugin-<name> v<version>
-   ```
-
-10. Push the branch after re-checking it is not the default branch.
-
-11. If running in Codex, create the PR with the GitHub connector/plugin. Otherwise, use the GitHub workflow available in the current environment.
-
-## PR body
-
-Use the repository PR template. Keep the body concise.
-
-For `Summary`, use:
-
-```markdown
-Release `@rsbuild/plugin-<name>` v<version>.
-```
-
-If related change PRs were provided or can be confidently identified, add a `Changes` section:
-
-```markdown
-## Changes
-
-- https://github.com/web-infra-dev/rsbuild/pull/<number>
-- https://github.com/web-infra-dev/rsbuild/pull/<number>
-```
-
-Use the same related change PRs that were added to the changelog. Do not invent change links.
-If no related links are known, omit `Changes` instead of adding an empty section.
+Return the PR URL and relevant validation results or limitations.
