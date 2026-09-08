@@ -254,9 +254,10 @@ async function printFileSizes(
   const prev = previousSizes?.[environmentName];
   const showDetail = options.detail !== false;
   const showDiff = options.diff !== false && previousSizes !== null;
-  // Older snapshots only contain gzip sizes. Never compare different algorithms.
-  const showCompressedDiff =
-    showDiff && prev && (prev.compressionType ?? 'gzip') === compression.type;
+  // Legacy snapshots have no compression type and a zero gzip total when disabled.
+  const prevType =
+    prev?.compressionType ?? (prev?.totalGzipSize ? 'gzip' : false);
+  const showCompressedDiff = showDiff && prevType === compression.type;
   let showTotal = options.total !== false;
 
   if (!showTotal && !showDetail) {
