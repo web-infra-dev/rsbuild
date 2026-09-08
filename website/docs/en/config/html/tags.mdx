@@ -152,9 +152,9 @@ export default {
 Controls whether to add a hash query parameter to asset URLs for cache invalidation, only affects the `src` attribute of the `script` tag and the `href` attribute of the `link` tag.
 
 - `false`: No hash query
-- `true`: Generate hash based on HTML content
+- `true`: Appends the Rspack compilation hash
 - `string`: Uses a custom hash string
-- `function`: Custom hash generation via a function
+- `function`: Returns a URL based on the asset URL and Rspack compilation hash
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -369,7 +369,7 @@ export default {
         }
       },
       (tags) => {
-        // Insert 'b.js' after 'a.js'
+        // Insert 'd.js' after 'a.js'
         const targetIndex = tags.findIndex((tag) => tag.attrs?.src === 'a.js');
 
         tags.splice(targetIndex + 1, 0, {
@@ -425,9 +425,9 @@ export default {
 The tag object here will be directly added to the HTML file after processing, but the `polyfill.ts` will not be transpiled or bundled, so there will be a 404 error when processing this script in the application.
 
 ```html
-<body>
+<head>
   <script src="https://example.com/src/polyfill.ts"></script>
-</body>
+</head>
 ```
 
 Reasonable use cases include:
@@ -452,10 +452,10 @@ function report() {
 }
 
 export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+  },
   html: {
-    output: {
-      assetPrefix: 'https://example.com/',
-    },
     tags: [
       // Inject asset from the `public` directory.
       { tag: 'script', attrs: { src: 'service-worker.js' } },
@@ -478,7 +478,7 @@ export default {
 The result will look like:
 
 ```html
-<body>
+<head>
   <script src="https://example.com/service-worker.js"></script>
   <script src="https://cdn.example.com/foo.js"></script>
   <script>
@@ -487,7 +487,7 @@ The result will look like:
     }
     report();
   </script>
-</body>
+</head>
 ```
 
 ## Version history
