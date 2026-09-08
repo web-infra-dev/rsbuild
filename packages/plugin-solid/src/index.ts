@@ -119,6 +119,13 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             ...solid,
           };
 
+          // Solid loads hydration modules from runtime URLs. Preserve native
+          // import() instead of generating an empty context dependency.
+          chain.module
+            .rule('solid-runtime')
+            .set('descriptionData', { name: /^@solidjs\/web$/ })
+            .parser({ importDynamic: false });
+
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
           if (extensions.length) {
