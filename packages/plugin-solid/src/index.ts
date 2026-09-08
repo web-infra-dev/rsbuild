@@ -123,9 +123,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
           // import() instead of generating an empty context dependency.
           chain.module
             .rule('solid-runtime')
-            .test(
-              /[\\/]node_modules[\\/]@solidjs[\\/]web[\\/]dist[\\/](?:web|dev)\.(?:js|cjs)$/,
-            )
+            .set('descriptionData', { name: /^@solidjs\/web$/ })
             .parser({ importDynamic: false });
 
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
