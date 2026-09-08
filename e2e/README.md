@@ -42,4 +42,15 @@ test('normalize path', () => {
 
 Use `@e2e/helper` for Rsbuild-specific fixtures and helpers. Import generic test utilities directly from `@rstackjs/test-utils`.
 
+Tests fail on build warning logs by default. Use `expectWarning()` to assert an expected message and allow build warnings for the current test:
+
+```ts
+import { test } from '@e2e/helper';
+
+test('should report the expected warning', async ({ build }) => {
+  const rsbuild = await build();
+  await rsbuild.expectWarning('Expected warning message');
+});
+```
+
 You can use the local skill at [`write-e2e-cases`](../.agents/skills/write-e2e-cases/SKILL.md) to add new test cases.

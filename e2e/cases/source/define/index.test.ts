@@ -15,7 +15,7 @@ test('should warn when define `process.env`', async ({ buildPreview }) => {
     config: {
       source: {
         define: {
-          'process.env': process.env,
+          'process.env': { PATH: process.env.PATH },
         },
       },
     },
@@ -31,7 +31,7 @@ test('should warn when define stringified `process.env`', async ({
     config: {
       source: {
         define: {
-          'process.env': JSON.stringify(process.env),
+          'process.env': JSON.stringify({ PATH: process.env.PATH }),
         },
       },
     },

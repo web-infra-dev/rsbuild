@@ -1,7 +1,7 @@
 import {
   type ChildProcess,
   type ExecSyncOptions,
-  execSync,
+  spawnSync,
   type SpawnOptions,
   spawn as nodeSpawn,
 } from 'node:child_process';
@@ -218,16 +218,20 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
   logHelper: [
     async ({ task }, use) => {
       const logHelper = proxyConsole();
-      await use(logHelper);
-      logHelper.restore();
+      try {
+        await use(logHelper);
+      } finally {
+        logHelper.restore();
+      }
 
       // If the test failed, log the console output for debugging
-      if (task.result?.status === 'fail' && logHelper.logs.length) {
+      if (task.result?.status === 'fail' && logHelper.originalLogs.length) {
         const { header, footer } = makeBox(task.name);
         console.log(header);
         logHelper.printCapturedLogs();
         console.log(footer);
       }
+      logHelper.expectNoBuildWarnings();
     },
     { auto: true },
   ],
@@ -375,12 +379,28 @@ const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
     await use(execCli);
   },
 
-  execCliSync: async ({ cwd }, use) => {
+  execCliSync: async ({ cwd, logHelper }, use) => {
     const execCliSync: ExecSync = (command, options = {}) => {
-      return execSync(
-        `node ${RSBUILD_BIN_PATH} ${command}`,
-        setupExecOptions(options, cwd),
-      ).toString();
+      const cmd = `"${process.execPath}" "${RSBUILD_BIN_PATH}" ${command}`;
+      const result = spawnSync(
+        cmd,
+        setupExecOptions({ shell: true, ...options }, cwd),
+      );
+      for (const output of [result.stdout, result.stderr]) {
+        if (output) {
+          logHelper.addLog(output.toString());
+        }
+      }
+      if (result.error || result.status !== 0) {
+        throw Object.assign(
+          result.error ||
+            new Error(
+              `Command failed: ${cmd}\n${result.stderr?.toString() || ''}`,
+            ),
+          result,
+        );
+      }
+      return result.stdout?.toString() || '';
     };
     await use(execCliSync);
   },
