@@ -12,7 +12,7 @@ type PrintFileSizeOptions =
   | {
       total?: boolean | Function;
       detail?: boolean;
-      compressed?: boolean;
+      compressed?: boolean | { type: 'gzip' | 'brotli' };
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
       diff?: boolean;
@@ -66,6 +66,7 @@ type Total =
       assets: PrintFileSizeAsset[];
       totalSize: number;
       totalGzipSize: number;
+      totalBrotliSize?: number;
     }) => string);
 ```
 
@@ -109,7 +110,8 @@ export default {
 - `distPath`: 输出目录相对于项目根目录的路径
 - `assets`: 静态资源列表，每个资源包含 `name` 和 `size` 属性
 - `totalSize`: 所有静态资源的体积
-- `totalGzipSize`: 所有静态资源 gzip 压缩后的体积
+- `totalGzipSize`: 所有静态资源 gzip 压缩后的体积，单位为字节。未开启 gzip 体积统计时为 `0`。
+- `totalBrotliSize`: 所有静态资源 Brotli 压缩后的体积，单位为字节。未开启 Brotli 体积统计时为 `undefined`。
 
 ### detail
 
@@ -132,12 +134,32 @@ export default {
 
 ### compressed
 
-- **类型：** `boolean`
+- **类型：** `boolean | { type: 'gzip' | 'brotli' }`
 - **默认值：** 当 [output.target](/config/output/target) 为 `node` 时为 `false`，否则为 `true`
 
-是否输出 gzip 压缩后的体积。
+控制是否在构建结束后计算并输出静态资源压缩后的体积。
 
-如果你不需要查看 gzip 压缩后的体积，可以把 `compressed` 设置为 false，这在大型项目中可以节省一些 gzip 计算的耗时：
+| 配置值                       | 行为                                                  |
+| ---------------------------- | ----------------------------------------------------- |
+| `true` 或 `{ type: 'gzip' }` | 计算 gzip 体积，并在 `Gzip` 列中显示。                |
+| `{ type: 'brotli' }`         | 使用压缩等级 6 计算 Brotli 体积，并在 `Br` 列中显示。 |
+| `false`                      | 跳过压缩计算，仅输出未压缩的体积。                    |
+
+例如，以下配置会输出 Brotli 体积：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      compressed: {
+        type: 'brotli',
+      },
+    },
+  },
+};
+```
+
+计算压缩体积需要额外时间。Brotli 压缩可能比 gzip 更耗时，因此开启 Brotli 体积统计可能使构建变慢，尤其是产物较多或文件较大时。如果你不需要查看压缩后的体积，可以将 `compressed` 设置为 `false`，跳过这部分计算：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -151,8 +173,9 @@ export default {
 
 :::tip
 
-- 该数据仅用于参考 gzip 压缩后的体积，Rsbuild 并不会对静态资源开启 gzip 压缩。通常，你需要在服务器端开启 gzip 压缩，例如使用 [nginx 的 gzip 模块](https://nginx.org/en/docs/http/ngx_http_gzip_module.html)。
-- 对于不适合 gzip 压缩的静态资源（如图片文件），在详细列表中不会显示其 gzip 体积，但在计算 gzip 后的总体积时会包含这些资源的原始大小。
+- 此选项仅用于体积统计，不会生成压缩文件。要向浏览器提供压缩后的资源，通常需要在服务器或 CDN 中配置压缩，实际传输体积取决于这些压缩配置。
+- 对于不适合压缩的静态资源（如图片文件），详细列表中不会显示其压缩体积，但计算压缩后的总体积时会计入这些资源的原始大小。
+- 开启 `diff` 时，Rsbuild 仅在前后两次构建使用相同算法时比较压缩体积。切换算法不影响未压缩体积的比较。
 
 :::
 
@@ -275,6 +298,7 @@ dist/static/css/index.2960ac62ab.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 k
 
 ## 版本历史
 
-| 版本    | 变更内容         |
-| ------- | ---------------- |
-| v1.6.13 | 新增 `diff` 选项 |
+| 版本    | 变更内容                                              |
+| ------- | ----------------------------------------------------- |
+| v2.2.5  | 新增 `compressed.type` 选项，支持输出 Brotli 压缩体积 |
+| v1.6.13 | 新增 `diff` 选项                                      |
