@@ -30,9 +30,9 @@
   },
   "dependencies": {
     "@babel/core": "catalog:",
-    "@dom-expressions/compiler": "catalog:",
     "@jridgewell/remapping": "catalog:",
-    "babel-preset-solid": "catalog:"
+    "@solidjs/babel-plugin": "catalog:",
+    "@solidjs/compiler": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
@@ -42,8 +42,8 @@
   },
   "peerDependencies": {
     "@rsbuild/core": "^2.0.0",
-    "@solidjs/web": "^2.0.0-rc.0",
-    "solid-js": "^2.0.0-rc.0"
+    "@solidjs/web": "^2.0.0-rc.6",
+    "solid-js": "^2.0.0-rc.6"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
