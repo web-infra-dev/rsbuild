@@ -34,7 +34,9 @@ export default {
 
 ## Boolean type
 
-If `assetPrefix` is set to `true`, the URL prefix will be `http://localhost:<port>/`:
+If `assetPrefix` is set to `true`, Rsbuild generates an absolute URL prefix from the dev server's protocol, hostname, actual listening port, and [server.base](/config/server/base).
+
+With the default server configuration, the prefix is `http://localhost:<port>/`:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -47,10 +49,12 @@ export default {
 The resource URL loaded in the browser is as follows:
 
 ```html
-<script defer src="http://localhost:3000/static/js/main.js"></script>
+<script defer src="http://localhost:3000/static/js/index.js"></script>
 ```
 
-If `assetPrefix` is set to `false` or not set, `/` is used as the default value.
+Enabling [server.https](/config/server/https) changes the protocol to `https`. The hostname follows [server.host](/config/server/host), except that `0.0.0.0` is replaced with `localhost`. Rsbuild also appends `server.base` to the URL. For example, with `server.host: '127.0.0.1'`, `server.base: '/foo'`, and a listening port of `3000`, the prefix is `http://127.0.0.1:3000/foo/`.
+
+If `assetPrefix` is set to `false`, the prefix is `/`, even when `server.base` is customized. If `assetPrefix` is not set, it inherits `server.base` instead.
 
 ## String type
 
@@ -69,7 +73,7 @@ export default {
 The resource URL loaded in the browser is as follows:
 
 ```html
-<script defer src="http://localhost:3000/example/static/js/index.js"></script>
+<script defer src="/example/static/js/index.js"></script>
 ```
 
 - For example, set to a complete URL:
