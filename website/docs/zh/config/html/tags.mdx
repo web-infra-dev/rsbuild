@@ -152,9 +152,9 @@ export default {
 控制是否为资源的 URL 添加 hash 作为 query 参数，以进行缓存失效，仅影响 `script` 标签的 `src` 属性和 `link` 标签的 `href` 属性。
 
 - `false`：不添加 hash query 参数
-- `true`：基于 HTML 内容生成 hash
+- `true`：追加 Rspack 编译的 hash
 - `string`：使用自定义的 hash 字符串
-- `function`：通过函数自定义 hash 生成
+- `function`：根据资源 URL 和 Rspack 编译的 hash 返回 URL
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -425,9 +425,9 @@ export default {
 这里的 tag 对象将会在简单处理后直接添加到 HTML 产物中，但对应的 `polyfill.ts` 将不会被转译、打包，也因此应用会在处理这行脚本时出现 404 错误。
 
 ```html
-<body>
+<head>
   <script src="https://example.com/src/polyfill.ts"></script>
-</body>
+</head>
 ```
 
 合理的使用场景包括：
@@ -452,10 +452,10 @@ function report() {
 }
 
 export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+  },
   html: {
-    output: {
-      assetPrefix: 'https://example.com/',
-    },
     tags: [
       // Inject asset from the `public` directory.
       { tag: 'script', attrs: { src: 'service-worker.js' } },
@@ -478,7 +478,7 @@ export default {
 得到的产物将会类似：
 
 ```html
-<body>
+<head>
   <script src="https://example.com/service-worker.js"></script>
   <script src="https://cdn.example.com/foo.js"></script>
   <script>
@@ -487,7 +487,7 @@ export default {
     }
     report();
   </script>
-</body>
+</head>
 ```
 
 ## 版本历史
