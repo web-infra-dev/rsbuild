@@ -1,5 +1,5 @@
 ---
-description: 'The Solid plugin provides support for Solid features. The plugin internally integrates babel-preset-solid.'
+description: 'Use Solid with Rsbuild, including JSX compilation, Solid Refresh, and server-side rendering.'
 ---
 
 # Solid plugin
@@ -8,13 +8,11 @@ import { SourceCode } from '@theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-solid" />
 
-The Solid plugin provides support for Solid features. The plugin internally integrates [babel-preset-solid](https://github.com/solidjs/solid/tree/main/packages/babel-preset-solid).
-
-:::tip
-The Solid plugin relies on Babel transpilation and requires an additional [Babel plugin](/plugins/list/plugin-babel). At the same time, adding the Babel plugin will cause additional compilation overhead.
-:::
+The Solid plugin adds Solid JSX compilation, hot module replacement, and server-side rendering support to Rsbuild.
 
 ## Quick start
+
+The following setup is for Solid v1. For Solid v2, see [Solid v2](#solid-v2).
 
 ### Install plugin
 
@@ -53,7 +51,7 @@ Babel compilation will introduce extra overhead, in the example above, we use `i
 
 ## Solid v2
 
-Solid v2 support is currently in beta and requires `solid-js` and `@solidjs/web` version `2.0.0-rc.6` or later. It uses `@solidjs/compiler` by default and does not require `@rsbuild/plugin-babel`.
+Solid v2 support is currently in beta and requires `solid-js` and `@solidjs/web` version `2.0.0-rc.6` or later. The default setup does not require `@rsbuild/plugin-babel`.
 
 Install and register the beta version of `@rsbuild/plugin-solid`:
 

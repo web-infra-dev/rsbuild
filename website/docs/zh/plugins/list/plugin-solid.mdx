@@ -1,5 +1,5 @@
 ---
-description: 'Solid 插件提供了对 Solid 的支持，插件内部集成了 babel-preset-solid。'
+description: '在 Rsbuild 中使用 Solid，支持 JSX 编译、Solid Refresh 和服务端渲染。'
 ---
 
 # Solid 插件
@@ -8,9 +8,11 @@ import { SourceCode } from '@theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-solid" />
 
-Solid 插件提供了对 Solid 的支持，插件内部集成了 [babel-preset-solid](https://github.com/solidjs/solid/tree/main/packages/babel-preset-solid)。
+Solid 插件为 Rsbuild 提供 Solid JSX 编译、热更新和服务端渲染支持。
 
 ## 快速开始
+
+以下配置适用于 Solid v1。使用 Solid v2 时，请参阅 [Solid v2](#solid-v2)。
 
 ### 安装插件
 
@@ -49,7 +51,7 @@ Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `
 
 ## Solid v2
 
-Solid v2 支持目前处于 beta 阶段，要求 `solid-js` 和 `@solidjs/web` 版本为 `2.0.0-rc.6` 或更高。插件默认使用 `@solidjs/compiler`，无需安装 `@rsbuild/plugin-babel`。
+Solid v2 支持目前处于 beta 阶段，要求 `solid-js` 和 `@solidjs/web` 为 `2.0.0-rc.6` 或更高版本。默认无需安装 `@rsbuild/plugin-babel`。
 
 安装并注册 `@rsbuild/plugin-solid` 的 beta 版本：
 
