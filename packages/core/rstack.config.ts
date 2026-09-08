@@ -2,7 +2,7 @@ import path from 'node:path';
 import { nodeMinifyConfig } from '@scripts/config/lib';
 import { baseConfig } from '@scripts/config/test';
 import { define as rstack } from 'rstack';
-import type { Rsbuild, Rspack } from 'rstack/lib';
+import { type Rsbuild, type Rspack, rspack } from 'rstack/lib';
 import pkgJson from './package.json' with { type: 'json' };
 import prebundleConfig from './prebundle.config.ts';
 
@@ -80,7 +80,7 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
 
     api.processAssets(
       { stage: 'optimize-inline' },
-      ({ assets, compiler, compilation, sources }) => {
+      ({ assets, compilation, sources }) => {
         for (const name of Object.keys(assets)) {
           const asset = assets[name];
           if (!name.endsWith('.js')) {
@@ -94,7 +94,9 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
 
           const replacedSource = source.replaceAll(
             RSPACK_INTERCEPT_MODULE_EXECUTION,
-            compiler.rspack.RuntimeGlobals.interceptModuleExecution,
+            // Keep `__webpack_require__.i` in the output so the consuming
+            // compiler can translate it to the app's runtime mode.
+            rspack.RuntimeGlobals.interceptModuleExecution,
           );
           compilation.updateAsset(name, new sources.RawSource(replacedSource));
         }
@@ -113,6 +115,7 @@ rstack.lib({
   tools: {
     rspack: {
       experiments: {
+        runtimeMode: 'rspack',
         nativeWatcher: true,
       },
     },
