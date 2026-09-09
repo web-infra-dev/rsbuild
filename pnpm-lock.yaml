@@ -83,8 +83,8 @@ catalogs:
       specifier: 1.14.11
       version: 1.14.11
     '@rstackjs/load-config':
-      specifier: ^0.1.2
-      version: 0.1.2
+      specifier: ^1.0.0
+      version: 1.0.0
     '@rstackjs/test-utils':
       specifier: ^1.0.0
       version: 1.0.0
@@ -493,6 +493,9 @@ importers:
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../packages/plugin-vue
+      '@rstackjs/load-config':
+        specifier: 'catalog:'
+        version: 1.0.0(jiti@2.7.0)
       '@rstackjs/test-utils':
         specifier: 'catalog:'
         version: 1.0.0
@@ -887,7 +890,7 @@ importers:
         version: 0.3.31
       '@rstackjs/load-config':
         specifier: 'catalog:'
-        version: 0.1.2(jiti@2.7.0)
+        version: 1.0.0(jiti@2.7.0)
       '@types/cors':
         specifier: 'catalog:'
         version: 2.8.19
@@ -2567,8 +2570,8 @@ packages:
       '@rspress/core':
         optional: true
 
-  '@rstackjs/load-config@0.1.2':
-    resolution: {integrity: sha512-6hChPVosmh2rzEt1M1CvGpsaE/+gGlt51ci5pbyd4Bd1FXyH+Owlg99ECvdcWtD7zdDwDM3jGkQL05xn9oWSIA==}
+  '@rstackjs/load-config@1.0.0':
+    resolution: {integrity: sha512-eLp6lGEngk43kU6Z0iQNlGwgy4lLx/wtKdaBgoewHmWN0HHJRgQypewagqGxo+iNP4Yyf7pOXxAbsbH+L9Ay6A==}
     peerDependencies:
       jiti: ^2.0.0
     peerDependenciesMeta:
@@ -6461,7 +6464,7 @@ snapshots:
     optionalDependencies:
       '@rspress/core': 2.0.21(@module-federation/runtime-tools@2.9.0)(@rspack/core@2.2.3)(core-js@3.50.0)(micromark-util-types@2.0.2)(micromark@4.0.2)(supports-color@8.1.1)
 
-  '@rstackjs/load-config@0.1.2(jiti@2.7.0)':
+  '@rstackjs/load-config@1.0.0(jiti@2.7.0)':
     optionalDependencies:
       jiti: 2.7.0
 
