@@ -3,8 +3,13 @@ import { expect, test } from '@e2e/helper';
 import fse from 'fs-extra';
 import { extractFileSizeLogs } from '../helper';
 
-for (const type of ['gzip', 'brotli'] as const) {
-  test(`should print ${type} size differences`, async ({
+for (const [type, detail] of [
+  ['gzip', true],
+  ['brotli', true],
+  ['gzip', false],
+  ['brotli', false],
+] as const) {
+  test(`should print ${type} ${detail ? '' : 'total '}size differences`, async ({
     cwd,
     build,
     editFile,
@@ -14,7 +19,7 @@ for (const type of ['gzip', 'brotli'] as const) {
     await fse.remove(cacheDir);
     const srcDir = await copySrcDir();
     const config = {
-      performance: { printFileSize: { compressed: { type } } },
+      performance: { printFileSize: { compressed: { type }, detail } },
       source: {
         entry: {
           index: join(srcDir, 'index.js'),

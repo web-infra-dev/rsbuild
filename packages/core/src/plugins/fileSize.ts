@@ -456,6 +456,15 @@ async function printFileSizes(
   const { totalSizeTitle, totalSizeLabel, totalSizeLabelLength } =
     getTotalSizeLabel();
 
+  const getCompressedTotalDiff = () => {
+    if (!showCompressedDiff) {
+      return '';
+    }
+
+    const diff = totalCompressedSize - (prev?.[compression.totalKey] ?? 0);
+    return isSignificantDiff(diff) ? ` ${formatDiff(diff).label}` : '';
+  };
+
   const getCustomTotal = () => {
     if (typeof options.total === 'function') {
       return options.total({
@@ -549,15 +558,7 @@ async function printFileSizes(
         if (options.compressed) {
           const colorFn = getAssetColor(totalCompressedSize / assets.length);
           log += ' '.repeat(maxSizeLength - totalSizeLabelLength);
-          log += `   ${colorFn(calcFileSize(totalCompressedSize))}`;
-
-          if (showCompressedDiff) {
-            const totalCompressedSizeDiff =
-              totalCompressedSize - (prev?.[compression.totalKey] ?? 0);
-            if (isSignificantDiff(totalCompressedSizeDiff)) {
-              log += ` ${formatDiff(totalCompressedSizeDiff).label}`;
-            }
-          }
+          log += `   ${colorFn(calcFileSize(totalCompressedSize))}${getCompressedTotalDiff()}`;
         }
 
         logs.push(log);
@@ -574,7 +575,7 @@ async function printFileSizes(
 
       if (options.compressed) {
         log += color.green(
-          ` (${calcFileSize(totalCompressedSize)} ${compression.label})`,
+          ` (${calcFileSize(totalCompressedSize)}${getCompressedTotalDiff()} ${compression.label})`,
         );
       }
 
