@@ -34,9 +34,10 @@ export default {
 
 ## Boolean 类型
 
-如果设置 `assetPrefix` 为 `true`，Rsbuild 会根据开发服务器的协议、主机名、实际监听端口和 [server.base](/config/server/base) 生成绝对 URL 前缀。
+- `true`：根据开发服务器的协议（[server.https](/config/server/https)）、主机名（[server.host](/config/server/host)）、实际监听端口和 [server.base](/config/server/base) 生成绝对 URL 前缀。
+- `false`：使用 `/` 作为资源前缀。
 
-使用默认服务器配置时，前缀为 `http://localhost:<port>/`：
+例如，设置为 `true` 且使用默认服务器配置时，前缀为 `http://localhost:<port>/`：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -51,10 +52,6 @@ export default {
 ```html
 <script defer src="http://localhost:3000/static/js/index.js"></script>
 ```
-
-开启 [server.https](/config/server/https) 后，协议会变为 `https`。主机名取自 [server.host](/config/server/host)，其中 `0.0.0.0` 会被替换为 `localhost`。Rsbuild 还会将 `server.base` 拼接到 URL 中。例如，当 `server.host` 为 `'127.0.0.1'`、`server.base` 为 `'/foo'`、监听端口为 `3000` 时，前缀为 `http://127.0.0.1:3000/foo/`。
-
-如果设置 `assetPrefix` 为 `false`，即使自定义了 `server.base`，前缀也为 `/`。如果不设置 `assetPrefix`，则会继承 `server.base`。
 
 ## String 类型
 
