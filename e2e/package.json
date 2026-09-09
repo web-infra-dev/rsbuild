@@ -38,7 +38,6 @@
     "@rsbuild/plugin-tailwindcss": "workspace:*",
     "@rsbuild/plugin-type-check": "catalog:",
     "@rsbuild/plugin-vue": "workspace:*",
-    "@rstackjs/load-config": "catalog:",
     "@rstackjs/test-utils": "catalog:",
     "@rstest/core": "catalog:",
     "@rstest/playwright": "catalog:",

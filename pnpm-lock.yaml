@@ -493,9 +493,6 @@ importers:
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../packages/plugin-vue
-      '@rstackjs/load-config':
-        specifier: 'catalog:'
-        version: 1.0.0(jiti@2.7.0)
       '@rstackjs/test-utils':
         specifier: 'catalog:'
         version: 1.0.0
