@@ -51,7 +51,7 @@ Because Windows does not support this syntax, you can use [cross-env](https://np
 
 After running these scripts, Rsbuild automatically registers the Rsdoctor plugin and opens the build analysis page when the build finishes. See the [Rsdoctor documentation](https://rsdoctor.rs/) for all features.
 
-Rsbuild prefers `@rsdoctor/core` when both packages are installed. Rsdoctor 1.x remains supported through `@rsdoctor/rspack-plugin`, but Rsbuild logs a warning recommending an upgrade to v2 when automatically loading the old plugin.
+Rsbuild prefers `@rsdoctor/core` when both packages are installed. Rsdoctor 1.x remains supported through `@rsdoctor/rspack-plugin`.
 
 If your Rsbuild version does not support automatically loading `@rsdoctor/core`, register the plugin manually as shown below.
 

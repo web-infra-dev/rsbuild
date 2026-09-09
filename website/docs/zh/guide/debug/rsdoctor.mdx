@@ -51,7 +51,7 @@ import { PackageManagerTabs } from '@theme';
 
 在项目内执行上述命令后，Rsbuild 会自动注册 Rsdoctor 的插件，并在构建完成后打开本次构建的分析页面，请参考 [Rsdoctor 文档](https://rsdoctor.rs/) 来了解完整功能。
 
-当新旧包同时安装时，Rsbuild 优先使用 `@rsdoctor/core`。Rsbuild 仍支持通过 `@rsdoctor/rspack-plugin` 使用 Rsdoctor 1.x，但自动加载旧版插件时会输出建议升级到 v2 的警告。
+当新旧包同时安装时，Rsbuild 优先使用 `@rsdoctor/core`。Rsbuild 仍支持通过 `@rsdoctor/rspack-plugin` 使用 Rsdoctor 1.x。
 
 如果你使用的 Rsbuild 版本尚不支持自动加载 `@rsdoctor/core`，请按照下方示例手动注册插件。
 
