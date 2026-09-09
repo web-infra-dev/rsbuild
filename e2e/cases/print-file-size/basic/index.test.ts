@@ -208,15 +208,22 @@ test('should respect a custom total function for printFileSize', async ({
   await rsbuild.expectLog('Generated 5 files.');
 });
 
-for (const type of ['gzip', 'brotli'] as const) {
-  test(`should report accurate ${type} sizes with compressed.type`, async ({
+for (const [type, level] of [
+  ['gzip', undefined],
+  ['gzip', 0],
+  ['gzip', 9],
+  ['brotli', undefined],
+  ['brotli', 0],
+  ['brotli', 11],
+] as const) {
+  test(`should report accurate ${type} sizes at level ${level ?? 'default'}`, async ({
     build,
   }) => {
     const rsbuild = await build({
       config: {
         performance: {
           printFileSize: {
-            compressed: { type },
+            compressed: { type, level },
             detail: false,
             include: ({ name }) => name === 'index.html',
             total: ({ totalGzipSize, totalBrotliSize }) =>
@@ -229,9 +236,9 @@ for (const type of ['gzip', 'brotli'] as const) {
     const size =
       type === 'brotli'
         ? zlib.brotliCompressSync(html, {
-            params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 6 },
+            params: { [zlib.constants.BROTLI_PARAM_QUALITY]: level ?? 6 },
           }).length
-        : zlib.gzipSync(html).length;
+        : zlib.gzipSync(html, { level }).length;
     await rsbuild.expectLog(
       type === 'brotli' ? `Sizes: 0/${size}` : `Sizes: ${size}/undefined`,
     );
