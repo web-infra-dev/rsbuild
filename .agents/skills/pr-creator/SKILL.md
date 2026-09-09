@@ -17,7 +17,7 @@ metadata:
    Do not revert unrelated user changes.
    Before creating the PR, ensure the intended changes are committed and never commit directly on the default branch.
 
-3. If `.github/PULL_REQUEST_TEMPLATE.md` exists, read it and follow its structure.
+3. If `.github/PULL_REQUEST_TEMPLATE.md` exists, read it and follow its current headings and guidance.
 
 4. Draft the PR title in the repository's standard format. If the repository uses Conventional Commits, common patterns include:
    - `feat(core): add ...`
@@ -29,7 +29,7 @@ metadata:
    - `release: v1.2.0`
 
 5. Write the PR body in concise, clear English.
-   - In `Summary`, explain the change context first: the user-facing problem, maintenance goal, or compatibility constraint that makes the change necessary.
+   - Explain the change context first: the user-facing problem, maintenance goal, or compatibility constraint that makes the change necessary.
    - Prioritize high-signal information: public API changes, behavior changes, breaking changes, migration notes, and important compatibility implications.
    - Then describe the main implementation change only as much as needed to understand the review.
    - Keep the PR body concise and review-oriented: use 1-4 short standalone sentences for typical changes, covering why it matters, what changed, and any reviewer-important impact.
@@ -40,10 +40,9 @@ metadata:
      - `This PR fixes incorrect padding in URL labels to keep terminal output aligned across different label lengths.`
      - `This PR updates the English docs to clarify how the extraction option works and when to enable it.`
 
-6. Fill `Related Links` with issue links, design docs, related PRs, or discussion pages.
+6. Include relevant issue links, design docs, related PRs, or discussion pages alongside the context they support.
    If the PR upgrades an npm dependency, add a link to the upgraded version's release notes or tag page when available.
    Example: `https://github.com/web-infra-dev/rspack/releases/tag/v1.0.0`
-   If there is no relevant link, omit the entire `Related Links` section from the PR body.
 
 7. Push the branch only after re-checking the branch name. Never push the default branch directly.
 

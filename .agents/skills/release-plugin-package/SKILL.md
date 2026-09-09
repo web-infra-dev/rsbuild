@@ -55,10 +55,10 @@ For version/changelog-only edits, validate edited JSON, matching template ranges
 
 ## Pull request
 
-Commit only the task changes, push the task branch, and create the PR using `.github/PULL_REQUEST_TEMPLATE.md`. Prefer the Codex GitHub connector when available; otherwise use `gh`. Consult [pr-creator](../pr-creator/SKILL.md) only when additional PR guidance is needed. Use:
+Commit only the task changes, push the task branch, and create the PR. Read `.github/PULL_REQUEST_TEMPLATE.md` when drafting the description and follow its current headings and guidance. Prefer the Codex GitHub connector when available; otherwise use `gh`. Consult [pr-creator](../pr-creator/SKILL.md) only when additional PR guidance is needed. Use:
 
 - Commit and PR title: `release: @rsbuild/plugin-<name> v<version>`
-- `Summary`: `Release @rsbuild/plugin-<name> v<version>.`
-- An optional `Changes` section linking the same verified change PRs used in the changelog; omit it when no links are known.
+- Explain that the PR prepares the release of `@rsbuild/plugin-<name>` at `v<version>` and updates its version, changelog, and matching template dependency ranges where applicable.
+- Include links to the same verified change PRs used in the changelog when available.
 
 Return the PR URL and relevant validation results or limitations.
