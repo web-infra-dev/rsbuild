@@ -17,7 +17,7 @@ metadata:
    Do not revert unrelated user changes.
    Before creating the PR, ensure the intended changes are committed and never commit directly on the default branch.
 
-3. If `.github/PULL_REQUEST_TEMPLATE.md` exists, read it and follow its current headings and guidance.
+3. Read the repository's PR template when available and follow its current headings and guidance.
 
 4. Draft the PR title in the repository's standard format. If the repository uses Conventional Commits, common patterns include:
    - `feat(core): add ...`
@@ -29,20 +29,13 @@ metadata:
    - `release: v1.2.0`
 
 5. Write the PR body in concise, clear English.
-   - Explain the change context first: the user-facing problem, maintenance goal, or compatibility constraint that makes the change necessary.
-   - Prioritize high-signal information: public API changes, behavior changes, breaking changes, migration notes, and important compatibility implications.
-   - Then describe the main implementation change only as much as needed to understand the review.
-   - Keep the PR body concise and review-oriented: use 1-4 short standalone sentences for typical changes, covering why it matters, what changed, and any reviewer-important impact.
-   - Omit incidental updates to tests, documentation, and supporting artifacts from the PR description; mention them only when they are the PR's primary purpose or carry reviewer-relevant risk.
-   - Avoid low-signal sections such as `Test plan` or `Validation`, routine verification commands, generated file lists, or obvious implementation details unless the repository template explicitly requires them or the change has unusual validation risk.
-   - Good background examples:
-     - `This PR adds support for custom logger injection so CLI output can be isolated per instance.`
-     - `This PR fixes incorrect padding in URL labels to keep terminal output aligned across different label lengths.`
-     - `This PR updates the English docs to clarify how the extraction option works and when to enable it.`
+   - Explain the problem or motivation and why it matters, then describe the approach and resulting behavior.
+   - Include API, compatibility, or migration details when they help reviewers assess the change.
+   - Keep typical descriptions to a few short sentences. Focus on the key changes rather than a file-by-file summary.
+   - Mention tests, documentation, and validation only when required by the template, central to the change, or relevant to review risk.
 
-6. Include relevant issue links, design docs, related PRs, or discussion pages alongside the context they support.
-   If the PR upgrades an npm dependency, add a link to the upgraded version's release notes or tag page when available.
-   Example: `https://github.com/web-infra-dev/rspack/releases/tag/v1.0.0`
+6. Include relevant issue, discussion, or design links alongside the context they support, following the template's guidance.
+   For dependency upgrades, link to the target version's release notes or tag when available.
 
 7. Push the branch only after re-checking the branch name. Never push the default branch directly.
 
