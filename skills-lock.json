@@ -11,7 +11,7 @@
       "source": "rstackjs/agent-skills",
       "sourceType": "github",
       "skillPath": ".agents/skills/pr-creator/SKILL.md",
-      "computedHash": "6b16aae8df116895d7bf8a567999ad54826ffa4b0c2353ba5187bf361d6e40f8"
+      "computedHash": "ed4ca0b83b380c9a4a350047ef5f2616c0446b2830d59e3a06839cb827fd39b4"
     },
     "release-blog-writer": {
       "source": "rstackjs/agent-skills",

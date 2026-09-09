@@ -21,10 +21,10 @@ Verify the edited JSON and all matching template ranges. Keep the release diff l
 
 ## Release PR
 
-Commit only the task changes, push the task branch, and create the PR using `.github/PULL_REQUEST_TEMPLATE.md`. Prefer the Codex GitHub connector when available; otherwise use `gh`. Consult [pr-creator](../pr-creator/SKILL.md) only when additional PR guidance is needed. Use:
+Commit only the task changes, push the task branch, and create the PR. Read `.github/PULL_REQUEST_TEMPLATE.md` when drafting the description and follow its current headings and guidance. Prefer the Codex GitHub connector when available; otherwise use `gh`. Consult [pr-creator](../pr-creator/SKILL.md) only when additional PR guidance is needed. Use:
 
 - Commit and PR title: `release: v<version>`
-- `Summary`: `Release @rsbuild/core and create-rsbuild <version>.`
-- `Related links`: `https://github.com/web-infra-dev/rsbuild/releases/tag/v<version>`
+- Explain that the PR prepares the release of `@rsbuild/core` and `create-rsbuild` at `<version>` and updates their package versions and template dependency ranges.
+- Include the release link: `https://github.com/web-infra-dev/rsbuild/releases/tag/v<version>`.
 
 Finish with the PR URL and any unresolved release preparation issue.

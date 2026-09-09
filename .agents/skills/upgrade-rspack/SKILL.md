@@ -22,8 +22,8 @@ Do not commit or create the PR while required checks remain failed or incomplete
 
 ## Pull request
 
-Commit only the task changes, push the task branch, and create the PR using `.github/PULL_REQUEST_TEMPLATE.md`. Prefer the Codex GitHub connector when available; otherwise use `gh`. Consult [pr-creator](../pr-creator/SKILL.md) only when additional PR guidance is needed. Use:
+Commit only the task changes, push the task branch, and create the PR. Read `.github/PULL_REQUEST_TEMPLATE.md` when drafting the description and follow its current headings and guidance. Prefer the Codex GitHub connector when available; otherwise use `gh`. Consult [pr-creator](../pr-creator/SKILL.md) only when additional PR guidance is needed. Use:
 
 - Commit and PR title: `feat(deps): update @rspack/core to <version>`
-- `Summary`: `Update @rspack/core to <version>.` Add relevant compatibility changes if needed.
-- `Related links`: `https://github.com/web-infra-dev/rspack/releases/tag/v<version>`
+- Explain why the upgrade matters to Rsbuild using verified upstream changes, and describe the update to `@rspack/core` at `<version>` and any relevant compatibility changes.
+- Include the upstream release link: `https://github.com/web-infra-dev/rspack/releases/tag/v<version>`.
