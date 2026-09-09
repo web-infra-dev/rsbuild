@@ -134,7 +134,7 @@ export default {
 
 ### compressed
 
-- **类型：** `boolean | { type: 'gzip' | 'brotli'; level?: number }`
+- **类型：** `boolean | { type?: 'gzip' | 'brotli'; level?: number }`
 - **默认值：** 当 [output.target](/config/output/target) 为 `node` 时为 `false`，否则为 `true`
 
 控制是否在构建结束后计算并输出静态资源压缩后的体积。设置为 `true` 时统计 gzip 体积，`false` 时跳过压缩计算，也可以通过对象配置压缩算法和等级。

@@ -720,7 +720,7 @@ export type PrintFileSizeOptions = {
          * The compression algorithm used to calculate file sizes.
          * @default 'gzip'
          */
-        type: 'gzip' | 'brotli';
+        type?: 'gzip' | 'brotli';
         /**
          * The compression level: an integer from 0 to 9 for gzip, or 0 to 11 for Brotli.
          * Higher levels generally produce smaller sizes but take longer to calculate.

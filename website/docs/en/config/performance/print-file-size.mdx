@@ -134,7 +134,7 @@ export default {
 
 ### compressed
 
-- **Type:** `boolean | { type: 'gzip' | 'brotli'; level?: number }`
+- **Type:** `boolean | { type?: 'gzip' | 'brotli'; level?: number }`
 - **Default:** `false` when [output.target](/config/output/target) is `node`, otherwise `true`
 
 Controls whether to calculate and print compressed asset sizes after a build. Set to `true` to report gzip sizes, `false` to skip compression calculations, or an object to configure the algorithm and level.
