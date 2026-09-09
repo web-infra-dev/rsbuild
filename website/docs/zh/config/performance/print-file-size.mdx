@@ -12,7 +12,7 @@ type PrintFileSizeOptions =
   | {
       total?: boolean | Function;
       detail?: boolean;
-      compressed?: boolean | { type: 'gzip' | 'brotli'; level?: number };
+      compressed?: boolean | { type?: 'gzip' | 'brotli'; level?: number };
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
       diff?: boolean;
