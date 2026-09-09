@@ -76,11 +76,6 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         }
 
         api.logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
-        if (packageName === '@rsdoctor/rspack-plugin') {
-          api.logger.warn(
-            'Please upgrade to Rsdoctor v2 by replacing @rsdoctor/rspack-plugin with @rsdoctor/core.',
-          );
-        }
         return;
       }
 

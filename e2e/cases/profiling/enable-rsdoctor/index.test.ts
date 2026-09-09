@@ -85,11 +85,7 @@ for (const [core, legacy, expectedLog] of [
       );
     }
     await logHelper.expectLog(expectedLog);
-    if (expectedLog === '@rsdoctor/rspack-plugin enabled.') {
-      await logHelper.expectLog(UPGRADE_LOG);
-    } else {
-      logHelper.expectNoLog(UPGRADE_LOG);
-    }
+    logHelper.expectNoLog(UPGRADE_LOG);
   });
 }
 
