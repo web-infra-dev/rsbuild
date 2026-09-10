@@ -3,6 +3,7 @@ import { type Compilation, type Compiler, rspack } from '@rspack/core';
 import { color, isFunction, partition } from '../helpers';
 import { addCompilationError } from '../helpers/compiler';
 import { readFileAsync } from '../helpers/fs';
+import { isNonceTag } from '../helpers/html';
 import { ensureAssetPrefix, isURL } from '../helpers/url';
 import type { Logger } from '../logger';
 import type {
@@ -148,6 +149,7 @@ const applyTagConfig = (
   tagConfig: TagConfig,
   compilationHash: string,
   entryName: string,
+  nonce?: string,
 ) => {
   if (!tagConfig.tags?.length) {
     return data;
@@ -213,14 +215,32 @@ const applyTagConfig = (
   // entire array. Flush before function configs so they receive sorted tags.
   let shouldSort = false;
 
+  const withNonce = (tag: HtmlTag): HtmlTag => {
+    if (nonce && isNonceTag(tag) && tag.attrs?.nonce === undefined) {
+      tag.attrs ??= {};
+      tag.attrs.nonce = nonce;
+    }
+    return tag;
+  };
+
   for (const item of tagConfig.tags) {
     if (isFunction(item)) {
       if (shouldSort) {
         tags = sortTags(tags, tagConfig);
       }
+      // Track existing tags so only tags added by the callback receive a default nonce.
+      // Preserve nonce changes or removals on existing tags.
+      const existingTags = nonce ? new Set(tags) : undefined;
       tags = item(tags, context) || tags;
+      if (existingTags) {
+        for (const tag of tags) {
+          if (!existingTags.has(tag)) {
+            withNonce(tag);
+          }
+        }
+      }
     } else {
-      tags.push(item);
+      tags.push(withNonce(item));
     }
 
     shouldSort = true;
@@ -450,7 +470,13 @@ export class RsbuildHtmlPlugin {
 
         if (tagConfig) {
           const hash = compilation.hash ?? '';
-          applyTagConfig(data, tagConfig, hash, entryName);
+          applyTagConfig(
+            data,
+            tagConfig,
+            hash,
+            entryName,
+            environment.config.security.nonce,
+          );
         }
 
         return data;
