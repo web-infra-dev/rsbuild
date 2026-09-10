@@ -319,8 +319,7 @@ The final injection position of the tag is determined by the [head](#head) and [
 - `append`: Defines the injection position of the current tag relative to existing tags, defaults to `true`
 - `head`: Specifies whether to add the current tag to the HTML `<head>` element, defaults to `true` for element types allowed in the `<head>`, otherwise `false`.
 - If two tag objects have the same `head` and `append` options, they will be inserted into the same area and hold their relative positions to each other.
-
-As an exception, Rsbuild moves import maps before the first module script or modulepreload link within each injected head or body tag list, preserving the relative order of the import maps; tags written in HTML templates or changed by `modifyHTML` are not reordered.
+- Import maps are moved before module scripts and modulepreload links within each injected head or body tag list.
 
 ```html
 <html>
