@@ -111,6 +111,67 @@ const sortTags = (tags: HtmlTag[], tagConfig: TagConfig) =>
   );
 
 /**
+ * Move import maps before the first module script or modulepreload link in place,
+ * preserving earlier tags and the relative order within each group.
+ */
+const moveImportMaps = (tags: HtmlTagObject[]): HtmlTagObject[] => {
+  const hasImportMap = tags.some((tag) => {
+    const type = tag.attributes.type;
+    return (
+      typeof type === 'string' &&
+      type.length === 'importmap'.length &&
+      type.toLowerCase() === 'importmap' &&
+      tag.tagName.toLowerCase() === 'script'
+    );
+  });
+
+  if (!hasImportMap) {
+    return tags;
+  }
+
+  let firstModuleIndex = -1;
+  let importMaps: HtmlTagObject[] | undefined;
+
+  for (let index = 0; index < tags.length; index++) {
+    const tag = tags[index];
+    const name = tag.tagName.toLowerCase();
+    const type = tag.attributes.type;
+    const scriptType =
+      name === 'script' && typeof type === 'string' ? type.toLowerCase() : '';
+
+    if (firstModuleIndex === -1) {
+      const rel = tag.attributes.rel;
+      if (
+        scriptType === 'module' ||
+        (name === 'link' &&
+          typeof rel === 'string' &&
+          rel
+            .toLowerCase()
+            .split(/[\t\n\f\r ]+/)
+            .includes('modulepreload'))
+      ) {
+        firstModuleIndex = index;
+      }
+    } else if (scriptType === 'importmap') {
+      importMaps ??= [];
+      importMaps.push(tag);
+      continue;
+    }
+
+    // Close the gaps left by collected import maps without changing tag order.
+    if (importMaps) {
+      tags[index - importMaps.length] = tag;
+    }
+  }
+
+  if (importMaps) {
+    tags.length -= importMaps.length;
+    tags.splice(firstModuleIndex, 0, ...importMaps);
+  }
+  return tags;
+};
+
+/**
  * `HtmlTagObject` -> `HtmlBasicTag`
  */
 const formatBasicTag = (tag: HtmlTagObject): HtmlBasicTag => ({
@@ -478,6 +539,9 @@ export class RsbuildHtmlPlugin {
             environment.config.security.nonce,
           );
         }
+
+        data.headTags = moveImportMaps(data.headTags);
+        data.bodyTags = moveImportMaps(data.bodyTags);
 
         return data;
       });

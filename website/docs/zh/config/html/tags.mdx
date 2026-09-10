@@ -320,6 +320,8 @@ export default {
 - `head` 指定是否将当前标签添加到 HTML 的 `<head>` 元素中，对于允许在 `<head>` 中包含的元素类型，默认为 `true`，否则为 `false`
 - 如果两个标签对象的 `head` 和 `append` 选项一致，它们将被插入到相同区域，并且维持彼此之间的相对位置。
 
+import map 是一个例外：Rsbuild 会在注入的 head 和 body 标签列表内，分别将 import map 移至第一个 module script 或 modulepreload 标签之前，并保留多张 map 的相对顺序；不会调整 HTML 模板中写死的标签或 `modifyHTML` 修改后的顺序。
+
 ```html
 <html>
   <head>
