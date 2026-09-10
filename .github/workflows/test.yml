@@ -37,12 +37,7 @@ jobs:
         id: changes
         with:
           predicate-quantifier: 'every'
-          filters: |
-            changed:
-              - "!**/*.md"
-              - "!**/*.mdx"
-              - "!**/_meta.json"
-              - "!**/dictionary.txt"
+          filters: .github/filters.yml
 
       - name: Setup Node.js
         if: steps.changes.outputs.changed == 'true'
@@ -85,12 +80,7 @@ jobs:
         id: changes
         with:
           predicate-quantifier: 'every'
-          filters: |
-            changed:
-              - "!**/*.md"
-              - "!**/*.mdx"
-              - "!**/_meta.json"
-              - "!**/dictionary.txt"
+          filters: .github/filters.yml
 
       - name: Setup Node.js
         if: steps.changes.outputs.changed == 'true'
