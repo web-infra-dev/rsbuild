@@ -80,7 +80,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
       }
 
       api.logger.warn(
-        `\`process.env.RSDOCTOR\` enabled, please install ${color.bold(color.yellow('@rsdoctor/core'))} package.`,
+        `\`process.env.RSDOCTOR\` enabled, please install ${color.bold(color.yellow('@rsdoctor/rspack-plugin'))} package.`,
       );
     });
   },

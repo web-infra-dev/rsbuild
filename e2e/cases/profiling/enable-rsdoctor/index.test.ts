@@ -11,9 +11,6 @@ type RsdoctorExports = {
   ) => Rspack.RspackPluginInstance;
 };
 
-const UPGRADE_LOG =
-  'Please upgrade to Rsdoctor v2 by replacing @rsdoctor/rspack-plugin with @rsdoctor/core.';
-
 const getRsdoctorPlugins = (config: Pick<Rspack.Configuration, 'plugins'>) =>
   config.plugins?.filter(
     (plugin) => plugin?.constructor?.name === 'RsdoctorRspackPlugin',
@@ -34,7 +31,7 @@ for (const [core, legacy, expectedLog] of [
   ['missing', true, '@rsdoctor/rspack-plugin enabled.'],
   ['legacy', true, '@rsdoctor/rspack-plugin enabled.'],
   ['broken', true, 'failed to load @rsdoctor/core module.'],
-  ['missing', false, 'please install @rsdoctor/core package.'],
+  ['missing', false, 'please install @rsdoctor/rspack-plugin package.'],
 ] as const) {
   test(`should auto-load Rsdoctor with ${core} core and legacy plugin ${legacy ? 'installed' : 'missing'}`, async ({
     logHelper,
@@ -81,7 +78,6 @@ for (const [core, legacy, expectedLog] of [
       );
     }
     await logHelper.expectLog(expectedLog);
-    logHelper.expectNoLog(UPGRADE_LOG);
   });
 }
 
@@ -93,7 +89,6 @@ test('should not register Rsdoctor when disabled', async ({ logHelper }) => {
     getRsdoctorPlugins(compiler.options as Rspack.Configuration),
   ).toHaveLength(0);
   logHelper.expectNoLog(/@rsdoctor\/.* enabled/);
-  logHelper.expectNoLog(UPGRADE_LOG);
 });
 
 test('should preserve a manually registered Rsdoctor plugin', async ({
