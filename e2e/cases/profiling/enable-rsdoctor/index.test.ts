@@ -4,12 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { createRsbuild, type Rspack } from '@rsbuild/core';
 import { onTestFinished } from '@rstest/core';
-
-type RsdoctorExports = {
-  RsdoctorRspackPlugin: new (
-    options?: Record<string, unknown>,
-  ) => Rspack.RspackPluginInstance;
-};
+import { RsdoctorRspackPlugin } from './_node_modules/@rsdoctor/rspack-plugin/index.js';
 
 const getRsdoctorPlugins = (config: Pick<Rspack.Configuration, 'plugins'>) =>
   config.plugins?.filter(
