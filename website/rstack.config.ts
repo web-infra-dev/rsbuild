@@ -253,9 +253,6 @@ define.doc({
         },
       }),
     ],
-    server: {
-      open: true,
-    },
     tools: {
       rspack: {
         experiments: {
