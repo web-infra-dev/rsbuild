@@ -34,11 +34,7 @@ for (const [core, legacy, expectedLog] of [
   ['missing', true, '@rsdoctor/rspack-plugin enabled.'],
   ['legacy', true, '@rsdoctor/rspack-plugin enabled.'],
   ['broken', true, 'failed to load @rsdoctor/core module.'],
-  [
-    'missing',
-    false,
-    'please install @rsdoctor/core or @rsdoctor/rspack-plugin package.',
-  ],
+  ['missing', false, 'please install @rsdoctor/core package.'],
 ] as const) {
   test(`should auto-load Rsdoctor with ${core} core and legacy plugin ${legacy ? 'installed' : 'missing'}`, async ({
     logHelper,
