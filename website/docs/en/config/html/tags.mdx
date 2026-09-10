@@ -319,6 +319,7 @@ The final injection position of the tag is determined by the [head](#head) and [
 - `append`: Defines the injection position of the current tag relative to existing tags, defaults to `true`
 - `head`: Specifies whether to add the current tag to the HTML `<head>` element, defaults to `true` for element types allowed in the `<head>`, otherwise `false`.
 - If two tag objects have the same `head` and `append` options, they will be inserted into the same area and hold their relative positions to each other.
+- Import maps are moved before module scripts and modulepreload links.
 
 ```html
 <html>
