@@ -1,11 +1,16 @@
 import { builtinModules } from 'node:module';
-import { sep } from 'node:path';
+import { resolve, sep } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { StatsError } from '@rspack/core';
 import { color } from 'rslog';
 import { LAZY_COMPILATION_IDENTIFIER } from '../constants';
 import { isVerbose, type Logger } from '../logger';
 import { removeLoaderChainDelimiter } from './stats';
+
+function formatDiagnosticPath(filePath: string, root: string): string {
+  // Avoid long chains of parent directories, e.g. paths to pnpm's global store.
+  return /^(\.\.[\\/]){4}/.test(filePath) ? resolve(root, filePath) : filePath;
+}
 
 const formatFileName = (fileName: string, stats: StatsError, root: string) => {
   // File name may be empty when the error is not related to a file.
@@ -30,6 +35,8 @@ const formatFileName = (fileName: string, stats: StatsError, root: string) => {
   const prefix = root + sep;
   if (fileName.startsWith(prefix)) {
     fileName = fileName.replace(prefix, `.${sep}`);
+  } else {
+    fileName = formatDiagnosticPath(fileName, root);
   }
 
   if (/:\d+:\d+/.test(fileName)) {
@@ -85,6 +92,7 @@ function resolveFileName(stats: StatsError, logger: Logger) {
 function formatModuleTrace(
   stats: StatsError,
   errorFile: string,
+  root: string,
   level: 'error' | 'warning',
   logger: Logger,
 ) {
@@ -114,7 +122,10 @@ function formatModuleTrace(
   }
 
   // Current moduleTrace is usually error -> entry, so reverse to entry -> error.
-  let trace = moduleNames.slice().reverse();
+  let trace = moduleNames
+    .slice()
+    .reverse()
+    .map((name) => formatDiagnosticPath(name, root));
   const MAX = 4;
 
   // Truncate long traces in non-verbose mode
@@ -265,7 +276,7 @@ export function formatStatsError(
 
   // display module trace for errors
   if (level === 'error' || isVerbose(logger)) {
-    const moduleTrace = formatModuleTrace(stats, fileName, level, logger);
+    const moduleTrace = formatModuleTrace(stats, fileName, root, level, logger);
     if (moduleTrace) {
       message += moduleTrace;
     }
