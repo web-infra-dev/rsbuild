@@ -1,6 +1,7 @@
 import { rspack } from '@rspack/core';
 import { createVirtualModule } from '../helpers';
 import { applyToCompiler } from '../helpers/compiler';
+import { isNonceTag } from '../helpers/html';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginNonce = (): RsbuildPlugin => ({
@@ -49,13 +50,7 @@ export const pluginNonce = (): RsbuildPlugin => ({
 
         if (nonce) {
           for (const tag of allTags) {
-            if (
-              tag.tag === 'script' ||
-              tag.tag === 'style' ||
-              (tag.tag === 'link' &&
-                tag.attrs?.rel === 'preload' &&
-                tag.attrs?.as === 'script')
-            ) {
+            if (isNonceTag(tag)) {
               tag.attrs ??= {};
               tag.attrs.nonce = nonce;
             }
