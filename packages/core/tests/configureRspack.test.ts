@@ -56,6 +56,26 @@ describe('configure Rspack', () => {
     expect(config[0].devtool).toEqual('eval');
   });
 
+  it('should allow tools.rspack to override default module and chunk IDs', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        mode: 'production',
+        tools: {
+          rspack: {
+            optimization: {
+              chunkIds: 'named',
+              moduleIds: 'named',
+            },
+          },
+        },
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.chunkIds).toEqual('named');
+    expect(config[0].optimization?.moduleIds).toEqual('named');
+  });
+
   it('should allow tools.rspack to be an array', async () => {
     const rsbuild = await createRsbuild({
       config: {

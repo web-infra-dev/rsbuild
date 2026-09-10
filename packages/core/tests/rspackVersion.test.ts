@@ -7,6 +7,8 @@ describe('rspack version', () => {
   it('should validate Rspack version compatibility', () => {
     expect(isSatisfyRspackVersion('0.1.0')).toBeFalsy();
 
+    expect(isSatisfyRspackVersion('2.2.2')).toBeFalsy();
+
     expect(isSatisfyRspackVersion(rspackMinVersion)).toBeTruthy();
 
     expect(isSatisfyRspackVersion('10.0.0')).toBeTruthy();
