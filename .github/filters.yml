@@ -1,0 +1,8 @@
+# Paths excluded from unit, e2e, and ecosystem tests.
+changed:
+  - '!**/*.{md,mdx}'
+  - '!**/{LICENSE,_meta.json,dictionary.txt}'
+  - '!{website,.agents,.vscode}/**'
+  - '!.github/ISSUE_TEMPLATE/**'
+  - '!.github/{FUNDING.yml,renovate.json}'
+  - '!{skills-lock.json,cspell.config.js}'

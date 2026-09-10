@@ -30,12 +30,7 @@ jobs:
         id: changes
         with:
           predicate-quantifier: 'every'
-          filters: |
-            changed:
-              - "!**/*.md"
-              - "!**/*.mdx"
-              - "!**/_meta.json"
-              - "!**/dictionary.txt"
+          filters: .github/filters.yml
 
   ecosystem_ci_dispatch:
     name: Dispatch ecosystem CI
