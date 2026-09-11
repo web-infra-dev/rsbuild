@@ -1,4 +1,5 @@
-export const rspackMinVersion = '2.0.0';
+// Rspack 2.2.3 is the minimum version for production-ready compact-hashed IDs.
+export const rspackMinVersion = '2.2.3';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);

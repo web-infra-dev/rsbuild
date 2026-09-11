@@ -1089,6 +1089,7 @@ exports[`should apply default plugins correctly in production 1`] = `
   },
   "name": "web",
   "optimization": {
+    "chunkIds": "compact-hashed",
     "minimize": true,
     "minimizer": [
       SwcJsMinimizerRspackPlugin {
@@ -1123,6 +1124,7 @@ exports[`should apply default plugins correctly in production 1`] = `
         "name": "LightningCssMinimizerRspackPlugin",
       },
     ],
+    "moduleIds": "compact-hashed",
     "splitChunks": {
       "chunks": "all",
     },
