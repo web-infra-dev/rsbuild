@@ -1,4 +1,4 @@
-// Rspack 2.2.3 fixes compact-hashed ID collisions for modern-module facade chunks.
+// Rspack 2.2.3 is the minimum version for production-ready compact-hashed IDs.
 export const rspackMinVersion = '2.2.3';
 
 const compareSemver = (version1: string, version2: string) => {
