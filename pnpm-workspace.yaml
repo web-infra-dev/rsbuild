@@ -117,7 +117,7 @@ catalog:
   'rspack-chain': '^2.3.2'
   'rspack-manifest-plugin': '5.2.2'
   'rspack-merge': '1.0.1'
-  'rspack-vue-loader': '^17.6.2'
+  'rspack-vue-loader': '^17.7.0'
   'rspress-plugin-font-open-sans': '^1.0.4'
   'rstack': '^0.7.3'
   'sass': '^1.103.1'
