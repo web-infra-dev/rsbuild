@@ -4,7 +4,7 @@ import { color, require } from '../helpers';
 import type { RsbuildPlugin, Rspack } from '../types';
 
 type RsdoctorExports = {
-  RsdoctorRspackPlugin: { new (): Rspack.RspackPluginInstance };
+  RsdoctorRspackPlugin?: { new (): Rspack.RspackPluginInstance };
 };
 
 type MaybeRsdoctorPlugin = Rspack.RspackPluginInstance & {
@@ -39,43 +39,49 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         }
       }
 
-      const packageName = '@rsdoctor/rspack-plugin';
-      let packagePath: string;
+      const packageNames = ['@rsdoctor/core', '@rsdoctor/rspack-plugin'];
 
-      try {
-        packagePath = require.resolve(packageName, {
-          paths: [api.context.rootPath],
-        });
-      } catch {
-        api.logger.warn(
-          `\`process.env.RSDOCTOR\` enabled, please install ${color.bold(color.yellow(packageName))} package.`,
-        );
+      for (const packageName of packageNames) {
+        let packagePath: string;
+        try {
+          packagePath = require.resolve(packageName, {
+            paths: [api.context.rootPath],
+          });
+        } catch {
+          continue;
+        }
+
+        let module: RsdoctorExports;
+        try {
+          const moduleURL = isWindows
+            ? pathToFileURL(packagePath).href
+            : packagePath;
+          module = await import(moduleURL);
+        } catch {
+          api.logger.error(
+            `\`process.env.RSDOCTOR\` enabled, but failed to load ${color.bold(color.yellow(packageName))} module.`,
+          );
+          return;
+        }
+
+        // Rsdoctor 1.x core does not export the plugin.
+        const RsdoctorPlugin = module[pluginName];
+        if (typeof RsdoctorPlugin !== 'function') {
+          continue;
+        }
+
+        for (const config of bundlerConfigs) {
+          config.plugins ||= [];
+          config.plugins.push(new RsdoctorPlugin());
+        }
+
+        api.logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
         return;
       }
 
-      let module: RsdoctorExports;
-      try {
-        const moduleURL = isWindows
-          ? pathToFileURL(packagePath).href
-          : packagePath;
-        module = await import(moduleURL);
-      } catch {
-        api.logger.error(
-          `\`process.env.RSDOCTOR\` enabled, but failed to load ${color.bold(color.yellow(packageName))} module.`,
-        );
-        return;
-      }
-
-      if (!module || !module[pluginName]) {
-        return;
-      }
-
-      for (const config of bundlerConfigs) {
-        config.plugins ||= [];
-        config.plugins.push(new module[pluginName]());
-      }
-
-      api.logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
+      api.logger.warn(
+        `\`process.env.RSDOCTOR\` enabled, please install ${color.bold(color.yellow('@rsdoctor/rspack-plugin'))} package.`,
+      );
     });
   },
 });

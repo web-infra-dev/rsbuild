@@ -1,102 +1,81 @@
+import { cp, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { createRsbuild, type Rspack } from '@rsbuild/core';
-import { matchPlugin } from '@scripts/test-helper';
+import { onTestFinished } from '@rstest/core';
+import { RsdoctorRspackPlugin } from './_node_modules/@rsdoctor/rspack-plugin/index.js';
 
-type RsdoctorExports = {
-  RsdoctorRspackPlugin: new (
-    options?: Record<string, unknown>,
-  ) => Rspack.RspackPluginInstance;
-};
+const getRsdoctorPlugins = (config: Pick<Rspack.Configuration, 'plugins'>) =>
+  config.plugins?.filter(
+    (plugin) => plugin?.constructor?.name === 'RsdoctorRspackPlugin',
+  );
 
-const RSDOCTOR_LOG = '@rsdoctor/rspack-plugin enabled';
+test.beforeEach(() => {
+  process.env.RSDOCTOR = 'true';
+});
 
 test.afterEach(() => {
-  process.env.RSDOCTOR = '';
+  delete process.env.RSDOCTOR;
 });
 
-test('should register Rsdoctor plugin when process.env.RSDOCTOR is true', async ({
-  copyNodeModules,
-  logHelper,
-}) => {
-  const { expectLog } = logHelper;
-  await copyNodeModules();
-  process.env.RSDOCTOR = 'true';
-
-  const rsbuild = await createRsbuild({
-    cwd: import.meta.dirname,
-  });
-
-  const compiler = await rsbuild.createCompiler();
-
-  await expectLog(RSDOCTOR_LOG);
-
-  expect(
-    matchPlugin(
-      compiler.options as Rspack.Configuration,
-      'RsdoctorRspackPlugin',
-    ),
-  ).toBeTruthy();
-});
-
-test('should not register Rsdoctor plugin when process.env.RSDOCTOR is false', async ({
-  logHelper,
-}) => {
-  const { expectNoLog } = logHelper;
-  process.env.RSDOCTOR = 'false';
-
-  const rsbuild = await createRsbuild({
-    cwd: import.meta.dirname,
-  });
-
-  const compiler = await rsbuild.createCompiler();
-
-  expectNoLog(RSDOCTOR_LOG);
-
-  expect(
-    matchPlugin(
-      compiler.options as Rspack.Configuration,
-      'RsdoctorRspackPlugin',
-    ),
-  ).toBeFalsy();
-});
-
-test('should not register Rsdoctor plugin when process.env.RSDOCTOR is true and the plugin has been registered', async ({
-  copyNodeModules,
-  logHelper,
-}) => {
-  const { expectNoLog } = logHelper;
-
-  await copyNodeModules();
-  process.env.RSDOCTOR = 'true';
-
-  const rsdoctorPackageName = '@rsdoctor/rspack-plugin';
-  const { RsdoctorRspackPlugin } = (await import(
-    rsdoctorPackageName
-  )) as RsdoctorExports;
-
-  const rsbuild = await createRsbuild({
-    cwd: import.meta.dirname,
-    config: {
-      tools: {
-        rspack: {
-          plugins: [
-            new RsdoctorRspackPlugin({
-              disableClientServer: true,
-            }),
-          ],
-        },
+for (const [core, expectedLog] of [
+  ['current', '@rsdoctor/core enabled.'],
+  ['missing', '@rsdoctor/rspack-plugin enabled.'],
+  ['legacy', '@rsdoctor/rspack-plugin enabled.'],
+] as const) {
+  test(`should auto-load Rsdoctor with ${core} core and legacy plugin installed`, async ({
+    logHelper,
+  }) => {
+    // Use separate paths to isolate package resolution and the ESM module cache.
+    const cwd = await mkdtemp(join(tmpdir(), 'rsbuild-rsdoctor-'));
+    onTestFinished(() => rm(cwd, { recursive: true, force: true }));
+    const packagesPath = join(cwd, 'node_modules/@rsdoctor');
+    await cp(join(import.meta.dirname, 'src'), join(cwd, 'src'), {
+      recursive: true,
+    });
+    await cp(
+      join(import.meta.dirname, '_node_modules/@rsdoctor'),
+      packagesPath,
+      {
+        recursive: true,
       },
-    },
+    );
+    if (core === 'missing') {
+      await rm(join(packagesPath, 'core'), { recursive: true });
+    }
+    if (core === 'legacy') {
+      await writeFile(join(packagesPath, 'core/index.js'), 'export {};');
+    }
+
+    const rsbuild = await createRsbuild({
+      cwd,
+      config: {
+        environments: { web: {}, node: { output: { target: 'node' } } },
+      },
+    });
+    const compiler = (await rsbuild.createCompiler()) as Rspack.MultiCompiler;
+    expect(compiler.compilers).toHaveLength(2);
+    for (const child of compiler.compilers) {
+      expect(getRsdoctorPlugins(child.options)).toHaveLength(1);
+    }
+    await logHelper.expectLog(expectedLog);
   });
+}
 
+test('should preserve a manually registered Rsdoctor plugin', async ({
+  copyNodeModules,
+  logHelper,
+}) => {
+  await copyNodeModules();
+  const plugin = new RsdoctorRspackPlugin();
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+    config: { tools: { rspack: { plugins: [plugin] } } },
+  });
   const compiler = await rsbuild.createCompiler();
-
-  expect(
-    matchPlugin(
-      compiler.options as Rspack.Configuration,
-      'RsdoctorRspackPlugin',
-    ),
-  ).toBeTruthy();
-
-  expectNoLog(RSDOCTOR_LOG);
+  expect(getRsdoctorPlugins(compiler.options as Rspack.Configuration)).toEqual([
+    plugin,
+  ]);
+  logHelper.expectNoLog(/@rsdoctor\/.* enabled/);
 });
