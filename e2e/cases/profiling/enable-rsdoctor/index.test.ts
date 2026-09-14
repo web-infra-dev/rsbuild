@@ -1,15 +1,28 @@
 import { cp, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import Module from 'node:module';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { createRsbuild, type Rspack } from '@rsbuild/core';
 import { onTestFinished } from '@rstest/core';
+import { rs } from 'rstack/test';
 import { RsdoctorRspackPlugin } from './_node_modules/@rsdoctor/rspack-plugin/index.js';
 
 const getRsdoctorPlugins = (config: Pick<Rspack.Configuration, 'plugins'>) =>
   config.plugins?.filter(
     (plugin) => plugin?.constructor?.name === 'RsdoctorRspackPlugin',
   );
+
+type ModuleLoader = {
+  _resolveFilename: (
+    request: string,
+    parent?: unknown,
+    isMain?: boolean,
+    options?: unknown,
+  ) => string;
+};
+
+const moduleLoader = Module as unknown as ModuleLoader;
 
 test.beforeEach(() => {
   process.env.RSDOCTOR = 'true';
@@ -48,16 +61,35 @@ for (const [core, expectedLog] of [
       await writeFile(join(packagesPath, 'core/index.js'), 'export {};');
     }
 
-    const rsbuild = await createRsbuild({
-      cwd,
-      config: {
-        environments: { web: {}, node: { output: { target: 'node' } } },
-      },
-    });
-    const compiler = (await rsbuild.createCompiler()) as Rspack.MultiCompiler;
-    expect(compiler.compilers).toHaveLength(2);
-    for (const child of compiler.compilers) {
-      expect(getRsdoctorPlugins(child.options)).toHaveLength(1);
+    const resolveFilename = moduleLoader._resolveFilename.bind(moduleLoader);
+    const resolveFilenameSpy =
+      core === 'missing'
+        ? rs
+            .spyOn(moduleLoader, '_resolveFilename')
+            .mockImplementation((request, ...args) => {
+              if (request === '@rsdoctor/core') {
+                const error = new Error('Cannot find module @rsdoctor/core');
+                (error as NodeJS.ErrnoException).code = 'MODULE_NOT_FOUND';
+                throw error;
+              }
+              return resolveFilename(request, ...args);
+            })
+        : undefined;
+
+    try {
+      const rsbuild = await createRsbuild({
+        cwd,
+        config: {
+          environments: { web: {}, node: { output: { target: 'node' } } },
+        },
+      });
+      const compiler = (await rsbuild.createCompiler()) as Rspack.MultiCompiler;
+      expect(compiler.compilers).toHaveLength(2);
+      for (const child of compiler.compilers) {
+        expect(getRsdoctorPlugins(child.options)).toHaveLength(1);
+      }
+    } finally {
+      resolveFilenameSpy?.mockRestore();
     }
     await logHelper.expectLog(expectedLog);
   });
