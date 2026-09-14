@@ -499,8 +499,8 @@ catalogs:
       specifier: ^4.0.0
       version: 4.0.0
     svelte:
-      specifier: ^5.56.10
-      version: 5.56.10
+      specifier: ^5.57.0
+      version: 5.57.0
     svelte-loader:
       specifier: 3.2.4
       version: 3.2.4
@@ -589,7 +589,7 @@ importers:
         version: 2.0.0-rc.8
       svelte:
         specifier: 'catalog:'
-        version: 5.56.10
+        version: 5.57.0
       vue:
         specifier: 'catalog:'
         version: 3.5.42(typescript@6.0.3)
@@ -767,7 +767,7 @@ importers:
     dependencies:
       svelte:
         specifier: 'catalog:'
-        version: 5.56.10
+        version: 5.57.0
     devDependencies:
       less:
         specifier: 'catalog:'
@@ -997,7 +997,7 @@ importers:
     dependencies:
       svelte:
         specifier: 'catalog:'
-        version: 5.56.10
+        version: 5.57.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1391,10 +1391,10 @@ importers:
     dependencies:
       svelte-loader:
         specifier: 'catalog:'
-        version: 3.2.4(svelte@5.56.10)
+        version: 3.2.4(svelte@5.57.0)
       svelte-preprocess:
         specifier: 'catalog:'
-        version: 6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.28)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3)
+        version: 6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.28)(sass@1.103.1)(svelte@5.57.0)(typescript@6.0.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1407,7 +1407,7 @@ importers:
         version: 24.13.4
       svelte:
         specifier: 'catalog:'
-        version: 5.56.10
+        version: 5.57.0
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -5313,8 +5313,8 @@ packages:
       typescript:
         optional: true
 
-  svelte@5.56.10:
-    resolution: {integrity: sha512-Lcxbj8I/KAbpY+VjtY4ENQBV0dDCipfGAhqb51XQZ67CIQqXgsv/8dPkbILaj4Fb6/b6JAEM/PIVbILXgDQy2g==}
+  svelte@5.57.0:
+    resolution: {integrity: sha512-NdbDn7fl4be1ViUG0oq/lvG6OZy3oENolV2ONjiqqsfVoeAfzaQAKUcEX3MrQod/Bebv1PgwET9rfXhgn9s4Kg==}
     engines: {node: '>=18'}
 
   svg-parser@2.0.4:
@@ -9512,20 +9512,20 @@ snapshots:
 
   svelte-dev-helper@1.1.9: {}
 
-  svelte-hmr@0.14.12(svelte@5.56.10):
+  svelte-hmr@0.14.12(svelte@5.57.0):
     dependencies:
-      svelte: 5.56.10
+      svelte: 5.57.0
 
-  svelte-loader@3.2.4(svelte@5.56.10):
+  svelte-loader@3.2.4(svelte@5.57.0):
     dependencies:
       loader-utils: 2.0.4
-      svelte: 5.56.10
+      svelte: 5.57.0
       svelte-dev-helper: 1.1.9
-      svelte-hmr: 0.14.12(svelte@5.56.10)
+      svelte-hmr: 0.14.12(svelte@5.57.0)
 
-  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.28)(sass@1.103.1)(svelte@5.56.10)(typescript@6.0.3):
+  svelte-preprocess@6.0.5(@babel/core@7.29.7)(less@4.9.1)(postcss-load-config@6.0.1)(postcss@8.5.28)(sass@1.103.1)(svelte@5.57.0)(typescript@6.0.3):
     dependencies:
-      svelte: 5.56.10
+      svelte: 5.57.0
     optionalDependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       less: 4.9.1(supports-color@8.1.1)
@@ -9534,13 +9534,12 @@ snapshots:
       sass: 1.103.1
       typescript: 6.0.3
 
-  svelte@5.56.10:
+  svelte@5.57.0:
     dependencies:
       '@jridgewell/remapping': 2.3.5
       '@jridgewell/sourcemap-codec': 1.5.5
       '@sveltejs/acorn-typescript': 1.0.10(acorn@8.17.0)
       '@types/estree': 1.0.9
-      '@types/trusted-types': 2.0.7
       acorn: 8.17.0
       aria-query: 5.3.1
       axobject-query: 4.1.0
