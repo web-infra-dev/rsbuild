@@ -1,9 +1,5 @@
 export class RsdoctorRspackPlugin {
   isRsdoctorPlugin = true;
 
-  constructor(options = {}) {
-    this.options = options;
-  }
-
   apply() {}
 }
