@@ -11,7 +11,19 @@ type MaybeRsdoctorPlugin = Rspack.RspackPluginInstance & {
   isRsdoctorPlugin?: boolean;
 };
 
-export const pluginRsdoctor = (): RsbuildPlugin => ({
+type ResolveRsdoctorPackage = (packageName: string, rootPath: string) => string;
+
+const resolveRsdoctorPackage: ResolveRsdoctorPackage = (
+  packageName,
+  rootPath,
+) =>
+  require.resolve(packageName, {
+    paths: [rootPath],
+  });
+
+export const pluginRsdoctor = (
+  resolvePackage: ResolveRsdoctorPackage = resolveRsdoctorPackage,
+): RsbuildPlugin => ({
   name: 'rsbuild:rsdoctor',
 
   setup(api) {
@@ -44,9 +56,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
       for (const packageName of packageNames) {
         let packagePath: string;
         try {
-          packagePath = require.resolve(packageName, {
-            paths: [api.context.rootPath],
-          });
+          packagePath = resolvePackage(packageName, api.context.rootPath);
         } catch {
           continue;
         }
