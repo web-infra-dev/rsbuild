@@ -1,0 +1,50 @@
+---
+description: 'Learn how to build a ReactLynx application using Rsbuild.'
+---
+
+# ReactLynx
+
+Learn how to build a [ReactLynx](https://lynxjs.org/react/introduction) application for [Lynx](https://lynxjs.org/) using Rsbuild.
+
+## Create a ReactLynx application
+
+Create a ReactLynx application with [@lynx-js/create-lynx](https://www.npmjs.com/package/@lynx-js/create-lynx):
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create @lynx-js/lynx@latest',
+    yarn: 'yarn create @lynx-js/lynx',
+    pnpm: 'pnpm create @lynx-js/lynx@latest',
+    bun: 'bun create @lynx-js/lynx@latest',
+  }}
+/>
+
+Then select `Rsbuild` when prompted to "Select build tool".
+
+## Use ReactLynx in an existing project
+
+To compile ReactLynx, you need to register the [ReactLynx plugin](https://lynxjs.org/api/rspeedy/react-rsbuild-plugin) provided by Lynx. The plugin will automatically add the necessary configuration for ReactLynx builds.
+
+Install `@lynx-js/react` and the plugin:
+
+<PackageManagerTabs command="add @lynx-js/react" />
+
+<PackageManagerTabs command="add @lynx-js/react-rsbuild-plugin -D" />
+
+Then register the plugin in Rsbuild config, and name the environment `lynx` so that it is built into a Lynx bundle:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReactLynx } from '@lynx-js/react-rsbuild-plugin';
+
+export default defineConfig({
+  environments: {
+    lynx: {},
+  },
+  plugins: [pluginReactLynx()],
+});
+```
+
+For more details, see the [ReactLynx documentation](https://lynxjs.org/react/introduction).
