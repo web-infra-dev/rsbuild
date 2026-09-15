@@ -23,14 +23,19 @@ describe('pluginRsdoctor', () => {
         }
 
         if (packageName === '@rsdoctor/rspack-plugin') {
-          return join(import.meta.dirname, 'fixtures/rsdoctor-rspack-plugin.js');
+          return join(
+            import.meta.dirname,
+            'fixtures/rsdoctor-rspack-plugin.js',
+          );
         }
 
         return resolve(packageName, options);
       });
 
     try {
-      const rsbuild = await createRsbuild({ cwd: import.meta.dirname });
+      const rsbuild = await createRsbuild({
+        cwd: join(import.meta.dirname, '..'),
+      });
       const compiler = await rsbuild.createCompiler();
       const plugins = (compiler.options as Rspack.Configuration).plugins;
 
