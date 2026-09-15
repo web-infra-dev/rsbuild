@@ -1,8 +1,6 @@
 import { join } from 'node:path';
-import type { OnBeforeCreateCompilerFn } from '../src/types/hooks';
-import type { RsbuildPluginAPI } from '../src/types/plugin';
-import type { Rspack } from '../src';
-import { pluginRsdoctor } from '../src/plugins/rsdoctor';
+import { createRsbuild, type Rspack } from '../src';
+import { require } from '../src/helpers';
 
 describe('pluginRsdoctor', () => {
   beforeEach(() => {
@@ -14,41 +12,35 @@ describe('pluginRsdoctor', () => {
   });
 
   it('should fall back to the legacy package when core is missing', async () => {
-    const log = rstest.fn();
-    let onBeforeCreateCompiler: OnBeforeCreateCompilerFn | undefined;
-    const resolvePackage = rstest.fn((packageName: string) => {
-      if (packageName === '@rsdoctor/core') {
-        const error = new Error('Cannot find module @rsdoctor/core');
-        (error as NodeJS.ErrnoException).code = 'MODULE_NOT_FOUND';
-        throw error;
-      }
-      return join(import.meta.dirname, 'fixtures/rsdoctor-rspack-plugin.js');
-    });
-    const plugin = pluginRsdoctor(resolvePackage);
+    const resolve = require.resolve.bind(require);
+    const resolveSpy = rstest
+      .spyOn(require, 'resolve')
+      .mockImplementation((packageName, options) => {
+        if (packageName === '@rsdoctor/core') {
+          const error = new Error('Cannot find module @rsdoctor/core');
+          (error as NodeJS.ErrnoException).code = 'MODULE_NOT_FOUND';
+          throw error;
+        }
 
-    plugin.setup({
-      context: { rootPath: import.meta.dirname },
-      logger: { info: log },
-      onBeforeCreateCompiler: (handler: OnBeforeCreateCompilerFn) => {
-        onBeforeCreateCompiler = handler as OnBeforeCreateCompilerFn;
-      },
-    } as unknown as RsbuildPluginAPI);
+        if (packageName === '@rsdoctor/rspack-plugin') {
+          return join(import.meta.dirname, 'fixtures/rsdoctor-rspack-plugin.js');
+        }
 
-    const bundlerConfigs: Rspack.Configuration[] = [{}];
-    expect(onBeforeCreateCompiler).toBeDefined();
-    await onBeforeCreateCompiler!({ bundlerConfigs, environments: {} });
+        return resolve(packageName, options);
+      });
 
-    expect(resolvePackage).toHaveBeenNthCalledWith(
-      1,
-      '@rsdoctor/core',
-      import.meta.dirname,
-    );
-    expect(resolvePackage).toHaveBeenNthCalledWith(
-      2,
-      '@rsdoctor/rspack-plugin',
-      import.meta.dirname,
-    );
-    expect(bundlerConfigs[0].plugins).toHaveLength(1);
-    expect(log).toHaveBeenCalledWith('@rsdoctor/rspack-plugin enabled.');
+    try {
+      const rsbuild = await createRsbuild({ cwd: import.meta.dirname });
+      const compiler = await rsbuild.createCompiler();
+      const plugins = (compiler.options as Rspack.Configuration).plugins;
+
+      expect(
+        plugins?.filter(
+          (plugin) => plugin?.constructor?.name === 'RsdoctorRspackPlugin',
+        ),
+      ).toHaveLength(1);
+    } finally {
+      resolveSpy.mockRestore();
+    }
   });
 });
