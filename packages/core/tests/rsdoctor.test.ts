@@ -22,10 +22,7 @@ describe('pluginRsdoctor', () => {
         (error as NodeJS.ErrnoException).code = 'MODULE_NOT_FOUND';
         throw error;
       }
-      return join(
-        import.meta.dirname,
-        'fixtures/rsdoctor-rspack-plugin.js',
-      );
+      return join(import.meta.dirname, 'fixtures/rsdoctor-rspack-plugin.js');
     });
     const plugin = pluginRsdoctor(resolvePackage);
 
