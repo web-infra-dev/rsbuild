@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
+    "@rspack/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:"

@@ -1217,7 +1217,7 @@ importers:
         version: 7.20.5
       babel-loader:
         specifier: 'catalog:'
-        version: 10.1.1(@babel/core@7.29.7)
+        version: 10.1.1(@babel/core@7.29.7)(@rspack/core@2.2.5)
       reduce-configs:
         specifier: ^1.1.2
         version: 1.1.2
@@ -1245,7 +1245,7 @@ importers:
         version: 4.9.1(supports-color@8.1.1)
       less-loader:
         specifier: 'catalog:'
-        version: 12.3.3(less@4.9.1)
+        version: 12.3.3(@rspack/core@2.2.5)(less@4.9.1)
       reduce-configs:
         specifier: 'catalog:'
         version: 2.0.1
@@ -1276,7 +1276,7 @@ importers:
         version: 1.2.1
       '@rspack/plugin-preact-refresh':
         specifier: 'catalog:'
-        version: 2.0.1(@prefresh/core@1.5.11)(@prefresh/utils@1.2.1)
+        version: 2.0.1(@prefresh/core@1.5.11)(@prefresh/utils@1.2.1)(@rspack/core@2.2.5)
       '@swc/plugin-prefresh':
         specifier: 'catalog:'
         version: 14.0.0
@@ -1284,6 +1284,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rspack/core':
+        specifier: 'catalog:'
+        version: 2.2.5(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.4
@@ -1298,7 +1301,7 @@ importers:
     dependencies:
       '@rspack/plugin-react-refresh':
         specifier: 'catalog:'
-        version: 2.0.2(react-refresh@0.19.0)
+        version: 2.0.2(@rspack/core@2.2.5)(react-refresh@0.19.0)
       react-refresh:
         specifier: 'catalog:'
         version: 0.19.0
@@ -1306,6 +1309,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rspack/core':
+        specifier: 'catalog:'
+        version: 2.2.5(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1354,7 +1360,7 @@ importers:
         version: 5.0.0
       sass-loader:
         specifier: 'catalog:'
-        version: 16.0.8(sass-embedded@1.104.1)(sass@1.103.1)
+        version: 16.0.8(@rspack/core@2.2.5)(sass-embedded@1.104.1)(sass@1.103.1)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1472,7 +1478,7 @@ importers:
     dependencies:
       rspack-vue-loader:
         specifier: 'catalog:'
-        version: 17.7.0(@vue/compiler-sfc@3.5.42)(vue@3.5.42)
+        version: 17.7.0(@rspack/core@2.2.5)(@vue/compiler-sfc@3.5.42)(vue@3.5.42)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -6614,10 +6620,12 @@ snapshots:
 
   '@rspack/lite-tapable@1.1.2': {}
 
-  '@rspack/plugin-preact-refresh@2.0.1(@prefresh/core@1.5.11)(@prefresh/utils@1.2.1)':
+  '@rspack/plugin-preact-refresh@2.0.1(@prefresh/core@1.5.11)(@prefresh/utils@1.2.1)(@rspack/core@2.2.5)':
     dependencies:
       '@prefresh/core': 1.5.11(preact@10.29.8)
       '@prefresh/utils': 1.2.1
+    optionalDependencies:
+      '@rspack/core': 2.2.5(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
 
   '@rspack/plugin-react-refresh@2.0.2(@rspack/core@2.2.5)(react-refresh@0.18.0)':
     dependencies:
@@ -6625,9 +6633,11 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 2.2.5(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
 
-  '@rspack/plugin-react-refresh@2.0.2(react-refresh@0.19.0)':
+  '@rspack/plugin-react-refresh@2.0.2(@rspack/core@2.2.5)(react-refresh@0.19.0)':
     dependencies:
       react-refresh: 0.19.0
+    optionalDependencies:
+      '@rspack/core': 2.2.5(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
 
   '@rspress/core@2.0.21(@module-federation/runtime-tools@2.9.0)(@rspack/core@2.2.5)(core-js@3.50.0)(micromark-util-types@2.0.2)(micromark@4.0.2)(supports-color@8.1.1)':
     dependencies:
@@ -7360,10 +7370,12 @@ snapshots:
 
   axobject-query@4.1.0: {}
 
-  babel-loader@10.1.1(@babel/core@7.29.7):
+  babel-loader@10.1.1(@babel/core@7.29.7)(@rspack/core@2.2.5):
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       find-up: 5.0.0
+    optionalDependencies:
+      '@rspack/core': 2.2.5(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
 
   bail@2.0.2: {}
 
@@ -8102,9 +8114,11 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.10.0
 
-  less-loader@12.3.3(less@4.9.1):
+  less-loader@12.3.3(@rspack/core@2.2.5)(less@4.9.1):
     dependencies:
       less: 4.9.1(supports-color@8.1.1)
+    optionalDependencies:
+      '@rspack/core': 2.2.5(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
 
   less@4.9.1(supports-color@8.1.1):
     dependencies:
@@ -9250,11 +9264,12 @@ snapshots:
 
   rspack-merge@1.0.1: {}
 
-  rspack-vue-loader@17.7.0(@vue/compiler-sfc@3.5.42)(vue@3.5.42):
+  rspack-vue-loader@17.7.0(@rspack/core@2.2.5)(@vue/compiler-sfc@3.5.42)(vue@3.5.42):
     dependencies:
       '@rspack/lite-tapable': 1.1.2
       chalk: 4.1.2
     optionalDependencies:
+      '@rspack/core': 2.2.5(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
       '@vue/compiler-sfc': 3.5.42
       vue: 3.5.42(typescript@6.0.3)
 
@@ -9394,10 +9409,11 @@ snapshots:
       sass-embedded-win32-arm64: 1.104.1
       sass-embedded-win32-x64: 1.104.1
 
-  sass-loader@16.0.8(sass-embedded@1.104.1)(sass@1.103.1):
+  sass-loader@16.0.8(@rspack/core@2.2.5)(sass-embedded@1.104.1)(sass@1.103.1):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
+      '@rspack/core': 2.2.5(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
       sass: 1.103.1
       sass-embedded: 1.104.1
 
