@@ -2,13 +2,14 @@ import fs from 'node:fs';
 import { isMultiCompiler } from '../helpers/compiler';
 import type { InternalContext, NormalizedConfig, Rspack } from '../types';
 import { type AssetsMiddleware, assetsMiddleware } from './assets-middleware';
-import { SocketServer } from './socketServer';
+import { type SocketConnectionListener, SocketServer } from './socketServer';
 
 type Options = {
   context: InternalContext;
   config: NormalizedConfig;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   resolvedPort: number;
+  onSocketConnect?: SocketConnectionListener;
 };
 
 /**
@@ -31,7 +32,13 @@ export class BuildManager {
 
   private context: InternalContext;
 
-  constructor({ config, context, compiler, resolvedPort }: Options) {
+  constructor({
+    config,
+    context,
+    compiler,
+    resolvedPort,
+    onSocketConnect,
+  }: Options) {
     this.config = config;
     this.context = context;
     this.compiler = compiler;
@@ -41,6 +48,7 @@ export class BuildManager {
       context,
       config.dev,
       () => this.outputFileSystem,
+      onSocketConnect,
     );
     this.context.socketServer = this.socketServer;
   }

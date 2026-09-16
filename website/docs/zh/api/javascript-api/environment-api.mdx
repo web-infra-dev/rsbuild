@@ -243,6 +243,7 @@ type EnvironmentAPI = {
     getTransformedHtml: (entryName: string) => Promise<string>;
     hot: {
       send: HotSend;
+      onConnect: HotOnConnect;
     };
   };
 };
@@ -382,3 +383,46 @@ if (import.meta.webpackHot) {
   import.meta.webpackHot.accept();
 }
 ```
+
+### hot.onConnect
+
+监听当前 environment 中新建立的 HMR 客户端连接，包括断线后的重连。它同时适用于内置 dev server 和通过 `connectWebSocket` 接入的自定义服务器。
+
+- **类型：**
+
+```ts
+type HotClient = {
+  send: HotSend;
+};
+
+type HotOnConnect = (
+  callback: (client: HotClient) => void | Promise<void>,
+) => () => void;
+```
+
+回调在连接通过校验、完成注册，并发送已有的初始构建消息后触发。`client.send` 接受与 `hot.send` 相同的参数，但只向该连接发送消息。向已关闭的连接发送消息会被忽略。
+
+例如，框架可以保存最新提交的构建版本，并在每个新连接建立时发送给它：
+
+```ts
+// 在服务端构建成功提交后更新这个值。
+let latestRevision = 0;
+
+const unsubscribe = server.environments.web.hot.onConnect((client) => {
+  client.send('custom', {
+    event: 'framework:committed-revision',
+    data: { revision: latestRevision },
+  });
+});
+
+// 在集成被清理时调用。
+unsubscribe();
+```
+
+请在客户端连接前注册回调，例如在 `server.setup` 中或调用 `server.listen()` 之前。已有连接不会触发新注册的回调。返回的函数用于移除监听器，可以重复调用。关闭 dev server 时会清理所有监听器。使用 `createDevServer({ runCompile: false })` 时，此 API 不可用。
+
+回调抛出的错误会被记录，不会中断其他监听器。异步回调不会被等待，也不会延迟连接建立流程。
+
+:::note
+连接通知不代表浏览器端的应用监听器、hydration 或 HMR 更新已就绪。请尽早注册自定义消息监听器，并在应用就绪前保存待处理的数据。Rsbuild 不会保存或自动重放自定义消息；集成方需要自行保存版本，并忽略重复或过期的更新。
+:::

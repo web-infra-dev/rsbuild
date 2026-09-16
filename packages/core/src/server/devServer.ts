@@ -1,6 +1,7 @@
 import { once } from 'node:events';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
+import type { WebSocket } from 'ws';
 import { color, pick } from '../helpers';
 import {
   getPublicPathFromCompiler,
@@ -59,6 +60,15 @@ export type HotSend = <T extends ServerMessage['type']>(
   type: T,
   data?: ExtractSocketMessageData<T>,
 ) => void;
+
+export type HotClient = {
+  /** Send an HMR message to this connection only. */
+  send: HotSend;
+};
+
+type HotConnectCallback = (client: HotClient) => void | Promise<void>;
+
+export type HotOnConnect = (callback: HotConnectCallback) => () => void;
 
 export type RsbuildDevServer = RsbuildServerBase & {
   /**
@@ -137,6 +147,7 @@ export async function createDevServer<
   };
 
   const compileState = createCompileState(context.environmentList.length);
+  const hotConnectCallbacks = new Map<string, Set<HotConnectCallback>>();
 
   const startCompile: () => Promise<BuildManager> = async () => {
     const compiler = await createCompiler();
@@ -184,6 +195,23 @@ export async function createDevServer<
       config,
       compiler,
       resolvedPort: port,
+      onSocketConnect: (socket, token) => {
+        const callbacks = hotConnectCallbacks.get(token);
+        if (!callbacks?.size) {
+          return;
+        }
+
+        const client: HotClient = { send: createHotSend(socket) };
+        for (const callback of [...callbacks]) {
+          try {
+            Promise.resolve(callback(client)).catch((error: unknown) => {
+              logger.error(error);
+            });
+          } catch (error) {
+            logger.error(error);
+          }
+        }
+      },
     });
 
     await buildManager.init();
@@ -233,12 +261,18 @@ export async function createDevServer<
     : setupGracefulShutdown();
 
   let closingPromise: Promise<void> | undefined;
+  let isClosing = false;
   let unregisterRestart: (() => void) | undefined;
 
   // Keep the restart watcher active when closing server resources,
   // so failed restarts can be retried.
   const closeServerResources = () => {
     if (!closingPromise) {
+      isClosing = true;
+      for (const callbacks of hotConnectCallbacks.values()) {
+        callbacks.clear();
+      }
+      hotConnectCallbacks.clear();
       unregisterRestart?.();
       unregisterRestart = undefined;
       closingPromise = (async () => {
@@ -315,14 +349,14 @@ export async function createDevServer<
 
   const environmentAPI: EnvironmentAPI = {};
   const createHotSend =
-    (token?: string): HotSend =>
+    (target?: string | WebSocket): HotSend =>
     (type, data) =>
       state.buildManager?.socketServer.sendMessage(
         {
           type,
           data,
         } as ServerMessage,
-        token,
+        target,
       );
 
   const getErrorMsg = (method: string) =>
@@ -335,6 +369,26 @@ export async function createDevServer<
       context: environment,
       hot: {
         send: createHotSend(environment.webSocketToken),
+        onConnect: (callback) => {
+          if (!runCompile) {
+            throw new Error(getErrorMsg('hot.onConnect'));
+          }
+          if (isClosing) {
+            return () => {};
+          }
+
+          const token = environment.webSocketToken;
+          let callbacks = hotConnectCallbacks.get(token);
+          if (!callbacks) {
+            callbacks = new Set();
+            hotConnectCallbacks.set(token, callbacks);
+          }
+          callbacks.add(callback);
+
+          return () => {
+            callbacks.delete(callback);
+          };
+        },
       },
       getStats: async () => {
         if (!state.buildManager) {
