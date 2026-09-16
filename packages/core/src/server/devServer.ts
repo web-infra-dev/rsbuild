@@ -147,7 +147,8 @@ export async function createDevServer<
   };
 
   const compileState = createCompileState(context.environmentList.length);
-  const hotConnectCallbacks = new Map<string, Set<HotConnectCallback>>();
+  let hotConnectCallbacks: Map<string, Set<HotConnectCallback>> | undefined =
+    new Map();
 
   const startCompile: () => Promise<BuildManager> = async () => {
     const compiler = await createCompiler();
@@ -196,7 +197,7 @@ export async function createDevServer<
       compiler,
       resolvedPort: port,
       onSocketConnect: (socket, token) => {
-        const callbacks = hotConnectCallbacks.get(token);
+        const callbacks = hotConnectCallbacks?.get(token);
         if (!callbacks?.size) {
           return;
         }
@@ -268,7 +269,7 @@ export async function createDevServer<
   const closeServerResources = () => {
     if (!closingPromise) {
       // Also prevent new subscriptions during and after shutdown.
-      hotConnectCallbacks.clear();
+      hotConnectCallbacks = undefined;
       unregisterRestart?.();
       unregisterRestart = undefined;
       closingPromise = (async () => {
@@ -362,7 +363,6 @@ export async function createDevServer<
 
   context.environmentList.forEach((environment, index) => {
     const { webSocketToken } = environment;
-    hotConnectCallbacks.set(webSocketToken, new Set());
 
     environmentAPI[environment.name] = {
       context: environment,
@@ -372,10 +372,19 @@ export async function createDevServer<
           if (!runCompile) {
             throw new Error(getErrorMsg('hot.onConnect'));
           }
-          hotConnectCallbacks.get(webSocketToken)?.add(callback);
+          if (!hotConnectCallbacks) {
+            return () => {};
+          }
+
+          let callbacks = hotConnectCallbacks.get(webSocketToken);
+          if (!callbacks) {
+            callbacks = new Set();
+            hotConnectCallbacks.set(webSocketToken, callbacks);
+          }
+          callbacks.add(callback);
 
           return () => {
-            hotConnectCallbacks.get(webSocketToken)?.delete(callback);
+            hotConnectCallbacks?.get(webSocketToken)?.delete(callback);
           };
         },
       },
