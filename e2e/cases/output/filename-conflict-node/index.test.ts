@@ -14,6 +14,7 @@ test('should avoid filename conflicts between node entries and async chunks', as
 
   expect(files).toContain('a.js');
   expect(files).toHaveLength(2);
+  // Both JS files must be in the dist root, with no subdirectories.
   expect(files.every((file) => /^[^/\\]+\.js$/.test(file))).toBe(true);
   expect(
     execFileSync(process.execPath, [join(rsbuild.distPath, 'a.js')], {
