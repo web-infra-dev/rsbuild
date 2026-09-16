@@ -386,7 +386,7 @@ if (import.meta.webpackHot) {
 
 ### hot.onConnect
 
-监听 HMR 客户端连接或重新连接到当前 environment。支持内置 dev server 和通过 `connectWebSocket` 接入的自定义服务器。
+注册回调，在 HMR 客户端连接到当前 environment 时触发，包括断线重连。
 
 - **版本：** `>= v2.2.8`
 - **类型：**
@@ -401,9 +401,9 @@ type HotOnConnect = (
 ) => () => void;
 ```
 
-回调在连接建立并发送已有的初始构建消息后触发。`client.send` 接受与 `hot.send` 相同的参数，只向该客户端发送消息。向已关闭的连接发送消息会被忽略。
+请在客户端连接前注册回调，例如在 `server.setup` 中或调用 `server.listen()` 之前。已有连接不会触发该回调。
 
-例如，向每个新连接的客户端发送最新的构建版本：
+使用 `client.send` 向该客户端单独发送消息，参数与 `hot.send` 相同。例如，在客户端连接时发送最新的构建版本：
 
 ```ts
 // 每次服务端构建成功后更新。
@@ -416,12 +416,9 @@ const unsubscribe = server.environments.web.hot.onConnect((client) => {
   });
 });
 
-// 调用返回的函数以取消监听。
-unsubscribe();
+// 不再需要监听时，调用 unsubscribe() 取消监听。
 ```
 
-请在客户端连接前注册回调，例如在 `server.setup` 中或调用 `server.listen()` 之前。已有连接不会触发该回调。
-
 :::note
-连接建立不代表浏览器端应用已就绪。请尽早注册自定义事件监听器，并在应用能够处理消息前缓存消息。Rsbuild 不会保存或重放自定义消息。
+回调触发时，浏览器端应用可能仍在初始化。请尽早注册自定义事件监听器，并按需缓存消息。Rsbuild 不会保存或重放自定义消息。
 :::

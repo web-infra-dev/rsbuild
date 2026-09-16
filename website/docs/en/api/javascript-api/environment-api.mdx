@@ -385,7 +385,7 @@ if (import.meta.webpackHot) {
 
 ### hot.onConnect
 
-Listen for HMR clients connecting or reconnecting to the current environment. Supports the built-in dev server and custom servers using `connectWebSocket`.
+Register a callback that runs when an HMR client connects or reconnects to the current environment.
 
 - **Version:** `>= v2.2.8`
 - **Type:**
@@ -400,9 +400,9 @@ type HotOnConnect = (
 ) => () => void;
 ```
 
-The callback runs after a connection is established and any initial build messages are sent. `client.send` accepts the same arguments as `hot.send` and sends only to that client. Sends to closed connections are ignored.
+Register the callback before clients connect, for example in `server.setup` or before `server.listen()`. Existing connections do not trigger the callback.
 
-For example, send the latest build revision to each new client:
+Use `client.send` to send messages to that client only. It accepts the same arguments as `hot.send`. For example, send the latest build revision whenever a client connects:
 
 ```ts
 // Update after each successful server build.
@@ -415,12 +415,9 @@ const unsubscribe = server.environments.web.hot.onConnect((client) => {
   });
 });
 
-// Call the returned function to stop listening.
-unsubscribe();
+// When no longer needed, call unsubscribe() to stop listening.
 ```
 
-Register the callback before clients connect, such as in `server.setup` or before `server.listen()`. It does not run for existing connections.
-
 :::note
-A connection does not mean the browser application is ready. Register custom event listeners early and buffer messages until the application can handle them. Rsbuild does not store or replay custom messages.
+The browser application may still be initializing when the callback runs. Register custom event listeners early and buffer messages if needed. Rsbuild does not store or replay custom messages.
 :::
