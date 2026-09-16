@@ -416,13 +416,11 @@ const unsubscribe = server.environments.web.hot.onConnect((client) => {
   });
 });
 
-// 清理集成时调用。
+// 调用返回的函数以取消监听。
 unsubscribe();
 ```
 
-请在客户端连接前注册回调，例如在 `server.setup` 中或调用 `server.listen()` 之前。已有连接不会触发该回调。使用 `createDevServer({ runCompile: false })` 时，此 API 不可用。
-
-返回的函数用于移除监听器，可安全地重复调用。关闭 dev server 时会清理所有监听器。回调中的错误会被记录，不会中断其他监听器；返回的 Promise 不会被等待。
+请在客户端连接前注册回调，例如在 `server.setup` 中或调用 `server.listen()` 之前。已有连接不会触发该回调。
 
 :::note
 连接建立不代表浏览器端应用已就绪。请尽早注册自定义事件监听器，并在应用能够处理消息前缓存消息。Rsbuild 不会保存或重放自定义消息。

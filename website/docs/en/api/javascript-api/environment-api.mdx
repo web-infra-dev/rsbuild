@@ -415,13 +415,11 @@ const unsubscribe = server.environments.web.hot.onConnect((client) => {
   });
 });
 
-// Call when the integration is disposed.
+// Call the returned function to stop listening.
 unsubscribe();
 ```
 
-Register the callback before clients connect, such as in `server.setup` or before `server.listen()`. It does not run for existing connections. This API is unavailable with `createDevServer({ runCompile: false })`.
-
-The returned function removes the listener and is safe to call repeatedly. Closing the dev server clears all listeners. Callback errors are logged without interrupting other listeners; returned promises are not awaited.
+Register the callback before clients connect, such as in `server.setup` or before `server.listen()`. It does not run for existing connections.
 
 :::note
 A connection does not mean the browser application is ready. Register custom event listeners early and buffer messages until the application can handle them. Rsbuild does not store or replay custom messages.
