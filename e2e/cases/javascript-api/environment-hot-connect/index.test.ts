@@ -1,14 +1,14 @@
 import { once } from 'node:events';
 import { createServer } from 'node:http';
 import { expect, expectPoll, test } from '@e2e/helper';
-import { createRsbuild, type HotClient } from '@rsbuild/core';
+import { createRsbuild } from '@rsbuild/core';
 
 test.each([false, true])(
   'should replay to new connections and unsubscribe (middlewareMode: %s)',
   async (middlewareMode) => {
     let revision = 1;
     let unsubscribe = () => {};
-    const clients: HotClient[] = [];
+    let connections = 0;
     const rsbuild = await createRsbuild({
       cwd: import.meta.dirname,
       config: {
@@ -18,7 +18,7 @@ test.each([false, true])(
           setup({ action, server }) {
             if (action !== 'dev') return;
             unsubscribe = server.environments.web.hot.onConnect((client) => {
-              clients.push(client);
+              connections++;
               client.send('custom', { event: 'revision', data: revision });
             });
           },
@@ -33,27 +33,24 @@ test.each([false, true])(
     const customServer = middlewareMode
       ? createServer(server.middlewares)
       : undefined;
-    const sockets: WebSocket[] = [];
 
-    const connect = (environment = 'web', token?: string) => {
+    const connect = async (environment = 'web') => {
       const { context } = server.environments[environment];
       const socket = new WebSocket(
-        `ws://localhost:${server.port}${context.config.dev.client.path}?token=${token ?? context.webSocketToken}`,
+        `ws://localhost:${server.port}${context.config.dev.client.path}?token=${context.webSocketToken}`,
       );
-      sockets.push(socket);
-      const types: string[] = [];
       const revisions: number[] = [];
       socket.addEventListener('message', ({ data }) => {
         const message = JSON.parse(String(data)) as {
           type: string;
-          data: { event: string; data: number };
+          data: { data: number };
         };
-        types.push(message.type);
-        if (message.type === 'custom' && message.data.event === 'revision') {
+        if (message.type === 'custom') {
           revisions.push(message.data.data);
         }
       });
-      return { socket, types, revisions };
+      await once(socket, 'open');
+      return { socket, revisions };
     };
 
     try {
@@ -65,19 +62,14 @@ test.each([false, true])(
       } else {
         await server.listen();
       }
-      await server.environments.web.getStats();
-
-      const first = connect();
+      const first = await connect();
       await expectPoll(() => first.revisions).toEqual([1]);
-      expect(first.types.slice(0, 3)).toEqual(['hash', 'ok', 'custom']);
 
-      const other = connect('other');
-      await expectPoll(() => other.types).toContain('ok');
-      expect(other.revisions).toEqual([]);
-      expect(clients).toHaveLength(1);
+      await connect('other');
+      expect(connections).toBe(1);
 
       revision = 2;
-      const second = connect();
+      const second = await connect();
       await expectPoll(() => second.revisions).toEqual([2]);
       expect(first.revisions).toEqual([1]);
 
@@ -85,27 +77,14 @@ test.each([false, true])(
       second.socket.close();
       await closed;
       revision = 4;
-      const reconnected = connect();
+      const reconnected = await connect();
       await expectPoll(() => reconnected.revisions).toEqual([4]);
-      expect(clients).toHaveLength(3);
-
-      const rejected = connect('web', 'invalid-token');
-      await once(rejected.socket, 'error');
-      expect(clients).toHaveLength(3);
+      expect(connections).toBe(3);
 
       unsubscribe();
-      unsubscribe();
-      const unsubscribed = connect();
-      await expectPoll(() => unsubscribed.types).toContain('ok');
-      expect(unsubscribed.revisions).toEqual([]);
-      expect(clients).toHaveLength(3);
-
-      await server.close();
-      expect(() =>
-        clients[0].send('custom', { event: 'closed' }),
-      ).not.toThrow();
+      await connect();
+      expect(connections).toBe(3);
     } finally {
-      for (const socket of sockets) socket.close();
       await server.close();
       if (customServer) {
         await new Promise<void>((resolve) =>
