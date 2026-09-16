@@ -261,17 +261,13 @@ export async function createDevServer<
     : setupGracefulShutdown();
 
   let closingPromise: Promise<void> | undefined;
-  let isClosing = false;
   let unregisterRestart: (() => void) | undefined;
 
   // Keep the restart watcher active when closing server resources,
   // so failed restarts can be retried.
   const closeServerResources = () => {
     if (!closingPromise) {
-      isClosing = true;
-      for (const callbacks of hotConnectCallbacks.values()) {
-        callbacks.clear();
-      }
+      // Also prevent new subscriptions during and after shutdown.
       hotConnectCallbacks.clear();
       unregisterRestart?.();
       unregisterRestart = undefined;
@@ -365,28 +361,21 @@ export async function createDevServer<
     `${color.yellow('runCompile')} is false`;
 
   context.environmentList.forEach((environment, index) => {
+    const { webSocketToken } = environment;
+    hotConnectCallbacks.set(webSocketToken, new Set());
+
     environmentAPI[environment.name] = {
       context: environment,
       hot: {
-        send: createHotSend(environment.webSocketToken),
+        send: createHotSend(webSocketToken),
         onConnect: (callback) => {
           if (!runCompile) {
             throw new Error(getErrorMsg('hot.onConnect'));
           }
-          if (isClosing) {
-            return () => {};
-          }
-
-          const token = environment.webSocketToken;
-          let callbacks = hotConnectCallbacks.get(token);
-          if (!callbacks) {
-            callbacks = new Set();
-            hotConnectCallbacks.set(token, callbacks);
-          }
-          callbacks.add(callback);
+          hotConnectCallbacks.get(webSocketToken)?.add(callback);
 
           return () => {
-            callbacks.delete(callback);
+            hotConnectCallbacks.get(webSocketToken)?.delete(callback);
           };
         },
       },
