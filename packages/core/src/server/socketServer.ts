@@ -116,6 +116,11 @@ export type ClientMessagePing = {
 
 export type ClientMessage = ClientMessagePing | ClientMessageError;
 
+export type SocketConnectionListener = (
+  socket: WebSocket,
+  token: string,
+) => void;
+
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
   return queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {};
@@ -166,14 +171,18 @@ export class SocketServer {
 
   private currentHash = new Map<string, string>();
 
+  private onSocketConnect?: SocketConnectionListener;
+
   constructor(
     context: InternalContext,
     options: DevConfig,
     getOutputFileSystem: () => Rspack.OutputFileSystem,
+    onSocketConnect?: SocketConnectionListener,
   ) {
     this.context = context;
     this.options = options;
     this.getOutputFileSystem = getOutputFileSystem;
+    this.onSocketConnect = onSocketConnect;
   }
 
   // subscribe upgrade event to handle socket
@@ -373,6 +382,7 @@ export class SocketServer {
 
   public async close(): Promise<void> {
     this.clearHeartbeatTimer();
+    this.onSocketConnect = undefined;
 
     // Remove all event listeners
     this.wsServer.removeAllListeners();
@@ -519,6 +529,8 @@ export class SocketServer {
       force: true,
       token,
     });
+
+    this.onSocketConnect?.(socket, token);
   }
 
   private getEnvironmentByToken(token: string) {

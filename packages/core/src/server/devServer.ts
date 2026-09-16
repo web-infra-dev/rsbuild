@@ -1,6 +1,7 @@
 import { once } from 'node:events';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
+import type { WebSocket } from 'ws';
 import { color, pick } from '../helpers';
 import {
   getPublicPathFromCompiler,
@@ -59,6 +60,15 @@ export type HotSend = <T extends ServerMessage['type']>(
   type: T,
   data?: ExtractSocketMessageData<T>,
 ) => void;
+
+export type HotClient = {
+  /** Send an HMR message to this connection only. */
+  send: HotSend;
+};
+
+type HotConnectCallback = (client: HotClient) => void | Promise<void>;
+
+export type HotOnConnect = (callback: HotConnectCallback) => () => void;
 
 export type RsbuildDevServer = RsbuildServerBase & {
   /**
@@ -137,6 +147,8 @@ export async function createDevServer<
   };
 
   const compileState = createCompileState(context.environmentList.length);
+  let hotConnectCallbacks: Map<string, Set<HotConnectCallback>> | undefined =
+    new Map();
 
   const startCompile: () => Promise<BuildManager> = async () => {
     const compiler = await createCompiler();
@@ -184,6 +196,23 @@ export async function createDevServer<
       config,
       compiler,
       resolvedPort: port,
+      onSocketConnect: (socket, token) => {
+        const callbacks = hotConnectCallbacks?.get(token);
+        if (!callbacks?.size) {
+          return;
+        }
+
+        const client: HotClient = { send: createHotSend(socket) };
+        for (const callback of [...callbacks]) {
+          try {
+            Promise.resolve(callback(client)).catch((error: unknown) => {
+              logger.error(error);
+            });
+          } catch (error) {
+            logger.error(error);
+          }
+        }
+      },
     });
 
     await buildManager.init();
@@ -239,6 +268,8 @@ export async function createDevServer<
   // so failed restarts can be retried.
   const closeServerResources = () => {
     if (!closingPromise) {
+      // Also prevent new subscriptions during and after shutdown.
+      hotConnectCallbacks = undefined;
       unregisterRestart?.();
       unregisterRestart = undefined;
       closingPromise = (async () => {
@@ -315,14 +346,14 @@ export async function createDevServer<
 
   const environmentAPI: EnvironmentAPI = {};
   const createHotSend =
-    (token?: string): HotSend =>
+    (target?: string | WebSocket): HotSend =>
     (type, data) =>
       state.buildManager?.socketServer.sendMessage(
         {
           type,
           data,
         } as ServerMessage,
-        token,
+        target,
       );
 
   const getErrorMsg = (method: string) =>
@@ -331,10 +362,31 @@ export async function createDevServer<
     `${color.yellow('runCompile')} is false`;
 
   context.environmentList.forEach((environment, index) => {
+    const { webSocketToken } = environment;
+
     environmentAPI[environment.name] = {
       context: environment,
       hot: {
-        send: createHotSend(environment.webSocketToken),
+        send: createHotSend(webSocketToken),
+        onConnect: (callback) => {
+          if (!runCompile) {
+            throw new Error(getErrorMsg('hot.onConnect'));
+          }
+          if (!hotConnectCallbacks) {
+            return () => {};
+          }
+
+          let callbacks = hotConnectCallbacks.get(webSocketToken);
+          if (!callbacks) {
+            callbacks = new Set();
+            hotConnectCallbacks.set(webSocketToken, callbacks);
+          }
+          callbacks.add(callback);
+
+          return () => {
+            hotConnectCallbacks?.get(webSocketToken)?.delete(callback);
+          };
+        },
       },
       getStats: async () => {
         if (!state.buildManager) {

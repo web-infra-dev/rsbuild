@@ -36,7 +36,11 @@ export { ensureAssetPrefix } from './helpers/url';
 // Helpers
 export { createLogger, type Logger, defaultLogger as logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
-export type { RsbuildDevServer } from './server/devServer';
+export type {
+  HotClient,
+  HotOnConnect,
+  RsbuildDevServer,
+} from './server/devServer';
 export type {
   RsbuildServerBase,
   ServerStartResult,

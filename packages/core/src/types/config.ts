@@ -20,7 +20,11 @@ import type {
 } from 'http-proxy-middleware';
 import type { RspackChain } from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
-import type { HotSend, RsbuildDevServer } from '../server/devServer';
+import type {
+  HotOnConnect,
+  HotSend,
+  RsbuildDevServer,
+} from '../server/devServer';
 import type { RsbuildPreviewServer } from '../server/previewServer';
 import type { Logger } from '../logger';
 import type {
@@ -1896,10 +1900,15 @@ export type EnvironmentAPI = Record<
     getTransformedHtml: (entryName: string) => Promise<string>;
 
     /**
-     * Send HMR message to the current environment only.
+     * HMR communication for the current environment.
      */
     hot: {
       send: HotSend;
+      /**
+       * Listen for accepted HMR connections in this environment.
+       * Returns a function that removes the listener.
+       */
+      onConnect: HotOnConnect;
     };
 
     /**
