@@ -242,7 +242,6 @@ type EnvironmentAPI = {
     getTransformedHtml: (entryName: string) => Promise<string>;
     hot: {
       send: HotSend;
-      onConnect: HotOnConnect;
     };
   };
 };
@@ -382,46 +381,3 @@ if (import.meta.webpackHot) {
   import.meta.webpackHot.accept();
 }
 ```
-
-### hot.onConnect
-
-Listen for new HMR client connections in the current environment, including reconnections. This works with both the built-in dev server and custom servers attached through `connectWebSocket`.
-
-- **Type:**
-
-```ts
-type HotClient = {
-  send: HotSend;
-};
-
-type HotOnConnect = (
-  callback: (client: HotClient) => void | Promise<void>,
-) => () => void;
-```
-
-The callback runs after the connection passes validation, is registered, and any available initial build messages are sent. `client.send` accepts the same arguments as `hot.send`, but sends only to that connection. Messages sent to a closed connection are ignored.
-
-For example, a framework can retain its latest committed revision and send it to each new connection:
-
-```ts
-// Update this value after a successful server build is committed.
-let latestRevision = 0;
-
-const unsubscribe = server.environments.web.hot.onConnect((client) => {
-  client.send('custom', {
-    event: 'framework:committed-revision',
-    data: { revision: latestRevision },
-  });
-});
-
-// Call when the integration is disposed.
-unsubscribe();
-```
-
-Register the callback before clients connect, for example in `server.setup` or before `server.listen()`. Existing connections do not trigger a newly registered callback. The returned function removes the listener and can be called more than once. Closing the dev server clears all listeners. This API is unavailable when `createDevServer({ runCompile: false })` is used.
-
-Callback errors are logged without interrupting other listeners. Async callbacks are not awaited and do not delay connection setup.
-
-:::note
-A connection notification does not mean the browser's application listeners, hydration, or HMR updates are ready. Install custom-message listeners eagerly and retain pending data until the application is ready. Rsbuild does not retain or automatically replay custom messages; the integration is responsible for storing revisions and ignoring duplicate or older updates.
-:::
