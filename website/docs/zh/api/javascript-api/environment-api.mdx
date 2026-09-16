@@ -405,16 +405,13 @@ type HotOnConnect = (
 
 回调接收一个 `client` 对象。使用 `client.send` 可以单独向该客户端发送消息，参数与 `hot.send` 相同。
 
-例如，你可以在每个客户端连接时，向其发送最新的构建版本号：
+例如，你可以在每个客户端连接时，向其发送一条欢迎消息：
 
 ```ts
-// 每次服务端构建成功后更新此值。
-let latestRevision = 0;
-
 const unsubscribe = server.environments.web.hot.onConnect((client) => {
   client.send('custom', {
-    event: 'framework:revision',
-    data: { revision: latestRevision },
+    event: 'welcome',
+    data: { message: 'Hello!' },
   });
 });
 ```

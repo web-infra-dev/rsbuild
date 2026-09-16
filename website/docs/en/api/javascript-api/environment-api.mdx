@@ -404,16 +404,13 @@ Register the callback before clients connect, for example in `server.setup` or b
 
 The callback receives a `client` object. Use `client.send` to send messages only to that client, with the same arguments as `hot.send`.
 
-For example, you can send the latest build revision to each client when it connects:
+For example, you can send a welcome message to each client when it connects:
 
 ```ts
-// Update this value after each successful server build.
-let latestRevision = 0;
-
 const unsubscribe = server.environments.web.hot.onConnect((client) => {
   client.send('custom', {
-    event: 'framework:revision',
-    data: { revision: latestRevision },
+    event: 'welcome',
+    data: { message: 'Hello!' },
   });
 });
 ```
