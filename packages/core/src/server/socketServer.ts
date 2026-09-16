@@ -339,11 +339,19 @@ export class SocketServer {
   /**
    * Send a server message to matching client sockets.
    * @param message - The message to send
-   * @param token - The token of the socket to send the message to,
-   * if not provided, the message will be sent to all sockets
+   * @param target - An environment token or a single socket.
+   * If not provided, the message will be sent to all sockets.
    */
-  public sendMessage(message: ServerMessage, token?: string): void {
+  public sendMessage(
+    message: ServerMessage,
+    target?: string | WebSocket,
+  ): void {
     const messageStr = JSON.stringify(message);
+
+    if (typeof target === 'object') {
+      this.sendRawMessage(target, messageStr);
+      return;
+    }
 
     const sendToSockets = (sockets: Set<WebSocket>) => {
       for (const socket of sockets) {
@@ -351,8 +359,8 @@ export class SocketServer {
       }
     };
 
-    if (token) {
-      const sockets = this.socketsMap.get(token);
+    if (target) {
+      const sockets = this.socketsMap.get(target);
       if (sockets) {
         sendToSockets(sockets);
       }
