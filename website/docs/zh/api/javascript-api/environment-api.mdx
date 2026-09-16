@@ -386,7 +386,7 @@ if (import.meta.webpackHot) {
 
 ### hot.onConnect
 
-注册回调，在 HMR 客户端连接到当前 environment 时触发，包括断线重连。
+注册一个回调，在 HMR 客户端连接或重新连接到当前 environment 时调用。
 
 - **版本：** `>= v2.2.8`
 - **类型：**
@@ -401,12 +401,14 @@ type HotOnConnect = (
 ) => () => void;
 ```
 
-请在客户端连接前注册回调，例如在 `server.setup` 中或调用 `server.listen()` 之前。已有连接不会触发该回调。
+请在客户端连接前注册回调，例如在 `server.setup` 中，或在调用 `server.listen()` 之前。已连接的客户端不会触发该回调。
 
-使用 `client.send` 向该客户端单独发送消息，参数与 `hot.send` 相同。例如，在客户端连接时发送最新的构建版本：
+回调接收一个 `client` 对象。使用 `client.send` 可以单独向该客户端发送消息，参数与 `hot.send` 相同。
+
+例如，你可以在每个客户端连接时，向其发送最新的构建版本号：
 
 ```ts
-// 每次服务端构建成功后更新。
+// 每次服务端构建成功后更新此值。
 let latestRevision = 0;
 
 const unsubscribe = server.environments.web.hot.onConnect((client) => {
@@ -415,10 +417,10 @@ const unsubscribe = server.environments.web.hot.onConnect((client) => {
     data: { revision: latestRevision },
   });
 });
-
-// 不再需要监听时，调用 unsubscribe() 取消监听。
 ```
 
+不再需要监听客户端连接时，调用返回的 `unsubscribe` 函数即可取消订阅。
+
 :::note
-回调触发时，浏览器端应用可能仍在初始化。请尽早注册自定义事件监听器，并按需缓存消息。Rsbuild 不会保存或重放自定义消息。
+回调执行时，浏览器端应用可能仍在初始化。请尽早在浏览器端注册自定义事件监听器，并根据需要缓存消息。Rsbuild 不会保存或重放自定义消息。
 :::
