@@ -385,8 +385,9 @@ if (import.meta.webpackHot) {
 
 ### hot.onConnect
 
-Listen for new HMR client connections in the current environment, including reconnections. This works with both the built-in dev server and custom servers attached through `connectWebSocket`.
+Listen for HMR clients connecting or reconnecting to the current environment. Supports the built-in dev server and custom servers using `connectWebSocket`.
 
+- **Version:** `>= v2.2.8`
 - **Type:**
 
 ```ts
@@ -399,17 +400,17 @@ type HotOnConnect = (
 ) => () => void;
 ```
 
-The callback runs after the connection passes validation, is registered, and any available initial build messages are sent. `client.send` accepts the same arguments as `hot.send`, but sends only to that connection. Messages sent to a closed connection are ignored.
+The callback runs after a connection is established and any initial build messages are sent. `client.send` accepts the same arguments as `hot.send` and sends only to that client. Sends to closed connections are ignored.
 
-For example, a framework can retain its latest committed revision and send it to each new connection:
+For example, send the latest build revision to each new client:
 
 ```ts
-// Update this value after a successful server build is committed.
+// Update after each successful server build.
 let latestRevision = 0;
 
 const unsubscribe = server.environments.web.hot.onConnect((client) => {
   client.send('custom', {
-    event: 'framework:committed-revision',
+    event: 'framework:revision',
     data: { revision: latestRevision },
   });
 });
@@ -418,10 +419,10 @@ const unsubscribe = server.environments.web.hot.onConnect((client) => {
 unsubscribe();
 ```
 
-Register the callback before clients connect, for example in `server.setup` or before `server.listen()`. Existing connections do not trigger a newly registered callback. The returned function removes the listener and can be called more than once. Closing the dev server clears all listeners. This API is unavailable when `createDevServer({ runCompile: false })` is used.
+Register the callback before clients connect, such as in `server.setup` or before `server.listen()`. It does not run for existing connections. This API is unavailable with `createDevServer({ runCompile: false })`.
 
-Callback errors are logged without interrupting other listeners. Async callbacks are not awaited and do not delay connection setup.
+The returned function removes the listener and is safe to call repeatedly. Closing the dev server clears all listeners. Callback errors are logged without interrupting other listeners; returned promises are not awaited.
 
 :::note
-A connection notification does not mean the browser's application listeners, hydration, or HMR updates are ready. Install custom-message listeners eagerly and retain pending data until the application is ready. Rsbuild does not retain or automatically replay custom messages; the integration is responsible for storing revisions and ignoring duplicate or older updates.
+A connection does not mean the browser application is ready. Register custom event listeners early and buffer messages until the application can handle them. Rsbuild does not store or replay custom messages.
 :::
