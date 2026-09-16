@@ -242,6 +242,7 @@ type EnvironmentAPI = {
     getTransformedHtml: (entryName: string) => Promise<string>;
     hot: {
       send: HotSend;
+      onConnect: HotOnConnect;
     };
   };
 };
@@ -381,3 +382,41 @@ if (import.meta.webpackHot) {
   import.meta.webpackHot.accept();
 }
 ```
+
+### hot.onConnect
+
+Register a callback that runs when an HMR client connects or reconnects to the current environment.
+
+- **Version:** `>= v2.2.8`
+- **Type:**
+
+```ts
+type HotClient = {
+  send: HotSend;
+};
+
+type HotOnConnect = (
+  callback: (client: HotClient) => void | Promise<void>,
+) => () => void;
+```
+
+Register the callback before clients connect, for example in `server.setup` or before calling `server.listen()`. The callback is not invoked for clients that are already connected.
+
+The callback receives a `client` object. Use `client.send` to send messages only to that client, with the same arguments as `hot.send`.
+
+For example, you can send a welcome message to each client when it connects:
+
+```ts
+const unsubscribe = server.environments.web.hot.onConnect((client) => {
+  client.send('custom', {
+    event: 'welcome',
+    data: { message: 'Hello!' },
+  });
+});
+```
+
+Call the returned `unsubscribe` function when you no longer need to listen for connections.
+
+:::note
+The browser application may still be initializing when the callback runs. Register custom event listeners in the browser as early as possible and buffer messages if needed. Rsbuild does not store or replay custom messages.
+:::

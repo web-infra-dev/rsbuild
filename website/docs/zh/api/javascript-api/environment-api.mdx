@@ -243,6 +243,7 @@ type EnvironmentAPI = {
     getTransformedHtml: (entryName: string) => Promise<string>;
     hot: {
       send: HotSend;
+      onConnect: HotOnConnect;
     };
   };
 };
@@ -382,3 +383,41 @@ if (import.meta.webpackHot) {
   import.meta.webpackHot.accept();
 }
 ```
+
+### hot.onConnect
+
+注册一个回调，在 HMR 客户端连接或重新连接到当前 environment 时调用。
+
+- **版本：** `>= v2.2.8`
+- **类型：**
+
+```ts
+type HotClient = {
+  send: HotSend;
+};
+
+type HotOnConnect = (
+  callback: (client: HotClient) => void | Promise<void>,
+) => () => void;
+```
+
+请在客户端连接前注册回调，例如在 `server.setup` 中，或在调用 `server.listen()` 之前。已连接的客户端不会触发该回调。
+
+回调接收一个 `client` 对象。使用 `client.send` 可以单独向该客户端发送消息，参数与 `hot.send` 相同。
+
+例如，你可以在每个客户端连接时，向其发送一条欢迎消息：
+
+```ts
+const unsubscribe = server.environments.web.hot.onConnect((client) => {
+  client.send('custom', {
+    event: 'welcome',
+    data: { message: 'Hello!' },
+  });
+});
+```
+
+不再需要监听客户端连接时，调用返回的 `unsubscribe` 函数即可取消订阅。
+
+:::note
+回调执行时，浏览器端应用可能仍在初始化。请尽早在浏览器端注册自定义事件监听器，并根据需要缓存消息。Rsbuild 不会保存或重放自定义消息。
+:::
