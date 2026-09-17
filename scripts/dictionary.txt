@@ -64,6 +64,7 @@ jiti
 jridgewell
 jscpuprofile
 jsesc
+jsonjoy
 kaios
 koppers
 lightningcss
