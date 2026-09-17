@@ -7,12 +7,10 @@ export async function setupOutputFileSystem(
   compilers: Compiler[],
 ): Promise<OutputFileSystem> {
   if (writeToDisk !== true) {
-    const { createFsFromVolume, Volume } = await import(
-      /* rspackChunkName: "memfs" */ 'memfs'
+    const { createMemoryFileSystem } = await import(
+      /* rspackChunkName: "memfs" */ './memoryFileSystem'
     );
-    const outputFileSystem = createFsFromVolume(
-      new Volume(),
-    ) as OutputFileSystem;
+    const outputFileSystem = createMemoryFileSystem() as OutputFileSystem;
 
     for (const compiler of compilers) {
       compiler.outputFileSystem = outputFileSystem;
