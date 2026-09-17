@@ -47,6 +47,7 @@
   "devDependencies": {
     "@jridgewell/remapping": "catalog:",
     "@jridgewell/trace-mapping": "catalog:",
+    "@jsonjoy.com/fs-core": "catalog:",
     "@rstackjs/load-config": "catalog:",
     "@types/cors": "catalog:",
     "@types/node": "catalog:",
