@@ -1,6 +1,9 @@
 import fs from 'node:fs';
-import { join } from 'node:path';
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
 import type { Config } from 'prebundle';
+
+const require = createRequire(import.meta.url);
 
 function replaceFileContent(
   filePath: string,
@@ -38,6 +41,15 @@ export default {
     {
       name: 'chokidar',
       dtsOnly: true,
+    },
+    {
+      name: 'ws',
+      dtsOnly: true,
+      copyDts: true,
+      beforeBundle(task) {
+        // ws declarations are provided by @types/ws.
+        task.depPath = dirname(require.resolve('@types/ws/package.json'));
+      },
     },
     {
       name: 'cors',
