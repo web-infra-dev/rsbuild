@@ -177,6 +177,7 @@ rstack.lib({
         isolated: true,
         alias: {
           // alias to pre-bundled types as they are public API
+          ws: './compiled/ws',
           cors: './compiled/cors',
           rslog: './compiled/rslog',
           postcss: './compiled/postcss/lib/postcss',
