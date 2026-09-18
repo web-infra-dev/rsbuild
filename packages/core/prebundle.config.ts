@@ -1,9 +1,7 @@
 import fs from 'node:fs';
-import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { Config } from 'prebundle';
-
-const require = createRequire(import.meta.url);
 
 function replaceFileContent(
   filePath: string,
@@ -48,7 +46,9 @@ export default {
       copyDts: true,
       beforeBundle(task) {
         // ws declarations are provided by @types/ws.
-        task.depPath = dirname(require.resolve('@types/ws/package.json'));
+        task.depPath = dirname(
+          fileURLToPath(import.meta.resolve('@types/ws/package.json')),
+        );
       },
     },
     {
