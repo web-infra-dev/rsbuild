@@ -11,7 +11,12 @@ define.test(() => {
   const isCI = Boolean(process.env.CI);
 
   return {
-    extends: definePlaywrightConfig({}),
+    extends: definePlaywrightConfig({
+      launchOptions: {
+        // Use the built-in Chrome browser to speed up CI tests
+        channel: isCI ? 'chrome' : undefined,
+      },
+    }),
     include: ['cases/**/*.test.ts'],
     exclude: ['**/node_modules/**', '**/.*/**', '**/test-temp-*/**'],
     reporters: ['default', ['github-actions', { annotations: false }]],

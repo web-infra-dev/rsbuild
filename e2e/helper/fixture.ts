@@ -8,7 +8,6 @@ import {
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
 import { expect, test as base } from '@rstest/playwright';
-import type { PlaywrightOptions } from '@rstest/playwright';
 import {
   copyNodeModules as baseCopyNodeModules,
   editFile as baseEditFile,
@@ -196,16 +195,7 @@ const setupExecOptions = <T extends SpawnOptions | ExecSyncOptions>(
   return options;
 };
 
-const rsbuildBase = base.extend({
-  playwright: {
-    launchOptions: {
-      // Use the built-in Chrome browser to speed up CI tests
-      channel: process.env.CI ? 'chrome' : undefined,
-    },
-  } satisfies PlaywrightOptions,
-});
-
-const rsbuildTest = rsbuildBase.extend<RsbuildFixture>({
+const rsbuildTest = base.extend<RsbuildFixture>({
   cwd: async ({ task }, use) => {
     const testPath = task.filepath;
     if (!testPath) {
