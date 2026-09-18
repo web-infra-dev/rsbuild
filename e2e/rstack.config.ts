@@ -19,6 +19,12 @@ define.test(() => {
     retry: isCI ? 3 : 0,
     testTimeout: 30_000,
     hookTimeout: 30_000,
+    expect: {
+      poll: {
+        // Preserve the 5s Playwright assertion timeout used before Rstest 0.12.
+        timeout: 5_000,
+      },
+    },
     output: {
       externals: ['@rsbuild/core'],
     },
