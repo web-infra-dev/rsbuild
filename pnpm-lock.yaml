@@ -379,8 +379,8 @@ catalogs:
       specifier: ^5.1.0
       version: 5.1.0
     html-rspack-plugin:
-      specifier: 6.1.10
-      version: 6.1.10
+      specifier: 6.1.11
+      version: 6.1.11
     http-proxy-middleware:
       specifier: 4.2.0
       version: 4.2.0
@@ -1099,7 +1099,7 @@ importers:
         version: 0.2.1
       html-rspack-plugin:
         specifier: 'catalog:'
-        version: 6.1.10(@rspack/core@2.2.6)
+        version: 6.1.11(@rspack/core@2.2.6)
       http-proxy-middleware:
         specifier: 'catalog:'
         version: 4.2.0(supports-color@8.1.1)
@@ -3999,8 +3999,8 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
 
-  html-rspack-plugin@6.1.10:
-    resolution: {integrity: sha512-8V2a8AytOzkplLZ2+c7gXdPK73s4ptEDBGUkD4+v4erV80PDjWZckijB+rabEq04l+vsTgPXwUx3DZNQ5AeaFw==}
+  html-rspack-plugin@6.1.11:
+    resolution: {integrity: sha512-aWPstu/jzOFh0BoY9eHtUp3yJp+01CdHuTxnw3RR5Uv9wAl8pAtokzaF7SWYivqZWAA2P+DYCZVmLnp23HfuGQ==}
     engines: {node: '>=16.20.2'}
     peerDependencies:
       '@rspack/core': ^1.0.0 || ^2.0.0
@@ -8029,7 +8029,7 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.48.0
 
-  html-rspack-plugin@6.1.10(@rspack/core@2.2.6):
+  html-rspack-plugin@6.1.11(@rspack/core@2.2.6):
     dependencies:
       '@rspack/lite-tapable': 1.1.5
     optionalDependencies:
