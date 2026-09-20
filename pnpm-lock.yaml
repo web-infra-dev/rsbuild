@@ -379,8 +379,8 @@ catalogs:
       specifier: ^5.1.0
       version: 5.1.0
     html-rspack-plugin:
-      specifier: 6.1.9
-      version: 6.1.9
+      specifier: 6.1.11
+      version: 6.1.11
     http-proxy-middleware:
       specifier: 4.2.0
       version: 4.2.0
@@ -1099,7 +1099,7 @@ importers:
         version: 0.2.1
       html-rspack-plugin:
         specifier: 'catalog:'
-        version: 6.1.9(@rspack/core@2.2.6)
+        version: 6.1.11(@rspack/core@2.2.6)
       http-proxy-middleware:
         specifier: 'catalog:'
         version: 4.2.0(supports-color@8.1.1)
@@ -2654,6 +2654,9 @@ packages:
   '@rspack/lite-tapable@1.1.2':
     resolution: {integrity: sha512-1OnyWChLGE46YzWyjlmYJssOu/Y0STAnnr2ueKPqDCYTf63GJMs0mxNnCul4dNiVqHYPKv3/fxrTY3IpqoVwZQ==}
 
+  '@rspack/lite-tapable@1.1.5':
+    resolution: {integrity: sha512-uzB782zJbFTM3ta+e2Glikx36dca/6Y+DXyvFN+wb0Tx5ItIW+g03A0t3amP3LGzPHSkb0k81VHCm4jxLQwfag==}
+
   '@rspack/plugin-preact-refresh@2.0.1':
     resolution: {integrity: sha512-tQ3WRBVaJ5JVy4jQHaYpYqeQrPStc7WrIJlVMrY/2mJMe5D1Ma4EO6K7J0v4Zx3HZMoJ1xeaqfCI9E8UHFE9yQ==}
     peerDependencies:
@@ -3996,11 +3999,11 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
 
-  html-rspack-plugin@6.1.9:
-    resolution: {integrity: sha512-GWdHEsyXrP4b2SSCzJfYKO/+r6DkNBeJytk2VKQwlrFuKCeCneIXpY1Cty3uYgH7jsAuPKkR1I1Cr2sOeX5KBg==}
+  html-rspack-plugin@6.1.11:
+    resolution: {integrity: sha512-aWPstu/jzOFh0BoY9eHtUp3yJp+01CdHuTxnw3RR5Uv9wAl8pAtokzaF7SWYivqZWAA2P+DYCZVmLnp23HfuGQ==}
     engines: {node: '>=16.20.2'}
     peerDependencies:
-      '@rspack/core': ^1.0.0 || ^2.0.0-0
+      '@rspack/core': ^1.0.0 || ^2.0.0
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
@@ -6660,6 +6663,8 @@ snapshots:
 
   '@rspack/lite-tapable@1.1.2': {}
 
+  '@rspack/lite-tapable@1.1.5': {}
+
   '@rspack/plugin-preact-refresh@2.0.1(@prefresh/core@1.5.11)(@prefresh/utils@1.2.1)(@rspack/core@2.2.6)':
     dependencies:
       '@prefresh/core': 1.5.11(preact@10.29.8)
@@ -8024,9 +8029,9 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.48.0
 
-  html-rspack-plugin@6.1.9(@rspack/core@2.2.6):
+  html-rspack-plugin@6.1.11(@rspack/core@2.2.6):
     dependencies:
-      '@rspack/lite-tapable': 1.1.2
+      '@rspack/lite-tapable': 1.1.5
     optionalDependencies:
       '@rspack/core': 2.2.6(@module-federation/runtime-tools@2.9.0)(@swc/helpers@0.5.23)
 
