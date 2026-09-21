@@ -13,10 +13,10 @@
     "octane": "^0.2.10"
   },
   "devDependencies": {
-    "@octanejs/rsbuild-plugin": "^0.1.49",
+    "@octanejs/rsbuild-plugin": "^0.1.51",
     "@rsbuild/core": "^2.2.8",
-    "@tsrx/typescript-plugin": "^0.4.1",
-    "@types/node": "^24.13.4",
+    "@tsrx/typescript-plugin": "^0.4.6",
+    "@types/node": "^24.13.6",
     "typescript": "^5.9.3"
   }
 }
