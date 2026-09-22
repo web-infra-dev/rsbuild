@@ -7,10 +7,16 @@ import type {
 import type { StackFrame } from 'stacktrace-parser';
 import { SCRIPT_REGEX } from '../constants';
 import { color, isRspackRuntimeModule } from '../helpers';
+import { cachedImport } from '../helpers/cachedImport';
 import { readFileAsync } from '../helpers/fs';
 import { isVerbose } from '../logger';
 import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
+
+const getTraceMapping = cachedImport(
+  () =>
+    import(/* rspackChunkName: "trace-mapping" */ '@jridgewell/trace-mapping'),
+);
 
 /**
  * Determines whether a given string is a valid method name
@@ -60,10 +66,7 @@ const parseFrame = async (
     return;
   }
 
-  const { TraceMap, originalPositionFor } = await import(
-    /* rspackChunkName: "trace-mapping" */
-    '@jridgewell/trace-mapping'
-  );
+  const { TraceMap, originalPositionFor } = await getTraceMapping();
 
   const sourceMapPath = sourceMapInfo.filename;
   const needle = {
