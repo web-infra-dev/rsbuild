@@ -88,11 +88,8 @@ export class CommonJsRunner extends BasicRunner {
     const requireCache: Record<string, ModuleObject> = Object.create(null);
     // rslint-disable-next-line @typescript-eslint/no-require-imports
     const vm = require('node:vm') as typeof import('node:vm');
-    // rslint-disable-next-line @typescript-eslint/no-implied-eval -- Evaluate import() in the main context instead of the VM context.
-    const dynamicImport = new Function(
-      'specifier',
-      'return import(specifier)',
-    ) as (specifier: string) => Promise<Module>;
+    let cachedDynamicImport:
+      ((specifier: string) => Promise<Module>) | undefined;
 
     return (currentDirectory, modulePath, context = {}) => {
       const file = context.file || this.getFile(modulePath, currentDirectory);
@@ -117,6 +114,11 @@ export class CommonJsRunner extends BasicRunner {
       const args = Object.keys(currentModuleScope);
       const argValues = args.map((arg) => currentModuleScope[arg]);
       this.preExecute(file.content, file);
+      // rslint-disable-next-line @typescript-eslint/no-implied-eval -- Evaluate import() in the main context instead of the VM context.
+      const dynamicImport = (cachedDynamicImport ??= new Function(
+        'specifier',
+        'return import(specifier)',
+      ) as (specifier: string) => Promise<Module>);
       const fn = vm.compileFunction(file.content, args, {
         filename: file.path,
         // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.
