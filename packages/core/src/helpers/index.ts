@@ -9,6 +9,7 @@ import type {
   RsbuildTarget,
   Rspack,
 } from '../types';
+import { cachedImport } from './cachedImport';
 
 export { require } from './vendors';
 
@@ -246,8 +247,10 @@ export const isTTY = (type: 'stdin' | 'stdout' = 'stdout'): boolean => {
   );
 };
 
+const getCrypto = cachedImport(() => import('node:crypto'));
+
 export async function hash(data: string): Promise<string> {
-  const crypto = await import('node:crypto');
+  const crypto = await getCrypto();
   // Available in Node.js v20.12.0
   // faster than `crypto.createHash()` when hashing a smaller amount of data (<= 5MB)
   if (crypto.hash) {

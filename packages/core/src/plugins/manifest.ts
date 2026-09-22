@@ -4,6 +4,7 @@ import type {
   ManifestPluginOptions,
 } from 'rspack-manifest-plugin';
 import { color, isObject } from '../helpers';
+import { cachedImport } from '../helpers/cachedImport';
 import { getPublicPathFromCompiler } from '../helpers/compiler';
 import { ensureAssetPrefix } from '../helpers/url';
 import { recursiveChunkEntryNames } from '../rspack-plugins/resource-hints/doesChunkBelongToHtml';
@@ -15,6 +16,11 @@ import type {
   ManifestObjectConfig,
   RsbuildPlugin,
 } from '../types';
+
+const getManifestPlugin = cachedImport(
+  () =>
+    import(/* rspackChunkName: "manifest-plugin" */ 'rspack-manifest-plugin'),
+);
 
 const isCSSPath = (filePath: string) => filePath.endsWith('.css');
 
@@ -230,9 +236,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
       const manifestOptions = normalizeManifestObjectConfig(manifest);
 
-      const { RspackManifestPlugin } = await import(
-        /* rspackChunkName: "manifest-plugin" */ 'rspack-manifest-plugin'
-      );
+      const { RspackManifestPlugin } = await getManifestPlugin();
       const { htmlPaths } = environment;
 
       // Exclude `*.LICENSE.txt` files by default
