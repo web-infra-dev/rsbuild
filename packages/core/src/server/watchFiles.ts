@@ -1,7 +1,6 @@
 import type { FSWatcher } from 'chokidar';
 import { castArray } from '../helpers';
-import { cachedImport } from '../helpers/cachedImport';
-import { getTinyglobby } from '../helpers/tinyglobby';
+import { cachedImport, getTinyglobby } from '../helpers/cachedImport';
 import type {
   ChokidarOptions,
   DevConfig,

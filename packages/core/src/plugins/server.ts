@@ -4,7 +4,7 @@ import path from 'node:path';
 import { isDeno } from '../constants';
 import { color } from '../helpers';
 import { dedupeNestedPaths } from '../helpers/path';
-import { getTinyglobby } from '../helpers/tinyglobby';
+import { getTinyglobby } from '../helpers/cachedImport';
 import { open } from '../server/open';
 import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
 
