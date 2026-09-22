@@ -8,6 +8,7 @@ import { lookup } from 'mrmime';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import { isWebTarget } from '../../helpers';
+import { cachedImport } from '../../helpers/cachedImport';
 import type { InternalContext, RequestHandler, Rspack } from '../../types';
 import { HttpCode } from '../helper';
 import { getFileFromUrl } from './getFileFromUrl';
@@ -264,13 +265,14 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
   }
 }
 
+const getRangeParser = cachedImport(
+  () => import(/* rspackChunkName: "range-parser" */ 'range-parser'),
+);
+
 const parseRangeHeaders = async (
   value: string,
 ): Promise<RangeResult | Ranges> => {
-  const { default: rangeParser } = await import(
-    /* rspackChunkName: "range-parser" */
-    'range-parser'
-  );
+  const { default: rangeParser } = await getRangeParser();
   const [len, rangeHeader] = value.split('|');
   return rangeParser(Number(len), rangeHeader, {
     combine: true,
