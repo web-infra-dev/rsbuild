@@ -70,7 +70,7 @@ export class EsmRunner extends CommonJsRunner {
             const result = await _require(path.dirname(file.path), specifier, {
               esmMode: EsmMode.Evaluated,
             });
-            return asModule(result, module.context);
+            return asModule(vm, result, module.context);
           },
         };
         esm = new vm.SourceTextModule(file.content, sourceTextModuleOptions);
@@ -80,6 +80,7 @@ export class EsmRunner extends CommonJsRunner {
       return (async () => {
         await esm.link(async (specifier, referencingModule) => {
           return asModule(
+            vm,
             await _require(
               path.dirname(referencingModule.identifier),
               specifier,
