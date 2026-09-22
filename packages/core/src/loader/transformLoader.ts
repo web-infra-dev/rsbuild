@@ -1,5 +1,6 @@
 import type { SourceMapInput } from '@jridgewell/trace-mapping';
 import type { LoaderDefinition, RawSourceMap } from '@rspack/core';
+import { cachedImport } from '../helpers/cachedImport';
 import type { EnvironmentContext } from '../types';
 
 export type TransformLoaderOptions = {
@@ -7,13 +8,15 @@ export type TransformLoaderOptions = {
   getEnvironment: () => EnvironmentContext;
 };
 
+const getRemapping = cachedImport(
+  () => import(/* rspackChunkName: "remapping" */ '@jridgewell/remapping'),
+);
+
 const mergeSourceMap = async (
   originalSourceMap: RawSourceMap | string,
   generatedSourceMap: RawSourceMap | string,
 ): Promise<RawSourceMap> => {
-  const { default: remapping } = await import(
-    /* rspackChunkName: "remapping" */ '@jridgewell/remapping'
-  );
+  const { default: remapping } = await getRemapping();
   return remapping(
     [generatedSourceMap, originalSourceMap] as SourceMapInput[],
     () => null,
