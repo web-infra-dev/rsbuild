@@ -1,5 +1,6 @@
 import { once } from 'node:events';
 import fs from 'node:fs';
+import { constants } from 'node:zlib';
 import { isVerbose } from '../logger';
 import type {
   InternalContext,
@@ -188,7 +189,6 @@ export async function startPreviewServer(
   // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
   // but before other middlewares to ensure responses are properly compressed
   if (compress) {
-    const { constants } = await import('node:zlib');
     middlewares.use(
       gzipMiddleware({
         // simulates the common gzip compression rates

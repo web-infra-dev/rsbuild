@@ -1,4 +1,5 @@
 import { URL } from 'node:url';
+import { promisify } from 'node:util';
 import { STATIC_PATH } from '../constants';
 import { castArray, color } from '../helpers';
 import type { Logger } from '../logger';
@@ -66,7 +67,6 @@ async function openBrowser(url: string, logger: Logger): Promise<boolean> {
   // existing tab when possible instead of creating a new one.
   if (shouldTryAppleScript(browser, browserArgs)) {
     const { execFile } = await import('node:child_process');
-    const { promisify } = await import('node:util');
     const execFileAsync = promisify(execFile);
 
     /**
