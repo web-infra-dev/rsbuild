@@ -4,6 +4,7 @@ import path from 'node:path';
 import { isDeno } from '../constants';
 import { color } from '../helpers';
 import { dedupeNestedPaths } from '../helpers/path';
+import { getTinyglobby } from '../helpers/cachedImport';
 import { open } from '../server/open';
 import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
 
@@ -58,7 +59,7 @@ export const pluginServer = (): RsbuildPlugin => ({
         let shouldCopy: CopyOptions['filter'] | undefined;
 
         if (ignore?.length) {
-          const { globSync } = await import('tinyglobby');
+          const { globSync } = await getTinyglobby();
 
           const ignoredList = globSync(ignore, {
             cwd: publicDir,

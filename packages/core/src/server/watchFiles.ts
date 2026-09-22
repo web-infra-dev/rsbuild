@@ -1,5 +1,6 @@
 import type { FSWatcher } from 'chokidar';
 import { castArray } from '../helpers';
+import { cachedImport, getTinyglobby } from '../helpers/cachedImport';
 import type {
   ChokidarOptions,
   DevConfig,
@@ -9,6 +10,10 @@ import type {
   WatchFiles,
 } from '../types';
 import type { BuildManager } from './buildManager';
+
+const getChokidar = cachedImport(
+  () => import(/* rspackChunkName: "chokidar" */ 'chokidar'),
+);
 
 export const DEFAULT_WATCH_FILE_EVENTS: readonly WatchFileEvent[] = [
   'add',
@@ -131,9 +136,7 @@ export async function createChokidar(
   root: string,
   options: ChokidarOptions,
 ): Promise<FSWatcher> {
-  const { default: chokidar } = await import(
-    /* rspackChunkName: "chokidar" */ 'chokidar'
-  );
+  const { default: chokidar } = await getChokidar();
 
   const watchFiles = new Set<string>();
 
@@ -146,9 +149,7 @@ export async function createChokidar(
   });
 
   if (globPatterns.length) {
-    const { glob } = await import(
-      /* rspackChunkName: "tinyglobby" */ 'tinyglobby'
-    );
+    const { glob } = await getTinyglobby();
     // interop default to make both CJS and ESM work
     const files = await glob(globPatterns, {
       cwd: root,

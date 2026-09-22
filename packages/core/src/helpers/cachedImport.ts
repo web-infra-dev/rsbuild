@@ -10,3 +10,6 @@ export const cachedImport = <T>(
       throw error;
     }));
 };
+
+export const getTinyglobby: () => Promise<typeof import('tinyglobby')> =
+  cachedImport(() => import(/* rspackChunkName: "tinyglobby" */ 'tinyglobby'));
