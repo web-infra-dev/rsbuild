@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+import { constants, gunzipSync } from 'node:zlib';
 import { gzipMiddleware } from '../src/server/gzipMiddleware';
 import type { Server, ServerResponse } from 'node:http';
 
@@ -219,11 +220,18 @@ test.each([
   async ({ contentType, encoding }) => {
     let headersSentBeforeWrite = false;
     let response: ServerResponse | undefined;
-    const flush = rstest.fn();
+    const chunks: Buffer[] = [];
+    const flush = rstest.fn(() => Buffer.concat(chunks));
     const body = 'hello '.repeat(300);
     const server = createServer((req, res: FlushableResponse) => {
       response = res;
       res.flush = flush;
+      const write = res.write.bind(res);
+      // Capture what earlier middleware has received when its flush method runs.
+      res.write = (chunk) => {
+        chunks.push(Buffer.from(chunk));
+        return write(chunk);
+      };
 
       gzipMiddleware()(req, res, () => {
         res.flush?.();
@@ -250,6 +258,11 @@ test.each([
       for (const receiver of flush.mock.contexts) {
         expect(receiver).toBe(response);
       }
+      const flushed = flush.mock.results[1].value;
+      const decoded = encoding
+        ? gunzipSync(flushed, { finishFlush: constants.Z_SYNC_FLUSH })
+        : flushed;
+      expect(decoded.toString()).toBe(body);
     } finally {
       await closeServer(server);
     }

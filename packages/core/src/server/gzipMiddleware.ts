@@ -109,9 +109,13 @@ export function gzipMiddleware({
     // Node.js responses do not have flush(). Add it so frameworks can flush the gzip buffer.
     res.flush = () => {
       // Do not call start(): headers must remain editable if no body has been written yet.
-      // Flush buffered data without ending the stream or resetting compression history.
-      gzip?.flush(zlib.constants.Z_SYNC_FLUSH);
-      flush?.();
+      if (gzip) {
+        // Flush without ending the stream or resetting compression history.
+        // Wait for gzip output before flushing any earlier middleware's buffer.
+        gzip.flush(zlib.constants.Z_SYNC_FLUSH, flush);
+      } else {
+        flush?.();
+      }
     };
 
     const start = () => {
