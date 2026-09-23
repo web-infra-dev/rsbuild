@@ -89,17 +89,13 @@ export default {
 Gzip 压缩可能会缓冲数据，导致流式 HTML 延迟发送。如果需要在响应结束前发送某段内容，可以在 `res.write()` 后调用 `res.flush?.()`。
 
 ```ts
-import type { ServerResponse } from 'node:http';
-
-type FlushableResponse = ServerResponse & { flush?: () => void };
-
 res.setHeader('Content-Type', 'text/html');
 res.write('<!doctype html><html><body><p>Loading...</p>');
-(res as FlushableResponse).flush?.();
+res.flush?.();
 
 // 数据准备好后继续写入，最后调用 res.end()。
 ```
 
-`res.flush()` 会刷新 gzip 缓冲区，但不会结束响应。它由压缩中间件提供，因此建议使用可选链（`?.`），以兼容禁用压缩等情况下该方法不存在的场景。局部类型断言用于补充 Node.js 响应类型中未声明的 `flush` 方法。
+`res.flush()` 会刷新 gzip 缓冲区，但不会结束响应。它由压缩中间件提供，因此建议使用可选链（`?.`），以兼容禁用压缩等情况下该方法不存在的场景。
 
 使用 `server.setup` 时，请在其返回的回调中调用 `server.middlewares.use()` 注册流式响应处理逻辑，确保压缩中间件先执行。详见[中间件执行顺序](/config/server/setup#中间件执行顺序)。
