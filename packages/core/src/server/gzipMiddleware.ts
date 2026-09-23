@@ -9,6 +9,7 @@ import type { CompressOptions, RequestHandler } from '../types';
 const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
 type WriteHeadHeaders = OutgoingHttpHeaders | OutgoingHttpHeader[];
+type FlushableResponse = ServerResponse & { flush?: () => void };
 
 const getMimeType = (contentType: string) =>
   contentType.split(';', 1)[0].trim().toLowerCase();
@@ -77,7 +78,7 @@ export function gzipMiddleware({
   filter,
   level = zlib.constants.Z_BEST_SPEED,
 }: CompressOptions = {}): RequestHandler {
-  return function gzipMiddleware(req, res, next): void {
+  return function gzipMiddleware(req, res: FlushableResponse, next): void {
     if (filter && !filter(req, res)) {
       next();
       return;
@@ -100,7 +101,18 @@ export function gzipMiddleware({
     const end = res.end.bind(res);
     const write = res.write.bind(res);
     const writeHead = res.writeHead.bind(res);
+
+    // Preserve a flush hook installed by earlier middleware, including its receiver.
+    const flush = res.flush?.bind(res);
     const listeners: [string | symbol, (...args: any[]) => void][] = [];
+
+    // Let streaming adapters send pending compressed data without ending the response.
+    res.flush = () => {
+      // Avoid start(): Content-Type may still be set before the first body write.
+      // Z_SYNC_FLUSH preserves compression history for subsequent chunks.
+      gzip?.flush(zlib.constants.Z_SYNC_FLUSH);
+      flush?.();
+    };
 
     const start = () => {
       if (started) {
