@@ -219,13 +219,11 @@ test.each([
   async ({ contentType, encoding }) => {
     let headersSentBeforeWrite = false;
     let response: ServerResponse | undefined;
-    const receivers: ServerResponse[] = [];
+    const flush = rstest.fn();
     const body = 'hello '.repeat(300);
     const server = createServer((req, res: FlushableResponse) => {
       response = res;
-      res.flush = function (this: ServerResponse) {
-        receivers.push(this);
-      };
+      res.flush = flush;
 
       gzipMiddleware()(req, res, () => {
         res.flush?.();
@@ -248,8 +246,8 @@ test.each([
       expect(await result.text()).toBe(`${body}done`);
       expect(result.headers.get('content-encoding')).toBe(encoding);
       expect(headersSentBeforeWrite).toBe(false);
-      expect(receivers).toHaveLength(3);
-      for (const receiver of receivers) {
+      expect(flush).toHaveBeenCalledTimes(3);
+      for (const receiver of flush.mock.contexts) {
         expect(receiver).toBe(response);
       }
     } finally {

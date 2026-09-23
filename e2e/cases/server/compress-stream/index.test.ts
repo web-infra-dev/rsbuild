@@ -24,9 +24,10 @@ test('should flush streamed HTML before deferred data in dev and preview', async
         });
         expect(response.headers.get('content-encoding')).toBe('gzip');
 
-        const reader = response.body!.getReader();
-        const chunks: Buffer[] = [];
-        let length = 0;
+        const reader = response
+          .body!.pipeThrough(new TextDecoderStream())
+          .getReader();
+        let html = '';
 
         // Fetch decodes gzip. Hold the suffix until the entire shell is decoded.
         // This fails if the compressor waits for res.end() to release the shell.
@@ -35,16 +36,13 @@ test('should flush streamed HTML before deferred data in dev and preview', async
           if (done) {
             break;
           }
-          const chunk = Buffer.from(value);
-          chunks.push(chunk);
-          length += chunk.length;
+          html += value;
 
-          if (length === Buffer.byteLength(shell)) {
-            expect(Buffer.concat(chunks).toString()).toBe(shell);
+          if (html === shell) {
             releaseSuffix!();
           }
         }
-        expect(Buffer.concat(chunks).toString()).toBe(shell + suffix);
+        expect(html).toBe(shell + suffix);
       } finally {
         releaseSuffix?.();
         releaseSuffix = undefined;
