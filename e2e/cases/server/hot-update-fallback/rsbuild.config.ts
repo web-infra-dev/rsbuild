@@ -1,11 +1,9 @@
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  dev: {
-    hmr: false,
-    liveReload: false,
-  },
   server: {
+    // Let OPTIONS reach the HMR fallback instead of being handled by CORS.
+    cors: false,
     setup:
       ({ server }) =>
       () => {
@@ -15,8 +13,5 @@ export default defineConfig({
           res.end('Downstream SSR');
         });
       },
-  },
-  output: {
-    copy: [{ from: './src/*.hot-update.*', to: '[name][ext]' }],
   },
 });
