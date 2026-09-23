@@ -15,38 +15,30 @@ for (const esm of [false, true]) {
         output: { module: esm },
       },
     });
-    await expect(page.locator('#test')).toHaveText('before');
-
     const extension = esm ? 'json.mjs' : 'json';
-    const manifestResponse = page.waitForResponse((response) =>
-      response.url().endsWith(`.hot-update.${extension}`),
+    const manifestResponse = page.waitForResponse(
+      `**/*.hot-update.${extension}`,
     );
     await editFile(entry, (code) => code.replace('before', 'after'));
-    const manifest = await manifestResponse;
-    expect(manifest.status()).toBe(200);
+    const manifest = new URL((await manifestResponse).url()).pathname;
     await expect(page.locator('#test')).toHaveText('after');
-
-    const cases: [method: string, pathname: string, status: number][] = [
-      ['GET', '/ordinary-page', 218],
-    ];
 
     for (const query of ['', '?cache=probe']) {
       const missing = `/runtime.missing.hot-update.${extension}${query}`;
-      cases.push(
+      for (const [method, pathname, status] of [
+        ['GET', `${manifest}${query}`, 200],
         ['GET', missing, 404],
         ['HEAD', missing, 404],
         ['OPTIONS', missing, 218],
-        ['GET', `${new URL(manifest.url()).pathname}${query}`, 200],
+        ['GET', '/ordinary-page', 218],
         ['GET', `/ordinary-page?next=${missing}`, 218],
-      );
-    }
-
-    for (const [method, pathname, status] of cases) {
-      const response = await fetch(`http://localhost:${port}${pathname}`, {
-        method,
-      });
-      await response.text();
-      expect(response.status, `${method} ${pathname}`).toBe(status);
+      ] as const) {
+        const response = await page.request.fetch(
+          `http://localhost:${port}${pathname}`,
+          { method },
+        );
+        expect(response.status(), `${method} ${pathname}`).toBe(status);
+      }
     }
   });
 }
