@@ -9,6 +9,7 @@ import type { CompressOptions, RequestHandler } from '../types';
 const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
 type WriteHeadHeaders = OutgoingHttpHeaders | OutgoingHttpHeader[];
+type FlushableResponse = ServerResponse & { flush?: () => void };
 
 const getMimeType = (contentType: string) =>
   contentType.split(';', 1)[0].trim().toLowerCase();
@@ -77,7 +78,7 @@ export function gzipMiddleware({
   filter,
   level = zlib.constants.Z_BEST_SPEED,
 }: CompressOptions = {}): RequestHandler {
-  return function gzipMiddleware(req, res, next): void {
+  return function gzipMiddleware(req, res: FlushableResponse, next): void {
     if (filter && !filter(req, res)) {
       next();
       return;
@@ -100,7 +101,22 @@ export function gzipMiddleware({
     const end = res.end.bind(res);
     const write = res.write.bind(res);
     const writeHead = res.writeHead.bind(res);
+
+    // Keep any existing flush method and call it with `res` as `this`.
+    const flush = res.flush?.bind(res);
     const listeners: [string | symbol, (...args: any[]) => void][] = [];
+
+    // Node.js responses do not have flush(). Add it so frameworks can flush the gzip buffer.
+    res.flush = () => {
+      // Do not call start(): headers must remain editable if no body has been written yet.
+      if (gzip) {
+        // Flush without ending the stream or resetting compression history.
+        // Wait for gzip output before flushing any earlier middleware's buffer.
+        gzip.flush(zlib.constants.Z_SYNC_FLUSH, flush);
+      } else {
+        flush?.();
+      }
+    };
 
     const start = () => {
       if (started) {
