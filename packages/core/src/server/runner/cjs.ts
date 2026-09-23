@@ -101,6 +101,7 @@ export class CommonJsRunner extends BasicRunner {
         return requireCache[file.path].exports;
       }
 
+      const content = this.getFileContent(file);
       const m = {
         exports: {},
       };
@@ -113,13 +114,13 @@ export class CommonJsRunner extends BasicRunner {
 
       const args = Object.keys(currentModuleScope);
       const argValues = args.map((arg) => currentModuleScope[arg]);
-      this.preExecute(file.content, file);
+      this.preExecute(content, file);
       // rslint-disable-next-line @typescript-eslint/no-implied-eval -- Evaluate import() in the main context instead of the VM context.
       const dynamicImport = (cachedDynamicImport ??= new Function(
         'specifier',
         'return import(specifier)',
       ) as (specifier: string) => Promise<Module>);
-      const fn = vm.compileFunction(file.content, args, {
+      const fn = vm.compileFunction(content, args, {
         filename: file.path,
         // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.
         importModuleDynamically: async (specifier) => {
