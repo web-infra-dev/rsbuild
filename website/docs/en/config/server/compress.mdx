@@ -83,3 +83,19 @@ export default {
 :::tip
 In actual production environments, web servers like Nginx or Apache are commonly used, which may use different compression levels. Therefore, you might observe differences between the file sizes after gzip compression in your local environment compared to production.
 :::
+
+## Streaming responses
+
+Gzip compression may buffer data, delaying delivery of streamed HTML. To send a chunk without waiting for the response to end, call `res.flush?.()` after `res.write()`.
+
+```js
+res.setHeader('Content-Type', 'text/html');
+res.write('<!doctype html><html><body><p>Loading...</p>');
+res.flush?.();
+
+// Continue writing as data becomes available, then call res.end().
+```
+
+`res.flush()` flushes the gzip buffer without ending the response. It is provided by the compression middleware, so use optional chaining (`?.`) to handle cases where the method is unavailable, such as when compression is disabled.
+
+When using `server.setup`, register your streaming handler with `server.middlewares.use()` inside the returned callback so the compression middleware runs first. See [Middleware execution order](/config/server/setup#middleware-execution-order).
