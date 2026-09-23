@@ -89,9 +89,13 @@ export default {
 Gzip 压缩可能会缓冲数据，导致流式 HTML 延迟发送。如果需要在响应结束前发送某段内容，可以在 `res.write()` 后调用 `res.flush?.()`。
 
 ```ts
+import type { ServerResponse } from 'node:http';
+
+type FlushableResponse = ServerResponse & { flush?: () => void };
+
 res.setHeader('Content-Type', 'text/html');
 res.write('<!doctype html><html><body><p>Loading...</p>');
-(res as typeof res & { flush?: () => void }).flush?.();
+(res as FlushableResponse).flush?.();
 
 // 数据准备好后继续写入，最后调用 res.end()。
 ```

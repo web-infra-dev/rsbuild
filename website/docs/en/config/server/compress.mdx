@@ -89,9 +89,13 @@ In actual production environments, web servers like Nginx or Apache are commonly
 Gzip compression may buffer data, delaying delivery of streamed HTML. To send a chunk without waiting for the response to end, call `res.flush?.()` after `res.write()`.
 
 ```ts
+import type { ServerResponse } from 'node:http';
+
+type FlushableResponse = ServerResponse & { flush?: () => void };
+
 res.setHeader('Content-Type', 'text/html');
 res.write('<!doctype html><html><body><p>Loading...</p>');
-(res as typeof res & { flush?: () => void }).flush?.();
+(res as FlushableResponse).flush?.();
 
 // Continue writing as data becomes available, then call res.end().
 ```
