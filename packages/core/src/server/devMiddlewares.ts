@@ -194,8 +194,20 @@ const applyDefaultMiddlewares = async ({
     upgradeEvents.push(buildManager.socketServer.upgrade);
 
     middlewares.use(function hotUpdateJsonFallbackMiddleware(req, res, next) {
-      // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
-      if (req.url?.endsWith('.hot-update.json') && req.method !== 'OPTIONS') {
+      const url = req.url;
+      if (!url || req.method === 'OPTIONS') {
+        next();
+        return;
+      }
+
+      const queryIndex = url.indexOf('?');
+      const end = queryIndex === -1 ? url.length : queryIndex;
+
+      // Missing HMR manifests should return 404 after a restart, including ESM output.
+      if (
+        url.endsWith('.hot-update.json', end) ||
+        url.endsWith('.hot-update.json.mjs', end)
+      ) {
         notFoundMiddleware(req, res, next);
       } else {
         next();
