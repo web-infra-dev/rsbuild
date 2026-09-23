@@ -83,3 +83,19 @@ export default {
 :::tip
 在实际生产环境中，通常会使用 Nginx 或 Apache 等 Web 服务器，它们可能使用不同的压缩级别，因此你可能会发现本地环境中使用 gzip 压缩后的文件大小与生产环境存在差异。
 :::
+
+## 流式响应 \{#streaming-responses}
+
+Gzip 压缩可能会缓冲数据，导致流式 HTML 延迟发送。如果需要在响应结束前发送某段内容，可以在 `res.write()` 后调用 `res.flush?.()`。
+
+```ts
+res.setHeader('Content-Type', 'text/html');
+res.write('<!doctype html><html><body><p>Loading...</p>');
+res.flush?.();
+
+// 数据准备好后继续写入，最后调用 res.end()。
+```
+
+`res.flush()` 会刷新 gzip 缓冲区，但不会结束响应。它由压缩中间件提供，因此建议使用可选链（`?.`），以兼容禁用压缩等情况下该方法不存在的场景。
+
+使用 `server.setup` 时，请在其返回的回调中调用 `server.middlewares.use()` 注册流式响应处理逻辑，确保压缩中间件先执行。详见[中间件执行顺序](/config/server/setup#中间件执行顺序)。
