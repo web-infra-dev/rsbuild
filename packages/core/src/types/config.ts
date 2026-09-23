@@ -1876,7 +1876,26 @@ export type ProgressBarConfig = {
   id?: string;
 };
 
-export type RequestHandler = Connect.NextHandleFunction;
+export interface RsbuildServerResponse extends ServerResponse {
+  /**
+   * Flush buffered gzip data without ending the response.
+   * May be absent when compression is disabled or the middleware has not run.
+   */
+  flush?: () => void;
+}
+
+export type RequestHandler = (
+  req: Connect.IncomingMessage,
+  res: RsbuildServerResponse,
+  next: Connect.NextFunction,
+) => unknown;
+
+export interface RsbuildMiddlewares extends Connect.Server {
+  use(fn: RequestHandler): this;
+  use(fn: Connect.ServerHandle): this;
+  use(route: string, fn: RequestHandler): this;
+  use(route: string, fn: Connect.ServerHandle): this;
+}
 
 export type EnvironmentAPI = Record<
   string,
