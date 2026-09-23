@@ -102,20 +102,13 @@ export function gzipMiddleware({
     const write = res.write.bind(res);
     const writeHead = res.writeHead.bind(res);
 
-    // Keep any existing flush method and call it with `res` as `this`.
-    const flush = res.flush?.bind(res);
     const listeners: [string | symbol, (...args: any[]) => void][] = [];
 
     // Node.js responses do not have flush(). Add it so frameworks can flush the gzip buffer.
     res.flush = () => {
       // Do not call start(): headers must remain editable if no body has been written yet.
-      if (gzip) {
-        // Flush without ending the stream or resetting compression history.
-        // Wait for gzip output before flushing any earlier middleware's buffer.
-        gzip.flush(zlib.constants.Z_SYNC_FLUSH, flush);
-      } else {
-        flush?.();
-      }
+      // Flush without ending the stream or resetting compression history.
+      gzip?.flush(zlib.constants.Z_SYNC_FLUSH);
     };
 
     const start = () => {
