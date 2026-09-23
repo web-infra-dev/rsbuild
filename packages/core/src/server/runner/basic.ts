@@ -40,7 +40,7 @@ export abstract class BasicRunner implements Runner {
   protected globalContext: BasicGlobalContext | null = null;
   protected baseModuleScope: BasicModuleScope | null = null;
   protected requirers: Map<string, RunnerRequirer> = new Map();
-  constructor(protected _options: BasicRunnerOptions) {}
+  constructor(protected readonly options: BasicRunnerOptions) {}
 
   run(file: string): Promise<unknown> {
     if (!this.globalContext) {
@@ -49,7 +49,7 @@ export abstract class BasicRunner implements Runner {
     this.baseModuleScope = this.createBaseModuleScope();
     this.createRunner();
     const res = this.getRequire()(
-      this._options.dist,
+      this.options.dist,
       file.startsWith('./') ? file : `./${file}`,
     );
     if (res && typeof res === 'object' && 'then' in res) {
@@ -77,9 +77,9 @@ export abstract class BasicRunner implements Runner {
   ): BasicModuleScope;
 
   /**
-   * Get the file information for a given module path.
+   * Resolve a module path without reading its content.
    *
-   * @returns An object containing the file path, content, and subPath, or null if the module is not an rspack output.
+   * @returns File information, or null if the module is not an rspack output.
    */
   protected getFile(
     modulePath: string[] | string,
@@ -101,14 +101,17 @@ export abstract class BasicRunner implements Runner {
       ? path.join(currentDirectory, modulePath)
       : modulePath;
 
-    if (!this._options.isOutputFile(joinedPath)) {
+    if (!this.options.isOutputFile(joinedPath)) {
       return null;
     }
     return {
       path: joinedPath,
-      content: this._options.readFileSync(joinedPath),
       subPath: getSubPath(modulePath),
     };
+  }
+
+  protected getFileContent(file: BasicRunnerFile): string {
+    return (file.content ??= this.options.readFileSync(file.path));
   }
 
   protected preExecute(_code: string, _file: BasicRunnerFile): void {}
