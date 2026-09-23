@@ -9,7 +9,6 @@ import type { CompressOptions, RequestHandler } from '../types';
 const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
 type WriteHeadHeaders = OutgoingHttpHeaders | OutgoingHttpHeader[];
-type FlushableResponse = ServerResponse & { flush?: () => void };
 
 const getMimeType = (contentType: string) =>
   contentType.split(';', 1)[0].trim().toLowerCase();
@@ -78,7 +77,7 @@ export function gzipMiddleware({
   filter,
   level = zlib.constants.Z_BEST_SPEED,
 }: CompressOptions = {}): RequestHandler {
-  return function gzipMiddleware(req, res: FlushableResponse, next): void {
+  return function gzipMiddleware(req, res, next): void {
     if (filter && !filter(req, res)) {
       next();
       return;

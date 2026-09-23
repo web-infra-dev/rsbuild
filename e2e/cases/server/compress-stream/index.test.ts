@@ -1,4 +1,3 @@
-import type { ServerResponse } from 'node:http';
 import { expect, test } from '@e2e/helper';
 
 test('should flush streamed HTML before deferred data in dev and preview', async ({
@@ -69,7 +68,7 @@ test('should flush streamed HTML before deferred data in dev and preview', async
                 };
                 res.setHeader('Content-Type', 'text/html');
                 res.write(shell);
-                (res as ServerResponse & { flush?: () => void }).flush?.();
+                res.flush?.();
               });
             },
         },

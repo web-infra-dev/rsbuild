@@ -13,7 +13,6 @@ import {
 } from '../helpers/url';
 import type { Logger } from '../logger';
 import type {
-  Connect,
   InternalContext,
   NormalizedConfig,
   OutputStructure,
@@ -22,6 +21,7 @@ import type {
   Routes,
   RsbuildConfig,
   RsbuildEntry,
+  RsbuildMiddlewares,
 } from '../types';
 import type { RsbuildDevServer } from './devServer';
 import type { RsbuildPreviewServer } from './previewServer';
@@ -718,7 +718,7 @@ export type RsbuildServerBase = {
    * The `connect` app instance.
    * Can be used to attach custom middlewares to the server.
    */
-  middlewares: Connect.Server;
+  middlewares: RsbuildMiddlewares;
   /**
    * Open URL in the browser after starting the server.
    */
