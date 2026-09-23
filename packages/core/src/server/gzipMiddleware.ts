@@ -102,14 +102,14 @@ export function gzipMiddleware({
     const write = res.write.bind(res);
     const writeHead = res.writeHead.bind(res);
 
-    // Preserve a flush hook installed by earlier middleware, including its receiver.
+    // Keep any existing flush method and call it with `res` as `this`.
     const flush = res.flush?.bind(res);
     const listeners: [string | symbol, (...args: any[]) => void][] = [];
 
-    // Let streaming adapters send pending compressed data without ending the response.
+    // Node.js responses do not have flush(). Add it so frameworks can flush the gzip buffer.
     res.flush = () => {
-      // Avoid start(): Content-Type may still be set before the first body write.
-      // Z_SYNC_FLUSH preserves compression history for subsequent chunks.
+      // Do not call start(): headers must remain editable if no body has been written yet.
+      // Flush buffered data without ending the stream or resetting compression history.
       gzip?.flush(zlib.constants.Z_SYNC_FLUSH);
       flush?.();
     };

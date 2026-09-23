@@ -16,7 +16,7 @@ test('should flush streamed HTML before deferred data in dev and preview', async
       try {
         const response = await fetch(`http://localhost:${result.port}/stream`, {
           headers: { 'accept-encoding': 'gzip' },
-          // Only guard against a stalled stream; correctness does not depend on timing.
+          // Abort a stuck request instead of waiting forever.
           signal: AbortSignal.any([
             controller.signal,
             AbortSignal.timeout(5_000),
@@ -29,8 +29,8 @@ test('should flush streamed HTML before deferred data in dev and preview', async
           .getReader();
         let html = '';
 
-        // Fetch decodes gzip. Hold the suffix until the entire shell is decoded.
-        // This fails if the compressor waits for res.end() to release the shell.
+        // Fetch decompresses gzip automatically. Send the remaining HTML only after
+        // the client has read the full shell, proving flush works before res.end().
         while (true) {
           const { done, value } = await reader.read();
           if (done) {
