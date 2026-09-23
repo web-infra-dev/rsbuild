@@ -35,7 +35,10 @@ const isRspackRuntimeStack = (value?: string): boolean => {
   return value.includes('__webpack_require__') || isRspackRuntimeModule(value);
 };
 
-export type CachedTraceMap = Map<string, TraceMap>;
+export type BrowserLogsCache = {
+  sourceMapPaths: Map<string, Promise<string | undefined>>;
+  traceMaps: Map<string, TraceMap>;
+};
 
 /**
  * Returns the first stack frame that looks like user code
@@ -57,30 +60,37 @@ const parseFrame = async (
   frame: Pick<StackFrame, 'file' | 'column' | 'lineNumber'>,
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
-  cachedTraceMap: CachedTraceMap,
+  cache: BrowserLogsCache,
 ) => {
   const { file, column, lineNumber } = frame;
-  const sourceMapInfo = await getFileFromUrl(`${file}.map`, fs, context);
+  const sourceMapUrl = `${file}.map`;
+  let sourceMapPathPromise = cache.sourceMapPaths.get(sourceMapUrl);
+  if (!sourceMapPathPromise) {
+    sourceMapPathPromise = getFileFromUrl(sourceMapUrl, fs, context).then(
+      (info) => (info && !('errorCode' in info) ? info.filename : undefined),
+    );
+    cache.sourceMapPaths.set(sourceMapUrl, sourceMapPathPromise);
+  }
 
-  if (!sourceMapInfo || 'errorCode' in sourceMapInfo) {
+  const sourceMapPath = await sourceMapPathPromise;
+  if (!sourceMapPath) {
     return;
   }
 
   const { TraceMap, originalPositionFor } = await getTraceMapping();
 
-  const sourceMapPath = sourceMapInfo.filename;
   const needle = {
     line: lineNumber ?? 0,
     column: column ?? 0,
   };
 
   try {
-    let tracer = cachedTraceMap.get(sourceMapPath);
+    let tracer = cache.traceMaps.get(sourceMapPath);
 
     if (!tracer) {
       const sourceMap = await readFileAsync(fs, sourceMapPath);
       tracer = new TraceMap(sourceMap.toString());
-      cachedTraceMap.set(sourceMapPath, tracer);
+      cache.traceMaps.set(sourceMapPath, tracer);
     }
 
     const originalPosition = originalPositionFor(tracer, needle);
@@ -100,7 +110,7 @@ const resolveOriginalLocation = async (
   stackFrames: StackFrame[],
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
-  cachedTraceMap: CachedTraceMap,
+  cache: BrowserLogsCache,
 ) => {
   // only parse JS files
   const frame = findFirstUserFrame(stackFrames);
@@ -108,7 +118,7 @@ const resolveOriginalLocation = async (
     return;
   }
 
-  const parsedFrame = await parseFrame(frame, fs, context, cachedTraceMap);
+  const parsedFrame = await parseFrame(frame, fs, context, cache);
   if (!parsedFrame) {
     return;
   }
@@ -185,7 +195,7 @@ const formatFullStack = async (
   stackFrames: StackFrame[],
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
-  cachedTraceMap: CachedTraceMap,
+  cache: BrowserLogsCache,
 ) => {
   const formattedFrames: {
     text: string;
@@ -194,7 +204,7 @@ const formatFullStack = async (
   }[] = [];
 
   for (const frame of stackFrames) {
-    const parsedFrame = await parseFrame(frame, fs, context, cachedTraceMap);
+    const parsedFrame = await parseFrame(frame, fs, context, cache);
     const { methodName } = frame;
     const parts: string[] = [];
 
@@ -261,7 +271,7 @@ export const formatBrowserErrorLog = async (
   fs: Rspack.OutputFileSystem,
   stackTrace: BrowserLogsStackTrace,
   stackFrames: StackFrame[] | null,
-  cachedTraceMap: CachedTraceMap,
+  cache: BrowserLogsCache,
 ): Promise<string> => {
   let log = color.red(message);
 
@@ -272,7 +282,7 @@ export const formatBrowserErrorLog = async (
           stackFrames,
           fs,
           context,
-          cachedTraceMap,
+          cache,
         );
 
         if (!resolved) {
@@ -298,7 +308,7 @@ export const formatBrowserErrorLog = async (
           stackFrames,
           context,
           fs,
-          cachedTraceMap,
+          cache,
         );
         if (fullStack) {
           log += fullStack;

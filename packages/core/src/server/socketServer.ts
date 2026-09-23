@@ -14,7 +14,7 @@ import type {
   RsbuildStatsItem,
   Rspack,
 } from '../types';
-import { type CachedTraceMap, formatBrowserErrorLog } from './browserLogs';
+import { type BrowserLogsCache, formatBrowserErrorLog } from './browserLogs';
 import { renderErrorToHtml } from './overlay';
 
 interface ExtWebSocket extends WebSocket {
@@ -454,7 +454,11 @@ export class SocketServer {
           const outputFs = this.getOutputFileSystem();
 
           const stackFrames = payload.stack ? parseStack(payload.stack) : null;
-          const cachedTraceMap: CachedTraceMap = new Map();
+          // Share source map lookups and parsed maps for this error only.
+          const cache: BrowserLogsCache = {
+            sourceMapPaths: new Map(),
+            traceMaps: new Map(),
+          };
 
           const log = await formatBrowserErrorLog(
             payload.message,
@@ -462,7 +466,7 @@ export class SocketServer {
             outputFs,
             stackTrace,
             stackFrames,
-            cachedTraceMap,
+            cache,
           );
 
           if (!this.reportedBrowserLogs.has(log)) {
@@ -485,7 +489,7 @@ export class SocketServer {
                     outputFs,
                     'full',
                     stackFrames,
-                    cachedTraceMap,
+                    cache,
                   );
 
             this.sendMessage(
