@@ -1,5 +1,11 @@
+import { rspack } from '@rspack/core';
 import { createRsbuild } from '../src';
-import { createEnvironmentAsyncHook, initHooks } from '../src/hooks';
+import {
+  createEnvironmentAsyncHook,
+  initHooks,
+  registerDevHook,
+} from '../src/hooks';
+import type { InternalContext, Rspack } from '../src/types';
 
 describe('initHooks', () => {
   test('should initialize hooks correctly', async () => {
@@ -71,4 +77,39 @@ describe('onExit hook', () => {
 
     expect(onExit).toHaveBeenCalledTimes(1);
   });
+});
+
+test('should wait for a restarted compiler before onAfterDevCompile', async () => {
+  const compiler = rspack([{ name: 'a' }, { name: 'b' }]);
+  const [a, b] = compiler.compilers;
+  const hooks = initHooks();
+  const onAfterDevCompile = rstest.fn();
+
+  hooks.onAfterDevCompile.tap(onAfterDevCompile);
+
+  registerDevHook({
+    compiler,
+    bundlerConfigs: [{}, {}],
+    MultiStatsCtor: rspack.MultiStats,
+    context: {
+      hooks,
+      environmentList: [{ name: 'a' }, { name: 'b' }],
+      environments: {},
+      buildState: { time: {} },
+    } as unknown as InternalContext,
+  });
+
+  const stats = {} as Rspack.Stats;
+  await a.hooks.done.promise(stats);
+
+  // A restarts without invalid; B finishes while A's watchRun is pending.
+  a.hooks.watchRun.tapPromise({ name: 'test', stage: -1 }, async () => {
+    await b.hooks.done.promise(stats);
+    expect(onAfterDevCompile).not.toHaveBeenCalled();
+  });
+
+  await a.hooks.watchRun.promise(a);
+  await a.hooks.done.promise(stats);
+
+  expect(onAfterDevCompile).toHaveBeenCalledTimes(1);
 });

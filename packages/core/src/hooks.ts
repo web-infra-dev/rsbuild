@@ -338,12 +338,20 @@ const onCompileDone = ({
         }
       });
 
-      compiler.hooks.invalid.tap('rsbuild:done', () => {
+      const resetDoneState = () => {
         if (compilerDone) {
           compilerDone = false;
           doneCompilers--;
         }
-      });
+      };
+
+      compiler.hooks.invalid.tap('rsbuild:done', resetDoneState);
+      // A watch compilation can restart without another invalid hook.
+      // Reset before asynchronous watchRun hooks can delay the new compilation.
+      compiler.hooks.watchRun.tap(
+        { name: 'rsbuild:done', stage: -Infinity },
+        resetDoneState,
+      );
     }
   } else {
     compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
