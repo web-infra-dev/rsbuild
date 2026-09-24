@@ -148,6 +148,8 @@ allowBuilds:
   core-js: false
   svelte-preprocess: false
 
+autoDedupe: true
+
 dedupePeers: true
 
 enableGlobalVirtualStore: true
