@@ -316,6 +316,10 @@ test('should dedupeNestedPaths correctly', async () => {
     'package/to/root/dist/web2',
     'package/to/root/dist/web3',
   ]);
+
+  expect(
+    dedupeNestedPaths(['package/to/root/dist', 'package/to/root/dist-legacy']),
+  ).toEqual(['package/to/root/dist', 'package/to/root/dist-legacy']);
 });
 
 test('should detect web targets correctly', () => {
