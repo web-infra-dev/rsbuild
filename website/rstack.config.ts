@@ -20,7 +20,7 @@ const description = 'The Rspack-based build tool';
 
 define.doc({
   plugins: [
-    withZephyr(),
+    withZephyr({ target: 'web' }),
     pluginAlgolia(),
     pluginSitemap({
       siteUrl,
