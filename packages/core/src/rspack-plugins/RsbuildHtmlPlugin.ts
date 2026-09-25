@@ -333,6 +333,27 @@ const addTitleTag = (headTags: HtmlTagObject[], title = '') => {
   }
 };
 
+const moveCharsetMeta = (headTags: HtmlTagObject[]): HtmlTagObject[] => {
+  for (let index = 0; index < headTags.length; index++) {
+    const tag = headTags[index];
+    if (tag.tagName.toLowerCase() === 'meta') {
+      const { charset, 'http-equiv': httpEquiv } = tag.attributes;
+      if (
+        typeof charset === 'string' ||
+        (typeof httpEquiv === 'string' &&
+          httpEquiv.toLowerCase() === 'content-type')
+      ) {
+        if (index > 0) {
+          headTags.splice(index, 1);
+          headTags.unshift(tag);
+        }
+        return headTags;
+      }
+    }
+  }
+  return headTags;
+};
+
 export class RsbuildHtmlPlugin {
   readonly name: string;
 
@@ -540,6 +561,7 @@ export class RsbuildHtmlPlugin {
           );
         }
 
+        data.headTags = moveCharsetMeta(data.headTags);
         data.headTags = moveImportMaps(data.headTags);
         data.bodyTags = moveImportMaps(data.bodyTags);
 
