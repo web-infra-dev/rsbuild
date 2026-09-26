@@ -132,7 +132,9 @@ test('should format time correctly', () => {
   expect(prettyTime(0.1234)).toEqual('0.12s');
   expect(prettyTime(1.234)).toEqual('1.23s');
   expect(prettyTime(12.34)).toEqual('12.3s');
+  expect(prettyTime(59.96)).toEqual('1m');
   expect(prettyTime(120)).toEqual('2m');
+  expect(prettyTime(119.96)).toEqual('2m');
   expect(prettyTime(123.4)).toEqual('2m 3.4s');
   expect(prettyTime(1234)).toEqual('20m 34s');
   expect(prettyTime(1234.5)).toEqual('20m 34.5s');
