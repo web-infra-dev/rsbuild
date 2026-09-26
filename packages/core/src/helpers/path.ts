@@ -16,7 +16,7 @@ export function toRelativePath(base: string, filepath: string): string {
 
 /**
  * Returns `target` relative to `parent`, or `undefined` if it is outside `parent`.
- * Returns `''` for the same directory. Symlinks are not resolved.
+ * Returns `''` for the same directory.
  *
  * @example
  * relativeWithin('/project', '/project/src'); // 'src'
