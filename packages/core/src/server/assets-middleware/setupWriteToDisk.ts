@@ -69,7 +69,8 @@ export function setupWriteToDisk(
               ? writeToDisk(targetPath, compilation.name)
               : true;
 
-          if (!allowWrite) {
+          // The compiler has already written the asset if it uses the Node.js fs
+          if (!allowWrite || compiler.outputFileSystem === fs) {
             callback();
             return;
           }
