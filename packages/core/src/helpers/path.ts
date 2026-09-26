@@ -62,7 +62,11 @@ export const dedupeNestedPaths = (paths: string[]): string[] => {
     .reduce<string[]>((prev, curr) => {
       const isSub = prev.some((p) => {
         const relativePath = relative(p, curr);
-        return !relativePath.startsWith('..') && !isAbsolute(relativePath);
+        return (
+          relativePath !== '..' &&
+          !relativePath.startsWith(`..${sep}`) &&
+          !isAbsolute(relativePath)
+        );
       });
       if (isSub) {
         return prev;
