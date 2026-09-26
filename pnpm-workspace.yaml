@@ -23,7 +23,7 @@ catalog:
   '@hono/node-server': '^2.1.1'
   '@jridgewell/remapping': '^2.3.5'
   '@jridgewell/trace-mapping': '^0.3.31'
-  '@jsonjoy.com/fs-core': '4.78.1'
+  '@jsonjoy.com/fs-core': '4.79.0'
   '@module-federation/enhanced': '2.9.0'
   '@module-federation/rsbuild-plugin': '2.9.0'
   '@module-federation/runtime-tools': '2.9.0'
