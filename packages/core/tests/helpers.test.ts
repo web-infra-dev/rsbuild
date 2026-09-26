@@ -2,7 +2,11 @@ import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, sep } from 'node:path';
 import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
-import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
+import {
+  dedupeNestedPaths,
+  getCommonParentPath,
+  getRelativePathInside,
+} from '../src/helpers/path';
 import { readPackageJsonByPath } from '../src/helpers/packageJson';
 import { ensureAssetPrefix, removeTailingSlash } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
@@ -284,6 +288,25 @@ describe('getCommonParentPath', () => {
     const paths = [normalize('/home/user/project/dist1')];
     const result = getCommonParentPath(paths);
     expect(result).toBe(normalize('/home/user/project/dist1'));
+  });
+});
+
+describe('getRelativePathInside', () => {
+  it.each<[string, string, string | undefined]>([
+    ['project/dist', 'project/dist', ''],
+    ['project/dist/', 'project/dist/.', ''],
+    ['project/dist', 'project/dist/src/index.js', join('src', 'index.js')],
+    [
+      'project/dist',
+      'project/dist/..cache/index.js',
+      join('..cache', 'index.js'),
+    ],
+    ['project/dist', 'project/dist/src/../index.js', 'index.js'],
+    ['project/dist', 'project', undefined],
+    ['project/dist', 'project/dist-legacy', undefined],
+    ['project/dist', 'project/dist/../shared', undefined],
+  ])('should resolve %s to %s as %s', (parent, target, expected) => {
+    expect(getRelativePathInside(parent, target)).toBe(expected);
   });
 });
 

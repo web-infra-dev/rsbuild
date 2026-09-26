@@ -14,6 +14,30 @@ export function toRelativePath(base: string, filepath: string): string {
   return relativePath;
 }
 
+/**
+ * Returns the relative path for a descendant, an empty string for the same
+ * directory, or undefined for a path outside the parent. Does not resolve symlinks.
+ *
+ * @example
+ * getRelativePathInside('/project', '/project/src'); // 'src'
+ * getRelativePathInside('/project', '/project'); // ''
+ * getRelativePathInside('/project', '/project-legacy'); // undefined
+ */
+export function getRelativePathInside(
+  parent: string,
+  target: string,
+): string | undefined {
+  const relativePath = relative(parent, target);
+  if (
+    relativePath === '..' ||
+    relativePath.startsWith(`..${sep}`) ||
+    isAbsolute(relativePath)
+  ) {
+    return undefined;
+  }
+  return relativePath;
+}
+
 export function getCommonParentPath(paths: string[]): string {
   const uniquePaths = [...new Set(paths)];
 
@@ -60,14 +84,9 @@ export const dedupeNestedPaths = (paths: string[]): string[] => {
   return paths
     .sort((p1, p2) => (p2.length > p1.length ? -1 : 1))
     .reduce<string[]>((prev, curr) => {
-      const isSub = prev.some((p) => {
-        const relativePath = relative(p, curr);
-        return (
-          relativePath !== '..' &&
-          !relativePath.startsWith(`..${sep}`) &&
-          !isAbsolute(relativePath)
-        );
-      });
+      const isSub = prev.some(
+        (p) => getRelativePathInside(p, curr) !== undefined,
+      );
       if (isSub) {
         return prev;
       }

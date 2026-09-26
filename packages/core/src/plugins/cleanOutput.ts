@@ -1,21 +1,14 @@
-import { join, sep } from 'node:path';
+import { join } from 'node:path';
 import { RSBUILD_OUTPUTS_PATH } from '../constants';
 import { color } from '../helpers';
 import { emptyDir } from '../helpers/fs';
+import { getRelativePathInside } from '../helpers/path';
 import type {
   CleanDistPath,
   CleanDistPathObject,
   EnvironmentContext,
   RsbuildPlugin,
 } from '../types';
-
-const addTrailingSep = (dir: string) => (dir.endsWith(sep) ? dir : dir + sep);
-
-const isStrictSubdir = (parent: string, child: string) => {
-  const parentDir = addTrailingSep(parent);
-  const childDir = addTrailingSep(child);
-  return parentDir !== childDir && childDir.startsWith(parentDir);
-};
 
 const normalizeCleanDistPath = (
   userOptions: CleanDistPath,
@@ -55,7 +48,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
 
       if (
         enable === true ||
-        (enable === 'auto' && isStrictSubdir(rootPath, targetPath))
+        (enable === 'auto' && getRelativePathInside(rootPath, targetPath))
       ) {
         return {
           path: targetPath,
@@ -81,7 +74,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
         }
 
         // only clean when the dist path is a subdir of root path
-        if (isStrictSubdir(rootPath, distPath)) {
+        if (getRelativePathInside(rootPath, distPath)) {
           return {
             path: distPath,
             keep,
