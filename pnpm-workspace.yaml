@@ -138,6 +138,7 @@ catalog:
   'typescript': '^6.0.3'
   'vue': '^3.5.43'
   'ws': '^8.21.3'
+  'zephyr-rspress-plugin': '1.4.0'
 
 catalogs:
   loader-utils-2:

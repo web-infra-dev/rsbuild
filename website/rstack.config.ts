@@ -12,6 +12,7 @@ import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import { define } from 'rstack';
+import { withZephyr } from 'zephyr-rspress-plugin';
 import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview.ts';
 
 const siteUrl = 'https://rsbuild.rs';
@@ -19,6 +20,7 @@ const description = 'The Rspack-based build tool';
 
 define.doc({
   plugins: [
+    withZephyr({ target: 'web' }),
     pluginAlgolia(),
     pluginSitemap({
       siteUrl,

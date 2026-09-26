@@ -56,6 +56,8 @@ jobs:
     name: Release
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     needs: validate_inputs
+    outputs:
+      sha: ${{ steps.source.outputs.sha }}
     runs-on: ubuntu-latest
     environment: npm
     permissions:
@@ -67,6 +69,10 @@ jobs:
         with:
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
+
+      - name: Record release source
+        id: source
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -85,3 +91,39 @@ jobs:
       - name: Publish to npm
         run: |
           pnpm --filter './packages/*' -r stage publish --tag ${{ github.event.inputs.npm_tag }} --no-git-checks
+
+  deploy-website:
+    name: Deploy website to production
+    if: inputs.npm_tag == 'latest' && inputs.branch == 'main'
+    needs: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          ref: ${{ needs.release.outputs.sha }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.20.0
+          package-manager-cache: false
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          run_install: true
+
+      - name: Build workspace packages
+        run: pnpm build
+
+      - name: Build and deploy website to production
+        env:
+          ZE_CI_TOKEN: ${{ secrets.ZE_CI_TOKEN }}
+          ZE_FAIL_BUILD: true
+          ZE_ENV: production
+        run: pnpm --filter rsbuild-website build
