@@ -217,13 +217,16 @@ export const prettyTime = (seconds: number): string => {
     return format(seconds.toFixed(digits), 's');
   }
 
-  if (seconds < 60) {
-    return format(seconds.toFixed(1), 's');
+  // Round first so that values like 119.96 are not printed as "1m 60.0s"
+  const roundedSeconds = Math.round(seconds * 10) / 10;
+
+  if (roundedSeconds < 60) {
+    return format(roundedSeconds.toFixed(1), 's');
   }
 
-  const minutes = Math.floor(seconds / 60);
+  const minutes = Math.floor(roundedSeconds / 60);
   const minutesLabel = format(minutes.toFixed(0), 'm');
-  const remainingSeconds = seconds % 60;
+  const remainingSeconds = roundedSeconds % 60;
 
   if (remainingSeconds === 0) {
     return minutesLabel;
