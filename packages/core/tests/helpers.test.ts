@@ -322,6 +322,12 @@ test('should dedupeNestedPaths correctly', async () => {
   ).toEqual(['package/to/root/dist', 'package/to/root/dist-legacy']);
 });
 
+test('should dedupe nested paths with names starting with two dots', () => {
+  expect(
+    dedupeNestedPaths(['package/to/root/dist', 'package/to/root/dist/..cache']),
+  ).toEqual(['package/to/root/dist']);
+});
+
 test('should detect web targets correctly', () => {
   // Test with single targets
   expect(isWebTarget('web')).toBe(true);
