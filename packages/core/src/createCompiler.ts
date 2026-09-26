@@ -170,10 +170,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       }
 
       const { rootPath } = context;
+      const rootPrefix = rootPath.endsWith(sep) ? rootPath : rootPath + sep;
       const absolutePath = resource.split('!').pop();
 
-      if (absolutePath?.startsWith(rootPath)) {
-        const relativePath = absolutePath.replace(rootPath, '');
+      if (absolutePath?.startsWith(rootPrefix)) {
+        const relativePath = absolutePath.slice(rootPrefix.length);
         lazyModules.add(relativePath);
       }
     }
