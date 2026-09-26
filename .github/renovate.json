@@ -62,6 +62,12 @@
       "matchPackageNames": ["*"]
     },
     {
+      "groupName": "memfs",
+      "groupSlug": "memfs",
+      "matchPackageNames": ["memfs", "@jsonjoy.com/*"],
+      "separateMajorMinor": false
+    },
+    {
       "matchManagers": ["npm"],
       "matchDepTypes": ["engines"],
       "matchPackageNames": ["node"],
