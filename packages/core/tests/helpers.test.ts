@@ -5,7 +5,7 @@ import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
 import {
   dedupeNestedPaths,
   getCommonParentPath,
-  getRelativePathInside,
+  relativeWithin,
 } from '../src/helpers/path';
 import { readPackageJsonByPath } from '../src/helpers/packageJson';
 import { ensureAssetPrefix, removeTailingSlash } from '../src/helpers/url';
@@ -291,7 +291,7 @@ describe('getCommonParentPath', () => {
   });
 });
 
-describe('getRelativePathInside', () => {
+describe('relativeWithin', () => {
   it.each<[string, string, string | undefined]>([
     ['project/dist', 'project/dist', ''],
     ['project/dist/', 'project/dist/.', ''],
@@ -306,7 +306,7 @@ describe('getRelativePathInside', () => {
     ['project/dist', 'project/dist-legacy', undefined],
     ['project/dist', 'project/dist/../shared', undefined],
   ])('should resolve %s to %s as %s', (parent, target, expected) => {
-    expect(getRelativePathInside(parent, target)).toBe(expected);
+    expect(relativeWithin(parent, target)).toBe(expected);
   });
 });
 

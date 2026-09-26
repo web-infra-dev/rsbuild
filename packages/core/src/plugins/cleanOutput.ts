@@ -2,7 +2,7 @@ import { join } from 'node:path';
 import { RSBUILD_OUTPUTS_PATH } from '../constants';
 import { color } from '../helpers';
 import { emptyDir } from '../helpers/fs';
-import { getRelativePathInside } from '../helpers/path';
+import { relativeWithin } from '../helpers/path';
 import type {
   CleanDistPath,
   CleanDistPathObject,
@@ -48,7 +48,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
 
       if (
         enable === true ||
-        (enable === 'auto' && getRelativePathInside(rootPath, targetPath))
+        (enable === 'auto' && relativeWithin(rootPath, targetPath))
       ) {
         return {
           path: targetPath,
@@ -74,7 +74,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
         }
 
         // only clean when the dist path is a subdir of root path
-        if (getRelativePathInside(rootPath, distPath)) {
+        if (relativeWithin(rootPath, distPath)) {
           return {
             path: distPath,
             keep,

@@ -6,7 +6,7 @@ import type {
   PitchLoaderDefinitionFunction,
 } from '@rspack/core';
 import { isCSSModules } from '../helpers/css';
-import { getRelativePathInside } from '../helpers/path';
+import { relativeWithin } from '../helpers/path';
 import type { CSSLoaderOptions } from '../types';
 
 type CSSUrlLoaderOptions = {
@@ -20,7 +20,7 @@ const HASH_PLACEHOLDER_REGEX =
 const normalizePath = (value: string) => value.replace(/\\/g, '/');
 
 const getRelativePath = (root: string, resourcePath: string) => {
-  const relativePath = getRelativePathInside(root, resourcePath);
+  const relativePath = relativeWithin(root, resourcePath);
   if (relativePath) {
     return normalizePath(relativePath);
   }

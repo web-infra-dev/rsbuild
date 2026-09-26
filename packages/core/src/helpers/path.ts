@@ -15,15 +15,15 @@ export function toRelativePath(base: string, filepath: string): string {
 }
 
 /**
- * Returns the relative path for a descendant, an empty string for the same
- * directory, or undefined for a path outside the parent. Does not resolve symlinks.
+ * Returns `target` relative to `parent`, or `undefined` if it is outside `parent`.
+ * Returns `''` for the same directory. Symlinks are not resolved.
  *
  * @example
- * getRelativePathInside('/project', '/project/src'); // 'src'
- * getRelativePathInside('/project', '/project'); // ''
- * getRelativePathInside('/project', '/project-legacy'); // undefined
+ * relativeWithin('/project', '/project/src'); // 'src'
+ * relativeWithin('/project', '/project'); // ''
+ * relativeWithin('/project', '/project-legacy'); // undefined
  */
-export function getRelativePathInside(
+export function relativeWithin(
   parent: string,
   target: string,
 ): string | undefined {
@@ -84,9 +84,7 @@ export const dedupeNestedPaths = (paths: string[]): string[] => {
   return paths
     .sort((p1, p2) => (p2.length > p1.length ? -1 : 1))
     .reduce<string[]>((prev, curr) => {
-      const isSub = prev.some(
-        (p) => getRelativePathInside(p, curr) !== undefined,
-      );
+      const isSub = prev.some((p) => relativeWithin(p, curr) !== undefined);
       if (isSub) {
         return prev;
       }
