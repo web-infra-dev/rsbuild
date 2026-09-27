@@ -122,6 +122,7 @@ export class CommonJsRunner extends BasicRunner {
       ) as (specifier: string) => Promise<Module>);
       const fn = vm.compileFunction(content, args, {
         filename: file.path,
+        // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.
         // Pass the import function directly to avoid retaining the module scope in a callback closure.
         importModuleDynamically: dynamicImport,
       });
