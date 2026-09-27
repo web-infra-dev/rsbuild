@@ -1,7 +1,13 @@
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, sep } from 'node:path';
-import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
+import {
+  isCI,
+  isPlainObject,
+  isWebTarget,
+  pick,
+  prettyTime,
+} from '../src/helpers';
 import {
   dedupeNestedPaths,
   getCommonParentPath,
@@ -11,6 +17,18 @@ import { readPackageJsonByPath } from '../src/helpers/packageJson';
 import { ensureAssetPrefix, removeTailingSlash } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext, RsbuildTarget } from '../src/types';
+
+it.each<[string | undefined, boolean]>([
+  [undefined, false],
+  ['', false],
+  ['false', false],
+  ['true', true],
+  ['1', true],
+  ['0', true],
+])('should detect CI=%s as %s', (value, expected) => {
+  rstest.stubEnv('CI', value);
+  expect(isCI()).toBe(expected);
+});
 
 describe('readPackageJsonByPath', () => {
   it('should read package.json from specified path', async () => {

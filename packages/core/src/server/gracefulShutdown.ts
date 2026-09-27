@@ -1,5 +1,5 @@
 import { constants } from 'node:os';
-import { isCI } from '../helpers/isCI';
+import { isCI } from '../helpers';
 
 /**
  * A set to store all cleanup callbacks that should be executed before process termination

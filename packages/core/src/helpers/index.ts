@@ -10,7 +10,6 @@ import type {
   Rspack,
 } from '../types';
 import { cachedImport } from './cachedImport';
-import { isCI } from './isCI';
 
 export { require } from './vendors';
 
@@ -20,6 +19,9 @@ export const getNodeEnv = (): string => process.env.NODE_ENV || '';
 export const setNodeEnv = (env: string): void => {
   process.env.NODE_ENV = env;
 };
+
+export const isCI = (): boolean =>
+  Boolean(process.env.CI) && process.env.CI !== 'false';
 
 export const isFunction = (func: unknown): func is (...args: any[]) => any =>
   typeof func === 'function';
