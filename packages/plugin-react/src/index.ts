@@ -41,6 +41,7 @@ export type PluginReactOptions = {
   /**
    * Enable or configure React Compiler via `builtin:swc-loader`,
    * the same as Rspack's `jsc.transform.reactCompiler` option.
+   * Only applied to environments whose `output.target` is `web`.
    *
    * @see https://rspack.rs/guide/integrations/react#using-builtinswc-loader
    */
@@ -197,7 +198,11 @@ export const pluginReact = (
         react: reactOptions,
       };
 
-      if (finalOptions.reactCompiler !== undefined) {
+      // React Compiler memoizes re-renders, which only happen in the browser.
+      if (
+        finalOptions.reactCompiler !== undefined &&
+        config.output.target === 'web'
+      ) {
         transformOptions.reactCompiler = finalOptions.reactCompiler;
       }
 
