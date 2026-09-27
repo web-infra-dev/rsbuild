@@ -79,8 +79,7 @@ export function setupWriteToDisk(
           },
           callback: (err?: Error) => void,
         ) => {
-          // Rspack already writes to disk with the native fs. Return before
-          // accessing info.content, whose getter materializes the asset buffer.
+          // Rspack already writes to disk with the native fs.
           if (compiler.outputFileSystem === fs) {
             callback();
             return;
