@@ -1,4 +1,5 @@
 import { constants } from 'node:os';
+import { isCI } from '../helpers/isCI';
 
 /**
  * A set to store all cleanup callbacks that should be executed before process termination
@@ -46,11 +47,11 @@ export const setupGracefulShutdown = (): (() => void) => {
   process.once('SIGTERM', onSigterm);
 
   // Listen for CTRL+D (stdin end) in non-CI environments
-  const isCI = process.env.CI === 'true';
+  const listenToStdin = !isCI();
   const onStdinEnd = () => {
     void handleTermination(0);
   };
-  if (!isCI) {
+  if (listenToStdin) {
     process.stdin.on('end', onStdinEnd);
   }
 
@@ -62,7 +63,7 @@ export const setupGracefulShutdown = (): (() => void) => {
     }
 
     process.removeListener('SIGTERM', onSigterm);
-    if (!isCI) {
+    if (listenToStdin) {
       process.stdin.removeListener('end', onStdinEnd);
     }
   };

@@ -10,6 +10,7 @@ import type {
   Rspack,
 } from '../types';
 import { cachedImport } from './cachedImport';
+import { isCI } from './isCI';
 
 export { require } from './vendors';
 
@@ -245,8 +246,7 @@ export const prettyTime = (seconds: number): string => {
  */
 export const isTTY = (type: 'stdin' | 'stdout' = 'stdout'): boolean => {
   return (
-    (type === 'stdin' ? process.stdin.isTTY : process.stdout.isTTY) &&
-    !process.env.CI
+    (type === 'stdin' ? process.stdin.isTTY : process.stdout.isTTY) && !isCI()
   );
 };
 
