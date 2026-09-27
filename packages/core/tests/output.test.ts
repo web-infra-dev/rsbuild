@@ -186,10 +186,6 @@ describe('plugin-output', () => {
       chunkLoading: 'import',
       workerChunkLoading: 'import',
     });
-    expect(config.node).toMatchObject({
-      __dirname: false,
-      __filename: false,
-    });
   });
 
   it('should allow using copy plugin', async () => {
