@@ -20,6 +20,9 @@ export const setNodeEnv = (env: string): void => {
   process.env.NODE_ENV = env;
 };
 
+export const isCI = (): boolean =>
+  Boolean(process.env.CI) && process.env.CI !== 'false';
+
 export const isFunction = (func: unknown): func is (...args: any[]) => any =>
   typeof func === 'function';
 
@@ -245,8 +248,7 @@ export const prettyTime = (seconds: number): string => {
  */
 export const isTTY = (type: 'stdin' | 'stdout' = 'stdout'): boolean => {
   return (
-    (type === 'stdin' ? process.stdin.isTTY : process.stdout.isTTY) &&
-    !process.env.CI
+    (type === 'stdin' ? process.stdin.isTTY : process.stdout.isTTY) && !isCI()
   );
 };
 
