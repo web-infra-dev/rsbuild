@@ -4,7 +4,9 @@ for (const name of ['double', 'triple']) {
   document.body.appendChild(output);
 
   // Load the separate worker environment's output without creating a child compilation.
-  const worker = new Worker(`/${name}-worker.js`, { type: 'module' });
+  const worker = new Worker(`/${name}-worker.js`, {
+    type: import.meta.env.WORKER_TYPE,
+  });
   worker.onmessage = ({ data }) => {
     output.textContent = String(data);
     worker.terminate();

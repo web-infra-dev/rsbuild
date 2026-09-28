@@ -1,6 +1,11 @@
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
+  source: {
+    define: {
+      'import.meta.env.WORKER_TYPE': JSON.stringify('module'),
+    },
+  },
   environments: {
     web: {},
     worker: {
