@@ -20,6 +20,9 @@ export const setNodeEnv = (env: string): void => {
   process.env.NODE_ENV = env;
 };
 
+export const isCI = (): boolean =>
+  Boolean(process.env.CI) && process.env.CI !== 'false';
+
 export const isFunction = (func: unknown): func is (...args: any[]) => any =>
   typeof func === 'function';
 
@@ -217,13 +220,16 @@ export const prettyTime = (seconds: number): string => {
     return format(seconds.toFixed(digits), 's');
   }
 
-  if (seconds < 60) {
-    return format(seconds.toFixed(1), 's');
+  // Round first so that values like 119.96 are not printed as "1m 60.0s"
+  const roundedSeconds = Math.round(seconds * 10) / 10;
+
+  if (roundedSeconds < 60) {
+    return format(roundedSeconds.toFixed(1), 's');
   }
 
-  const minutes = Math.floor(seconds / 60);
+  const minutes = Math.floor(roundedSeconds / 60);
   const minutesLabel = format(minutes.toFixed(0), 'm');
-  const remainingSeconds = seconds % 60;
+  const remainingSeconds = roundedSeconds % 60;
 
   if (remainingSeconds === 0) {
     return minutesLabel;
@@ -242,8 +248,7 @@ export const prettyTime = (seconds: number): string => {
  */
 export const isTTY = (type: 'stdin' | 'stdout' = 'stdout'): boolean => {
   return (
-    (type === 'stdin' ? process.stdin.isTTY : process.stdout.isTTY) &&
-    !process.env.CI
+    (type === 'stdin' ? process.stdin.isTTY : process.stdout.isTTY) && !isCI()
   );
 };
 

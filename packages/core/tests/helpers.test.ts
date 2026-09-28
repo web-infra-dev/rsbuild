@@ -1,12 +1,34 @@
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, sep } from 'node:path';
-import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
-import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
+import {
+  isCI,
+  isPlainObject,
+  isWebTarget,
+  pick,
+  prettyTime,
+} from '../src/helpers';
+import {
+  dedupeNestedPaths,
+  getCommonParentPath,
+  relativeWithin,
+} from '../src/helpers/path';
 import { readPackageJsonByPath } from '../src/helpers/packageJson';
 import { ensureAssetPrefix, removeTailingSlash } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext, RsbuildTarget } from '../src/types';
+
+it.each<[string | undefined, boolean]>([
+  [undefined, false],
+  ['', false],
+  ['false', false],
+  ['true', true],
+  ['1', true],
+  ['0', true],
+])('should detect CI=%s as %s', (value, expected) => {
+  rstest.stubEnv('CI', value);
+  expect(isCI()).toBe(expected);
+});
 
 describe('readPackageJsonByPath', () => {
   it('should read package.json from specified path', async () => {
@@ -132,7 +154,9 @@ test('should format time correctly', () => {
   expect(prettyTime(0.1234)).toEqual('0.12s');
   expect(prettyTime(1.234)).toEqual('1.23s');
   expect(prettyTime(12.34)).toEqual('12.3s');
+  expect(prettyTime(59.96)).toEqual('1m');
   expect(prettyTime(120)).toEqual('2m');
+  expect(prettyTime(119.96)).toEqual('2m');
   expect(prettyTime(123.4)).toEqual('2m 3.4s');
   expect(prettyTime(1234)).toEqual('20m 34s');
   expect(prettyTime(1234.5)).toEqual('20m 34.5s');
@@ -287,6 +311,25 @@ describe('getCommonParentPath', () => {
   });
 });
 
+describe('relativeWithin', () => {
+  it.each<[string, string, string | undefined]>([
+    ['project/dist', 'project/dist', ''],
+    ['project/dist/', 'project/dist/.', ''],
+    ['project/dist', 'project/dist/src/index.js', join('src', 'index.js')],
+    [
+      'project/dist',
+      'project/dist/..cache/index.js',
+      join('..cache', 'index.js'),
+    ],
+    ['project/dist', 'project/dist/src/../index.js', 'index.js'],
+    ['project/dist', 'project', undefined],
+    ['project/dist', 'project/dist-legacy', undefined],
+    ['project/dist', 'project/dist/../shared', undefined],
+  ])('should resolve %s to %s as %s', (parent, target, expected) => {
+    expect(relativeWithin(parent, target)).toBe(expected);
+  });
+});
+
 test('should dedupeNestedPaths correctly', async () => {
   expect(
     dedupeNestedPaths([
@@ -316,6 +359,16 @@ test('should dedupeNestedPaths correctly', async () => {
     'package/to/root/dist/web2',
     'package/to/root/dist/web3',
   ]);
+
+  expect(
+    dedupeNestedPaths(['package/to/root/dist', 'package/to/root/dist-legacy']),
+  ).toEqual(['package/to/root/dist', 'package/to/root/dist-legacy']);
+});
+
+test('should dedupe nested paths with names starting with two dots', () => {
+  expect(
+    dedupeNestedPaths(['package/to/root/dist', 'package/to/root/dist/..cache']),
+  ).toEqual(['package/to/root/dist']);
 });
 
 test('should detect web targets correctly', () => {

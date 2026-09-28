@@ -169,6 +169,25 @@ describe('plugin-output', () => {
     expect(rspackConfigs[0].output).toMatchSnapshot();
   });
 
+  it('should output ES modules when target is web-worker and output.module is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          target: 'web-worker',
+          module: true,
+        },
+      },
+    });
+
+    const [config] = await rsbuild.initConfigs();
+    expect(config.output).toMatchObject({
+      module: true,
+      chunkFormat: 'module',
+      chunkLoading: 'import',
+      workerChunkLoading: 'import',
+    });
+  });
+
   it('should allow using copy plugin', async () => {
     const rsbuild = await createRsbuild({
       config: {

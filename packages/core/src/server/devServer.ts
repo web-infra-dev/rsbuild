@@ -256,6 +256,18 @@ export async function createDevServer<
     devMiddlewares?: GetDevMiddlewaresResult;
     buildManager?: BuildManager;
   } = {};
+  let webSocketServers: Set<HTTPServer> | undefined = new Set();
+
+  // Detach upgrade listeners so external servers do not retain closed compilers.
+  const removeWebSocketListeners = () => {
+    const onUpgrade = state.devMiddlewares?.onUpgrade;
+    if (onUpgrade && webSocketServers) {
+      for (const server of webSocketServers) {
+        server.removeListener('upgrade', onUpgrade);
+      }
+    }
+    webSocketServers = undefined;
+  };
 
   const cleanupGracefulShutdown = middlewareMode
     ? null
@@ -267,21 +279,26 @@ export async function createDevServer<
   // Keep the restart watcher active when closing server resources,
   // so failed restarts can be retried.
   const closeServerResources = () => {
-    if (!closingPromise) {
-      // Also prevent new subscriptions during and after shutdown.
-      hotConnectCallbacks = undefined;
-      unregisterRestart?.();
-      unregisterRestart = undefined;
-      closingPromise = (async () => {
-        removeCleanup(closeServer);
-        cleanupGracefulShutdown?.();
-        await context.hooks.onCloseDevServer.callBatch();
-        await Promise.all([
-          state.devMiddlewares?.close(),
-          state.fileWatcher?.close(),
-        ]);
-      })();
+    if (closingPromise) {
+      return closingPromise;
     }
+
+    // Prevent new subscriptions during and after shutdown.
+    hotConnectCallbacks = undefined;
+    removeWebSocketListeners();
+    unregisterRestart?.();
+    unregisterRestart = undefined;
+
+    closingPromise = (async () => {
+      removeCleanup(closeServer);
+      cleanupGracefulShutdown?.();
+      await context.hooks.onCloseDevServer.callBatch();
+      await Promise.all([
+        state.devMiddlewares?.close(),
+        state.fileWatcher?.close(),
+      ]);
+    })();
+
     return closingPromise;
   };
 
@@ -465,9 +482,7 @@ export async function createDevServer<
         // 404 fallback middleware should be the last middleware
         middlewares.use(notFoundMiddleware);
 
-        if (state.devMiddlewares) {
-          httpServer.on('upgrade', state.devMiddlewares.onUpgrade);
-        }
+        devServer.connectWebSocket({ server: httpServer });
 
         logger.debug('listen dev server done');
 
@@ -496,8 +511,13 @@ export async function createDevServer<
       });
     },
     connectWebSocket: ({ server }: { server: HTTPServer }) => {
-      if (state.devMiddlewares) {
+      if (
+        state.devMiddlewares &&
+        webSocketServers &&
+        !webSocketServers.has(server)
+      ) {
         server.on('upgrade', state.devMiddlewares.onUpgrade);
+        webSocketServers.add(server);
       }
     },
     close: closeServer,

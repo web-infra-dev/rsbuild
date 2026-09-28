@@ -41,6 +41,22 @@ export const resolveWriteToDiskConfig = (
   };
 };
 
+/**
+ * Copy selected assets from the compiler's output file system to disk.
+ * Rspack always writes to compiler.outputFileSystem; this hook handles any
+ * additional disk writes requested by dev.writeToDisk:
+ *
+ * - With `true` and the native Node.js fs, Rspack already writes to disk,
+ *   so no extra write is needed.
+ * - With a predicate, Rspack writes to memory and this hook copies only
+ *   the files accepted by the predicate to disk.
+ * - With different settings across environments, Rspack writes to memory
+ *   and the resolved predicate selects files using each environment's setting.
+ * - With `true` and a custom output file system, keep copying to disk because
+ *   the custom file system may store assets somewhere else, such as memory.
+ *
+ * When all environments disable writeToDisk, the caller skips this setup.
+ */
 export function setupWriteToDisk(
   compilers: Compiler[],
   writeToDisk: ResolvedWriteToDisk,
@@ -63,9 +79,15 @@ export function setupWriteToDisk(
           },
           callback: (err?: Error) => void,
         ) => {
+          // Rspack already writes to disk with the native fs.
+          if (compiler.outputFileSystem === fs) {
+            callback();
+            return;
+          }
+
           const { targetPath, content, compilation } = info;
           const allowWrite =
-            writeToDisk && typeof writeToDisk === 'function'
+            typeof writeToDisk === 'function'
               ? writeToDisk(targetPath, compilation.name)
               : true;
 
