@@ -90,6 +90,11 @@ export class BuildManager {
         resolve();
       });
     });
+
+    // Release the closed server without clearing a replacement server's reference.
+    if (this.context.socketServer === this.socketServer) {
+      this.context.socketServer = undefined;
+    }
   }
 
   public readFileSync = (fileName: string): string => {
