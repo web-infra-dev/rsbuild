@@ -115,5 +115,7 @@ export default {
 ```
 
 :::tip
-当 [output.target](/config/output/target) 为 `web-worker` 时，externals 将不会生效。这是因为 Web Worker 环境不支持访问全局变量。
+当 [output.target](/config/output/target) 为 `web-worker` 且 [output.module](/config/output/module) 为 `true` 时，externals 会被保留，并可通过 ES 模块导入加载。请确保 worker 运行时能够解析外部模块的路径。
+
+对于 classic worker 产物（`output.module: false`），Rsbuild 会忽略 externals，因为 worker 无法访问主页面提供的全局变量。
 :::

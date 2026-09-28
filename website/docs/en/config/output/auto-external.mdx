@@ -233,7 +233,9 @@ For more complex `output.externals` configurations, such as arrays, functions, o
 
 :::tip
 
-If [output.target](/config/output/target) is `web-worker`, Rsbuild removes the `externals` configuration, so `output.autoExternal` will not take effect. This is because a Web Worker runs in an isolated global scope and cannot access global variables injected into `window` by CDN scripts or the host page.
+When [output.target](/config/output/target) is `web-worker`, `output.autoExternal` takes effect if [output.module](/config/output/module) is `true`. Externalized packages remain ES module imports, so the worker runtime must be able to resolve their package names.
+
+For classic worker output (`output.module: false`), Rsbuild removes the `externals` configuration, so `output.autoExternal` does not take effect. Classic workers cannot access global variables injected into `window` by CDN scripts or the host page.
 
 :::
 
