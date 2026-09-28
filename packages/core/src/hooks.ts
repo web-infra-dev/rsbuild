@@ -150,16 +150,27 @@ export function createAsyncHook<
   const postGroup: Callback[] = [];
   const defaultGroup: Callback[] = [];
 
-  const tap = (cb: Callback | HookDescriptor<Callback>) => {
-    if (isFunction(cb)) {
-      defaultGroup.push(cb);
-    } else if (cb.order === 'pre') {
-      preGroup.push(cb.handler);
-    } else if (cb.order === 'post') {
-      postGroup.push(cb.handler);
-    } else {
-      defaultGroup.push(cb.handler);
+  const register = (cb: Callback | HookDescriptor<Callback>, once: boolean) => {
+    const { handler, order } = isFunction(cb) ? { handler: cb } : cb;
+    const group =
+      order === 'pre' ? preGroup : order === 'post' ? postGroup : defaultGroup;
+
+    if (!once) {
+      group.push(handler);
+      return;
     }
+
+    let called = false;
+    const onceCallback = ((...args: Parameters<Callback>) => {
+      // Another invocation may already have captured this callback in its list.
+      if (called) {
+        return;
+      }
+      called = true;
+      group.splice(group.indexOf(onceCallback), 1);
+      return handler(...args) as ReturnType<Callback>;
+    }) as Callback;
+    group.push(onceCallback);
   };
 
   const callChain = async (...params: Parameters<Callback>) => {
@@ -189,7 +200,8 @@ export function createAsyncHook<
   };
 
   return {
-    tap,
+    tap: (cb) => register(cb, false),
+    tapOnce: (cb) => register(cb, true),
     callChain,
     callBatch,
   };
