@@ -90,6 +90,10 @@ export class BuildManager {
         resolve();
       });
     });
+
+    if (this.context.socketServer === this.socketServer) {
+      this.context.socketServer = undefined;
+    }
   }
 
   public readFileSync = (fileName: string): string => {
