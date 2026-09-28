@@ -149,6 +149,8 @@ export function createAsyncHook<
   const preGroup: Callback[] = [];
   const postGroup: Callback[] = [];
   const defaultGroup: Callback[] = [];
+  // Overlapping calls may still hold snapshots of removed callbacks.
+  const calledOnceCallbacks = new WeakSet<Callback>();
 
   const register = (cb: Callback | HookDescriptor<Callback>, once: boolean) => {
     const { handler, order } = isFunction(cb) ? { handler: cb } : cb;
@@ -160,13 +162,8 @@ export function createAsyncHook<
       return;
     }
 
-    let called = false;
     const onceCallback = ((...args: Parameters<Callback>) => {
-      // Another invocation may already have captured this callback in its list.
-      if (called) {
-        return;
-      }
-      called = true;
+      calledOnceCallbacks.add(onceCallback);
       group.splice(group.indexOf(onceCallback), 1);
       return handler(...args) as ReturnType<Callback>;
     }) as Callback;
@@ -177,6 +174,9 @@ export function createAsyncHook<
     const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
 
     for (const callback of callbacks) {
+      if (calledOnceCallbacks.has(callback)) {
+        continue;
+      }
       const result = await callback(...params);
 
       if (result !== undefined) {
@@ -192,6 +192,9 @@ export function createAsyncHook<
     const results: T[] = [];
 
     for (const callback of callbacks) {
+      if (calledOnceCallbacks.has(callback)) {
+        continue;
+      }
       const result: T = await callback(...params);
       results.push(result);
     }

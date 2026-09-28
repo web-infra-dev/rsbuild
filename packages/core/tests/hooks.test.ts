@@ -49,13 +49,18 @@ describe.each(['callChain', 'callBatch'] as const)(
     });
 
     test('should only run once across overlapping calls', async () => {
-      const hook = createAsyncHook();
-      const callback = rstest.fn(async () => {});
-      hook.tap(async () => {});
+      const hook = createAsyncHook<() => Promise<string>>();
+      const callback = rstest.fn(async () => 'once');
+      hook.tap(async () => 'regular');
       hook.tapOnce(callback);
 
-      await Promise.all([hook[method](), hook[method]()]);
+      const results = await Promise.all([hook[method](), hook[method]()]);
       expect(callback).toHaveBeenCalledTimes(1);
+      expect(results).toEqual(
+        method === 'callChain'
+          ? [['once'], ['regular']]
+          : [['regular', 'once'], ['regular']],
+      );
     });
   },
 );
