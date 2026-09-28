@@ -143,14 +143,18 @@ export function createEnvironmentAsyncHook<
   };
 }
 
+const SKIP_CALLBACK = Symbol('skip callback');
+
 export function createAsyncHook<
   Callback extends (...args: any[]) => any,
 >(): AsyncHook<Callback> {
-  const preGroup: Callback[] = [];
-  const postGroup: Callback[] = [];
-  const defaultGroup: Callback[] = [];
-  // Overlapping calls may still hold snapshots of removed callbacks.
-  const calledOnceCallbacks = new WeakSet<Callback>();
+  type InternalCallback = (
+    ...args: Parameters<Callback>
+  ) =>
+    ReturnType<Callback> | Promise<ReturnType<Callback>> | typeof SKIP_CALLBACK;
+  const preGroup: InternalCallback[] = [];
+  const postGroup: InternalCallback[] = [];
+  const defaultGroup: InternalCallback[] = [];
 
   const register = (cb: Callback | HookDescriptor<Callback>, once: boolean) => {
     const { handler, order } = isFunction(cb) ? { handler: cb } : cb;
@@ -166,11 +170,16 @@ export function createAsyncHook<
       return;
     }
 
-    const onceCallback = ((...args: Parameters<Callback>) => {
-      calledOnceCallbacks.add(onceCallback);
+    let called = false;
+    const onceCallback: InternalCallback = (...args) => {
+      // Overlapping calls may still hold snapshots of removed callbacks.
+      if (called) {
+        return SKIP_CALLBACK;
+      }
+      called = true;
       group.splice(group.indexOf(onceCallback), 1);
       return handler(...args) as ReturnType<Callback>;
-    }) as Callback;
+    };
     group.push(onceCallback);
   };
 
@@ -178,12 +187,9 @@ export function createAsyncHook<
     const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
 
     for (const callback of callbacks) {
-      if (calledOnceCallbacks.has(callback)) {
-        continue;
-      }
       const result = await callback(...params);
 
-      if (result !== undefined) {
+      if (result !== SKIP_CALLBACK && result !== undefined) {
         params[0] = result;
       }
     }
@@ -191,16 +197,15 @@ export function createAsyncHook<
     return params;
   };
 
-  const callBatch = async <T = unknown>(...params: Parameters<Callback>) => {
+  const callBatch = async (...params: Parameters<Callback>) => {
     const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
-    const results: T[] = [];
+    const results: Awaited<ReturnType<Callback>>[] = [];
 
     for (const callback of callbacks) {
-      if (calledOnceCallbacks.has(callback)) {
-        continue;
+      const result = await callback(...params);
+      if (result !== SKIP_CALLBACK) {
+        results.push(result);
       }
-      const result: T = await callback(...params);
-      results.push(result);
     }
 
     return results;

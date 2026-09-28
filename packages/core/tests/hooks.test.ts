@@ -65,6 +65,15 @@ describe.each(['callChain', 'callBatch'] as const)(
   },
 );
 
+test('should preserve undefined return values in batch results', async () => {
+  const hook = createAsyncHook<() => void>();
+  hook.tap(() => {});
+  hook.tapOnce(() => {});
+
+  expect(await hook.callBatch()).toEqual([undefined, undefined]);
+  expect(await hook.callBatch()).toEqual([undefined]);
+});
+
 describe('initHooks', () => {
   test('should initialize hooks correctly', async () => {
     const hooks = initHooks();
