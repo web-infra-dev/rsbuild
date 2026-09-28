@@ -204,11 +204,12 @@ export function init(
       return;
     }
 
-    for (const item of clientErrors) {
-      if (item.id === id) {
-        item.message = message;
-      }
+    const clientError = clientErrors.find((item) => item.id === id);
+    // Ignore responses for errors cleared by a newer compilation.
+    if (!clientError) {
+      return;
     }
+    clientError.message = message;
 
     createOverlay(
       'Runtime errors',
@@ -311,8 +312,9 @@ export function init(
         // Update the last compilation hash
         lastHash = message.data;
 
-        if (clearOverlay && shouldUpdate()) {
-          clearOverlay();
+        if (shouldUpdate()) {
+          clientErrors.length = 0;
+          clearOverlay?.();
         }
         break;
       case 'ok':
