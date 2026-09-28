@@ -91,6 +91,7 @@ export class BuildManager {
       });
     });
 
+    // Release the closed server without clearing a replacement server's reference.
     if (this.context.socketServer === this.socketServer) {
       this.context.socketServer = undefined;
     }
