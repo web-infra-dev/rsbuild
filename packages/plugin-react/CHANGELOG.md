@@ -1,5 +1,27 @@
 # @rsbuild/plugin-react
 
+## 2.1.1 (2026-09-28)
+
+### Bug fixes
+
+- fix(plugin-react): apply reactCompiler only to web environments by @BleedingDev in https://github.com/web-infra-dev/rsbuild/pull/8568
+
+### Document
+
+- docs(website): add react compiler rust version use into rsbuild by @WuMingDao in https://github.com/web-infra-dev/rsbuild/pull/8031
+- docs: update React Compiler guides by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8038
+- docs: update stale plugin references by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8190
+- docs: update Rspack documentation links by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8406
+
+### Other changes
+
+- chore(build): simplify Rslib configs by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8168
+- chore: migrate Rslib to Rstack CLI by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8170
+- chore(deps): upgrade Rslib to v1.0.0-beta.2 by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8230
+- chore: update Rstack config by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8411
+- chore(build): enable Rspack runtime mode by @Timeless0911 in https://github.com/web-infra-dev/rsbuild/pull/8448
+- chore(deps): update react to v19.3.0 by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8488
+
 ## 2.1.0 (2026-06-18)
 
 ### New features
