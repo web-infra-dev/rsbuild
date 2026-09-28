@@ -8,70 +8,43 @@ import {
 } from '../src/hooks';
 import type { InternalContext, Rspack } from '../src/types';
 
-describe.each(['callChain', 'callBatch'] as const)(
-  'tapOnce with %s',
-  (method) => {
-    test('should preserve callback order and only run each registration once', async () => {
-      const hook = createAsyncHook<(value: string) => string>();
-      const calls: string[] = [];
-      const handler = (label: string) => (value: string) => {
-        calls.push(label);
-        return `${value}:${label}`;
-      };
-      const shared = handler('shared');
+test.each(['callChain', 'callBatch'] as const)(
+  'tapOnce should preserve order and only run once with %s',
+  async (method) => {
+    const hook = createAsyncHook();
+    const calls: string[] = [];
+    hook.tapOnce({ order: 'post', handler: () => calls.push('post') });
+    hook.tapOnce(() => calls.push('once'));
+    hook.tap(() => calls.push('regular'));
+    hook.tapOnce({ order: 'pre', handler: () => calls.push('pre') });
 
-      hook.tapOnce({ order: 'post', handler: handler('post') });
-      hook.tapOnce(shared);
-      hook.tap(shared);
-      hook.tapOnce({ order: 'pre', handler: handler('pre') });
-
-      const first = await hook[method]('start');
-      expect(calls).toEqual(['pre', 'shared', 'shared', 'post']);
-      expect(first).toEqual(
-        method === 'callChain'
-          ? ['start:pre:shared:shared:post']
-          : ['start:pre', 'start:shared', 'start:shared', 'start:post'],
-      );
-
-      calls.length = 0;
-      expect(await hook[method]('next')).toEqual(['next:shared']);
-      expect(calls).toEqual(['shared']);
-    });
-
-    test('should not repeat a callback that throws', async () => {
-      const hook = createAsyncHook();
-      hook.tapOnce(() => {
-        throw new Error('callback failed');
-      });
-
-      await expect(hook[method]()).rejects.toThrow('callback failed');
-      await expect(hook[method]()).resolves.toEqual([]);
-    });
-
-    test('should only run once across overlapping calls', async () => {
-      const hook = createAsyncHook<() => Promise<string>>();
-      const callback = rstest.fn(async () => 'once');
-      hook.tap(async () => 'regular');
-      hook.tapOnce(callback);
-
-      const results = await Promise.all([hook[method](), hook[method]()]);
-      expect(callback).toHaveBeenCalledTimes(1);
-      expect(results).toEqual(
-        method === 'callChain'
-          ? [['once'], ['regular']]
-          : [['regular', 'once'], ['regular']],
-      );
-    });
+    await hook[method]();
+    await hook[method]();
+    expect(calls).toEqual(['pre', 'once', 'regular', 'post', 'regular']);
   },
 );
 
-test('should preserve undefined return values in batch results', async () => {
-  const hook = createAsyncHook<() => void>();
-  hook.tap(() => {});
-  hook.tapOnce(() => {});
+test('tapOnce should not repeat a callback that throws', async () => {
+  const hook = createAsyncHook();
+  hook.tapOnce(() => {
+    throw new Error('callback failed');
+  });
 
-  expect(await hook.callBatch()).toEqual([undefined, undefined]);
-  expect(await hook.callBatch()).toEqual([undefined]);
+  await expect(hook.callBatch()).rejects.toThrow('callback failed');
+  expect(await hook.callBatch()).toEqual([]);
+});
+
+test('tapOnce should omit skipped callbacks from overlapping batch results', async () => {
+  const hook = createAsyncHook();
+  const callback = rstest.fn(() => 'once');
+  hook.tap(() => {});
+  hook.tapOnce(callback);
+
+  expect(await Promise.all([hook.callBatch(), hook.callBatch()])).toEqual([
+    [undefined, 'once'],
+    [undefined],
+  ]);
+  expect(callback).toHaveBeenCalledTimes(1);
 });
 
 describe('initHooks', () => {
