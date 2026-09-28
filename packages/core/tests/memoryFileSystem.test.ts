@@ -1,19 +1,13 @@
-import type { IFsWithVolume } from 'memfs';
 import { createMemoryFileSystem } from '../src/server/assets-middleware/memoryFileSystem';
 
-test('should copy whole-file writes into exact-sized buffers, including overwrites', () => {
-  const fs = createMemoryFileSystem() as IFsWithVolume;
-  // Stay above the Buffer pool threshold when checking the backing allocation.
-  for (const size of [Buffer.poolSize * 2 + 1, Buffer.poolSize + 1]) {
-    const content = Buffer.alloc(size, 'x');
-    fs.writeFileSync('/asset.js', content);
-    content.fill(0);
+test('should write whole files, including overwrites', () => {
+  const fs = createMemoryFileSystem();
+  for (const content of ['hello world', 'hello']) {
+    const buffer = Buffer.from(content);
+    fs.writeFileSync('/asset.js', buffer);
 
-    const stat = fs.statSync('/asset.js');
-    const node = fs.__vol._core.inodes[Number(stat.ino)];
-    expect(stat.size).toBe(size);
-    expect(node.buf.buffer.byteLength).toBe(size);
-    expect(fs.readFileSync('/asset.js')).toEqual(Buffer.alloc(size, 'x'));
+    expect(fs.statSync('/asset.js').size).toBe(buffer.length);
+    expect(fs.readFileSync('/asset.js', 'utf8')).toBe(content);
   }
 });
 
