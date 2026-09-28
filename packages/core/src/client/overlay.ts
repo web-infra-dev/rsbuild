@@ -7,6 +7,20 @@ const {
 } = typeof window !== 'undefined' ? window : globalThis;
 
 class ErrorOverlay extends HTMLElement {
+  private onEscKeydown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape' || e.code === 'Escape') {
+      this.close();
+    }
+  };
+
+  connectedCallback() {
+    document.addEventListener('keydown', this.onEscKeydown);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('keydown', this.onEscKeydown);
+  }
+
   init(html: string) {
     const root = this.attachShadow({ mode: 'open' });
     root.innerHTML = html;
@@ -23,14 +37,6 @@ class ErrorOverlay extends HTMLElement {
       }
       e.stopPropagation();
     });
-
-    const onEscKeydown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' || e.code === 'Escape') {
-        this.close();
-      }
-      document.removeEventListener('keydown', onEscKeydown);
-    };
-    document.addEventListener('keydown', onEscKeydown);
   }
 
   close = (immediate: unknown = false) => {
