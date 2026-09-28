@@ -180,6 +180,8 @@ type ReactCompiler =
 
 - **默认值：** `undefined`
 
+React Compiler 仅会应用于 [output.target](/config/output/target) 为 `web` 的环境。`node` 和 `web-worker` 环境通常用于服务端渲染，组件只渲染一次，记忆化不会带来收益。如需在其他环境中启用，可以在该环境的配置中设置 [tools.swc](/config/tools/swc) 的 `jsc.transform.reactCompiler`。
+
 将 `reactCompiler` 设置为 `true`，即可使用默认选项启用 React Compiler：
 
 ```ts

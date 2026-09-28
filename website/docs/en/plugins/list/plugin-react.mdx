@@ -180,6 +180,8 @@ type ReactCompiler =
 
 - **Default:** `undefined`
 
+React Compiler is only applied to environments whose [output.target](/config/output/target) is `web`. `node` and `web-worker` environments are usually used for server-side rendering, where components render once and memoization has no effect. To enable it for another environment, set [tools.swc](/config/tools/swc) `jsc.transform.reactCompiler` in that environment's config.
+
 Set `reactCompiler` to `true` to enable React Compiler with the default options:
 
 ```ts
