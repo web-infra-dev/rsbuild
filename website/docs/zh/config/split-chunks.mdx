@@ -166,6 +166,8 @@ export default {
 
 对于单入口应用，这会将应用代码和动态导入的模块打包到同一个 JavaScript chunk 中。多入口应用仍会为每个入口生成独立的 chunk。
 
+当 `output.target` 为 `'web-worker'` 时，默认不会生成异步 chunk，无需额外配置。
+
 ## 版本历史 \{#version-history}
 
 | 版本   | 变更内容                                                     |
