@@ -111,6 +111,8 @@ Cloudflare 提供了多种部署 Rsbuild 项目的方式。如果只需要托管
 
 Cloudflare Workers 属于运行时部署目标，而不是静态托管。对于需要运行在 Cloudflare Workers runtime 中的 Rsbuild 项目，[rsbuild-cloudflare](https://github.com/Nsttt/rsbuild-cloudflare) 是一个实验性插件，可以读取 Wrangler 配置、通过 Miniflare 提供开发服务，并生成可部署的 Worker 产物。
 
+如果需要手动配置 Worker 打包，请参考 [output.target - Cloudflare Workers](/config/output/target#cloudflare-workers)。
+
 ### GitHub Pages
 
 [GitHub Pages](https://pages.github.com/) 是一个静态站点托管服务，可以直接从 GitHub 上的存储库获取 HTML、CSS 和 JavaScript 文件。

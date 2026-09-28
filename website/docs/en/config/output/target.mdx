@@ -117,6 +117,10 @@ For more information, see [Using Web Workers](/guide/basic/web-workers).
 
 ## Other targets
 
+For other runtimes, choose the closest built-in target and adapt it with additional configuration or plugins.
+
+### Electron
+
 [Rspack](https://rspack.rs/config/target) supports other target types, such as `electron-main` and `electron-renderer`.
 
 Rsbuild currently does not support these targets. You can configure these targets using [tools.rspack](/config/tools/rspack).
@@ -132,3 +136,27 @@ export default {
   },
 };
 ```
+
+### Cloudflare Workers
+
+Cloudflare Workers use a default export for event handlers and named exports for classes such as Durable Objects. To build this type of Worker, enable [output.module](/config/output/module) to generate ES module output and configure Rspack's `output.library.type` to preserve the entry exports.
+
+The following configuration builds an ES module Worker with the default chunk splitting settings:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'web-worker',
+    module: true,
+  },
+  tools: {
+    rspack: {
+      output: {
+        library: { type: 'module' },
+      },
+    },
+  },
+};
+```
+
+This configuration covers bundling. Use Wrangler or a platform plugin for local development and deployment. See [Deploying to Cloudflare Workers](/guide/basic/deployment#cloudflare-workers).
