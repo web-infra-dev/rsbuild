@@ -5,6 +5,7 @@ import type {
   PathData,
   PitchLoaderDefinitionFunction,
 } from '@rspack/core';
+import { getPublicPathFromCompiler } from '../helpers/compiler';
 import { isCSSModules } from '../helpers/css';
 import { relativeWithin } from '../helpers/path';
 import type { CSSLoaderOptions } from '../types';
@@ -16,6 +17,8 @@ type CSSUrlLoaderOptions = {
 
 const HASH_PLACEHOLDER_REGEX =
   /\[(?:[^:\]]+:)?(?:chunkhash|contenthash|hash|fullhash)(?::[^\]]+)?]/i;
+
+const PUBLIC_PATH_PLACEHOLDER = 'rsbuild-css-url://public-path/';
 
 const normalizePath = (value: string) => value.replace(/\\/g, '/');
 
@@ -83,7 +86,11 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
       );
     }
 
-    const moduleExports = await this.importModule(`!!${remainingRequest}`);
+    // css-loader resolves asset URLs with `new URL()`, which throws for
+    // relative public paths, so execute with an absolute placeholder.
+    const moduleExports = await this.importModule(`!!${remainingRequest}`, {
+      publicPath: PUBLIC_PATH_PLACEHOLDER,
+    });
     const content = getCSSContent(moduleExports);
 
     const ext = path.extname(this.resourcePath);
@@ -115,7 +122,14 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
       pathData,
     );
 
-    this.emitFile(filename, content, undefined, {
+    // Restore the public path, `auto` is relative to the emitted CSS file
+    const publicPath =
+      this._compilation.outputOptions.publicPath === 'auto'
+        ? '../'.repeat(filename.split('/').length - 1)
+        : getPublicPathFromCompiler(this._compilation);
+    const css = content.replaceAll(PUBLIC_PATH_PLACEHOLDER, publicPath);
+
+    this.emitFile(filename, css, undefined, {
       ...info,
       ...assetInfo,
       immutable:
