@@ -180,8 +180,6 @@ type ReactCompiler =
 
 - **默认值：** `undefined`
 
-React Compiler 仅会应用于 [output.target](/config/output/target) 为 `web` 的环境。`node` 和 `web-worker` 环境通常用于服务端渲染，组件只渲染一次，记忆化不会带来收益。如需在其他环境中启用，可以在该环境的配置中设置 [tools.swc](/config/tools/swc) 的 `jsc.transform.reactCompiler`。
-
 将 `reactCompiler` 设置为 `true`，即可使用默认选项启用 React Compiler：
 
 ```ts
@@ -211,6 +209,33 @@ pluginReact({
 ```
 
 更多选项请参考官方 [React Compiler 配置说明](https://react.dev/reference/react-compiler/configuration)。
+
+#### 在非 web 环境中启用 \{#enable-in-non-web-environments}
+
+`reactCompiler` 选项仅对 [output.target](/config/output/target) 为 `web` 的环境生效。React Compiler 主要用于减少组件重复渲染时的计算开销，对常规服务端渲染的帮助有限，跳过这一步可以节省构建时间。
+
+如果你的 React 应用运行在 Node.js 或 Web Worker 中，也可以通过 [tools.swc](/config/tools/swc) 的 `jsc.transform.reactCompiler` 手动启用，以优化组件的重复渲染。下面以 `node` 环境为例：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  output: {
+    target: 'node',
+  },
+  tools: {
+    swc: {
+      jsc: {
+        transform: {
+          reactCompiler: true,
+        },
+      },
+    },
+  },
+});
+```
 
 ### splitChunks
 
