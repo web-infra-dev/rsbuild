@@ -82,6 +82,7 @@ export async function startPreviewServer(
   const serverTerminator = getServerTerminator(httpServer);
 
   let closingPromise: Promise<void> | null = null;
+  let cleanupCliShortcuts: (() => void) | undefined;
 
   const closeServer = async () => {
     if (!closingPromise) {
@@ -89,6 +90,7 @@ export async function startPreviewServer(
         // ensure closeServer is only called once
         removeCleanup(closeServer);
         cleanupGracefulShutdown();
+        cleanupCliShortcuts?.();
         await serverTerminator();
       })();
     }
@@ -256,7 +258,7 @@ export async function startPreviewServer(
           ? {}
           : config.dev.cliShortcuts;
 
-      await setupCliShortcuts({
+      cleanupCliShortcuts = await setupCliShortcuts({
         openPage,
         closeServer,
         printUrls,
