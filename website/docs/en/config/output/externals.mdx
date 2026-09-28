@@ -115,5 +115,7 @@ export default {
 ```
 
 :::tip
-If [output.target](/config/output/target) is `web-worker`, externals will not take effect. This is because the Web Worker environment cannot access global variables.
+When [output.target](/config/output/target) is `web-worker` and [output.module](/config/output/module) is `true`, externals are preserved and can be loaded through ES module imports. Make sure the worker runtime can resolve the external module paths.
+
+For classic worker output (`output.module: false`), Rsbuild ignores externals because workers cannot access global variables provided by the host page.
 :::

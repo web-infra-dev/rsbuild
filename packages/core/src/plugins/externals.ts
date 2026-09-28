@@ -234,8 +234,8 @@ export function pluginExternals(): RsbuildPlugin {
             ? config.target.includes('webworker')
             : config.target === 'webworker';
 
-          // externals will not take effect, the Worker environment can not access global variables.
-          if (isWebWorker && config.externals) {
+          // Classic workers cannot access page globals. Module workers can import externals.
+          if (isWebWorker && !config.output?.module && config.externals) {
             delete config.externals;
           }
         }

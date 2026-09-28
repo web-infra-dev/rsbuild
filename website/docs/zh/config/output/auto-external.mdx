@@ -233,7 +233,9 @@ export default {
 
 :::tip
 
-当 [output.target](/config/output/target) 为 `web-worker` 时，Rsbuild 会移除 `externals` 配置，因此 `output.autoExternal` 不会生效。这是因为 Web Worker 运行在独立的全局作用域中，无法访问主页面通过 CDN 脚本或宿主环境注入到 `window` 上的全局变量。
+当 [output.target](/config/output/target) 为 `web-worker` 时，只有在 [output.module](/config/output/module) 为 `true` 时，`output.autoExternal` 才会生效。被外部化的包会保留为 ES 模块导入，因此 worker 运行时必须能够解析这些包名。
+
+对于 classic worker 产物（`output.module: false`），Rsbuild 会移除 `externals` 配置，因此 `output.autoExternal` 不会生效。Classic worker 无法访问主页面通过 CDN 脚本或宿主环境注入到 `window` 上的全局变量。
 
 :::
 
