@@ -154,8 +154,12 @@ export function createAsyncHook<
 
   const register = (cb: Callback | HookDescriptor<Callback>, once: boolean) => {
     const { handler, order } = isFunction(cb) ? { handler: cb } : cb;
-    const group =
-      order === 'pre' ? preGroup : order === 'post' ? postGroup : defaultGroup;
+    let group = defaultGroup;
+    if (order === 'pre') {
+      group = preGroup;
+    } else if (order === 'post') {
+      group = postGroup;
+    }
 
     if (!once) {
       group.push(handler);
