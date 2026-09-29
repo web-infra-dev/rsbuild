@@ -115,6 +115,8 @@ export type AsyncHook<Callback extends (...args: any[]) => T, T = any> = {
    * @param cb The callback function or hook descriptor to register
    */
   tap: (cb: Callback | HookDescriptor<Callback>) => void;
+  /** Registers a callback that is removed before its first execution. */
+  tapOnce: (cb: Callback | HookDescriptor<Callback>) => void;
   /**
    * Executes callbacks in sequence, passing the result of each callback as the first argument
    * to the next callback in the chain. If a callback returns undefined, the original arguments

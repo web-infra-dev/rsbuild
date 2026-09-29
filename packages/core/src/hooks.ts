@@ -143,23 +143,44 @@ export function createEnvironmentAsyncHook<
   };
 }
 
+const SKIP_CALLBACK = Symbol('skip callback');
+
 export function createAsyncHook<
   Callback extends (...args: any[]) => any,
 >(): AsyncHook<Callback> {
-  const preGroup: Callback[] = [];
-  const postGroup: Callback[] = [];
-  const defaultGroup: Callback[] = [];
+  type InternalCallback = (
+    ...args: Parameters<Callback>
+  ) =>
+    ReturnType<Callback> | Promise<ReturnType<Callback>> | typeof SKIP_CALLBACK;
+  const preGroup: InternalCallback[] = [];
+  const postGroup: InternalCallback[] = [];
+  const defaultGroup: InternalCallback[] = [];
 
-  const tap = (cb: Callback | HookDescriptor<Callback>) => {
-    if (isFunction(cb)) {
-      defaultGroup.push(cb);
-    } else if (cb.order === 'pre') {
-      preGroup.push(cb.handler);
-    } else if (cb.order === 'post') {
-      postGroup.push(cb.handler);
-    } else {
-      defaultGroup.push(cb.handler);
+  const register = (cb: Callback | HookDescriptor<Callback>, once: boolean) => {
+    const { handler, order } = isFunction(cb) ? { handler: cb } : cb;
+    let group = defaultGroup;
+    if (order === 'pre') {
+      group = preGroup;
+    } else if (order === 'post') {
+      group = postGroup;
     }
+
+    if (!once) {
+      group.push(handler);
+      return;
+    }
+
+    let called = false;
+    const onceCallback: InternalCallback = (...args) => {
+      // Overlapping calls may still hold snapshots of removed callbacks.
+      if (called) {
+        return SKIP_CALLBACK;
+      }
+      called = true;
+      group.splice(group.indexOf(onceCallback), 1);
+      return handler(...args) as ReturnType<Callback>;
+    };
+    group.push(onceCallback);
   };
 
   const callChain = async (...params: Parameters<Callback>) => {
@@ -168,7 +189,7 @@ export function createAsyncHook<
     for (const callback of callbacks) {
       const result = await callback(...params);
 
-      if (result !== undefined) {
+      if (result !== SKIP_CALLBACK && result !== undefined) {
         params[0] = result;
       }
     }
@@ -176,20 +197,23 @@ export function createAsyncHook<
     return params;
   };
 
-  const callBatch = async <T = unknown>(...params: Parameters<Callback>) => {
+  const callBatch = async (...params: Parameters<Callback>) => {
     const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
-    const results: T[] = [];
+    const results: Awaited<ReturnType<Callback>>[] = [];
 
     for (const callback of callbacks) {
-      const result: T = await callback(...params);
-      results.push(result);
+      const result = await callback(...params);
+      if (result !== SKIP_CALLBACK) {
+        results.push(result);
+      }
     }
 
     return results;
   };
 
   return {
-    tap,
+    tap: (cb) => register(cb, false),
+    tapOnce: (cb) => register(cb, true),
     callChain,
     callBatch,
   };
