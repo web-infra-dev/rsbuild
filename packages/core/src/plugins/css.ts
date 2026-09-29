@@ -11,7 +11,7 @@ import {
   RAW_QUERY_REGEX,
   URL_QUERY_REGEX,
 } from '../constants';
-import { castArray, color, getFilename } from '../helpers';
+import { castArray, color, getFilename, isPlainObject } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import type {
   CSSLoaderModulesMode,
@@ -61,6 +61,21 @@ export async function getLightningCSSLoaderOptions(
     config: userOptions,
   });
 }
+
+const mergeCSSUrlMinimizerOptions = (
+  loaderOptions: Rspack.LightningcssLoaderOptions,
+  minimizerOptions: Rspack.LightningcssLoaderOptions,
+): Rspack.LightningcssLoaderOptions => {
+  const options = deepmerge(loaderOptions, minimizerOptions);
+
+  // Object-form minimizer targets replace loader targets. Merging them would
+  // retain browsers that the minimizer did not request.
+  if (isPlainObject(minimizerOptions.targets)) {
+    options.targets = minimizerOptions.targets;
+  }
+
+  return options;
+};
 
 const getCSSUrlMinimizerOptions = (
   cssOptions:
@@ -449,7 +464,7 @@ export const pluginCss = (): RsbuildPlugin => ({
               ) {
                 // Apply minimizer transforms before hashing the CSS URL asset,
                 // with the same option precedence as the asset minimizer.
-                lightningcssOptions = deepmerge(
+                lightningcssOptions = mergeCSSUrlMinimizerOptions(
                   lightningcssOptions,
                   cssUrlMinimizerOptions,
                 );

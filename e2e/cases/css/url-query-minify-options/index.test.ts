@@ -7,7 +7,10 @@ test.for([true, false])(
   async (css, { build }) => {
     const cssOptions = {
       removeUnusedLocalIdents: true,
-      minimizerOptions: { unusedSymbols: ['unused'] },
+      minimizerOptions: {
+        targets: { chrome: '120.0.0' },
+        unusedSymbols: ['unused'],
+      },
     };
     const rsbuild = await build({
       config: {
@@ -30,6 +33,7 @@ test.for([true, false])(
     expect(basename(webCss)).toBe(basename(nodeCss));
     expect(files[webCss]).toBe(files[nodeCss]);
     expect(files[webCss].includes('.unused')).toBe(!css);
+    expect(files[webCss].includes('-webkit-user-select')).toBe(!css);
     expect(files[webCss]).not.toContain('.loader-unused');
   },
 );

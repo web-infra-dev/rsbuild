@@ -2,6 +2,7 @@ a {
   color: inherit;
   -webkit-text-decoration: inherit;
   text-decoration: inherit;
+  user-select: none;
 }
 
 .unused {
