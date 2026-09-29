@@ -114,8 +114,28 @@ export default {
 };
 ```
 
-:::tip
-当 [output.target](/config/output/target) 为 `web-worker` 且 [output.module](/config/output/module) 为 `true` 时，externals 会被保留，并可通过 ES 模块导入加载。请确保 worker 运行时能够解析外部模块的路径。
+## Web workers
 
-对于 classic worker 产物（`output.module: false`），Rsbuild 会忽略 externals，因为 worker 无法访问主页面提供的全局变量。
+当 [output.target](/config/output/target) 为 `web-worker` 时，外部依赖需要由 worker 自身的运行环境提供。Worker 无法访问主页面的全局变量。
+
+对于 module worker 产物（[output.module](/config/output/module) 为 `true`），外部依赖默认通过 ES 模块导入加载。请确保 worker 运行时能够解析外部模块的路径。
+
+对于 classic worker 产物（`output.module: false`），可以将依赖映射到 worker 内的全局变量。例如，将 `worker-sdk` 映射到 `self.WorkerSDK`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'web-worker',
+    module: false,
+    externals: {
+      'worker-sdk': 'self WorkerSDK',
+    },
+  },
+};
+```
+
+在加载 worker 产物前，需要先加载定义 `self.WorkerSDK` 的脚本。例如，在单独的启动脚本中调用 `importScripts()`，先加载依赖脚本，再加载 worker 产物。
+
+:::tip
+如果同时构建 `web` 和 `web-worker` 两种 target，请将依赖浏览器页面全局变量的 externals 配置在 `target: 'web'` 对应的[环境](/config/environments)中。不要放在顶层 `output.externals` 中，因为顶层配置也会应用到 worker，而 worker 无法访问页面中的全局变量。
 :::

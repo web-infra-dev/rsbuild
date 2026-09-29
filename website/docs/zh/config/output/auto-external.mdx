@@ -29,11 +29,10 @@ type AutoExternal =
 
 当构建产物可以在运行时直接加载外部依赖时，适合使用 `output.autoExternal`：
 
-- 适合用于 ESM 产物，例如 `output.module: true`。external 的依赖会保留为 `import` 语句，可以由宿主环境提供。
+- 适合用于 ESM 产物，例如 `output.module: true`。external 的依赖会保留为 `import` 语句，因此运行时需要能够解析这些包名。
 - 适合用于 CommonJS 产物。external 的依赖会输出为 `require()` 调用，可以由 Node.js 或 CommonJS 类库运行时加载。
-- 避免用于默认的 Web 产物。Rsbuild 默认输出 IIFE bundle，而 IIFE externals 需要明确的浏览器全局变量名。`output.autoExternal` 只能从 `package.json` 中读取包名，无法可靠推导这些全局变量名。
 
-对于使用默认 IIFE 产物的 Web 应用，建议手动配置 [output.externals](/config/output/externals)，这样可以显式设置浏览器全局变量名。对于 `@scope/pkg/button` 或 `react-dom/client` 这类 scoped package 和子路径导入，这一点尤其重要。
+对于默认的 Web 产物或 [classic worker](/config/output/externals#web-workers)，建议通过 [output.externals](/config/output/externals) 将依赖映射到页面或 worker 内提供的全局变量。`output.autoExternal` 只能从 `package.json` 中读取包名，无法推导这些全局变量名，尤其是 `@scope/pkg/button` 或 `react-dom/client` 这类 scoped package 和子路径导入。
 
 ## 默认行为
 
@@ -230,14 +229,6 @@ export default {
 当 `output.externals` 使用对象形式配置时，Rsbuild 会跳过对象 key 中对应包名的自动 external 规则。例如，如果你在 `output.externals` 中配置了 `react`，Rsbuild 不会再为 `react` 或其子路径导入（如 `react/jsx-runtime`）生成自动 external 规则。如果你希望这些子路径导入仍然保持 external，也需要将它们添加到 `output.externals` 中。
 
 对于数组、函数或正则表达式等更复杂的 `output.externals` 配置，Rsbuild 会将它们与 `output.autoExternal` 生成的规则合并。如果最终行为不符合预期，可以使用 `DEBUG=rsbuild` 或 `rsbuild inspect` 查看实际生效的 externals 配置。
-
-:::tip
-
-当 [output.target](/config/output/target) 为 `web-worker` 时，只有在 [output.module](/config/output/module) 为 `true` 时，`output.autoExternal` 才会生效。被外部化的包会保留为 ES 模块导入，因此 worker 运行时必须能够解析这些包名。
-
-对于 classic worker 产物（`output.module: false`），Rsbuild 会移除 `externals` 配置，因此 `output.autoExternal` 不会生效。Classic worker 无法访问主页面通过 CDN 脚本或宿主环境注入到 `window` 上的全局变量。
-
-:::
 
 ## 版本历史
 
