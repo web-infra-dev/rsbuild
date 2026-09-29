@@ -348,7 +348,7 @@ export async function createDevServer<
         customShortcuts: shortcutsOptions.custom,
         logger,
       });
-      context.hooks.onCloseDevServer.tap(cleanup);
+      context.hooks.onCloseDevServer.tapOnce(cleanup);
     }
 
     if (!getPortSilently && portTip) {
@@ -465,7 +465,7 @@ export async function createDevServer<
       const serverTerminator = getServerTerminator(httpServer);
       logger.debug('listen dev server');
 
-      context.hooks.onCloseDevServer.tap(serverTerminator);
+      context.hooks.onCloseDevServer.tapOnce(serverTerminator);
 
       try {
         httpServer.listen({
@@ -542,7 +542,7 @@ export async function createDevServer<
 
   if (runCompile) {
     // print server url should between listen and beforeCompile
-    context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
+    context.hooks.onBeforeCreateCompiler.tapOnce(beforeCreateCompiler);
   } else {
     await beforeCreateCompiler();
   }
