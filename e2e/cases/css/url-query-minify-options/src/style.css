@@ -1,0 +1,21 @@
+a {
+  color: inherit;
+  -webkit-text-decoration: inherit;
+  text-decoration: inherit;
+}
+
+.unused {
+  color: red;
+}
+
+.loader-unused {
+  color: blue;
+}
+
+.keep:hover {
+  color: green;
+}
+
+.keep:focus {
+  color: purple;
+}

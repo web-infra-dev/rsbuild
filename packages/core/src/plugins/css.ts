@@ -17,6 +17,7 @@ import type {
   CSSLoaderModulesMode,
   CSSLoaderOptions,
   NormalizedEnvironmentConfig,
+  OneOrMany,
   PostCSSLoaderOptions,
   PostCSSOptions,
   RsbuildPlugin,
@@ -60,6 +61,27 @@ export async function getLightningCSSLoaderOptions(
     config: userOptions,
   });
 }
+
+const getCSSUrlMinimizerOptions = (
+  cssOptions:
+    OneOrMany<Rspack.LightningCssMinimizerRspackPluginOptions> | undefined,
+): Rspack.LightningcssLoaderOptions | false => {
+  const options = castArray(cssOptions);
+  const { minimizerOptions, test, include, exclude } = options[0] ?? {};
+
+  // Asset filters match emitted filenames, which are not yet available in the loader.
+  // Preserve filtered or multiple minimizers in the asset stage. Returning false
+  // prevents marking the CSS URL asset as already minimized.
+  if (
+    options.length > 1 ||
+    [test, include, exclude].some((value) => value !== undefined)
+  ) {
+    return false;
+  }
+
+  // CSS ?url rejects CSS Modules, so removeUnusedLocalIdents does not apply.
+  return minimizerOptions ?? {};
+};
 
 // If the target is not `web` and the modules option of css-loader is enabled,
 // we must enable exportOnlyLocals to only exports the modules identifier mappings.
@@ -381,7 +403,7 @@ export const pluginCss = (): RsbuildPlugin => ({
           }
           importLoaders.inline++;
 
-          let minifyCss = parseMinifyOptions(config).minifyCss;
+          let { minifyCss, cssOptions } = parseMinifyOptions(config);
           let { browserslist } = environment;
 
           // Use the same browserslist and minification as web bundles to ensure consistent
@@ -392,9 +414,17 @@ export const pluginCss = (): RsbuildPlugin => ({
             );
             if (webEnvironment) {
               browserslist = webEnvironment.browserslist;
-              minifyCss = parseMinifyOptions(webEnvironment.config).minifyCss;
+              const webMinifyOptions = parseMinifyOptions(
+                webEnvironment.config,
+              );
+              minifyCss = webMinifyOptions.minifyCss;
+              cssOptions ??= webMinifyOptions.cssOptions;
             }
           }
+
+          const cssUrlMinimizerOptions = minifyCss
+            ? getCSSUrlMinimizerOptions(cssOptions)
+            : {};
 
           await updateRules(
             async (rule, type) => {
@@ -406,14 +436,24 @@ export const pluginCss = (): RsbuildPlugin => ({
                 config.output.injectStyles;
               const minify = inlineStyle && minifyCss;
 
-              const lightningcssOptions = await getLightningCSSLoaderOptions(
+              let lightningcssOptions = await getLightningCSSLoaderOptions(
                 config,
                 browserslist,
                 minify,
               );
 
-              if (type === 'url') {
-                cssUrlMinimized = lightningcssOptions.minify === true;
+              if (
+                type === 'url' &&
+                lightningcssOptions.minify === true &&
+                cssUrlMinimizerOptions !== false
+              ) {
+                // Apply minimizer transforms before hashing the CSS URL asset,
+                // with the same option precedence as the asset minimizer.
+                lightningcssOptions = deepmerge(
+                  lightningcssOptions,
+                  cssUrlMinimizerOptions,
+                );
+                cssUrlMinimized = true;
               }
 
               rule
