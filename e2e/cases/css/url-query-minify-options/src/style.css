@@ -11,11 +11,3 @@ a {
 .loader-unused {
   color: blue;
 }
-
-.keep:hover {
-  color: green;
-}
-
-.keep:focus {
-  color: purple;
-}

@@ -4,10 +4,6 @@ export default defineConfig({
   tools: {
     lightningcssLoader: {
       unusedSymbols: ['loader-unused'],
-      pseudoClasses: {
-        hover: 'loader-hover',
-        focus: 'loader-focus',
-      },
     },
   },
   environments: {
