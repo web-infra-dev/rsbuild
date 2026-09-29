@@ -17,6 +17,11 @@ type CSSUrlLoaderOptions = {
 const HASH_PLACEHOLDER_REGEX =
   /\[(?:[^:\]]+:)?(?:chunkhash|contenthash|hash|fullhash)(?::[^\]]+)?]/i;
 
+const BASE_URI = 'rsbuild-css-url://';
+const ABSOLUTE_PUBLIC_PATH = `${BASE_URI}/public-path/`;
+const AUTO_PUBLIC_PATH = '__rsbuild_css_url_auto_public_path__';
+const SINGLE_DOT_PATH_SEGMENT = '__rsbuild_css_url_single_dot__';
+
 const normalizePath = (value: string) => value.replace(/\\/g, '/');
 
 const getRelativePath = (root: string, resourcePath: string) => {
@@ -83,8 +88,25 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
       );
     }
 
-    const moduleExports = await this.importModule(`!!${remainingRequest}`);
-    const content = getCSSContent(moduleExports);
+    let { publicPath } = this._compilation.outputOptions;
+    if (publicPath === 'auto') {
+      publicPath = AUTO_PUBLIC_PATH;
+    }
+
+    // Follow CssExtractRspackPlugin: give css-loader's new URL() an absolute
+    // public path, preserving relative dot segments until after execution.
+    const publicPathForExtract =
+      typeof publicPath === 'string' &&
+      !/^[a-zA-Z][a-zA-Z\d+\-.]*?:/.test(publicPath)
+        ? `${ABSOLUTE_PUBLIC_PATH}${publicPath.replaceAll('.', SINGLE_DOT_PATH_SEGMENT)}`
+        : publicPath;
+    const moduleExports = await this.importModule(`!!${remainingRequest}`, {
+      publicPath: publicPathForExtract,
+      baseUri: `${BASE_URI}/`,
+    });
+    const content = getCSSContent(moduleExports)
+      .replaceAll(ABSOLUTE_PUBLIC_PATH, '')
+      .replaceAll(SINGLE_DOT_PATH_SEGMENT, '.');
 
     const ext = path.extname(this.resourcePath);
     const sourceFilename = normalizePath(
@@ -115,7 +137,17 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
       pathData,
     );
 
-    this.emitFile(filename, content, undefined, {
+    let css = content;
+    if (publicPath === AUTO_PUBLIC_PATH) {
+      // Auto public paths are relative to the emitted CSS file, not the JS entry.
+      const undoPath = path.posix.relative(path.posix.dirname(filename), '.');
+      css = content.replaceAll(
+        AUTO_PUBLIC_PATH,
+        undoPath ? `${undoPath}/` : '',
+      );
+    }
+
+    this.emitFile(filename, css, undefined, {
       ...info,
       ...assetInfo,
       immutable:
