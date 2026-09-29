@@ -50,6 +50,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
                   "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
                   "options": {
                     "filename": "static/css/[name].css",
+                    "minimized": false,
                     "modules": {
                       "auto": true,
                       "exportGlobals": false,
@@ -612,6 +613,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
                   "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
                   "options": {
                     "filename": "static/css/[name].css",
+                    "minimized": false,
                     "modules": {
                       "auto": true,
                       "exportGlobals": false,
