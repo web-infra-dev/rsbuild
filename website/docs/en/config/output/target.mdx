@@ -160,3 +160,15 @@ export default {
 ```
 
 This configuration covers bundling. Use Wrangler or a platform plugin for local development and deployment. See [Deploying to Cloudflare Workers](/guide/basic/deployment#cloudflare-workers).
+
+#### Built-in modules
+
+Built-in modules such as `cloudflare:workers` and `cloudflare:sockets` are provided by the Cloudflare Workers runtime. When importing these modules, use [output.externals](/config/output/externals) to exclude them from the bundle and preserve them as ES module imports loaded at runtime:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: [/^cloudflare:/],
+  },
+};
+```
