@@ -172,6 +172,20 @@ export default {
 };
 ```
 
+如果代码或依赖还使用了 Node.js 内置模块，可以添加 `/^node:/`，将 `node:buffer` 等导入排除在打包之外：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: [/^cloudflare:/, /^node:/],
+  },
+};
+```
+
+请确保所用的 Node.js API 已在 Worker 中启用并受支持。配置 externals 不会提供 polyfill，详见 [Cloudflare 的 Node.js 兼容说明](https://developers.cloudflare.com/workers/runtime-apis/nodejs/)。
+
+`/^node:/` 不会匹配不带 `node:` 前缀的导入。例如，导入 `buffer` 时，可以在 `externals` 数组中添加 `{ buffer: 'node:buffer' }`，将其映射到 `node:buffer`。
+
 #### 条件导出 \{#conditional-exports}
 
 部分依赖（如 [postgres](https://github.com/porsager/postgres/blob/master/package.json)）通过 `workerd` 导出条件提供 Cloudflare Workers 专用入口。在 [resolve.conditionNames](/config/resolve/condition-names) 中添加 `workerd`，即可让 Rsbuild 使用这些入口：
