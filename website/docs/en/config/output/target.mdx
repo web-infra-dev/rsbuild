@@ -172,3 +172,17 @@ export default {
   },
 };
 ```
+
+#### Conditional exports
+
+Some dependencies, such as [postgres](https://github.com/porsager/postgres/blob/master/package.json), use the `workerd` export condition to provide an entry for Cloudflare Workers. Add `workerd` to [resolve.conditionNames](/config/resolve/condition-names) to use these entries:
+
+```ts title="rsbuild.config.ts"
+export default {
+  resolve: {
+    conditionNames: ['workerd', '...'],
+  },
+};
+```
+
+The `'...'` value keeps the default conditions enabled.

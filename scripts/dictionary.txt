@@ -182,3 +182,4 @@ vnode
 watchpack
 webm
 webp
+workerd
