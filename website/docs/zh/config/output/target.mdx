@@ -171,3 +171,17 @@ export default {
   },
 };
 ```
+
+#### 条件导出 \{#conditional-exports}
+
+部分依赖（如 [postgres](https://github.com/porsager/postgres/blob/master/package.json)）通过 `workerd` 导出条件提供 Cloudflare Workers 专用入口。在 [resolve.conditionNames](/config/resolve/condition-names) 中添加 `workerd`，即可让 Rsbuild 使用这些入口：
+
+```ts title="rsbuild.config.ts"
+export default {
+  resolve: {
+    conditionNames: ['workerd', '...'],
+  },
+};
+```
+
+其中，`'...'` 表示保留默认的导出条件。
