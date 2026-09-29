@@ -22,7 +22,9 @@ const ABSOLUTE_PUBLIC_PATH = `${BASE_URI}/public-path/`;
 const AUTO_PUBLIC_PATH = '__rsbuild_css_url_auto_public_path__';
 const SINGLE_DOT_PATH_SEGMENT = '__rsbuild_css_url_single_dot__';
 
-// Give css-loader's new URL() an absolute public path while preserving dot segments.
+// Follow CssExtractRspackPlugin: prefix relative paths so css-loader's new URL()
+// can resolve them, and protect dots so it does not collapse ./ or ../ segments.
+// Remove these markers from the resulting CSS after module execution.
 const getPublicPathForExtract = (publicPath: string) =>
   /^[a-zA-Z][a-zA-Z\d+\-.]*?:/.test(publicPath)
     ? publicPath
@@ -99,7 +101,8 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
       publicPath = AUTO_PUBLIC_PATH;
     }
 
-    // Follow CssExtractRspackPlugin, also protecting paths returned by callbacks.
+    // Wrap callbacks so their returned paths get the same protection, without
+    // evaluating them before Rspack provides the path data.
     const publicPathForExtract =
       typeof publicPath === 'function'
         ? (pathData: PathData, assetInfo?: AssetInfo) =>
