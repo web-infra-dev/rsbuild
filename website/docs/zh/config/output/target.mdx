@@ -159,3 +159,15 @@ export default {
 ```
 
 这段配置用于打包产物。本地开发和部署需要配合 Wrangler 或平台插件，详见 [部署到 Cloudflare Workers](/guide/basic/deployment#cloudflare-workers)。
+
+#### 内置模块 \{#built-in-modules}
+
+`cloudflare:workers`、`cloudflare:sockets` 等内置模块由 Cloudflare Workers 运行时提供。导入这些模块时，需要通过 [output.externals](/config/output/externals) 将它们排除在打包之外，保留为运行时加载的 ES 模块导入：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: [/^cloudflare:/],
+  },
+};
+```
