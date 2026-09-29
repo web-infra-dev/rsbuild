@@ -227,19 +227,6 @@ export function pluginExternals(): RsbuildPlugin {
           chain.externals(mergedExternals);
         }
       });
-
-      api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-        for (const config of bundlerConfigs) {
-          const isWebWorker = Array.isArray(config.target)
-            ? config.target.includes('webworker')
-            : config.target === 'webworker';
-
-          // Classic workers cannot access page globals. Module workers can import externals.
-          if (isWebWorker && !config.output?.module && config.externals) {
-            delete config.externals;
-          }
-        }
-      });
     },
   };
 }
