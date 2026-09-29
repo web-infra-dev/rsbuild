@@ -22,6 +22,12 @@ const ABSOLUTE_PUBLIC_PATH = `${BASE_URI}/public-path/`;
 const AUTO_PUBLIC_PATH = '__rsbuild_css_url_auto_public_path__';
 const SINGLE_DOT_PATH_SEGMENT = '__rsbuild_css_url_single_dot__';
 
+// Give css-loader's new URL() an absolute public path while preserving dot segments.
+const getPublicPathForExtract = (publicPath: string) =>
+  /^[a-zA-Z][a-zA-Z\d+\-.]*?:/.test(publicPath)
+    ? publicPath
+    : `${ABSOLUTE_PUBLIC_PATH}${publicPath.replaceAll('.', SINGLE_DOT_PATH_SEGMENT)}`;
+
 const normalizePath = (value: string) => value.replace(/\\/g, '/');
 
 const getRelativePath = (root: string, resourcePath: string) => {
@@ -93,13 +99,14 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
       publicPath = AUTO_PUBLIC_PATH;
     }
 
-    // Follow CssExtractRspackPlugin: give css-loader's new URL() an absolute
-    // public path, preserving relative dot segments until after execution.
+    // Follow CssExtractRspackPlugin, also protecting paths returned by callbacks.
     const publicPathForExtract =
-      typeof publicPath === 'string' &&
-      !/^[a-zA-Z][a-zA-Z\d+\-.]*?:/.test(publicPath)
-        ? `${ABSOLUTE_PUBLIC_PATH}${publicPath.replaceAll('.', SINGLE_DOT_PATH_SEGMENT)}`
-        : publicPath;
+      typeof publicPath === 'function'
+        ? (pathData: PathData, assetInfo?: AssetInfo) =>
+            getPublicPathForExtract(publicPath(pathData, assetInfo))
+        : typeof publicPath === 'string'
+          ? getPublicPathForExtract(publicPath)
+          : publicPath;
     const moduleExports = await this.importModule(`!!${remainingRequest}`, {
       publicPath: publicPathForExtract,
       baseUri: `${BASE_URI}/`,

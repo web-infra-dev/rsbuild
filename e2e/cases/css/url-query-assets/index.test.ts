@@ -25,7 +25,8 @@ test.for([
     'https://cdn.example.com/my%20assets/',
   ],
   ['https://cdn.example.com/prefix-', 'https://cdn.example.com/prefix-'],
-  [() => 'https://cdn.example.com/', 'https://cdn.example.com/'],
+  [(): string => 'https://cdn.example.com/', 'https://cdn.example.com/'],
+  [(): string => '../', '../'],
 ] as const)(
   'should preserve CSS `?url` publicPath %s',
   async ([publicPath, expected], { build }) => {
