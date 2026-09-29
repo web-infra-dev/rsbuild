@@ -114,8 +114,28 @@ export default {
 };
 ```
 
-:::tip
-When [output.target](/config/output/target) is `web-worker` and [output.module](/config/output/module) is `true`, externals are preserved and can be loaded through ES module imports. Make sure the worker runtime can resolve the external module paths.
+## Web workers
 
-For classic worker output (`output.module: false`), Rsbuild ignores externals because workers cannot access global variables provided by the host page.
+When building a worker with [output.target](/config/output/target) set to `web-worker`, external dependencies must be available in the worker itself. Workers cannot access global variables from the host page.
+
+For module worker output ([output.module](/config/output/module) is `true`), external dependencies are loaded through ES module imports by default. Make sure the worker runtime can resolve the external module paths.
+
+For classic worker output (`output.module: false`), you can map dependencies to global variables in the worker. For example, map `worker-sdk` to `self.WorkerSDK`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'web-worker',
+    module: false,
+    externals: {
+      'worker-sdk': 'self WorkerSDK',
+    },
+  },
+};
+```
+
+Before loading the worker bundle, load a script that defines `self.WorkerSDK`. For example, use a separate bootstrap script that calls `importScripts()` to load the dependency script first, then the worker bundle.
+
+:::tip
+If you build for both `web` and `web-worker` targets, configure externals that rely on browser page globals in the [environment](/config/environments) with `target: 'web'`. Avoid placing them in the top-level `output.externals`, because that configuration also applies to workers, which cannot access the page's global variables.
 :::
