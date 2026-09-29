@@ -373,6 +373,8 @@ export const pluginCss = (): RsbuildPlugin => ({
           rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
         });
 
+        let cssUrlMinimized = false;
+
         if (config.tools.lightningcssLoader !== false) {
           if (emitCss) {
             importLoaders.normal++;
@@ -409,6 +411,10 @@ export const pluginCss = (): RsbuildPlugin => ({
                 browserslist,
                 minify,
               );
+
+              if (type === 'url') {
+                cssUrlMinimized = lightningcssOptions.minify === true;
+              }
 
               rule
                 .use(CHAIN_ID.USE.LIGHTNINGCSS)
@@ -501,6 +507,7 @@ export const pluginCss = (): RsbuildPlugin => ({
                   posix.join(cssUrlPath, cssUrlFilename(pathData, assetInfo))
               : posix.join(cssUrlPath, cssUrlFilename),
           modules: cssLoaderOptions.modules,
+          minimized: cssUrlMinimized,
         });
 
         const isStringExport = cssLoaderOptions.exportType === 'string';

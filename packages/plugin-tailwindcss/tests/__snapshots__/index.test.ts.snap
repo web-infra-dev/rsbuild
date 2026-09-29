@@ -23,6 +23,7 @@ exports[`plugin-tailwindcss > should add tailwindcss loader to CSS rule 1`] = `
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,

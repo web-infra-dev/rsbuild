@@ -40,7 +40,7 @@ test.for([
       rsbuild.getDistFiles(),
       'static/css/nested/style.css',
     );
-    expect(css).toContain(`url(${expected}static/image/image.png)`);
+    expect(css).toContain(`${expected}static/image/image.png`);
   },
 );
 
