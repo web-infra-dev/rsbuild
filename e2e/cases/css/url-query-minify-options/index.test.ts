@@ -11,7 +11,16 @@ test.for([true, false])(
     };
     const rsbuild = await build({
       config: {
-        environments: { web: { output: { minify: { css, cssOptions } } } },
+        environments: {
+          web: {
+            output: {
+              minify: {
+                css,
+                cssOptions,
+              },
+            },
+          },
+        },
       },
     });
     const files = rsbuild.getDistFiles();
@@ -42,7 +51,17 @@ test.for([false, true])(
         ]
       : options;
     const rsbuild = await build({
-      config: { environments: { web: { output: { minify: { cssOptions } } } } },
+      config: {
+        environments: {
+          web: {
+            output: {
+              minify: {
+                cssOptions,
+              },
+            },
+          },
+        },
+      },
     });
     const files = rsbuild.getDistFiles();
     const other = getFileContent(files, '/web/static/css/other.css');
