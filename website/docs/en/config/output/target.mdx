@@ -117,6 +117,10 @@ For more information, see [Using Web Workers](/guide/basic/web-workers).
 
 ## Other targets
 
+For other runtimes, choose the closest built-in target and adapt it with additional configuration or plugins.
+
+### Electron
+
 [Rspack](https://rspack.rs/config/target) supports other target types, such as `electron-main` and `electron-renderer`.
 
 Rsbuild currently does not support these targets. You can configure these targets using [tools.rspack](/config/tools/rspack).
@@ -132,3 +136,67 @@ export default {
   },
 };
 ```
+
+### Cloudflare Workers
+
+Cloudflare Workers use a default export for event handlers and named exports for classes such as Durable Objects. To build this type of Worker, enable [output.module](/config/output/module) to generate ES module output and configure Rspack's `output.library.type` to preserve the entry exports.
+
+The following configuration builds an ES module Worker with the default chunk splitting settings:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'web-worker',
+    module: true,
+  },
+  tools: {
+    rspack: {
+      output: {
+        library: { type: 'module' },
+      },
+    },
+  },
+};
+```
+
+This configuration covers bundling. Use Wrangler or a platform plugin for local development and deployment. See [Deploying to Cloudflare Workers](/guide/basic/deployment#cloudflare-workers).
+
+#### Built-in modules
+
+Built-in modules such as `cloudflare:workers` and `cloudflare:sockets` are provided by the Cloudflare Workers runtime. When importing these modules, use [output.externals](/config/output/externals) to exclude them from the bundle and preserve them as ES module imports loaded at runtime:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: [/^cloudflare:/],
+  },
+};
+```
+
+If your code or dependencies also import Node.js built-in modules, add `/^node:/` to externalize imports such as `node:buffer`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: [/^cloudflare:/, /^node:/],
+  },
+};
+```
+
+Make sure the Node.js APIs you use are supported and enabled in your Worker. Configuring externals does not provide polyfills. See [Cloudflare's Node.js compatibility documentation](https://developers.cloudflare.com/workers/runtime-apis/nodejs/).
+
+The `/^node:/` rule does not match imports without the `node:` prefix. For example, when importing `buffer`, add `{ buffer: 'node:buffer' }` to the `externals` array to map it to `node:buffer`.
+
+#### Conditional exports
+
+Some dependencies, such as [postgres](https://github.com/porsager/postgres/blob/master/package.json), use the `workerd` export condition to provide an entry for Cloudflare Workers. Add `workerd` to [resolve.conditionNames](/config/resolve/condition-names) to use these entries:
+
+```ts title="rsbuild.config.ts"
+export default {
+  resolve: {
+    conditionNames: ['workerd', '...'],
+  },
+};
+```
+
+The `'...'` value keeps the default conditions enabled.

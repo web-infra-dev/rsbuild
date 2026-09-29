@@ -1,5 +1,16 @@
 # @rsbuild/plugin-react
 
+## 2.1.1 (2026-09-28)
+
+### Bug fixes
+
+- fix(plugin-react): apply reactCompiler only to web environments by @BleedingDev in https://github.com/web-infra-dev/rsbuild/pull/8568
+
+### Document
+
+- docs(website): add react compiler rust version use into rsbuild by @WuMingDao in https://github.com/web-infra-dev/rsbuild/pull/8031
+- docs: update React Compiler guides by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8038
+
 ## 2.1.0 (2026-06-18)
 
 ### New features

@@ -223,8 +223,6 @@ describe('plugin-externals', () => {
 
     const [config] = await rsbuild.initConfigs();
 
-    // The final web worker externals are removed in the onBeforeCreateCompiler hook.
-    // initConfigs only verifies the generated Rspack config before that hook runs.
     expect(config.externals).toEqual([/^foo(?:$|[/\\])/]);
   });
 });

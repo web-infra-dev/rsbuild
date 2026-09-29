@@ -114,7 +114,11 @@ dist/addon.node
 
 更多信息可参考 [Web Workers](/guide/basic/web-workers)。
 
-## 其他 target
+## 其他 target \{#other-targets}
+
+对于其他运行环境，可以选择最接近的内置 target，再通过额外配置或插件适配。
+
+### Electron
 
 Rspack 支持的 [target](https://rspack.rs/zh/config/target) 类型更为丰富，比如 `electron-main` 和 `electron-renderer` 等。
 
@@ -131,3 +135,67 @@ export default {
   },
 };
 ```
+
+### Cloudflare Workers
+
+Cloudflare Workers 使用默认导出提供事件处理函数，并通过具名导出提供 Durable Objects 等类。要构建这种 Worker，需要启用 [output.module](/config/output/module) 来生成 ES 模块格式的产物，并配置 Rspack 的 `output.library.type` 来保留入口导出。
+
+以下配置使用默认的拆包设置，构建 ES 模块 Worker：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'web-worker',
+    module: true,
+  },
+  tools: {
+    rspack: {
+      output: {
+        library: { type: 'module' },
+      },
+    },
+  },
+};
+```
+
+这段配置用于打包产物。本地开发和部署需要配合 Wrangler 或平台插件，详见 [部署到 Cloudflare Workers](/guide/basic/deployment#cloudflare-workers)。
+
+#### 内置模块 \{#built-in-modules}
+
+`cloudflare:workers`、`cloudflare:sockets` 等内置模块由 Cloudflare Workers 运行时提供。导入这些模块时，需要通过 [output.externals](/config/output/externals) 将它们排除在打包之外，保留为运行时加载的 ES 模块导入：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: [/^cloudflare:/],
+  },
+};
+```
+
+如果代码或依赖还使用了 Node.js 内置模块，可以添加 `/^node:/`，将 `node:buffer` 等导入排除在打包之外：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: [/^cloudflare:/, /^node:/],
+  },
+};
+```
+
+请确保所用的 Node.js API 已在 Worker 中启用并受支持。配置 externals 不会提供 polyfill，详见 [Cloudflare 的 Node.js 兼容说明](https://developers.cloudflare.com/workers/runtime-apis/nodejs/)。
+
+`/^node:/` 不会匹配不带 `node:` 前缀的导入。例如，导入 `buffer` 时，可以在 `externals` 数组中添加 `{ buffer: 'node:buffer' }`，将其映射到 `node:buffer`。
+
+#### 条件导出 \{#conditional-exports}
+
+部分依赖（如 [postgres](https://github.com/porsager/postgres/blob/master/package.json)）通过 `workerd` 导出条件提供 Cloudflare Workers 专用入口。在 [resolve.conditionNames](/config/resolve/condition-names) 中添加 `workerd`，即可让 Rsbuild 使用这些入口：
+
+```ts title="rsbuild.config.ts"
+export default {
+  resolve: {
+    conditionNames: ['workerd', '...'],
+  },
+};
+```
+
+其中，`'...'` 表示保留默认的导出条件。
