@@ -62,7 +62,7 @@ export async function getLightningCSSLoaderOptions(
   });
 }
 
-const mergeCSSOptions = (
+const mergeCSSMinimizerOptions = (
   loaderOptions: Rspack.LightningcssLoaderOptions,
   minimizerOptions: Rspack.LightningcssLoaderOptions,
 ): Rspack.LightningcssLoaderOptions => {
@@ -464,7 +464,7 @@ export const pluginCss = (): RsbuildPlugin => ({
               ) {
                 // Apply minimizer transforms before hashing the CSS URL asset,
                 // with the same option precedence as the asset minimizer.
-                lightningcssOptions = mergeCSSOptions(
+                lightningcssOptions = mergeCSSMinimizerOptions(
                   lightningcssOptions,
                   cssUrlMinimizerOptions,
                 );
