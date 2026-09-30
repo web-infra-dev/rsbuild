@@ -1,3 +1,4 @@
+import { format } from 'node:util';
 import type { RequestHandler } from 'http-proxy-middleware';
 import { color } from '../helpers';
 import type { Logger } from '../logger';
@@ -13,14 +14,14 @@ function formatProxyOptions(proxyOptions: ProxyConfig, logger: Logger) {
   const defaultOptions: ProxyOptions = {
     changeOrigin: true,
     logger: {
-      info(msg: string) {
-        logger.debug(logPrefix + msg);
+      info(msg: string, ...args: unknown[]) {
+        logger.debug(logPrefix + format(msg, ...args));
       },
-      warn: (msg: string) => {
-        logger.warn(logPrefix + msg);
+      warn: (msg: string, ...args: unknown[]) => {
+        logger.warn(logPrefix + format(msg, ...args));
       },
-      error: (msg: string) => {
-        logger.error(logPrefix + msg);
+      error: (msg: string, ...args: unknown[]) => {
+        logger.error(logPrefix + format(msg, ...args));
       },
     },
   };

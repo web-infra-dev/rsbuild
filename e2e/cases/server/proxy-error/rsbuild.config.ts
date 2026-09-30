@@ -6,7 +6,7 @@ export default defineConfig({
     proxy: [
       {
         pathFilter: '/api',
-        target: 'http://somepagewhichdoesnotexist.com:9000',
+        target: 'http://127.0.0.1:1',
         changeOrigin: true,
         secure: false,
       },

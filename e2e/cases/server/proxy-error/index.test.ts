@@ -7,4 +7,8 @@ test('should handle proxy error', async ({ dev, page }) => {
   expect(res?.status()).toBe(504);
   const body = await res?.text();
   expect(body).toContain('Error occurred while trying to proxy');
+
+  await rsbuild.expectLog(
+    `[HPM] Error occurred while proxying request localhost:${rsbuild.port}/api to http://127.0.0.1:1/ [ECONNREFUSED]`,
+  );
 });
