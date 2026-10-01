@@ -1,12 +1,17 @@
 import fs from 'node:fs';
 import type { Compiler, OutputFileSystem } from '@rspack/core';
-import type { ResolvedWriteToDisk } from './setupWriteToDisk';
 
+/**
+ * When every environment writes all of its files to disk, compilers keep
+ * their current output file system, which is the native fs unless the user
+ * set a custom one. Otherwise, all compilers share one memory fs, and
+ * `setupWriteToDisk` copies the selected files to disk.
+ */
 export async function setupOutputFileSystem(
-  writeToDisk: ResolvedWriteToDisk,
+  writeAllToDisk: boolean,
   compilers: Compiler[],
 ): Promise<OutputFileSystem> {
-  if (writeToDisk !== true) {
+  if (!writeAllToDisk) {
     const { createMemoryFileSystem } = await import(
       /* rspackChunkName: "memfs" */ './memoryFileSystem'
     );

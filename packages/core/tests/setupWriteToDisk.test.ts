@@ -1,4 +1,4 @@
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { Compiler } from '@rspack/core';
@@ -16,12 +16,11 @@ type AssetEmittedTap = (
  * like the dev server's memory fs, and emits assets through the
  * `emit` and `assetEmitted` hooks.
  */
-const createCompiler = (name: string) => {
+const createCompiler = () => {
   const emitTaps: (() => void)[] = [];
   const assetEmittedTaps: AssetEmittedTap[] = [];
   const compiler = {
-    name,
-    options: { name },
+    options: {},
     outputFileSystem: {},
     hooks: {
       emit: { tap: (_: string, fn: () => void) => emitTaps.push(fn) },
@@ -36,7 +35,6 @@ const createCompiler = (name: string) => {
     let contentReads = 0;
     const info = {
       targetPath,
-      compilation: { name },
       get content() {
         contentReads++;
         return Buffer.from('content');
@@ -57,22 +55,34 @@ const createCompiler = (name: string) => {
   return { compiler, emitAsset };
 };
 
-const createDistDir = () =>
-  mkdtempSync(join(tmpdir(), 'rsbuild-write-to-disk-'));
+let distDir: string;
+
+beforeEach(() => {
+  distDir = mkdtempSync(join(tmpdir(), 'rsbuild-write-to-disk-'));
+});
+
+afterEach(() => {
+  rmSync(distDir, { recursive: true, force: true });
+});
 
 test('should read asset content only after writeToDisk accepts the file', async () => {
-  const distDir = createDistDir();
-  const { compiler, emitAsset } = createCompiler('web');
+  const { compiler, emitAsset } = createCompiler();
   setupWriteToDisk(
     [compiler],
-    (filePath) => filePath.endsWith('.html'),
+    [(filePath) => filePath.endsWith('.html')],
     defaultLogger,
   );
 
   expect(await emitAsset(join(distDir, 'index.js'))).toBe(0);
   expect(await emitAsset(join(distDir, 'index.html'))).toBe(1);
-  expect(existsSync(join(distDir, 'index.js'))).toBe(false);
   expect(readFileSync(join(distDir, 'index.html'), 'utf8')).toBe('content');
+});
 
-  rmSync(distDir, { recursive: true, force: true });
+test('should skip assets of environments that disable writeToDisk', async () => {
+  const web = createCompiler();
+  const node = createCompiler();
+  setupWriteToDisk([web.compiler, node.compiler], [false, true], defaultLogger);
+
+  expect(await web.emitAsset(join(distDir, 'web.js'))).toBe(0);
+  expect(await node.emitAsset(join(distDir, 'node.js'))).toBe(1);
 });
