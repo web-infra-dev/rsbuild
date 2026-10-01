@@ -78,22 +78,24 @@ logger.info('hello'); // info    [web] hello
 
 You can use `override()` to replace some logger methods with a custom output format:
 
+Forward `...args` to the console method to preserve formatting arguments and additional values.
+
 ```ts title="rsbuild.config.ts"
 import { createLogger } from '@rsbuild/core';
 
 const logger = createLogger();
 
 logger.override({
-  info(message) {
-    console.log(`[info] ${message}`);
+  info(message, ...args) {
+    console.log(`[info] ${message}`, ...args);
   },
-  warn(message) {
-    console.warn(`[warn] ${message}`);
+  warn(message, ...args) {
+    console.warn(`[warn] ${message}`, ...args);
   },
 });
 
-logger.info('hello'); // [info] hello
-logger.warn('world'); // [warn] world
+logger.info('hello %s', 'world'); // [info] hello world
+logger.warn('file: %s', 'index.js'); // [warn] file: index.js
 ```
 
 ## Instance logger
