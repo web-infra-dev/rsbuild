@@ -1,3 +1,4 @@
+import { randomBytes } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import zlib from 'node:zlib';
@@ -221,6 +222,12 @@ for (const [type, level] of [
   }) => {
     const rsbuild = await build({
       config: {
+        tools: {
+          htmlPlugin: {
+            // Ensure compression produces multiple output chunks.
+            templateContent: `<html><body>${randomBytes(32 * 1024).toString('hex')}</body></html>`,
+          },
+        },
         performance: {
           printFileSize: {
             compressed: { type, level },

@@ -72,30 +72,27 @@ function getCompression(compressed: PrintFileSizeOptions['compressed']) {
       } as const);
 }
 
-async function calcCompressedSize(
+function calcCompressedSize(
   input: Buffer | string,
   type: CompressionType,
   level: number,
 ) {
-  const data = await new Promise<Buffer>((resolve, reject) => {
-    const callback = (err: Error | null, result: Buffer) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(result);
-    };
-    if (type === 'brotli') {
-      zlib.brotliCompress(
-        input,
-        { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: level } },
-        callback,
-      );
-    } else {
-      zlib.gzip(input, { level }, callback);
-    }
+  return new Promise<number>((resolve, reject) => {
+    const stream =
+      type === 'brotli'
+        ? zlib.createBrotliCompress({
+            params: { [zlib.constants.BROTLI_PARAM_QUALITY]: level },
+          })
+        : zlib.createGzip({ level });
+    let size = 0;
+    // Only the size is needed; avoid retaining and concatenating compressed data.
+    stream.on('data', (chunk: Buffer) => {
+      size += chunk.length;
+    });
+    stream.on('error', reject);
+    stream.on('end', () => resolve(size));
+    stream.end(input);
   });
-  return data.length;
 }
 
 /** Get the cache file path for storing previous build sizes */
