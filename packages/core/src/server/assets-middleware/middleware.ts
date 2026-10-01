@@ -483,6 +483,15 @@ export function createAssetsMiddleware(
         }
       }
 
+      if (req.method === 'HEAD') {
+        res.setHeader('Content-Length', len);
+        if (res.statusCode === HttpCode.NotFound) {
+          res.statusCode = HttpCode.Ok;
+        }
+        res.end();
+        return;
+      }
+
       let readStream: ReadStream;
 
       const [start, end] = calcStartAndEnd(offset, len);
@@ -495,14 +504,6 @@ export function createAssetsMiddleware(
       }
 
       res.setHeader('Content-Length', len);
-
-      if (req.method === 'HEAD') {
-        if (res.statusCode === HttpCode.NotFound) {
-          res.statusCode = HttpCode.Ok;
-        }
-        res.end();
-        return;
-      }
 
       const cleanup = () => {
         destroyStream(readStream, true);
