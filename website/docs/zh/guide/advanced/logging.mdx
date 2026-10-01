@@ -78,8 +78,6 @@ logger.info('hello'); // info    [web] hello
 
 可以通过 `override()` 覆盖 logger 的部分方法，以使用自定义的输出格式：
 
-将 `...args` 转发给 console 方法，以保留格式化参数和其他附加值。
-
 ```ts title="rsbuild.config.ts"
 import { createLogger } from '@rsbuild/core';
 
@@ -94,8 +92,8 @@ logger.override({
   },
 });
 
-logger.info('hello %s', 'world'); // [info] hello world
-logger.warn('file: %s', 'index.js'); // [warn] file: index.js
+logger.info('hello'); // [info] hello
+logger.warn('world'); // [warn] world
 ```
 
 ## 实例 logger
