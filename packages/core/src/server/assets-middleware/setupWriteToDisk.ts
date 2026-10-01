@@ -85,7 +85,7 @@ export function setupWriteToDisk(
             return;
           }
 
-          const { targetPath, content, compilation } = info;
+          const { targetPath, compilation } = info;
           const allowWrite =
             typeof writeToDisk === 'function'
               ? writeToDisk(targetPath, compilation.name)
@@ -96,6 +96,9 @@ export function setupWriteToDisk(
             return;
           }
 
+          // Rspack creates the content buffer on access, so only read it
+          // after the file is accepted.
+          const { content } = info;
           const dir = path.dirname(targetPath);
           const name = compiler.options.name
             ? `Child "${compiler.options.name}": `
