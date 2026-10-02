@@ -62,7 +62,7 @@ catalog:
   '@types/cors': '^2.8.19'
   '@types/fs-extra': '^11.0.4'
   '@types/less': '^3.0.8'
-  '@types/node': '^24.13.6'
+  '@types/node': '^24.19.0'
   '@types/on-finished': '2.3.5'
   '@types/range-parser': '^1.2.7'
   '@types/react': '^19.3.0'

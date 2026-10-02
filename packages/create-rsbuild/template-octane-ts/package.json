@@ -16,7 +16,7 @@
     "@octanejs/rsbuild-plugin": "^0.1.56",
     "@rsbuild/core": "^2.2.11",
     "@tsrx/typescript-plugin": "^0.4.12",
-    "@types/node": "^24.13.6",
+    "@types/node": "^24.19.0",
     "typescript": "^5.9.3"
   }
 }

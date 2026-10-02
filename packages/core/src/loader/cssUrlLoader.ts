@@ -12,6 +12,7 @@ import type { CSSLoaderOptions } from '../types';
 type CSSUrlLoaderOptions = {
   filename: string | ((pathData: PathData, assetInfo?: AssetInfo) => string);
   modules: CSSLoaderOptions['modules'];
+  minimized: boolean;
 };
 
 const HASH_PLACEHOLDER_REGEX =
@@ -160,6 +161,9 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
     this.emitFile(filename, css, undefined, {
       ...info,
       ...assetInfo,
+      // Avoid minifying CSS twice, which can change its content hash and cause
+      // the emitted URL to differ between web and node builds.
+      minimized: options.minimized,
       immutable:
         info.immutable || HASH_PLACEHOLDER_REGEX.test(filenameTemplate),
     });
