@@ -1,0 +1,50 @@
+---
+description: '了解如何使用 Rsbuild 构建 ReactLynx 应用。'
+---
+
+# ReactLynx
+
+在本文档中，你可以了解如何使用 Rsbuild 构建 [Lynx](https://lynxjs.org/zh/) 的 [ReactLynx](https://lynxjs.org/zh/react/introduction) 应用。
+
+## 创建 ReactLynx 应用
+
+使用 [@lynx-js/create-lynx](https://www.npmjs.com/package/@lynx-js/create-lynx) 创建 ReactLynx 应用：
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create @lynx-js/lynx@latest',
+    yarn: 'yarn create @lynx-js/lynx',
+    pnpm: 'pnpm create @lynx-js/lynx@latest',
+    bun: 'bun create @lynx-js/lynx@latest',
+  }}
+/>
+
+然后在提示 "Select build tool" 时选择 `Rsbuild`。
+
+## 在已有项目中使用 ReactLynx
+
+编译 ReactLynx 需要注册 Lynx 提供的 [ReactLynx 插件](https://lynxjs.org/zh/api/rspeedy/react-rsbuild-plugin)，插件会自动添加 ReactLynx 构建所需的配置。
+
+安装 `@lynx-js/react` 和插件：
+
+<PackageManagerTabs command="add @lynx-js/react" />
+
+<PackageManagerTabs command="add @lynx-js/react-rsbuild-plugin -D" />
+
+然后在 Rsbuild 配置文件中注册插件，并将 environment 命名为 `lynx`，使其被构建为 Lynx bundle：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReactLynx } from '@lynx-js/react-rsbuild-plugin';
+
+export default defineConfig({
+  environments: {
+    lynx: {},
+  },
+  plugins: [pluginReactLynx()],
+});
+```
+
+更多用法请参考 [ReactLynx 文档](https://lynxjs.org/zh/react/introduction)。

@@ -9,5 +9,10 @@
   "plugin-babel",
   "plugin-tailwindcss",
   "plugin-sass",
-  "plugin-less"
+  "plugin-less",
+  {
+    "type": "custom-link",
+    "label": "ReactLynx 插件",
+    "link": "https://lynxjs.org/zh/api/rspeedy/react-rsbuild-plugin"
+  }
 ]
