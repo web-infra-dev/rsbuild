@@ -12,13 +12,17 @@ Rsdoctor 致力于成为一站式、智能化的构建分析工具，通过可�
 
 ## 快速上手
 
+Rsdoctor 2.0 要求 Node.js 22.18 或更高版本以及 Rspack 2.x。请使用 Rsbuild 2.x 以满足 Rspack 版本要求。
+
 在基于 Rsbuild 的项目中，你可以通过以下步骤开启 Rsdoctor 分析：
 
 1. 安装 Rsdoctor 插件：
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsdoctor/rspack-plugin -D" />
+<PackageManagerTabs command="add @rsdoctor/core -D" />
+
+从 Rsdoctor 1.x 升级时，请移除 `@rsdoctor/rspack-plugin`，并将已有插件的导入路径改为 `@rsdoctor/core`。完整迁移步骤请参考 [Rsdoctor 1.x 到 2.x 迁移指南](https://v2.rsdoctor.rs/zh/guide/migration/migration-v2)。
 
 2. 在 CLI 命令前添加 `RSDOCTOR=true` 环境变量：
 
@@ -47,12 +51,16 @@ import { PackageManagerTabs } from '@theme';
 
 在项目内执行上述命令后，Rsbuild 会自动注册 Rsdoctor 的插件，并在构建完成后打开本次构建的分析页面，请参考 [Rsdoctor 文档](https://rsdoctor.rs/) 来了解完整功能。
 
+当新旧包同时安装时，Rsbuild 优先使用 `@rsdoctor/core`。Rsbuild 仍支持通过 `@rsdoctor/rspack-plugin` 使用 Rsdoctor 1.x，但自动加载旧版插件时会输出建议升级到 v2 的警告。
+
+如果你使用的 Rsbuild 版本尚不支持自动加载 `@rsdoctor/core`，请按照下方示例手动注册插件。
+
 ## 配置项
 
 如果你需要配置 Rsdoctor 插件提供的 [选项](https://rsdoctor.rs/zh/config/options/options)，请手动注册 Rsdoctor 插件：
 
 ```ts title="rsbuild.config.ts"
-import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { RsdoctorRspackPlugin } from '@rsdoctor/core';
 
 export default {
   tools: {
