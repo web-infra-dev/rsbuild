@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { Compilation, Compiler } from '@rspack/core';
+import type { Compiler } from '@rspack/core';
 import type { Logger } from '../../logger';
-import type { EnvironmentContext, NormalizedDevConfig } from '../../types';
+import type { WriteToDisk } from '../../types';
 
 declare module '@rspack/core' {
   interface Compiler {
@@ -10,59 +10,36 @@ declare module '@rspack/core' {
   }
 }
 
-export type ResolvedWriteToDisk =
-  boolean | ((filePath: string, name?: string) => boolean);
-
-/**
- * Resolve writeToDisk config across multiple environments.
- * Returns the unified config if all environments have the same value,
- * otherwise returns a function that resolves config based on compilation.
- */
-export const resolveWriteToDiskConfig = (
-  config: NormalizedDevConfig,
-  environments: Record<string, EnvironmentContext>,
-  environmentList: EnvironmentContext[],
-): ResolvedWriteToDisk => {
-  const writeToDiskValues = environmentList.map(
-    (env) => env.config.dev.writeToDisk,
-  );
-  if (new Set(writeToDiskValues).size === 1) {
-    return writeToDiskValues[0];
-  }
-
-  return (filePath: string, name?: string) => {
-    let { writeToDisk } = config;
-    if (name && environments[name]) {
-      writeToDisk = environments[name].config.dev.writeToDisk ?? writeToDisk;
-    }
-    return typeof writeToDisk === 'function'
-      ? writeToDisk(filePath)
-      : writeToDisk;
-  };
-};
-
 /**
  * Copy selected assets from the compiler's output file system to disk.
  * Rspack always writes to compiler.outputFileSystem; this hook handles any
- * additional disk writes requested by dev.writeToDisk:
+ * additional disk writes requested by each environment's dev.writeToDisk:
  *
+ * - With `false`, no hook is registered, so the environment's assets are
+ *   never read for disk writes.
  * - With `true` and the native Node.js fs, Rspack already writes to disk,
  *   so no extra write is needed.
  * - With a predicate, Rspack writes to memory and this hook copies only
  *   the files accepted by the predicate to disk.
- * - With different settings across environments, Rspack writes to memory
- *   and the resolved predicate selects files using each environment's setting.
- * - With `true` and a custom output file system, keep copying to disk because
- *   the custom file system may store assets somewhere else, such as memory.
+ * - With `true` and a non-native output file system, copy every file to disk.
+ *   This happens when environments have different settings and share the
+ *   memory fs, or with a custom output file system that may store assets
+ *   somewhere else.
  *
+ * `writeToDiskList` holds the writeToDisk value for each compiler, in order.
  * When all environments disable writeToDisk, the caller skips this setup.
  */
 export function setupWriteToDisk(
   compilers: Compiler[],
-  writeToDisk: ResolvedWriteToDisk,
+  writeToDiskList: WriteToDisk[],
   logger: Logger,
 ): void {
-  for (const compiler of compilers) {
+  for (const [index, compiler] of compilers.entries()) {
+    const writeToDisk = writeToDiskList[index];
+    if (!writeToDisk) {
+      continue;
+    }
+
     compiler.hooks.emit.tap('DevMiddleware', () => {
       if (compiler.__hasRsbuildAssetEmittedCallback) {
         return;
@@ -75,7 +52,6 @@ export function setupWriteToDisk(
           info: {
             targetPath: string;
             content: Buffer;
-            compilation: Compilation;
           },
           callback: (err?: Error) => void,
         ) => {
@@ -85,17 +61,15 @@ export function setupWriteToDisk(
             return;
           }
 
-          const { targetPath, content, compilation } = info;
-          const allowWrite =
-            typeof writeToDisk === 'function'
-              ? writeToDisk(targetPath, compilation.name)
-              : true;
-
-          if (!allowWrite) {
+          const { targetPath } = info;
+          if (typeof writeToDisk === 'function' && !writeToDisk(targetPath)) {
             callback();
             return;
           }
 
+          // Rspack creates the content buffer on access, so only read it
+          // after the file is accepted.
+          const { content } = info;
           const dir = path.dirname(targetPath);
           const name = compiler.options.name
             ? `Child "${compiler.options.name}": `
