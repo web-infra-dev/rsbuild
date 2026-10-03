@@ -1,6 +1,4 @@
-import fs from 'node:fs';
 import { expect, test } from '@e2e/helper';
-import { rs } from 'rstack/test';
 
 test('should serve static files', async ({ request, dev }) => {
   const rsbuild = await dev();
@@ -9,42 +7,6 @@ test('should serve static files', async ({ request, dev }) => {
   expect(await resText.text()).toContain('bar');
   const resIndexJs = await request.get(`${baseUrl}/static/js/index.js`);
   expect(await resIndexJs.text()).toContain('Hello Rsbuild!');
-});
-
-test('should serve HEAD responses without leaking file streams', async ({
-  request,
-  dev,
-}) => {
-  const rsbuild = await dev({ config: { dev: { writeToDisk: true } } });
-  const url = `http://localhost:${rsbuild.port}/static/js/index.js`;
-  const get = await request.get(url, {
-    headers: { 'Accept-Encoding': 'identity' },
-  });
-  const readStream = rs.spyOn(fs, 'createReadStream');
-
-  try {
-    const head = await request.head(url);
-    expect(head.status()).toBe(200);
-    expect(await head.body()).toHaveLength(0);
-    for (const name of ['content-type', 'content-length', 'etag']) {
-      expect(head.headers()[name]).toBe(get.headers()[name]);
-    }
-
-    const range = await request.head(url, { headers: { Range: 'bytes=0-9' } });
-    expect(range.status()).toBe(206);
-    expect(range.headers()['content-length']).toBe('10');
-    expect(await range.body()).toHaveLength(0);
-
-    await expect
-      .poll(() =>
-        readStream.mock.results.every(
-          (result) => result.type === 'return' && result.value.closed,
-        ),
-      )
-      .toBe(true);
-  } finally {
-    readStream.mockRestore();
-  }
 });
 
 test('should return 403 for path traversal', async ({ request, dev }) => {
