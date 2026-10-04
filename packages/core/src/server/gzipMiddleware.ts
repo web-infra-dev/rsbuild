@@ -130,6 +130,7 @@ export function gzipMiddleware({
         });
 
         on('drain', () => gzip!.resume());
+        on('close', () => gzip!.destroy());
 
         gzip.on('end', () => {
           end();
