@@ -1,12 +1,11 @@
 import fs from 'node:fs';
 import type { Compiler, OutputFileSystem } from '@rspack/core';
-import type { ResolvedWriteToDisk } from './setupWriteToDisk';
 
 export async function setupOutputFileSystem(
-  writeToDisk: ResolvedWriteToDisk,
+  writeAllToDisk: boolean,
   compilers: Compiler[],
 ): Promise<OutputFileSystem> {
-  if (writeToDisk !== true) {
+  if (!writeAllToDisk) {
     const { createMemoryFileSystem } = await import(
       /* rspackChunkName: "memfs" */ './memoryFileSystem'
     );

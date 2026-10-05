@@ -10,13 +10,13 @@
     "typecheck": "tsrx-tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "octane": "^0.6.0"
+    "octane": "^0.8.0"
   },
   "devDependencies": {
-    "@octanejs/rsbuild-plugin": "^0.1.56",
+    "@octanejs/rsbuild-plugin": "^0.1.58",
     "@rsbuild/core": "^2.2.11",
-    "@tsrx/typescript-plugin": "^0.4.12",
-    "@types/node": "^24.19.0",
+    "@tsrx/typescript-plugin": "^0.6.1",
+    "@types/node": "^24.19.1",
     "typescript": "^5.9.3"
   }
 }

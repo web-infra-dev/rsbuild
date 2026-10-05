@@ -4,7 +4,8 @@
     "config:recommended",
     "schedule:weekly",
     "helpers:pinGitHubActionDigests",
-    "github>rstackjs/renovate:security"
+    "github>rstackjs/renovate:security",
+    ":semanticCommitTypeAll(chore)"
   ],
   "ignorePaths": ["**/node_modules/**"],
   "rangeStrategy": "bump",
