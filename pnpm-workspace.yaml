@@ -46,7 +46,7 @@ catalog:
   '@rstackjs/test-utils': '^1.0.0'
   '@rstest/core': '^0.12.2'
   '@rstest/playwright': '^0.12.2'
-  '@shikijs/transformers': '^4.4.3'
+  '@shikijs/transformers': '^4.5.0'
   '@solidjs/babel-plugin': '2.0.0-rc.9'
   '@solidjs/compiler': '2.0.0-rc.9'
   '@solidjs/web': '^2.0.0-rc.9'
