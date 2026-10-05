@@ -12,7 +12,7 @@
     "octane": "^0.8.0"
   },
   "devDependencies": {
-    "@octanejs/rsbuild-plugin": "^0.1.56",
+    "@octanejs/rsbuild-plugin": "^0.1.58",
     "@rsbuild/core": "^2.2.11"
   }
 }
