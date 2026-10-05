@@ -3,6 +3,7 @@ import path from 'node:path';
 import onFinished from 'on-finished';
 import { color } from '../helpers';
 import { addTrailingSlash } from '../helpers/url';
+import { UP_PATH_REGEXP } from './assets-middleware/getFileFromUrl';
 import { isVerbose, type Logger } from '../logger';
 import type { Connect, EnvironmentAPI, RequestHandler, Rspack } from '../types';
 import {
@@ -100,8 +101,25 @@ const isFileExistsInDistPaths = async (
   filename: string,
   outputFileSystem: Rspack.OutputFileSystem,
 ): Promise<boolean> => {
+  let decodedFilename: string;
+  try {
+    // The filename can be a percent-encoded URL path
+    decodedFilename = decodeURIComponent(filename);
+  } catch {
+    return false;
+  }
+
+  // Same checks as the assets middleware: never look outside the output directories
+  if (
+    decodedFilename.includes('\0') ||
+    UP_PATH_REGEXP.test(path.normalize(`./${decodedFilename}`))
+  ) {
+    return false;
+  }
+
   for (const distPath of distPaths) {
-    if (await isFileExists(path.join(distPath, filename), outputFileSystem)) {
+    const filePath = path.join(distPath, decodedFilename);
+    if (await isFileExists(filePath, outputFileSystem)) {
       return true;
     }
   }
