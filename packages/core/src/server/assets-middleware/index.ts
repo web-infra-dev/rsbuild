@@ -31,7 +31,7 @@ import { resolveHostname } from './../hmrFallback';
 import type { SocketServer } from '../socketServer';
 import { createAssetsMiddleware } from './middleware';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
-import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
+import { setupWriteToDisk } from './setupWriteToDisk';
 
 const noop = () => {};
 
@@ -260,7 +260,7 @@ export const assetsMiddleware = async ({
 }): Promise<AssetsMiddleware> => {
   const { logger } = context;
   const resolvedHost = await resolveHostname(config.server.host);
-  const { environments, environmentList } = context;
+  const { environmentList } = context;
 
   const setupCompiler = (compiler: Compiler, index: number) => {
     const environment = environmentList[index];
@@ -312,16 +312,17 @@ export const assetsMiddleware = async ({
     });
   });
 
-  const writeToDisk = resolveWriteToDiskConfig(
-    config.dev,
-    environments,
-    environmentList,
+  const writeToDiskList = environmentList.map(
+    (environment) => environment.config.dev.writeToDisk,
   );
-  if (writeToDisk) {
-    setupWriteToDisk(compilers, writeToDisk, logger);
+  if (writeToDiskList.some(Boolean)) {
+    setupWriteToDisk(compilers, writeToDiskList, logger);
   }
 
-  const outputFileSystem = await setupOutputFileSystem(writeToDisk, compilers);
+  const outputFileSystem = await setupOutputFileSystem(
+    writeToDiskList.every((writeToDisk) => writeToDisk === true),
+    compilers,
+  );
 
   const ready = (callback: () => void) => {
     if (
