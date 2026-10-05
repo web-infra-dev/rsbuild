@@ -21,7 +21,7 @@ const solidRefreshLoader: Rspack.LoaderDefinition<SolidRefreshLoaderOptions> =
     try {
       const result = await transformRefreshAsync(String(source), {
         filename: getTransformFilename(this.resourcePath),
-        bundler: 'rspack-esm',
+        bundler: 'standard',
         fixRender: true,
         ...(typeof granular === 'boolean' ? { granular } : {}),
         jsx: false,
