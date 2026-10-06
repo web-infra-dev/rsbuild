@@ -1,5 +1,16 @@
 # @rsbuild/plugin-solid
 
+## 2.0.0-rc.1 (2026-10-06)
+
+### Bug fixes
+
+- fix(plugin-solid): align refresh with Solid rc.13 by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8623
+
+### Other changes
+
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8484
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8514
+
 ## 2.0.0-rc.0 (2026-09-08)
 
 ### Breaking changes
