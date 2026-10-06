@@ -1,0 +1,122 @@
+# Evidence ledger
+
+Every source here is public `web-infra-dev/rsbuild` activity within the recorded window. Dates identify the observed change or interaction, not necessarily PR creation. Authored changes were checked against linked commit accounts. Mixed authorship is called out below. These are samples, not exhaustive personal profiles. PR bodies describe author-reported intent and validation; final patches establish what changed. Measurements were not reproduced in this task.
+
+Rule identifiers connect the main skill to its support. Multiple comments on one PR count as one case. No silent approval supports a particular engineering standard.
+
+## chenjiahan
+
+P1 concerns avoiding unused work. P2 concerns evidence for performance changes. C1 concerns target/environment behavior. T1 concerns integration verification. T2 concerns controlled test isolation. A1 concerns semantic fit of existing abstractions and API names. S1 concerns project scope.
+
+| Date | Source and kind | Observation | Rule and limit |
+| --- | --- | --- | --- |
+| 2025-10-28 | [6457, authored diff](https://github.com/web-infra-dev/rsbuild/pull/6457/files) | Returns before traversing assets when source maps are disabled. | P1. No numerical timing evidence inspected. |
+| 2025-11-29 | [6668, authored change](https://github.com/web-infra-dev/rsbuild/pull/6668) | Loads webpack-merge inside mergeConfig instead of eagerly; reports smaller main and total chunks. | P1/P2. Bundle size does not establish measured startup latency. |
+| 2025-12-10 | [6747, authored diff](https://github.com/web-infra-dev/rsbuild/pull/6747/files) | Uses compilation asset sources instead of rereading files, retains filesystem fallback where sources were discarded, preserves callback shape. | P1. Benchmark images were not inspected. Fallback is contract-specific. |
+| 2026-06-15 | [7904, authored change](https://github.com/web-infra-dev/rsbuild/pull/7904) | Skips CSS transforms when no CSS is emitted while preserving CSS Modules locals; seven-run means and profiling support the optimization. | P1/P2. Final edge cases include bot suggestions; snapshots changed without a new e2e. |
+| 2026-07-15 | [8101, review](https://github.com/web-infra-dev/rsbuild/pull/8101#discussion_r3585736301) | Requests deferring Object.fromEntries until the conditional path needs it. | P1. Not a ban on all eager constants. |
+| 2026-06-30 | [8015, own-PR closure rationale](https://github.com/web-infra-dev/rsbuild/pull/8015#issuecomment-4839962541) | Rejects parallel linting after comparison with ten prior runs showed roughly one second difference within noise and slower individual tasks. | P2. CI logs were not independently checked. |
+| 2025-11-27 | [6656, authored diff](https://github.com/web-infra-dev/rsbuild/pull/6656/files) | Supplies HMR settings through an environment-specific initialization entry rather than shared define values. | C1. Test checks emitted settings, not full browser isolation. |
+| 2025-11-12 | [6558, authored diff](https://github.com/web-infra-dev/rsbuild/pull/6558/files) | Aligns SSR CSS browser targets with browser output and changes multi-environment fixture/snapshot. | C1/T1. [Explicit limitation](https://github.com/web-infra-dev/rsbuild/pull/6558#discussion_r2516569378) says multiple web/node environments cannot each be paired automatically. |
+| 2026-09-29 | [8606, authored diff](https://github.com/web-infra-dev/rsbuild/pull/8606/files) | Avoids double CSS minification; e2e compares web/Node filenames and content, executes Node URL output, checks disabled options. | C1/T1. [Reply](https://github.com/web-infra-dev/rsbuild/pull/8606#discussion_r4131259552) defers adjacent cssOptions compatibility work. No requirement to fix every adjacent issue in one PR. |
+| 2026-09-07 | [8440, authored diff](https://github.com/web-infra-dev/rsbuild/pull/8440/files) | Tests completion log order for dev/build, initial compilation, and single/multiple environment rebuilds. | T1. Tests logs/state, not real terminal rendering. |
+| 2026-04-30 | [7581, review](https://github.com/web-infra-dev/rsbuild/pull/7581#pullrequestreview-4202394823) | Requests e2e instead of unit coverage for SVG loader behavior; final build/preview checks emitted asset versus data URL. | T1. The visible ASCII fixture does not itself prove multibyte boundary coverage. |
+| 2026-09-14 | [8491, review](https://github.com/web-infra-dev/rsbuild/pull/8491#pullrequestreview-5198200678) | Requests real dependency fixture layouts rather than private Module._resolveFilename mocking. | T2. A later CI isolation failure required another approach. |
+| 2026-09-15 | [8493, review](https://github.com/web-infra-dev/rsbuild/pull/8493#pullrequestreview-5208246745) | Requests spying existing require.resolve helper through source createRsbuild instead of adding production resolver injection or manually mocking the plugin API. | T2. Resolved and approved; demonstrates conditional unit isolation, not an e2e-only rule. |
+| 2026-01-21 to 23 | [7003, review thread](https://github.com/web-infra-dev/rsbuild/pull/7003#discussion_r2716202131) | Requests existing dev helper, permits extending it, asks for declared types and separate event/payload fields. | A1, bounded corroboration. Several remarks on one PR are one case, not repeated proof. |
+| 2026-03-18 to 19 | [7340, review exchange](https://github.com/web-infra-dev/rsbuild/pull/7340#discussion_r2950875974) | Suggests shared rule, then [accepts separate rule](https://github.com/web-infra-dev/rsbuild/pull/7340#discussion_r2957628477) after author explains transpilation scope would omit dependencies. | A1 counterexample to mandatory reuse. |
+| 2026-07-15 | [8101, change request](https://github.com/web-infra-dev/rsbuild/pull/8101#pullrequestreview-4702411870) | Rejects experiments.css naming because it conflicts with Rspack terminology; requests separating core/plugin work and config snapshots. | A1 naming is a single contextual observation, not a universal taxonomy. |
+| 2026-02-17 | [7200, authored diff](https://github.com/web-infra-dev/rsbuild/pull/7200/files) | Extends cleanup return type for async behavior and updates EN/ZH lifecycle docs. | Bounded API practice. No new tests in this type/docs change. |
+| 2026-02-22 | [7229, authored diff](https://github.com/web-infra-dev/rsbuild/pull/7229/files) | Deprecates dev.setupMiddlewares with warning/type annotation and replacement guidance while retaining behavior. | One migration example; no permanent deprecation policy inferred. |
+| 2025-11-11 | [6552, issue response](https://github.com/web-infra-dev/rsbuild/issues/6552#issuecomment-3516919342) | Declines an official Lit minifier plugin and points to existing plugin maintainers. | S1, task-specific scope. |
+| 2025-12-09 to 10 | [6725, issue response](https://github.com/web-infra-dev/rsbuild/issues/6725#issuecomment-3630784106) | Explains intentional proxy precedence, suggests specific paths/bypass, remains open to new evidence. | S1. Not a ban on default changes. |
+| 2025-12-23 | [6823, issue response](https://github.com/web-infra-dev/rsbuild/issues/6823#issuecomment-3685938216) | Keeps built-in templates focused, encourages community backend templates. | S1. Does not imply Node builds are unsupported. |
+| 2025-12-13 | [6763, discussion reply](https://github.com/web-infra-dev/rsbuild/discussions/6763#discussioncomment-15245098) | Explains limited core maintenance capacity when retaining an import-control plugin in the community. | S1 stated rationale. External plugin not crawled. |
+| 2026-02-09 | [7147, issue response](https://github.com/web-infra-dev/rsbuild/issues/7147#issuecomment-3869162960) | Supplied reproduction works; requests a corrected link. | Isolated observation, not a mandatory reproduction-before-every-change rule. |
+
+## 9aoy
+
+I1 is the repeated authored integration practice of reusing build configuration through adapters and caller-aware defaults. Review standards remain unsupported by the sampled silent cross-author approvals.
+
+| Date | Source and kind | Observation and attribution | Limit |
+| --- | --- | --- | --- |
+| 2025-10-30 | [6464, authored change](https://github.com/web-infra-dev/rsbuild/pull/6464) | Fixes CommonJS VM debugger offsets, adapts SSR fixture for inspector/ESM switching; both commits linked to 9aoy. | Debugger correctness, not performance evidence. |
+| 2025-12-12 | [6759, authored change](https://github.com/web-infra-dev/rsbuild/pull/6759) | Adds optional Rstest scaffolding, examples and EN/ZH docs; five linked commits. | Initial duplicate setup is a counterexample to timeless adapter reuse. |
+| 2025-12-15 | [6779, authored change](https://github.com/web-infra-dev/rsbuild/pull/6779) | Moves Rstest-specific Vue defaults into caller-aware integration while preserving later user overrides. | I1. Four 9aoy commits, final chenjiahan comment rewrite; snapshots but no targeted caller test. |
+| 2025-12-23 | [6828, authored change](https://github.com/web-infra-dev/rsbuild/pull/6828) | Explicit missing custom config throws; 9aoy's initial commit includes CLI regression test. | T1. Three later commits are chenjiahan's polish. |
+| 2025-12-29 | [6860, authored change](https://github.com/web-infra-dev/rsbuild/pull/6860) | Reuses core build configuration through withRslibConfig. | I1. Six 9aoy commits and one chenjiahan commit; not every final line is solely attributable. |
+| 2026-01-09 | [6941, authored change](https://github.com/web-infra-dev/rsbuild/pull/6941) | Reuses withRsbuildConfig across six templates, removes duplicate plugin/environment declarations, updates EN/ZH docs; four linked commits. | I1. Does not justify eliminating deliberate user configuration. |
+| 2026-01-26 | [7052, authored change](https://github.com/web-infra-dev/rsbuild/pull/7052) | Fixes ESM VM identifier and preserves existing NODE_OPTIONS when adding VM flags; five linked commits. | No automated breakpoint assertion added. |
+| 2026-03-02 | [7273, authored change](https://github.com/web-infra-dev/rsbuild/pull/7273) | Adds writeToDisk to override-only config paths, with a unit case for function replacement. | Single-function testing supports the repository's distinction, not e2e-only guidance. |
+| 2026-03-05 | [7290, authored change](https://github.com/web-infra-dev/rsbuild/pull/7290) | Stabilizes core-js resolution with package-relative cwd and updates snapshots; three linked commits. | Specific import.meta.dirname expression follows chenjiahan review, not independent personal preference. |
+| 2025-11-17 | [6578, discussion reply](https://github.com/web-infra-dev/rsbuild/discussions/6578#discussioncomment-14984907) | Explains Rstest SWC coverage compatibility blocker and a compatible formatjs version pending upgrade. | Integration context, not current package-version advice. |
+
+## Timeless0911
+
+I2 concerns observable behavior and consumer compatibility during build-tool integration. T1 is supported by three independent e2e changes. These are authored practices; substantive independent review standards were not established.
+
+| Date | Source and kind | Observation | Limit |
+| --- | --- | --- | --- |
+| 2025-11-12 | [6559, authored change](https://github.com/web-infra-dev/rsbuild/pull/6559) | Collision fixture checks both error and output.filename guidance. | T1. One linked commit. |
+| 2026-01-22 | [7010, authored change and reply](https://github.com/web-infra-dev/rsbuild/pull/7010#discussion_r2715947455) | Tests nonzero startup exit and stderr; explains why exit-code assertion is needed. | T1. Two linked commits; author rationale, not cross-author merge policy. |
+| 2026-04-22 | [7523, authored change](https://github.com/web-infra-dev/rsbuild/pull/7523) | SVGR loader supports function publicPath while retaining string/default branches. | I2. Two linked commits, no added test. |
+| 2026-05-21 | [7716, authored change](https://github.com/web-infra-dev/rsbuild/pull/7716) | Restores Renovate scanning of relevant workspaces with explicit ignorePaths. | Concrete scope correction; not a scan-every-directory rule. |
+| 2026-05-29 | [7785, authored change](https://github.com/web-infra-dev/rsbuild/pull/7785) | Switches to isolated declarations, removes obsolete dependency/catalog entry; reports environment and three-run build means. | Two linked commits. Measurement not rerun; only one of two detailed performance examples. |
+| 2026-07-30 | [8203, authored change](https://github.com/web-infra-dev/rsbuild/pull/8203) | Reads environment-specific module setting for addons; tests ESM/CJS output and gates native runtime by platform. | I2/T1/C1. Two linked commits; native execution is platform-limited. |
+| 2026-09-08 | [8448, authored change](https://github.com/web-infra-dev/rsbuild/pull/8448) | Preserves HMR hook under Rspack runtime mode; reports exports, declarations, repeated build and consumer checks. | I2. Two linked commits; gzip total slightly increases. No across-the-board size improvement claim. |
+
+## SoonIter
+
+W1 is a narrow website practice supported by three authored changes. General reviewer expectations are not established.
+
+| Date | Source and kind | Observation | Limit |
+| --- | --- | --- | --- |
+| 2025-11-15 | [6341, authored change](https://github.com/web-infra-dev/rsbuild/pull/6341) | Uses Rspress OverviewGroup/HomeFeature and EN/ZH navigation metadata. | W1. Three SoonIter commits; Copilot authored final version bump. Introduced a workaround removed later. |
+| 2025-11-18 | [6601, authored change](https://github.com/web-infra-dev/rsbuild/pull/6601) | Removes transparent-navigation workaround and uses BackgroundImage directly. | W1. One linked commit; conditional cleanup, not never-work-around advice. |
+| 2026-04-23 | [7532, authored change](https://github.com/web-infra-dev/rsbuild/pull/7532) | Adopts BlogBackButton while preserving beforeDocContent, route, language and Link component. | W1. Two linked commits; body mentions additional work absent from final patch. |
+| 2026-09-02 | [8413, authored change](https://github.com/web-infra-dev/rsbuild/pull/8413) | Replaces SVGR type assertion with annotation for old/new Rspack type compatibility. | One linked commit, isolated practice. |
+
+## yifancong
+
+D1 establishes Rsdoctor responsibility. Test decisions were often shaped by chenjiahan's reviews, so do not assign them an independent personal preference.
+
+| Date | Source and kind | Observation | Limit |
+| --- | --- | --- | --- |
+| 2026-09-13 | [8454, authored change](https://github.com/web-infra-dev/rsbuild/pull/8454) | Prefers Rsdoctor core, preserves legacy fallback and manual registration, distinguishes load failures from missing exports. | D1. Five linked commits; one feature family. |
+| 2026-09-15 | [8491, authored change](https://github.com/web-infra-dev/rsbuild/pull/8491) | Splits core/legacy dependency fixtures and manual registration coverage. | D1/T2. Four linked commits; external CI injection defeated missing-core isolation. |
+| 2026-09-15 | [8493, authored change](https://github.com/web-infra-dev/rsbuild/pull/8493) | Calls source createRsbuild with a require.resolve spy, restored in finally. | D1/T2. Four linked commits. Body's resolver-injection description is stale; final production code has no such argument. |
+| 2026-07-16 | [8109, authored change/reply](https://github.com/web-infra-dev/rsbuild/pull/8109#discussion_r3586063196) | Adds reverse-proxy e2e and EN/ZH docs; explains asset prefix does not determine proxy mount. | T1. One linked commit. Explicit external prefix may remain necessary. |
+| 2026-04-30 | [7581, authored change/reply](https://github.com/web-infra-dev/rsbuild/pull/7581#issuecomment-4350372261) | Adds SVG encoding e2e after review. | Three yifancong commits followed by two chenjiahan commits; not solely one author's test design. |
+| 2025-12-11 | [6749, issue reply](https://github.com/web-infra-dev/rsbuild/issues/6749#issuecomment-3641524074) | Requests source maps, stats, reproduction and Rsdoctor version; acknowledges open investigation. | D1 diagnostic context, not a universal required checklist. |
+| 2026-06-17 and 29 | [7861, issue follow-through](https://github.com/web-infra-dev/rsbuild/issues/7861#issuecomment-4727932933) | Reports Rsdoctor fixes and a [later release](https://github.com/web-infra-dev/rsbuild/issues/7861#issuecomment-4829900610). | D1. External project not mined. |
+
+## fi3ework
+
+F1 is routing evidence. These distinct interventions do not support a sufficiently narrow repeated personal rule.
+
+| Date | Source and kind | Observation | Limit |
+| --- | --- | --- | --- |
+| 2025-10-21 | [6390, authored change](https://github.com/web-infra-dev/rsbuild/pull/6390) | Adopts Rspack-specific Vue loader with dependency/import/snapshot changes. | One linked commit. [Earlier explanation](https://github.com/web-infra-dev/rsbuild/pull/6388#issuecomment-3421857261) abandons pre-copy approach, not evidence to always fork. |
+| 2025-11-06 | [6517, authored change](https://github.com/web-infra-dev/rsbuild/pull/6517) | Replaces bespoke ecosystem CI machinery with reusable actions. | One linked commit. |
+| 2025-11-06 | [6519, authored correction](https://github.com/web-infra-dev/rsbuild/pull/6519) | Fixes action refs with v prefix after CI breakage. | Counterexample to uniformly validated integrations. |
+| 2026-09-28 | [8578, authored change](https://github.com/web-infra-dev/rsbuild/pull/8578) | Removes FORCE_COLOR workaround after Rstest stops worker injection; reports old/new behavior. | One linked commit. Author-reported validation not rerun. |
+| 2026-06-05 | [7776, comment](https://github.com/web-infra-dev/rsbuild/pull/7776#issuecomment-4629798784) | States local timing verification but explicitly calls detailed analysis an agent report. | Do not attribute the report's style or methodology personally. |
+
+## SyMind
+
+R1 supports realistic runtime regression coverage as authored practice. It does not establish a distinct review standard.
+
+| Date | Source and kind | Observation | Limit |
+| --- | --- | --- | --- |
+| 2026-01-23 | [7003, authored change](https://github.com/web-infra-dev/rsbuild/pull/7003) | HMR custom events, disposal, browser e2e for delivery/reloads. | R1/T1. Nine linked commits. [Reply](https://github.com/web-infra-dev/rsbuild/pull/7003#discussion_r2714994222) explains runtime-global workaround necessitated by build tooling. |
+| 2026-03-25 | [7343, authored change](https://github.com/web-infra-dev/rsbuild/pull/7343) | Hash-preserving fallback source-map names, Windows error coverage and four unit snapshot updates. | R1/T1. Eight linked commits include merge/revert work. |
+| 2026-06-04 | [7826, authored change](https://github.com/web-infra-dev/rsbuild/pull/7826) | Uses stats chunk IDs; e2e combines natural IDs, runtime chunk and split chunks. | R1/T1. One linked commit. |
+| 2025-12-22 | [5275, discussion comment](https://github.com/web-infra-dev/rsbuild/discussions/5275#discussioncomment-15317038) | Explains unminified Node defaults for debugging and runtime behavior, retaining explicit minification opt-in. | R1 stated rationale; historical migration evidence, not an immutable default. |
+| 2026-06-12 | [7861, issue reply](https://github.com/web-infra-dev/rsbuild/issues/7861#issuecomment-4688569159) | Reports upstream analyzer fix. | Coordination evidence only; external repository not mined. |
+| 2026-08-11 | [8251, unmerged candidate](https://github.com/web-infra-dev/rsbuild/pull/8251) | Proposed ESM resolution change has conflict markers in inspected patch. | Excluded as an accepted implementation exemplar. Creation date shown; not merged activity. |
+
+## Group synthesis
+
+The common test pattern is supported for the five named contributors in T1, with counterexamples against a universal e2e-only requirement. Adapter reuse is most directly supported for 9aoy; website component reuse for SoonIter; build-consumer compatibility for Timeless0911. fi3ework's record supplies context rather than a rule set. Rsdoctor tests show collaboration, not independent agreement inferred from approvals.
+
+No repeated unresolved personal disagreement was found. The main skill preserves the concrete alternatives demonstrated by the evidence. Isolated naming, deprecation and diagnostic observations remain bounded. No biography, personality claim, private motive, or sensitive personal inference is part of this mode.
