@@ -109,9 +109,13 @@ const isFileExistsInDistPaths = async (
     return false;
   }
 
-  // Same checks as the assets middleware: never look outside the output directories
+  if (decodedFilename.includes('\0')) {
+    return false;
+  }
+
+  // Only normalize paths with a parent directory segment, as in the assets middleware.
   if (
-    decodedFilename.includes('\0') ||
+    UP_PATH_REGEXP.test(decodedFilename) &&
     UP_PATH_REGEXP.test(path.normalize(`./${decodedFilename}`))
   ) {
     return false;
