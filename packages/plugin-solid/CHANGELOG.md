@@ -1,5 +1,19 @@
 # @rsbuild/plugin-solid
 
+## 2.0.0-rc.1 (2026-10-06)
+
+### Bug fixes
+
+- fix(plugin-solid): align refresh with Solid rc.13 by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8623
+
+### Other changes
+
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8484
+- chore(deps): upgrade Rstack to 0.7.6 and Rstest to 0.12 by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8511
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8514
+- chore(deps): upgrade rstack to v0.8.0 by @SoonIter in https://github.com/web-infra-dev/rsbuild/pull/8524
+- chore(test): remove FORCE_COLOR workaround for Rstest by @fi3ework in https://github.com/web-infra-dev/rsbuild/pull/8578
+
 ## 2.0.0-rc.0 (2026-09-08)
 
 ### Breaking changes
