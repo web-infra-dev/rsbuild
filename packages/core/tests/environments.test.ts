@@ -424,6 +424,202 @@ describe('environment config', () => {
     expect(configs[1].lazyCompilation).toBeTruthy();
   });
 
+  it('should enable Node lazy compilation only with an explicit capability', async () => {
+    rs.stubEnv('NODE_ENV', 'development');
+    const rsbuild = await createRsbuild({
+      config: {
+        environments: {
+          nodeDefault: {
+            output: { target: 'node' },
+          },
+          nodeBoolean: {
+            output: { target: 'node' },
+            dev: { lazyCompilation: true },
+          },
+          nodeObject: {
+            output: { target: 'node' },
+            dev: { lazyCompilation: { imports: true, entries: false } },
+          },
+          nodeDisabled: {
+            output: { target: 'node' },
+            dev: { lazyCompilation: { node: false } },
+          },
+          nodeEnabled: {
+            output: { target: 'node' },
+            dev: {
+              lazyCompilation: {
+                node: true,
+                imports: true,
+                serverUrl: 'http://localhost:3000',
+              },
+            },
+          },
+          nodeAutoUrl: {
+            output: { target: 'node' },
+            dev: {
+              lazyCompilation: {
+                node: true,
+              },
+            },
+          },
+          web: {
+            dev: {
+              lazyCompilation: {
+                node: true,
+                imports: true,
+                entries: false,
+                serverUrl: 'http://localhost:3000',
+              },
+            },
+          },
+          worker: {
+            output: { target: 'web-worker' },
+            dev: {
+              lazyCompilation: {
+                node: true,
+                serverUrl: 'http://localhost:3000',
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs({ action: 'dev' });
+    const byName = Object.fromEntries(
+      configs.map((config) => [config.name, config]),
+    );
+
+    for (const name of [
+      'nodeDefault',
+      'nodeBoolean',
+      'nodeObject',
+      'nodeDisabled',
+      'worker',
+    ]) {
+      expect(byName[name].lazyCompilation).toBeFalsy();
+      expect(
+        matchPlugin(byName[name], 'HotModuleReplacementPlugin'),
+      ).toBeFalsy();
+    }
+    expect(byName.nodeEnabled.lazyCompilation).toEqual({
+      imports: true,
+      entries: false,
+      serverUrl: 'http://localhost:3000',
+    });
+    expect(
+      matchPlugin(byName.nodeEnabled, 'HotModuleReplacementPlugin'),
+    ).toBeTruthy();
+    expect(byName.nodeAutoUrl.lazyCompilation).toEqual({
+      imports: true,
+      entries: false,
+    });
+    expect(
+      matchPlugin(byName.nodeAutoUrl, 'HotModuleReplacementPlugin'),
+    ).toBeTruthy();
+    expect(byName.web.lazyCompilation).toEqual({
+      imports: true,
+      entries: false,
+      serverUrl: 'http://localhost:3000',
+    });
+    expect(byName.web.lazyCompilation).not.toHaveProperty('node');
+  });
+
+  it.each([
+    {
+      dev: {
+        hmr: false,
+        lazyCompilation: {
+          node: true,
+          serverUrl: 'http://localhost:3000',
+        },
+      },
+      error: 'Node lazy compilation requires dev.hmr',
+    },
+    {
+      dev: {
+        lazyCompilation: {
+          node: true,
+          entries: true,
+          serverUrl: 'http://localhost:3000',
+        },
+      },
+      error:
+        'Node lazy compilation does not support dev.lazyCompilation.entries: true',
+    },
+  ])(
+    'should reject incompatible Node lazy compilation config',
+    async ({ dev, error }) => {
+      rs.stubEnv('NODE_ENV', 'development');
+      const rsbuild = await createRsbuild({
+        config: {
+          output: { target: 'node' },
+          dev,
+        },
+      });
+
+      await expect(rsbuild.initConfigs({ action: 'dev' })).rejects.toThrow(
+        error,
+      );
+    },
+  );
+
+  it.each([
+    '/lazy',
+    '//localhost:3000',
+    '',
+    'ftp://localhost:3000',
+    'http://',
+    'http:localhost',
+  ])(
+    'should reject invalid Node lazy compilation URL %j',
+    async (serverUrl) => {
+      rs.stubEnv('NODE_ENV', 'development');
+      const rsbuild = await createRsbuild({
+        config: {
+          output: { target: 'node' },
+          dev: { lazyCompilation: { node: true, serverUrl } },
+        },
+      });
+      await expect(rsbuild.initConfigs({ action: 'dev' })).rejects.toThrow(
+        'dev.lazyCompilation.serverUrl to be an absolute HTTP(S) URL',
+      );
+    },
+  );
+
+  it.each([
+    { serverUrl: 'http://localhost:3000', expected: 'http://localhost:3000' },
+    {
+      serverUrl: 'https://example.com:443',
+      expected: 'https://example.com:443',
+    },
+    {
+      serverUrl: 'http://localhost:<port>',
+      expected: 'http://localhost:<port>',
+    },
+    {
+      serverUrl: 'HTTPS://example.com:443',
+      expected: 'https://example.com:443',
+    },
+    {
+      serverUrl: 'hTtPs://Example.com:<port>/Lazy',
+      expected: 'https://Example.com:<port>/Lazy',
+    },
+  ])(
+    'should preserve explicit Node lazy compilation URL %j during config inspection',
+    async ({ serverUrl, expected }) => {
+      rs.stubEnv('NODE_ENV', 'development');
+      const rsbuild = await createRsbuild({
+        config: {
+          output: { target: 'node' },
+          dev: { lazyCompilation: { node: true, serverUrl } },
+        },
+      });
+      const [config] = await rsbuild.initConfigs({ action: 'dev' });
+      expect(config.lazyCompilation).toMatchObject({ serverUrl: expected });
+    },
+  );
+
   it('should expose APIs by environment', async () => {
     const logs: string[] = [];
     const createConsumerPlugin = (name: string): RsbuildPlugin => ({
