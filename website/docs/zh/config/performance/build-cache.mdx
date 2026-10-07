@@ -42,7 +42,7 @@ export default {
 
 当 Rspack 提供结构化的缓存信息时，`persistent.status` 和 `persistent.reason` 会包含其结果。`valid` 表示元数据版本和被跟踪的构建依赖通过了校验，但不能确认快照或模块条目已恢复。没有结构化信息时，恢复状态为 `unknown`，原因为 `null`。非持久化缓存模式下 `persistent` 为 `null`。
 
-当 Rspack 提供可靠的计数时，`moduleBuilds` 包含 `reused` 和 `total`，在 `finishModules` 之后、封装或优化之前记录。`total` 是主模块图中的不同模块数。`reused` 是从缓存恢复构建结果且在此之前未重新构建的模块数。这些计数可能包含内存缓存重用，因此不是磁盘缓存命中率。旧版 Rspack、未支持的模式、后续重新构建或添加入口等无法提供可靠计数的情况中，`moduleBuilds` 为 `null`。
+当 Rspack 提供可靠的计数时，`moduleBuilds` 包含 `reused` 和 `total`，在 `finishModules` 之后、封装或优化之前记录。`total` 是主模块图中的不同模块数，包括不能缓存的模块。`reused` 是从缓存恢复构建结果且在此之前未重新构建的模块数。这些计数衡量模块图中的重用情况，而不是缓存查询的命中率；其中可能包含内存和磁盘缓存的重用。旧版 Rspack、未支持的模式、后续重新构建或添加入口等无法提供可靠计数的情况中，`moduleBuilds` 为 `null`。
 
 报告会在每次编译时序列化一次 Rspack stats，这会带来额外开销。如果序列化失败，`statsError` 会包含错误，构建继续进行且恢复状态为 `unknown`。回调可以返回 Promise，Rsbuild 会在完成编译钩子前等待它；如果回调抛出错误或 Promise 被拒绝，钩子会失败。
 
