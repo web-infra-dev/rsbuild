@@ -7,6 +7,7 @@ import type {
   RsbuildContext,
   RsbuildPlugin,
 } from '../types';
+import { getBuildCacheDiagnostics } from './cacheDiagnostics';
 
 function getCacheDirectory(
   { cacheDirectory }: BuildCacheOptions,
@@ -121,5 +122,22 @@ export const pluginCache = (): RsbuildPlugin => ({
         api.logger.debug('Rspack persistent cache enabled');
       }
     });
+
+    api.onAfterEnvironmentCompile(
+      async ({ environment, isFirstCompile, isWatch, stats, time }) => {
+        const callback = environment.config.performance.buildCacheDiagnostics;
+        if (!callback) return;
+
+        await callback(
+          getBuildCacheDiagnostics({
+            environment: environment.name,
+            isFirstCompile,
+            isWatch,
+            stats,
+            time,
+          }),
+        );
+      },
+    );
   },
 });
