@@ -5,6 +5,16 @@ type CacheInfo = Pick<BuildCacheDiagnostics, 'mode' | 'persistent'>;
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 
+export function enableCacheInfoStats(stats: Rspack.Configuration['stats']) {
+  const options: Rspack.StatsOptions =
+    typeof stats === 'boolean'
+      ? { preset: stats ? 'normal' : 'none' }
+      : typeof stats === 'string'
+        ? { preset: stats }
+        : (stats ?? {});
+  return { ...options, cacheInfo: true };
+}
+
 export function readCacheInfo(value: unknown): CacheInfo | undefined {
   if (!isRecord(value)) return;
   const { mode, persistent } = value;
@@ -32,6 +42,24 @@ export function readCacheInfo(value: unknown): CacheInfo | undefined {
     return;
   }
   return { mode, persistent: { status, reason } };
+}
+
+function readModuleBuilds(
+  value: unknown,
+): BuildCacheDiagnostics['moduleBuilds'] {
+  if (!isRecord(value)) return null;
+  const { reused, total } = value;
+  if (
+    typeof reused !== 'number' ||
+    typeof total !== 'number' ||
+    !Number.isSafeInteger(reused) ||
+    !Number.isSafeInteger(total) ||
+    reused < 0 ||
+    reused > total
+  ) {
+    return null;
+  }
+  return { reused, total };
 }
 
 export function getBuildCacheDiagnostics({
@@ -119,15 +147,19 @@ export function getBuildCacheDiagnostics({
   };
   const cacheLogs = json?.logging?.['rspack.persistentCache'];
   if (cacheLogs) addLogs(cacheLogs.entries);
+  const cacheInfo = readCacheInfo(json?.cacheInfo);
 
   return {
     environment,
     isFirstCompile,
     isWatch,
     time,
-    ...(readCacheInfo(json?.cacheInfo) ?? fallback),
+    ...(cacheInfo ?? fallback),
     configuration,
-    reused: 'unknown',
+    moduleBuilds:
+      cacheInfo?.mode === 'persistent' && isRecord(json?.cacheInfo)
+        ? readModuleBuilds(json.cacheInfo.moduleBuilds)
+        : null,
     logs,
     statsError,
   };
