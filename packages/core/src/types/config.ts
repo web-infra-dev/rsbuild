@@ -707,7 +707,7 @@ export type BuildCacheDiagnostics = {
     status: 'cold' | 'valid' | 'invalidated' | 'error' | 'unknown';
     reason: 'version' | 'buildDependencies' | 'recovery' | null;
   } | null;
-  reused: 'unknown';
+  moduleBuilds: { reused: number; total: number } | null;
   logs: { type: string; message: string }[];
   statsError: string | null;
 };

@@ -39,7 +39,7 @@ test('reports effective cache settings and logs for each environment', async ({
       join(import.meta.dirname, 'test-temp-cache'),
     );
     expect(web?.logs.length).toBeGreaterThan(0);
-    expect(web?.reused).toBe('unknown');
+    expect(web?.moduleBuilds).toBeNull();
     expect(web?.persistent).toEqual({ status: 'unknown', reason: null });
     expect(node?.mode).toBe('disabled');
     expect(node?.configuration).toBeNull();
