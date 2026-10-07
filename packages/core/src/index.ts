@@ -56,6 +56,7 @@ export type {
   AutoExternal,
   AutoExternalExclude,
   Build,
+  BuildCacheDiagnostics,
   BuildOptions,
   BuildResult,
   Charset,
