@@ -280,11 +280,11 @@ catalogs:
       specifier: ^0.5.23
       version: 0.5.23
     '@swc/plugin-prefresh':
-      specifier: ^15.0.0
-      version: 15.0.0
+      specifier: ^17.0.0
+      version: 17.0.0
     '@swc/plugin-remove-console':
-      specifier: ^15.0.0
-      version: 15.0.0
+      specifier: ^17.0.0
+      version: 17.0.0
     '@tailwindcss/postcss':
       specifier: ^4.3.3
       version: 4.3.3
@@ -816,7 +816,7 @@ importers:
     dependencies:
       '@swc/plugin-remove-console':
         specifier: 'catalog:'
-        version: 15.0.0
+        version: 17.0.0
 
   e2e/helper:
     dependencies:
@@ -1285,7 +1285,7 @@ importers:
         version: 2.0.1(@prefresh/core@1.5.11)(@prefresh/utils@1.2.1)(@rspack/core@2.2.8)
       '@swc/plugin-prefresh':
         specifier: 'catalog:'
-        version: 15.0.0
+        version: 17.0.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1575,10 +1575,10 @@ importers:
         version: 19.3.0(react@19.3.0)
       rsbuild-plugin-google-analytics:
         specifier: 'catalog:'
-        version: 1.0.6(@rsbuild/core@2.2.11)
+        version: 1.0.6(@rsbuild/core@2.2.12)
       rsbuild-plugin-open-graph:
         specifier: 'catalog:'
-        version: 1.1.3(@rsbuild/core@2.2.11)
+        version: 1.1.3(@rsbuild/core@2.2.12)
       rspress-plugin-font-open-sans:
         specifier: 'catalog:'
         version: 1.0.4(@rspress/core@2.0.23)
@@ -2379,8 +2379,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@2.2.11':
-    resolution: {integrity: sha512-avPW0j6RaEbtV2mfl0AzTAJEimPX4Xj0pCcZyxNCrE9vkS91HmweM5V7XQj3kI5iTYfHRp9Y6To8RRHYLEvG7A==}
+  '@rsbuild/core@2.2.12':
+    resolution: {integrity: sha512-SnJ81Jf9ZGms8hUq0FGxrqlUxdHKV76VK9gxrEdtWLbTic+qRt0SIAsk5NdIr1tXFzqzQ6Fqeffs+K1EUuZEHw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -3041,11 +3041,11 @@ packages:
   '@swc/helpers@0.5.23':
     resolution: {integrity: sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw==}
 
-  '@swc/plugin-prefresh@15.0.0':
-    resolution: {integrity: sha512-3+oxvGDfPRtrbd+io8RcBC0VQWAqB9KSOvkRIqmvNpG0MaoNv9aRI20BlaXvTfX2scDtUMFDXmqTPtOLSWPJLQ==}
+  '@swc/plugin-prefresh@17.0.0':
+    resolution: {integrity: sha512-cUO9UT6y/iAVOb6qwcZflVqQUIsh7ti2bX5HrKg69vwdVQRsTfVyG2l8Q3/EdJGfbAf32Eyf22SJj1Bk9727zQ==}
 
-  '@swc/plugin-remove-console@15.0.0':
-    resolution: {integrity: sha512-dicZGUchU4XqJdn5F/1hn8u71k3o54flANtXO+gX46uRn7BZKWONXGLbmNAo67qtkMIgDk4d7dDfZvBYYKOCjw==}
+  '@swc/plugin-remove-console@17.0.0':
+    resolution: {integrity: sha512-cwUtdtat4Z1nKOVVkJ6vIGtamS0gRt4XTAU+zcxKkxNaYAfYtpWDf7V1sIwkZ/Bp68DbvuPdKIYQ90dDBCocfw==}
 
   '@tailwindcss/node@4.3.3':
     resolution: {integrity: sha512-/T8IKEsf9VTU6tLjgC7+sv2mOPtQxzE2jMw7u4Tt40Tx+QSZxpzh95/H6cMKoja9XuW7iMdLJYBB0o9G1CaAgg==}
@@ -6336,7 +6336,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.60.4':
     optional: true
 
-  '@rsbuild/core@2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)':
+  '@rsbuild/core@2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)':
     dependencies:
       '@rspack/core': 2.2.8(@module-federation/runtime-tools@2.9.2)(@swc/helpers@0.5.23)
       '@swc/helpers': 0.5.23
@@ -6354,12 +6354,12 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  '@rsbuild/plugin-react@2.1.1(@rsbuild/core@2.2.11)(@rspack/core@2.2.8)':
+  '@rsbuild/plugin-react@2.1.1(@rsbuild/core@2.2.12)(@rspack/core@2.2.8)':
     dependencies:
       '@rspack/plugin-react-refresh': 2.0.2(@rspack/core@2.2.8)(react-refresh@0.19.0)
       react-refresh: 0.19.0
     optionalDependencies:
-      '@rsbuild/core': 2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
     transitivePeerDependencies:
       - '@rspack/core'
 
@@ -6384,8 +6384,8 @@ snapshots:
 
   '@rslib/core@1.0.1(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)(typescript@6.0.3)':
     dependencies:
-      '@rsbuild/core': 2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
-      rsbuild-plugin-dts: 1.0.1(@rsbuild/core@2.2.11)(typescript@6.0.3)
+      '@rsbuild/core': 2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
+      rsbuild-plugin-dts: 1.0.1(@rsbuild/core@2.2.12)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -6519,8 +6519,8 @@ snapshots:
     dependencies:
       '@mdx-js/mdx': 3.1.1(supports-color@8.1.1)
       '@mdx-js/react': 3.1.1(@types/react@19.3.0)(react@19.3.0)
-      '@rsbuild/core': 2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
-      '@rsbuild/plugin-react': 2.1.1(@rsbuild/core@2.2.11)(@rspack/core@2.2.8)
+      '@rsbuild/core': 2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
+      '@rsbuild/plugin-react': 2.1.1(@rsbuild/core@2.2.12)(@rspack/core@2.2.8)
       '@rspress/shared': 2.0.23(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)(supports-color@8.1.1)
       '@shikijs/rehype': 4.3.0
       '@types/mdast': 4.0.4
@@ -6591,7 +6591,7 @@ snapshots:
 
   '@rspress/shared@2.0.23(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)(supports-color@8.1.1)':
     dependencies:
-      '@rsbuild/core': 2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
       '@shikijs/rehype': 4.3.0
       '@types/react': 19.3.0
       mdast-util-mdx-jsx: 3.2.0(supports-color@8.1.1)
@@ -6654,7 +6654,7 @@ snapshots:
 
   '@rstest/core@0.12.3(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)':
     dependencies:
-      '@rsbuild/core': 2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
       '@types/chai': 5.2.3
       cjs-module-lexer: 2.2.1
     transitivePeerDependencies:
@@ -6935,11 +6935,11 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@swc/plugin-prefresh@15.0.0':
+  '@swc/plugin-prefresh@17.0.0':
     dependencies:
       '@swc/counter': 0.1.3
 
-  '@swc/plugin-remove-console@15.0.0':
+  '@swc/plugin-remove-console@17.0.0':
     dependencies:
       '@swc/counter': 0.1.3
 
@@ -9116,20 +9116,20 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.4
       fsevents: 2.3.3
 
-  rsbuild-plugin-dts@1.0.1(@rsbuild/core@2.2.11)(typescript@6.0.3):
+  rsbuild-plugin-dts@1.0.1(@rsbuild/core@2.2.12)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.45.3
-      '@rsbuild/core': 2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
     optionalDependencies:
       typescript: 6.0.3
 
-  rsbuild-plugin-google-analytics@1.0.6(@rsbuild/core@2.2.11):
+  rsbuild-plugin-google-analytics@1.0.6(@rsbuild/core@2.2.12):
     optionalDependencies:
-      '@rsbuild/core': 2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
 
-  rsbuild-plugin-open-graph@1.1.3(@rsbuild/core@2.2.11):
+  rsbuild-plugin-open-graph@1.1.3(@rsbuild/core@2.2.12):
     optionalDependencies:
-      '@rsbuild/core': 2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
 
   rslog@2.3.0: {}
 
@@ -9160,7 +9160,7 @@ snapshots:
 
   rstack@0.8.0(@module-federation/runtime-tools@2.9.2)(@rspress/core@2.0.23)(core-js@3.50.0)(jiti@2.7.0)(typescript@6.0.3):
     dependencies:
-      '@rsbuild/core': 2.2.11(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
+      '@rsbuild/core': 2.2.12(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
       '@rslib/core': 1.0.1(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)(typescript@6.0.3)
       '@rslint/core': 0.9.3(jiti@2.7.0)
       '@rstest/core': 0.12.3(@module-federation/runtime-tools@2.9.2)(core-js@3.50.0)
