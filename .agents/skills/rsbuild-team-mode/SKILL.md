@@ -30,14 +30,14 @@ The following checks primarily reflect chenjiahan's authored work and substantiv
 
 Routing means consulting the relevant evidence and affected code. It does not authorize contacting these people or requesting their review.
 
-| Area | Evidence to consult | How to use it |
-| --- | --- | --- |
-| Rstest integration, config loading, SSR debugging | 9aoy, I1 | Check the consuming tool's context, dependency compatibility, and triggering config before changing shared defaults. |
-| Build tooling, Rslib upgrades, CLI failures, asset emission | Timeless0911, I2 | Verify the affected build or runtime behavior; dependency bumps alone do not prove compatibility. |
-| Website theme and Rspress integration | SoonIter, W1 | Check supported upstream components before retaining a local adapter. Remove a workaround when the upstream capability replaces it, while preserving existing theme hooks. |
-| Rsdoctor loading and diagnostics | yifancong, D1 | Check core and legacy resolution paths, manual registration, and environment-dependent test isolation. The inspected test strategy evolved through chenjiahan's reviews. |
-| Ecosystem CI, Vue loader, Rstest compatibility | fi3ework, F1 | Use these changes as integration context. Evidence is too sparse for a distinct personal rule set. |
-| Server runtime, HMR, source maps | SyMind, R1 | Exercise the triggering runtime configuration or platform. Preserve explicit Node options and debugging behavior when changing defaults. |
+| Area                                                        | Evidence to consult | How to use it                                                                                                                                                              |
+| ----------------------------------------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Rstest integration, config loading, SSR debugging           | 9aoy, I1            | Check the consuming tool's context, dependency compatibility, and triggering config before changing shared defaults.                                                       |
+| Build tooling, Rslib upgrades, CLI failures, asset emission | Timeless0911, I2    | Verify the affected build or runtime behavior; dependency bumps alone do not prove compatibility.                                                                          |
+| Website theme and Rspress integration                       | SoonIter, W1        | Check supported upstream components before retaining a local adapter. Remove a workaround when the upstream capability replaces it, while preserving existing theme hooks. |
+| Rsdoctor loading and diagnostics                            | yifancong, D1       | Check core and legacy resolution paths, manual registration, and environment-dependent test isolation. The inspected test strategy evolved through chenjiahan's reviews.   |
+| Ecosystem CI, Vue loader, Rstest compatibility              | fi3ework, F1        | Use these changes as integration context. Evidence is too sparse for a distinct personal rule set.                                                                         |
+| Server runtime, HMR, source maps                            | SyMind, R1          | Exercise the triggering runtime configuration or platform. Preserve explicit Node options and debugging behavior when changing defaults.                                   |
 
 ## Handle exceptions and disagreements
 
