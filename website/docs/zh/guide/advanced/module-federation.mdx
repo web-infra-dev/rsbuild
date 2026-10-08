@@ -1,5 +1,5 @@
 ---
-description: 'Module Federation 是一种 JavaScript 应用分治的架构模式（类似于服务端的微服务），它允许你在多个 JavaScript 应用程序（或微前端）之间共享代码和资源。'
+description: '在 Rsbuild 中集成 Module Federation v2.0 或 v1.5 以在应用间共享代码，并了解配置示例和使用限制。'
 ---
 
 # 模块联邦
@@ -41,15 +41,16 @@ Module Federation（MF） 目前有多个主要版本，你可以根据你的需
 你需要安装额外的 [@module-federation/rsbuild-plugin](https://npmjs.com/package/@module-federation/rsbuild-plugin) 插件，才能使用 Module Federation v2.0。
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
 import { pluginModuleFederation } from '@module-federation/rsbuild-plugin';
 
 export default defineConfig({
-  plugins: {
+  plugins: [
     pluginModuleFederation({
       name: 'remote',
-     // other options
+      // other options
     }),
-  },
+  ],
 });
 ```
 
@@ -62,6 +63,8 @@ export default defineConfig({
 你可以通过 Rsbuild 的 [moduleFederation.options](/config/module-federation/options) 来使用它，无须安装任何插件。
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
 export default defineConfig({
   moduleFederation: {
     options: {

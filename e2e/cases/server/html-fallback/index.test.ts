@@ -120,6 +120,26 @@ test('should access /main success when entry is main', async ({
   await expect(locator).toHaveText('Hello Rsbuild!');
 });
 
+test('should access /中文 success when entry name is not ASCII', async ({
+  page,
+  devOnly,
+}) => {
+  const rsbuild = await devOnly({
+    config: {
+      source: {
+        entry: {
+          中文: './src/index.js',
+        },
+      },
+    },
+  });
+
+  const res = await page.goto(`http://localhost:${rsbuild.port}/中文`);
+
+  expect(res?.status()).toBe(200);
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
+});
+
 test('should access /main success when entry is main and use memoryFs', async ({
   page,
   devOnly,

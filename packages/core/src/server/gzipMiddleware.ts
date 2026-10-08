@@ -118,10 +118,16 @@ export function gzipMiddleware({
 
       const compress = shouldCompress(res);
       if (compress) {
+        const contentLength = Number(res.getHeader('Content-Length'));
         res.setHeader('Content-Encoding', 'gzip');
         res.removeHeader('Content-Length');
 
-        gzip = zlib.createGzip({ level });
+        gzip = zlib.createGzip({
+          level,
+          // Reduce output callbacks for large assets without enlarging the
+          // buffer for small responses or streams with an unknown length.
+          chunkSize: contentLength > 512 * 1024 ? 64 * 1024 : undefined,
+        });
 
         gzip.on('data', (chunk) => {
           if (!write(chunk)) {

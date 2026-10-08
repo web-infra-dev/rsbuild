@@ -4,7 +4,7 @@ import { getPathnameFromUrl } from '../../helpers/path';
 import type { InternalContext, Rspack } from '../../types';
 import { HttpCode, isUrlPathUnderBase } from '../helper';
 
-const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
+export const UP_PATH_REGEXP: RegExp = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
 
 const stat = (
   filename: string,
