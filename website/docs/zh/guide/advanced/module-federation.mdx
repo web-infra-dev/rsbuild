@@ -41,15 +41,16 @@ Module Federation（MF） 目前有多个主要版本，你可以根据你的需
 你需要安装额外的 [@module-federation/rsbuild-plugin](https://npmjs.com/package/@module-federation/rsbuild-plugin) 插件，才能使用 Module Federation v2.0。
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
 import { pluginModuleFederation } from '@module-federation/rsbuild-plugin';
 
 export default defineConfig({
-  plugins: {
+  plugins: [
     pluginModuleFederation({
       name: 'remote',
-     // other options
+      // other options
     }),
-  },
+  ],
 });
 ```
 
@@ -62,6 +63,8 @@ export default defineConfig({
 你可以通过 Rsbuild 的 [moduleFederation.options](/config/module-federation/options) 来使用它，无须安装任何插件。
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
 export default defineConfig({
   moduleFederation: {
     options: {
