@@ -5,7 +5,9 @@ type CacheInfo = Pick<BuildCacheDiagnostics, 'mode' | 'persistent'>;
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 
-export function enableCacheInfoStats(stats: Rspack.Configuration['stats']) {
+export function enableCacheInfoStats(
+  stats: Rspack.Configuration['stats'],
+): Rspack.StatsOptions & { cacheInfo: true } {
   const options: Rspack.StatsOptions =
     typeof stats === 'boolean'
       ? { preset: stats ? 'normal' : 'none' }
