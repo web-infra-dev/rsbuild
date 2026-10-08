@@ -53,7 +53,8 @@ export const pluginBasic = (): RsbuildPlugin => ({
           isDev &&
           config.dev.hmr &&
           (target === 'web' ||
-            (target === 'node' &&
+            (api.context.action === 'dev' &&
+              target === 'node' &&
               isNodeLazyCompilationEnabled(config.dev.lazyCompilation)));
 
         if (usingHMR) {

@@ -526,6 +526,44 @@ describe('environment config', () => {
   });
 
   it.each([
+    { action: 'dev', mode: 'development', enabled: true },
+    { action: 'build', mode: 'development', enabled: false },
+    { action: 'build', mode: 'production', enabled: false },
+  ] as const)(
+    'should align Node lazy compilation and HMR for $action in $mode mode',
+    async ({ action, mode, enabled }) => {
+      const rsbuild = await createRsbuild({
+        config: {
+          mode,
+          output: { target: 'node' },
+          dev: { lazyCompilation: { node: true } },
+        },
+      });
+      const [config] = await rsbuild.initConfigs({ action });
+      expect(Boolean(config.lazyCompilation)).toBe(enabled);
+      expect(Boolean(matchPlugin(config, 'HotModuleReplacementPlugin'))).toBe(
+        enabled,
+      );
+    },
+  );
+
+  it.each(['production', 'none'] as const)(
+    'should reject Node lazy compilation in %s mode',
+    async (mode) => {
+      const rsbuild = await createRsbuild({
+        config: {
+          mode,
+          output: { target: 'node' },
+          dev: { lazyCompilation: { node: true } },
+        },
+      });
+      await expect(rsbuild.initConfigs({ action: 'dev' })).rejects.toThrow(
+        'Node lazy compilation requires mode: "development"',
+      );
+    },
+  );
+
+  it.each([
     {
       dev: {
         hmr: false,

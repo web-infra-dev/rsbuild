@@ -326,3 +326,19 @@ test('should resume Node lazy imports in one retained ES module runtime', async 
     { module: true, extension: 'mjs' },
   );
 });
+
+for (const mode of ['production', 'none'] as const) {
+  test(`should reject Node lazy compilation in ${mode} mode before compiling`, async ({
+    devOnly,
+  }) => {
+    await expect(
+      devOnly({
+        config: {
+          mode,
+          output: { target: 'node' },
+          dev: { lazyCompilation: { node: true } },
+        },
+      }),
+    ).rejects.toThrow('Node lazy compilation requires mode: "development"');
+  });
+}

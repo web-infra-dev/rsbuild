@@ -175,7 +175,7 @@ Rsbuild 会自动将 `<port>` 占位符替换为 server 实际监听的端口号
 
 ### Node 目标
 
-Node 目标默认立即编译。设置 `dev.lazyCompilation.node: true` 可延迟编译动态导入的模块。布尔值 `true` 和未设置 `node: true` 的配置仍仅作用于浏览器目标。Node 入口始终立即编译，设置 `entries: true` 会报错。Node lazy compilation 要求 `dev.hmr: true`。
+Node 目标默认立即编译。设置 `dev.lazyCompilation.node: true` 可延迟编译动态导入的模块。布尔值 `true` 和未设置 `node: true` 的配置仍仅作用于浏览器目标。Node 入口始终立即编译，设置 `entries: true` 会报错。Node lazy compilation 要求 `mode: 'development'` 和 `dev.hmr: true`。其他模式会报错，因为热更新必须保留运行时实例。
 
 例如，为应用自行管理的原生 runtime 配置 ES module bundle：
 

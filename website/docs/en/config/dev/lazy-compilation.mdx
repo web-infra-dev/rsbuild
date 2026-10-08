@@ -175,7 +175,7 @@ Rsbuild will replace the `<port>` placeholder with the actual port number the se
 
 ### Node targets
 
-Node targets compile eagerly by default. Set `dev.lazyCompilation.node: true` to defer dynamic imports. Boolean `true` and options without `node: true` remain browser-only. Node entries stay eager, and `entries: true` is rejected. Node lazy compilation requires `dev.hmr: true`.
+Node targets compile eagerly by default. Set `dev.lazyCompilation.node: true` to defer dynamic imports. Boolean `true` and options without `node: true` remain browser-only. Node entries stay eager, and `entries: true` is rejected. Node lazy compilation requires `mode: 'development'` and `dev.hmr: true`. Other modes are rejected because hot updates must preserve the retained runtime.
 
 For example, configure an ES module bundle for an application-owned native runtime:
 

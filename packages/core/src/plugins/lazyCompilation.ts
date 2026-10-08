@@ -105,6 +105,11 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
         if (!isNodeLazyCompilationEnabled(options)) {
           return;
         }
+        if (config.mode !== 'development') {
+          throw new Error(
+            'Node lazy compilation requires mode: "development" to preserve the retained runtime during hot updates.',
+          );
+        }
         if (!config.dev.hmr) {
           throw new Error(
             'Node lazy compilation requires dev.hmr to apply compiled modules to the retained runtime.',
