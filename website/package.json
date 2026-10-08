@@ -27,6 +27,7 @@
     "rsbuild-plugin-open-graph": "catalog:",
     "rspress-plugin-font-open-sans": "catalog:",
     "rstack": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "zephyr-rspress-plugin": "catalog:"
   }
 }
