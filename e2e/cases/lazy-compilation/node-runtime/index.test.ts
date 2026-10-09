@@ -55,21 +55,21 @@ const runRuntimeCase = async (
   Reflect.set(process, stateKey, evaluations);
   const requestController = new AbortController();
   let runtime: Runtime | undefined;
+  let runtimePromise: Promise<Runtime> | undefined;
   let runtimeLoads = 0;
   let firstRequests = 0;
   let secondRequests = 0;
   let compiledModules = new Set<string>();
 
-  const loadRuntime = async (): Promise<Runtime> => {
-    if (runtime) {
+  const loadRuntime = (): Promise<Runtime> => {
+    runtimePromise ??= (async () => {
+      runtimeLoads++;
+      runtime = module
+        ? ((await import(pathToFileURL(outputPath).href)) as Runtime)
+        : (nativeRequire(outputPath) as Runtime);
       return runtime;
-    }
-
-    runtimeLoads++;
-    runtime = module
-      ? ((await import(pathToFileURL(outputPath).href)) as Runtime)
-      : (nativeRequire(outputPath) as Runtime);
-    return runtime;
+    })();
+    return runtimePromise;
   };
 
   const successfulCompileBridge: RsbuildPlugin = {
@@ -89,6 +89,13 @@ const runRuntimeCase = async (
         );
         if (!runtime) {
           return;
+        }
+
+        if (
+          compiledModules.has(join(sourceDir, 'first.js')) &&
+          evaluations.firstExecutions === 0
+        ) {
+          await expect.poll(() => evaluations.firstHandlers).toBe(3);
         }
 
         const compilationHash = stats.hash;
@@ -204,30 +211,34 @@ const runRuntimeCase = async (
     expect(compiledModules.has(join(sourceDir, 'first.js'))).toBe(false);
     expect(compiledModules.has(join(sourceDir, 'second.js'))).toBe(false);
 
-    const firstResponse = await fetch(
-      `http://localhost:${rsbuild.port}/first`,
-      {
-        signal: AbortSignal.any([
-          requestController.signal,
-          AbortSignal.timeout(15_000),
-        ]),
-      },
+    const firstResponses = await Promise.all(
+      Array.from({ length: 3 }, () =>
+        fetch(`http://localhost:${rsbuild.port}/first`, {
+          signal: AbortSignal.any([
+            requestController.signal,
+            AbortSignal.timeout(15_000),
+          ]),
+        }),
+      ),
     );
-    expect(
-      firstResponse.status,
-      firstResponse.ok ? undefined : await firstResponse.text(),
-    ).toBe(200);
-    expect(await firstResponse.json()).toEqual({
-      value: 'first lazy result',
-      entryExecutions: 1,
-      firstExecutions: 1,
-      firstHandlers: 1,
-      firstUpdates: 0,
-      secondExecutions: 0,
-      secondHandlers: 0,
-    });
+    for (const response of firstResponses) {
+      expect(
+        response.status,
+        response.ok ? undefined : await response.text(),
+      ).toBe(200);
+      expect(await response.json()).toEqual({
+        value: 'first lazy result',
+        firstHandlers: 3,
+        entryExecutions: 1,
+        firstExecutions: 1,
+        firstUpdates: 0,
+        secondExecutions: 0,
+        secondHandlers: 0,
+      });
+    }
+    expect(evaluations.firstHandlers).toBe(3);
     expect(runtimeLoads).toBe(1);
-    expect(firstRequests).toBe(1);
+    expect(firstRequests).toBe(3);
     expect(secondRequests).toBe(0);
     expect(compiledModules.has(join(sourceDir, 'first.js'))).toBe(true);
     expect(compiledModules.has(join(sourceDir, 'second.js'))).toBe(false);
@@ -257,7 +268,7 @@ const runRuntimeCase = async (
       value: 'edited lazy result',
       entryExecutions: 1,
       firstExecutions: 1,
-      firstHandlers: 2,
+      firstHandlers: 4,
       firstUpdates: 1,
       secondExecutions: 0,
       secondHandlers: 0,
@@ -278,13 +289,13 @@ const runRuntimeCase = async (
       value: 'second lazy result',
       entryExecutions: 1,
       firstExecutions: 1,
-      firstHandlers: 2,
+      firstHandlers: 4,
       firstUpdates: 1,
       secondExecutions: 1,
       secondHandlers: 1,
     });
     expect(runtimeLoads).toBe(1);
-    expect(firstRequests).toBe(2);
+    expect(firstRequests).toBe(4);
     expect(secondRequests).toBe(1);
     expect(compiledModules.has(join(sourceDir, 'first.js'))).toBe(true);
     expect(compiledModules.has(join(sourceDir, 'second.js'))).toBe(true);
@@ -301,7 +312,7 @@ const runRuntimeCase = async (
   }
 };
 
-test('should resume Node lazy imports in one retained CommonJS runtime', async ({
+test('should resume concurrent and repeated Node lazy imports in one retained CommonJS runtime', async ({
   cwd,
   devOnly,
   copySrcDir,
@@ -314,7 +325,7 @@ test('should resume Node lazy imports in one retained CommonJS runtime', async (
   );
 });
 
-test('should resume Node lazy imports in one retained ES module runtime', async ({
+test('should resume concurrent and repeated Node lazy imports in one retained ES module runtime', async ({
   cwd,
   devOnly,
   copySrcDir,

@@ -1,19 +1,15 @@
 const state = process[__NODE_LAZY_STATE_KEY__];
 state.entryExecutions++;
-let firstPromise;
-let secondPromise;
 
 export const loadFirst = async () => {
   state.firstHandlers++;
-  firstPromise ??= import('./first.js');
-  const { getValue } = await firstPromise;
+  const { getValue } = await import('./first.js');
   return getValue();
 };
 
 export const loadSecond = async () => {
   state.secondHandlers++;
-  secondPromise ??= import('./second.js');
-  const { getValue } = await secondPromise;
+  const { getValue } = await import('./second.js');
   return getValue();
 };
 
