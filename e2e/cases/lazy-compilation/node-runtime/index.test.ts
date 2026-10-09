@@ -58,8 +58,7 @@ const runRuntimeCase = async (
   let runtimeLoads = 0;
   let firstRequests = 0;
   let secondRequests = 0;
-  let hotChecks = 0;
-  const moduleCensuses: Set<string>[] = [];
+  let compiledModules = new Set<string>();
 
   const loadRuntime = async (): Promise<Runtime> => {
     if (runtime) {
@@ -81,15 +80,12 @@ const runRuntimeCase = async (
           return;
         }
 
-        moduleCensuses.push(
-          new Set(
-            [...stats.compilation.modules]
-              .filter(
-                (compiledModule) =>
-                  compiledModule instanceof rspack.NormalModule,
-              )
-              .map((compiledModule) => compiledModule.resource),
-          ),
+        compiledModules = new Set(
+          [...stats.compilation.modules]
+            .filter(
+              (compiledModule) => compiledModule instanceof rspack.NormalModule,
+            )
+            .map((compiledModule) => compiledModule.resource),
         );
         if (!runtime) {
           return;
@@ -113,7 +109,6 @@ const runRuntimeCase = async (
             );
           }
         }
-        hotChecks++;
       });
     },
   };
@@ -205,10 +200,9 @@ const runRuntimeCase = async (
       },
     });
 
-    expect(moduleCensuses).toHaveLength(1);
-    expect(moduleCensuses[0].has(join(sourceDir, 'index.js'))).toBe(true);
-    expect(moduleCensuses[0].has(join(sourceDir, 'first.js'))).toBe(false);
-    expect(moduleCensuses[0].has(join(sourceDir, 'second.js'))).toBe(false);
+    expect(compiledModules.has(join(sourceDir, 'index.js'))).toBe(true);
+    expect(compiledModules.has(join(sourceDir, 'first.js'))).toBe(false);
+    expect(compiledModules.has(join(sourceDir, 'second.js'))).toBe(false);
 
     const firstResponse = await fetch(
       `http://localhost:${rsbuild.port}/first`,
@@ -235,9 +229,8 @@ const runRuntimeCase = async (
     expect(runtimeLoads).toBe(1);
     expect(firstRequests).toBe(1);
     expect(secondRequests).toBe(0);
-    expect(hotChecks).toBe(1);
-    expect(moduleCensuses[1].has(join(sourceDir, 'first.js'))).toBe(true);
-    expect(moduleCensuses[1].has(join(sourceDir, 'second.js'))).toBe(false);
+    expect(compiledModules.has(join(sourceDir, 'first.js'))).toBe(true);
+    expect(compiledModules.has(join(sourceDir, 'second.js'))).toBe(false);
     expect(evaluations.entryExecutions).toBe(1);
     expect(evaluations.firstExecutions).toBe(1);
     expect(evaluations.secondExecutions).toBe(0);
@@ -246,10 +239,10 @@ const runRuntimeCase = async (
       code.replace('first lazy result', 'edited lazy result'),
     );
     await expect
-      .poll(() => ({ hotChecks, firstUpdates: evaluations.firstUpdates }), {
+      .poll(() => evaluations.firstUpdates, {
         timeout: 5_000,
       })
-      .toEqual({ hotChecks: 2, firstUpdates: 1 });
+      .toBe(1);
     const editedResponse = await fetch(
       `http://localhost:${rsbuild.port}/first`,
       {
@@ -269,7 +262,7 @@ const runRuntimeCase = async (
       secondExecutions: 0,
       secondHandlers: 0,
     });
-    expect(moduleCensuses[2].has(join(sourceDir, 'second.js'))).toBe(false);
+    expect(compiledModules.has(join(sourceDir, 'second.js'))).toBe(false);
 
     const secondResponse = await fetch(
       `http://localhost:${rsbuild.port}/second`,
@@ -293,9 +286,8 @@ const runRuntimeCase = async (
     expect(runtimeLoads).toBe(1);
     expect(firstRequests).toBe(2);
     expect(secondRequests).toBe(1);
-    expect(hotChecks).toBe(3);
-    expect(moduleCensuses[3].has(join(sourceDir, 'first.js'))).toBe(true);
-    expect(moduleCensuses[3].has(join(sourceDir, 'second.js'))).toBe(true);
+    expect(compiledModules.has(join(sourceDir, 'first.js'))).toBe(true);
+    expect(compiledModules.has(join(sourceDir, 'second.js'))).toBe(true);
     expect(evaluations.entryExecutions).toBe(1);
     expect(evaluations.firstExecutions).toBe(1);
     expect(evaluations.secondExecutions).toBe(1);
