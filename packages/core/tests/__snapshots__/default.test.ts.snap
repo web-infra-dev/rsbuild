@@ -151,7 +151,7 @@ exports[`should apply default plugins correctly 1`] = `
             "sideEffects": true,
             "use": [
               {
-                "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+                "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
               },
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -723,7 +723,7 @@ exports[`should apply default plugins correctly in production 1`] = `
             "sideEffects": true,
             "use": [
               {
-                "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+                "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
               },
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1891,7 +1891,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "sideEffects": true,
             "use": [
               {
-                "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+                "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
               },
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",

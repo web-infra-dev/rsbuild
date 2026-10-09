@@ -124,7 +124,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "sideEffects": true,
               "use": [
                 {
-                  "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+                  "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
                 },
                 {
                   "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",

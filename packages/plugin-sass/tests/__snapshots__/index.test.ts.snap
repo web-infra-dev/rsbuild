@@ -130,7 +130,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
         "sideEffects": true,
         "use": [
           {
-            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -519,7 +519,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
         "sideEffects": true,
         "use": [
           {
-            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -711,7 +711,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
         "sideEffects": true,
         "use": [
           {
-            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",

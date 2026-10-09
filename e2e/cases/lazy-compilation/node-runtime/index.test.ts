@@ -1,10 +1,10 @@
+import { randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 import { type Dev, expect, test } from '@e2e/helper';
 import { type RsbuildPlugin, rspack } from '@rsbuild/core';
-import { waitFor } from '@rstackjs/test-utils';
 
 type RuntimeResult = {
   value: string;
@@ -40,9 +40,10 @@ const runRuntimeCase = async (
   },
   { module, extension }: { module: boolean; extension: 'cjs' | 'mjs' },
 ) => {
-  const outputPath = join(cwd, 'dist', extension, `index.${extension}`);
+  const outputDir = `dist/${extension}-${randomUUID()}`;
+  const outputPath = join(cwd, outputDir, `index.${extension}`);
   const nativeRequire = createRequire(import.meta.url);
-  const stateKey = `rsbuild-node-lazy:${cwd}:${extension}`;
+  const stateKey = `rsbuild-node-lazy:${outputPath}`;
   const evaluations: Omit<RuntimeResult, 'value'> = {
     entryExecutions: 0,
     firstExecutions: 0,
@@ -172,7 +173,7 @@ const runRuntimeCase = async (
           assetPrefix: module ? 'auto' : undefined,
           cleanDistPath: true,
           distPath: {
-            root: `dist/${extension}`,
+            root: outputDir,
             js: '',
           },
           filename: {
@@ -218,7 +219,10 @@ const runRuntimeCase = async (
         ]),
       },
     );
-    expect(firstResponse.status).toBe(200);
+    expect(
+      firstResponse.status,
+      firstResponse.ok ? undefined : await firstResponse.text(),
+    ).toBe(200);
     expect(await firstResponse.json()).toEqual({
       value: 'first lazy result',
       entryExecutions: 1,
@@ -241,7 +245,11 @@ const runRuntimeCase = async (
     await editFile(join(sourceDir, 'value.js'), (code) =>
       code.replace('first lazy result', 'edited lazy result'),
     );
-    await waitFor(() => hotChecks === 2 && evaluations.firstUpdates === 1);
+    await expect
+      .poll(() => ({ hotChecks, firstUpdates: evaluations.firstUpdates }), {
+        timeout: 5_000,
+      })
+      .toEqual({ hotChecks: 2, firstUpdates: 1 });
     const editedResponse = await fetch(
       `http://localhost:${rsbuild.port}/first`,
       {
@@ -342,3 +350,16 @@ for (const mode of ['production', 'none'] as const) {
     ).rejects.toThrow('Node lazy compilation requires mode: "development"');
   });
 }
+
+test('should isolate a fresh CommonJS runtime from previously loaded chunks', async ({
+  cwd,
+  devOnly,
+  copySrcDir,
+  editFile,
+}) => {
+  const sourceDir = await copySrcDir();
+  await runRuntimeCase(
+    { cwd, devOnly, sourceDir, editFile },
+    { module: false, extension: 'cjs' },
+  );
+});

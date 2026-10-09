@@ -112,7 +112,7 @@ exports[`plugin-less > should add less-loader 1`] = `
         "sideEffects": true,
         "use": [
           {
-            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -447,7 +447,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
         "sideEffects": true,
         "use": [
           {
-            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -610,7 +610,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
         "sideEffects": true,
         "use": [
           {
-            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -787,7 +787,7 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
         "sideEffects": true,
         "use": [
           {
-            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
