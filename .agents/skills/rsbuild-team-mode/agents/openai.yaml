@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Rsbuild team mode'
+  short_description: 'Apply evidence-backed Rsbuild contributor conventions'
+  default_prompt: 'Use $rsbuild-team-mode to implement or review this Rsbuild change.'
