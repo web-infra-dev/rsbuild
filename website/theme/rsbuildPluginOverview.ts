@@ -4,7 +4,7 @@ import type { RsbuildPlugin } from 'rstack/app';
 import type { Group } from './components/Overview';
 
 const camelCase = (input: string): string =>
-  input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
+  input.replace(/[-_](\w)/g, (_, c: string) => c.toUpperCase());
 
 export const rsbuildPluginOverview: RsbuildPlugin = {
   name: 'rsbuild-doc:overview',
