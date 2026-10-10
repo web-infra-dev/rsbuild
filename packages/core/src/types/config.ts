@@ -2075,6 +2075,17 @@ export type LiveReload =
       html?: boolean;
     };
 
+export type LazyCompilationOptions = Rspack.LazyCompilationOptions & {
+  /**
+   * Enable lazy compilation for a Node target.
+   *
+   * The caller must load the emitted bundle once and apply hot updates to that
+   * retained runtime after successful compilations.
+   * @default false
+   */
+  node?: boolean;
+};
+
 export interface DevConfig {
   /**
    * Controls whether to forward browser runtime errors to the terminal. When `true`, the dev
@@ -2165,7 +2176,7 @@ export interface DevConfig {
    * Enable lazy compilation (compilation on demand).
    * @default { imports: true, entries: false }
    */
-  lazyCompilation?: boolean | Rspack.LazyCompilationOptions;
+  lazyCompilation?: boolean | LazyCompilationOptions;
 }
 
 export type NormalizedDevConfig = Omit<DevConfig, 'watchFiles'> &

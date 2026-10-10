@@ -32,7 +32,7 @@ catalog:
   '@rsbuild/plugin-check-syntax': '^2.0.1'
   '@rsbuild/plugin-rem': '^1.0.6'
   '@rsbuild/plugin-type-check': '^1.6.0'
-  '@rspack/core': '~2.2.8'
+  '@rspack/core': 'npm:@rspack-canary/core@2.2.9-canary-a9cfd15e-20261009001219'
   '@rspack/plugin-preact-refresh': '^2.0.1'
   '@rspack/plugin-react-refresh': '^2.0.2'
   '@rspress/core': '^2.0.23'
@@ -171,6 +171,7 @@ hoistPattern: []
 # Reduce the risk of installing compromised packages
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
+  - '@rspack-canary/*'
   - 'html-rspack-plugin@6.1.11'
   - 'path-serializer@0.7.0'
   - '@rspack/*'

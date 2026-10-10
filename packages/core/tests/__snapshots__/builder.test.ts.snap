@@ -128,7 +128,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "sideEffects": true,
             "use": [
               {
-                "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+                "loader": "<PNPM_INNER>/@rspack-canary/core/dist/cssExtractLoader.js",
               },
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",

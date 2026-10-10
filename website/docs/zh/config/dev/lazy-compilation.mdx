@@ -35,6 +35,12 @@ type LazyCompilationOptions =
        * @default "/lazy-compilation-using-"
        */
       prefix?: string;
+      /**
+       * 为 Node 目标启用 lazy compilation
+       * 应用需要保留并更新输出的 runtime
+       * @default false
+       */
+      node?: boolean;
     };
 ```
 
@@ -63,7 +69,7 @@ Lazy compilation 仅在开发阶段有效，对于生产构建不会产生影响
 
 ### 启用 Lazy compilation
 
-Rsbuild 已经默认开启了 `imports` 选项，即 lazy 编译动态引入的模块。
+对于 web 目标，Rsbuild 默认开启 `imports` 选项，即 lazy 编译动态引入的模块。
 
 将 `lazyCompilation` 设置为 `true` 即可开启完整的 lazy compilation 功能：
 
@@ -142,7 +148,7 @@ export default {
 
 通过 [lazyCompilation.serverUrl](https://rspack.rs/zh/config/lazy-compilation#serverurl) 可以指定 client 需要请求的 server URL。
 
-如果未显式配置 `lazyCompilation.serverUrl`，Rsbuild 会在同时满足以下条件时，根据 [dev.client](/config/dev/client) 推导默认的 `serverUrl`：
+对于 web 目标，如果未显式配置 `lazyCompilation.serverUrl`，Rsbuild 会在同时满足以下条件时，根据 [dev.client](/config/dev/client) 推导默认的 `serverUrl`：
 
 - [dev.assetPrefix](/config/dev/asset-prefix) 为 `true` 或绝对 URL。
 - 配置了 [dev.client.host](/config/dev/client#host) 或 [dev.client.port](/config/dev/client#port)。
@@ -166,6 +172,57 @@ export default {
 :::tip
 Rsbuild 会自动将 `<port>` 占位符替换为 server 实际监听的端口号。
 :::
+
+### Node 目标
+
+Node 目标默认立即编译。设置 `dev.lazyCompilation.node: true` 可延迟编译动态导入的模块。布尔值 `true` 和未设置 `node: true` 的配置仍仅作用于浏览器目标。Node 入口始终立即编译，设置 `entries: true` 会报错。Node lazy compilation 要求 `mode: 'development'` 和 `dev.hmr: true`。其他模式会报错，因为热更新必须保留运行时实例。
+
+例如，为应用自行管理的原生 runtime 配置 ES module bundle：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    module: true,
+    filename: {
+      js: '[name].mjs',
+    },
+  },
+  dev: {
+    writeToDisk: true,
+    lazyCompilation: { node: true },
+  },
+  tools: {
+    rspack: {
+      output: { publicPath: 'auto' },
+    },
+  },
+};
+```
+
+应用或框架负责 runtime 的生命周期：
+
+- 使用原生 `import()` 或 `require()` 加载一次输出的入口，并在 lazy import 等待期间保留该 runtime。
+- 从入口暴露调用 `import.meta.webpackHot.check(true)` 或 `module.hot.check(true)` 的接口。在编译成功、更新文件可用后调用该接口。按顺序应用待处理的更新，直到运行时的 `__webpack_hash__` 与成功编译的 hash 一致。Rsbuild 会安装 HMR 插件，但不会主动执行 hot check。
+- 处理更新失败，并在关闭时释放 runtime、请求和 server。应用需要自行恢复 runtime 无法接受的更新。
+
+原生 runtime 需要访问输出的 chunk 和 hot-update 文件。示例将这些文件写入磁盘，并通过 `publicPath: 'auto'` 让 ESM hot update 相对于输出目录解析。在 `"type": "module"` 的 package 中使用 CommonJS 输出时，应为 bundle 和异步 chunk 设置 `.cjs` 文件名，并将 `tools.rspack.output.hotUpdateChunkFilename` 设置为 `'[id].[fullhash].hot-update.cjs'`。
+
+Node 激活端点默认使用 dev server 的协议、主机和实际端口生成绝对 HTTP(S) URL，不受 `dev.client` 配置影响。显式设置的 HTTP(S) `serverUrl` 优先，并支持 `<port>`。使用外部托管的 dev middleware 时，应将 `serverUrl` 设置为可访问的宿主端点。
+
+Runtime 的管理方还需要定义由哪个模块接受更新。模块接受自身更新时不会通知父模块，因此先前返回的模块引用可能保持不变。Lazy boundary 可以接受静态依赖的更新，并通过 getter 读取更新后的 binding：
+
+```js title="src/boundary.js"
+import { value } from './value.js';
+
+export const getValue = () => value;
+
+import.meta.webpackHot.accept('./value.js', () => {});
+```
+
+入口可以只 lazy 导入一次该 boundary，并在更新后调用 `getValue()`。发生变化的 `value.js` 模块需要将更新传播到 boundary，而不是接受自身更新。
+
+Rsbuild 不会保留或热更新 `environment.loadBundle` 创建的 runtime。Node 输出仍不通过 HTTP 提供为静态资源。框架需要协调接受更新的模块边界、路由 manifest、loader 更新与保留的 runtime。
 
 ## 版本历史
 

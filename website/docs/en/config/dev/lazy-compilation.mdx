@@ -35,6 +35,12 @@ type LazyCompilationOptions =
        * @default "/lazy-compilation-using-"
        */
       prefix?: string;
+      /**
+       * Enable lazy compilation for Node targets.
+       * The application must retain and update the emitted runtime.
+       * @default false
+       */
+      node?: boolean;
     };
 ```
 
@@ -63,7 +69,7 @@ Lazy compilation is only effective for dev builds and does not affect production
 
 ### Enable lazy compilation
 
-By default, Rsbuild already enables `imports` option, which means lazy compilation of dynamic imported modules.
+For web targets, Rsbuild enables the `imports` option by default, which means lazy compilation of dynamically imported modules.
 
 To enable full lazy compilation functionality, set `lazyCompilation` option to `true`:
 
@@ -142,7 +148,7 @@ When the `imports` option is enabled, all async modules will only be compiled wh
 
 Use [lazyCompilation.serverUrl](https://rspack.rs/config/lazy-compilation#serverurl) to tell the client the server URL that needs to be requested.
 
-If `lazyCompilation.serverUrl` is not explicitly configured, Rsbuild derives the default `serverUrl` from [dev.client](/config/dev/client) when both of the following conditions are met:
+For web targets, if `lazyCompilation.serverUrl` is not explicitly configured, Rsbuild derives the default `serverUrl` from [dev.client](/config/dev/client) when both of the following conditions are met:
 
 - [dev.assetPrefix](/config/dev/asset-prefix) is `true` or an absolute URL.
 - [dev.client.host](/config/dev/client#host) or [dev.client.port](/config/dev/client#port) is configured.
@@ -166,6 +172,57 @@ export default {
 :::tip
 Rsbuild will replace the `<port>` placeholder with the actual port number the server is listening on.
 :::
+
+### Node targets
+
+Node targets compile eagerly by default. Set `dev.lazyCompilation.node: true` to defer dynamic imports. Boolean `true` and options without `node: true` remain browser-only. Node entries stay eager, and `entries: true` is rejected. Node lazy compilation requires `mode: 'development'` and `dev.hmr: true`. Other modes are rejected because hot updates must preserve the retained runtime.
+
+For example, configure an ES module bundle for an application-owned native runtime:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    module: true,
+    filename: {
+      js: '[name].mjs',
+    },
+  },
+  dev: {
+    writeToDisk: true,
+    lazyCompilation: { node: true },
+  },
+  tools: {
+    rspack: {
+      output: { publicPath: 'auto' },
+    },
+  },
+};
+```
+
+The application or framework owns the runtime lifecycle:
+
+- Load the emitted entry once with native `import()` or `require()` and retain that runtime while a lazy import is pending.
+- Expose a bridge from the entry that calls `import.meta.webpackHot.check(true)` or `module.hot.check(true)`. Invoke it after a successful compilation, when the update files are available. Apply pending revisions sequentially until the runtime's `__webpack_hash__` matches the successful compilation's hash. Rsbuild installs the HMR plugin but does not drive hot checks.
+- Handle update failures and dispose of the runtime, requests, and server on shutdown. An update that the runtime cannot accept requires recovery by the application.
+
+Native runtimes need access to emitted chunks and hot-update files. The example writes them to disk and uses `publicPath: 'auto'` so ESM hot updates resolve relative to the output. For CommonJS output inside a package with `"type": "module"`, use `.cjs` bundle and async chunk filenames, and set `tools.rspack.output.hotUpdateChunkFilename` to `'[id].[fullhash].hot-update.cjs'`.
+
+The Node activation endpoint defaults to an absolute HTTP(S) URL from the dev server's protocol, host, and actual port. It does not use `dev.client` overrides. An explicit HTTP(S) `serverUrl` takes precedence and supports `<port>`. With externally hosted dev middleware, set `serverUrl` to the reachable host endpoint.
+
+The runtime owner must also define which module accepts an update. A self-accepted module does not notify its parents, so previously returned module references can stay unchanged. A lazy boundary can accept a static dependency and expose a getter that reads the updated binding:
+
+```js title="src/boundary.js"
+import { value } from './value.js';
+
+export const getValue = () => value;
+
+import.meta.webpackHot.accept('./value.js', () => {});
+```
+
+An entry can lazily import this boundary once and call `getValue()` after an update. The changing `value.js` module must let the update propagate to the boundary instead of accepting itself.
+
+Rsbuild does not retain or hot update runtimes created by `environment.loadBundle`. Node output remains excluded from HTTP asset serving. Frameworks must coordinate their acceptance boundaries, route manifests, and loader updates with the retained runtime.
 
 ## Version history
 

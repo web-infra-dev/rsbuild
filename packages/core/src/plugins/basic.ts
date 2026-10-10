@@ -1,4 +1,5 @@
 import type { RsbuildPlugin } from '../types';
+import { isNodeLazyCompilationEnabled } from './lazyCompilation';
 
 /**
  * Set some basic Rspack configs
@@ -48,7 +49,13 @@ export const pluginBasic = (): RsbuildPlugin => ({
             .moduleIds('compact-hashed');
         }
 
-        const usingHMR = isDev && config.dev.hmr && target === 'web';
+        const usingHMR =
+          isDev &&
+          config.dev.hmr &&
+          (target === 'web' ||
+            (api.context.action === 'dev' &&
+              target === 'node' &&
+              isNodeLazyCompilationEnabled(config.dev.lazyCompilation)));
 
         if (usingHMR) {
           chain
