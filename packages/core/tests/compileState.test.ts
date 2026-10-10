@@ -9,11 +9,10 @@ test('should resolve environment stats independently', async () => {
   const nodeStats = createStats('node');
 
   const webPromise = compileState.wait(0);
-  const nodePromise = compileState.wait(1);
-
   let nodeResolved = false;
-  nodePromise.then(() => {
+  const nodePromise = compileState.wait(1).then((stats) => {
     nodeResolved = true;
+    return stats;
   });
 
   compileState.done(0, webStats);
@@ -38,10 +37,10 @@ test('should wait for the next stats after resetting an environment', async () =
 
   compileState.reset(0);
 
-  const nextPromise = compileState.wait(0);
   let resolved = false;
-  nextPromise.then(() => {
+  const nextPromise = compileState.wait(0).then((stats) => {
     resolved = true;
+    return stats;
   });
 
   await Promise.resolve();
@@ -60,10 +59,10 @@ test('should not resolve pending waiters with stale stats during repeated resets
   compileState.done(0, previousStats);
   compileState.reset(0);
 
-  const nextPromise = compileState.wait(0);
   let resolvedStats: Rspack.Stats | undefined;
-  nextPromise.then((stats) => {
+  const nextPromise = compileState.wait(0).then((stats) => {
     resolvedStats = stats;
+    return stats;
   });
 
   compileState.reset(0);
