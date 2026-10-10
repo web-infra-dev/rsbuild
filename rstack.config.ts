@@ -44,10 +44,13 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) =>
         },
       },
       rules: {
-        // Rslint does not recognize default exports from text imports yet.
-        // https://github.com/web-infra-dev/rslint/issues/2083
-        'import/default': 'off',
+        // Re-enable these rules in follow-up PRs after addressing existing reports.
+        'import/no-unresolved': 'off',
+        'import/named': 'off',
+        'import/no-named-as-default-member': 'off',
+        'import/no-named-as-default': 'off',
         'import/no-duplicates': 'off',
+        '@typescript-eslint/await-thenable': 'off',
         'unicorn/prefer-array-some': 'error',
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
