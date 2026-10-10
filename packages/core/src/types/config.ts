@@ -679,6 +679,31 @@ export type BuildCacheOptions = {
   buildDependencies?: string[];
 };
 
+export type BuildCacheDiagnostics = {
+  environment: string;
+  isFirstCompile: boolean;
+  isWatch: boolean;
+  time: number;
+  mode: 'disabled' | 'memory' | 'persistent' | 'unknown';
+  configuration: {
+    name?: string;
+    version?: string;
+    storage: { type: 'filesystem'; directory?: string; location?: string };
+    buildDependencies: string[] | Record<string, string[]>;
+    maxAge?: number;
+    maxMemoryGenerations?: number;
+    portable?: boolean;
+    readonly?: boolean;
+  } | null;
+  persistent: {
+    status: 'cold' | 'valid' | 'invalidated' | 'error' | 'unknown';
+    reason: 'version' | 'buildDependencies' | 'recovery' | null;
+  } | null;
+  moduleBuilds: { reused: number; total: number } | null;
+  logs: { type: string; message: string }[];
+  statsError: string | null;
+};
+
 export type PrintFileSizeAsset = {
   /**
    * The name of the asset.
@@ -825,6 +850,13 @@ export interface PerformanceConfig {
    * @default false
    */
   buildCache?: BuildCacheOptions | boolean;
+
+  /**
+   * Receive persistent-cache diagnostics after each environment compilation.
+   */
+  buildCacheDiagnostics?: (
+    diagnostics: BuildCacheDiagnostics,
+  ) => MaybePromise<void>;
 
   /**
    * Whether to print the file sizes after production build.
