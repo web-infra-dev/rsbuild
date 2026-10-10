@@ -1,4 +1,5 @@
 import { define } from 'rstack';
+import { defineConfig } from 'rstack/lint';
 import skillsLock from './skills-lock.json' with { type: 'json' };
 
 define.fmt({
@@ -22,51 +23,63 @@ define.staged({
   '*.{js,jsx,ts,tsx,mjs,cjs}': ['rs lint --type-check', 'rs fmt'],
 });
 
-define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
-  globalIgnores([
-    'e2e/cases/browser-logs/skip-build-error/src/index.js',
-    'e2e/cases/wasm/wasm-source-import/src/index.js',
-  ]),
-  js.configs.recommended,
-  importPlugin.configs.recommended,
-  ts.configs.recommendedTypeChecked,
-  {
-    files: ['**/*.test.{ts,tsx}'],
-    ...rstestPlugin.configs.recommended,
-  },
-  {
-    plugins: ['unicorn'],
-    languageOptions: {
-      parserOptions: {
-        project: [
-          './packages/*/tsconfig.json',
-          './scripts/*/tsconfig.json',
-          './examples/*/tsconfig.json',
-          './e2e/tsconfig.json',
-          './e2e/type-tests/*/tsconfig.json',
-        ],
+define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) =>
+  defineConfig([
+    globalIgnores([
+      'e2e/cases/browser-logs/skip-build-error/src/index.js',
+      'e2e/cases/wasm/wasm-source-import/src/index.js',
+    ]),
+    js.configs.recommended,
+    importPlugin.configs.recommended,
+    ts.configs.recommendedTypeChecked,
+    {
+      files: ['**/*.test.{ts,tsx}'],
+      ...rstestPlugin.configs.recommended,
+    },
+    {
+      plugins: ['unicorn'],
+      languageOptions: {
+        parserOptions: {
+          projectService: true,
+        },
+      },
+      rules: {
+        // Rslint does not recognize default exports from text imports yet.
+        // https://github.com/web-infra-dev/rslint/issues/2083
+        'import/default': 'off',
+        'import/no-duplicates': 'off',
+        'unicorn/prefer-array-some': 'error',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
       },
     },
-    rules: {
-      // Rslint does not recognize default exports from text imports yet.
-      // https://github.com/web-infra-dev/rslint/issues/2083
-      'import/default': 'off',
-      'import/no-duplicates': 'off',
-      'unicorn/prefer-array-some': 'error',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-    },
-  },
-  {
-    // Templates lack installed dependencies, and e2e sources include intentional
-    // syntax fixtures. Keep ordinary lint rules without requiring type information.
-    files: ['packages/create-rsbuild/template-*/**', 'e2e/cases/**/src/**'],
-    languageOptions: {
-      parserOptions: {
-        projectService: false,
-        project: false,
+    {
+      // Test runners use the shared e2e project, not nearby fixture tsconfigs.
+      files: ['e2e/**/*.test.ts', 'e2e/**/*.config.ts', 'e2e/helper/**/*.ts'],
+      languageOptions: {
+        parserOptions: {
+          projectService: false,
+          project: './e2e/tsconfig.json',
+        },
       },
     },
-  },
-]);
+    {
+      // Templates lack installed dependencies, and e2e sources include intentional
+      // syntax fixtures. Keep ordinary lint rules without requiring type information.
+      files: ['packages/create-rsbuild/template-*/**', 'e2e/cases/**/src/**'],
+      languageOptions: {
+        parserOptions: {
+          projectService: false,
+          project: false,
+        },
+      },
+    },
+  ])
+    .flat()
+    .map((config) => ({
+      ...config,
+      // Resolve lint globs and project paths from the repository in every invocation.
+      basePath: import.meta.dirname,
+    })),
+);
