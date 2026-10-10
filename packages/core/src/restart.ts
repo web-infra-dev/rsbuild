@@ -179,7 +179,11 @@ export function watchFilesForRestart({
     if (!closePromise) {
       closePromise = watchersPromise
         .then((watchers) =>
-          Promise.all(watchers.map((watcher) => watcher?.close())),
+          Promise.all(
+            watchers
+              .filter((watcher) => watcher !== undefined)
+              .map((watcher) => watcher.close()),
+          ),
         )
         .then(() => {});
     }
