@@ -49,7 +49,6 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
       'import/no-unresolved': 'off',
       'import/named': 'off',
       'import/no-named-as-default-member': 'off',
-      'import/no-named-as-default': 'off',
       'import/no-duplicates': 'off',
       '@typescript-eslint/await-thenable': 'off',
       'unicorn/prefer-array-some': 'error',
