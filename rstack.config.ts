@@ -42,6 +42,9 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
       },
     },
     rules: {
+      // Explicit exports overriding star exports are incorrectly reported as duplicates.
+      // https://github.com/web-infra-dev/rslint/issues/2409
+      'import/export': 'off',
       // Re-enable these rules in follow-up PRs after addressing existing reports.
       'import/no-unresolved': 'off',
       'import/named': 'off',
