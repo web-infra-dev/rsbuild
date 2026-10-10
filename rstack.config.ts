@@ -28,8 +28,8 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
     'e2e/cases/wasm/wasm-source-import/src/index.js',
   ]),
   js.configs.recommended,
-  importPlugin.configs.recommended,
   ts.configs.recommendedTypeChecked,
+  importPlugin.configs.recommended,
   {
     files: ['**/*.test.{ts,tsx}'],
     ...rstestPlugin.configs.recommended,
@@ -38,16 +38,13 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
     plugins: ['unicorn'],
     languageOptions: {
       parserOptions: {
-        project: [
-          './packages/*/tsconfig.json',
-          './scripts/*/tsconfig.json',
-          './examples/*/tsconfig.json',
-          './e2e/tsconfig.json',
-          './e2e/type-tests/*/tsconfig.json',
-        ],
+        projectService: true,
       },
     },
     rules: {
+      // Explicit exports overriding star exports are incorrectly reported as duplicates.
+      // https://github.com/web-infra-dev/rslint/issues/2409
+      'import/export': 'off',
       // Re-enable these rules in follow-up PRs after addressing existing reports.
       'import/no-unresolved': 'off',
       'import/named': 'off',
@@ -68,7 +65,6 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
     languageOptions: {
       parserOptions: {
         projectService: false,
-        project: false,
       },
     },
   },

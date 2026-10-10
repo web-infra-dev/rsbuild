@@ -4,5 +4,5 @@
     "jsx": "react-jsx",
     "outDir": "dist"
   },
-  "include": ["src", "index.test.ts"]
+  "include": ["src"]
 }
