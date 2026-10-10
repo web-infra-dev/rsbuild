@@ -58,4 +58,15 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
+  {
+    // Templates lack installed dependencies, and e2e sources include intentional
+    // syntax fixtures. Keep ordinary lint rules without requiring type information.
+    files: ['packages/create-rsbuild/template-*/**', 'e2e/cases/**/src/**'],
+    languageOptions: {
+      parserOptions: {
+        projectService: false,
+        project: false,
+      },
+    },
+  },
 ]);
