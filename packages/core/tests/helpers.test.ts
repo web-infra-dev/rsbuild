@@ -330,7 +330,7 @@ describe('relativeWithin', () => {
   });
 });
 
-test('should dedupeNestedPaths correctly', async () => {
+test('should dedupeNestedPaths correctly', () => {
   expect(
     dedupeNestedPaths([
       'package/to/root/dist/web1',

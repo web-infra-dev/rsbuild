@@ -1,6 +1,10 @@
 import { join } from 'node:path';
 import { matchPlugin } from '@scripts/test-helper';
-import { createRsbuild, type RsbuildPlugin } from '../src';
+import {
+  createRsbuild,
+  type RsbuildPlugin,
+  type RsbuildPluginAPI,
+} from '../src';
 
 describe('environment config', () => {
   it('should normalize context correctly', async () => {
@@ -438,7 +442,7 @@ describe('environment config', () => {
         plugins: [
           {
             name: 'global-provider',
-            setup(api) {
+            setup(api: RsbuildPluginAPI) {
               api.expose('test-api', 'global');
             },
           },
@@ -449,7 +453,7 @@ describe('environment config', () => {
             plugins: [
               {
                 name: 'web-provider',
-                setup(api) {
+                setup(api: RsbuildPluginAPI) {
                   api.expose('test-api', 'web', { environment: 'web' });
                 },
               },

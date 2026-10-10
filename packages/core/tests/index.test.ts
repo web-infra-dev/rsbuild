@@ -1,6 +1,6 @@
 import { createLogger, logger, version } from '../src';
 
-it('should export current Rsbuild version', async () => {
+it('should export current Rsbuild version', () => {
   expect(typeof version).toEqual('string');
 });
 
