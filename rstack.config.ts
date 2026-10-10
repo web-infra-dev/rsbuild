@@ -58,19 +58,11 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) =>
       },
     },
     {
-      // Test runners use the shared e2e project, not nearby fixture tsconfigs.
-      files: ['e2e/**/*.test.ts', 'e2e/**/*.config.ts', 'e2e/helper/**/*.ts'],
-      languageOptions: {
-        parserOptions: {
-          projectService: false,
-          project: './e2e/tsconfig.json',
-        },
-      },
-    },
-    {
       // Templates lack installed dependencies, and e2e sources include intentional
       // syntax fixtures. Keep ordinary lint rules without requiring type information.
       files: ['packages/create-rsbuild/template-*/**', 'e2e/cases/**/src/**'],
+      // This source is explicitly included in the shared e2e TypeScript project.
+      ignores: ['e2e/cases/javascript-api/server-custom-message/src/**/*.ts'],
       languageOptions: {
         parserOptions: {
           projectService: false,
