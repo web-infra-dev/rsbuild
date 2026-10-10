@@ -28,8 +28,8 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
     'e2e/cases/wasm/wasm-source-import/src/index.js',
   ]),
   js.configs.recommended,
-  importPlugin.configs.recommended,
   ts.configs.recommendedTypeChecked,
+  importPlugin.configs.recommended,
   {
     files: ['**/*.test.{ts,tsx}'],
     ...rstestPlugin.configs.recommended,
