@@ -1,4 +1,4 @@
-import { createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type RsbuildPluginAPI } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
 import { modifyBabelLoaders, pluginBabel } from '../src';
 
@@ -161,7 +161,7 @@ describe('plugins/babel', () => {
           pluginBabel({ include: /standalone/ }),
           {
             name: 'test:modify-babel-loaders',
-            setup(api) {
+            setup(api: RsbuildPluginAPI) {
               api.modifyBundlerChain((chain, { CHAIN_ID }) => {
                 chain.module.rules
                   .get(CHAIN_ID.RULE.JS_DATA_URI)
