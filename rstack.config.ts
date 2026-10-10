@@ -45,12 +45,12 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
       // Explicit exports overriding star exports are incorrectly reported as duplicates.
       // https://github.com/web-infra-dev/rslint/issues/2409
       'import/export': 'off',
+      // Distinct .js and .ts files are incorrectly reported as duplicate imports.
+      // https://github.com/web-infra-dev/rslint/issues/2410
+      'import/no-duplicates': 'off',
       // Re-enable these rules in follow-up PRs after addressing existing reports.
       'import/no-unresolved': 'off',
-      'import/named': 'off',
       'import/no-named-as-default-member': 'off',
-      'import/no-duplicates': 'off',
-      '@typescript-eslint/await-thenable': 'off',
       'unicorn/prefer-array-some': 'error',
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',

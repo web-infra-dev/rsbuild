@@ -393,6 +393,7 @@ async function printFileSizes(
       }
     }
 
+    // rslint-disable-next-line @typescript-eslint/await-thenable -- Only compressed assets require asynchronous formatting.
     return (await Promise.all(formattedAssets)).sort((a, b) => a.size - b.size);
   };
 
