@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import type { ManifestData } from '@rsbuild/core';
 import { getFileContent } from '@rstackjs/test-utils';
 
 test('should generate manifest file when target is node', async ({ build }) => {
@@ -8,7 +9,7 @@ test('should generate manifest file when target is node', async ({ build }) => {
 
   expect(manifestContent).toBeDefined();
 
-  const manifest = JSON.parse(manifestContent);
+  const manifest = JSON.parse(manifestContent) as ManifestData;
   expect(manifest.allFiles).toEqual(['/index.js']);
 
   expect(manifest.entries.index).toMatchObject({

@@ -465,8 +465,8 @@ export const getPort = async ({
           server.close(resolve);
         });
       });
-    } catch (e: any) {
-      if (e.code !== 'EADDRINUSE') {
+    } catch (e) {
+      if (!(e instanceof Error) || !('code' in e) || e.code !== 'EADDRINUSE') {
         throw e;
       }
       port++;

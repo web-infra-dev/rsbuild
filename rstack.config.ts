@@ -52,7 +52,6 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
       'import/no-unresolved': 'off',
       'import/no-named-as-default-member': 'off',
       'unicorn/prefer-array-some': 'error',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
     },

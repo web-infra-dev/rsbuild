@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import type { ManifestData } from '@rsbuild/core';
 import { getFileContent } from '@rstackjs/test-utils';
 
 test('should allow to filter files in manifest', async ({ build }) => {
@@ -17,7 +18,7 @@ test('should allow to filter files in manifest', async ({ build }) => {
   const files = rsbuild.getDistFiles();
 
   const manifestContent = getFileContent(files, 'manifest.json');
-  const manifest = JSON.parse(manifestContent);
+  const manifest = JSON.parse(manifestContent) as ManifestData;
 
   // index.js
   expect(manifest.allFiles).toHaveLength(1);
@@ -45,7 +46,7 @@ test('should allow to include license files in manifest', async ({ build }) => {
   const files = rsbuild.getDistFiles();
 
   const manifestContent = getFileContent(files, 'manifest.json');
-  const manifest = JSON.parse(manifestContent);
+  const manifest = JSON.parse(manifestContent) as ManifestData;
 
   expect(manifest.allFiles).toHaveLength(3);
 

@@ -135,7 +135,9 @@ test('should generate source map correctly in dev', async ({ dev }) => {
   const rsbuild = await dev();
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMap = JSON.parse(getFileContent(files, '.js.map'));
+  const jsMap = JSON.parse(
+    getFileContent(files, '.js.map'),
+  ) as Rspack.RawSourceMap;
   expect(jsMap.sources.length).toBeGreaterThan(1);
   expect(jsMap.file).toEqual('static/js/index.js');
   expect(jsMap.sourcesContent).toContain(
