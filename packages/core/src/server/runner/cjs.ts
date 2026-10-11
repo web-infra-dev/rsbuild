@@ -85,7 +85,7 @@ export class CommonJsRunner extends BasicRunner {
   }
 
   protected createCjsRequirer(): RunnerRequirer {
-    const requireCache: Record<string, ModuleObject> = Object.create(null);
+    const requireCache = Object.create(null) as Record<string, ModuleObject>;
     // rslint-disable-next-line @typescript-eslint/no-require-imports
     const vm = require('node:vm') as typeof import('node:vm');
     let cachedDynamicImport:

@@ -111,10 +111,13 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
         : typeof publicPath === 'string'
           ? getPublicPathForExtract(publicPath)
           : publicPath;
-    const moduleExports = await this.importModule(`!!${remainingRequest}`, {
-      publicPath: publicPathForExtract,
-      baseUri: `${BASE_URI}/`,
-    });
+    const moduleExports: unknown = await this.importModule(
+      `!!${remainingRequest}`,
+      {
+        publicPath: publicPathForExtract,
+        baseUri: `${BASE_URI}/`,
+      },
+    );
     const content = getCSSContent(moduleExports)
       .replaceAll(ABSOLUTE_PUBLIC_PATH, '')
       .replaceAll(SINGLE_DOT_PATH_SEGMENT, '.');
