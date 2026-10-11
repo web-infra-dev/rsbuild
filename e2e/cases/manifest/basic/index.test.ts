@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import type { ManifestData } from '@rsbuild/core';
 import { getFileContent } from '@rstackjs/test-utils';
 
 test('should generate manifest file in output', async ({ build }) => {
@@ -18,7 +19,7 @@ test('should generate manifest file in output', async ({ build }) => {
 
   expect(manifestContent).toBeDefined();
 
-  const manifest = JSON.parse(manifestContent);
+  const manifest = JSON.parse(manifestContent) as ManifestData;
 
   // index.js, index.html
   expect(manifest.allFiles).toHaveLength(2);

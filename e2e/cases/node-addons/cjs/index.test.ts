@@ -17,7 +17,9 @@ test('should compile Node addons correctly for CJS output', async ({
 
   // the `test.darwin.node` is only compatible with darwin
   if (process.platform === 'darwin') {
-    const { addon } = require('./dist/index.cjs');
+    const { addon } = require('./dist/index.cjs') as {
+      addon: { readLength: unknown };
+    };
     expect(typeof addon.readLength).toEqual('function');
   }
 });
@@ -58,7 +60,9 @@ test('should compile Node addons in the node_modules for CJS output', async ({
   expect(fs.existsSync(addonFile)).toBeTruthy();
 
   if (process.platform === 'darwin') {
-    const { addon } = require('./dist/index.cjs');
+    const { addon } = require('./dist/index.cjs') as {
+      addon: { readLength: unknown };
+    };
     expect(typeof addon.readLength).toEqual('function');
   }
 });

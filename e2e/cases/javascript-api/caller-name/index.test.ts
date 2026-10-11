@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import type { RsbuildPluginAPI } from '@rsbuild/core';
 
 test('should allow to set caller name and use it in plugins', async ({
   build,
@@ -10,7 +11,7 @@ test('should allow to set caller name and use it in plugins', async ({
       plugins: [
         {
           name: 'foo',
-          setup(api) {
+          setup(api: RsbuildPluginAPI) {
             callerName = api.context.callerName;
           },
         },

@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import type { ManifestData } from '@rsbuild/core';
 import { getFileContent } from '@rstackjs/test-utils';
 
 test('should apply assetPrefix to assets in manifest entries', async ({
@@ -8,7 +9,7 @@ test('should apply assetPrefix to assets in manifest entries', async ({
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
   const manifestContent = getFileContent(files, 'manifest.json');
-  const manifest = JSON.parse(manifestContent);
+  const manifest = JSON.parse(manifestContent) as ManifestData;
 
   expect(manifest.entries.index.assets).toEqual([
     'https://cdn.example.com/assets/static/image/icon.png',

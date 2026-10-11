@@ -1,5 +1,5 @@
 import { matchPlugin } from '@scripts/test-helper';
-import { createRsbuild } from '../src';
+import { createRsbuild, type Rspack } from '../src';
 
 describe('plugin-output', () => {
   it('should set output correctly', async () => {
@@ -220,11 +220,13 @@ describe('plugin-output', () => {
         },
         tools: {
           bundlerChain: (chain, { CHAIN_ID }) => {
-            chain.plugin(CHAIN_ID.PLUGIN.COPY).tap((args) => [
-              {
-                patterns: [...(args[0]?.patterns || []), 'tests/'],
-              },
-            ]);
+            chain
+              .plugin(CHAIN_ID.PLUGIN.COPY)
+              .tap((args: Rspack.CopyRspackPluginOptions[]) => [
+                {
+                  patterns: [...(args[0]?.patterns || []), 'tests/'],
+                },
+              ]);
           },
         },
       },
