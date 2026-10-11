@@ -8,9 +8,9 @@ test('should preserve module worker entry exports with library output', async ({
 }) => {
   const result = await build();
   const entry = pathToFileURL(join(result.distPath, 'index.mjs'));
-  const worker: typeof import('./src/index.ts') = await import(
+  const worker = (await import(
     `${entry.href}?t=${Date.now()}`
-  );
+  )) as typeof import('./src/index.ts');
 
   expect(Object.keys(worker).sort()).toEqual(['Counter', 'default']);
   expect(await worker.default.fetch().text()).toBe('hello worker');
