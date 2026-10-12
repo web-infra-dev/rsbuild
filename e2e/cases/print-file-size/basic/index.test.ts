@@ -270,3 +270,74 @@ test('should print Brotli total without details', async ({ build }) => {
   expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 Total size (web): X.X kB (X.X kB brotli)`);
 });
+
+test('should report complete compressed totals for many assets across environments', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      plugins: [
+        {
+          name: 'emit-many-assets',
+          setup(api) {
+            api.processAssets(
+              { stage: 'additional' },
+              ({ compilation, sources }) => {
+                for (let i = 0; i < 32; i++) {
+                  compilation.emitAsset(
+                    `size-test-${i}.txt`,
+                    new sources.RawSource(`${i}: ${'x'.repeat(i * 1000)}\n`),
+                  );
+                }
+              },
+            );
+          },
+        } satisfies RsbuildPlugin,
+      ],
+      performance: {
+        printFileSize: {
+          detail: false,
+          include: ({ name }) => name.startsWith('size-test-'),
+          total: ({
+            environmentName,
+            assets,
+            totalSize,
+            totalGzipSize,
+            totalBrotliSize,
+          }) =>
+            `${environmentName}: ${assets.length}/${totalSize}/${totalBrotliSize ?? totalGzipSize}`,
+        },
+      },
+      environments: {
+        gzip: {},
+        brotli: {
+          performance: {
+            printFileSize: { compressed: { type: 'brotli' } },
+          },
+        },
+      },
+    },
+  });
+  const contents = Array.from(
+    { length: 32 },
+    (_, i) => `${i}: ${'x'.repeat(i * 1000)}\n`,
+  );
+  const size = contents.reduce(
+    (total, content) => total + Buffer.byteLength(content),
+    0,
+  );
+  const gzipSize = contents.reduce(
+    (total, content) => total + zlib.gzipSync(content, { level: 6 }).length,
+    0,
+  );
+  const brotliSize = contents.reduce(
+    (total, content) =>
+      total +
+      zlib.brotliCompressSync(content, {
+        params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 6 },
+      }).length,
+    0,
+  );
+  await rsbuild.expectLog(`gzip: 32/${size}/${gzipSize}`);
+  await rsbuild.expectLog(`brotli: 32/${size}/${brotliSize}`);
+});

@@ -19,6 +19,65 @@ import type {
 
 type CompressionType = 'gzip' | 'brotli';
 
+const MAX_CONCURRENT_ASSETS = 16;
+
+type AssetProcessor = (
+  names: string[],
+  processAsset: (name: string, index: number) => Promise<void>,
+) => Promise<void>;
+
+/** Share a lazy asset queue across all environments in one build. */
+export function createAssetProcessor(): AssetProcessor {
+  let active = 0;
+  const waiting: (() => void)[] = [];
+  let failure: { error: unknown } | undefined;
+
+  return async (
+    names: string[],
+    processAsset: (name: string, index: number) => Promise<void>,
+  ) => {
+    let cursor = 0;
+
+    const consume = async () => {
+      while (cursor < names.length && !failure) {
+        const index = cursor++;
+        if (active >= MAX_CONCURRENT_ASSETS) {
+          await new Promise<void>((resolve) => waiting.push(resolve));
+        } else {
+          active++;
+        }
+
+        try {
+          // Another environment may have failed while this consumer waited.
+          if (failure) {
+            return;
+          }
+          await processAsset(names[index], index);
+        } catch (error) {
+          failure ??= { error };
+        } finally {
+          const next = waiting.shift();
+          if (next) {
+            next();
+          } else {
+            active--;
+          }
+        }
+      }
+    };
+
+    await Promise.all(
+      Array.from(
+        { length: Math.min(MAX_CONCURRENT_ASSETS, names.length) },
+        consume,
+      ),
+    );
+    if (failure) {
+      throw failure.error;
+    }
+  };
+}
+
 type SizeMap = Record<
   string,
   {
@@ -250,6 +309,7 @@ async function printFileSizes(
   environmentName: string,
   previousSizes: SizeSnapshots | null,
   saveSnapshot: boolean,
+  processAssets: AssetProcessor,
 ) {
   const logs: string[] = [];
   const compression = getCompression(options.compressed);
@@ -347,54 +407,57 @@ async function printFileSizes(
 
   const getAssets = async () => {
     const { exclude, include } = options;
-    const formattedAssets: (FormattedAsset | Promise<FormattedAsset>)[] = [];
+    const formattedAssets: FormattedAsset[] = [];
     const compilationAssets = stats.compilation.assets;
 
-    for (const assetName of Object.keys(compilationAssets)) {
-      const filePath = getFilePath(assetName);
+    await processAssets(
+      Object.keys(compilationAssets),
+      async (assetName, index) => {
+        const filePath = getFilePath(assetName);
 
-      if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
-        continue;
-      }
-
-      // Accessing an asset retrieves its Source through the Rust-JS bridge,
-      // so filter by filename before reading it.
-      const value = compilationAssets[assetName];
-      const content =
-        options.compressed && isCompressible(filePath)
-          ? value.source()
-          : undefined;
-      const size =
-        content === undefined ? value.size() : Buffer.byteLength(content);
-
-      if (exclude || include) {
-        const publicAsset: PrintFileSizeAsset = {
-          name: filePath,
-          size,
-        };
-        if (exclude?.(publicAsset)) {
-          continue;
+        if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
+          return;
         }
-        if (include) {
-          if (!include(publicAsset)) {
-            continue;
+
+        // Accessing an asset retrieves its Source through the Rust-JS bridge,
+        // so filter by filename before reading it.
+        const value = compilationAssets[assetName];
+        const content =
+          options.compressed && isCompressible(filePath)
+            ? value.source()
+            : undefined;
+        const size =
+          content === undefined ? value.size() : Buffer.byteLength(content);
+
+        if (exclude || include) {
+          const publicAsset: PrintFileSizeAsset = {
+            name: filePath,
+            size,
+          };
+          if (exclude?.(publicAsset)) {
+            return;
+          }
+          if (include) {
+            if (!include(publicAsset)) {
+              return;
+            }
           }
         }
-      }
 
-      if (content === undefined) {
-        formattedAssets.push(formatAsset(filePath, size, null));
-      } else {
-        formattedAssets.push(
-          calcCompressedSize(content, compression.type, compression.level).then(
-            (compressedSize) => formatAsset(filePath, size, compressedSize),
-          ),
-        );
-      }
-    }
+        const compressedSize =
+          content === undefined
+            ? null
+            : await calcCompressedSize(
+                content,
+                compression.type,
+                compression.level,
+              );
+        // Preserve input order for assets with equal sizes, regardless of completion order.
+        formattedAssets[index] = formatAsset(filePath, size, compressedSize);
+      },
+    );
 
-    // rslint-disable-next-line @typescript-eslint/await-thenable -- Only compressed assets require asynchronous formatting.
-    return (await Promise.all(formattedAssets)).sort((a, b) => a.size - b.size);
+    return formattedAssets.filter(Boolean).sort((a, b) => a.size - b.size);
   };
 
   const assets = await getAssets();
@@ -643,6 +706,8 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
         ? await loadPrevSnapshots(snapshotPath)
         : null;
       const nextSnapshots: SizeSnapshots = {};
+      // Acquire a shared slot before reading Source data through the Rust-JS bridge.
+      const processAssets = createAssetProcessor();
 
       const logs = await Promise.all(
         environments.map(async ({ name, index, config, distPath }) => {
@@ -655,6 +720,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
             name,
             prevSnapshots,
             showDiff,
+            processAssets,
           );
 
           // Store current sizes for this environment
