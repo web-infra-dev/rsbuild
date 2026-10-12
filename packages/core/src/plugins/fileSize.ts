@@ -28,19 +28,13 @@ type AssetProcessor = (
 ) => Promise<void>;
 
 /**
- * Creates an asset processor to share across all environments in one build.
+ * Processes up to 16 assets at a time across all environments in one build.
+ * Reads each asset only when a slot is available and starts the next asset
+ * as soon as one finishes. Passes the original index to preserve result order.
  *
- * Runs at most MAX_CONCURRENT_ASSETS callbacks concurrently across all calls.
- * Each callback starts only after acquiring a slot, so source reads and
- * compression stay lazy. Completed slots are reused immediately without
- * waiting for a whole batch. Each call uses a bounded number of consumers
- * instead of creating a promise for every asset upfront.
- *
- * The callback receives the asset's original index so callers can preserve
- * result order even when callbacks finish out of order.
- * On failure, stops starting callbacks across environments. Each affected
- * call drains its consumers before rejecting with the first error.
- * Create a new processor for each build because the failure is retained.
+ * On failure, stops starting new tasks. Each call waits for its running tasks
+ * to finish before throwing the first error. Create a new processor for each
+ * build to reset this error state.
  */
 export function createAssetProcessor(): AssetProcessor {
   let active = 0;
