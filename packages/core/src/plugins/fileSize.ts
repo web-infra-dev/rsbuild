@@ -20,6 +20,71 @@ import type {
 
 type CompressionType = 'gzip' | 'brotli';
 
+const MAX_CONCURRENT_ASSETS = 16;
+
+type AssetProcessor = (
+  names: string[],
+  processAsset: (name: string, index: number) => Promise<void>,
+) => Promise<void>;
+
+/**
+ * Processes up to 16 assets at a time across all environments in one build.
+ * Reads each asset only when a slot is available and starts the next asset
+ * as soon as one finishes. Passes the original index to preserve result order.
+ *
+ * On failure, stops starting new tasks. Each call waits for its running tasks
+ * to finish before throwing the first error. Create a new processor for each
+ * build to reset this error state.
+ */
+export function createAssetProcessor(): AssetProcessor {
+  let active = 0;
+  const waiting: (() => void)[] = [];
+  let failure: { error: unknown } | undefined;
+
+  return async (names, processAsset) => {
+    let cursor = 0;
+
+    const consume = async () => {
+      while (cursor < names.length && !failure) {
+        const index = cursor++;
+        if (active >= MAX_CONCURRENT_ASSETS) {
+          await new Promise<void>((resolve) => waiting.push(resolve));
+        } else {
+          active++;
+        }
+
+        try {
+          // Another environment may have failed while this consumer waited.
+          if (failure) {
+            return;
+          }
+          await processAsset(names[index], index);
+        } catch (error) {
+          failure ??= { error };
+        } finally {
+          const next = waiting.shift();
+          if (next) {
+            // Transfer this slot to a waiting consumer.
+            next();
+          } else {
+            active--;
+          }
+        }
+      }
+    };
+
+    await Promise.all(
+      Array.from(
+        { length: Math.min(MAX_CONCURRENT_ASSETS, names.length) },
+        consume,
+      ),
+    );
+    if (failure) {
+      throw failure.error;
+    }
+  };
+}
+
 type SizeMap = Record<
   string,
   {
@@ -246,6 +311,7 @@ const calcTotalSize = (assets: FormattedAsset[], compressed?: boolean) => {
 async function getFileSizes(
   options: PrintFileSizeOptions,
   compilation: Rspack.Compilation,
+  processAssets: AssetProcessor,
 ) {
   if (options.detail === false && options.total === false) {
     return [];
@@ -253,14 +319,19 @@ async function getFileSizes(
 
   const { exclude, include } = options;
   const compression = getCompression(options.compressed);
-  const fileSizes = [];
+  const fileSizes: {
+    filePath: string;
+    size: number;
+    compressedSize: number | null;
+  }[] = [];
   const compilationAssets = compilation.assets;
 
-  for (const assetName of Object.keys(compilationAssets)) {
+  const names = Object.keys(compilationAssets);
+  await processAssets(names, async (assetName, index) => {
     const filePath = getFilePath(assetName);
 
     if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
-      continue;
+      return;
     }
 
     // Accessing an asset retrieves its Source through the Rust-JS bridge,
@@ -279,28 +350,26 @@ async function getFileSizes(
         size,
       };
       if (exclude?.(publicAsset)) {
-        continue;
+        return;
       }
-      if (include) {
-        if (!include(publicAsset)) {
-          continue;
-        }
+      if (include && !include(publicAsset)) {
+        return;
       }
     }
 
-    if (content === undefined) {
-      fileSizes.push({ filePath, size, compressedSize: null });
-    } else {
-      fileSizes.push(
-        calcCompressedSize(content, compression.type, compression.level).then(
-          (compressedSize) => ({ filePath, size, compressedSize }),
-        ),
-      );
-    }
-  }
+    const compressedSize =
+      content === undefined
+        ? null
+        : await calcCompressedSize(
+            content,
+            compression.type,
+            compression.level,
+          );
+    // Preserve input order regardless of compression completion order.
+    fileSizes[index] = { filePath, size, compressedSize };
+  });
 
-  // rslint-disable-next-line @typescript-eslint/await-thenable -- Only compressed assets require asynchronous size calculation.
-  return Promise.all(fileSizes);
+  return fileSizes.filter(Boolean);
 }
 
 function printFileSizes(
@@ -622,9 +691,11 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
 
   setup(api) {
     let fileSizeResults: ReturnType<typeof getFileSizes>[] | undefined;
+    let processAssets: AssetProcessor | undefined;
 
     api.onBeforeBuild(({ isFirstCompile }) => {
       fileSizeResults = isFirstCompile ? [] : undefined;
+      processAssets = isFirstCompile ? createAssetProcessor() : undefined;
     });
 
     api.onAfterCreateCompiler(({ compiler }) => {
@@ -639,12 +710,17 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
         compiler.hooks.emit.tapPromise(
           { name: 'rsbuild:file-size', stage: Infinity },
           async (compilation) => {
-            if (!fileSizeResults || compilation.errors.length) {
+            if (
+              !fileSizeResults ||
+              !processAssets ||
+              compilation.errors.length
+            ) {
               return;
             }
             fileSizeResults[index] = getFileSizes(
               normalizeConfig(config),
               compilation,
+              processAssets,
             );
             // Report errors after the build, without preventing asset emission.
             await fileSizeResults[index].catch(() => {});
@@ -656,6 +732,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
     api.onAfterBuild(async ({ stats, isFirstCompile }) => {
       const results = fileSizeResults;
       fileSizeResults = undefined;
+      processAssets = undefined;
       const { hasErrors } = context.buildState;
       // No need to print file sizes if there is any compilation error
       if (!stats || hasErrors || !isFirstCompile || !results) {
