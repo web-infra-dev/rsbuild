@@ -1,6 +1,7 @@
 import { createServer } from 'node:http';
 import { expect, gotoPage, test } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
+import { getRandomPort } from '@rstackjs/test-utils';
 
 test('should remove WebSocket listeners from external servers on close', async () => {
   const rsbuild = await createRsbuild({
@@ -9,11 +10,17 @@ test('should remove WebSocket listeners from external servers on close', async (
       server: {
         port: 0,
         middlewareMode: true,
+        proxy: {
+          '/proxy': { target: 'http://127.0.0.1', ws: true },
+        },
       },
     },
   });
   const rsbuildServer = await rsbuild.createDevServer();
-  const servers = [createServer(), createServer()];
+  const servers = [
+    createServer(rsbuildServer.middlewares),
+    createServer(rsbuildServer.middlewares),
+  ];
   const onUpgrade = () => {};
 
   try {
@@ -22,6 +29,15 @@ test('should remove WebSocket listeners from external servers on close', async (
       rsbuildServer.connectWebSocket({ server });
       rsbuildServer.connectWebSocket({ server });
       expect(server.listenerCount('upgrade')).toBe(2);
+
+      const port = await getRandomPort();
+      await new Promise<void>((resolve) => {
+        server.listen(port, '127.0.0.1', resolve);
+      });
+      // Even unmatched HTTP requests can trigger proxy upgrade subscriptions.
+      const response = await fetch(`http://127.0.0.1:${port}/`);
+      expect(response.status).toBe(200);
+      await response.text();
     }
 
     await rsbuildServer.environments.web.getStats();
@@ -34,6 +50,7 @@ test('should remove WebSocket listeners from external servers on close', async (
     }
   } finally {
     await rsbuildServer.close();
+    await Promise.all(servers.map((server) => server[Symbol.asyncDispose]()));
   }
 });
 
