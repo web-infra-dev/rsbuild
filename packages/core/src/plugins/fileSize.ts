@@ -339,10 +339,9 @@ async function getFileSizes(
     const value = compilationAssets[assetName];
     const content =
       options.compressed && isCompressible(filePath)
-        ? value.source()
+        ? value.buffer()
         : undefined;
-    const size =
-      content === undefined ? value.size() : Buffer.byteLength(content);
+    const size = content === undefined ? value.size() : content.length;
 
     if (exclude || include) {
       const publicAsset: PrintFileSizeAsset = {
