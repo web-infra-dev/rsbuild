@@ -48,14 +48,14 @@ test('tapOnce should omit skipped callbacks from overlapping batch results', asy
 });
 
 describe('initHooks', () => {
-  test('should initialize hooks correctly', async () => {
+  test('should initialize hooks correctly', () => {
     const hooks = initHooks();
     expect(Object.keys(hooks)).toMatchSnapshot();
   });
 
   test('should run createEnvironmentAsyncHook only in the specified environment', async () => {
     const logs: string[] = [];
-    const hookA = createEnvironmentAsyncHook();
+    const hookA = createEnvironmentAsyncHook<(msg: string) => void>();
     hookA.tap((msg) => {
       logs.push(`[global] ${msg}`);
     });

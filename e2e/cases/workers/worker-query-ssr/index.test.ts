@@ -13,9 +13,9 @@ test('should support worker query imports in SSR builds', async ({ build }) => {
   const queryWorker = Object.entries(files).find(([, content]) =>
     content.includes('query-ssr-worker'),
   );
-  const bundle = await import(
+  const bundle = (await import(
     `${pathToFileURL(entryFile!).href}?t=${Date.now()}`
-  );
+  )) as { workerTypes: string };
 
   expect(entry).toContain('inline-ssr-worker');
   expect(entry).toContain('new Worker');

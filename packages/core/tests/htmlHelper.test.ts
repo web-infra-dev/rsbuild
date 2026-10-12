@@ -23,7 +23,7 @@ test('should detect HTML title via "hasTitle" correctly', () => {
 });
 
 describe('getHTMLPathByEntry', () => {
-  it('should use distPath.html as the folder', async () => {
+  it('should use distPath.html as the folder', () => {
     const htmlPath = getHTMLPathByEntry(
       'main',
       {
@@ -44,7 +44,7 @@ describe('getHTMLPathByEntry', () => {
     expect(htmlPath).toEqual('my-html/main/index.html');
   });
 
-  it('should allow disabling html folder', async () => {
+  it('should allow disabling html folder', () => {
     const htmlPath = getHTMLPathByEntry(
       'main',
       {

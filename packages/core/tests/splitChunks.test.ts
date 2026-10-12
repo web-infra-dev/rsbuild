@@ -211,7 +211,7 @@ describe('plugin-split-chunks', () => {
 });
 
 describe('getPackageNameFromModulePath', () => {
-  it('should parse the correct path fragment in npm/yarn', async () => {
+  it('should parse the correct path fragment in npm/yarn', () => {
     let modulePath = '/path/to/node_modules/@scope/package-name/index.js';
     let [_, scope, name] = modulePath.match(MODULE_PATH_REGEX)!;
     expect(scope).toBe('@scope');
@@ -223,7 +223,7 @@ describe('getPackageNameFromModulePath', () => {
     expect(name).toBe('package-name');
   });
 
-  it('should parse the correct path fragment in pnpm', async () => {
+  it('should parse the correct path fragment in pnpm', () => {
     let modulePath =
       '/path/to/node_modules/.pnpm/@scope+package-name@1.0.0/node_modules/@scope/package-name/index.js';
     let [_, scope, name] = modulePath.match(MODULE_PATH_REGEX)!;

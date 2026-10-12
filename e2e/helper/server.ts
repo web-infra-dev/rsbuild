@@ -1,12 +1,12 @@
-import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { HttpBindings } from '@hono/node-server';
 import { RESPONSE_ALREADY_SENT } from '@hono/node-server/utils/response';
 import type { RequestHandler } from '@rsbuild/core';
 import type { Context } from 'hono';
 
 export const createConnectHandler = (middlewares: RequestHandler) => {
-  return ({ env }: Context) => {
-    const incoming = env.incoming as IncomingMessage;
-    const outgoing = env.outgoing as ServerResponse;
+  return ({ env }: Context<{ Bindings: HttpBindings }>) => {
+    const incoming = env.incoming;
+    const outgoing = env.outgoing;
 
     middlewares(incoming, outgoing, (error) => {
       if (outgoing.writableEnded) {

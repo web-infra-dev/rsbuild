@@ -15,9 +15,7 @@ test('should normalize shortcut input', () => {
 
 test('should keep other shortcuts active when one interface closes', async () => {
   const input = new PassThrough();
-  using stdin = rstest
-    .spyOn(process, 'stdin', 'get')
-    .mockReturnValue(input as typeof process.stdin);
+  using _stdin = rstest.spyOn(process, 'stdin', 'get').mockReturnValue(input);
   const printUrls = rstest.fn();
   const options = {
     help: false,

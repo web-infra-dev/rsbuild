@@ -118,7 +118,7 @@ export function getConfigUtils(
         if (!plugin) {
           return true;
         }
-        const name = plugin.name || plugin.constructor.name;
+        const name: unknown = plugin.name || plugin.constructor.name;
         return name !== pluginName;
       });
     },

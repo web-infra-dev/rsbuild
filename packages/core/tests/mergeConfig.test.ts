@@ -55,7 +55,7 @@ describe('mergeRsbuildConfig', () => {
     expect(typeof config.tools?.rspack).toEqual('function');
   });
 
-  test('should merge string and string[] correctly', async () => {
+  test('should merge string and string[] correctly', () => {
     expect(
       mergeRsbuildConfig(
         {
@@ -76,7 +76,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test('should deep merge object correctly', async () => {
+  test('should deep merge object correctly', () => {
     expect(
       mergeRsbuildConfig(
         {
@@ -107,7 +107,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test('should merge function and object correctly', async () => {
+  test('should merge function and object correctly', () => {
     const rspackFn = (config: Rspack.Configuration) => {
       config.devtool = 'source-map';
     };
@@ -225,7 +225,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test('should merge server.open correctly', async () => {
+  test('should merge server.open correctly', () => {
     expect(
       mergeRsbuildConfig(
         {
@@ -246,7 +246,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test('should merge tools.htmlPlugin correctly', async () => {
+  test('should merge tools.htmlPlugin correctly', () => {
     expect(
       mergeRsbuildConfig(
         {
@@ -437,7 +437,7 @@ describe('mergeRsbuildConfig', () => {
     expect(mergedConfig.tools?.rspack.plugins[0] instanceof A).toBeTruthy();
   });
 
-  test('should merge overrideBrowserslist in environments as expected', async () => {
+  test('should merge overrideBrowserslist in environments as expected', () => {
     expect(
       mergeRsbuildConfig(
         {
@@ -496,7 +496,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test('should merge output.filename.js as expected', async () => {
+  test('should merge output.filename.js as expected', () => {
     const fn = () => 'custom-output2.js';
     expect(
       mergeRsbuildConfig(
@@ -524,7 +524,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test('should merge output.copy as expected', async () => {
+  test('should merge output.copy as expected', () => {
     expect(
       mergeRsbuildConfig(
         {
@@ -568,7 +568,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test('should merge output.distPath as expected', async () => {
+  test('should merge output.distPath as expected', () => {
     expect(
       mergeRsbuildConfig(
         {

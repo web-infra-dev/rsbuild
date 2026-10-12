@@ -436,6 +436,7 @@ export async function createRsbuild(
   const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
     let plugins = pluginOptions;
     do {
+      // rslint-disable-next-line @typescript-eslint/await-thenable -- Plugin options intentionally mix synchronous values and promises.
       plugins = (await Promise.all(plugins)).flat(
         Number.POSITIVE_INFINITY as 1,
       );

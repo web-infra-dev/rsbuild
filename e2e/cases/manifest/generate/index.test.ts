@@ -1,6 +1,6 @@
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
-import type { RsbuildConfig } from '@rsbuild/core';
+import type { ManifestData, RsbuildConfig } from '@rsbuild/core';
 
 const config: RsbuildConfig = {
   output: {
@@ -24,7 +24,10 @@ test('should generate custom manifest data', async ({ runBoth }) => {
     ({ result }) => {
       const files = result.getDistFiles();
       const manifestContent = getFileContent(files, 'my-manifest.json');
-      const manifest = JSON.parse(manifestContent);
+      const manifest = JSON.parse(manifestContent) as {
+        filesCount: number;
+        data: ManifestData;
+      };
 
       expect(manifest.filesCount).toBe(2);
       expect(manifest.data.allFiles.length).toBe(2);

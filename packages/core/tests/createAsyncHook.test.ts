@@ -27,8 +27,8 @@ describe('createAsyncHook', () => {
 
   test('should allow modifying params in callback functions', async () => {
     const myHook = createAsyncHook();
-    const callback1 = async () => 2;
-    const callback2 = async () => 3;
+    const callback1 = () => Promise.resolve(2);
+    const callback2 = () => Promise.resolve(3);
 
     myHook.tap(callback1);
     myHook.tap(callback2);

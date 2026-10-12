@@ -235,10 +235,9 @@ describe('plugin-solid', () => {
       },
     });
     const config = await rsbuild.initConfigs();
-    const refreshRule = matchRules(config[0], 'a.tsx').find(
-      (rule) =>
-        isRule(rule) && JSON.stringify(rule).includes('refreshLoader.mjs'),
-    );
+    const refreshRule = matchRules(config[0], 'a.tsx')
+      .filter(isRule)
+      .find((rule) => JSON.stringify(rule).includes('refreshLoader.mjs'));
 
     expect(refreshRule?.enforce).toBe('pre');
     expect(JSON.stringify(refreshRule)).toContain('"granular":false');

@@ -7,6 +7,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
 import { color, hash } from '../helpers';
+import { applyToCompiler } from '../helpers/compiler';
 import type { Logger } from '../logger';
 import type {
   InternalContext,
@@ -18,6 +19,71 @@ import type {
 } from '../types';
 
 type CompressionType = 'gzip' | 'brotli';
+
+const MAX_CONCURRENT_ASSETS = 16;
+
+type AssetProcessor = (
+  names: string[],
+  processAsset: (name: string, index: number) => Promise<void>,
+) => Promise<void>;
+
+/**
+ * Processes up to 16 assets at a time across all environments in one build.
+ * Reads each asset only when a slot is available and starts the next asset
+ * as soon as one finishes. Passes the original index to preserve result order.
+ *
+ * On failure, stops starting new tasks. Each call waits for its running tasks
+ * to finish before throwing the first error. Create a new processor for each
+ * build to reset this error state.
+ */
+export function createAssetProcessor(): AssetProcessor {
+  let active = 0;
+  const waiting: (() => void)[] = [];
+  let failure: { error: unknown } | undefined;
+
+  return async (names, processAsset) => {
+    let cursor = 0;
+
+    const consume = async () => {
+      while (cursor < names.length && !failure) {
+        const index = cursor++;
+        if (active >= MAX_CONCURRENT_ASSETS) {
+          await new Promise<void>((resolve) => waiting.push(resolve));
+        } else {
+          active++;
+        }
+
+        try {
+          // Another environment may have failed while this consumer waited.
+          if (failure) {
+            return;
+          }
+          await processAsset(names[index], index);
+        } catch (error) {
+          failure ??= { error };
+        } finally {
+          const next = waiting.shift();
+          if (next) {
+            // Transfer this slot to a waiting consumer.
+            next();
+          } else {
+            active--;
+          }
+        }
+      }
+    };
+
+    await Promise.all(
+      Array.from(
+        { length: Math.min(MAX_CONCURRENT_ASSETS, names.length) },
+        consume,
+      ),
+    );
+    if (failure) {
+      throw failure.error;
+    }
+  };
+}
 
 type SizeMap = Record<
   string,
@@ -242,9 +308,73 @@ const calcTotalSize = (assets: FormattedAsset[], compressed?: boolean) => {
   };
 };
 
-async function printFileSizes(
+async function getFileSizes(
   options: PrintFileSizeOptions,
-  stats: Rspack.Stats,
+  compilation: Rspack.Compilation,
+  processAssets: AssetProcessor,
+) {
+  if (options.detail === false && options.total === false) {
+    return [];
+  }
+
+  const { exclude, include } = options;
+  const compression = getCompression(options.compressed);
+  const fileSizes: {
+    filePath: string;
+    size: number;
+    compressedSize: number | null;
+  }[] = [];
+  const compilationAssets = compilation.assets;
+
+  // Avoid per-file property descriptor lookups on the assets proxy.
+  const names = Object.getOwnPropertyNames(compilationAssets);
+  await processAssets(names, async (assetName, index) => {
+    const filePath = getFilePath(assetName);
+
+    if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
+      return;
+    }
+
+    // Accessing an asset retrieves its Source through the Rust-JS bridge,
+    // so filter by filename before reading it.
+    const value = compilationAssets[assetName];
+    const content =
+      options.compressed && isCompressible(filePath)
+        ? value.buffer()
+        : undefined;
+    const size = content === undefined ? value.size() : content.length;
+
+    if (exclude || include) {
+      const publicAsset: PrintFileSizeAsset = {
+        name: filePath,
+        size,
+      };
+      if (exclude?.(publicAsset)) {
+        return;
+      }
+      if (include && !include(publicAsset)) {
+        return;
+      }
+    }
+
+    const compressedSize =
+      content === undefined
+        ? null
+        : await calcCompressedSize(
+            content,
+            compression.type,
+            compression.level,
+          );
+    // Preserve input order regardless of compression completion order.
+    fileSizes[index] = { filePath, size, compressedSize };
+  });
+
+  return fileSizes.filter(Boolean);
+}
+
+function printFileSizes(
+  options: PrintFileSizeOptions,
+  fileSizes: Awaited<ReturnType<typeof getFileSizes>>,
   rootPath: string,
   distPath: string,
   environmentName: string,
@@ -285,7 +415,7 @@ async function printFileSizes(
     let normalizedPath = '';
 
     // Store current size for next build
-    if (snapshot || showDiff) {
+    if (snapshot || (showDetail && showDiff)) {
       // Normalize filename for comparison (remove hash)
       normalizedPath = normalizeFilePath(filePath);
 
@@ -295,6 +425,20 @@ async function printFileSizes(
           [compression.sizeKey]: compressedSize ?? undefined,
         };
       }
+    }
+
+    // Skip per-file labels when only the total is displayed.
+    if (!showDetail) {
+      return {
+        filePath,
+        filenameLabel: '',
+        filenameLength: 0,
+        size,
+        sizeLabel: '',
+        sizeLabelLength: 0,
+        compressedSize,
+        compressedSizeLabel: null,
+      };
     }
 
     // Append inline diff to sizeLabel
@@ -345,58 +489,11 @@ async function printFileSizes(
     };
   };
 
-  const getAssets = async () => {
-    const { exclude, include } = options;
-    const formattedAssets: (FormattedAsset | Promise<FormattedAsset>)[] = [];
-    const compilationAssets = stats.compilation.assets;
-
-    for (const assetName of Object.keys(compilationAssets)) {
-      const filePath = getFilePath(assetName);
-
-      if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
-        continue;
-      }
-
-      // Accessing an asset retrieves its Source through the Rust-JS bridge,
-      // so filter by filename before reading it.
-      const value = compilationAssets[assetName];
-      const content =
-        options.compressed && isCompressible(filePath)
-          ? value.source()
-          : undefined;
-      const size =
-        content === undefined ? value.size() : Buffer.byteLength(content);
-
-      if (exclude || include) {
-        const publicAsset: PrintFileSizeAsset = {
-          name: filePath,
-          size,
-        };
-        if (exclude?.(publicAsset)) {
-          continue;
-        }
-        if (include) {
-          if (!include(publicAsset)) {
-            continue;
-          }
-        }
-      }
-
-      if (content === undefined) {
-        formattedAssets.push(formatAsset(filePath, size, null));
-      } else {
-        formattedAssets.push(
-          calcCompressedSize(content, compression.type, compression.level).then(
-            (compressedSize) => formatAsset(filePath, size, compressedSize),
-          ),
-        );
-      }
-    }
-
-    return (await Promise.all(formattedAssets)).sort((a, b) => a.size - b.size);
-  };
-
-  const assets = await getAssets();
+  const assets = fileSizes
+    .map(({ filePath, size, compressedSize }) =>
+      formatAsset(filePath, size, compressedSize),
+    )
+    .sort((a, b) => a.size - b.size);
 
   if (assets.length === 0) {
     return { logs };
@@ -607,15 +704,57 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:file-size',
 
   setup(api) {
+    let fileSizeResults: ReturnType<typeof getFileSizes>[] | undefined;
+    let processAssets: AssetProcessor | undefined;
+
+    api.onBeforeBuild(({ isFirstCompile }) => {
+      fileSizeResults = isFirstCompile ? [] : undefined;
+      processAssets = isFirstCompile ? createAssetProcessor() : undefined;
+    });
+
+    api.onAfterCreateCompiler(({ compiler }) => {
+      if (context.action !== 'build') {
+        return;
+      }
+      applyToCompiler(compiler, (compiler, index) => {
+        const { config } = context.environmentList[index];
+        if (config.performance.printFileSize === false) {
+          return;
+        }
+        compiler.hooks.emit.tapPromise(
+          { name: 'rsbuild:file-size', stage: Infinity },
+          async (compilation) => {
+            if (
+              !fileSizeResults ||
+              !processAssets ||
+              compilation.errors.length
+            ) {
+              return;
+            }
+            fileSizeResults[index] = getFileSizes(
+              normalizeConfig(config),
+              compilation,
+              processAssets,
+            );
+            // Report errors after the build, without preventing asset emission.
+            await fileSizeResults[index].catch(() => {});
+          },
+        );
+      });
+    });
+
     api.onAfterBuild(async ({ stats, isFirstCompile }) => {
+      const results = fileSizeResults;
+      fileSizeResults = undefined;
+      processAssets = undefined;
       const { hasErrors } = context.buildState;
       // No need to print file sizes if there is any compilation error
-      if (!stats || hasErrors || !isFirstCompile) {
+      if (!stats || hasErrors || !isFirstCompile || !results) {
         return;
       }
 
       const environments = context.environmentList.filter(
-        ({ config }) => config.performance.printFileSize !== false,
+        ({ index }) => results[index] !== undefined,
       );
 
       // If no environment has printFileSize enabled, skip
@@ -645,10 +784,9 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
 
       const logs = await Promise.all(
         environments.map(async ({ name, index, config, distPath }) => {
-          const statsItem = 'stats' in stats ? stats.stats[index] : stats;
-          const { logs: sizeLogs, snapshot } = await printFileSizes(
+          const { logs: sizeLogs, snapshot } = printFileSizes(
             normalizeConfig(config),
-            statsItem,
+            await results[index],
             api.context.rootPath,
             distPath,
             name,

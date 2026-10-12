@@ -1,4 +1,5 @@
 import { createRestartManager } from '../src/helpers/restartManager';
+import type { RestartFn } from '../src/types';
 
 describe('restartManager', () => {
   test('should execute all callbacks and clear the registry when one throws', async () => {
@@ -9,6 +10,7 @@ describe('restartManager', () => {
 
     manager.registerCleanup(() => {
       calls.push('first');
+      // rslint-disable-next-line @typescript-eslint/only-throw-error -- Verify cleanup continues after a non-Error value is thrown.
       throw null;
     });
     manager.registerCleanup(() => {
@@ -42,7 +44,7 @@ describe('restartManager', () => {
 
   test('should isolate ports when managers share a restart callback', async () => {
     const inheritedPorts: (number | undefined)[] = [];
-    const restart = rstest.fn(({ options }) => {
+    const restart = rstest.fn<RestartFn>(({ options }) => {
       const manager = createRestartManager({ onRestart: () => {} });
       inheritedPorts.push(manager.inheritPort(options));
       return true;

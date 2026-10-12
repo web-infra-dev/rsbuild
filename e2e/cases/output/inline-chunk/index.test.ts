@@ -1,18 +1,11 @@
 import { expect, test } from '@e2e/helper';
 import { findFiles, getFileContent } from '@rstackjs/test-utils';
-import type { RspackChain } from '@rsbuild/core';
+import type { ToolsConfig } from '@rsbuild/core';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
-const toolsConfig = {
-  bundlerChain: (chain: RspackChain) => {
+const toolsConfig: ToolsConfig = {
+  bundlerChain: (chain) => {
     chain.devtool('source-map');
-  },
-  htmlPlugin: (config: any) => {
-    // minify will remove sourcemap comment
-    if (typeof config.minify === 'object') {
-      config.minify.minifyJS = false;
-      config.minify.minifyCSS = false;
-    }
   },
 };
 
