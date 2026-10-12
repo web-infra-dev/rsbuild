@@ -415,7 +415,7 @@ function printFileSizes(
     let normalizedPath = '';
 
     // Store current size for next build
-    if (snapshot || showDiff) {
+    if (snapshot || (showDetail && showDiff)) {
       // Normalize filename for comparison (remove hash)
       normalizedPath = normalizeFilePath(filePath);
 
@@ -425,6 +425,20 @@ function printFileSizes(
           [compression.sizeKey]: compressedSize ?? undefined,
         };
       }
+    }
+
+    // Skip per-file labels when only the total is displayed.
+    if (!showDetail) {
+      return {
+        filePath,
+        filenameLabel: '',
+        filenameLength: 0,
+        size,
+        sizeLabel: '',
+        sizeLabelLength: 0,
+        compressedSize,
+        compressedSizeLabel: null,
+      };
     }
 
     // Append inline diff to sizeLabel
