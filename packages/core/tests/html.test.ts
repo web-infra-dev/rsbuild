@@ -1,3 +1,6 @@
+import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { matchPlugin } from '@scripts/test-helper';
 import { createRsbuild, type HtmlConfig } from '../src';
 
@@ -17,6 +20,36 @@ describe('plugin-html', () => {
     const config = (await rsbuild.initConfigs())[0];
 
     expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
+  });
+
+  it('should keep the charset meta tag within the first 1024 bytes', async () => {
+    const cwd = mkdtempSync(join(tmpdir(), 'rsbuild-html-charset-'));
+    mkdirSync(join(cwd, 'src'));
+    writeFileSync(join(cwd, 'src/index.js'), 'console.log("hello");');
+    writeFileSync(
+      join(cwd, 'index.html'),
+      `<html><head>${'x'.repeat(1100)}</head><body><div id="root"></div></body></html>`,
+    );
+
+    const rsbuild = await createRsbuild({
+      cwd,
+      config: {
+        source: { entry: { index: './src/index.js' } },
+        html: { template: './index.html' },
+      },
+    });
+    await rsbuild.build();
+
+    const html = readFileSync(join(cwd, 'dist/index.html'), 'utf8');
+    const charsetMeta = /<meta\b(?=[^>]*\bcharset\s*=)[^>]*>/i.exec(html);
+    if (!charsetMeta) {
+      throw new Error('Expected an HTML charset meta tag');
+    }
+    expect(
+      Buffer.byteLength(
+        html.slice(0, charsetMeta.index + charsetMeta[0].length),
+      ),
+    ).toBeLessThanOrEqual(1024);
   });
 
   it('should not register html plugin when target is node', async () => {

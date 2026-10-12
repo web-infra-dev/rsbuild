@@ -41,6 +41,39 @@ function getInject(entryName: string, config: NormalizedEnvironmentConfig) {
 const getDefaultTemplateContent = (mountId: string) =>
   `<!DOCTYPE html><html><head></head><body><div id="${mountId}"></div></body></html>`;
 
+const ensureCharsetMetaInFirst1024Bytes = (html: string): string => {
+  const headTag = /<head\b[^>]*>/i.exec(html);
+  if (!headTag) {
+    return html;
+  }
+
+  const headContentStart = headTag.index + headTag[0].length;
+  const headContentEnd = html.indexOf('</head', headContentStart);
+  if (headContentEnd === -1) {
+    return html;
+  }
+
+  const charsetMeta = /<meta\b(?=[^>]*\bcharset\s*=)[^>]*>/i.exec(
+    html.slice(headContentStart, headContentEnd),
+  );
+  if (!charsetMeta) {
+    return html;
+  }
+
+  const charsetMetaStart = headContentStart + charsetMeta.index;
+  const charsetMetaEnd = charsetMetaStart + charsetMeta[0].length;
+  if (Buffer.byteLength(html.slice(0, charsetMetaEnd)) <= 1024) {
+    return html;
+  }
+
+  return (
+    html.slice(0, headContentStart) +
+    charsetMeta[0] +
+    html.slice(headContentStart, charsetMetaStart) +
+    html.slice(charsetMetaEnd)
+  );
+};
+
 const existTemplatePath = new Set<string>();
 
 export async function getTemplate(
@@ -204,6 +237,11 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
 
   setup(api) {
     let defaultFavicon: string | undefined;
+
+    api.modifyHTML({
+      order: 'post',
+      handler: ensureCharsetMetaInFirst1024Bytes,
+    });
 
     const resolveDefaultFavicon = () => {
       if (defaultFavicon) {
