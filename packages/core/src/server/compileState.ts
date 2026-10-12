@@ -16,7 +16,7 @@ const createDeferred = (): Deferred => {
 };
 
 export const createCompileState = (environmentCount: number) => {
-  const stats: Array<Rspack.Stats | undefined> = new Array(environmentCount);
+  const stats = new Array<Rspack.Stats | undefined>(environmentCount);
   const waiters = Array.from({ length: environmentCount }, createDeferred);
 
   return {

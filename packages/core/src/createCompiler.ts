@@ -158,7 +158,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
   // Collect lazy compiled modules from the infrastructure logs
   compiler.hooks.infrastructureLog.tap(HOOK_NAME, (name, _, args) => {
-    const log = args[0];
+    const log: unknown = args[0];
     if (
       name === 'LazyCompilation' &&
       typeof log === 'string' &&

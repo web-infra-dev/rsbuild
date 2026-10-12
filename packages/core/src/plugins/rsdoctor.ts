@@ -56,7 +56,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
           const moduleURL = isWindows
             ? pathToFileURL(packagePath).href
             : packagePath;
-          module = await import(moduleURL);
+          module = (await import(moduleURL)) as RsdoctorExports;
         } catch {
           api.logger.error(
             `\`process.env.RSDOCTOR\` enabled, but failed to load ${color.bold(color.yellow(packageName))} module.`,

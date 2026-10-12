@@ -425,10 +425,10 @@ export class SocketServer {
     // rslint-disable-next-line @typescript-eslint/no-misused-promises -- ws does not consume listener return values.
     socket.on('message', async (data) => {
       try {
-        const payload: ClientMessage = JSON.parse(
+        const payload = JSON.parse(
           // rslint-disable-next-line @typescript-eslint/no-base-to-string
           typeof data === 'string' ? data : data.toString(),
-        );
+        ) as ClientMessage;
 
         const { context } = this;
         const config = context.normalizedConfig;

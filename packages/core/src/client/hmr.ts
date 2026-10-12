@@ -305,7 +305,7 @@ export function init(
   }
 
   function onMessage(e: MessageEvent<string>) {
-    const message: ServerMessage = JSON.parse(e.data);
+    const message = JSON.parse(e.data) as ServerMessage;
 
     switch (message.type) {
       case 'hash':
