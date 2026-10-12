@@ -27,7 +27,21 @@ type AssetProcessor = (
   processAsset: (name: string, index: number) => Promise<void>,
 ) => Promise<void>;
 
-/** Share a lazy asset queue across all environments in one build. */
+/**
+ * Creates an asset processor to share across all environments in one build.
+ *
+ * Runs at most MAX_CONCURRENT_ASSETS callbacks concurrently across all calls.
+ * Each callback starts only after acquiring a slot, so source reads and
+ * compression stay lazy. Completed slots are reused immediately without
+ * waiting for a whole batch. Each call uses a bounded number of consumers
+ * instead of creating a promise for every asset upfront.
+ *
+ * The callback receives the asset's original index so callers can preserve
+ * result order even when callbacks finish out of order.
+ * On failure, stops starting callbacks across environments. Each affected
+ * call drains its consumers before rejecting with the first error.
+ * Create a new processor for each build because the failure is retained.
+ */
 export function createAssetProcessor(): AssetProcessor {
   let active = 0;
   const waiting: (() => void)[] = [];
