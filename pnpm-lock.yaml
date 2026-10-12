@@ -684,6 +684,9 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.3.0(@types/react@19.3.0)
+      '@types/ws':
+        specifier: 'catalog:'
+        version: 8.18.2
       create-rsbuild:
         specifier: workspace:*
         version: link:../packages/create-rsbuild
@@ -702,6 +705,9 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
+      ws:
+        specifier: 'catalog:'
+        version: 8.22.0
 
   e2e/assets: {}
 

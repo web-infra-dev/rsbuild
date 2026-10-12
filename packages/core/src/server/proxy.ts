@@ -58,7 +58,12 @@ export async function createProxyMiddleware(
   );
 
   for (const opts of formattedOptions) {
-    const proxyMiddleware = baseMiddleware(opts);
+    const proxyMiddleware = baseMiddleware({
+      ...opts,
+      // Rsbuild dispatches upgrades explicitly and removes its listener on close.
+      // Prevent HTTP requests from registering an additional proxy listener.
+      ws: false,
+    });
 
     const middleware: Middleware = async (req, res, next) => {
       const bypassUrl =
