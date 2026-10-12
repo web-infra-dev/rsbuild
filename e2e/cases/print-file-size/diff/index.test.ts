@@ -77,8 +77,10 @@ test('should not print gzip total diff when change is below threshold', async ({
   expect(snapshotFile).toBeTruthy();
 
   const snapshotPath = join(snapshotDir, snapshotFile!);
-  const snapshots: Record<string, { totalGzipSize: number }> =
-    await fse.readJSON(snapshotPath);
+  const snapshots = (await fse.readJSON(snapshotPath)) as Record<
+    string,
+    { totalGzipSize: number }
+  >;
   const environmentName = Object.keys(snapshots)[0];
 
   expect(snapshots[environmentName].totalGzipSize).toBeGreaterThan(5);

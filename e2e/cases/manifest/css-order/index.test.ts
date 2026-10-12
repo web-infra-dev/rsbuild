@@ -11,7 +11,7 @@ test('should generate manifest with initial chunks in correct order', async ({
   const filenames = Object.keys(files);
   const manifestContent =
     files[filenames.find((file) => file.endsWith('manifest.json'))!];
-  const manifest: ManifestData = JSON.parse(manifestContent);
+  const manifest = JSON.parse(manifestContent) as ManifestData;
 
   for (const entry of Object.values(manifest.entries)) {
     const htmlFileName = entry.html![0];

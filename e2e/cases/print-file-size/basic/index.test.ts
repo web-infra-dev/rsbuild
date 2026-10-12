@@ -341,3 +341,40 @@ test('should report complete compressed totals for many assets across environmen
   await rsbuild.expectLog(`gzip: 32/${size}/${gzipSize}`);
   await rsbuild.expectLog(`brotli: 32/${size}/${brotliSize}`);
 });
+
+test('should emit assets after a reporting failure and reset the queue for the next build', async ({
+  build,
+}) => {
+  let shouldFail = true;
+  const rsbuild = await build({
+    config: {
+      performance: {
+        printFileSize: {
+          detail: false,
+          include: ({ name }) => {
+            if (shouldFail) {
+              throw new Error('File size reporting failed');
+            }
+            return name === 'index.html';
+          },
+          total: ({ assets }) => `Reported ${assets.length} asset`,
+        },
+      },
+    },
+  });
+  await rsbuild.expectLog('Failed to print file size.');
+  expect(
+    await readFile(join(rsbuild.distPath, 'index.html'), 'utf8'),
+  ).toContain('<html');
+  await rsbuild.close();
+  rsbuild.clearLogs();
+  shouldFail = false;
+
+  const result = await rsbuild.instance.build();
+  try {
+    await rsbuild.expectLog('Reported 1 asset');
+    rsbuild.expectNoLog('Failed to print file size.');
+  } finally {
+    await result.close();
+  }
+});
