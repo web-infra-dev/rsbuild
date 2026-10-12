@@ -326,7 +326,8 @@ async function getFileSizes(
   }[] = [];
   const compilationAssets = compilation.assets;
 
-  const names = Object.keys(compilationAssets);
+  // Avoid per-file property descriptor lookups on the assets proxy.
+  const names = Object.getOwnPropertyNames(compilationAssets);
   await processAssets(names, async (assetName, index) => {
     const filePath = getFilePath(assetName);
 
