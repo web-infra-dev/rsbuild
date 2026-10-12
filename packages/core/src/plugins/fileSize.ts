@@ -33,10 +33,7 @@ export function createAssetProcessor(): AssetProcessor {
   const waiting: (() => void)[] = [];
   let failure: { error: unknown } | undefined;
 
-  return async (
-    names: string[],
-    processAsset: (name: string, index: number) => Promise<void>,
-  ) => {
+  return async (names, processAsset) => {
     let cursor = 0;
 
     const consume = async () => {
@@ -59,6 +56,7 @@ export function createAssetProcessor(): AssetProcessor {
         } finally {
           const next = waiting.shift();
           if (next) {
+            // Transfer this slot to a waiting consumer.
             next();
           } else {
             active--;
@@ -320,52 +318,48 @@ async function getFileSizes(
   }[] = [];
   const compilationAssets = compilation.assets;
 
-  await processAssets(
-    Object.keys(compilationAssets),
-    async (assetName, index) => {
-      const filePath = getFilePath(assetName);
+  const names = Object.keys(compilationAssets);
+  await processAssets(names, async (assetName, index) => {
+    const filePath = getFilePath(assetName);
 
-      if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
+    if (!exclude && EXCLUDE_ASSET_REGEX.test(filePath)) {
+      return;
+    }
+
+    // Accessing an asset retrieves its Source through the Rust-JS bridge,
+    // so filter by filename before reading it.
+    const value = compilationAssets[assetName];
+    const content =
+      options.compressed && isCompressible(filePath)
+        ? value.source()
+        : undefined;
+    const size =
+      content === undefined ? value.size() : Buffer.byteLength(content);
+
+    if (exclude || include) {
+      const publicAsset: PrintFileSizeAsset = {
+        name: filePath,
+        size,
+      };
+      if (exclude?.(publicAsset)) {
         return;
       }
-
-      // Accessing an asset retrieves its Source through the Rust-JS bridge,
-      // so filter by filename before reading it.
-      const value = compilationAssets[assetName];
-      const content =
-        options.compressed && isCompressible(filePath)
-          ? value.source()
-          : undefined;
-      const size =
-        content === undefined ? value.size() : Buffer.byteLength(content);
-
-      if (exclude || include) {
-        const publicAsset: PrintFileSizeAsset = {
-          name: filePath,
-          size,
-        };
-        if (exclude?.(publicAsset)) {
-          return;
-        }
-        if (include) {
-          if (!include(publicAsset)) {
-            return;
-          }
-        }
+      if (include && !include(publicAsset)) {
+        return;
       }
+    }
 
-      const compressedSize =
-        content === undefined
-          ? null
-          : await calcCompressedSize(
-              content,
-              compression.type,
-              compression.level,
-            );
-      // Preserve input order regardless of compression completion order.
-      fileSizes[index] = { filePath, size, compressedSize };
-    },
-  );
+    const compressedSize =
+      content === undefined
+        ? null
+        : await calcCompressedSize(
+            content,
+            compression.type,
+            compression.level,
+          );
+    // Preserve input order regardless of compression completion order.
+    fileSizes[index] = { filePath, size, compressedSize };
+  });
 
   return fileSizes.filter(Boolean);
 }

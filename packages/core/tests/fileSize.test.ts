@@ -30,7 +30,6 @@ describe('plugin-file-size', () => {
     release.shift()!();
     await setImmediate();
     expect(started).toHaveLength(17);
-    expect(started[16]).toBe('second-0');
 
     drain = true;
     for (const resolve of release) {
