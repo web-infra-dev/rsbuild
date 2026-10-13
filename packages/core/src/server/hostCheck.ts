@@ -1,8 +1,43 @@
 import type { IncomingHttpHeaders } from 'node:http';
 import { isIP } from 'node:net';
+import type { Connect } from '../types';
+import type { UpgradeEvent } from './helper';
 
-export const HOST_CHECK_ERROR =
+const HOST_CHECK_ERROR =
   'Blocked request: disallowed or invalid Host header. To allow a trusted hostname, add it to server.allowedHosts.';
+
+export function createHostCheckMiddleware(
+  allowedHosts: readonly string[],
+): Connect.NextHandleFunction {
+  return (req, res, next) => {
+    if (isRequestHostAllowed(req.headers, allowedHosts)) {
+      next();
+      return;
+    }
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end(HOST_CHECK_ERROR);
+  };
+}
+
+export function withHostCheck(
+  onUpgrade: UpgradeEvent,
+  allowedHosts: readonly string[],
+): UpgradeEvent {
+  return (req, socket, head) => {
+    if (!isRequestHostAllowed(req.headers, allowedHosts)) {
+      socket.end(
+        'HTTP/1.1 403 Forbidden\r\n' +
+          'Connection: close\r\n' +
+          'Content-Type: text/plain; charset=utf-8\r\n' +
+          `Content-Length: ${Buffer.byteLength(HOST_CHECK_ERROR)}\r\n\r\n` +
+          HOST_CHECK_ERROR,
+      );
+      socket.destroySoon();
+      return;
+    }
+    onUpgrade(req, socket, head);
+  };
+}
 
 export function isRequestHostAllowed(
   headers: IncomingHttpHeaders,

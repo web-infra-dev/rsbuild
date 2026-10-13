@@ -29,6 +29,7 @@ import {
 } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import { createHttpServer } from './httpServer';
+import { createHostCheckMiddleware, withHostCheck } from './hostCheck';
 import {
   faviconFallbackMiddleware,
   getBaseUrlMiddleware,
@@ -61,6 +62,15 @@ export async function startPreviewServer(
   const serverConfig = config.server;
   const { host, headers, proxy, historyApiFallback, compress, base, cors } =
     serverConfig;
+  const allowedHosts =
+    serverConfig.allowedHosts === true
+      ? undefined
+      : [...serverConfig.allowedHosts, host];
+
+  // Validate before server.setup and plugin hooks can register middleware.
+  if (allowedHosts) {
+    middlewares.use(createHostCheckMiddleware(allowedHosts));
+  }
 
   const assetPrefixes = context.environmentList.map(
     (environment) => environment.config.output.assetPrefix,
@@ -185,7 +195,10 @@ export async function startPreviewServer(
       middlewares.use(middleware);
     }
 
-    httpServer.on('upgrade', upgrade);
+    httpServer.on(
+      'upgrade',
+      allowedHosts ? withHostCheck(upgrade, allowedHosts) : upgrade,
+    );
   }
 
   // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),

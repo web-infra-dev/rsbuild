@@ -42,7 +42,7 @@ import {
   type StartDevServerResult,
 } from './helper';
 import { createHttpServer } from './httpServer';
-import { HOST_CHECK_ERROR, isRequestHostAllowed } from './hostCheck';
+import { createHostCheckMiddleware, withHostCheck } from './hostCheck';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
 import { getPublicPathnames } from './publicPathnames';
@@ -446,14 +446,7 @@ export async function createDevServer<
 
   // Validate before server.setup and plugin hooks can register middleware.
   if (allowedHosts) {
-    middlewares.use((req, res, next) => {
-      if (isRequestHostAllowed(req.headers, allowedHosts)) {
-        next();
-        return;
-      }
-      res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
-      res.end(HOST_CHECK_ERROR);
-    });
+    middlewares.use(createHostCheckMiddleware(allowedHosts));
   }
 
   const httpServer = middlewareMode
@@ -581,21 +574,10 @@ export async function createDevServer<
   });
 
   if (allowedHosts) {
-    const { onUpgrade } = state.devMiddlewares;
-    state.devMiddlewares.onUpgrade = (req, socket, head) => {
-      if (!isRequestHostAllowed(req.headers, allowedHosts)) {
-        socket.end(
-          'HTTP/1.1 403 Forbidden\r\n' +
-            'Connection: close\r\n' +
-            'Content-Type: text/plain; charset=utf-8\r\n' +
-            `Content-Length: ${Buffer.byteLength(HOST_CHECK_ERROR)}\r\n\r\n` +
-            HOST_CHECK_ERROR,
-        );
-        socket.destroySoon();
-        return;
-      }
-      onUpgrade(req, socket, head);
-    };
+    state.devMiddlewares.onUpgrade = withHostCheck(
+      state.devMiddlewares.onUpgrade,
+      allowedHosts,
+    );
   }
 
   // start watching
