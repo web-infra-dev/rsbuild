@@ -101,6 +101,8 @@ type ServerSetupContext =
 
 当 `server.setup` 被调用时，Rsbuild 内置的中间件还未注册，因此你添加的中间件会早于内置中间件执行。
 
+通过 [server.allowedHosts](/config/server/allowed-hosts) 启用 Host 校验时，开发服务器会在用户中间件之前进行校验。
+
 `server.setup` 允许你返回一个回调函数，当 Rsbuild 内置的中间件注册完成后，会执行你返回的回调函数，在回调函数中注册的中间件会晚于内置中间件执行。
 
 ```ts title="rsbuild.config.ts"
