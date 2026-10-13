@@ -7,7 +7,7 @@ description: 'Specify which hostnames the Rsbuild dev and preview servers accept
 - **Type:** `string[] | true`
 - **Default:** `true`
 
-Specify which hostnames the dev and preview servers accept in incoming requests. This option applies to HTTP and WebSocket requests, including when HTTPS is enabled.
+Specify which hostnames the dev and preview servers accept in HTTP and WebSocket requests.
 
 ## Usage
 
@@ -39,13 +39,13 @@ Setting `allowedHosts: true` disables Host validation and can leave server conte
 
 [server.host](/config/server/host) determines the network address the server listens on. `server.allowedHosts` determines which hostnames it accepts in requests.
 
-For example, `host: '0.0.0.0'` lets the server listen on all IPv4 interfaces. With `allowedHosts: ['app.example.test']`, it accepts requests for `app.example.test` in addition to the automatically allowed hosts, and rejects requests for other hostnames. Setting `host` to `0.0.0.0` or `::` does not disable Host validation.
+For example, `host: '0.0.0.0'` lets the server listen on all IPv4 interfaces. With `allowedHosts: ['app.example.test']`, it accepts requests for `app.example.test` in addition to the automatically allowed hosts, and rejects requests for other hostnames.
 
 ## Request validation
 
 When validation is enabled, requests with a missing, invalid, or disallowed hostname receive a `403 Forbidden` response. The check runs before custom middleware, proxy forwarding, and HMR connections.
 
-Rsbuild reads the hostname from `Host` in HTTP/1.1 requests and from `:authority` in HTTP/2 requests. Both fields can include a port. Requests with conflicting `Host` and `:authority` values are rejected. Forwarded headers such as `X-Forwarded-Host` do not affect this check.
+Rsbuild reads the hostname from `Host` in HTTP/1.1 requests and from `:authority` in HTTP/2 requests. Requests with conflicting `Host` and `:authority` values are rejected. Forwarded headers such as `X-Forwarded-Host` do not affect this check.
 
 In dev server middleware mode, Rsbuild checks requests that reach its middleware or WebSocket handler. Your application is responsible for checking any routes or WebSocket connections it handles separately.
 

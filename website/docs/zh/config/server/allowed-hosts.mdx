@@ -7,7 +7,7 @@ description: '指定可以用来访问 Rsbuild 开发服务器和预览服务器
 - **类型：** `string[] | true`
 - **默认值：** `true`
 
-指定可以用来访问开发服务器和预览服务器的主机名。此选项适用于 HTTP 和 WebSocket 请求，启用 HTTPS 时也会生效。
+指定可以用来访问开发服务器和预览服务器的主机名，适用于 HTTP 和 WebSocket 请求。
 
 ## 使用方式 \{#usage}
 
@@ -39,13 +39,13 @@ export default {
 
 [server.host](/config/server/host) 决定服务器监听哪个网络地址，`server.allowedHosts` 决定服务器接受哪些主机名的请求。
 
-例如，`host: '0.0.0.0'` 表示监听所有 IPv4 网络接口。同时配置 `allowedHosts: ['app.example.test']` 后，除了自动允许的主机名和 IP 地址，服务器还会接受发往 `app.example.test` 的请求，并拒绝其他主机名的请求。将 `host` 设为 `0.0.0.0` 或 `::` 不会关闭 Host 校验。
+例如，`host: '0.0.0.0'` 表示监听所有 IPv4 网络接口。同时配置 `allowedHosts: ['app.example.test']` 后，除了自动允许的主机名和 IP 地址，服务器还会接受发往 `app.example.test` 的请求，并拒绝其他主机名的请求。
 
 ## 请求校验 \{#request-validation}
 
 启用校验后，如果请求中的主机名缺失、格式无效或不在允许范围内，服务器会返回 `403 Forbidden`。校验会在自定义中间件、代理转发和 HMR 连接处理之前进行。
 
-Rsbuild 从 HTTP/1.1 请求的 `Host` 或 HTTP/2 请求的 `:authority` 中读取主机名，这两个字段都可以包含端口。如果 `Host` 与 `:authority` 的值冲突，请求会被拒绝。`X-Forwarded-Host` 等转发头不影响校验结果。
+Rsbuild 从 HTTP/1.1 请求的 `Host` 或 HTTP/2 请求的 `:authority` 中读取主机名。如果 `Host` 与 `:authority` 的值冲突，请求会被拒绝。`X-Forwarded-Host` 等转发头不影响校验结果。
 
 在开发服务器的中间件模式下，校验只覆盖交由 Rsbuild 中间件或 WebSocket 处理器处理的请求。应用自行处理的路由和 WebSocket 连接需要自行校验。
 
