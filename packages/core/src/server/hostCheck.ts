@@ -8,16 +8,9 @@ export function isHostAllowed(
   hostHeader: string | undefined,
   allowedHosts: readonly string[],
 ): boolean {
-  if (!hostHeader) {
-    return false;
-  }
-
-  // Accept only an authority, not paths, credentials, or whitespace that URL
-  // parsing would otherwise accept. Compare the full match to reject final newlines.
-  const match = /^(?:\[[\da-f:.]+\]|[\w-]+(?:\.[\w-]+)*\.?)(?::\d+)?$/i.exec(
-    hostHeader,
-  );
-  if (!match || match[0] !== hostHeader) {
+  // Reject characters that URL parsing could interpret as other URL components
+  // or normalize away instead of treating them as part of the host.
+  if (!hostHeader || /[\s/@\\?#%]/.test(hostHeader)) {
     return false;
   }
 

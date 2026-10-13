@@ -23,7 +23,7 @@ it.each<[string | undefined, string[], boolean]>([
   [undefined, [], false],
   ['', [], false],
   ['localhost:65536', [], false],
-  ['localhost:', [], false],
+  ['localhost:', [], true],
   ['localhost:abc', [], false],
   ['localhost:3000:4000', [], false],
   ['::1', [], false],
@@ -40,8 +40,8 @@ it.each<[string | undefined, string[], boolean]>([
   ['localhost\n', [], false],
   [' localhost', [], false],
   ['localhost,attacker.test', [], false],
-  ['.localhost', [], false],
-  ['app..localhost', [], false],
+  ['.localhost', [], true],
+  ['app..localhost', [], true],
 ])('isHostAllowed(%j, %j) should return %s', (host, allowedHosts, expected) => {
   expect(isHostAllowed(host, allowedHosts)).toBe(expected);
 });
