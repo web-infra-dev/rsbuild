@@ -18,7 +18,7 @@ const getSolidLoaderOptions = (config: Rspack.Configuration) => {
 
     const solidLoader = rule.use.find(
       (item) =>
-        typeof item === 'object' && item.loader?.includes('solidLoader.mjs'),
+        typeof item === 'object' && item?.loader?.includes('solidLoader.mjs'),
     );
 
     if (solidLoader && typeof solidLoader === 'object') {
