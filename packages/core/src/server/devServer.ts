@@ -42,6 +42,7 @@ import {
   type StartDevServerResult,
 } from './helper';
 import { createHttpServer } from './httpServer';
+import { HOST_CHECK_ERROR, isRequestHostAllowed } from './hostCheck';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
 import { getPublicPathnames } from './publicPathnames';
@@ -438,6 +439,22 @@ export async function createDevServer<
     /* rspackChunkName: "connect-next" */ 'connect-next'
   );
   const middlewares = connect();
+  const allowedHosts =
+    config.server.allowedHosts === true
+      ? undefined
+      : [...config.server.allowedHosts, host];
+
+  // Validate before server.setup and plugin hooks can register middleware.
+  if (allowedHosts) {
+    middlewares.use((req, res, next) => {
+      if (isRequestHostAllowed(req.headers, allowedHosts)) {
+        next();
+        return;
+      }
+      res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end(HOST_CHECK_ERROR);
+    });
+  }
 
   const httpServer = middlewareMode
     ? null
@@ -562,6 +579,24 @@ export async function createDevServer<
     context,
     postCallbacks,
   });
+
+  if (allowedHosts) {
+    const { onUpgrade } = state.devMiddlewares;
+    state.devMiddlewares.onUpgrade = (req, socket, head) => {
+      if (!isRequestHostAllowed(req.headers, allowedHosts)) {
+        socket.end(
+          'HTTP/1.1 403 Forbidden\r\n' +
+            'Connection: close\r\n' +
+            'Content-Type: text/plain; charset=utf-8\r\n' +
+            `Content-Length: ${Buffer.byteLength(HOST_CHECK_ERROR)}\r\n\r\n` +
+            HOST_CHECK_ERROR,
+        );
+        socket.destroySoon();
+        return;
+      }
+      onUpgrade(req, socket, head);
+    };
+  }
 
   // start watching
   state.buildManager?.watch();
