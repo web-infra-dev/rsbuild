@@ -15,14 +15,25 @@ Host validation is disabled by default. Set this option to an array to enable it
 
 - `true`: disable validation and accept any hostname.
 - `[]`: allow only `localhost`, its subdomains (such as `app.localhost`), IP addresses, and the hostname set by [server.host](/config/server/host) or `--host`.
-- `string[]`: allow additional hostnames alongside those listed above. An entry such as `app.example.test` matches only that hostname. A leading `.` also allows all subdomains: `.example.test` matches `example.test`, `app.example.test`, and `a.b.example.test`.
+- `string[]`: allow additional hostnames alongside those listed above.
 
-For example, to allow a specific hostname and a domain with all its subdomains:
+Allow a specific hostname without its subdomains:
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
-    allowedHosts: ['app.example.test', '.internal.example.test'],
+    allowedHosts: ['app.example.test'],
+  },
+};
+```
+
+To allow a domain and all its subdomains, add a leading `.`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    // Allows example.test, app.example.test, a.b.example.test, etc.
+    allowedHosts: ['.example.test'],
   },
 };
 ```

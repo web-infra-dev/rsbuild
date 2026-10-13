@@ -15,14 +15,25 @@ description: '指定可以用来访问 Rsbuild 开发服务器和预览服务器
 
 - `true`：关闭校验，接受任意主机名。
 - `[]`：仅允许 `localhost`、它的子域名（如 `app.localhost`）、IP 地址，以及通过 [server.host](/config/server/host) 或 `--host` 配置的主机名。
-- `string[]`：在上述范围之外，额外允许数组中的主机名。例如，`app.example.test` 仅匹配该主机名；以 `.` 开头则同时允许域名自身及其所有子域名，如 `.example.test` 可匹配 `example.test`、`app.example.test` 和 `a.b.example.test`。
+- `string[]`：在上述范围之外，额外允许数组中的主机名。
 
-例如，允许一个指定的主机名，以及另一个域名和它的所有子域名：
+允许指定的主机名，不包括它的子域名：
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
-    allowedHosts: ['app.example.test', '.internal.example.test'],
+    allowedHosts: ['app.example.test'],
+  },
+};
+```
+
+允许某个域名及其所有子域名，在域名前加上 `.`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    // 允许 example.test、app.example.test、a.b.example.test 等
+    allowedHosts: ['.example.test'],
   },
 };
 ```
