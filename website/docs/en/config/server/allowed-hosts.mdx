@@ -1,0 +1,67 @@
+---
+description: 'Specify which hostnames the Rsbuild dev and preview servers accept.'
+---
+
+# server.allowedHosts
+
+- **Type:** `string[] | true`
+- **Default:** `true`
+
+Specify which hostnames the dev and preview servers accept in HTTP and WebSocket requests.
+
+## Usage
+
+Host validation is disabled by default. Set this option to an array to enable it:
+
+- `true`: disable validation and accept any hostname.
+- `[]`: allow only `localhost`, its subdomains (such as `app.localhost`), IP addresses, and the hostname set by [server.host](/config/server/host) or `--host`.
+- `string[]`: allow additional hostnames alongside those listed above.
+
+Allow a specific hostname without its subdomains:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    allowedHosts: ['app.example.test'],
+  },
+};
+```
+
+To allow a domain and all its subdomains, add a leading `.`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    // Allows example.test, app.example.test, a.b.example.test, etc.
+    allowedHosts: ['.example.test'],
+  },
+};
+```
+
+Use hostnames without a protocol, port, or path. For example, use `app.example.test`, not `https://app.example.test:3000/`. Hostnames are case-insensitive.
+
+:::warning
+Only allow domains whose DNS records you control or whose owners you trust. Do not allow broad suffixes such as `.com`, which would also allow domains owned by others.
+
+Setting `allowedHosts: true` disables Host validation and can leave server content exposed to DNS rebinding attacks. Use `[]` or a list of trusted hostnames to enable protection. Host validation does not replace authentication or [CORS configuration](/config/server/cors).
+:::
+
+## Difference from server.host
+
+[server.host](/config/server/host) determines the network address the server listens on. `server.allowedHosts` determines which hostnames it accepts in requests.
+
+For example, `host: '0.0.0.0'` lets the server listen on all IPv4 interfaces. Hostnames used to access it must still be allowed by `allowedHosts`.
+
+## Request validation
+
+When validation is enabled, accessing the server through a disallowed hostname returns `403 Forbidden`. If you trust the hostname, add it to `server.allowedHosts`.
+
+If you use a reverse proxy, make sure the hostname it forwards to Rsbuild is allowed.
+
+In dev server middleware mode, this option only protects requests handled by Rsbuild. Your application must validate requests it handles separately.
+
+## Version history
+
+| Version | Changes                                                      |
+| ------- | ------------------------------------------------------------ |
+| v2.2.13 | Added `server.allowedHosts` for the dev and preview servers. |
