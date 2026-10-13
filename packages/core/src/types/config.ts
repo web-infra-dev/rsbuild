@@ -498,7 +498,8 @@ export interface ServerConfig {
    */
   host?: string | boolean;
   /**
-   * Hostnames allowed to access the dev server. `true` disables Host validation.
+   * Hostnames allowed to access the dev or preview server.
+   * `true` disables Host validation.
    * Localhost, IP addresses, and `server.host` are always allowed.
    * A leading dot allows a hostname and all its subdomains.
    * @default true
