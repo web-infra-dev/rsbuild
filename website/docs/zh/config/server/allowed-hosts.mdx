@@ -1,0 +1,34 @@
+---
+description: '控制哪些主机名可以访问 Rsbuild 开发服务器。'
+---
+
+# server.allowedHosts
+
+- **类型：** `string[] | true`
+- **默认值：** `true`
+
+控制哪些主机名可以通过 HTTP 或 WebSocket 请求访问开发服务器。启用 HTTPS 时此选项同样生效，目前不适用于预览服务器。
+
+- `true`：关闭 Host 校验，接受任意主机名。
+- `[]`：允许 `localhost`、`.localhost` 的子域名、IP 地址，以及通过 [server.host](/config/server/host) 或 `--host` 配置的主机名。
+- `string[]`：额外允许指定的主机名。以 `.` 开头的条目同时允许域名自身及其所有子域名。例如，`.example.test` 允许 `example.test` 和 `app.example.test`。
+
+数组条目应只包含主机名，不包含协议、端口或路径。匹配不区分大小写，并忽略末尾的点。请求的端口不影响匹配结果。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    allowedHosts: ['app.example.test', '.internal.example.test'],
+  },
+};
+```
+
+`server.host` 控制服务器监听哪个网络接口；`server.allowedHosts` 检查请求中的主机名。启用 Host 校验后，监听 `0.0.0.0` 或 `::` 并不意味着允许任意主机名。
+
+缺少 Host、Host 无效或不在允许范围内的请求会收到 `403` 响应，校验早于用户中间件、代理请求和 HMR 连接的处理。HTTP/2 请求使用 `:authority` 进行校验；`Host` 与 `:authority` 冲突时会拒绝请求。`X-Forwarded-Host` 等转发头不参与校验。
+
+在中间件模式下，校验覆盖由 Rsbuild 中间件和 WebSocket 处理器处理的请求。应用自行管理的路由和 upgrade 监听器需要自行校验。
+
+:::warning
+仅允许你能控制的主机名。保持 `allowedHosts: true` 会关闭对 DNS 重绑定攻击的防护，恶意网站可能借此读取开发服务器的内容。Host 校验不能替代身份认证或 [CORS 配置](/config/server/cors)。
+:::

@@ -498,6 +498,13 @@ export interface ServerConfig {
    */
   host?: string | boolean;
   /**
+   * Hostnames allowed to access the dev server. `true` disables Host validation.
+   * Localhost, IP addresses, and `server.host` are always allowed.
+   * A leading dot allows a hostname and all its subdomains.
+   * @default true
+   */
+  allowedHosts?: string[] | true;
+  /**
    * Adds headers to all responses.
    */
   headers?: Record<string, string | string[]>;
@@ -568,7 +575,7 @@ export interface ServerConfig {
    * such as registering custom middleware or running pre-start tasks.
    *
    * When `server.setup` is called, Rsbuild built-in middlewares are not registered yet,
-   * so middlewares you add run earlier than built-ins.
+   * so middlewares you add run earlier than built-ins, except Host validation.
    *
    * `server.setup` can return a callback function. After built-in middlewares are registered,
    * Rsbuild will execute that callback. Middlewares registered in the callback run later than built-ins.

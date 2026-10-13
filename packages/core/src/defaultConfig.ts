@@ -87,6 +87,7 @@ const getDefaultServerConfig = (): Omit<
 > => ({
   port: DEFAULT_PORT,
   host: LOCALHOST,
+  allowedHosts: true,
   open: false,
   base: '/',
   htmlFallback: 'index',

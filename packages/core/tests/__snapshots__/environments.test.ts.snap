@@ -1249,6 +1249,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     },
   },
   "server": {
+    "allowedHosts": true,
     "base": "/",
     "compress": true,
     "cors": {
@@ -1406,6 +1407,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     },
   },
   "server": {
+    "allowedHosts": true,
     "base": "/",
     "compress": true,
     "cors": {
@@ -1567,6 +1569,7 @@ exports[`environment config > should print environment config when inspecting co
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -1724,6 +1727,7 @@ exports[`environment config > should print environment config when inspecting co
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -1901,6 +1905,7 @@ exports[`environment config > should support modifying environment config by api
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -2059,6 +2064,7 @@ exports[`environment config > should support modifying environment config by api
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -2217,6 +2223,7 @@ exports[`environment config > should support modifying environment config by api
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -2377,6 +2384,7 @@ exports[`environment config > should support modifying single environment config
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -2535,6 +2543,7 @@ exports[`environment config > should support modifying single environment config
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {

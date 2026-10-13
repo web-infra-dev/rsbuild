@@ -1,4 +1,5 @@
-import { isHostAllowed } from '../src/server/hostCheck';
+import type { IncomingHttpHeaders } from 'node:http';
+import { isHostAllowed, isRequestHostAllowed } from '../src/server/hostCheck';
 
 it.each<[string | undefined, string[], boolean]>([
   ['localhost', [], true],
@@ -44,4 +45,17 @@ it.each<[string | undefined, string[], boolean]>([
   ['app..localhost', [], true],
 ])('isHostAllowed(%j, %j) should return %s', (host, allowedHosts, expected) => {
   expect(isHostAllowed(host, allowedHosts)).toBe(expected);
+});
+
+it.each<[IncomingHttpHeaders, boolean]>([
+  [{ host: 'localhost' }, true],
+  [{ ':authority': 'localhost:3000' }, true],
+  [{ ':authority': 'attacker.test' }, false],
+  [{ ':authority': 'localhost', host: 'localhost' }, true],
+  [{ ':authority': 'localhost', host: '127.0.0.1' }, false],
+  [{ ':authority': ['localhost'] }, false],
+  [{ 'x-forwarded-host': 'localhost' }, false],
+  [{ host: 'attacker.test', 'x-forwarded-host': 'localhost' }, false],
+])('isRequestHostAllowed(%j) should return %s', (headers, expected) => {
+  expect(isRequestHostAllowed(headers, [])).toBe(expected);
 });
