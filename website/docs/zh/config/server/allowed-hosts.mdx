@@ -1,5 +1,5 @@
 ---
-description: '控制哪些主机名可以访问 Rsbuild 开发服务器。'
+description: '控制哪些主机名可以访问 Rsbuild 开发服务器或预览服务器。'
 ---
 
 # server.allowedHosts
@@ -7,7 +7,7 @@ description: '控制哪些主机名可以访问 Rsbuild 开发服务器。'
 - **类型：** `string[] | true`
 - **默认值：** `true`
 
-控制哪些主机名可以通过 HTTP 或 WebSocket 请求访问开发服务器。启用 HTTPS 时此选项同样生效，目前不适用于预览服务器。
+控制哪些主机名可以通过 HTTP 或 WebSocket 请求访问开发服务器或预览服务器。启用 HTTPS 时此选项同样生效。
 
 - `true`：关闭 Host 校验，接受任意主机名。
 - `[]`：允许 `localhost`、`.localhost` 的子域名、IP 地址，以及通过 [server.host](/config/server/host) 或 `--host` 配置的主机名。
@@ -27,8 +27,8 @@ export default {
 
 缺少 Host、Host 无效或不在允许范围内的请求会收到 `403` 响应，校验早于用户中间件、代理请求和 HMR 连接的处理。HTTP/2 请求使用 `:authority` 进行校验；`Host` 与 `:authority` 冲突时会拒绝请求。`X-Forwarded-Host` 等转发头不参与校验。
 
-在中间件模式下，校验覆盖由 Rsbuild 中间件和 WebSocket 处理器处理的请求。应用自行管理的路由和 upgrade 监听器需要自行校验。
+当开发服务器使用中间件模式时，校验覆盖由 Rsbuild 中间件和 WebSocket 处理器处理的请求。应用自行管理的路由和 upgrade 监听器需要自行校验。
 
 :::warning
-仅允许你能控制的主机名。保持 `allowedHosts: true` 会关闭对 DNS 重绑定攻击的防护，恶意网站可能借此读取开发服务器的内容。Host 校验不能替代身份认证或 [CORS 配置](/config/server/cors)。
+仅允许你能控制的主机名。保持 `allowedHosts: true` 会关闭对 DNS 重绑定攻击的防护，恶意网站可能借此读取服务器的内容。Host 校验不能替代身份认证或 [CORS 配置](/config/server/cors)。
 :::

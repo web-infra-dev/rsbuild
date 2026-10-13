@@ -1,5 +1,5 @@
 ---
-description: 'Control which hostnames can access the Rsbuild dev server.'
+description: 'Control which hostnames can access the Rsbuild dev or preview server.'
 ---
 
 # server.allowedHosts
@@ -7,7 +7,7 @@ description: 'Control which hostnames can access the Rsbuild dev server.'
 - **Type:** `string[] | true`
 - **Default:** `true`
 
-Control which hostnames can access the dev server through HTTP or WebSocket requests. This option also applies when HTTPS is enabled. It does not currently apply to the preview server.
+Control which hostnames can access the dev or preview server through HTTP or WebSocket requests. This option also applies when HTTPS is enabled.
 
 - `true`: disable Host validation and accept any hostname.
 - `[]`: allow `localhost`, subdomains of `.localhost`, IP addresses, and the hostname configured by [server.host](/config/server/host) or `--host`.
@@ -27,8 +27,8 @@ export default {
 
 Requests with a missing, invalid, or disallowed Host receive a `403` response before user middleware, proxy requests, or HMR connections are handled. HTTP/2 requests are checked using `:authority`; conflicting `Host` and `:authority` headers are rejected. Forwarded headers such as `X-Forwarded-Host` are not used for validation.
 
-In middleware mode, validation applies to requests handled by Rsbuild's middleware and WebSocket handler. Routes and upgrade listeners managed separately by your application need their own validation.
+When using the dev server in middleware mode, validation applies to requests handled by Rsbuild's middleware and WebSocket handler. Routes and upgrade listeners managed separately by your application need their own validation.
 
 :::warning
-Allow only hostnames you control. Keeping `allowedHosts: true` disables protection against DNS rebinding attacks, which can expose dev server content to malicious websites. Host validation does not replace authentication or [CORS configuration](/config/server/cors).
+Allow only hostnames you control. Keeping `allowedHosts: true` disables protection against DNS rebinding attacks, which can expose server content to malicious websites. Host validation does not replace authentication or [CORS configuration](/config/server/cors).
 :::
