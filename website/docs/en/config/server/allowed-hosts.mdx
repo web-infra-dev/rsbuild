@@ -9,6 +9,8 @@ description: 'Control which hostnames can access the Rsbuild dev or preview serv
 
 Control which hostnames can access the dev or preview server through HTTP or WebSocket requests. This option also applies when HTTPS is enabled.
 
+## Usage
+
 - `true`: disable Host validation and accept any hostname.
 - `[]`: allow `localhost`, subdomains of `.localhost`, IP addresses, and the hostname configured by [server.host](/config/server/host) or `--host`.
 - `string[]`: also allow the specified hostnames. An entry starting with `.` allows both the hostname itself and all its subdomains. For example, `.example.test` allows `example.test` and `app.example.test`.
@@ -23,12 +25,22 @@ export default {
 };
 ```
 
+:::warning
+Allow only hostnames you control. Keeping `allowedHosts: true` disables protection against DNS rebinding attacks, which can expose server content to malicious websites. Host validation does not replace authentication or [CORS configuration](/config/server/cors).
+:::
+
+## Difference from server.host
+
 `server.host` controls which network interface the server listens on; `server.allowedHosts` checks the hostname in incoming requests. Listening on `0.0.0.0` or `::` does not allow arbitrary hostnames when Host validation is enabled.
+
+## Request validation
 
 Requests with a missing, invalid, or disallowed Host receive a `403` response before user middleware, proxy requests, or HMR connections are handled. HTTP/2 requests are checked using `:authority`; conflicting `Host` and `:authority` headers are rejected. Forwarded headers such as `X-Forwarded-Host` are not used for validation.
 
 When using the dev server in middleware mode, validation applies to requests handled by Rsbuild's middleware and WebSocket handler. Routes and upgrade listeners managed separately by your application need their own validation.
 
-:::warning
-Allow only hostnames you control. Keeping `allowedHosts: true` disables protection against DNS rebinding attacks, which can expose server content to malicious websites. Host validation does not replace authentication or [CORS configuration](/config/server/cors).
-:::
+## Version history
+
+| Version | Changes                                                      |
+| ------- | ------------------------------------------------------------ |
+| v2.2.13 | Added `server.allowedHosts` for the dev and preview servers. |
