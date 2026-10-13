@@ -101,8 +101,6 @@ type ServerSetupContext =
 
 When `server.setup` is called, the default Rsbuild middlewares are not registered yet, so the middleware you add will run before the default middlewares.
 
-When [server.allowedHosts](/config/server/allowed-hosts) enables Host validation, the dev server performs this validation before user middleware.
-
 `server.setup` allows you to return a callback function, which will be called when the default Rsbuild middlewares are registered. The middleware you register in the callback function will run after the default middlewares.
 
 ```ts title="rsbuild.config.ts"
