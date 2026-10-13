@@ -1,5 +1,5 @@
 ---
-description: 'Control which hostnames can access the Rsbuild dev or preview server.'
+description: 'Specify which hostnames the Rsbuild dev and preview servers accept.'
 ---
 
 # server.allowedHosts
@@ -7,15 +7,17 @@ description: 'Control which hostnames can access the Rsbuild dev or preview serv
 - **Type:** `string[] | true`
 - **Default:** `true`
 
-Control which hostnames can access the dev or preview server through HTTP or WebSocket requests. This option also applies when HTTPS is enabled.
+Specify which hostnames the dev and preview servers accept in incoming requests. This option applies to HTTP and WebSocket requests, including when HTTPS is enabled.
 
 ## Usage
 
-- `true`: disable Host validation and accept any hostname.
-- `[]`: allow `localhost`, subdomains of `.localhost`, IP addresses, and the hostname configured by [server.host](/config/server/host) or `--host`.
-- `string[]`: also allow the specified hostnames. An entry starting with `.` allows both the hostname itself and all its subdomains. For example, `.example.test` allows `example.test` and `app.example.test`.
+Host validation is disabled by default. Set this option to an array to enable it:
 
-Entries should contain hostnames only, without a protocol, port, or path. Matching is case-insensitive and ignores a trailing dot. Request ports do not affect matching.
+- `true`: disable validation and accept any hostname.
+- `[]`: allow only `localhost`, its subdomains (such as `app.localhost`), IP addresses, and the hostname set by [server.host](/config/server/host) or `--host`.
+- `string[]`: allow additional hostnames alongside those listed above. An entry such as `app.example.test` matches only that hostname. A leading `.` also allows all subdomains: `.example.test` matches `example.test`, `app.example.test`, and `a.b.example.test`.
+
+For example, to allow a specific hostname and a domain with all its subdomains:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -25,19 +27,27 @@ export default {
 };
 ```
 
+Use hostnames without a protocol, port, or path. For example, use `app.example.test`, not `https://app.example.test:3000/`. Matching is case-insensitive and ignores a trailing dot. The port in a request does not affect hostname matching.
+
 :::warning
-Allow only hostnames you control. Keeping `allowedHosts: true` disables protection against DNS rebinding attacks, which can expose server content to malicious websites. Host validation does not replace authentication or [CORS configuration](/config/server/cors).
+Only allow domains whose DNS records you control or whose owners you trust. Do not allow broad suffixes such as `.com`, which would also allow domains owned by others.
+
+Setting `allowedHosts: true` disables Host validation and can leave server content exposed to DNS rebinding attacks. Use `[]` or a list of trusted hostnames to enable protection. Host validation does not replace authentication or [CORS configuration](/config/server/cors).
 :::
 
 ## Difference from server.host
 
-`server.host` controls which network interface the server listens on; `server.allowedHosts` checks the hostname in incoming requests. Listening on `0.0.0.0` or `::` does not allow arbitrary hostnames when Host validation is enabled.
+[server.host](/config/server/host) determines the network address the server listens on. `server.allowedHosts` determines which hostnames it accepts in requests.
+
+For example, `host: '0.0.0.0'` lets the server listen on all IPv4 interfaces. With `allowedHosts: ['app.example.test']`, it accepts requests for `app.example.test` in addition to the automatically allowed hosts, and rejects requests for other hostnames. Setting `host` to `0.0.0.0` or `::` does not disable Host validation.
 
 ## Request validation
 
-Requests with a missing, invalid, or disallowed Host receive a `403` response before user middleware, proxy requests, or HMR connections are handled. HTTP/2 requests are checked using `:authority`; conflicting `Host` and `:authority` headers are rejected. Forwarded headers such as `X-Forwarded-Host` are not used for validation.
+When validation is enabled, requests with a missing, invalid, or disallowed hostname receive a `403 Forbidden` response. The check runs before custom middleware, proxy forwarding, and HMR connections.
 
-When using the dev server in middleware mode, validation applies to requests handled by Rsbuild's middleware and WebSocket handler. Routes and upgrade listeners managed separately by your application need their own validation.
+Rsbuild reads the hostname from `Host` in HTTP/1.1 requests and from `:authority` in HTTP/2 requests. Both fields can include a port. Requests with conflicting `Host` and `:authority` values are rejected. Forwarded headers such as `X-Forwarded-Host` do not affect this check.
+
+In dev server middleware mode, Rsbuild checks requests that reach its middleware or WebSocket handler. Your application is responsible for checking any routes or WebSocket connections it handles separately.
 
 ## Version history
 

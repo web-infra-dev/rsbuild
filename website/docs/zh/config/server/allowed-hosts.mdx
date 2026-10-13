@@ -1,5 +1,5 @@
 ---
-description: '控制哪些主机名可以访问 Rsbuild 开发服务器或预览服务器。'
+description: '指定可以用来访问 Rsbuild 开发服务器和预览服务器的主机名。'
 ---
 
 # server.allowedHosts
@@ -7,15 +7,17 @@ description: '控制哪些主机名可以访问 Rsbuild 开发服务器或预览
 - **类型：** `string[] | true`
 - **默认值：** `true`
 
-控制哪些主机名可以通过 HTTP 或 WebSocket 请求访问开发服务器或预览服务器。启用 HTTPS 时此选项同样生效。
+指定可以用来访问开发服务器和预览服务器的主机名。此选项适用于 HTTP 和 WebSocket 请求，启用 HTTPS 时也会生效。
 
 ## 使用方式 \{#usage}
 
-- `true`：关闭 Host 校验，接受任意主机名。
-- `[]`：允许 `localhost`、`.localhost` 的子域名、IP 地址，以及通过 [server.host](/config/server/host) 或 `--host` 配置的主机名。
-- `string[]`：额外允许指定的主机名。以 `.` 开头的条目同时允许域名自身及其所有子域名。例如，`.example.test` 允许 `example.test` 和 `app.example.test`。
+默认不进行 Host 校验。将此选项设为数组即可启用：
 
-数组条目应只包含主机名，不包含协议、端口或路径。匹配不区分大小写，并忽略末尾的点。请求的端口不影响匹配结果。
+- `true`：关闭校验，接受任意主机名。
+- `[]`：仅允许 `localhost`、它的子域名（如 `app.localhost`）、IP 地址，以及通过 [server.host](/config/server/host) 或 `--host` 配置的主机名。
+- `string[]`：在上述范围之外，额外允许数组中的主机名。例如，`app.example.test` 仅匹配该主机名；以 `.` 开头则同时允许域名自身及其所有子域名，如 `.example.test` 可匹配 `example.test`、`app.example.test` 和 `a.b.example.test`。
+
+例如，允许一个指定的主机名，以及另一个域名和它的所有子域名：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -25,19 +27,27 @@ export default {
 };
 ```
 
+配置时只填写主机名，不包含协议、端口或路径。例如，应填写 `app.example.test`，而不是 `https://app.example.test:3000/`。匹配不区分大小写，并忽略末尾的点。请求中的端口不影响主机名的匹配。
+
 :::warning
-仅允许你能控制的主机名。保持 `allowedHosts: true` 会关闭对 DNS 重绑定攻击的防护，恶意网站可能借此读取服务器的内容。Host 校验不能替代身份认证或 [CORS 配置](/config/server/cors)。
+请只添加你能控制 DNS 记录的域名，或来自可信所有者的域名。不要添加 `.com` 这样的宽泛后缀，否则其他人拥有的域名也会被允许访问。
+
+`allowedHosts: true` 会关闭 Host 校验，恶意网站可能通过 DNS 重绑定攻击读取服务器内容。建议使用 `[]` 或明确的可信主机名列表来启用防护。Host 校验不能替代身份认证或 [CORS 配置](/config/server/cors)。
 :::
 
 ## 与 server.host 的区别 \{#difference-from-serverhost}
 
-`server.host` 控制服务器监听哪个网络接口；`server.allowedHosts` 检查请求中的主机名。启用 Host 校验后，监听 `0.0.0.0` 或 `::` 并不意味着允许任意主机名。
+[server.host](/config/server/host) 决定服务器监听哪个网络地址，`server.allowedHosts` 决定服务器接受哪些主机名的请求。
+
+例如，`host: '0.0.0.0'` 表示监听所有 IPv4 网络接口。同时配置 `allowedHosts: ['app.example.test']` 后，除了自动允许的主机名和 IP 地址，服务器还会接受发往 `app.example.test` 的请求，并拒绝其他主机名的请求。将 `host` 设为 `0.0.0.0` 或 `::` 不会关闭 Host 校验。
 
 ## 请求校验 \{#request-validation}
 
-缺少 Host、Host 无效或不在允许范围内的请求会收到 `403` 响应，校验早于用户中间件、代理请求和 HMR 连接的处理。HTTP/2 请求使用 `:authority` 进行校验；`Host` 与 `:authority` 冲突时会拒绝请求。`X-Forwarded-Host` 等转发头不参与校验。
+启用校验后，如果请求中的主机名缺失、格式无效或不在允许范围内，服务器会返回 `403 Forbidden`。校验会在自定义中间件、代理转发和 HMR 连接处理之前进行。
 
-当开发服务器使用中间件模式时，校验覆盖由 Rsbuild 中间件和 WebSocket 处理器处理的请求。应用自行管理的路由和 upgrade 监听器需要自行校验。
+Rsbuild 从 HTTP/1.1 请求的 `Host` 或 HTTP/2 请求的 `:authority` 中读取主机名，这两个字段都可以包含端口。如果 `Host` 与 `:authority` 的值冲突，请求会被拒绝。`X-Forwarded-Host` 等转发头不影响校验结果。
+
+在开发服务器的中间件模式下，校验只覆盖交由 Rsbuild 中间件或 WebSocket 处理器处理的请求。应用自行处理的路由和 WebSocket 连接需要自行校验。
 
 ## 版本历史 \{#version-history}
 
