@@ -38,7 +38,7 @@ export default {
 };
 ```
 
-配置时只填写主机名，不包含协议、端口或路径。例如，应填写 `app.example.test`，而不是 `https://app.example.test:3000/`。匹配不区分大小写，并忽略末尾的点。请求中的端口不影响主机名的匹配。
+配置时只填写主机名，不包含协议、端口或路径。例如，应填写 `app.example.test`，而不是 `https://app.example.test:3000/`。主机名不区分大小写。
 
 :::warning
 请只添加你能控制 DNS 记录的域名，或来自可信所有者的域名。不要添加 `.com` 这样的宽泛后缀，否则其他人拥有的域名也会被允许访问。
@@ -50,15 +50,15 @@ export default {
 
 [server.host](/config/server/host) 决定服务器监听哪个网络地址，`server.allowedHosts` 决定服务器接受哪些主机名的请求。
 
-例如，`host: '0.0.0.0'` 表示监听所有 IPv4 网络接口。同时配置 `allowedHosts: ['app.example.test']` 后，除了自动允许的主机名和 IP 地址，服务器还会接受发往 `app.example.test` 的请求，并拒绝其他主机名的请求。
+例如，`host: '0.0.0.0'` 表示监听所有 IPv4 网络接口，访问时使用的主机名仍需符合 `allowedHosts` 的配置。
 
 ## 请求校验 \{#request-validation}
 
-启用校验后，如果请求中的主机名缺失、格式无效或不在允许范围内，服务器会返回 `403 Forbidden`。校验会在自定义中间件、代理转发和 HMR 连接处理之前进行。
+启用校验后，使用未被允许的主机名访问服务器会收到 `403 Forbidden`。如果你信任该主机名，可以将其添加到 `server.allowedHosts`。
 
-Rsbuild 从 HTTP/1.1 请求的 `Host` 或 HTTP/2 请求的 `:authority` 中读取主机名。如果 `Host` 与 `:authority` 的值冲突，请求会被拒绝。`X-Forwarded-Host` 等转发头不影响校验结果。
+如果使用反向代理，请确保它转发给 Rsbuild 的主机名在允许范围内。
 
-在开发服务器的中间件模式下，校验只覆盖交由 Rsbuild 中间件或 WebSocket 处理器处理的请求。应用自行处理的路由和 WebSocket 连接需要自行校验。
+在开发服务器的中间件模式下，此选项仅保护由 Rsbuild 处理的请求。应用自行处理的请求需要自行校验。
 
 ## 版本历史 \{#version-history}
 

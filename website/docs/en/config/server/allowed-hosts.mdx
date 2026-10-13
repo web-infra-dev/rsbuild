@@ -38,7 +38,7 @@ export default {
 };
 ```
 
-Use hostnames without a protocol, port, or path. For example, use `app.example.test`, not `https://app.example.test:3000/`. Matching is case-insensitive and ignores a trailing dot. The port in a request does not affect hostname matching.
+Use hostnames without a protocol, port, or path. For example, use `app.example.test`, not `https://app.example.test:3000/`. Hostnames are case-insensitive.
 
 :::warning
 Only allow domains whose DNS records you control or whose owners you trust. Do not allow broad suffixes such as `.com`, which would also allow domains owned by others.
@@ -50,15 +50,15 @@ Setting `allowedHosts: true` disables Host validation and can leave server conte
 
 [server.host](/config/server/host) determines the network address the server listens on. `server.allowedHosts` determines which hostnames it accepts in requests.
 
-For example, `host: '0.0.0.0'` lets the server listen on all IPv4 interfaces. With `allowedHosts: ['app.example.test']`, it accepts requests for `app.example.test` in addition to the automatically allowed hosts, and rejects requests for other hostnames.
+For example, `host: '0.0.0.0'` lets the server listen on all IPv4 interfaces. Hostnames used to access it must still be allowed by `allowedHosts`.
 
 ## Request validation
 
-When validation is enabled, requests with a missing, invalid, or disallowed hostname receive a `403 Forbidden` response. The check runs before custom middleware, proxy forwarding, and HMR connections.
+When validation is enabled, accessing the server through a disallowed hostname returns `403 Forbidden`. If you trust the hostname, add it to `server.allowedHosts`.
 
-Rsbuild reads the hostname from `Host` in HTTP/1.1 requests and from `:authority` in HTTP/2 requests. Requests with conflicting `Host` and `:authority` values are rejected. Forwarded headers such as `X-Forwarded-Host` do not affect this check.
+If you use a reverse proxy, make sure the hostname it forwards to Rsbuild is allowed.
 
-In dev server middleware mode, Rsbuild checks requests that reach its middleware or WebSocket handler. Your application is responsible for checking any routes or WebSocket connections it handles separately.
+In dev server middleware mode, this option only protects requests handled by Rsbuild. Your application must validate requests it handles separately.
 
 ## Version history
 
