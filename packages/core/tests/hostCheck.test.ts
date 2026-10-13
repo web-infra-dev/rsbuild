@@ -1,3 +1,4 @@
+// cspell:ignore fakeexample fakelocalhost cocalhost
 import { isHostAllowed } from '../src/server/hostCheck';
 
 it.each<[string | undefined, string[], boolean]>([
