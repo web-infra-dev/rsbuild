@@ -123,21 +123,12 @@ export const pluginCache = (): RsbuildPlugin => ({
       }
     });
 
-    api.onAfterEnvironmentCompile(
-      async ({ environment, isFirstCompile, isWatch, stats, time }) => {
-        const callback = environment.config.performance.buildCacheDiagnostics;
-        if (!callback) return;
+    api.onAfterEnvironmentCompile(async (event) => {
+      const callback =
+        event.environment.config.performance.buildCacheDiagnostics;
+      if (!callback) return;
 
-        await callback(
-          getBuildCacheDiagnostics({
-            environment: environment.name,
-            isFirstCompile,
-            isWatch,
-            stats,
-            time,
-          }),
-        );
-      },
-    );
+      await callback(getBuildCacheDiagnostics(event));
+    });
   },
 });

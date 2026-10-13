@@ -2,49 +2,79 @@ import type { Rspack } from '../src';
 import {
   enableCacheInfoStats,
   getBuildCacheDiagnostics,
-  readCacheInfo,
 } from '../src/plugins/cacheDiagnostics';
+
+const getReport = (stats: unknown) =>
+  getBuildCacheDiagnostics({
+    environment: { name: 'web' },
+    isFirstCompile: true,
+    isWatch: false,
+    stats: stats as Rspack.Stats,
+    time: 1,
+  });
+
+const reportCacheInfo = (cacheInfo: unknown) =>
+  getReport({
+    compilation: { options: { cache: false } },
+    toJson: () => ({ cacheInfo }),
+  });
 
 describe('persistent cache diagnostics', () => {
   it('enables collection while preserving stats options and presets', () => {
-    expect(enableCacheInfoStats(undefined)).toEqual({ cacheInfo: true });
-    expect(enableCacheInfoStats(false)).toEqual({
-      preset: 'none',
-      cacheInfo: true,
-    });
-    expect(enableCacheInfoStats(true)).toEqual({
-      preset: 'normal',
-      cacheInfo: true,
-    });
-    expect(enableCacheInfoStats('errors-only')).toEqual({
-      preset: 'errors-only',
-      cacheInfo: true,
-    });
-    expect(enableCacheInfoStats({ all: false, warnings: true })).toEqual({
-      all: false,
-      warnings: true,
-      cacheInfo: true,
-    });
+    for (const [stats, expected] of [
+      [undefined, {}],
+      [false, { preset: 'none' }],
+      [true, { preset: 'normal' }],
+      ['errors-only', { preset: 'errors-only' }],
+      [
+        { all: false, warnings: true },
+        { all: false, warnings: true },
+      ],
+    ] as const) {
+      expect(enableCacheInfoStats(stats)).toEqual({
+        ...expected,
+        cacheInfo: true,
+      });
+    }
   });
 
   it('accepts structured cache information and rejects unsupported shapes', () => {
-    expect(
-      readCacheInfo({
-        mode: 'persistent',
-        persistent: { status: 'invalidated', reason: 'version' },
-      }),
-    ).toEqual({
+    const invalidated = {
       mode: 'persistent',
       persistent: { status: 'invalidated', reason: 'version' },
+    };
+    expect(reportCacheInfo(invalidated)).toMatchObject({
+      ...invalidated,
+      moduleBuilds: null,
     });
-    expect(readCacheInfo({ mode: 'memory', persistent: null })).toEqual({
-      mode: 'memory',
+    expect(reportCacheInfo({ mode: 'memory', persistent: null })).toMatchObject(
+      {
+        mode: 'memory',
+        persistent: null,
+        moduleBuilds: null,
+      },
+    );
+    expect(reportCacheInfo(undefined)).toMatchObject({
+      mode: 'disabled',
       persistent: null,
+      moduleBuilds: null,
     });
-    expect(readCacheInfo(undefined)).toBeUndefined();
-    expect(
-      readCacheInfo({ mode: 'persistent', persistent: { status: 'hit' } }),
-    ).toBeUndefined();
+    for (const persistent of [
+      { status: 'hit', reason: null },
+      { status: 'valid', reason: 'unexpected' },
+    ]) {
+      expect(
+        reportCacheInfo({
+          mode: 'persistent',
+          persistent,
+          moduleBuilds: { reused: 7, total: 10 },
+        }),
+      ).toMatchObject({
+        mode: 'disabled',
+        persistent: null,
+        moduleBuilds: null,
+      });
+    }
   });
 
   it('reports stats serialization failures without failing compilation', () => {
@@ -53,17 +83,9 @@ describe('persistent cache diagnostics', () => {
       toJson: () => {
         throw new Error('stats unavailable');
       },
-    } as unknown as Rspack.Stats;
+    };
 
-    expect(
-      getBuildCacheDiagnostics({
-        environment: 'web',
-        isFirstCompile: true,
-        isWatch: false,
-        stats,
-        time: 1,
-      }),
-    ).toMatchObject({
+    expect(getReport(stats)).toMatchObject({
       mode: 'disabled',
       statsError: 'stats unavailable',
       logs: [],
@@ -83,17 +105,9 @@ describe('persistent cache diagnostics', () => {
         },
       },
       toJson: () => ({}),
-    } as unknown as Rspack.Stats;
+    };
 
-    expect(
-      getBuildCacheDiagnostics({
-        environment: 'web',
-        isFirstCompile: true,
-        isWatch: false,
-        stats,
-        time: 1,
-      }),
-    ).toMatchObject({
+    expect(getReport(stats)).toMatchObject({
       mode: 'persistent',
       configuration: {
         storage: { type: 'filesystem', directory: '/cache' },
@@ -106,29 +120,22 @@ describe('persistent cache diagnostics', () => {
 
   it('reports valid module reuse counts and treats unavailable counts as unknown', () => {
     const report = (moduleBuilds: unknown) =>
-      getBuildCacheDiagnostics({
-        environment: 'web',
-        isFirstCompile: true,
-        isWatch: false,
-        stats: {
-          compilation: { options: { cache: false } },
-          toJson: () => ({
-            cacheInfo: {
-              mode: 'persistent',
-              persistent: { status: 'valid', reason: null },
-              moduleBuilds,
-            },
-          }),
-        } as unknown as Rspack.Stats,
-        time: 1,
+      reportCacheInfo({
+        mode: 'persistent',
+        persistent: { status: 'valid', reason: null },
+        moduleBuilds,
       }).moduleBuilds;
 
     expect(report({ reused: 7, total: 10 })).toEqual({ reused: 7, total: 10 });
     expect(report({ reused: 0, total: 0 })).toEqual({ reused: 0, total: 0 });
-    expect(report(undefined)).toBeNull();
-    expect(report(null)).toBeNull();
-    expect(report({ reused: 2, total: 1 })).toBeNull();
-    expect(report({ reused: -1, total: 2 })).toBeNull();
-    expect(report({ reused: 1.5, total: 2 })).toBeNull();
+    for (const counts of [
+      undefined,
+      null,
+      { reused: 2, total: 1 },
+      { reused: -1, total: 2 },
+      { reused: 1.5, total: 2 },
+    ]) {
+      expect(report(counts)).toBeNull();
+    }
   });
 });
