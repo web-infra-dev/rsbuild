@@ -11,6 +11,8 @@ define.fmt({
     'e2e/cases/syntax-es/using-declaration/src/index.ts',
     // Preserve uppercase DOCTYPE in create-rsbuild templates.
     'packages/create-rsbuild/**/*.html',
+    // Preserve charset attribute syntax in regression fixtures.
+    'e2e/cases/html/meta/src/{unquoted,spaced}.html',
     // Ignore installed Skills because their formatting may differ from this repository.
     ...Object.keys(skillsLock.skills).map((name) => `.agents/skills/${name}`),
   ],
