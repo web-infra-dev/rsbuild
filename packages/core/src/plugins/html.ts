@@ -115,7 +115,8 @@ async function getMetaTags(
   // `html.meta` will add charset meta by default.
   // If the custom HTML template already contains charset meta, Rsbuild should not inject it again.
   if (templateContent && metaTags.charset) {
-    const charsetRegExp = /<meta[^>]+charset=["'][^>]*>/i;
+    // Skip quoted attribute values and require an attribute boundary.
+    const charsetRegExp = /<meta\b(?:[^>"']|"[^"]*"|'[^']*')*?\scharset\s*=/i;
     if (charsetRegExp.test(templateContent)) {
       delete metaTags.charset;
     }

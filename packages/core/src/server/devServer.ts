@@ -42,6 +42,7 @@ import {
   type StartDevServerResult,
 } from './helper';
 import { createHttpServer } from './httpServer';
+import { createHostCheckMiddleware, withHostCheck } from './hostCheck';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
 import { getPublicPathnames } from './publicPathnames';
@@ -438,6 +439,15 @@ export async function createDevServer<
     /* rspackChunkName: "connect-next" */ 'connect-next'
   );
   const middlewares = connect();
+  const allowedHosts =
+    config.server.allowedHosts === true
+      ? undefined
+      : [...config.server.allowedHosts, host];
+
+  // Validate before server.setup and plugin hooks can register middleware.
+  if (allowedHosts) {
+    middlewares.use(createHostCheckMiddleware(allowedHosts));
+  }
 
   const httpServer = middlewareMode
     ? null
@@ -562,6 +572,13 @@ export async function createDevServer<
     context,
     postCallbacks,
   });
+
+  if (allowedHosts) {
+    state.devMiddlewares.onUpgrade = withHostCheck(
+      state.devMiddlewares.onUpgrade,
+      allowedHosts,
+    );
+  }
 
   // start watching
   state.buildManager?.watch();

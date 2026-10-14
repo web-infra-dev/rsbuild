@@ -55,3 +55,38 @@ test('should generate meta tags via function for each entry', async ({
   expect(barHtml).toContain('<meta name="description" content="bar page">');
   expect(barHtml).toContain('<meta property="og:title" content="bar">');
 });
+
+test('should recognize charset attributes with different HTML syntax', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      source: {
+        entry: {
+          unquoted: './src/index.js',
+          spaced: './src/index.js',
+          attributes: './src/index.js',
+        },
+      },
+      html: {
+        template: ({ entryName }) => `./src/${entryName}.html`,
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+
+  for (const entryName of ['unquoted', 'spaced']) {
+    const html = getFileContent(files, `${entryName}.html`);
+    expect(html.match(/<meta\b[^>]*\scharset\s*=[^>]*>/gi)).toHaveLength(1);
+  }
+
+  expect(getFileContent(files, 'unquoted.html')).toContain(
+    '<meta charset=utf-8>',
+  );
+  expect(getFileContent(files, 'spaced.html')).toContain(
+    "<meta charset = 'utf-8'>",
+  );
+  expect(getFileContent(files, 'attributes.html')).toContain(
+    '<meta charset="utf-8">',
+  );
+});

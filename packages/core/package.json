@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "2.2.12",
+  "version": "2.2.13",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
@@ -17,6 +17,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./jiti": {
+      "types": "./compiled/jiti/lib/jiti.d.mts",
+      "default": "./compiled/jiti/lib/jiti.mjs"
     },
     "./types": {
       "types": "./types.d.ts"
