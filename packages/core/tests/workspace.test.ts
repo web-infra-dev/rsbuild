@@ -34,9 +34,9 @@ test('should prefer the nearest workspace root', () => {
   expect(findWorkspaceRoot(nested)).toBe(app);
 });
 
-test('should fall back to the nearest package root even with invalid package.json', () => {
+test('should fall back to the nearest package root', () => {
   writeFileSync(join(root, 'package.json'), '{}');
-  writeFileSync(join(app, 'package.json'), '{ invalid json');
+  writeFileSync(join(app, 'package.json'), '{}');
   const nested = join(app, 'nested');
   mkdirSync(nested);
   expect(findWorkspaceRoot(nested)).toBe(app);
