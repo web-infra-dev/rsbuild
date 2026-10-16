@@ -172,9 +172,7 @@ Rsbuild uses the PostCSS v8. When you use third-party PostCSS plugins, please pa
 
 Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load PostCSS config files and merge them with the default config.
 
-The search starts at the Rsbuild project root and stops at the nearest workspace root, identified by `pnpm-workspace.yaml`, `lerna.json`, or a `workspaces` field in `package.json`. If no workspace root is found, the search stops at the nearest ancestor directory containing `package.json` (including the project root), or at the project root if none exists.
-
-For monorepos without these workspace markers, add a `postcss.config.*` file in the application directory that imports or re-exports the shared PostCSS config.
+Rsbuild limits the search for PostCSS config files to the project or workspace boundary.
 
 Rsbuild internally sets the `postcss-loader`'s `postcssOptions.config` option to `false` to avoid loading config files repeatedly.
 

@@ -170,9 +170,7 @@ Rsbuild 中使用的 PostCSS 版本为 v8，当你引入社区中的 PostCSS 插
 
 Rsbuild 使用 [postcss-load-config](https://github.com/postcss/postcss-load-config) 加载 PostCSS 配置文件，并将其与默认配置合并。
 
-搜索从 Rsbuild 项目根目录开始，在最近的 workspace 根目录停止。Rsbuild 通过 `pnpm-workspace.yaml`、`lerna.json` 或 `package.json` 中的 `workspaces` 字段识别 workspace 根目录。如果未找到 workspace 根目录，则在向上查找时遇到的最近一个包含 `package.json` 的目录（包括项目根目录）停止；如果也没有找到 `package.json`，则只搜索项目根目录。
-
-对于没有上述 workspace 标记的 monorepo，可以在应用目录中添加 `postcss.config.*` 文件，显式导入或重新导出共享的 PostCSS 配置。
+Rsbuild 仅在项目或所属 workspace 范围内查找 PostCSS 配置文件。
 
 Rsbuild 内部将 `postcss-loader` 的 `postcssOptions.config` 选项始终设置为 `false`，以避免重复加载配置文件。
 
