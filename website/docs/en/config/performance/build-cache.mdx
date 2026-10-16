@@ -38,13 +38,15 @@ export default {
 };
 ```
 
-The report contains the environment name, compilation time, effective Rspack cache mode and persistent-cache settings, and entries from Rspack's `rspack.persistentCache` logger. Paths may appear in the settings, logs, and errors. `isWatch` identifies watch compilations. `isFirstCompile` follows the first compile cycle of the build across environments; neither field establishes whether the persistent cache was reused.
+Suppose you change one source file in a project with two modules. Rspack can report `persistent.status: 'valid'` because the cache version and tracked build dependencies still match, and `moduleBuilds: { reused: 1, total: 2 }` because it reused one module build.
 
-When Rspack provides structured cache information, `persistent.status` and `persistent.reason` contain its result. A `valid` status means that the metadata version and tracked build dependencies validated; it does not confirm that a snapshot or module entry was restored. Without structured information, recovery status is `unknown` and the reason is `null`. `persistent` is `null` for non-persistent cache modes.
+- `persistent` describes cache validation for this compilation. With older Rspack versions, the status is `unknown`. Outside persistent mode, the field is `null`.
+- `persistentSessionInitialization` describes what Rspack found when it opened a shared filesystem cache. Later compilations can report the same initial result. The field is `null` when Rspack supplies no session result.
+- `moduleBuilds` counts distinct modules in the main graph after `finishModules`, including modules ineligible for caching. Reuse can come from memory or disk. Zero means Rspack measured no reuse. `null` means the count is unavailable.
 
-When available, `moduleBuilds` contains `reused` and `total` counts from Rspack, captured immediately after `finishModules` and before sealing or optimization. `total` counts distinct modules in the main module graph, including modules that are ineligible for caching. `reused` counts modules whose build work was restored from cache and not rebuilt by that point. These counts measure graph module reuse, not cache lookup hits; they can include memory reuse as well as disk reuse. `moduleBuilds` is `null` when Rspack cannot provide a reliable count, including with older Rspack versions, unsupported modes, or a later rebuild or entry addition.
+The report also includes the environment, compilation time, cache settings and `rspack.persistentCache` logs. Settings, logs and errors can contain file paths.
 
-Reports serialize Rspack stats once per compilation, which adds overhead. If serialization fails, `statsError` contains the error and the build continues with an unknown recovery status. The callback can return a promise; Rsbuild waits for it before completing the compilation hook, and a thrown or rejected callback fails the hook.
+Rsbuild reads stats once per report. If that fails, the build continues and `statsError` contains the error. Rsbuild awaits your callback. Throwing or rejecting a promise fails the compilation hook.
 
 ## Enable cache
 

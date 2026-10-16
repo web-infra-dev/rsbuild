@@ -45,6 +45,7 @@ describe('persistent cache diagnostics', () => {
     };
     expect(reportCacheInfo(invalidated)).toMatchObject({
       ...invalidated,
+      persistentSessionInitialization: null,
       moduleBuilds: null,
     });
     expect(reportCacheInfo({ mode: 'memory', persistent: null })).toMatchObject(
@@ -75,6 +76,18 @@ describe('persistent cache diagnostics', () => {
         moduleBuilds: null,
       });
     }
+  });
+
+  it('keeps shared cache initialization separate from this compilation', () => {
+    const cacheInfo = {
+      mode: 'persistent',
+      persistent: { status: 'unknown', reason: null },
+      persistentSessionInitialization: {
+        status: 'invalidated',
+        reason: 'buildDependencies',
+      },
+    };
+    expect(reportCacheInfo(cacheInfo)).toMatchObject(cacheInfo);
   });
 
   it('reports stats serialization failures without failing compilation', () => {

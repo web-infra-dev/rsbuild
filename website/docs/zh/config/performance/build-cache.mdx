@@ -38,13 +38,15 @@ export default {
 };
 ```
 
-报告包含环境名称、编译耗时、实际生效的 Rspack 缓存模式和持久化缓存配置，以及 Rspack 的 `rspack.persistentCache` 日志。配置、日志和错误中可能包含路径。`isWatch` 用于标识监听编译，`isFirstCompile` 表示所有环境的首次编译周期；两者均不能确定持久化缓存是否被重用。
+假设项目只有两个模块，你修改了其中一个源文件。Rspack 可能报告 `persistent.status: 'valid'`，表示缓存版本和跟踪的构建依赖仍然匹配；同时报告 `moduleBuilds: { reused: 1, total: 2 }`，表示复用了其中一个模块的构建结果。
 
-当 Rspack 提供结构化的缓存信息时，`persistent.status` 和 `persistent.reason` 会包含其结果。`valid` 表示元数据版本和被跟踪的构建依赖通过了校验，但不能确认快照或模块条目已恢复。没有结构化信息时，恢复状态为 `unknown`，原因为 `null`。非持久化缓存模式下 `persistent` 为 `null`。
+- `persistent` 描述本次编译的缓存验证结果。使用旧版 Rspack 时，状态为 `unknown`；未使用持久化缓存时，此字段为 `null`。
+- `persistentSessionInitialization` 描述 Rspack 打开共享文件系统缓存时的验证结果。后续编译可能报告相同的初始结果。Rspack 未提供会话验证结果时，此字段为 `null`。
+- `moduleBuilds` 在 `finishModules` 后统计主模块图中不同的模块，包括不能缓存的模块。复用的构建结果可能来自内存或磁盘。复用数为零表示未复用任何模块；`null` 表示无法统计。
 
-当 Rspack 提供可靠的计数时，`moduleBuilds` 包含 `reused` 和 `total`，在 `finishModules` 之后、封装或优化之前记录。`total` 是主模块图中的不同模块数，包括不能缓存的模块。`reused` 是从缓存恢复构建结果且在此之前未重新构建的模块数。这些计数衡量模块图中的重用情况，而不是缓存查询的命中率；其中可能包含内存和磁盘缓存的重用。旧版 Rspack、未支持的模式、后续重新构建或添加入口等无法提供可靠计数的情况中，`moduleBuilds` 为 `null`。
+报告还包含环境名称、编译耗时、缓存配置和 `rspack.persistentCache` 日志。配置、日志和错误信息可能包含文件路径。
 
-报告会在每次编译时序列化一次 Rspack stats，这会带来额外开销。如果序列化失败，`statsError` 会包含错误，构建继续进行且恢复状态为 `unknown`。回调可以返回 Promise，Rsbuild 会在完成编译钩子前等待它；如果回调抛出错误或 Promise 被拒绝，钩子会失败。
+Rsbuild 为每份报告读取一次编译统计信息。读取失败时，构建会继续，错误记录在 `statsError` 中。Rsbuild 会等待回调完成；回调抛出错误或返回 rejected Promise 会使编译钩子失败。
 
 ## 启用缓存
 

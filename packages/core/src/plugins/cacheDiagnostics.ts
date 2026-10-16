@@ -2,7 +2,7 @@ import type { BuildCacheDiagnostics, Rspack } from '../types';
 
 type CacheInfo = Pick<
   BuildCacheDiagnostics,
-  'mode' | 'persistent' | 'moduleBuilds'
+  'mode' | 'persistent' | 'persistentSessionInitialization' | 'moduleBuilds'
 >;
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -20,17 +20,9 @@ export function enableCacheInfoStats(
   return { ...options, cacheInfo: true };
 }
 
-function readCacheInfo(value: unknown): CacheInfo | undefined {
-  if (!isRecord(value)) return;
-  const { mode, persistent } = value;
-  if (mode === 'disabled' || mode === 'memory') {
-    return persistent === null
-      ? { mode, persistent, moduleBuilds: null }
-      : undefined;
-  }
-  if (mode !== 'persistent' || !isRecord(persistent)) return;
-
-  const { status, reason } = persistent;
+function readValidation(value: unknown): CacheInfo['persistent'] {
+  if (!isRecord(value)) return null;
+  const { status, reason } = value;
   if (
     status !== 'cold' &&
     status !== 'valid' &&
@@ -38,7 +30,7 @@ function readCacheInfo(value: unknown): CacheInfo | undefined {
     status !== 'error' &&
     status !== 'unknown'
   ) {
-    return;
+    return null;
   }
   if (
     reason !== null &&
@@ -46,18 +38,12 @@ function readCacheInfo(value: unknown): CacheInfo | undefined {
     reason !== 'buildDependencies' &&
     reason !== 'recovery'
   ) {
-    return;
+    return null;
   }
-  return {
-    mode,
-    persistent: { status, reason },
-    moduleBuilds: readModuleBuilds(value.moduleBuilds),
-  };
+  return { status, reason };
 }
 
-function readModuleBuilds(
-  value: unknown,
-): BuildCacheDiagnostics['moduleBuilds'] {
+function readModuleBuilds(value: unknown): CacheInfo['moduleBuilds'] {
   if (!isRecord(value)) return null;
   const { reused, total } = value;
   if (
@@ -73,8 +59,41 @@ function readModuleBuilds(
   return { reused, total };
 }
 
+function getCacheInfo(
+  value: unknown,
+  configuredMode: CacheInfo['mode'],
+): CacheInfo {
+  const info = isRecord(value) ? value : undefined;
+  if (info?.mode === 'persistent') {
+    const persistent = readValidation(info.persistent);
+    if (persistent) {
+      return {
+        mode: info.mode,
+        persistent,
+        persistentSessionInitialization: readValidation(
+          info.persistentSessionInitialization,
+        ),
+        moduleBuilds: readModuleBuilds(info.moduleBuilds),
+      };
+    }
+  }
+  // Older Rspack versions expose the configured mode but no validation result.
+  const mode =
+    (info?.mode === 'disabled' || info?.mode === 'memory') &&
+    info.persistent === null
+      ? info.mode
+      : configuredMode;
+  return {
+    mode,
+    persistent:
+      mode === 'persistent' ? { status: 'unknown', reason: null } : null,
+    persistentSessionInitialization: null,
+    moduleBuilds: null,
+  };
+}
+
 export function getBuildCacheDiagnostics({
-  environment: { name: environment },
+  environment,
   isFirstCompile,
   isWatch,
   stats,
@@ -117,23 +136,15 @@ export function getBuildCacheDiagnostics({
             readonly: cache.readonly,
           }
         : null;
-  const mode =
-    cache === false
+  const mode = configuration
+    ? 'persistent'
+    : cache === false
       ? 'disabled'
-      : cache?.type === 'persistent' || cache?.type === 'filesystem'
-        ? 'persistent'
-        : cache?.type === 'memory'
-          ? 'memory'
-          : 'unknown';
-  const fallback: CacheInfo = {
-    mode,
-    persistent:
-      mode === 'persistent' ? { status: 'unknown', reason: null } : null,
-    moduleBuilds: null,
-  };
+      : cache?.type === 'memory'
+        ? 'memory'
+        : 'unknown';
 
   const logs: BuildCacheDiagnostics['logs'] = [];
-  // Older Rspack versions ignore cacheInfo and do not return the field.
   const statsOptions = {
     all: false,
     cacheInfo: true,
@@ -159,21 +170,13 @@ export function getBuildCacheDiagnostics({
   };
   const cacheLogs = json?.logging?.['rspack.persistentCache'];
   if (cacheLogs) addLogs(cacheLogs.entries);
-  const {
-    mode: effectiveMode,
-    persistent,
-    moduleBuilds,
-  } = readCacheInfo(json?.cacheInfo) ?? fallback;
-
   return {
-    environment,
+    environment: environment.name,
     isFirstCompile,
     isWatch,
     time,
-    mode: effectiveMode,
-    persistent,
+    ...getCacheInfo(json?.cacheInfo, mode),
     configuration,
-    moduleBuilds,
     logs,
     statsError,
   };

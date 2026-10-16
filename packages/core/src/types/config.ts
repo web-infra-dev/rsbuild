@@ -707,6 +707,8 @@ export type BuildCacheDiagnostics = {
     status: 'cold' | 'valid' | 'invalidated' | 'error' | 'unknown';
     reason: 'version' | 'buildDependencies' | 'recovery' | null;
   } | null;
+  /** Initial validation of a shared filesystem cache session, when available. */
+  persistentSessionInitialization: BuildCacheDiagnostics['persistent'];
   moduleBuilds: { reused: number; total: number } | null;
   logs: { type: string; message: string }[];
   statsError: string | null;
