@@ -46,7 +46,7 @@ catalog:
   '@rstest/core': '^0.12.3'
   '@rstest/playwright': '^0.12.3'
   # Match the Shiki version used by Rspress to keep transformer types compatible.
-  '@shikijs/transformers': '4.3.0'
+  '@shikijs/transformers': '4.5.0'
   '@solidjs/babel-plugin': '2.0.0-rc.14'
   '@solidjs/compiler': '2.0.0-rc.14'
   '@solidjs/web': '^2.0.0-rc.14'
@@ -138,6 +138,7 @@ catalog:
   'typescript': '^6.0.3'
   'vue': '^3.5.43'
   'ws': '^8.22.0'
+  'zephyr-rspress-plugin': '1.4.0'
 
 catalogs:
   loader-utils-2:
@@ -199,3 +200,8 @@ patchedDependencies:
 strictDepBuilds: true
 
 strictPeerDependencies: false
+
+overrides:
+  shiki: 4.5.0
+  '@shikijs/core': 4.5.0
+  '@shikijs/rehype': 4.5.0
