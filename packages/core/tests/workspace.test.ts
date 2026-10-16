@@ -21,7 +21,7 @@ test.each([
   ['lerna.json', '{}'],
   ['package.json', '{"workspaces":["packages/*"]}'],
   ['deno.json', '{"workspace":["packages/app"]}'],
-  ['deno.jsonc', '{"workspace":["packages/app"]}'],
+  ['deno.jsonc', '{\n// Workspace members\n"workspace":["packages/app",],\n}'],
 ])('should find a workspace with %s', (file, content) => {
   writeFileSync(join(root, file), content);
   writeFileSync(join(app, 'package.json'), '{}');

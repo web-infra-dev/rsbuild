@@ -498,6 +498,9 @@ catalogs:
     stacktrace-parser:
       specifier: ^0.1.11
       version: 0.1.11
+    strip-json-comments:
+      specifier: 5.0.3
+      version: 5.0.3
     style-loader:
       specifier: ^4.0.0
       version: 4.0.0
@@ -1157,6 +1160,9 @@ importers:
       stacktrace-parser:
         specifier: 'catalog:'
         version: 0.1.11
+      strip-json-comments:
+        specifier: 'catalog:'
+        version: 5.0.3
       style-loader:
         specifier: 'catalog:'
         version: 4.0.0
@@ -5193,6 +5199,10 @@ packages:
 
   stringify-entities@4.0.4:
     resolution: {integrity: sha512-IwfBptatlO+QCJUo19AqvrPNqlVMpW9YEL2LIVY+Rpv2qsjCGxaDLNRgeGsQWJhfItebuJhsGSLjaBbNSQ+ieg==}
+
+  strip-json-comments@5.0.3:
+    resolution: {integrity: sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==}
+    engines: {node: '>=14.16'}
 
   style-loader@4.0.0:
     resolution: {integrity: sha512-1V4WqhhZZgjVAVJyt7TdDPZoPBPNHbekX4fWnCJL1yQukhCeZhJySUL+gL9y6sNdN95uEOS83Y55SqHcP7MzLA==}
@@ -9346,6 +9356,8 @@ snapshots:
     dependencies:
       character-entities-html4: 2.1.0
       character-entities-legacy: 3.0.0
+
+  strip-json-comments@5.0.3: {}
 
   style-loader@4.0.0: {}
 

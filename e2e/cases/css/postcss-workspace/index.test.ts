@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-for (const mode of ['package', 'workspace', 'shared']) {
+for (const mode of ['package', 'workspace', 'shared', 'deno']) {
   test(`should respect the PostCSS config search boundary (${mode})`, async ({
     build,
   }) => {
@@ -23,13 +23,19 @@ for (const mode of ['package', 'workspace', 'shared']) {
         'throw new Error("PostCSS config outside the project was loaded");',
       );
 
-      if (mode !== 'package') {
+      if (mode === 'deno') {
+        await writeFile(
+          join(workspace, 'deno.jsonc'),
+          '{\n// Workspace members\n"workspace":["app",],\n}',
+        );
+      } else if (mode !== 'package') {
         await writeFile(
           join(workspace, 'package.json'),
           '{"workspaces":["app"]}',
         );
       }
-      if (mode === 'shared') {
+      const shared = mode === 'shared' || mode === 'deno';
+      if (shared) {
         await writeFile(
           join(workspace, 'postcss.config.cjs'),
           `module.exports = {
@@ -43,9 +49,7 @@ for (const mode of ['package', 'workspace', 'shared']) {
 
       const rsbuild = await build({ cwd: app });
       const css = getFileContent(rsbuild.getDistFiles(), 'index.css');
-      expect(css).toContain(
-        `--marker:${mode === 'shared' ? 'shared' : 'original'}`,
-      );
+      expect(css).toContain(`--marker:${shared ? 'shared' : 'original'}`);
     } finally {
       await rm(parent, { recursive: true, force: true });
     }

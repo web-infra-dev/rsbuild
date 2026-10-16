@@ -129,6 +129,7 @@ catalog:
   'sirv': '^3.0.2'
   'solid-js': '^2.0.0-rc.14'
   'stacktrace-parser': '^0.1.11'
+  'strip-json-comments': '5.0.3'
   'style-loader': '^4.0.0'
   'svelte': '^5.57.2'
   'svelte-loader': '3.2.4'
