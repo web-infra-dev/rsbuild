@@ -88,7 +88,6 @@
     "rspack-merge": "catalog:",
     "sirv": "catalog:",
     "stacktrace-parser": "catalog:",
-    "strip-json-comments": "catalog:",
     "style-loader": "catalog:",
     "tinyglobby": "catalog:",
     "typescript": "catalog:",

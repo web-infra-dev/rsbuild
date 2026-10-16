@@ -1,28 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import stripJsonComments from 'strip-json-comments';
 import { isFileSync } from './fs';
-
-function hasWorkspaceField(
-  file: string,
-  field: string,
-  jsonc = false,
-): boolean {
-  // Avoid opening missing files and creating ENOENT errors at every ancestor.
-  if (!isFileSync(file)) {
-    return false;
-  }
-
-  try {
-    const content = readFileSync(file, 'utf8');
-    const config = JSON.parse(
-      jsonc ? stripJsonComments(content, { trailingCommas: true }) : content,
-    ) as Record<string, unknown> | null;
-    return Boolean(config?.[field]);
-  } catch {
-    return false;
-  }
-}
 
 /** Find the nearest workspace root, falling back to the nearest package root. */
 export function findWorkspaceRoot(root: string): string {
@@ -30,19 +8,26 @@ export function findWorkspaceRoot(root: string): string {
   let packageRoot: string | undefined;
 
   while (true) {
-    const packageJson = join(current, 'package.json');
-    if (!packageRoot && isFileSync(packageJson)) {
-      packageRoot = current;
-    }
-
     if (
       isFileSync(join(current, 'pnpm-workspace.yaml')) ||
-      isFileSync(join(current, 'lerna.json')) ||
-      hasWorkspaceField(packageJson, 'workspaces') ||
-      hasWorkspaceField(join(current, 'deno.json'), 'workspace', true) ||
-      hasWorkspaceField(join(current, 'deno.jsonc'), 'workspace', true)
+      isFileSync(join(current, 'lerna.json'))
     ) {
       return current;
+    }
+
+    const packageJson = join(current, 'package.json');
+    if (isFileSync(packageJson)) {
+      packageRoot ??= current;
+      try {
+        const pkg = JSON.parse(readFileSync(packageJson, 'utf8')) as {
+          workspaces?: unknown;
+        } | null;
+        if (pkg?.workspaces) {
+          return current;
+        }
+      } catch {
+        // Ignore unreadable or invalid package.json files.
+      }
     }
 
     const parent = dirname(current);

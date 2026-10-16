@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
-for (const mode of ['package', 'workspace', 'shared', 'deno']) {
+for (const mode of ['package', 'workspace', 'shared']) {
   test(`should respect the PostCSS config search boundary (${mode})`, async ({
     build,
   }) => {
@@ -23,18 +23,13 @@ for (const mode of ['package', 'workspace', 'shared', 'deno']) {
         'throw new Error("PostCSS config outside the project was loaded");',
       );
 
-      if (mode === 'deno') {
-        await writeFile(
-          join(workspace, 'deno.jsonc'),
-          '{\n// Workspace members\n"workspace":["app",],\n}',
-        );
-      } else if (mode !== 'package') {
+      if (mode !== 'package') {
         await writeFile(
           join(workspace, 'package.json'),
           '{"workspaces":["app"]}',
         );
       }
-      const shared = mode === 'shared' || mode === 'deno';
+      const shared = mode === 'shared';
       if (shared) {
         await writeFile(
           join(workspace, 'postcss.config.cjs'),
