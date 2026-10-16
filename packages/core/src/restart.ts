@@ -152,13 +152,18 @@ export function watchFilesForRestart({
   const watchersPromise = Promise.all(
     watchGroups.map(async ({ files, events, options }) => {
       try {
-        const watcher = await createChokidar(files, root, {
-          // Avoid initial add events.
-          ignoreInitial: true,
-          // Ignore file permission errors.
-          ignorePermissionErrors: true,
-          ...options,
-        });
+        const watcher = await createChokidar(
+          files,
+          root,
+          {
+            // Avoid initial add events.
+            ignoreInitial: true,
+            // Ignore file permission errors.
+            ignorePermissionErrors: true,
+            ...options,
+          },
+          logger,
+        );
         // Chokidar reports event paths relative to `cwd` when it is configured.
         const cwd = options?.cwd ?? root;
         const watchEvents = events

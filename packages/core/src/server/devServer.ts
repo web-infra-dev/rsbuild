@@ -561,6 +561,7 @@ export async function createDevServer<
 
   state.fileWatcher = await setupWatchFiles({
     config,
+    logger,
     buildManager: state.buildManager,
     root: context.rootPath,
   });

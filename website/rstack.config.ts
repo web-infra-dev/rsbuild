@@ -2,7 +2,6 @@ import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginRss } from '@rspress/plugin-rss';
-import { pluginSitemap } from '@rspress/plugin-sitemap';
 import {
   transformerNotationDiff,
   transformerNotationFocus,
@@ -19,12 +18,10 @@ const siteUrl = 'https://rsbuild.rs';
 const description = 'The Rspack-based build tool';
 
 define.doc({
+  siteOrigin: siteUrl,
   plugins: [
     withZephyr({ target: 'web' }),
     pluginAlgolia(),
-    pluginSitemap({
-      siteUrl,
-    }),
     pluginFontOpenSans(),
     pluginRss({
       siteUrl,
@@ -164,7 +161,6 @@ define.doc({
     light: 'https://assets.rspack.rs/rsbuild/navbar-logo-light.png',
     dark: 'https://assets.rspack.rs/rsbuild/navbar-logo-dark.png',
   },
-  llms: true,
   markdown: {
     link: {
       checkAnchors: true,

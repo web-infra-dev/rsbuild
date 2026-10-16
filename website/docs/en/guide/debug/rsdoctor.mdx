@@ -12,13 +12,19 @@ Use Rsdoctor to debug build outputs or the build process.
 
 ## Quick start
 
+:::tip
+This guide applies to Rsbuild v2.2.6 and later. For Rsbuild v1, see the [v1 documentation](https://v1.rsbuild.rs/guide/debug/rsdoctor).
+:::
+
 In an Rsbuild project, enable Rsdoctor as follows:
 
 1. Install the Rsdoctor plugin:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsdoctor/rspack-plugin -D" />
+<PackageManagerTabs command="add @rsdoctor/core@latest -D" />
+
+To upgrade from Rsdoctor 1.x, see the [Rsdoctor 2.0 migration guide](https://rsdoctor.rs/guide/migration/migration-v2).
 
 2. Set the `RSDOCTOR=true` environment variable before running the CLI command:
 
@@ -52,7 +58,7 @@ After running these scripts, Rsbuild automatically registers the Rsdoctor plugin
 To configure the [options](https://rsdoctor.rs/config/options/options) exposed by the Rsdoctor plugin, manually register the plugin:
 
 ```ts title="rsbuild.config.ts"
-import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { RsdoctorRspackPlugin } from '@rsdoctor/core';
 
 export default {
   tools: {

@@ -56,6 +56,22 @@ export const pluginDefine = (): RsbuildPlugin => ({
       const baseUrl = JSON.stringify(config.server.base);
       const assetPrefix = JSON.stringify(getPublicPathFromChain(chain, false));
 
+      const envPrefix = 'import.meta.env.';
+      const userEnv: DefinePluginOptions = Object.create(null);
+
+      for (const [key, value] of Object.entries(config.source.define)) {
+        if (!key.startsWith(envPrefix)) {
+          continue;
+        }
+
+        const name = key.slice(envPrefix.length);
+
+        // Keep nested paths as separate DefinePlugin definitions.
+        if (name !== '' && !name.includes('.')) {
+          userEnv[name] = value;
+        }
+      }
+
       const builtinVars: DefinePluginOptions = {
         'import.meta.env': {
           MODE: JSON.stringify(config.mode),
@@ -64,6 +80,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
           SSR: config.output.target === 'node',
           BASE_URL: baseUrl,
           ASSET_PREFIX: assetPrefix,
+          ...userEnv,
         },
         'process.env.BASE_URL': baseUrl,
         'process.env.ASSET_PREFIX': assetPrefix,
