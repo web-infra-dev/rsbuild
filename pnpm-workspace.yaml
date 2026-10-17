@@ -101,7 +101,7 @@ catalog:
   'on-finished': '2.4.1'
   'open': '^11.0.4'
   'path-serializer': '0.7.0'
-  'playwright': '1.61.1'
+  'playwright': '1.64.1'
   'postcss': '^8.5.29'
   'postcss-load-config': '6.0.1'
   'postcss-loader': '8.2.1'
