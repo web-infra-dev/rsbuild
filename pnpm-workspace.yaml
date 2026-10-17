@@ -71,7 +71,7 @@ catalog:
   '@types/ws': '^8.18.2'
   'babel-loader': '10.1.1'
   'browserslist-load-config': '^1.0.3'
-  'cac': '^7.0.1'
+  'cac': '^7.1.0'
   'chokidar': '^5.0.0'
   'connect-next': '5.0.0'
   'core-js': '^3.50.0'
