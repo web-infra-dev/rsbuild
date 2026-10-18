@@ -127,8 +127,9 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     : [compiler as Rspack.Compiler];
 
   const deferBuildLogs =
-    isMultiCompiler &&
-    context.environmentList.some(({ config }) => config.dev.progressBar);
+    context.action === 'build' ||
+    (isMultiCompiler &&
+      context.environmentList.some(({ config }) => config.dev.progressBar));
   const pendingBuildLogs: (() => void)[] = [];
 
   const finishFatalBuild = () => {
@@ -266,6 +267,12 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     }
   };
 
+  const flushPendingBuildLogs = () => {
+    for (const log of pendingBuildLogs.splice(0)) {
+      log();
+    }
+  };
+
   if (isMultiCompiler) {
     (compiler as Rspack.MultiCompiler).compilers.forEach((item, index) => {
       item.hooks.done.tap(
@@ -285,8 +292,8 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     HOOK_NAME,
     (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
       hasFatalError = false;
-      for (const log of pendingBuildLogs.splice(0)) {
-        log();
+      if (context.action !== 'build') {
+        flushPendingBuildLogs();
       }
       const stats = getRsbuildStats(
         statsInstance,
@@ -335,6 +342,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     compiler,
     environments: context.environments,
   });
+
+  if (context.action === 'build') {
+    // Register last so build duration is printed after file sizes and plugin logs.
+    context.hooks.onAfterBuild.tap(flushPendingBuildLogs);
+  }
   logger.debug('compiler created');
 
   return {

@@ -9,9 +9,13 @@ export function extractFileSizeLogs(logs: string[]) {
     const trimmed = log.trim();
     const isTableHeader = trimmed.startsWith('File (');
     const isTotalSize = trimmed.startsWith('Total');
+    const isBuildTime = trimmed.startsWith('ready   built in');
 
     if (isTableHeader || isTotalSize) {
       isFileSizeLog = true;
+    }
+    if (isBuildTime) {
+      isFileSizeLog = false;
     }
     if (isFileSizeLog) {
       // replace numbers and contenthash with placeholder
