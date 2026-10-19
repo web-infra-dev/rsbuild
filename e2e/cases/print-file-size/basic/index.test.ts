@@ -220,6 +220,30 @@ test('should not calculate gzip size if the asset is not compressible', async ({
   );
 });
 
+for (const total of [false, true]) {
+  test(`should ${total ? 'keep' : 'omit'} the compression header when only non-compressible files are listed`, async ({
+    build,
+  }) => {
+    const rsbuild = await build({
+      config: {
+        performance: {
+          printFileSize: {
+            detail: 1,
+            total,
+            include: ({ name }) => /\.(png|html)$/.test(name),
+          },
+        },
+      },
+    });
+    const logs = extractFileSizeLogs(rsbuild.logs);
+    expect(logs).toMatch(
+      /^dist\/static\/image\/icon\.\[\[hash\]\]\.png\s+X\.X kB$/m,
+    );
+    expect(logs).toContain('... 1 more file not shown');
+    expect(logs.includes('Gzip')).toBe(total);
+  });
+}
+
 test('should calculate gzip size for script-like assets', async ({ build }) => {
   const emitTsAssetPlugin: RsbuildPlugin = {
     name: 'emit-ts-asset',
