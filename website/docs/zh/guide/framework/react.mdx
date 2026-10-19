@@ -37,12 +37,14 @@ import { PackageManagerTabs } from '@theme';
 
 通过以下命令创建使用 Rsbuild 的 TanStack Start 应用：
 
-```bash
-# 使用 React 和 Rsbuild 的 TanStack Start 模板
-pnpm create rsbuild@latest my-app -t tanstack-start-react
-cd my-app
-pnpm dev
-```
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest my-app -- -t tanstack-start-react\ncd my-app\nnpm run dev',
+    yarn: 'yarn create rsbuild my-app -t tanstack-start-react\ncd my-app\nyarn dev',
+    pnpm: 'pnpm create rsbuild@latest my-app -t tanstack-start-react\ncd my-app\npnpm dev',
+    bun: 'bun create rsbuild@latest my-app --template tanstack-start-react\ncd my-app\nbun run dev',
+  }}
+/>
 
 如果需要将 TanStack Start 项目从 Vite 迁移到 Rsbuild，请参考 [TanStack Start 迁移](/guide/migration/tanstack-start)。
 
