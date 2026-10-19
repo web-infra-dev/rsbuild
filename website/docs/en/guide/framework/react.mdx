@@ -37,12 +37,14 @@ The following full-stack React frameworks are built on Rsbuild and reuse Rsbuild
 
 Create a TanStack Start application with Rsbuild:
 
-```bash
-# TanStack Start with React and Rsbuild
-pnpm create rsbuild@latest my-app -t tanstack-start-react
-cd my-app
-pnpm dev
-```
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest my-app -- -t tanstack-start-react\ncd my-app\nnpm run dev',
+    yarn: 'yarn create rsbuild my-app -t tanstack-start-react\ncd my-app\nyarn dev',
+    pnpm: 'pnpm create rsbuild@latest my-app -t tanstack-start-react\ncd my-app\npnpm dev',
+    bun: 'bun create rsbuild@latest my-app -t tanstack-start-react\ncd my-app\nbun run dev',
+  }}
+/>
 
 To migrate a TanStack Start project from Vite, see [TanStack Start migration](/guide/migration/tanstack-start).
 
