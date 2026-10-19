@@ -22,6 +22,8 @@ Using `npm create`:
 npm create rsbuild@latest
 ```
 
+Select a framework, then choose **Basic (TypeScript)** or **Basic (JavaScript)**. React also offers **TanStack Start** for full-stack applications powered by Rsbuild.
+
 Using CLI flags:
 
 ```bash
@@ -35,6 +37,8 @@ npx create-rsbuild --dir my-project --template react --no-git
 ```
 
 ### Template examples
+
+For basic templates, use `<framework>-ts` for **Basic (TypeScript)** and `<framework>-js` for **Basic (JavaScript)**. For example, `react-ts` selects React's basic TypeScript template.
 
 The following commands create a project without interactive prompts:
 
@@ -51,6 +55,14 @@ npx -y create-rsbuild@latest my-app -t vanilla-ts
 npx -y create-rsbuild@latest my-app -t react-js
 npx -y create-rsbuild@latest my-app -t react-ts
 ```
+
+- **TanStack Start (React)**
+
+```bash
+npx -y create-rsbuild@latest my-app -t tanstack-start
+```
+
+This template uses TanStack CLI with Rsbuild as the build tool. The `--tools`, `--skill`, and `--template-version` options are not supported; use TanStack CLI's setup flow to configure the project instead.
 
 - **Vue**
 
