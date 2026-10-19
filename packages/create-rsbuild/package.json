@@ -41,7 +41,6 @@
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@types/node": "catalog:",
-    "tinyexec": "catalog:",
     "typescript": "catalog:"
   },
   "engines": {

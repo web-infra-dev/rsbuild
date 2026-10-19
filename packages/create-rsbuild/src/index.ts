@@ -8,8 +8,8 @@ import {
   type ESLintTemplateName,
   type RslintTemplateName,
   select,
+  xSync,
 } from '@rstackjs/create-toolkit';
-import { xSync } from 'tinyexec';
 import {
   addPluginsToRsbuildConfig,
   enableReactCompilerInRsbuildConfig,

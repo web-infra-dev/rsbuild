@@ -235,8 +235,8 @@ catalogs:
       specifier: 2.1.0-beta.1
       version: 2.1.0-beta.1
     '@rstackjs/create-toolkit':
-      specifier: 2.2.8
-      version: 2.2.8
+      specifier: 2.2.9
+      version: 2.2.9
     '@rstackjs/doc-ui':
       specifier: 1.14.11
       version: 1.14.11
@@ -513,9 +513,6 @@ catalogs:
     tailwindcss:
       specifier: ^4.3.3
       version: 4.3.3
-    tinyexec:
-      specifier: ^1.3.1
-      version: 1.3.1
     tinyglobby:
       specifier: ^0.2.17
       version: 0.2.17
@@ -1174,7 +1171,7 @@ importers:
     dependencies:
       '@rstackjs/create-toolkit':
         specifier: 'catalog:'
-        version: 2.2.8
+        version: 2.2.9
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1200,9 +1197,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.2
-      tinyexec:
-        specifier: 'catalog:'
-        version: 1.3.1
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -2727,8 +2721,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rstackjs/create-toolkit@2.2.8':
-    resolution: {integrity: sha512-aN1T4xvIHGoBya00L/7g5hG1pBImVVybza+HcxeNETy1nl0ZSGDL3JIuusoRJggtrgQ6MkPJrSXP/3+TBjjGOQ==}
+  '@rstackjs/create-toolkit@2.2.9':
+    resolution: {integrity: sha512-k4fR2ZMiddHhQiBFWuW81vHd6IKKCML7RKYcnLnHeH+vtF4NzNPgsGavZCzyCtIvxUCkCvwwUn2QM9Aowa080Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
   '@rstackjs/doc-ui@1.14.11':
@@ -5309,10 +5303,6 @@ packages:
     peerDependencies:
       tslib: ^2
 
-  tinyexec@1.3.1:
-    resolution: {integrity: sha512-GCvB3aoys96IuDFBMcTB46JOR6mdMtAToqwiW8JlWhsoh1mhHi/xn9ss/Dg7N555GiJyEt2qzoG/NHCwM6h1EA==}
-    engines: {node: '>=18'}
-
   tinyglobby@0.2.17:
     resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
     engines: {node: '>=12.0.0'}
@@ -6684,7 +6674,7 @@ snapshots:
   '@rstackjs/cli-win32-x64-msvc@0.8.4':
     optional: true
 
-  '@rstackjs/create-toolkit@2.2.8': {}
+  '@rstackjs/create-toolkit@2.2.9': {}
 
   '@rstackjs/doc-ui@1.14.11(@rspress/core@2.1.0-beta.1)':
     optionalDependencies:
@@ -9541,8 +9531,6 @@ snapshots:
   thingies@2.6.0(tslib@2.8.1):
     dependencies:
       tslib: 2.8.1
-
-  tinyexec@1.3.1: {}
 
   tinyglobby@0.2.17:
     dependencies:
