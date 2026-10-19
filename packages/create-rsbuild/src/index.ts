@@ -21,7 +21,11 @@ const frameworkAlias: Record<string, string> = {
   'solid-js': 'solid',
 };
 
-async function getTemplateName({ template }: Argv) {
+let isNonInteractive = false;
+
+async function getTemplateName({ dir, template }: Argv) {
+  isNonInteractive = typeof dir === 'string' && typeof template === 'string';
+
   if (typeof template === 'string') {
     if (template === 'tanstack-start') {
       return template;
@@ -135,6 +139,11 @@ await create({
           distFolder,
           packageName,
         ];
+        if (isNonInteractive) {
+          // Skip npx's install confirmation and TanStack's setup prompts.
+          args.unshift('--yes');
+          args.push('--yes');
+        }
         if (!gitEnabled) {
           args.push('--no-git');
         }
