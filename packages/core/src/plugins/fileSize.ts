@@ -384,7 +384,11 @@ function printFileSizes(
   const logs: string[] = [];
   const compression = getCompression(options.compressed);
   const prev = previousSizes?.[environmentName];
-  const showDetail = options.detail !== false;
+  const detailLimit =
+    typeof options.detail === 'number'
+      ? Math.max(0, Math.floor(options.detail))
+      : Infinity;
+  const showDetail = options.detail !== false && detailLimit > 0;
   const showDiff = options.diff !== false && previousSizes !== null;
   // Legacy snapshots have no compression type and a zero gzip total when disabled.
   const prevType =
@@ -580,27 +584,26 @@ function printFileSizes(
   };
 
   if (showDetail) {
+    const displayedAssets = assets.slice(
+      Math.max(0, assets.length - detailLimit),
+    );
     let maxFileLength = Math.max(
       showTotal ? totalSizeTitle.length : 0,
       fileHeader.length,
     );
     let maxSizeLength = totalSizeLabelLength;
-    let hasCompressedSize = false;
-
-    for (const asset of assets) {
+    for (const asset of displayedAssets) {
       if (asset.filenameLength > maxFileLength) {
         maxFileLength = asset.filenameLength;
       }
       if (asset.sizeLabelLength > maxSizeLength) {
         maxSizeLength = asset.sizeLabelLength;
       }
-      if (asset.compressedSize !== null) {
-        hasCompressedSize = true;
-      }
     }
 
     const showCompressedHeader = Boolean(
-      options.compressed && hasCompressedSize,
+      options.compressed &&
+      assets.some((asset) => asset.compressedSize !== null),
     );
 
     logs.push(
@@ -612,7 +615,7 @@ function printFileSizes(
       ),
     );
 
-    for (const asset of assets) {
+    for (const asset of displayedAssets) {
       let { sizeLabel, filenameLabel } = asset;
       const { sizeLabelLength, compressedSizeLabel, filenameLength } = asset;
 
@@ -633,6 +636,15 @@ function printFileSizes(
       }
 
       logs.push(log);
+    }
+
+    const hiddenCount = assets.length - displayedAssets.length;
+    if (hiddenCount > 0) {
+      logs.push(
+        color.dim(
+          `... ${hiddenCount} more ${hiddenCount === 1 ? 'file' : 'files'} not shown`,
+        ),
+      );
     }
 
     if (showTotal) {

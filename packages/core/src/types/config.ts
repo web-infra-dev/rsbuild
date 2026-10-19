@@ -715,10 +715,13 @@ export type PrintFileSizeOptions = {
         totalBrotliSize?: number;
       }) => string);
   /**
-   * Whether to print the size of each static asset.
+   * Controls how many asset sizes to print in each environment.
+   * Set to `true` to print all assets, or `false` or `0` to hide individual assets.
+   * A positive integer limits the list to the largest assets by uncompressed size.
+   * Omitted assets still contribute to totals and size comparisons when `diff` is enabled.
    * @default true
    */
-  detail?: boolean;
+  detail?: boolean | number;
   /**
    * Whether to print the compressed size of each static asset.
    * Set to `true` to use gzip, or specify `type` to select gzip or Brotli.
