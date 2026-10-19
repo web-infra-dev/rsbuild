@@ -48,16 +48,16 @@ import { PackageManagerTabs } from '@theme';
 
 React 和 Solid 1 提供 `TanStack Start` 模板，用于创建以 Rsbuild 为构建工具的全栈应用。
 
-| 框架           | 官方文档                        | Rsbuild 集成指南                                             |
-| -------------- | ------------------------------- | ------------------------------------------------------------ |
-| vanilla        | 原生 JavaScript                 | -                                                            |
-| react          | [React](https://react.dev/)     | [使用 React](/guide/framework/react)                         |
-| vue            | [Vue](https://vuejs.org/)       | [使用 Vue](/guide/framework/vue)                             |
-| lit            | [Lit](https://lit.dev/)         | -                                                            |
-| preact         | [Preact](https://preactjs.com/) | [使用 Preact](/guide/framework/preact)                       |
-| svelte         | [Svelte](https://svelte.dev/)   | [使用 Svelte](/guide/framework/svelte)                       |
-| solid / solid2 | [Solid](https://solidjs.com/)   | [使用 Solid](/guide/framework/solid)                         |
-| octane         | [Octane](https://octanejs.dev/) | [使用 Octane](https://octanejs.dev/docs/build-tools#rsbuild) |
+| 框架    | 官方文档                        | Rsbuild 集成指南                                             |
+| ------- | ------------------------------- | ------------------------------------------------------------ |
+| vanilla | 原生 JavaScript                 | -                                                            |
+| react   | [React](https://react.dev/)     | [使用 React](/guide/framework/react)                         |
+| vue     | [Vue](https://vuejs.org/)       | [使用 Vue](/guide/framework/vue)                             |
+| lit     | [Lit](https://lit.dev/)         | -                                                            |
+| preact  | [Preact](https://preactjs.com/) | [使用 Preact](/guide/framework/preact)                       |
+| svelte  | [Svelte](https://svelte.dev/)   | [使用 Svelte](/guide/framework/svelte)                       |
+| solid   | [Solid](https://solidjs.com/)   | [使用 Solid](/guide/framework/solid)                         |
+| octane  | [Octane](https://octanejs.dev/) | [使用 Octane](https://octanejs.dev/docs/build-tools#rsbuild) |
 
 你还可以通过以下方式获取更多工具和模板：
 
@@ -107,12 +107,6 @@ npx -y create-rsbuild@latest my-app -t react
 
 # 指定多个 tools
 npx -y create-rsbuild@latest my-app -t react --tools rslint,prettier
-
-# 使用 React 和 Rsbuild 的 TanStack Start 模板
-npx -y create-rsbuild@latest my-app -t tanstack-start-react
-
-# 使用 Solid 1 和 Rsbuild 的 TanStack Start 模板
-npx -y create-rsbuild@latest my-app -t tanstack-start-solid
 ```
 
 > 如需查看各模板的创建命令，请参考 [模板示例](https://github.com/web-infra-dev/rsbuild/tree/main/packages/create-rsbuild#template-examples)。
