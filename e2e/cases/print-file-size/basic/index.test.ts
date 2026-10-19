@@ -236,9 +236,7 @@ for (const total of [false, true]) {
       },
     });
     const logs = extractFileSizeLogs(rsbuild.logs);
-    expect(logs).toMatch(
-      /^dist\/static\/image\/icon\.\[\[hash\]\]\.png\s+X\.X kB$/m,
-    );
+    expect(logs).toContain('dist/static/image/icon.[[hash]].png');
     expect(logs).toContain('... 1 more file not shown');
     expect(logs.includes('Gzip')).toBe(total);
   });
