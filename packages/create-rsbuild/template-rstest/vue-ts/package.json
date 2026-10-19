@@ -8,6 +8,6 @@
     "@rstest/core": "^0.12.3",
     "@testing-library/jest-dom": "^7.0.1",
     "@vue/test-utils": "^2.5.1",
-    "happy-dom": "^20.14.6"
+    "happy-dom": "^21.0.3"
   }
 }
