@@ -134,6 +134,20 @@ npx -y create-rsbuild@latest my-app -t octane-js
 npx -y create-rsbuild@latest my-app -t octane-ts
 ```
 
+- **Lynx**
+
+Creates a ReactLynx app with Rsbuild using `@lynx-js/create-lynx`.
+
+```bash
+# Basic (JavaScript)
+npx -y create-rsbuild@latest my-app -t lynx-js
+
+# Basic (TypeScript)
+npx -y create-rsbuild@latest my-app -t lynx-ts
+```
+
+See the [Lynx guide](https://lynxjs.org/next/guide/build/index.html) for configuration and development instructions.
+
 ## Documentation
 
 See [Documentation](https://rsbuild.rs/guide/start/quick-start).

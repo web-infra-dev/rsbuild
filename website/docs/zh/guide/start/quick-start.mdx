@@ -48,16 +48,19 @@ import { PackageManagerTabs } from '@theme';
 
 创建应用时，可选择 `create-rsbuild` 提供的下列模板，查看集成指南了解更多信息。
 
-| 框架    | 官方文档                        | Rsbuild 集成指南                                             |
-| ------- | ------------------------------- | ------------------------------------------------------------ |
-| vanilla | 原生 JavaScript                 | -                                                            |
-| react   | [React](https://react.dev/)     | [使用 React](/guide/framework/react)                         |
-| vue     | [Vue](https://vuejs.org/)       | [使用 Vue](/guide/framework/vue)                             |
-| lit     | [Lit](https://lit.dev/)         | -                                                            |
-| preact  | [Preact](https://preactjs.com/) | [使用 Preact](/guide/framework/preact)                       |
-| svelte  | [Svelte](https://svelte.dev/)   | [使用 Svelte](/guide/framework/svelte)                       |
-| solid   | [Solid](https://solidjs.com/)   | [使用 Solid](/guide/framework/solid)                         |
-| octane  | [Octane](https://octanejs.dev/) | [使用 Octane](https://octanejs.dev/docs/build-tools#rsbuild) |
+| 框架    | 官方文档                        | Rsbuild 集成指南                                               |
+| ------- | ------------------------------- | -------------------------------------------------------------- |
+| vanilla | 原生 JavaScript                 | -                                                              |
+| react   | [React](https://react.dev/)     | [使用 React](/guide/framework/react)                           |
+| vue     | [Vue](https://vuejs.org/)       | [使用 Vue](/guide/framework/vue)                               |
+| lit     | [Lit](https://lit.dev/)         | -                                                              |
+| preact  | [Preact](https://preactjs.com/) | [使用 Preact](/guide/framework/preact)                         |
+| svelte  | [Svelte](https://svelte.dev/)   | [使用 Svelte](/guide/framework/svelte)                         |
+| solid   | [Solid](https://solidjs.com/)   | [使用 Solid](/guide/framework/solid)                           |
+| octane  | [Octane](https://octanejs.dev/) | [使用 Octane](https://octanejs.dev/docs/build-tools#rsbuild)   |
+| lynx    | [Lynx](https://lynxjs.org/)     | [使用 Lynx](https://lynxjs.org/next/zh/guide/build/index.html) |
+
+选择 **Lynx** 后，会通过 `@lynx-js/create-lynx` 创建基于 Rsbuild 的 ReactLynx 应用，支持 TypeScript 和 JavaScript 模板。
 
 你还可以通过以下方式获取更多工具和模板：
 
@@ -127,7 +130,7 @@ Options:
   --package-name <name>     specify the package name
   --template-version <ver>  specify the npm template version
 
-Available templates: vanilla-js, vanilla-ts, react-js, react-ts, tanstack-start-react, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts, tanstack-start-solid, solid2-js, solid2-ts, octane-js, octane-ts
+Available templates: vanilla-js, vanilla-ts, react-js, react-ts, tanstack-start-react, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts, tanstack-start-solid, solid2-js, solid2-ts, octane-js, octane-ts, lynx-js, lynx-ts
 
 Optional tools: react-compiler, rstest, eslint, rslint, biome, prettier, tailwindcss, storybook
 
