@@ -46,7 +46,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### 模板
 
-先选择框架，再选择 `Basic (TypeScript)` 或 `Basic (JavaScript)` 创建基础应用。React 和 Solid 1 还提供 `TanStack Start` 模板，用于创建以 Rsbuild 为构建工具的全栈应用。
+React 和 Solid 1 提供 `TanStack Start` 模板，用于创建以 Rsbuild 为构建工具的全栈应用。
 
 | 框架           | 官方文档                        | Rsbuild 集成指南                                             |
 | -------------- | ------------------------------- | ------------------------------------------------------------ |
@@ -66,7 +66,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### 可选工具
 
-使用 Basic 模板时，`create-rsbuild` 可帮助设置以下常用工具。使用上下箭头和空格进行选择；如不需要这些工具，直接按回车跳过。
+`create-rsbuild` 可帮助设置以下常用工具。使用上下箭头和空格进行选择；如不需要这些工具，直接按回车跳过。
 
 | 工具                                                    | 用途                             |
 | ------------------------------------------------------- | -------------------------------- |
@@ -105,7 +105,7 @@ npx -y create-rsbuild@latest my-app --template react
 # 使用缩写
 npx -y create-rsbuild@latest my-app -t react
 
-# 为 Basic 模板指定多个工具
+# 指定多个 tools
 npx -y create-rsbuild@latest my-app -t react --tools rslint,prettier
 
 # 使用 React 和 Rsbuild 的 TanStack Start 模板
@@ -116,8 +116,6 @@ npx -y create-rsbuild@latest my-app -t tanstack-start-solid
 ```
 
 > 如需查看各模板的创建命令，请参考 [模板示例](https://github.com/web-infra-dev/rsbuild/tree/main/packages/create-rsbuild#template-examples)。
-
-TanStack Start 模板由 TanStack CLI 完成项目配置，不支持 `--tools`、`--skill` 和 `--template-version` 选项，传入这些选项会报错。
 
 `create-rsbuild` 完整的 CLI 选项如下：
 

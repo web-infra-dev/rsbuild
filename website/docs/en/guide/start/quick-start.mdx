@@ -46,7 +46,7 @@ Follow the instructions printed by the CLI to start your application:
 
 ### Templates
 
-Choose a framework, then select `Basic (TypeScript)` or `Basic (JavaScript)` for a basic application. React and Solid 1 also offer a `TanStack Start` template for full-stack applications, with Rsbuild configured as the build tool.
+React and Solid 1 offer a `TanStack Start` template for full-stack applications, with Rsbuild configured as the build tool.
 
 | Framework      | Official docs                   | Rsbuild integration guide                                     |
 | -------------- | ------------------------------- | ------------------------------------------------------------- |
@@ -66,7 +66,7 @@ For more tools and templates, see:
 
 ### Optional tools
 
-For Basic templates, `create-rsbuild` can help you set up the following commonly used tools. Use the arrow keys to navigate and the space bar to select. Press Enter without selecting anything to skip these tools.
+`create-rsbuild` can help you set up the following commonly used tools. Use the arrow keys to navigate and the space bar to select. Press Enter without selecting anything to skip these tools.
 
 | Tool                                                    | Use                                          |
 | ------------------------------------------------------- | -------------------------------------------- |
@@ -105,7 +105,7 @@ npx -y create-rsbuild@latest my-app --template react
 # Using abbreviations
 npx -y create-rsbuild@latest my-app -t react
 
-# Specify multiple tools for a Basic template
+# Specify multiple tools
 npx -y create-rsbuild@latest my-app -t react --tools rslint,prettier
 
 # TanStack Start with React and Rsbuild
@@ -116,8 +116,6 @@ npx -y create-rsbuild@latest my-app -t tanstack-start-solid
 ```
 
 > See [Template examples](https://github.com/web-infra-dev/rsbuild/tree/main/packages/create-rsbuild#template-examples) for commands that create each template.
-
-TanStack Start templates use the TanStack CLI for project setup. The `--tools`, `--skill`, and `--template-version` options are not supported for these templates and will cause an error.
 
 All CLI flags supported by `create-rsbuild`:
 
