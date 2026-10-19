@@ -21,7 +21,7 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then select `Solid` when prompted to "Select framework".
+Then select `Solid 1` or `Solid 2` when prompted to "Select framework".
 
 ## Full-stack frameworks
 
@@ -34,12 +34,13 @@ The following full-stack Solid frameworks are built on Rsbuild and reuse Rsbuild
 - [Documentation](https://tanstack.com/start/latest)
 - [Example project](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start-solid)
 
-You can initialize the TanStack Start example project with:
+Create a TanStack Start application with Rsbuild:
 
 ```bash
-npx giget gh:rstackjs/rstack-examples/rsbuild/tanstack-start-solid tanstack-start
-cd tanstack-start
-pnpm i
+# TanStack Start with Solid 1 and Rsbuild
+pnpm create rsbuild@latest my-app -t tanstack-start-solid
+cd my-app
+pnpm dev
 ```
 
 To migrate a TanStack Start project from Vite, see [TanStack Start migration](/guide/migration/tanstack-start).
