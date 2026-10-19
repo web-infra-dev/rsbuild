@@ -21,6 +21,7 @@ test('should create project with eslint as expected', async () => {
     },
   );
   expect(pkgJson.devDependencies.eslint).toBeTruthy();
+  expect(pkgJson.devDependencies.typescript).toBeUndefined();
   expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
   await clean();
 });
@@ -162,6 +163,7 @@ test('should create React project with ESLint as expected', async () => {
   );
   expect(pkgJson.devDependencies.eslint).toBeTruthy();
   expect(pkgJson.devDependencies['eslint-plugin-react-hooks']).toBeTruthy();
+  expect(pkgJson.devDependencies.typescript).toBe('^6.0.3');
   expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
   await clean();
 });
@@ -177,6 +179,7 @@ test('should create React project with Rslint as expected', async () => {
     },
   );
   expect(pkgJson.devDependencies['@rslint/core']).toBeTruthy();
+  expect(pkgJson.devDependencies.typescript).toBe('^7.0.2');
 
   const configContent = readCreatedFile(dir, 'rslint.config.ts');
   expect(
@@ -218,6 +221,7 @@ test('should create Vue project with ESLint as expected', async () => {
   );
   expect(pkgJson.devDependencies.eslint).toBeTruthy();
   expect(pkgJson.devDependencies['eslint-plugin-vue']).toBeTruthy();
+  expect(pkgJson.devDependencies.typescript).toBe('^6.0.3');
   expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
   await clean();
 });
@@ -345,3 +349,19 @@ test('should ignore react-compiler for non-React projects', async () => {
   expect(configContent.includes('react-compiler')).toBeFalsy();
   await clean();
 });
+
+test.each([
+  ['vanilla-ts', '^6.0.3'],
+  ['svelte-ts', '^6.0.3'],
+  ['octane-ts', '^5.9.3'],
+])(
+  'should select a compatible TypeScript version for %s with ESLint',
+  async (template, version) => {
+    const { pkgJson } = await createAndValidate(import.meta.dirname, template, {
+      name: `test-temp-${template}-eslint`,
+      tools: ['eslint'],
+    });
+    expect(pkgJson.devDependencies['typescript-eslint']).toBeTruthy();
+    expect(pkgJson.devDependencies.typescript).toBe(version);
+  },
+);

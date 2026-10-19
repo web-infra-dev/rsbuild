@@ -16,6 +16,6 @@
     "@rsbuild/core": "^2.2.14",
     "@rsbuild/plugin-solid": "^2.0.0-rc.1",
     "@types/node": "^24.19.2",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }
