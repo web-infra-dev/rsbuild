@@ -58,7 +58,7 @@ npx -y create-rsbuild@latest my-app -t react-js
 npx -y create-rsbuild@latest my-app -t react-ts
 
 # TanStack Start (with Rsbuild)
-npx -y create-rsbuild@latest my-app -t tanstack-start
+npx -y create-rsbuild@latest my-app -t tanstack-start-react
 ```
 
 - **Vue**

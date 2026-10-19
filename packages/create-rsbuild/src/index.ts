@@ -28,7 +28,10 @@ async function getTemplateName({ dir, template }: Argv) {
   isNonInteractive = typeof dir === 'string' && typeof template === 'string';
 
   if (typeof template === 'string') {
-    if (template === 'tanstack-start' || template === 'tanstack-start-solid') {
+    if (
+      template === 'tanstack-start-react' ||
+      template === 'tanstack-start-solid'
+    ) {
       return template;
     }
     const pair = template.split('-');
@@ -69,7 +72,7 @@ async function getTemplateName({ dir, template }: Argv) {
   );
 
   if (variant === 'tanstack-start') {
-    return framework === 'solid' ? 'tanstack-start-solid' : 'tanstack-start';
+    return `tanstack-start-${framework}`;
   }
 
   return `${framework}-${variant}`;
@@ -164,7 +167,7 @@ await create({
     'react-js',
     'react-ts',
     {
-      name: 'tanstack-start',
+      name: 'tanstack-start-react',
       create: (context) => createTanStackProject('React', context),
     },
     'vue-js',
