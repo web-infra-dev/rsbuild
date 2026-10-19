@@ -154,7 +154,24 @@ function createLynxProject(
   process.exitCode = result.exitCode ?? 1;
 }
 
-function mapESLintTemplate(templateName: string): ESLintTemplateName {
+function mapESLintTemplate(
+  templateName: string,
+  { distFolder }: { distFolder: string },
+): ESLintTemplateName {
+  const packageJsonPath = path.join(distFolder, 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8')) as {
+    devDependencies: Record<string, string>;
+  };
+
+  // typescript-eslint still requires TypeScript 6's JavaScript API.
+  if (/^[~^]?7\./.test(packageJson.devDependencies.typescript ?? '')) {
+    packageJson.devDependencies.typescript = '^6.0.3';
+    fs.writeFileSync(
+      packageJsonPath,
+      `${JSON.stringify(packageJson, null, 2)}\n`,
+    );
+  }
+
   switch (templateName) {
     case 'react-js':
     case 'react-ts':
