@@ -54,6 +54,7 @@ async function getTemplateName({ dir, template }: Argv) {
         { value: 'solid', label: 'Solid 1' },
         { value: 'solid2', label: 'Solid 2' },
         { value: 'octane', label: 'Octane' },
+        { value: 'lynx', label: 'Lynx' },
       ],
     }),
   );
@@ -103,6 +104,34 @@ function createTanStackProject(
   }
   if (override) {
     args.push('--force');
+  }
+  const result = xSync('npx', args, {
+    nodePath: false,
+    nodeOptions: { stdio: 'inherit' },
+  });
+  process.exitCode = result.exitCode ?? 1;
+}
+
+function createLynxProject(
+  language: 'ts' | 'js',
+  { distFolder, packageName, gitEnabled, override }: TemplateCreateContext,
+) {
+  const args = [
+    '@lynx-js/create-lynx@latest',
+    distFolder,
+    '--template',
+    `rsbuild-react-${language}`,
+    '--package-name',
+    packageName,
+  ];
+  if (isNonInteractive) {
+    args.unshift('--yes');
+  }
+  if (!gitEnabled) {
+    args.push('--no-git');
+  }
+  if (override) {
+    args.push('--override');
   }
   const result = xSync('npx', args, {
     nodePath: false,
@@ -188,6 +217,14 @@ await create({
     'solid2-ts',
     'octane-js',
     'octane-ts',
+    {
+      name: 'lynx-js',
+      create: (context) => createLynxProject('js', context),
+    },
+    {
+      name: 'lynx-ts',
+      create: (context) => createLynxProject('ts', context),
+    },
   ],
   getTemplateName,
   mapESLintTemplate,
