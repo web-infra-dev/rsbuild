@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import zlib from 'node:zlib';
 import { expect, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { rs } from 'rstack/test';
 import { extractFileSizeLogs } from '../helper';
 
 test('should print file size after building by default', async ({ build }) => {
@@ -44,6 +45,26 @@ test('should not print logs when printFileSize is false', async ({ build }) => {
   });
 
   expect(extractFileSizeLogs(rsbuild.logs)).toEqual('');
+});
+
+test('should skip compression when detail is zero and total is disabled', async ({
+  build,
+}) => {
+  const createGzip = rs.spyOn(zlib, 'createGzip');
+  try {
+    const rsbuild = await build({
+      config: {
+        performance: {
+          printFileSize: { detail: 0, total: false },
+        },
+      },
+    });
+
+    expect(createGzip).not.toHaveBeenCalled();
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual('');
+  } finally {
+    createGzip.mockRestore();
+  }
 });
 
 for (const detail of [false, 0] as const) {

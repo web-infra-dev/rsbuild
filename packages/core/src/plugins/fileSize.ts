@@ -313,7 +313,10 @@ async function getFileSizes(
   compilation: Rspack.Compilation,
   processAssets: AssetProcessor,
 ) {
-  if (options.detail === false && options.total === false) {
+  if (
+    (options.detail === false || options.detail === 0) &&
+    options.total === false
+  ) {
     return [];
   }
 
