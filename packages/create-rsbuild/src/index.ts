@@ -9,6 +9,7 @@ import {
   type RslintTemplateName,
   select,
 } from '@rstackjs/create-toolkit';
+import { xSync } from 'tinyexec';
 import {
   addPluginsToRsbuildConfig,
   enableReactCompilerInRsbuildConfig,
@@ -22,6 +23,9 @@ const frameworkAlias: Record<string, string> = {
 
 async function getTemplateName({ template }: Argv) {
   if (typeof template === 'string') {
+    if (template === 'tanstack-start') {
+      return template;
+    }
     const pair = template.split('-');
     const language = pair[1] ?? 'js';
     const framework = pair[0];
@@ -46,17 +50,20 @@ async function getTemplateName({ template }: Argv) {
     }),
   );
 
-  const language = checkCancel<string>(
+  const variant = checkCancel<string>(
     await select({
-      message: 'Select language',
+      message: framework === 'react' ? 'Select template' : 'Select language',
       options: [
         { value: 'ts', label: 'TypeScript' },
         { value: 'js', label: 'JavaScript' },
+        ...(framework === 'react'
+          ? [{ value: 'tanstack-start', label: 'TanStack Start' }]
+          : []),
       ],
     }),
   );
 
-  return `${framework}-${language}`;
+  return variant === 'tanstack-start' ? variant : `${framework}-${variant}`;
 }
 
 function mapESLintTemplate(templateName: string): ESLintTemplateName {
@@ -114,6 +121,33 @@ await create({
     'vanilla-ts',
     'react-js',
     'react-ts',
+    {
+      name: 'tanstack-start',
+      create: ({ distFolder, packageName, gitEnabled, override }) => {
+        const args = [
+          '@tanstack/cli@latest',
+          'create',
+          '--framework',
+          'React',
+          '--build-tool',
+          'rsbuild',
+          '--target-dir',
+          distFolder,
+          packageName,
+        ];
+        if (!gitEnabled) {
+          args.push('--no-git');
+        }
+        if (override) {
+          args.push('--force');
+        }
+        const result = xSync('npx', args, {
+          nodePath: false,
+          nodeOptions: { stdio: 'inherit' },
+        });
+        process.exitCode = result.exitCode ?? 1;
+      },
+    },
     'vue-js',
     'vue-ts',
     'lit-js',
