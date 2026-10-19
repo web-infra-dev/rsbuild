@@ -56,10 +56,10 @@ async function getTemplateName({ dir, template }: Argv) {
 
   const variant = checkCancel<string>(
     await select({
-      message: framework === 'react' ? 'Select template' : 'Select language',
+      message: 'Select template',
       options: [
-        { value: 'ts', label: 'TypeScript' },
-        { value: 'js', label: 'JavaScript' },
+        { value: 'ts', label: 'Basic (TypeScript)' },
+        { value: 'js', label: 'Basic (JavaScript)' },
         ...(framework === 'react'
           ? [{ value: 'tanstack-start', label: 'TanStack Start' }]
           : []),
