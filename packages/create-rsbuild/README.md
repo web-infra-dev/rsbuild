@@ -109,6 +109,9 @@ npx -y create-rsbuild@latest my-app -t solid-js
 
 # Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t solid-ts
+
+# TanStack Start (with Rsbuild)
+npx -y create-rsbuild@latest my-app -t tanstack-start-solid
 ```
 
 - **Solid 2**

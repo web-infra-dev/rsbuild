@@ -8,6 +8,7 @@ import {
   type ESLintTemplateName,
   type RslintTemplateName,
   select,
+  type TemplateCreateContext,
   xSync,
 } from '@rstackjs/create-toolkit';
 import {
@@ -27,7 +28,7 @@ async function getTemplateName({ dir, template }: Argv) {
   isNonInteractive = typeof dir === 'string' && typeof template === 'string';
 
   if (typeof template === 'string') {
-    if (template === 'tanstack-start') {
+    if (template === 'tanstack-start' || template === 'tanstack-start-solid') {
       return template;
     }
     const pair = template.split('-');
@@ -60,14 +61,51 @@ async function getTemplateName({ dir, template }: Argv) {
       options: [
         { value: 'ts', label: 'Basic (TypeScript)' },
         { value: 'js', label: 'Basic (JavaScript)' },
-        ...(framework === 'react'
+        ...(framework === 'react' || framework === 'solid'
           ? [{ value: 'tanstack-start', label: 'TanStack Start' }]
           : []),
       ],
     }),
   );
 
-  return variant === 'tanstack-start' ? variant : `${framework}-${variant}`;
+  if (variant === 'tanstack-start') {
+    return framework === 'solid' ? 'tanstack-start-solid' : 'tanstack-start';
+  }
+
+  return `${framework}-${variant}`;
+}
+
+function createTanStackProject(
+  framework: 'React' | 'Solid',
+  { distFolder, packageName, gitEnabled, override }: TemplateCreateContext,
+) {
+  const args = [
+    '@tanstack/cli@latest',
+    'create',
+    '--framework',
+    framework,
+    '--build-tool',
+    'rsbuild',
+    '--target-dir',
+    distFolder,
+    packageName,
+  ];
+  if (isNonInteractive) {
+    // Skip npx's install confirmation and TanStack's setup prompts.
+    args.unshift('--yes');
+    args.push('--yes');
+  }
+  if (!gitEnabled) {
+    args.push('--no-git');
+  }
+  if (override) {
+    args.push('--force');
+  }
+  const result = xSync('npx', args, {
+    nodePath: false,
+    nodeOptions: { stdio: 'inherit' },
+  });
+  process.exitCode = result.exitCode ?? 1;
 }
 
 function mapESLintTemplate(templateName: string): ESLintTemplateName {
@@ -127,35 +165,7 @@ await create({
     'react-ts',
     {
       name: 'tanstack-start',
-      create: ({ distFolder, packageName, gitEnabled, override }) => {
-        const args = [
-          '@tanstack/cli@latest',
-          'create',
-          '--framework',
-          'React',
-          '--build-tool',
-          'rsbuild',
-          '--target-dir',
-          distFolder,
-          packageName,
-        ];
-        if (isNonInteractive) {
-          // Skip npx's install confirmation and TanStack's setup prompts.
-          args.unshift('--yes');
-          args.push('--yes');
-        }
-        if (!gitEnabled) {
-          args.push('--no-git');
-        }
-        if (override) {
-          args.push('--force');
-        }
-        const result = xSync('npx', args, {
-          nodePath: false,
-          nodeOptions: { stdio: 'inherit' },
-        });
-        process.exitCode = result.exitCode ?? 1;
-      },
+      create: (context) => createTanStackProject('React', context),
     },
     'vue-js',
     'vue-ts',
@@ -167,6 +177,10 @@ await create({
     'svelte-ts',
     'solid-js',
     'solid-ts',
+    {
+      name: 'tanstack-start-solid',
+      create: (context) => createTanStackProject('Solid', context),
+    },
     'solid2-js',
     'solid2-ts',
     'octane-js',
