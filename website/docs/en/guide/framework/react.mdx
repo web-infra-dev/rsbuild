@@ -21,7 +21,7 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then select `React` when prompted to "Select framework".
+Then select `React` when prompted to "Select framework", followed by a Basic template.
 
 ## Full-stack frameworks
 
@@ -35,12 +35,13 @@ The following full-stack React frameworks are built on Rsbuild and reuse Rsbuild
 - [Basic example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start)
 - [RSC example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start-rsc)
 
-You can initialize the TanStack Start example project with:
+Create a TanStack Start application with Rsbuild:
 
 ```bash
-npx giget gh:rstackjs/rstack-examples/rsbuild/tanstack-start tanstack-start
-cd tanstack-start
-pnpm i
+# TanStack Start with React and Rsbuild
+npx -y create-rsbuild@latest my-app -t tanstack-start-react
+cd my-app
+pnpm dev
 ```
 
 To migrate a TanStack Start project from Vite, see [TanStack Start migration](/guide/migration/tanstack-start).

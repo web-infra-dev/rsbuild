@@ -39,34 +39,34 @@ import { PackageManagerTabs } from '@theme';
 
 按照提示操作即可。
 
-创建完成后，执行以下步骤：
+按照 CLI 输出的提示启动应用：
 
-- 执行 `pnpm install`（或其他包管理器的 install 命令）安装依赖。
+- 如果尚未安装依赖，执行 `pnpm install`（或其他包管理器的 install 命令）。
 - 执行 `pnpm run dev` 启动 [开发服务器](/guide/basic/server)。
 
 ### 模板
 
-创建应用时，可选择 `create-rsbuild` 提供的下列模板，查看集成指南了解更多信息。
+先选择框架，再选择 `Basic (TypeScript)` 或 `Basic (JavaScript)` 创建基础应用。React 和 Solid 1 还提供 `TanStack Start` 模板，用于创建以 Rsbuild 为构建工具的全栈应用。
 
-| 模板    | 官方文档                        | Rsbuild 集成指南                                             |
-| ------- | ------------------------------- | ------------------------------------------------------------ |
-| vanilla | 原生 JavaScript                 | -                                                            |
-| react   | [React](https://react.dev/)     | [使用 React](/guide/framework/react)                         |
-| vue     | [Vue](https://vuejs.org/)       | [使用 Vue](/guide/framework/vue)                             |
-| lit     | [Lit](https://lit.dev/)         | -                                                            |
-| preact  | [Preact](https://preactjs.com/) | [使用 Preact](/guide/framework/preact)                       |
-| svelte  | [Svelte](https://svelte.dev/)   | [使用 Svelte](/guide/framework/svelte)                       |
-| solid   | [Solid](https://solidjs.com/)   | [使用 Solid](/guide/framework/solid)                         |
-| octane  | [Octane](https://octanejs.dev/) | [使用 Octane](https://octanejs.dev/docs/build-tools#rsbuild) |
+| 框架           | 官方文档                        | Rsbuild 集成指南                                             |
+| -------------- | ------------------------------- | ------------------------------------------------------------ |
+| vanilla        | 原生 JavaScript                 | -                                                            |
+| react          | [React](https://react.dev/)     | [使用 React](/guide/framework/react)                         |
+| vue            | [Vue](https://vuejs.org/)       | [使用 Vue](/guide/framework/vue)                             |
+| lit            | [Lit](https://lit.dev/)         | -                                                            |
+| preact         | [Preact](https://preactjs.com/) | [使用 Preact](/guide/framework/preact)                       |
+| svelte         | [Svelte](https://svelte.dev/)   | [使用 Svelte](/guide/framework/svelte)                       |
+| solid / solid2 | [Solid](https://solidjs.com/)   | [使用 Solid](/guide/framework/solid)                         |
+| octane         | [Octane](https://octanejs.dev/) | [使用 Octane](https://octanejs.dev/docs/build-tools#rsbuild) |
 
-`create-rsbuild` 提供了开箱即用的基础模板，你还可以通过以下方式获取更丰富的模板：
+你还可以通过以下方式获取更多工具和模板：
 
 - 前往 [Rspack - 生态](https://rspack.rs/zh/guide/start/quick-start#%E7%94%9F%E6%80%81) 了解基于 Rsbuild 的各种上层工具。
 - 前往 [awesome-rstack - Starter](https://github.com/rstackjs/awesome-rstack#starter) 获取更多社区维护的模板。
 
 ### 可选工具
 
-`create-rsbuild` 可帮助设置以下常用工具。使用上下箭头和空格进行选择；如不需要这些工具，直接按回车跳过。
+使用 Basic 模板时，`create-rsbuild` 可帮助设置以下常用工具。使用上下箭头和空格进行选择；如不需要这些工具，直接按回车跳过。
 
 | 工具                                                    | 用途                             |
 | ------------------------------------------------------- | -------------------------------- |
@@ -105,11 +105,19 @@ npx -y create-rsbuild@latest my-app --template react
 # 使用缩写
 npx -y create-rsbuild@latest my-app -t react
 
-# 指定多个 tools
+# 为 Basic 模板指定多个工具
 npx -y create-rsbuild@latest my-app -t react --tools rslint,prettier
+
+# 使用 React 和 Rsbuild 的 TanStack Start 模板
+npx -y create-rsbuild@latest my-app -t tanstack-start-react
+
+# 使用 Solid 1 和 Rsbuild 的 TanStack Start 模板
+npx -y create-rsbuild@latest my-app -t tanstack-start-solid
 ```
 
 > 如需查看各模板的创建命令，请参考 [模板示例](https://github.com/web-infra-dev/rsbuild/tree/main/packages/create-rsbuild#template-examples)。
+
+TanStack Start 模板由 TanStack CLI 完成项目配置，不支持 `--tools`、`--skill` 和 `--template-version` 选项，传入这些选项会报错。
 
 `create-rsbuild` 完整的 CLI 选项如下：
 
@@ -127,7 +135,7 @@ Options:
   --package-name <name>     specify the package name
   --template-version <ver>  specify the npm template version
 
-Available templates: vanilla-js, vanilla-ts, react-js, react-ts, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts, solid2-js, solid2-ts, octane-js, octane-ts
+Available templates: vanilla-js, vanilla-ts, react-js, react-ts, tanstack-start-react, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts, tanstack-start-solid, solid2-js, solid2-ts, octane-js, octane-ts
 
 Optional tools: react-compiler, rstest, eslint, rslint, biome, prettier, tailwindcss, storybook
 

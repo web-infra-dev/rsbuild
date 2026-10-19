@@ -21,7 +21,7 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-然后在 `Select framework` 时选择 `Solid` 即可。
+然后在 `Select framework` 时选择 `Solid 1` 或 `Solid 2`，再选择 Basic 模板。
 
 ## 全栈框架 \{#full-stack-frameworks}
 
@@ -34,12 +34,13 @@ import { PackageManagerTabs } from '@theme';
 - [文档](https://tanstack.com/start/latest)
 - [示例项目](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/tanstack-start-solid)
 
-你可以运行以下命令来一键初始化 TanStack Start 示例项目：
+通过以下命令创建使用 Rsbuild 的 TanStack Start 应用：
 
 ```bash
-npx giget gh:rstackjs/rstack-examples/rsbuild/tanstack-start-solid tanstack-start
-cd tanstack-start
-pnpm i
+# 使用 Solid 1 和 Rsbuild 的 TanStack Start 模板
+npx -y create-rsbuild@latest my-app -t tanstack-start-solid
+cd my-app
+pnpm dev
 ```
 
 如果需要将 TanStack Start 项目从 Vite 迁移到 Rsbuild，请参考 [TanStack Start 迁移](/guide/migration/tanstack-start)。

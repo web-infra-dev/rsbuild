@@ -39,34 +39,34 @@ import { PackageManagerTabs } from '@theme';
 
 Follow the prompts to complete the setup.
 
-After creating the application, do the following:
+Follow the instructions printed by the CLI to start your application:
 
-- Run `pnpm install` (or your package manager's install command) to install dependencies.
+- If dependencies have not been installed, run `pnpm install` (or your package manager's install command).
 - Run `pnpm run dev` to start the [dev server](/guide/basic/server).
 
 ### Templates
 
-When creating an application, choose from the following templates provided by `create-rsbuild`:
+Choose a framework, then select `Basic (TypeScript)` or `Basic (JavaScript)` for a basic application. React and Solid 1 also offer a `TanStack Start` template for full-stack applications, with Rsbuild configured as the build tool.
 
-| Template | Official docs                   | Rsbuild integration guide                                     |
-| -------- | ------------------------------- | ------------------------------------------------------------- |
-| vanilla  | Native JavaScript               | -                                                             |
-| react    | [React](https://react.dev/)     | [Using React](/guide/framework/react)                         |
-| vue      | [Vue](https://vuejs.org/)       | [Using Vue](/guide/framework/vue)                             |
-| lit      | [Lit](https://lit.dev/)         | -                                                             |
-| preact   | [Preact](https://preactjs.com/) | [Using Preact](/guide/framework/preact)                       |
-| svelte   | [Svelte](https://svelte.dev/)   | [Using Svelte](/guide/framework/svelte)                       |
-| solid    | [Solid](https://solidjs.com/)   | [Using Solid](/guide/framework/solid)                         |
-| octane   | [Octane](https://octanejs.dev/) | [Using Octane](https://octanejs.dev/docs/build-tools#rsbuild) |
+| Framework      | Official docs                   | Rsbuild integration guide                                     |
+| -------------- | ------------------------------- | ------------------------------------------------------------- |
+| vanilla        | Native JavaScript               | -                                                             |
+| react          | [React](https://react.dev/)     | [Using React](/guide/framework/react)                         |
+| vue            | [Vue](https://vuejs.org/)       | [Using Vue](/guide/framework/vue)                             |
+| lit            | [Lit](https://lit.dev/)         | -                                                             |
+| preact         | [Preact](https://preactjs.com/) | [Using Preact](/guide/framework/preact)                       |
+| svelte         | [Svelte](https://svelte.dev/)   | [Using Svelte](/guide/framework/svelte)                       |
+| solid / solid2 | [Solid](https://solidjs.com/)   | [Using Solid](/guide/framework/solid)                         |
+| octane         | [Octane](https://octanejs.dev/) | [Using Octane](https://octanejs.dev/docs/build-tools#rsbuild) |
 
-`create-rsbuild` provides basic templates. For more options, see:
+For more tools and templates, see:
 
 - Visit [Rspack - Ecosystem](https://rspack.rs/guide/start/quick-start#ecosystem) to learn about higher-level tools built on Rsbuild.
 - Visit [awesome-rstack - Starter](https://github.com/rstackjs/awesome-rstack#starter) for community-maintained templates.
 
 ### Optional tools
 
-`create-rsbuild` can help you set up the following commonly used tools. Use the arrow keys to navigate and the space bar to select. Press Enter without selecting anything to skip these tools.
+For Basic templates, `create-rsbuild` can help you set up the following commonly used tools. Use the arrow keys to navigate and the space bar to select. Press Enter without selecting anything to skip these tools.
 
 | Tool                                                    | Use                                          |
 | ------------------------------------------------------- | -------------------------------------------- |
@@ -105,11 +105,19 @@ npx -y create-rsbuild@latest my-app --template react
 # Using abbreviations
 npx -y create-rsbuild@latest my-app -t react
 
-# Specify multiple tools
+# Specify multiple tools for a Basic template
 npx -y create-rsbuild@latest my-app -t react --tools rslint,prettier
+
+# TanStack Start with React and Rsbuild
+npx -y create-rsbuild@latest my-app -t tanstack-start-react
+
+# TanStack Start with Solid 1 and Rsbuild
+npx -y create-rsbuild@latest my-app -t tanstack-start-solid
 ```
 
 > See [Template examples](https://github.com/web-infra-dev/rsbuild/tree/main/packages/create-rsbuild#template-examples) for commands that create each template.
+
+TanStack Start templates use the TanStack CLI for project setup. The `--tools`, `--skill`, and `--template-version` options are not supported for these templates and will cause an error.
 
 All CLI flags supported by `create-rsbuild`:
 
@@ -127,7 +135,7 @@ Options:
   --package-name <name>     specify the package name
   --template-version <ver>  specify the npm template version
 
-Available templates: vanilla-js, vanilla-ts, react-js, react-ts, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts, solid2-js, solid2-ts, octane-js, octane-ts
+Available templates: vanilla-js, vanilla-ts, react-js, react-ts, tanstack-start-react, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts, tanstack-start-solid, solid2-js, solid2-ts, octane-js, octane-ts
 
 Optional tools: react-compiler, rstest, eslint, rslint, biome, prettier, tailwindcss, storybook
 
