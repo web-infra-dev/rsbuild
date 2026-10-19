@@ -67,6 +67,10 @@ define.doc({
     pluginClientRedirects({
       redirects: [
         {
+          from: '/guide/start/glossary',
+          to: '/guide/faq/glossary',
+        },
+        {
           from: '/config/source/alias',
           to: '/config/resolve/alias',
         },
