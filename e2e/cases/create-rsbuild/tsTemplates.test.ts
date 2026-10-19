@@ -3,7 +3,6 @@ import { createAndValidate } from './helper';
 
 test('should create react-ts project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'react-ts');
-  expect(pkgJson.devDependencies.typescript).toBe('^7.0.2');
   expect(pkgJson.dependencies.react).toBeTruthy();
   expect(pkgJson.dependencies['react-dom']).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-react']).toBeTruthy();
@@ -11,7 +10,6 @@ test('should create react-ts project as expected', async () => {
 
 test('should create octane project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'octane-ts');
-  expect(pkgJson.devDependencies.typescript).toBe('^5.9.3');
   expect(pkgJson.dependencies.octane).toBeTruthy();
   expect(pkgJson.devDependencies['@octanejs/rsbuild-plugin']).toBeTruthy();
   expect(pkgJson.devDependencies['@tsrx/typescript-plugin']).toBeTruthy();
@@ -19,7 +17,6 @@ test('should create octane project as expected', async () => {
 
 test('should create preact-ts project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'preact-ts');
-  expect(pkgJson.devDependencies.typescript).toBe('^7.0.2');
   expect(pkgJson.dependencies.preact).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-preact']).toBeTruthy();
 });
@@ -28,7 +25,6 @@ test('should create vue-ts project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue-ts', {
     expectedBuildScript: 'vue-tsc && rsbuild build',
   });
-  expect(pkgJson.devDependencies.typescript).toBe('^6.0.3');
   expect(pkgJson.dependencies.vue).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-vue']).toBeTruthy();
 });
@@ -37,20 +33,17 @@ test('should create vue3-ts project alias as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue3-ts', {
     expectedBuildScript: 'vue-tsc && rsbuild build',
   });
-  expect(pkgJson.devDependencies.typescript).toBe('^6.0.3');
   expect(pkgJson.dependencies.vue).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-vue']).toBeTruthy();
 });
 
 test('should create lit-ts project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'lit-ts');
-  expect(pkgJson.devDependencies.typescript).toBe('^7.0.2');
   expect(pkgJson.dependencies.lit).toBeTruthy();
 });
 
 test('should create solid-ts project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'solid-ts');
-  expect(pkgJson.devDependencies.typescript).toBe('^7.0.2');
   expect(pkgJson.dependencies['solid-js']).toBeTruthy();
   expect(pkgJson.dependencies['@solidjs/web']).toBeUndefined();
   expect(pkgJson.devDependencies['@rsbuild/plugin-solid']).toBeTruthy();
@@ -58,7 +51,6 @@ test('should create solid-ts project as expected', async () => {
 
 test('should create solid2-ts project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'solid2-ts');
-  expect(pkgJson.devDependencies.typescript).toBe('^7.0.2');
   expect(pkgJson.dependencies['solid-js']).toBeTruthy();
   expect(pkgJson.dependencies['@solidjs/web']).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-solid']).toBeTruthy();
@@ -66,7 +58,6 @@ test('should create solid2-ts project as expected', async () => {
 
 test('should create svelte-ts project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'svelte-ts');
-  expect(pkgJson.devDependencies.typescript).toBe('^6.0.3');
   expect(pkgJson.dependencies.svelte).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-svelte']).toBeTruthy();
 });

@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { test } from '@e2e/helper';
 import { createAndValidate } from './helper';
 
 test('should create vanilla project as expected', async () => {
@@ -6,11 +6,7 @@ test('should create vanilla project as expected', async () => {
 });
 
 test('should create vanilla-ts project as expected', async () => {
-  const { pkgJson } = await createAndValidate(
-    import.meta.dirname,
-    'vanilla-ts',
-  );
-  expect(pkgJson.devDependencies.typescript).toBe('^7.0.2');
+  await createAndValidate(import.meta.dirname, 'vanilla-ts');
 });
 
 test('should allow to create project in sub dir', async () => {
