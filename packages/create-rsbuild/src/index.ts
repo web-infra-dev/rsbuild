@@ -217,10 +217,14 @@ function mapRslintTemplate(templateName: string): RslintTemplateName {
 }
 
 const root = path.join(import.meta.dirname, '..');
+const { version } = JSON.parse(
+  fs.readFileSync(path.join(root, 'package.json'), 'utf-8'),
+) as { version: string };
 
 await create({
   root,
   name: 'rsbuild',
+  banner: `create-rsbuild v${version}`,
   templates: [
     'vanilla-js',
     'vanilla-ts',
