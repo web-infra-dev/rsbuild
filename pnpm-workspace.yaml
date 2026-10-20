@@ -63,7 +63,6 @@ catalog:
   '@types/fs-extra': '^11.0.4'
   '@types/less': '^3.0.8'
   '@types/node': '^24.19.2'
-  '@types/on-finished': '2.3.5'
   '@types/range-parser': '^1.2.7'
   '@types/react': '^19.3.0'
   '@types/react-dom': '^19.3.0'
@@ -98,7 +97,6 @@ catalog:
   # Keep memfs and its storage extension on matching versions.
   'memfs': '4.80.0'
   'mrmime': '^2.0.1'
-  'on-finished': '2.4.1'
   'open': '^11.0.4'
   'path-serializer': '0.7.0'
   'playwright': '1.61.1'
