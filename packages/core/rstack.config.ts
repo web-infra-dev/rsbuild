@@ -29,6 +29,7 @@ for (const item of prebundleConfig.dependencies) {
 
 const externals: Rspack.Configuration['externals'] = [
   '@rspack/core',
+  '@swc-next/core',
   '@rsbuild/core',
   // yaml and tsx are optional dependencies of `postcss-load-config`
   'yaml',

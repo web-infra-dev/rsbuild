@@ -115,6 +115,9 @@ catalogs:
     '@svgr/plugin-svgo':
       specifier: 8.1.0
       version: 8.1.0
+    '@swc-next/core':
+      specifier: 0.3.1
+      version: 0.3.1
     '@swc/helpers':
       specifier: ^0.5.23
       version: 0.5.23
@@ -136,6 +139,9 @@ catalogs:
     '@types/cors':
       specifier: ^2.8.19
       version: 2.8.19
+    '@types/eslint-scope':
+      specifier: ^8.4.0
+      version: 8.4.0
     '@types/fs-extra':
       specifier: ^11.0.4
       version: 11.0.4
@@ -202,6 +208,9 @@ catalogs:
     dotenv-expand:
       specifier: ^13.0.0
       version: 13.0.0
+    eslint-scope:
+      specifier: ^8.4.0
+      version: 8.4.0
     fast-glob:
       specifier: ^3.3.3
       version: 3.3.3
@@ -244,6 +253,9 @@ catalogs:
     loader-utils:
       specifier: ^3.3.1
       version: 3.3.1
+    magic-string:
+      specifier: ^0.30.21
+      version: 0.30.21
     memfs:
       specifier: ^4.68.1
       version: 4.68.1
@@ -881,6 +893,9 @@ importers:
       '@rspack/core':
         specifier: 'catalog:'
         version: 2.2.0-beta.1(@module-federation/runtime-tools@2.8.2)(@swc/helpers@0.5.23)
+      '@swc-next/core':
+        specifier: 'catalog:'
+        version: 0.3.1
       '@swc/helpers':
         specifier: 'catalog:'
         version: 0.5.23
@@ -897,6 +912,9 @@ importers:
       '@types/cors':
         specifier: 'catalog:'
         version: 2.8.19
+      '@types/eslint-scope':
+        specifier: 'catalog:'
+        version: 8.4.0
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.3
@@ -936,6 +954,9 @@ importers:
       dotenv-expand:
         specifier: 'catalog:'
         version: 13.0.0(patch_hash=5ff37847fa487be2db4e4f14c2b21937f4e51cc7a43deea4506d4aaf3fa6149c)
+      eslint-scope:
+        specifier: 'catalog:'
+        version: 8.4.0
       fresh-import:
         specifier: 'catalog:'
         version: 0.2.1
@@ -951,6 +972,9 @@ importers:
       launch-editor-middleware:
         specifier: 'catalog:'
         version: 2.14.1
+      magic-string:
+        specifier: 'catalog:'
+        version: 0.30.21
       memfs:
         specifier: 'catalog:'
         version: 4.68.1
@@ -3036,6 +3060,96 @@ packages:
     peerDependencies:
       '@svgr/core': '*'
 
+  '@swc-next/core-binding-darwin-arm64@0.3.1':
+    resolution: {integrity: sha512-+MVWldG8hd8Oih7ytV0Bc6N1D/gjlLzpLknKpdCuYcTpL0NhU8shizMpXeKj80N4ffwo+vsgaloW3ZENRrGTTw==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@swc-next/core-binding-darwin-x64@0.3.1':
+    resolution: {integrity: sha512-Z+4ID6jV64V59h4zJD8w26EgxNrCxtM8x+0PRB7HsAvCPzwch2FFvkC/t97DSTXZJlZLUY3mRDP9SI2KIsi1Pg==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@swc-next/core-binding-linux-arm64-gnu@0.3.1':
+    resolution: {integrity: sha512-eZ4DjaPtmeyuqhawSnI/rOhpJJVEIg4SaPkhwiOv9HcNWJRh62kJWHq5QKp2RVcdbMPXY3ZTpEbXE1tSZN0Cdw==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@swc-next/core-binding-linux-arm64-musl@0.3.1':
+    resolution: {integrity: sha512-KPAlUZSkdQ5n7YZMuidesHPg2UOxn9bbIWnto1m3UuASdsz9Zckbz5uUzYILjMVcI8ys/g6D0P1P3O6rLtGy/w==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@swc-next/core-binding-linux-ppc64-gnu@0.3.1':
+    resolution: {integrity: sha512-1Kp5zgcTnF++oSGZv2eL/X4GHk0DjAOLoBI1d/tU1WEHx5vgj1BIr9iQ3Ld3JBRkUYXc/LKKCmD9EfEjCLTAjQ==}
+    cpu: [ppc64]
+    os: [linux]
+    libc: [glibc]
+
+  '@swc-next/core-binding-linux-riscv64-gnu@0.3.1':
+    resolution: {integrity: sha512-O+9gNhXPvnix9bMfeDj19JlcZ1fhAIWkH4JyLqL22XK5hrEaEUYlvkqU3kdOepUhmkhDU9PwO44HwOq/XJ8O7A==}
+    cpu: [riscv64]
+    os: [linux]
+    libc: [glibc]
+
+  '@swc-next/core-binding-linux-riscv64-musl@0.3.1':
+    resolution: {integrity: sha512-4Xp0v/COUv1F8A9Na0lZgdcIfn4hguJuBoSOj9ZW4Pjr0gmG3osfmZMFSV+wRE+pvbXVkL4UeQT+fMFFzxpFWw==}
+    cpu: [riscv64]
+    os: [linux]
+    libc: [musl]
+
+  '@swc-next/core-binding-linux-s390x-gnu@0.3.1':
+    resolution: {integrity: sha512-zHIS/KEJEfVk2JHzLE6KzY+pV/Em2EqtFqAKZAp+l7Kw66R8H5YBiILBAFER8nSuD9SRSWqaQxpNEH2JGR/O3A==}
+    cpu: [s390x]
+    os: [linux]
+    libc: [glibc]
+
+  '@swc-next/core-binding-linux-x64-gnu@0.3.1':
+    resolution: {integrity: sha512-OAugzjEzfeewq/noRIU44/ixKDewhljlb09+/FQGq88xshzIVUkHVVBaAfCtQuA7uDF1UaYdxDdCHwIuJNpuSg==}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@swc-next/core-binding-linux-x64-musl@0.3.1':
+    resolution: {integrity: sha512-AFkh1avQovOkZbD8CXalchbfQEarPUotqT7naPZpoYfEbE39Bu68MqNh0fjvJIpkHvOGCmdJXaTDf3TWV3l2og==}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@swc-next/core-binding-win32-arm64-msvc@0.3.1':
+    resolution: {integrity: sha512-icmDzQsHNdTzCFCnAaSr1fM0CSwlvmckg/mwiwMnRzM/TEWMiwsppMcpMlQmrWXKO2ORyvt7R6B8rDnJe1xy6A==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@swc-next/core-binding-win32-ia32-msvc@0.3.1':
+    resolution: {integrity: sha512-OH7hdfbJk80hpJ5a6xWYSnznjg5R/fq2ELzivilvs6wgERM0QjL3dMOsId29VBP2ZJaAS40JSnPTkGZwZLEbvA==}
+    cpu: [ia32]
+    os: [win32]
+
+  '@swc-next/core-binding-win32-x64-msvc@0.3.1':
+    resolution: {integrity: sha512-msdm5yr/vjQZn00pDyqTC0LIHzZfpan8yCGeXHbi2yKbcYREELfEmoJUWnOoExVC6fow5q/k3TzwnCiX0orUiw==}
+    cpu: [x64]
+    os: [win32]
+
+  '@swc-next/core@0.3.1':
+    resolution: {integrity: sha512-g0lwFSIXRmSOqRn0nE7w6IFo0ZRpBoi0udY3uA5AeuSThXQduMysR3HN1txNsBGihoY7Bm4WNHJeIDCOnQKSyg==}
+    peerDependencies:
+      '@swc-next/core-binding-wasm': 0.3.1
+    peerDependenciesMeta:
+      '@swc-next/core-binding-wasm':
+        optional: true
+
+  '@swc-next/decoder@0.3.1':
+    resolution: {integrity: sha512-7axsLTTITVI0qsu10grAenEv7jAqeCuCG61benRMUMzjj103/QClqAIFFr101Vhyou2fz2O8Evs2yzqkHeXkbQ==}
+
+  '@swc-next/encoder@0.3.1':
+    resolution: {integrity: sha512-uPUho5RrRy3nyf4dZaw3s3V20v59HsHV1OqBx+m7PwHwTcKV5nl3uZBotB0S6DelTMc50ZIIBAKDJJkR6D3/yA==}
+
+  '@swc-next/types@0.3.1':
+    resolution: {integrity: sha512-MIAQdoHudyRAIXh6WvyEyTtgsbiE+0tOj9vA8NmXgdtK2ZWFPEmls66tznxQ26HiOC6YDGzQmFW/ZdfD1M65jw==}
+
   '@swc/counter@0.1.3':
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
 
@@ -3177,6 +3291,15 @@ packages:
 
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
+
+  '@types/eslint-scope@8.4.0':
+    resolution: {integrity: sha512-RhVLLrJB96ufa3O58HBsOd4IVVaYN7gBIn7K9fxHQBB++AJYOWNQcevpHDIVVw6YD0Ycup/XodUlZ3ZntVrqhA==}
+
+  '@types/eslint@9.6.1':
+    resolution: {integrity: sha512-FXx2pKgId/WyYo2jXw63kk7/+TY7u7AziEJxJAnSFzHlqTAS3Ync6SvgYAN/k4/PQpnnVuzoMuVnByKK2qp0ag==}
+
+  '@types/esrecurse@4.3.1':
+    resolution: {integrity: sha512-xJBAbDifo5hpffDBuHl0Y8ywswbiAp/Wi7Y/GtAgSlZyIABppyurxVueOPE8LUQOxdlgi6Zqce7uoEpqNTeiUw==}
 
   '@types/estree-jsx@1.0.5':
     resolution: {integrity: sha512-52CcUVNFyfb1A2ALocQw/Dd1BQFNmSdkuC3BkZ6iqhdMfQz7JWOFRuJFloOzjk+6WijU56m9oKXFAXc7o3Towg==}
@@ -3835,6 +3958,14 @@ packages:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
 
+  eslint-scope@8.4.0:
+    resolution: {integrity: sha512-sNXOfKCn74rt8RICKMvJS7XKV/Xk9kA7DyJr8mJik3S7Cwgy3qlkkmyS2uQB3jiJg6VNdZd/pDBJu0nvG2NlTg==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  eslint-visitor-keys@5.0.1:
+    resolution: {integrity: sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
+
   esm-env@1.2.2:
     resolution: {integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==}
 
@@ -3845,6 +3976,14 @@ packages:
     peerDependenciesMeta:
       '@typescript-eslint/types':
         optional: true
+
+  esrecurse@4.3.0:
+    resolution: {integrity: sha512-KmfKL3b6G+RXvP8N1vr3Tq1kL/oCFgn2NYXEtqP8/L3pKapUA4G8cFVaoF3SU323CD4XypR/ffioHmkti6/Tag==}
+    engines: {node: '>=4.0'}
+
+  estraverse@5.3.0:
+    resolution: {integrity: sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==}
+    engines: {node: '>=4.0'}
 
   estree-util-attach-comments@3.0.0:
     resolution: {integrity: sha512-cKUwm/HUcTDsYh/9FgnuFqpfquUbwIqwKM26BVCGDPVgvaCl/nDCCjUfiLlx6lsEZ3Z4RFxNbOQ60pkaEwFxGw==}
@@ -7232,6 +7371,75 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  '@swc-next/core-binding-darwin-arm64@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-darwin-x64@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-linux-arm64-gnu@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-linux-arm64-musl@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-linux-ppc64-gnu@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-linux-riscv64-gnu@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-linux-riscv64-musl@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-linux-s390x-gnu@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-linux-x64-gnu@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-linux-x64-musl@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-win32-arm64-msvc@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-win32-ia32-msvc@0.3.1':
+    optional: true
+
+  '@swc-next/core-binding-win32-x64-msvc@0.3.1':
+    optional: true
+
+  '@swc-next/core@0.3.1':
+    dependencies:
+      '@swc-next/decoder': 0.3.1
+      '@swc-next/encoder': 0.3.1
+      '@swc-next/types': 0.3.1
+    optionalDependencies:
+      '@swc-next/core-binding-darwin-arm64': 0.3.1
+      '@swc-next/core-binding-darwin-x64': 0.3.1
+      '@swc-next/core-binding-linux-arm64-gnu': 0.3.1
+      '@swc-next/core-binding-linux-arm64-musl': 0.3.1
+      '@swc-next/core-binding-linux-ppc64-gnu': 0.3.1
+      '@swc-next/core-binding-linux-riscv64-gnu': 0.3.1
+      '@swc-next/core-binding-linux-riscv64-musl': 0.3.1
+      '@swc-next/core-binding-linux-s390x-gnu': 0.3.1
+      '@swc-next/core-binding-linux-x64-gnu': 0.3.1
+      '@swc-next/core-binding-linux-x64-musl': 0.3.1
+      '@swc-next/core-binding-win32-arm64-msvc': 0.3.1
+      '@swc-next/core-binding-win32-ia32-msvc': 0.3.1
+      '@swc-next/core-binding-win32-x64-msvc': 0.3.1
+
+  '@swc-next/decoder@0.3.1':
+    dependencies:
+      '@swc-next/types': 0.3.1
+
+  '@swc-next/encoder@0.3.1':
+    dependencies:
+      '@swc-next/types': 0.3.1
+
+  '@swc-next/types@0.3.1': {}
+
   '@swc/counter@0.1.3': {}
 
   '@swc/helpers@0.5.23':
@@ -7373,6 +7581,20 @@ snapshots:
       '@types/ms': 2.1.0
 
   '@types/deep-eql@4.0.2': {}
+
+  '@types/eslint-scope@8.4.0':
+    dependencies:
+      '@types/eslint': 9.6.1
+      '@types/esrecurse': 4.3.1
+      '@types/estree': 1.0.9
+      eslint-visitor-keys: 5.0.1
+
+  '@types/eslint@9.6.1':
+    dependencies:
+      '@types/estree': 1.0.9
+      '@types/json-schema': 7.0.15
+
+  '@types/esrecurse@4.3.1': {}
 
   '@types/estree-jsx@1.0.5':
     dependencies:
@@ -7981,11 +8203,24 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
+  eslint-scope@8.4.0:
+    dependencies:
+      esrecurse: 4.3.0
+      estraverse: 5.3.0
+
+  eslint-visitor-keys@5.0.1: {}
+
   esm-env@1.2.2: {}
 
   esrap@2.2.13:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  esrecurse@4.3.0:
+    dependencies:
+      estraverse: 5.3.0
+
+  estraverse@5.3.0: {}
 
   estree-util-attach-comments@3.0.0:
     dependencies:

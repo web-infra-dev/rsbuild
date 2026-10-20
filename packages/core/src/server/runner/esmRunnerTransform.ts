@@ -1,5 +1,5 @@
-import path from 'node:path';
-import { STATIC_PATH } from '../../constants';
+import { parseSync } from '@swc-next/core';
+import { esmRunnerPlugin, type EsmRunnerPluginResult } from './esmRunnerPlugin';
 import { color } from '../../helpers';
 
 export type TransformSourceFile = Readonly<{
@@ -7,30 +7,6 @@ export type TransformSourceFile = Readonly<{
   source: string;
   sourceMap?: string;
 }>;
-
-export type SwcTransformOutput = {
-  code: string;
-  map?: string;
-};
-
-export type SwcTransform = (
-  source: string,
-  options: Record<string, unknown>,
-) => Promise<SwcTransformOutput> | SwcTransformOutput;
-
-export const ESM_RUNNER_TRANSFORM_PLUGIN_PATH: string = path.join(
-  STATIC_PATH,
-  'swc-esm-runner-transform.wasm',
-);
-
-const TRANSFORMED_ESM_PARAMETERS = [
-  '__rsbuild_import__',
-  '__rsbuild_dynamic_import__',
-  '__rsbuild_exports__',
-  '__rsbuild_export_all__',
-  '__rsbuild_export_name__',
-  '__rsbuild_import_meta__',
-];
 
 const STRICT_MODE_PREFIX = '"use strict";\n';
 
@@ -40,10 +16,7 @@ const ASYNC_FUNCTION_BODY_LINE_OFFSET = (() => {
     ...parameters: string[]
   ) => (...args: unknown[]) => Promise<unknown>;
   // rslint-disable-next-line @typescript-eslint/no-implied-eval
-  const source = new AsyncFunction(
-    ...TRANSFORMED_ESM_PARAMETERS,
-    marker,
-  ).toString();
+  const source = new AsyncFunction(marker).toString();
   return source.slice(0, source.indexOf(marker)).split('\n').length - 1;
 })();
 
@@ -75,43 +48,40 @@ const appendSourceMetadata = (
 
 export const transformForTransformedEsm = async (
   file: TransformSourceFile,
-  transform: SwcTransform,
-): Promise<string> => {
-  let result: SwcTransformOutput;
+): Promise<Pick<EsmRunnerPluginResult, 'code' | 'parameters'>> => {
   try {
-    result = await transform(file.source, {
-      configFile: false,
-      filename: file.path,
-      inlineSourcesContent: true,
-      inputSourceMap: file.sourceMap ?? false,
-      isModule: true,
-      jsc: {
-        parser: { dynamicImport: true, syntax: 'ecmascript' },
-        target: 'es2022',
-        experimental: {
-          // swc_plugin_runner falls back to its process-memory cache when this
-          // existing file cannot be created as a cache directory.
-          cacheRoot: ESM_RUNNER_TRANSFORM_PLUGIN_PATH,
-          plugins: [[ESM_RUNNER_TRANSFORM_PLUGIN_PATH, {}]],
-        },
-      },
-      module: { type: 'es6' },
-      sourceMaps: true,
-      swcrc: false,
+    const { program, diagnostics } = parseSync(file.source, {
+      sourceType: 'module',
+      lang: 'js',
+      preserveParens: false,
+      semanticErrors: true,
     });
+    const errors = diagnostics.filter(
+      (diagnostic) => diagnostic.severity === 'error',
+    );
+    if (errors.length) {
+      throw new SyntaxError(errors.map((error) => error.message).join('\n'));
+    }
+    const result = esmRunnerPlugin(program, file.source, file.path);
+    let sourceMap = result.map;
+    if (file.sourceMap) {
+      const { default: remapping } = await import(
+        /* rspackChunkName: "remapping" */ '@jridgewell/remapping'
+      );
+      sourceMap = remapping(
+        [result.map, file.sourceMap],
+        () => null,
+      ).toString();
+    }
+    return {
+      code: appendSourceMetadata(result.code, sourceMap, file.path),
+      parameters: result.parameters,
+    };
   } catch (error) {
     const reason = error instanceof Error ? `: ${error.message}` : '';
     throw new Error(
-      `${color.dim('[rsbuild:runner]')} Failed to transform ${file.path} for the module runner with ${ESM_RUNNER_TRANSFORM_PLUGIN_PATH}${reason}`,
+      `${color.dim('[rsbuild:runner]')} Failed to transform ${file.path} for the module runner with SWC Next${reason}`,
       { cause: error },
     );
   }
-
-  if (!result || typeof result.code !== 'string') {
-    throw new Error(
-      `${color.dim('[rsbuild:runner]')} SWC returned no module-runner code for ${file.path}`,
-    );
-  }
-
-  return appendSourceMetadata(result.code, result.map, file.path);
 };

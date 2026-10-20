@@ -4,10 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { experiments } from '@rspack/core';
 import type { IBasicRunnerOptions } from './basic';
 import { color } from '../../helpers';
-import {
-  transformForTransformedEsm,
-  type SwcTransform,
-} from './esmRunnerTransform';
+import type { EsmRunnerPluginResult } from './esmRunnerPlugin';
 import type { Runner, RunnerRequirer } from './type';
 
 type Namespace = Record<PropertyKey, unknown>;
@@ -36,15 +33,6 @@ type ModuleNode = {
   mapErrorStack: (error: unknown) => void;
   state: ModuleState;
 };
-
-const TRANSFORMED_ESM_PARAMETERS = [
-  '__rsbuild_import__',
-  '__rsbuild_dynamic_import__',
-  '__rsbuild_exports__',
-  '__rsbuild_export_all__',
-  '__rsbuild_export_name__',
-  '__rsbuild_import_meta__',
-];
 
 const AsyncFunction = async function () {}.constructor as new (
   ...parameters: string[]
@@ -230,13 +218,15 @@ class TransformedEsmEvaluator {
     moduleNode: ModuleNode,
     ancestors: Set<string>,
   ): Promise<void> {
-    const code = await this.#transformBundleModule(moduleNode.id);
+    const { code, parameters } = await this.#transformBundleModule(
+      moduleNode.id,
+    );
     moduleNode.mapErrorStack = createStackTraceMapper(code, moduleNode.id);
 
     let execute: (...args: unknown[]) => Promise<void>;
     try {
       // rslint-disable-next-line @typescript-eslint/no-implied-eval
-      execute = new AsyncFunction(...TRANSFORMED_ESM_PARAMETERS, code);
+      execute = new AsyncFunction(...parameters, code);
     } catch (error) {
       throw new Error(
         `${color.dim('[rsbuild:runner]')} Failed to instantiate module-runner code for ${moduleNode.id}`,
@@ -303,7 +293,9 @@ class TransformedEsmEvaluator {
     );
   }
 
-  async #transformBundleModule(moduleId: string): Promise<string> {
+  async #transformBundleModule(
+    moduleId: string,
+  ): Promise<Pick<EsmRunnerPluginResult, 'code' | 'parameters'>> {
     const source = this.#readFileSync(moduleId);
     const match = TRAILING_SOURCE_MAP_COMMENT.exec(source);
     const sourceMapUrl = (match?.[1] ?? match?.[2])?.trim();
@@ -323,10 +315,10 @@ class TransformedEsmEvaluator {
       }
     }
 
-    return transformForTransformedEsm(
-      { path: moduleId, source, sourceMap },
-      experiments.swc.transform as SwcTransform,
+    const { transformForTransformedEsm } = await import(
+      /* rspackChunkName: "esm-runner-transform" */ './esmRunnerTransform'
     );
+    return transformForTransformedEsm({ path: moduleId, source, sourceMap });
   }
 
   async #import(

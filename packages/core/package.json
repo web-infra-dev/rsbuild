@@ -35,14 +35,14 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "pnpm run build:esm-runner-transform && rs lib",
-    "build:esm-runner-transform": "node swc-plugins/esm-runner-transform/build.js",
+    "build": "rs lib",
     "dev": "rs lib -w",
     "prebundle": "prebundle",
     "test": "rs test"
   },
   "dependencies": {
     "@rspack/core": "catalog:",
+    "@swc-next/core": "catalog:",
     "@swc/helpers": "catalog:"
   },
   "devDependencies": {
@@ -50,6 +50,7 @@
     "@jridgewell/trace-mapping": "catalog:",
     "@rstackjs/load-config": "catalog:",
     "@types/cors": "catalog:",
+    "@types/eslint-scope": "catalog:",
     "@types/node": "catalog:",
     "@types/on-finished": "catalog:",
     "@types/range-parser": "catalog:",
@@ -63,11 +64,13 @@
     "css-loader": "catalog:",
     "deepmerge": "catalog:",
     "dotenv-expand": "catalog:",
+    "eslint-scope": "catalog:",
     "fresh-import": "catalog:",
     "html-rspack-plugin": "catalog:",
     "http-proxy-middleware": "catalog:",
     "jiti": "catalog:",
     "launch-editor-middleware": "catalog:",
+    "magic-string": "catalog:",
     "memfs": "catalog:",
     "mrmime": "catalog:",
     "on-finished": "catalog:",

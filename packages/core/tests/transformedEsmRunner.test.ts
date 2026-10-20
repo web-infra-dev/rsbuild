@@ -546,3 +546,205 @@ test('retries a failed module and isolates separate runner graphs', async () => 
     'Bundle module is outside the output root',
   );
 });
+
+test('rewrites imported reads while preserving shadowing and property names', async () => {
+  const runner = createRunner([
+    ['dependency.mjs', `export const value = 7; export class Base {}`],
+    [
+      'entry.mjs',
+      `import { value, Base } from './dependency.mjs';
+export class Child extends Base { [value]() { return value; } }
+export const object = { value, [value]: value };
+export const parameter = (value) => ({ value });
+export function hoisted() { const read = () => value; var value = 3; return read(); }
+export function scopes() {
+  const result = [];
+  for (const value of [1, 2]) result.push(value);
+  try { throw 4; } catch (value) { result.push(value); }
+  { const value = 5; result.push(value); }
+  result.push(value);
+  return result;
+}
+export const { local, nested: [other], ...rest } = { local: value, nested: [2], extra: 3 };
+export { value as "string name" };`,
+    ],
+  ]);
+  const result = (await runner.run('entry.mjs')) as TestNamespace;
+  expect(result.object).toEqual({ value: 7, 7: 7 });
+  expect(result.parameter(9)).toEqual({ value: 9 });
+  expect(result.hoisted()).toBe(3);
+  expect(result.scopes()).toEqual([1, 2, 4, 5, 7]);
+  expect(new result.Child()[7]()).toBe(7);
+  expect(result).toMatchObject({
+    local: 7,
+    other: 2,
+    rest: { extra: 3 },
+    'string name': 7,
+  });
+});
+
+test('avoids collisions with helpers and generated bindings', async () => {
+  const runner = createRunner([
+    [
+      'entry.mjs',
+      `export { value as beforeImport };
+import { value } from './dependency.mjs';
+const __rsbuild_import__ = 1;
+const __rsbuild_export_name__ = 2;
+const __rsbuild_import_namespace__ = 3;
+const __rsbuild_default__ = 4;
+export const collision = [__rsbuild_import__, __rsbuild_export_name__, __rsbuild_import_namespace__, __rsbuild_default__, value];
+export function nested(__rsbuild_dynamic_import__, __rsbuild_import_meta__) {
+  return [import.meta.url, import('./dependency.mjs'), __rsbuild_dynamic_import__, __rsbuild_import_meta__];
+}`,
+    ],
+    ['dependency.mjs', 'export const value = 5;'],
+  ]);
+  const result = (await runner.run('entry.mjs')) as TestNamespace;
+  expect(result.beforeImport).toBe(5);
+  expect(result.collision).toEqual([1, 2, 3, 4, 5]);
+  const [url, imported, ...values] = result.nested(6, 7);
+  expect(url).toBe(pathToFileURL(path.join(DEFAULT_DIST, 'entry.mjs')).href);
+  await expect(imported).resolves.toMatchObject({ value: 5 });
+  expect(values).toEqual([6, 7]);
+});
+
+test.each([
+  'function named() { return 42; }',
+  'function /* (comment) */ () { return 42; }',
+  'async function () { return 42; }',
+  '() => 42',
+  '((() => 42))',
+  '(function named() { return 42; })',
+])('supports default export %s', async (declaration) => {
+  const runner = createRunner([['entry.mjs', `export default ${declaration}`]]);
+  const result = (await runner.run('entry.mjs')) as TestNamespace;
+  expect(await result.default()).toBe(42);
+});
+
+test.each(['class Named {}', 'class {}'])(
+  'supports default export %s',
+  async (declaration) => {
+    const runner = createRunner([
+      ['entry.mjs', `export default ${declaration}`],
+    ]);
+    const result = (await runner.run('entry.mjs')) as TestNamespace;
+    expect(new result.default()).toBeInstanceOf(result.default);
+  },
+);
+
+test('hoists anonymous default functions across cyclic imports', async () => {
+  const runner = createRunner([
+    [
+      'entry.mjs',
+      `import { value } from './dependency.mjs'; export { value };
+export default function /* ( */ * /* ) */ () { yield 42; }`,
+    ],
+    [
+      'dependency.mjs',
+      `import read from './entry.mjs'; export const value = read().next().value;`,
+    ],
+  ]);
+  await expect(runner.run('entry.mjs')).resolves.toMatchObject({ value: 42 });
+});
+
+test('supports namespace reexports, parenthesized calls and unicode offsets', async () => {
+  const runner = createRunner([
+    [
+      'entry.mjs',
+      `#!/usr/bin/env node
+const emoji = '😀';
+import { receiver, tag, value as 值 } from './dependency.mjs';
+export * as namespace from './dependency.mjs';
+export const result = [emoji, 值, (receiver)(), (receiver)?.(), (tag)\`😀\`];`,
+    ],
+    [
+      'dependency.mjs',
+      `export const value = '你好';
+export function receiver() { return this; }
+export function tag() { return this; }`,
+    ],
+  ]);
+  const result = (await runner.run('entry.mjs')) as TestNamespace;
+  expect(result.result).toEqual([
+    '😀',
+    '你好',
+    undefined,
+    undefined,
+    undefined,
+  ]);
+  expect(result.namespace.value).toBe('你好');
+});
+
+test.each([
+  `import value from './dependency.mjs' with { type: 'json' };`,
+  `export { default } from './dependency.mjs' with { type: 'json' };`,
+  `export * from './dependency.mjs' with { type: 'json' };`,
+])('rejects unsupported attributes: %s', async (source) => {
+  const runner = createRunner([['entry.mjs', source]]);
+  await expect(runner.run('entry.mjs')).rejects.toThrow(
+    'Import attributes are not supported',
+  );
+});
+
+test('rejects writes to imported bindings', async () => {
+  const runner = createRunner([
+    ['entry.mjs', `import { value } from './dependency.mjs'; value = 2;`],
+    ['dependency.mjs', 'export let value = 1;'],
+  ]);
+  await expect(runner.run('entry.mjs')).rejects.toThrow();
+});
+
+test('preserves ASI boundaries around removed imports and exports', async () => {
+  const runner = createRunner([
+    [
+      'entry.mjs',
+      `let value = 1
+import './dependency.mjs'
+(() => { value++; })()
+export { value }
+(() => { value++; })()
+export * from './dependency.mjs'
+(() => { value++; })()`,
+    ],
+    ['dependency.mjs', 'export const dependency = true;'],
+  ]);
+  await expect(runner.run('entry.mjs')).resolves.toMatchObject({
+    value: 4,
+    dependency: true,
+  });
+});
+
+test.each(['inline', 'external'])(
+  'composes %s bundle source maps',
+  async (kind) => {
+    const sourceMap = JSON.stringify({
+      version: 3,
+      sources: [path.join(DEFAULT_DIST, 'original.js')],
+      sourcesContent: ['\n\nthrow new Error("mapped failure");'],
+      names: [],
+      mappings: 'AAEA', // cspell:ignore AAEA
+    });
+    const url =
+      kind === 'inline'
+        ? `data:application/json;base64,${Buffer.from(sourceMap).toString('base64')}`
+        : 'entry.mjs.map';
+    const runner = createRunner([
+      [
+        'entry.mjs',
+        `throw new Error('mapped failure');\n//# sourceMappingURL=${url}`,
+      ],
+      ['entry.mjs.map', sourceMap],
+    ]);
+    let runtimeError: unknown;
+    try {
+      await runner.run('entry.mjs');
+    } catch (error) {
+      runtimeError = error;
+    }
+    expect(runtimeError).toBeInstanceOf(Error);
+    expect((runtimeError as Error).stack).toContain(
+      `${path.join(DEFAULT_DIST, 'original.js')}:3:7`,
+    );
+  },
+);
