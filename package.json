@@ -2,6 +2,10 @@
   "name": "rsbuild-monorepo",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "packages/*",
+    "scripts/*"
+  ],
   "scripts": {
     "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
     "check": "rs check --type-check",
