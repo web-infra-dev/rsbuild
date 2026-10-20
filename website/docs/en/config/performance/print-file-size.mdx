@@ -140,7 +140,7 @@ Rsbuild applies the `include` and `exclude` filters before selecting files. If t
 
 The limit only affects the file list. Omitted files still contribute to the totals and size comparisons when `diff` is enabled.
 
-When you customize the total with a `total` function, the `detail` limit does not affect its `assets` parameter. For example, if 100 files pass the filters, `detail: 20` displays only the 20 largest files, but `assets` still contains all 100 files.
+When customizing the total output, the `assets` parameter passed to the `total` callback is unaffected by the `detail` limit. For example, if 100 files pass the filters, `detail: 20` displays only the 20 largest files, but `assets` still contains all 100 files.
 
 ### compressed
 
