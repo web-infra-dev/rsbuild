@@ -138,7 +138,9 @@ export default {
 
 Rsbuild applies the `include` and `exclude` filters before selecting files. If the remaining files exceed the limit, the report shows how many files were omitted.
 
-The limit only affects the file list. Omitted files still contribute to the totals and size comparisons when `diff` is enabled. A custom `total` function also receives all files that pass the filters in its `assets` parameter.
+The limit only affects the file list. Omitted files still contribute to the totals and size comparisons when `diff` is enabled.
+
+When you customize the total with a `total` function, the `detail` limit does not affect its `assets` parameter. For example, if 100 files pass the filters, `detail: 20` displays only the 20 largest files, but `assets` still contains all 100 files.
 
 ### compressed
 
