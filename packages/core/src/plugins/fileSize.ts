@@ -606,7 +606,9 @@ function printFileSizes(
 
     const showCompressedHeader = Boolean(
       options.compressed &&
-      assets.some((asset) => asset.compressedSize !== null),
+      (showTotal ? assets : displayedAssets).some(
+        (asset) => asset.compressedSize !== null,
+      ),
     );
 
     logs.push(

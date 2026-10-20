@@ -214,11 +214,36 @@ test('should not calculate gzip size if the asset is not compressible', async ({
 }) => {
   const rsbuild = await build();
   const logs = extractFileSizeLogs(rsbuild.logs);
+  const imageLog = logs
+    .split('\n')
+    .find((line) => line.startsWith('dist/static/image/icon.'));
 
-  expect(logs).toMatch(
-    /^dist\/static\/image\/icon\.\[\[hash\]\]\.png\s+X\.X kB$/m,
+  expect(imageLog?.trim().replace(/\s+/g, ' ')).toBe(
+    'dist/static/image/icon.[[hash]].png X.X kB',
   );
 });
+
+for (const total of [false, true]) {
+  test(`should ${total ? 'keep' : 'omit'} the compression header when only non-compressible files are listed`, async ({
+    build,
+  }) => {
+    const rsbuild = await build({
+      config: {
+        performance: {
+          printFileSize: {
+            detail: 1,
+            total,
+            include: ({ name }) => /\.(png|html)$/.test(name),
+          },
+        },
+      },
+    });
+    const logs = extractFileSizeLogs(rsbuild.logs);
+    expect(logs).toContain('dist/static/image/icon.[[hash]].png');
+    expect(logs).toContain('... 1 more file not shown');
+    expect(logs.includes('Gzip')).toBe(total);
+  });
+}
 
 test('should calculate gzip size for script-like assets', async ({ build }) => {
   const emitTsAssetPlugin: RsbuildPlugin = {
@@ -245,8 +270,13 @@ test('should calculate gzip size for script-like assets', async ({ build }) => {
   });
 
   const logs = extractFileSizeLogs(rsbuild.logs);
+  const scriptLog = logs
+    .split('\n')
+    .find((line) => line.startsWith('dist/static/assets/script.ts '));
 
-  expect(logs).toMatch(/dist\/static\/assets\/script\.ts\s+X\.X kB\s+X\.X kB/);
+  expect(scriptLog?.trim().replace(/\s+/g, ' ')).toBe(
+    'dist/static/assets/script.ts X.X kB X.X kB',
+  );
 });
 
 for (const detail of [false, 2] as const) {
