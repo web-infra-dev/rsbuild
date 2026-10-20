@@ -115,7 +115,7 @@ Common methods and properties that are available in both dev and preview servers
 
 Calling the `close()` method to perform necessary cleanup operations.
 
-In the dev server, this will also trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook.
+This also triggers the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) or [onClosePreviewServer](/plugins/dev/hooks#onclosepreviewserver) hook and waits for async cleanup callbacks to complete.
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';

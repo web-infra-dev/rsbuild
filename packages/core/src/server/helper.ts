@@ -704,7 +704,8 @@ export const HttpCode = {
 export type RsbuildServerBase = {
   /**
    * Close the server.
-   * In the dev server, this will call the `onCloseDevServer` hook.
+   * Calls the `onCloseDevServer` or `onClosePreviewServer` hook and waits for
+   * async cleanup callbacks to complete.
    */
   close: () => Promise<void>;
   /**

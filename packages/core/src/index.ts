@@ -149,6 +149,7 @@ export type {
   OnBeforeStartPreviewServerFn,
   OnCloseBuildFn,
   OnCloseDevServerFn,
+  OnClosePreviewServerFn,
   OnDevCompileDoneFn,
   OnExitFn,
   OnRestartFn,

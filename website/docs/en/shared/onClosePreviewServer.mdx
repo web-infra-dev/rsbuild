@@ -1,0 +1,11 @@
+Called when closing the preview server. Can be used to perform cleanup operations when the preview server is closed.
+
+Rsbuild CLI will automatically call this hook at the appropriate time, while users of the JavaScript API need to manually call the [server.close()](/api/javascript-api/server-api#close) method to trigger this hook.
+
+- **Type:**
+
+```ts
+function onClosePreviewServer(callback: () => Promise<void> | void): void;
+```
+
+- **Version:** `>= 2.3.0`

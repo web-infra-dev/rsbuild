@@ -28,6 +28,7 @@ import type {
   OnBeforeStartPreviewServerFn,
   OnCloseBuildFn,
   OnCloseDevServerFn,
+  OnClosePreviewServerFn,
   OnExitFn,
   OnRestartFn,
 } from './hooks';
@@ -656,6 +657,11 @@ export type RsbuildPluginAPI = Readonly<{
    * operations when the dev server is closed.
    */
   onCloseDevServer: PluginHook<OnCloseDevServerFn>;
+  /**
+   * Called when closing the preview server.
+   * Async callbacks are awaited before `server.close()` resolves.
+   */
+  onClosePreviewServer: PluginHook<OnClosePreviewServerFn>;
   /**
    * Alias for the `onAfterDevCompile` hook.
    * @deprecated Use `onAfterDevCompile` instead (added in v1.5.0).

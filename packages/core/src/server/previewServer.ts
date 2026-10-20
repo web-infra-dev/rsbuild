@@ -102,6 +102,7 @@ export async function startPreviewServer(
         cleanupGracefulShutdown();
         cleanupCliShortcuts?.();
         await serverTerminator();
+        await context.hooks.onClosePreviewServer.callBatch();
       })();
     }
     return closingPromise;
