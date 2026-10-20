@@ -422,6 +422,7 @@ export async function createRsbuild(
       'onBeforeStartPreviewServer',
       'onCloseBuild',
       'onCloseDevServer',
+      'onClosePreviewServer',
       'onDevCompileDone',
       'onExit',
       'onRestart',

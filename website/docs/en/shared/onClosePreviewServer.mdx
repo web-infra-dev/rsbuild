@@ -1,0 +1,9 @@
+Called when closing the preview server. Use this hook to release resources started by your plugin, such as a runtime or a child process.
+
+Rsbuild CLI automatically triggers this hook when closing the preview server. When using the JavaScript API, call [server.close()](/api/javascript-api/server-api#close) to trigger it. The close operation waits for async callbacks to complete. Repeated calls to `server.close()` only trigger the hook once per server instance.
+
+- **Type:**
+
+```ts
+function onClosePreviewServer(callback: () => Promise<void> | void): void;
+```

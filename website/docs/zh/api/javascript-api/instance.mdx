@@ -951,6 +951,22 @@ rsbuild.onAfterStartPreviewServer(({ port, routes }) => {
 });
 ```
 
+## rsbuild.onClosePreviewServer
+
+> 功能与 [onClosePreviewServer](/plugins/dev/hooks#onclosepreviewserver) 插件 hook 一致。
+
+import OnClosePreviewServer from '@zh/shared/onClosePreviewServer.mdx';
+
+<OnClosePreviewServer />
+
+- **示例：**
+
+```ts
+rsbuild.onClosePreviewServer(async () => {
+  await runtime.dispose();
+});
+```
+
 ## rsbuild.onBeforeDevCompile
 
 > 功能与 [onBeforeDevCompile](/plugins/dev/hooks#onbeforedevcompile) 插件 hook 一致。

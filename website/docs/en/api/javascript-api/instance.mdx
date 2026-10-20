@@ -951,6 +951,22 @@ rsbuild.onAfterStartPreviewServer(({ port, routes }) => {
 });
 ```
 
+## rsbuild.onClosePreviewServer
+
+> Provides the same functionality as the [onClosePreviewServer](/plugins/dev/hooks#onclosepreviewserver) plugin hook.
+
+import OnClosePreviewServer from '@en/shared/onClosePreviewServer.mdx';
+
+<OnClosePreviewServer />
+
+- **Example:**
+
+```ts
+rsbuild.onClosePreviewServer(async () => {
+  await runtime.dispose();
+});
+```
+
 ## rsbuild.onBeforeDevCompile
 
 > Provides the same functionality as the [onBeforeDevCompile](/plugins/dev/hooks#onbeforedevcompile) plugin hook.

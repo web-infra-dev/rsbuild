@@ -47,6 +47,7 @@ description: '使用 Rsbuild 插件钩子定制配置、编译、HTML 和服务�
 
 - [onBeforeStartPreviewServer](#onbeforestartpreviewserver)：在启动预览服务器前调用。
 - [onAfterStartPreviewServer](#onafterstartpreviewserver)：在启动预览服务器后调用。
+- [onClosePreviewServer](#onclosepreviewserver)：在关闭预览服务器时调用。
 
 ## Hooks 顺序
 
@@ -116,6 +117,7 @@ description: '使用 Rsbuild 插件钩子定制配置、编译、HTML 和服务�
 - [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [onBeforeStartPreviewServer](#onbeforestartpreviewserver)
 - [onAfterStartPreviewServer](#onafterstartpreviewserver)
+- [onClosePreviewServer](#onclosepreviewserver)
 - [onExit](#onexit)
 
 ## Global hooks vs environment hooks
@@ -142,6 +144,7 @@ description: '使用 Rsbuild 插件钩子定制配置、编译、HTML 和服务�
 - [onCloseBuild](#onclosebuild)
 - [onBeforeStartPreviewServer](#onbeforestartpreviewserver)
 - [onAfterStartPreviewServer](#onafterstartpreviewserver)
+- [onClosePreviewServer](#onclosepreviewserver)
 - [onRestart](#onrestart)
 - [onExit](#onexit)
 
@@ -966,6 +969,24 @@ const myPlugin = () => ({
     api.onAfterStartPreviewServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
+    });
+  },
+});
+```
+
+### onClosePreviewServer
+
+import OnClosePreviewServer from '@zh/shared/onClosePreviewServer.mdx';
+
+<OnClosePreviewServer />
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onClosePreviewServer(async () => {
+      await runtime.dispose();
     });
   },
 });

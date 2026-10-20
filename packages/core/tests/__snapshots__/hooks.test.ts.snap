@@ -10,6 +10,7 @@ exports[`initHooks > should initialize hooks correctly 1`] = `
   "onBeforeDevCompile",
   "onAfterDevCompile",
   "onCloseDevServer",
+  "onClosePreviewServer",
   "onAfterStartDevServer",
   "onBeforeStartDevServer",
   "onAfterStartPreviewServer",

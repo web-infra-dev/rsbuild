@@ -323,6 +323,7 @@ export type RsbuildInstance = {
   | 'onBeforeStartPreviewServer'
   | 'onCloseBuild'
   | 'onCloseDevServer'
+  | 'onClosePreviewServer'
   | 'onDevCompileDone'
   | 'onExit'
   | 'onRestart'
