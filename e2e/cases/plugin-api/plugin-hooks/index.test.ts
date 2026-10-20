@@ -131,6 +131,7 @@ test('should run plugin hooks correctly when running preview', async () => {
   });
 
   rsbuild.onClosePreviewServer(async () => {
+    // Verify that close() waits for async hooks to complete.
     await setImmediate();
     hooks.push('AsyncPreviewCleanup');
   });
