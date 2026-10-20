@@ -1,3 +1,4 @@
+import type { IncomingHttpHeaders } from 'node:http';
 import { rspack } from '@rspack/core';
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
@@ -34,6 +35,34 @@ export type RsbuildDevMiddlewareOptions = {
    * Callbacks returned by `onBeforeStartDevServer` hook and `server.setup` config
    */
   postCallbacks: (() => Promise<void> | void)[];
+};
+
+const isSameOriginRequest = (headers: IncomingHttpHeaders): boolean => {
+  const site = headers['sec-fetch-site'];
+  if (site !== undefined) {
+    return site === 'same-origin' || site === 'none';
+  }
+
+  // Keep non-browser clients that send neither header working.
+  if (headers.origin === undefined) {
+    return true;
+  }
+
+  const host = headers[':authority'] ?? headers.host;
+  if (typeof host !== 'string') {
+    return false;
+  }
+
+  try {
+    const origin = new URL(headers.origin);
+    // Compare host and port; HTTPS may terminate at a reverse proxy.
+    return (
+      (origin.protocol === 'http:' || origin.protocol === 'https:') &&
+      origin.host === new URL(`${origin.protocol}//${host}`).host
+    );
+  } catch {
+    return false;
+  }
 };
 
 const applySetupMiddlewares = (
@@ -172,6 +201,12 @@ const applyDefaultMiddlewares = async ({
   };
 
   middlewares.use('/__open-in-editor', async (req, res, next) => {
+    if (!isSameOriginRequest(req.headers)) {
+      res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Cross-origin request blocked');
+      return;
+    }
+
     try {
       const handler = await getLaunchEditorHandler();
       handler(req, res, next);
