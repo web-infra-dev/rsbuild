@@ -1,6 +1,6 @@
-在关闭预览服务器时调用。可用于释放插件启动的运行时、子进程等资源。
+关闭预览服务器时调用，可用于在预览服务器关闭时执行清理操作。
 
-Rsbuild CLI 会在关闭预览服务器时自动触发此钩子。使用 JavaScript API 时，调用 [server.close()](/api/javascript-api/server-api#close) 即可触发。关闭操作会等待异步回调完成。对同一个服务器实例重复调用 `server.close()` 只会触发一次此钩子。
+Rsbuild CLI 会自动在合适的时机调用此钩子，使用 JavaScript API 的用户需要手动调用 [server.close()](/api/javascript-api/server-api#close) 方法来触发此钩子。
 
 - **类型：**
 
