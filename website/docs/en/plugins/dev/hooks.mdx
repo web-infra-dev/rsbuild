@@ -989,8 +989,8 @@ import OnClosePreviewServer from '@en/shared/onClosePreviewServer.mdx';
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onClosePreviewServer(async () => {
-      await runtime.dispose();
+    api.onClosePreviewServer(() => {
+      console.log('close preview server!');
     });
   },
 });

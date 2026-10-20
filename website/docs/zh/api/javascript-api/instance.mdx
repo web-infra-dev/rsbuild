@@ -962,8 +962,8 @@ import OnClosePreviewServer from '@zh/shared/onClosePreviewServer.mdx';
 - **示例：**
 
 ```ts
-rsbuild.onClosePreviewServer(async () => {
-  await runtime.dispose();
+rsbuild.onClosePreviewServer(() => {
+  console.log('close preview server!');
 });
 ```
 

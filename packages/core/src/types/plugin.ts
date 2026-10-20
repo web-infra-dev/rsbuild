@@ -658,8 +658,8 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onCloseDevServer: PluginHook<OnCloseDevServerFn>;
   /**
-   * Called when closing the preview server. Async callbacks are awaited before
-   * `server.close()` resolves, allowing plugins to release runtime resources.
+   * Called when closing the preview server.
+   * Async callbacks are awaited before `server.close()` resolves.
    */
   onClosePreviewServer: PluginHook<OnClosePreviewServerFn>;
   /**
