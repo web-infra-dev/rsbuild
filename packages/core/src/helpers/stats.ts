@@ -65,7 +65,8 @@ export const getStatsWarnings = ({
 function getDisplayStats(compiler: Rspack.Compiler) {
   const stats = compiler.options?.stats;
   // Cache diagnostics are read separately so their errors cannot break HMR.
-  return typeof stats === 'object' && 'cacheInfo' in stats && stats.cacheInfo
+  return typeof stats === 'object' &&
+    (stats.all || ('cacheInfo' in stats && stats.cacheInfo))
     ? { ...stats, cacheInfo: false }
     : stats;
 }

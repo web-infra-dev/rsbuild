@@ -94,7 +94,10 @@ test('reads cache diagnostics once per opted-in environment and rebuild', async 
       environments: {
         web: { ...observed, tools: { rspack: { stats: false } } },
         quiet: { tools: { rspack: { stats: options } } },
-        disabled: { ...observed, tools: { rspack: { cache: false } } },
+        disabled: {
+          ...observed,
+          tools: { rspack: { cache: false, stats: { all: true } } },
+        },
       },
       tools: { rspack: { plugins: [probe] } },
     },
