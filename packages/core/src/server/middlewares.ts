@@ -1,6 +1,6 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
-import onFinished from 'on-finished';
+import { finished } from 'node:stream';
 import { color } from '../helpers';
 import { addTrailingSlash } from '../helpers/url';
 import { UP_PATH_REGEXP } from './assets-middleware/getFileFromUrl';
@@ -63,7 +63,7 @@ export const getRequestLoggerMiddleware = (
       );
     };
 
-    onFinished(res, logRequest);
+    finished(res, logRequest);
 
     next();
   };

@@ -303,9 +303,6 @@ catalogs:
     '@types/node':
       specifier: ^24.19.2
       version: 24.19.2
-    '@types/on-finished':
-      specifier: 2.3.5
-      version: 2.3.5
     '@types/range-parser':
       specifier: ^1.2.7
       version: 1.2.7
@@ -405,9 +402,6 @@ catalogs:
     mrmime:
       specifier: ^2.0.1
       version: 2.0.1
-    on-finished:
-      specifier: 2.4.1
-      version: 2.4.1
     open:
       specifier: ^11.0.4
       version: 11.0.4
@@ -1055,9 +1049,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.2
-      '@types/on-finished':
-        specifier: 'catalog:'
-        version: 2.3.5
       '@types/range-parser':
         specifier: 'catalog:'
         version: 1.2.7
@@ -1112,9 +1103,6 @@ importers:
       mrmime:
         specifier: 'catalog:'
         version: 2.0.1
-      on-finished:
-        specifier: 'catalog:'
-        version: 2.4.1
       open:
         specifier: 'catalog:'
         version: 11.0.4
@@ -3200,9 +3188,6 @@ packages:
   '@types/node@24.19.2':
     resolution: {integrity: sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ==}
 
-  '@types/on-finished@2.3.5':
-    resolution: {integrity: sha512-XUaCx9tVIC577KsOZxKbnvGlyPt2ogNXQEq/bOQpAfPwH9sH0FbzrRsK1961jpjKlK5V+Owmw55dVjukWhwH0w==}
-
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
 
@@ -3677,9 +3662,6 @@ packages:
   dotenv@17.4.2:
     resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
     engines: {node: '>=12'}
-
-  ee-first@1.1.1:
-    resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
   electron-to-chromium@1.5.349:
     resolution: {integrity: sha512-QsWVGyRuY07Aqb234QytTfwd5d9AJlfNIQ5wIOl1L+PZDzI9d9+Fn0FRale/QYlFxt/bUnB0/nLd1jFPGxGK1A==}
@@ -4509,10 +4491,6 @@ packages:
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
-
-  on-finished@2.4.1:
-    resolution: {integrity: sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==}
-    engines: {node: '>= 0.8'}
 
   oniguruma-parser@0.12.2:
     resolution: {integrity: sha512-6HVa5oIrgMC6aA6WF6XyyqbhRPJrKR02L20+2+zpDtO5QAzGHAUGw5TKQvwi5vctNnRHkJYmjAhRVQF2EKdTQw==}
@@ -7118,10 +7096,6 @@ snapshots:
     dependencies:
       undici-types: 7.24.6
 
-  '@types/on-finished@2.3.5':
-    dependencies:
-      '@types/node': 24.19.2
-
   '@types/range-parser@1.2.7': {}
 
   '@types/react-dom@19.3.0(@types/react@19.3.0)':
@@ -7576,8 +7550,6 @@ snapshots:
       dotenv: 17.4.2
 
   dotenv@17.4.2: {}
-
-  ee-first@1.1.1: {}
 
   electron-to-chromium@1.5.349: {}
 
@@ -8708,10 +8680,6 @@ snapshots:
       boolbase: 1.0.0
 
   object-assign@4.1.1: {}
-
-  on-finished@2.4.1:
-    dependencies:
-      ee-first: 1.1.1
 
   oniguruma-parser@0.12.2: {}
 
