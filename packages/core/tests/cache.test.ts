@@ -1,6 +1,24 @@
-import { createRsbuild } from '../src';
+import { createRsbuild, type Rspack } from '../src';
 
 describe('plugin-cache', () => {
+  it.each<[Rspack.Configuration['stats'], Rspack.StatsOptions]>([
+    [false, { preset: 'none' }],
+    ['errors-only', { preset: 'errors-only' }],
+    [{ warnings: false }, { warnings: false }],
+  ])(
+    'preserves stats %j when enabling cache diagnostics',
+    async (stats, expected) => {
+      const rsbuild = await createRsbuild({
+        config: {
+          performance: { buildCache: true, buildCacheDiagnostics() {} },
+          tools: { rspack: { stats } },
+        },
+      });
+      const [config] = await rsbuild.initConfigs();
+      expect(config.stats).toMatchObject({ ...expected, cacheInfo: true });
+    },
+  );
+
   const cases = [
     {
       name: 'should add cache config correctly',

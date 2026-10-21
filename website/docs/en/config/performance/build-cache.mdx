@@ -25,30 +25,26 @@ When enabled, Rspack will store the build snapshots in the cache directory. In s
 
 ## Inspect cache diagnostics
 
-Use `performance.buildCacheDiagnostics` to receive a report after each environment compilation, including rebuilds in watch mode:
+Set `performance.buildCacheDiagnostics` to receive one report per environment compilation, including watch rebuilds.
 
 ```ts title="rsbuild.config.ts"
 export default {
   performance: {
     buildCache: true,
-    buildCacheDiagnostics(report) {
-      console.log(report);
+    buildCacheDiagnostics({ environment, moduleBuilds }) {
+      console.log(environment, moduleBuilds);
     },
   },
 };
 ```
 
-Suppose you change one source file in a project with two modules. Rspack can report `persistent.status: 'valid'` because the cache version and tracked build dependencies still match, and `moduleBuilds: { reused: 1, total: 2 }` because it reused one module build.
+After editing a dependency in a two-module project, `{ reused: 1, total: 2 }` means Rspack skipped one module build. The count covers distinct modules in the main graph after `finishModules`, including modules ineligible for caching. Reuse can come from memory or disk. Zero means Rspack measured no reuse. `null` means the count is unavailable.
 
-- `persistent` describes cache validation for this compilation. With older Rspack versions, the status is `unknown`. Outside persistent mode, the field is `null`.
-- `persistentSessionInitialization` describes what Rspack found when it opened a shared filesystem cache. Later compilations can report the same initial result. The field is `null` when Rspack supplies no session result.
-- `moduleBuilds` counts distinct modules in the main graph after `finishModules`, including modules ineligible for caching. Reuse can come from memory or disk. Zero means Rspack measured no reuse. `null` means the count is unavailable.
+`persistent` records validation for this compilation. `persistentSessionInitialization` records what the filesystem backend found when it opened a shared cache. Older Rspack versions report `unknown` for persistent cache validation and `null` for counts. Disabled and memory caches skip the stats read.
 
-The report includes the environment, compilation time, and Rspack's normalized persistent cache settings. Settings and errors can contain file paths. Disabled and memory caches skip stats collection.
+Reports include compilation time and normalized persistent cache settings. Settings and errors can contain file paths. A stats read failure appears in `statsError` and the build continues. Rsbuild awaits the callback, so a callback error fails the compilation hook.
 
-If reading cache stats fails, the build continues and `statsError` contains the error. Rsbuild awaits the callback, so throwing or rejecting a promise from your callback fails the compilation hook.
-
-For raw logs, use Rspack's `stats.loggingDebug: /^rspack\.persistentCache$/` with the legacy cache. The new filesystem cache writes to the `rspack.cache.IdleFileCache` infrastructure logger.
+For raw diagnostics, the legacy cache uses `stats.loggingDebug: /^rspack\.persistentCache$/` and the filesystem backend uses the `rspack.cache.IdleFileCache` infrastructure logger.
 
 ## Enable cache
 

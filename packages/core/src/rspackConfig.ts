@@ -5,7 +5,7 @@ import { CHAIN_ID, modifyBundlerChain } from './configChain';
 import { castArray, color, getNodeEnv } from './helpers';
 import type { Logger } from './logger';
 import { getHTMLPlugin } from './pluginHelper';
-import { enableCacheInfoStats } from './plugins/cacheDiagnostics';
+import { enableCacheDiagnostics } from './plugins/cacheDiagnostics';
 import type {
   ConfigChainAsyncWithContext,
   EnvironmentContext,
@@ -199,14 +199,8 @@ export async function generateRspackConfig({
 
   rspackConfig = await modifyRspackConfig(context, rspackConfig, chainUtils);
 
-  const { cache } = rspackConfig;
-  if (
-    chainUtils.environment.config.performance.buildCacheDiagnostics &&
-    cache &&
-    typeof cache === 'object' &&
-    (cache.type === 'persistent' || cache.type === 'filesystem')
-  ) {
-    rspackConfig.stats = enableCacheInfoStats(rspackConfig.stats);
+  if (chainUtils.environment.config.performance.buildCacheDiagnostics) {
+    enableCacheDiagnostics(rspackConfig);
   }
 
   validateRspackConfig(rspackConfig, context.logger);

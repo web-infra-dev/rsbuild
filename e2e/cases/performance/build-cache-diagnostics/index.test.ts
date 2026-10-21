@@ -1,142 +1,147 @@
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
-import type {
-  BuildCacheDiagnostics,
-  RsbuildConfig,
-  Rspack,
-} from '@rsbuild/core';
+import type { BuildCacheDiagnostics, Rspack } from '@rsbuild/core';
 import fse from 'fs-extra';
 
-test('reports cold and warm cache diagnostics for each environment', async ({
-  build,
-}) => {
+const buildCache = {
+  cacheDirectory: join(import.meta.dirname, 'test-temp-cache'),
+};
+test.beforeEach(async () => {
+  await fse.emptyDir(buildCache.cacheDirectory);
+});
+
+function captureReports() {
   const reports: BuildCacheDiagnostics[] = [];
-  const cacheDirectory = join(import.meta.dirname, 'test-temp-cache');
-  await fse.emptyDir(cacheDirectory);
-  const config: RsbuildConfig = {
-    performance: {
-      buildCache: { cacheDirectory },
-      buildCacheDiagnostics: (report) => {
-        reports.push(report);
-      },
-    },
-    environments: {
-      web: {},
-      node: {
-        tools: {
-          rspack: (config) => {
-            config.cache = false;
-          },
-        },
-      },
+  const performance = {
+    buildCache,
+    buildCacheDiagnostics(report: BuildCacheDiagnostics) {
+      reports.push(report);
     },
   };
+  return { reports, performance };
+}
 
-  for (let run = 0; run < 2; run++) {
-    const result = await build({ config });
-    await result.close();
-    const web = reports.find((report) => report.environment === 'web');
-    const node = reports.find((report) => report.environment === 'node');
-    expect(reports).toHaveLength(2);
-    expect(web?.mode).toBe('persistent');
-    expect(web?.configuration).toMatchObject({
-      type: 'persistent',
-      storage: { directory: cacheDirectory },
+test('reports cold and warm module reuse when Rspack exposes it', async ({
+  build,
+}) => {
+  for (const cold of [true, false]) {
+    const { reports, performance } = captureReports();
+    let hasCacheInfo: boolean | undefined;
+    const inspect = (compiler: Rspack.Compiler) => {
+      compiler.hooks.done.tap('test', (stats) => {
+        const options = { all: false, cacheInfo: true };
+        hasCacheInfo = Boolean(stats.toJson(options).cacheInfo);
+      });
+    };
+    await build({
+      config: { performance, tools: { rspack: { plugins: [inspect] } } },
     });
-    const statsOptions = { all: false, cacheInfo: true };
-    const webStats = result.stats
-      ?.toJson(statsOptions)
-      .children?.find((stats) => stats.name === 'web');
-    expect(webStats).toBeDefined();
-    if (webStats?.cacheInfo) {
-      expect(web?.persistent?.status).toBe(run === 0 ? 'cold' : 'valid');
-      expect(web?.moduleBuilds?.total).toBeGreaterThan(0);
-      expect(web?.moduleBuilds?.reused).toBe(
-        run === 0 ? 0 : web?.moduleBuilds?.total,
+    expect(hasCacheInfo).toBeDefined();
+    expect(reports).toHaveLength(1);
+    const [report] = reports;
+    expect(report).toMatchObject({
+      mode: 'persistent',
+      configuration: {
+        type: 'persistent',
+        storage: { directory: buildCache.cacheDirectory },
+      },
+    });
+    if (hasCacheInfo) {
+      expect(report.persistent).toEqual({
+        status: cold ? 'cold' : 'valid',
+        reason: null,
+      });
+      expect(report.moduleBuilds?.total).toBeGreaterThan(0);
+      expect(report.moduleBuilds?.reused).toBe(
+        cold ? 0 : report.moduleBuilds?.total,
       );
     } else {
-      expect(web?.persistent).toEqual({ status: 'unknown', reason: null });
-      expect(web?.moduleBuilds).toBeNull();
+      expect(report.persistent).toEqual({ status: 'unknown', reason: null });
+      expect(report.moduleBuilds).toBeNull();
     }
-    expect(node?.mode).toBe('disabled');
-    expect(node?.configuration).toBeNull();
-    expect(node?.persistent).toBeNull();
-    reports.length = 0;
   }
 });
 
-test('keeps cache stats and errors scoped to the environment', async ({
+test('reads cache stats once per opted-in persistent environment', async ({
   build,
 }) => {
-  const reports: BuildCacheDiagnostics[] = [];
+  const { reports, performance } = captureReports();
+  const observed = { performance };
   const reads: string[] = [];
-  const cacheInfo = {
+  const recovered = {
     persistent: { status: 'error', reason: 'recovery' },
     persistentSessionInitialization: { status: 'valid', reason: null },
-    moduleBuilds: { reused: 0, total: 2 },
   };
+  const moduleBuilds = { reused: 1, total: 2 };
   const probe = (compiler: Rspack.Compiler) => {
     compiler.hooks.compilation.tap('test', (compilation) => {
       compilation.hooks.statsFactory.tap('test', (factory, options) => {
         if (!('cacheInfo' in options) || !options.cacheInfo) return;
         reads.push(compiler.name!);
-        if (compiler.name === 'web') throw new Error('cache stats unavailable');
+        if (compiler.name === 'broken')
+          throw new Error('cache stats unavailable');
         factory.hooks.result
           .for('compilation')
           .tap('test', (stats: Rspack.StatsCompilation) => ({
             ...stats,
-            cacheInfo,
+            cacheInfo: {
+              ...recovered,
+              get moduleBuilds() {
+                if (compiler.name === 'unreadable')
+                  throw new Error('module counts unavailable');
+                return moduleBuilds;
+              },
+            },
           }));
       });
     });
   };
   await build({
     config: {
-      performance: {
-        buildCache: true,
-        buildCacheDiagnostics: (report) => {
-          reports.push(report);
-        },
-      },
+      performance: { buildCache },
       environments: {
-        web: {},
-        server: {},
-        node: { tools: { rspack: { cache: false } } },
+        broken: observed,
+        quiet: {},
+        recovered: observed,
+        unreadable: observed,
+        disabled: { ...observed, tools: { rspack: { cache: false } } },
       },
-      tools: { rspack: { plugins: [{ apply: probe }] } },
+      tools: { rspack: { plugins: [probe] } },
     },
   });
-  expect(reads.sort()).toEqual(['server', 'web']);
-  expect(
-    reports.find((report) => report.environment === 'server'),
-  ).toMatchObject(cacheInfo);
-  expect(reports.find((report) => report.environment === 'web')).toMatchObject({
+  expect(reads.sort()).toEqual(['broken', 'recovered', 'unreadable']);
+  const byEnvironment = Object.fromEntries(
+    reports.map((report) => [report.environment, report]),
+  );
+  expect(byEnvironment.quiet).toBeUndefined();
+  expect(byEnvironment.recovered).toMatchObject({ ...recovered, moduleBuilds });
+  expect(byEnvironment.unreadable).toMatchObject({
+    ...recovered,
+    moduleBuilds: null,
+    statsError: 'module counts unavailable',
+  });
+  expect(byEnvironment.broken).toMatchObject({
     mode: 'persistent',
     statsError: 'cache stats unavailable',
     moduleBuilds: null,
   });
-  expect(reports.find((report) => report.environment === 'node')).toMatchObject(
-    {
-      mode: 'disabled',
-      statsError: null,
-      moduleBuilds: null,
-    },
-  );
+  expect(byEnvironment.disabled).toMatchObject({
+    mode: 'disabled',
+    configuration: null,
+    persistent: null,
+    statsError: null,
+    moduleBuilds: null,
+  });
 });
 
 test('reports each development compilation', async ({ devOnly }) => {
   const entry = join(import.meta.dirname, 'test-temp-src', 'index.js');
   await fse.outputFile(entry, "console.log('first');");
-  const reports: BuildCacheDiagnostics[] = [];
+  const { reports, performance } = captureReports();
   await devOnly({
     config: {
       source: { entry: { index: './test-temp-src/index.js' } },
-      performance: {
-        buildCache: true,
-        buildCacheDiagnostics: (report) => {
-          reports.push(report);
-        },
-      },
+      performance,
     },
   });
 
@@ -159,5 +164,4 @@ test('propagates callback failures', async ({ build }) => {
     },
   });
   expect(result.buildError?.message).toContain('diagnostics callback failed');
-  await result.close();
 });
