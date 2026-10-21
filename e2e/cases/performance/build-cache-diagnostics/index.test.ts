@@ -81,9 +81,12 @@ test('keeps cache stats and errors scoped to the environment', async ({
         if (!('cacheInfo' in options) || !options.cacheInfo) return;
         reads.push(compiler.name!);
         if (compiler.name === 'web') throw new Error('cache stats unavailable');
-        factory.hooks.extract.for('compilation').tap('test', (stats) => {
-          stats.cacheInfo = cacheInfo;
-        });
+        factory.hooks.result
+          .for('compilation')
+          .tap('test', (stats: Rspack.StatsCompilation) => ({
+            ...stats,
+            cacheInfo,
+          }));
       });
     });
   };
