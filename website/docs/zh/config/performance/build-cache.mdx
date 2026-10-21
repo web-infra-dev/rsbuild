@@ -25,26 +25,9 @@ type BuildCacheConfig =
 
 ## 查看缓存诊断信息
 
-设置 `performance.buildCacheDiagnostics` 即可在每个环境编译完成时收到一份报告，包括监听模式下的重新编译。
+将 `performance.buildCacheDiagnostics` 设置为回调，例如 `({ environment, moduleBuilds }) => console.log(environment, moduleBuilds)`。每个环境编译结束时都会调用回调，包括监听模式下的重新编译。报告包含编译耗时、持久化缓存配置、验证结果和模块构建计数。[Rspack 缓存字段](https://rspack.rs/zh/config/stats#statscacheinfo)
 
-```ts title="rsbuild.config.ts"
-export default {
-  performance: {
-    buildCache: true,
-    buildCacheDiagnostics({ environment, moduleBuilds }) {
-      console.log(environment, moduleBuilds);
-    },
-  },
-};
-```
-
-在只有两个模块的项目中修改一个依赖后，`{ reused: 1, total: 2 }` 表示 Rspack 跳过了一个模块的构建。统计范围是 `finishModules` 结束后主模块图中的不同模块，包括不可缓存的模块。复用的结果可以来自内存或磁盘。复用数为零表示确实测得零次复用，`null` 表示无法统计。
-
-`persistent` 记录本次编译的验证结果。`persistentSessionInitialization` 记录文件系统后端打开共享缓存时的验证结果。使用旧版 Rspack 时，持久化缓存验证状态为 `unknown`，模块计数为 `null`。禁用缓存或使用内存缓存时会跳过统计信息的读取。
-
-报告包含编译耗时和规范化后的持久化缓存配置。配置和错误信息可能包含文件路径。读取统计信息失败时，错误记录在 `statsError` 中，构建会继续。Rsbuild 会等待回调完成，回调报错会使编译钩子失败。
-
-如需查看原始诊断日志，旧版缓存使用 `stats.loggingDebug: /^rspack\.persistentCache$/`，文件系统后端使用 `rspack.cache.IdleFileCache` 基础设施日志记录器。
+使用旧版 Rspack 时，持久化缓存的验证状态为 `unknown`，模块计数为 `null`。禁用缓存或使用内存缓存时会跳过统计信息的读取。读取错误会记录在 `statsError` 中，构建会继续。回调抛出异常或返回被拒绝的 Promise 会使编译钩子失败。配置和错误信息可能包含文件路径。
 
 ## 启用缓存
 

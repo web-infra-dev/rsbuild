@@ -1,6 +1,6 @@
 import { color } from 'rslog';
 import { isVerbose, type Logger } from '../logger';
-import type { InternalContext, RsbuildStats, Rspack } from '../types';
+import type { ActionType, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
 
@@ -62,9 +62,18 @@ export const getStatsWarnings = ({
   return [];
 };
 
+function getDisplayStats(compiler: Rspack.Compiler) {
+  const stats = compiler.options?.stats;
+  // Cache diagnostics are read separately so their errors cannot break HMR.
+  return typeof stats === 'object' && 'cacheInfo' in stats && stats.cacheInfo
+    ? { ...stats, cacheInfo: false }
+    : stats;
+}
+
 function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
-  { logger, action, environmentList }: InternalContext,
+  logger: Logger,
+  action?: ActionType,
 ): Rspack.StatsOptions {
   let defaultOptions: Rspack.StatsOptions = {
     all: false,
@@ -88,24 +97,14 @@ function getStatsOptions(
     };
   }
 
-  const displayStats = (compiler: Rspack.Compiler, index: number) => {
-    const stats = compiler.options?.stats;
-    // Cache diagnostics have their own guarded read. A cache stats error must
-    // not prevent Rsbuild from reporting compilation errors or serving HMR.
-    return environmentList[index].config.performance.buildCacheDiagnostics &&
-      typeof stats === 'object'
-      ? { ...stats, cacheInfo: false }
-      : stats;
-  };
-
   if (isMultiCompiler(compiler)) {
     return {
       ...defaultOptions,
-      children: compiler.compilers.map(displayStats),
+      children: compiler.compilers.map(getDisplayStats),
     } as unknown as Rspack.StatsOptions;
   }
 
-  const stats = displayStats(compiler, 0);
+  const stats = getDisplayStats(compiler);
 
   if (typeof stats === 'string') {
     return { ...defaultOptions, preset: stats };
@@ -121,9 +120,10 @@ function getStatsOptions(
 export function getRsbuildStats(
   statsInstance: Rspack.Stats | Rspack.MultiStats,
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
-  context: InternalContext,
+  logger: Logger,
+  action?: ActionType,
 ): RsbuildStats {
-  const statsOptions = getStatsOptions(compiler, context);
+  const statsOptions = getStatsOptions(compiler, logger, action);
   return statsInstance.toJson(statsOptions) as RsbuildStats;
 }
 

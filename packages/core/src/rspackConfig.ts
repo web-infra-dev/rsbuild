@@ -5,7 +5,7 @@ import { CHAIN_ID, modifyBundlerChain } from './configChain';
 import { castArray, color, getNodeEnv } from './helpers';
 import type { Logger } from './logger';
 import { getHTMLPlugin } from './pluginHelper';
-import { enableCacheDiagnostics } from './plugins/cacheDiagnostics';
+import { enableCacheDiagnostics } from './plugins/cache';
 import type {
   ConfigChainAsyncWithContext,
   EnvironmentContext,

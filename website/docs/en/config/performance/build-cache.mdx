@@ -25,26 +25,9 @@ When enabled, Rspack will store the build snapshots in the cache directory. In s
 
 ## Inspect cache diagnostics
 
-Set `performance.buildCacheDiagnostics` to receive one report per environment compilation, including watch rebuilds.
+Set `performance.buildCacheDiagnostics` to a function such as `({ environment, moduleBuilds }) => console.log(environment, moduleBuilds)`. Rsbuild calls it after each environment compilation, including watch rebuilds. The report includes compilation time, persistent cache settings, validation results, and module-build counts. [Rspack cache fields](https://rspack.rs/config/stats#statscacheinfo)
 
-```ts title="rsbuild.config.ts"
-export default {
-  performance: {
-    buildCache: true,
-    buildCacheDiagnostics({ environment, moduleBuilds }) {
-      console.log(environment, moduleBuilds);
-    },
-  },
-};
-```
-
-After editing a dependency in a two-module project, `{ reused: 1, total: 2 }` means Rspack skipped one module build. The count covers distinct modules in the main graph after `finishModules`, including modules ineligible for caching. Reuse can come from memory or disk. Zero means Rspack measured no reuse. `null` means the count is unavailable.
-
-`persistent` records validation for this compilation. `persistentSessionInitialization` records what the filesystem backend found when it opened a shared cache. Older Rspack versions report `unknown` for persistent cache validation and `null` for counts. Disabled and memory caches skip the stats read.
-
-Reports include compilation time and normalized persistent cache settings. Settings and errors can contain file paths. A stats read failure appears in `statsError` and the build continues. Rsbuild awaits the callback, so a callback error fails the compilation hook.
-
-For raw diagnostics, the legacy cache uses `stats.loggingDebug: /^rspack\.persistentCache$/` and the filesystem backend uses the `rspack.cache.IdleFileCache` infrastructure logger.
+Older Rspack versions report `unknown` for persistent validation and `null` for counts. Disabled and memory caches skip the stats read. Read errors populate `statsError` and the build continues. If the callback throws or rejects, the compilation hook fails. Settings and errors can include file paths.
 
 ## Enable cache
 
