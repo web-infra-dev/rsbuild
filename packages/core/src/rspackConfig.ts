@@ -199,7 +199,13 @@ export async function generateRspackConfig({
 
   rspackConfig = await modifyRspackConfig(context, rspackConfig, chainUtils);
 
-  if (chainUtils.environment.config.performance.buildCacheDiagnostics) {
+  const { cache } = rspackConfig;
+  if (
+    chainUtils.environment.config.performance.buildCacheDiagnostics &&
+    cache &&
+    typeof cache === 'object' &&
+    (cache.type === 'persistent' || cache.type === 'filesystem')
+  ) {
     rspackConfig.stats = enableCacheInfoStats(rspackConfig.stats);
   }
 

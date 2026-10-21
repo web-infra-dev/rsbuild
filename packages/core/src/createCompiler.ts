@@ -288,12 +288,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       for (const log of pendingBuildLogs.splice(0)) {
         log();
       }
-      const stats = getRsbuildStats(
-        statsInstance,
-        compiler,
-        logger,
-        context.action,
-      );
+      const stats = getRsbuildStats(statsInstance, compiler, context);
       const hasErrors = statsInstance.hasErrors();
 
       context.buildState.stats = stats;

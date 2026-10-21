@@ -44,9 +44,11 @@ export default {
 - `persistentSessionInitialization` 描述 Rspack 打开共享文件系统缓存时的验证结果。后续编译可能报告相同的初始结果。Rspack 未提供会话验证结果时，此字段为 `null`。
 - `moduleBuilds` 在 `finishModules` 后统计主模块图中不同的模块，包括不能缓存的模块。复用的构建结果可能来自内存或磁盘。复用数为零表示未复用任何模块；`null` 表示无法统计。
 
-报告还包含环境名称、编译耗时、缓存配置和 `rspack.persistentCache` 日志。配置、日志和错误信息可能包含文件路径。
+报告还包含环境名称、编译耗时和 Rspack 规范化后的持久化缓存配置。配置和错误可能包含文件路径。禁用缓存或使用内存缓存时，Rsbuild 会跳过统计信息的收集。
 
-Rsbuild 为每份报告读取一次编译统计信息。读取失败时，构建会继续，错误记录在 `statsError` 中。Rsbuild 会等待回调完成；回调抛出错误或返回 rejected Promise 会使编译钩子失败。
+如果读取缓存统计信息失败，构建会继续，错误信息保存在 `statsError` 中。Rsbuild 会等待回调完成，回调抛出错误或返回 rejected Promise 会使编译钩子失败。
+
+如需查看原始日志，旧版缓存使用 Rspack 的 `stats.loggingDebug: /^rspack\.persistentCache$/`，新版文件系统缓存使用 `rspack.cache.IdleFileCache` 基础设施日志记录器。
 
 ## 启用缓存
 

@@ -693,16 +693,12 @@ export type BuildCacheDiagnostics = {
   isWatch: boolean;
   time: number;
   mode: 'disabled' | 'memory' | 'persistent' | 'unknown';
-  configuration: {
-    name?: string;
-    version?: string;
-    storage: { type: 'filesystem'; directory?: string; location?: string };
-    buildDependencies: string[] | Record<string, string[]>;
-    maxAge?: number;
-    maxMemoryGenerations?: number;
-    portable?: boolean;
-    readonly?: boolean;
-  } | null;
+  configuration: Readonly<
+    Extract<
+      Rspack.Compiler['options']['cache'],
+      { type: 'persistent' | 'filesystem' }
+    >
+  > | null;
   persistent: {
     status: 'cold' | 'valid' | 'invalidated' | 'error' | 'unknown';
     reason: 'version' | 'buildDependencies' | 'recovery' | null;
@@ -710,7 +706,6 @@ export type BuildCacheDiagnostics = {
   /** Initial validation of a shared filesystem cache session, when available. */
   persistentSessionInitialization: BuildCacheDiagnostics['persistent'];
   moduleBuilds: { reused: number; total: number } | null;
-  logs: { type: string; message: string }[];
   statsError: string | null;
 };
 

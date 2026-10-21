@@ -44,9 +44,11 @@ Suppose you change one source file in a project with two modules. Rspack can rep
 - `persistentSessionInitialization` describes what Rspack found when it opened a shared filesystem cache. Later compilations can report the same initial result. The field is `null` when Rspack supplies no session result.
 - `moduleBuilds` counts distinct modules in the main graph after `finishModules`, including modules ineligible for caching. Reuse can come from memory or disk. Zero means Rspack measured no reuse. `null` means the count is unavailable.
 
-The report also includes the environment, compilation time, cache settings and `rspack.persistentCache` logs. Settings, logs and errors can contain file paths.
+The report includes the environment, compilation time, and Rspack's normalized persistent cache settings. Settings and errors can contain file paths. Disabled and memory caches skip stats collection.
 
-Rsbuild reads stats once per report. If that fails, the build continues and `statsError` contains the error. Rsbuild awaits your callback. Throwing or rejecting a promise fails the compilation hook.
+If reading cache stats fails, the build continues and `statsError` contains the error. Rsbuild awaits the callback, so throwing or rejecting a promise from your callback fails the compilation hook.
+
+For raw logs, use Rspack's `stats.loggingDebug: /^rspack\.persistentCache$/` with the legacy cache. The new filesystem cache writes to the `rspack.cache.IdleFileCache` infrastructure logger.
 
 ## Enable cache
 

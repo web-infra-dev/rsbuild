@@ -1,6 +1,6 @@
 import { color } from 'rslog';
 import { isVerbose, type Logger } from '../logger';
-import type { ActionType, RsbuildStats, Rspack } from '../types';
+import type { InternalContext, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
 
@@ -64,8 +64,7 @@ export const getStatsWarnings = ({
 
 function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
-  logger: Logger,
-  action?: ActionType,
+  { logger, action, environmentList }: InternalContext,
 ): Rspack.StatsOptions {
   let defaultOptions: Rspack.StatsOptions = {
     all: false,
@@ -89,16 +88,24 @@ function getStatsOptions(
     };
   }
 
+  const displayStats = (compiler: Rspack.Compiler, index: number) => {
+    const stats = compiler.options?.stats;
+    // Cache diagnostics have their own guarded read. A cache stats error must
+    // not prevent Rsbuild from reporting compilation errors or serving HMR.
+    return environmentList[index].config.performance.buildCacheDiagnostics &&
+      typeof stats === 'object'
+      ? { ...stats, cacheInfo: false }
+      : stats;
+  };
+
   if (isMultiCompiler(compiler)) {
     return {
       ...defaultOptions,
-      children: compiler.compilers.map((compiler) =>
-        compiler.options ? compiler.options.stats : undefined,
-      ),
+      children: compiler.compilers.map(displayStats),
     } as unknown as Rspack.StatsOptions;
   }
 
-  const { stats } = compiler.options;
+  const stats = displayStats(compiler, 0);
 
   if (typeof stats === 'string') {
     return { ...defaultOptions, preset: stats };
@@ -114,10 +121,9 @@ function getStatsOptions(
 export function getRsbuildStats(
   statsInstance: Rspack.Stats | Rspack.MultiStats,
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
-  logger: Logger,
-  action?: ActionType,
+  context: InternalContext,
 ): RsbuildStats {
-  const statsOptions = getStatsOptions(compiler, logger, action);
+  const statsOptions = getStatsOptions(compiler, context);
   return statsInstance.toJson(statsOptions) as RsbuildStats;
 }
 
