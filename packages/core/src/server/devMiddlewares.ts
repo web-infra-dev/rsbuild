@@ -12,7 +12,7 @@ import type {
 import type { BuildManager } from './buildManager';
 import type { RsbuildDevServer } from './devServer';
 import { gzipMiddleware } from './gzipMiddleware';
-import type { UpgradeEvent } from './helper';
+import { getPublicDirPaths, type UpgradeEvent } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import {
   faviconFallbackMiddleware,
@@ -225,11 +225,12 @@ const applyDefaultMiddlewares = async ({
     );
   }
 
-  if (server.publicDir.length) {
+  const publicDirPaths = getPublicDirPaths(config);
+  if (publicDirPaths.length) {
     const { default: sirv } = await import(
       /* rspackChunkName: "sirv" */ 'sirv'
     );
-    for (const { name } of server.publicDir) {
+    for (const name of publicDirPaths) {
       const sirvMiddleware = sirv(name, {
         etag: true,
         dev: true,
