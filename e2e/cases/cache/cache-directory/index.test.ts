@@ -108,6 +108,7 @@ test('reads cache diagnostics once per opted-in environment and rebuild', async 
   expect(reports.disabled).toMatchObject({
     mode: 'disabled',
     moduleBuilds: null,
+    counters: null,
   });
   const { environments } = server!;
   const web = await environments.web.getStats();
@@ -126,6 +127,7 @@ test('reads cache diagnostics once per opted-in environment and rebuild', async 
     persistentSessionInitialization:
       info?.persistentSessionInitialization ?? null,
     moduleBuilds: info?.moduleBuilds ?? null,
+    counters: info?.counters ?? null,
     statsError: null,
   });
   const quiet = await environments.quiet.getStats();

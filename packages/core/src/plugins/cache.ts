@@ -116,6 +116,7 @@ const reportBuildCacheDiagnostics: OnAfterEnvironmentCompileFn = (event) => {
     persistent: configuration ? { status: 'unknown', reason: null } : null,
     persistentSessionInitialization: null,
     moduleBuilds: null,
+    counters: null,
     statsError: null,
   };
   if (configuration && stats) {
@@ -128,6 +129,7 @@ const reportBuildCacheDiagnostics: OnAfterEnvironmentCompileFn = (event) => {
       report.persistentSessionInitialization =
         info?.persistentSessionInitialization ?? null;
       report.moduleBuilds = info?.moduleBuilds ?? null;
+      report.counters = info?.counters ?? null;
     } catch (error) {
       report.statsError =
         error instanceof Error ? error.message : String(error);

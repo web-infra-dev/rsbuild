@@ -706,6 +706,8 @@ export type BuildCacheDiagnostics = {
   /** Initial validation of a shared filesystem cache session, when available. */
   persistentSessionInitialization: BuildCacheDiagnostics['persistent'];
   moduleBuilds: { reused: number; total: number } | null;
+  counters:
+    { logger: string; label: string; hit: number; total: number }[] | null;
   statsError: string | null;
 };
 
