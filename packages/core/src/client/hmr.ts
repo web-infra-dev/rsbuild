@@ -11,8 +11,8 @@ import type {
   NormalizedClientConfig,
   WebSocketUrlResolver,
 } from '../types';
+import { resolveLocation } from './location';
 import { logger } from './log';
-import { formatSocketURL } from './socketUrl';
 
 let createOverlay: undefined | ((title: string, content: string) => void);
 let clearOverlay: undefined | (() => void);
@@ -113,12 +113,31 @@ export function init(
   let hasBuildErrors = false;
   const base = serverBase.endsWith('/') ? serverBase : `${serverBase}/`;
 
+  function formatURL(fallback?: boolean) {
+    const location = resolveLocation(self.location);
+    const hostname = (fallback ? serverHost : config.host) || location.hostname;
+    const port = (fallback ? serverPort : config.port) || location.port;
+    const protocol =
+      config.protocol || (location.protocol === 'https:' ? 'wss' : 'ws');
+    const pathname = config.path;
+
+    if (typeof URL !== 'undefined' && 'searchParams' in URL.prototype) {
+      const url = new URL('http://localhost');
+      url.port = String(port);
+      url.hostname = hostname;
+      url.protocol = protocol;
+      url.pathname = pathname;
+      url.searchParams.append('token', token);
+      return url.toString();
+    }
+
+    // compatible with IE 11 and legacy WebKit where URL lacks searchParams
+    const colon = protocol.indexOf(':') === -1 ? ':' : '';
+    return `${protocol}${colon}//${hostname}:${port}${pathname}?token=${token}`;
+  }
+
   function getSocketURL(fallback?: boolean) {
-    const url = formatSocketURL(
-      fallback ? { ...config, host: serverHost, port: serverPort } : config,
-      token,
-      self.location,
-    );
+    const url = formatURL(fallback);
     return resolveWebSocketUrl ? resolveWebSocketUrl(url) : url;
   }
 
