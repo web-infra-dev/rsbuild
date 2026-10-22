@@ -375,13 +375,17 @@ api.transform({ test: /\.md$/ }, ({ code }) => {
 });
 ```
 
-- `codeFilter`: runs the transform handler only when its input code matches the filter, the same as Rspack's [rules[].use.codeFilter](https://rspack.rs/config/module-rules#rulesusecodefilter). Strings match substrings, and regular expressions match the code. The filter checks the output of any loaders or transform handlers that run before this handler. If the code does not match, it passes through unchanged.
+- `codeFilter`: runs the transform function only when the module's code contains the given string or matches the regular expression. Otherwise, the function is skipped and the code is left unchanged.
+
+For example, this transform runs only for JavaScript modules whose code contains `console.log`:
 
 ```js
 api.transform({ test: /\.js$/, codeFilter: 'console.log' }, ({ code }) => {
   return code.replaceAll('console.log', 'console.debug');
 });
 ```
+
+The filter checks the code just before your transform function runs. If other loaders or transforms have already modified the code, it checks that updated code. This option corresponds to Rspack's [rules[].use.codeFilter](https://rspack.rs/config/module-rules#rulesusecodefilter).
 
 - `targets`: matches the Rsbuild [output.target](/config/output/target), and applies the current transform function only to the matched targets.
 

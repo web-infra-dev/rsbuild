@@ -349,8 +349,12 @@ export type TransformDescriptor = {
    */
   test?: Rspack.RuleSetCondition;
   /**
-   * Only run the transform when its input code matches the filter.
-   * Strings match substrings, and regular expressions match the code.
+   * Run the transform only when the module's code contains the given string
+   * or matches the regular expression. Otherwise, skip this transform and
+   * leave the code unchanged.
+   *
+   * The filter checks the code just before the transform runs, including
+   * changes made by earlier loaders or transforms.
    * @see https://rspack.rs/config/module-rules#rulesusecodefilter
    */
   codeFilter?: Rspack.RuleSetLoaderWithOptions['codeFilter'];

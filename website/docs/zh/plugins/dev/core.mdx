@@ -375,13 +375,17 @@ api.transform({ test: /\.md$/ }, ({ code }) => {
 });
 ```
 
-- `codeFilter`：仅在输入代码匹配过滤条件时执行转换函数，对应 Rspack 的 [rules[].use.codeFilter](https://rspack.rs/zh/config/module-rules#rulesusecodefilter)。字符串按子串匹配，正则表达式按正则匹配。过滤条件检查的是在当前转换函数之前执行的 loader 或转换函数的输出。不匹配时，代码保持不变并继续传递。
+- `codeFilter`：根据模块的代码内容，决定是否执行转换函数。设置为字符串时，代码中包含该字符串才会执行；设置为正则表达式时，代码匹配该正则才会执行。不匹配时，会跳过当前转换函数，代码保持不变。
+
+例如，以下转换函数只处理代码中包含 `console.log` 的 JavaScript 模块：
 
 ```js
 api.transform({ test: /\.js$/, codeFilter: 'console.log' }, ({ code }) => {
   return code.replaceAll('console.log', 'console.debug');
 });
 ```
+
+匹配发生在转换函数执行前。如果代码已被其他 loader 或转换函数修改，会使用修改后的代码进行匹配。该选项对应 Rspack 的 [rules[].use.codeFilter](https://rspack.rs/zh/config/module-rules#rulesusecodefilter)。
 
 - `targets`：匹配 Rsbuild [output.target](/config/output/target)，仅对匹配的 targets 应用当前 transform 函数。
 
