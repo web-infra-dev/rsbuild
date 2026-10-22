@@ -455,7 +455,7 @@ export function init(
   }
 
   function fullReload(data?: ServerMessageFullReload['data']) {
-    if (!liveReload) {
+    if (!liveReload || typeof document === 'undefined') {
       return;
     }
 
