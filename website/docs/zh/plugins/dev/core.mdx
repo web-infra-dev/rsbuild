@@ -349,6 +349,7 @@ const pluginPug = () => ({
 ```ts
 type TransformDescriptor = {
   test?: RuleSetCondition;
+  codeFilter?: string | RegExp;
   targets?: RsbuildTarget[];
   environments?: string[];
   resourceQuery?: RuleSetCondition;
@@ -371,6 +372,14 @@ type TransformDescriptor = {
 ```js
 api.transform({ test: /\.md$/ }, ({ code }) => {
   // ...
+});
+```
+
+- `codeFilter`：仅在输入代码匹配过滤条件时执行转换函数，对应 Rspack 的 [rules[].use.codeFilter](https://rspack.rs/zh/config/module-rules#rulesusecodefilter)。字符串按子串匹配，正则表达式按正则匹配。过滤条件检查的是在当前转换函数之前执行的 loader 或转换函数的输出。不匹配时，代码保持不变并继续传递。
+
+```js
+api.transform({ test: /\.js$/, codeFilter: 'console.log' }, ({ code }) => {
+  return code.replaceAll('console.log', 'console.debug');
 });
 ```
 
