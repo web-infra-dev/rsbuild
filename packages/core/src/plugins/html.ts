@@ -204,6 +204,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:html',
 
   setup(api) {
+    // Environments may resolve different favicons from their public directories.
     const defaultFavicons = new Map<string, string>();
 
     const resolveDefaultFavicon = (config: NormalizedEnvironmentConfig) => {
@@ -211,6 +212,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
       const extensions = ['ico', 'png', 'svg'];
       const publicDirs = Array.from(new Set(publicDir.map(({ name }) => name)));
 
+      // Preserve directory order in the key because it determines lookup precedence.
       const key = JSON.stringify(publicDirs);
       const defaultFavicon = defaultFavicons.get(key);
       if (defaultFavicon) {
