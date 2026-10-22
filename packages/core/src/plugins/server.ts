@@ -6,7 +6,11 @@ import { color } from '../helpers';
 import { dedupeNestedPaths } from '../helpers/path';
 import { getTinyglobby } from '../helpers/cachedImport';
 import { open } from '../server/open';
-import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
+import type {
+  EnvironmentContext,
+  OnAfterStartDevServerFn,
+  RsbuildPlugin,
+} from '../types';
 
 const copyPublicDir = async (
   publicDir: string,
@@ -99,29 +103,42 @@ export const pluginServer = (): RsbuildPlugin => ({
       if (!isFirstCompile) {
         return;
       }
-      const config = api.getNormalizedConfig();
-
-      for (const { name: publicDir, copyOnBuild, ignore } of config.server
-        .publicDir) {
-        if (copyOnBuild === false) {
-          continue;
-        }
-
-        if (!fs.existsSync(publicDir)) {
-          continue;
-        }
-
-        const distPaths = dedupeNestedPaths(
-          Object.values(environments)
-            .filter(
-              ({ config }) =>
-                copyOnBuild === true ||
-                (copyOnBuild === 'auto' && config.output.target !== 'node'),
-            )
-            .map(({ distPath }) => distPath),
+      // Group environments with the same copy settings to preserve nested output deduplication.
+      const groups = new Map<string, EnvironmentContext[]>();
+      for (const environment of Object.values(environments)) {
+        const key = JSON.stringify(
+          environment.config.server.publicDir.map(
+            ({ name, copyOnBuild, ignore }) => [name, copyOnBuild, ignore],
+          ),
         );
+        const group = groups.get(key);
+        if (group) {
+          group.push(environment);
+        } else {
+          groups.set(key, [environment]);
+        }
+      }
 
-        await copyPublicDir(publicDir, distPaths, ignore);
+      for (const group of groups.values()) {
+        for (const { name: publicDir, copyOnBuild, ignore } of group[0].config
+          .server.publicDir) {
+          if (copyOnBuild === false || !fs.existsSync(publicDir)) {
+            continue;
+          }
+          const distPaths = dedupeNestedPaths(
+            group
+              .filter(
+                ({ config }) =>
+                  copyOnBuild === true || config.output.target !== 'node',
+              )
+              .map(({ distPath }) => distPath),
+          );
+          if (distPaths.length === 0) {
+            continue;
+          }
+
+          await copyPublicDir(publicDir, distPaths, ignore);
+        }
       }
     });
   },

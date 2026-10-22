@@ -3,7 +3,11 @@ import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from './createContext';
-import { getDefaultEntry, normalizeConfig } from './defaultConfig';
+import {
+  getDefaultEntry,
+  normalizeConfig,
+  normalizePublicDirs,
+} from './defaultConfig';
 import { camelCase, color, pick } from './helpers';
 import { ensureAbsolutePath } from './helpers/path';
 import { inspectConfig } from './inspectConfig';
@@ -158,7 +162,7 @@ const initEnvironmentConfigs = (
       Object.entries(environments)
         .filter(([name]) => isEnvironmentEnabled(name))
         .map(([name, config]) => {
-          const environmentConfig = mergeRsbuildConfig(
+          const environmentConfig = mergeRsbuildConfig<EnvironmentConfig>(
             baseEnvironmentConfig,
             config,
           ) as unknown as MergedEnvironmentConfig;
@@ -278,13 +282,20 @@ export async function initRsbuildConfig({
       name,
     );
 
+    const publicDir = environmentConfig.server?.publicDir;
     const normalizedEnvironmentConfig = {
       ...environmentConfig,
       dev: {
         ...normalizedBaseConfig.dev,
         ...environmentConfig.dev,
       },
-      server: normalizedBaseConfig.server,
+      server:
+        publicDir === undefined
+          ? normalizedBaseConfig.server
+          : {
+              ...normalizedBaseConfig.server,
+              publicDir: normalizePublicDirs(context.rootPath, publicDir),
+            },
     };
 
     const { tsconfigPath } = normalizedEnvironmentConfig.source;
