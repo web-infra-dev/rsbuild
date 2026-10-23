@@ -377,6 +377,8 @@ api.transform({ test: /\.md$/ }, ({ code }) => {
 
 - `codeFilter`: runs the transform function registered by this `api.transform` call only when its input code contains the given string or matches the regular expression. Otherwise, this transform is skipped and its input code is passed on unchanged.
 
+Requires Rsbuild `>= 2.3.0`.
+
 For example, this transform runs only for JavaScript modules whose code contains `console.log`:
 
 ```js

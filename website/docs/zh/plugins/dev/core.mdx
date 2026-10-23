@@ -377,6 +377,8 @@ api.transform({ test: /\.md$/ }, ({ code }) => {
 
 - `codeFilter`：根据输入代码，决定是否执行本次 `api.transform` 注册的转换函数。代码中包含指定字符串或匹配指定正则表达式时，才会执行；否则会跳过当前转换函数，并将代码原样传递给后续处理。
 
+需要 Rsbuild `>= 2.3.0`。
+
 例如，以下转换函数只处理代码中包含 `console.log` 的 JavaScript 模块：
 
 ```js
