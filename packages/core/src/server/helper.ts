@@ -580,7 +580,7 @@ export const getAddressUrls = async ({
   port: number;
   host?: string;
 }): Promise<AddressUrl[]> => {
-  if (host && host !== ALL_INTERFACES_IPV4) {
+  if (host && !isWildcardHost(host)) {
     const url = concatUrl({
       port,
       host: await getHostInUrl(host),
