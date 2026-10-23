@@ -306,7 +306,7 @@ export default () => ({
 
 A simplified wrapper around [Rspack loaders](https://rspack.rs/guide/features/loader), `api.transform` lets you easily transform the code of specific modules during the build process.
 
-You can match files by module path, query, or other conditions, and apply custom transformations to their contents.
+Each call registers a transform function. The `descriptor` controls which modules to transform and how the function runs.
 
 - **Type:**
 
@@ -319,7 +319,7 @@ function Transform(
 
 `api.transform` accepts two params:
 
-- `descriptor`: an object describing the module's matching conditions.
+- `descriptor`: an object that controls when and how the transform function runs.
 - `handler`: a transformation function that takes the current module code and returns the transformed code.
 
 ### Example
@@ -342,13 +342,14 @@ const pluginPug = () => ({
 
 ### Descriptor param
 
-The `descriptor` param is an object describing the module's matching conditions.
+The `descriptor` param controls which modules to transform and how the transform function runs.
 
 - **Type:**
 
 ```ts
 type TransformDescriptor = {
   test?: RuleSetCondition;
+  codeFilter?: string | RegExp;
   targets?: RsbuildTarget[];
   environments?: string[];
   resourceQuery?: RuleSetCondition;
@@ -364,7 +365,7 @@ type TransformDescriptor = {
 };
 ```
 
-The `descriptor` param supports the following matching conditions:
+The `descriptor` param supports the following options:
 
 - `test`: matches module's path (without query), the same as Rspack's [rules[].test](https://rspack.rs/config/module-rules#rulestest).
 
@@ -373,6 +374,18 @@ api.transform({ test: /\.md$/ }, ({ code }) => {
   // ...
 });
 ```
+
+- `codeFilter`: runs the transform function registered by this `api.transform` call only when its input code contains the given string or matches the regular expression. Otherwise, this transform is skipped and its input code is passed on unchanged.
+
+For example, this transform runs only for JavaScript modules whose code contains `console.log`:
+
+```js
+api.transform({ test: /\.js$/, codeFilter: 'console.log' }, ({ code }) => {
+  return code.replaceAll('console.log', 'console.debug');
+});
+```
+
+The filter checks the code that this transform function is about to receive, including any changes made by earlier loaders or transform functions. This option corresponds to Rspack's [rules[].use.codeFilter](https://rspack.rs/config/module-rules#rulesusecodefilter).
 
 - `targets`: matches the Rsbuild [output.target](/config/output/target), and applies the current transform function only to the matched targets.
 
