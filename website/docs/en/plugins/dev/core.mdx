@@ -367,7 +367,11 @@ type TransformDescriptor = {
 
 The `descriptor` param supports the following options:
 
-- `test`: matches module's path (without query), the same as Rspack's [rules[].test](https://rspack.rs/config/module-rules#rulestest).
+#### test
+
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module-rules#condition)
+
+Matches the module's path (without query), the same as Rspack's [rules[].test](https://rspack.rs/config/module-rules#rulestest).
 
 ```js
 api.transform({ test: /\.md$/ }, ({ code }) => {
@@ -375,7 +379,12 @@ api.transform({ test: /\.md$/ }, ({ code }) => {
 });
 ```
 
-- `codeFilter`: runs the transform function registered by this `api.transform` call only when its input code contains the given string or matches the regular expression. Otherwise, this transform is skipped and its input code is passed on unchanged.
+#### codeFilter
+
+- **Type:** `string | RegExp`
+- **Version:** `>= 2.3.0`
+
+Runs the transform function registered by this `api.transform` call only when its input code contains the given string or matches the regular expression. Otherwise, this transform is skipped and its input code is passed on unchanged.
 
 For example, this transform runs only for JavaScript modules whose code contains `console.log`:
 
@@ -387,7 +396,11 @@ api.transform({ test: /\.js$/, codeFilter: 'console.log' }, ({ code }) => {
 
 The filter checks the code that this transform function is about to receive, including any changes made by earlier loaders or transform functions. This option corresponds to Rspack's [rules[].use.codeFilter](https://rspack.rs/config/module-rules#rulesusecodefilter).
 
-- `targets`: matches the Rsbuild [output.target](/config/output/target), and applies the current transform function only to the matched targets.
+#### targets
+
+- **Type:** `('web' | 'node' | 'web-worker')[]`
+
+Matches the Rsbuild [output.target](/config/output/target), and applies the current transform function only to the matched targets.
 
 ```js
 api.transform({ test: /\.md$/, targets: ['web'] }, ({ code }) => {
@@ -395,7 +408,11 @@ api.transform({ test: /\.md$/, targets: ['web'] }, ({ code }) => {
 });
 ```
 
-- `environments`: matches the Rsbuild [environment](/guide/advanced/environments) name, and applies the current transform function only to the matched environments.
+#### environments
+
+- **Type:** `string[]`
+
+Matches the Rsbuild [environment](/guide/advanced/environments) name, and applies the current transform function only to the matched environments.
 
 ```js
 api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
@@ -403,7 +420,11 @@ api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
 });
 ```
 
-- `resourceQuery`: matches module's query, the same as Rspack's [rules[].resourceQuery](https://rspack.rs/config/module-rules#rulesresourcequery).
+#### resourceQuery
+
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module-rules#condition)
+
+Matches the module's query, the same as Rspack's [rules[].resourceQuery](https://rspack.rs/config/module-rules#rulesresourcequery).
 
 ```js
 // match raw query: "foo.ext?raw"
@@ -412,7 +433,12 @@ api.transform({ resourceQuery: /^\?raw$/ }, ({ code }) => {
 });
 ```
 
-- `raw`: if raw is `true`, the transform handler will receive the Buffer type code instead of the string type.
+#### raw
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+When `raw` is `true`, the transform function receives code as a Buffer. Otherwise, it receives code as a string.
 
 ```js
 api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
@@ -420,7 +446,11 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`: marks the layer of the matching module, can be used to group a group of modules into one layer, the same as Rspack's [rules[].layer](https://rspack.rs/config/module-rules#ruleslayer).
+#### layer
+
+- **Type:** `string`
+
+Assigns matching modules to a layer, the same as Rspack's [rules[].layer](https://rspack.rs/config/module-rules#ruleslayer).
 
 ```js
 api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
@@ -428,7 +458,11 @@ api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuerLayer`: matches the layer of the module that issues the current module, the same as Rspack's [rules[].issuerLayer](https://rspack.rs/config/module-rules#rulesissuerlayer).
+#### issuerLayer
+
+- **Type:** `string`
+
+Matches the layer of the module that imports the current module, the same as Rspack's [rules[].issuerLayer](https://rspack.rs/config/module-rules#rulesissuerlayer).
 
 ```js
 api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
@@ -436,7 +470,11 @@ api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuer`: matches the absolute path of the module that issues the current module, the same as Rspack's [rules[].issuer](https://rspack.rs/config/module-rules#rulesissuer).
+#### issuer
+
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module-rules#condition)
+
+Matches the absolute path of the module that imports the current module, the same as Rspack's [rules[].issuer](https://rspack.rs/config/module-rules#rulesissuer).
 
 ```js
 api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
@@ -444,7 +482,11 @@ api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
 });
 ```
 
-- `with`: matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with), the same as Rspack's [rules[].with](https://rspack.rs/config/module-rules#ruleswith).
+#### with
+
+- **Type:** `Record<string, RuleSetCondition>`
+
+Matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with), the same as Rspack's [rules[].with](https://rspack.rs/config/module-rules#ruleswith).
 
 ```js
 api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
@@ -452,7 +494,11 @@ api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
 });
 ```
 
-- `mimetype`: Matches modules based on MIME type instead of file extension. It's primarily useful for data URI module (like `data:text/javascript,...`), the same as Rspack's [rules[].mimetype](https://rspack.rs/config/module-rules#rulesmimetype).
+#### mimetype
+
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module-rules#condition)
+
+Matches modules by MIME type, the same as Rspack's [rules[].mimetype](https://rspack.rs/config/module-rules#rulesmimetype). This is primarily useful for data URI modules, such as `data:text/javascript,...`.
 
 ```js
 api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
@@ -460,10 +506,16 @@ api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
 });
 ```
 
-- `order`: Specifies the execution order of the transform function, corresponding to Rspack's [rules[].enforce](https://rspack.rs/config/module-rules#rulesenforce).
-  - When `order` is `pre`, the transform function will be executed before other transform functions (or Rspack loaders).
-  - When `order` is `post`, the transform function will be executed after other transform functions (or Rspack loaders).
-  - When `order` is `default`, the transform function will use the default loader order.
+#### order
+
+- **Type:** `'pre' | 'post' | 'default'`
+- **Default:** `'default'`
+
+Specifies the execution order of the transform function, corresponding to Rspack's [rules[].enforce](https://rspack.rs/config/module-rules#rulesenforce).
+
+- When `order` is `pre`, the transform function will be executed before other transform functions (or Rspack loaders).
+- When `order` is `post`, the transform function will be executed after other transform functions (or Rspack loaders).
+- When `order` is `default`, the transform function will use the default loader order.
 
 ```js
 api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
@@ -471,7 +523,11 @@ api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
 });
 ```
 
-- `enforce`: Deprecated. Use `order` instead.
+#### enforce
+
+- **Type:** `'pre' | 'post'`
+
+Deprecated. Use [order](#order) instead.
 
 ### Handler param
 
