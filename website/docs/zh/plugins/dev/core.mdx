@@ -306,7 +306,7 @@ export default () => ({
 
 `api.transform` 是 [Rspack loader](https://rspack.rs/zh/guide/features/loader) 的简化封装，让你能够在构建过程中轻松转换特定模块的代码。
 
-你可以通过模块路径、查询参数或其他条件匹配文件，并对其内容应用自定义转换。
+每次调用都会注册一个转换函数。你可以通过 `descriptor` 配置该函数的匹配条件和执行方式。
 
 - **类型：**
 
@@ -319,7 +319,7 @@ function Transform(
 
 `api.transform` 接受两个参数：
 
-- `descriptor`：一个对象，用于描述模块的匹配条件。
+- `descriptor`：一个对象，用于配置转换函数的匹配条件和执行方式。
 - `handler`：一个转换函数，接收模块当前的代码，并返回转换后的代码。
 
 ### 示例
@@ -342,7 +342,7 @@ const pluginPug = () => ({
 
 ### descriptor 参数
 
-`descriptor` 参数是一个对象，用于描述模块的匹配条件。
+`descriptor` 参数是一个对象，用于配置转换函数的匹配条件和执行方式。
 
 - **类型：**
 
@@ -365,7 +365,7 @@ type TransformDescriptor = {
 };
 ```
 
-`descriptor` 参数支持设置以下匹配条件：
+`descriptor` 参数支持以下选项：
 
 - `test`：匹配模块的路径（不包含 query），等价于 Rspack 的 [rules[].test](https://rspack.rs/zh/config/module-rules#rulestest)。
 
@@ -375,7 +375,7 @@ api.transform({ test: /\.md$/ }, ({ code }) => {
 });
 ```
 
-- `codeFilter`：根据模块的代码内容，决定是否执行转换函数。设置为字符串时，代码中包含该字符串才会执行；设置为正则表达式时，代码匹配该正则才会执行。不匹配时，会跳过当前转换函数，代码保持不变。
+- `codeFilter`：根据输入代码，决定是否执行本次 `api.transform` 注册的转换函数。代码中包含指定字符串或匹配指定正则表达式时，才会执行；否则会跳过当前转换函数，并将代码原样传递给后续处理。
 
 例如，以下转换函数只处理代码中包含 `console.log` 的 JavaScript 模块：
 
@@ -385,7 +385,7 @@ api.transform({ test: /\.js$/, codeFilter: 'console.log' }, ({ code }) => {
 });
 ```
 
-匹配发生在转换函数执行前。如果代码已被其他 loader 或转换函数修改，会使用修改后的代码进行匹配。该选项对应 Rspack 的 [rules[].use.codeFilter](https://rspack.rs/zh/config/module-rules#rulesusecodefilter)。
+匹配的是当前转换函数即将接收的代码。如果此前的 loader 或转换函数已修改代码，会使用修改后的内容进行匹配。该选项对应 Rspack 的 [rules[].use.codeFilter](https://rspack.rs/zh/config/module-rules#rulesusecodefilter)。
 
 - `targets`：匹配 Rsbuild [output.target](/config/output/target)，仅对匹配的 targets 应用当前 transform 函数。
 
