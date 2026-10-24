@@ -8,6 +8,72 @@ import { getTinyglobby } from '../helpers/cachedImport';
 import { open } from '../server/open';
 import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
 
+const copyPublicDir = async (
+  publicDir: string,
+  distPaths: string[],
+  ignore: string[],
+): Promise<void> => {
+  // Create filter function for ignore patterns
+  let shouldCopy: CopyOptions['filter'] | undefined;
+
+  if (ignore?.length) {
+    const { globSync } = await getTinyglobby();
+
+    const ignoredList = globSync(ignore, {
+      cwd: publicDir,
+      absolute: false,
+      dot: true,
+      onlyFiles: false,
+    });
+
+    const ignoredSet = new Set(
+      ignoredList.map((item) => item.replace(/\\/g, '/').replace(/\/$/, '')), // normalize path separators for Windows
+    );
+
+    shouldCopy = (source: string) => {
+      const relativePath = path.relative(publicDir, source);
+
+      if (!relativePath) {
+        return true;
+      }
+
+      const normalizedPath = relativePath.replace(/\\/g, '/');
+
+      return !ignoredSet.has(normalizedPath);
+    };
+  }
+
+  try {
+    // async errors will missing error stack on copy, move
+    // https://github.com/jprichardson/node-fs-extra/issues/769
+    await Promise.all(
+      distPaths.map(async (distPath) => {
+        // https://github.com/web-infra-dev/rsbuild/issues/5804
+        if (isDeno && fs.existsSync(distPath)) {
+          await fs.promises.rm(distPath, {
+            recursive: true,
+            force: true,
+          });
+        }
+
+        await fs.promises.cp(publicDir, distPath, {
+          recursive: true,
+          // dereference symlinks
+          dereference: true,
+          mode: fs.constants.COPYFILE_FICLONE,
+          filter: shouldCopy,
+        });
+      }),
+    );
+  } catch (err) {
+    if (err instanceof Error) {
+      err.message = `Failed to copy public directory '${color.yellow(publicDir)}' to output directory. To disable public directory copying, set \`${color.cyan('server.publicDir: false')}\` in your config.\n${err.message}`;
+    }
+
+    throw err;
+  }
+};
+
 // For Rsbuild server config
 export const pluginServer = (): RsbuildPlugin => ({
   name: 'rsbuild:server',
@@ -55,67 +121,7 @@ export const pluginServer = (): RsbuildPlugin => ({
             .map(({ distPath }) => distPath),
         );
 
-        // Create filter function for ignore patterns
-        let shouldCopy: CopyOptions['filter'] | undefined;
-
-        if (ignore?.length) {
-          const { globSync } = await getTinyglobby();
-
-          const ignoredList = globSync(ignore, {
-            cwd: publicDir,
-            absolute: false,
-            dot: true,
-            onlyFiles: false,
-          });
-
-          const ignoredSet = new Set(
-            ignoredList.map((item) =>
-              item.replace(/\\/g, '/').replace(/\/$/, ''),
-            ), // normalize path separators for Windows
-          );
-
-          shouldCopy = (source: string) => {
-            const relativePath = path.relative(publicDir, source);
-
-            if (!relativePath) {
-              return true;
-            }
-
-            const normalizedPath = relativePath.replace(/\\/g, '/');
-
-            return !ignoredSet.has(normalizedPath);
-          };
-        }
-
-        try {
-          // async errors will missing error stack on copy, move
-          // https://github.com/jprichardson/node-fs-extra/issues/769
-          await Promise.all(
-            distPaths.map(async (distPath) => {
-              // https://github.com/web-infra-dev/rsbuild/issues/5804
-              if (isDeno && fs.existsSync(distPath)) {
-                await fs.promises.rm(distPath, {
-                  recursive: true,
-                  force: true,
-                });
-              }
-
-              await fs.promises.cp(publicDir, distPath, {
-                recursive: true,
-                // dereference symlinks
-                dereference: true,
-                mode: fs.constants.COPYFILE_FICLONE,
-                filter: shouldCopy,
-              });
-            }),
-          );
-        } catch (err) {
-          if (err instanceof Error) {
-            err.message = `Failed to copy public directory '${color.yellow(publicDir)}' to output directory. To disable public directory copying, set \`${color.cyan('server.publicDir: false')}\` in your config.\n${err.message}`;
-          }
-
-          throw err;
-        }
+        await copyPublicDir(publicDir, distPaths, ignore);
       }
     });
   },

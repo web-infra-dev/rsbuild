@@ -204,16 +204,20 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:html',
 
   setup(api) {
-    let defaultFavicon: string | undefined;
+    // Environments may resolve different favicons from their public directories.
+    const defaultFavicons = new Map<string, string>();
 
-    const resolveDefaultFavicon = () => {
+    const resolveDefaultFavicon = (config: NormalizedEnvironmentConfig) => {
+      const { publicDir } = config.server;
+      const extensions = ['ico', 'png', 'svg'];
+      const publicDirs = Array.from(new Set(publicDir.map(({ name }) => name)));
+
+      // Preserve directory order in the key because it determines lookup precedence.
+      const key = JSON.stringify(publicDirs);
+      const defaultFavicon = defaultFavicons.get(key);
       if (defaultFavicon) {
         return defaultFavicon;
       }
-
-      const { publicDir } = api.getNormalizedConfig().server;
-      const extensions = ['ico', 'png', 'svg'];
-      const publicDirs = Array.from(new Set(publicDir.map(({ name }) => name)));
 
       const faviconPaths: string[] = [];
       for (const publicDir of publicDirs) {
@@ -224,9 +228,10 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
 
       const faviconPath = findExists(faviconPaths);
       if (faviconPath) {
-        defaultFavicon = faviconPath;
+        defaultFavicons.set(key, faviconPath);
+        return faviconPath;
       }
-      return defaultFavicon;
+      return undefined;
     };
 
     api.modifyBundlerChain(
@@ -309,7 +314,8 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
             pluginOptions.title = await getTitle(entryName, config);
 
             const favicon =
-              (await getFavicon(entryName, config)) || resolveDefaultFavicon();
+              (await getFavicon(entryName, config)) ||
+              resolveDefaultFavicon(config);
             if (favicon) {
               extraData.favicon = favicon;
             }

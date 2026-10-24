@@ -6,11 +6,11 @@ import type {
   ChokidarOptions,
   DevConfig,
   NormalizedConfig,
-  NormalizedServerConfig,
   WatchFileEvent,
   WatchFiles,
 } from '../types';
 import type { BuildManager } from './buildManager';
+import { getPublicDirPaths } from './helper';
 
 const getChokidar = cachedImport(
   () => import(/* rspackChunkName: "chokidar" */ 'chokidar'),
@@ -50,7 +50,7 @@ export async function setupWatchFiles(
     logger,
   );
   const serverFilesWatcher = await watchServerFiles(
-    config.server,
+    config,
     buildManager,
     root,
     logger,
@@ -100,18 +100,12 @@ async function watchDevFiles(
 }
 
 function watchServerFiles(
-  { publicDir }: NormalizedServerConfig,
+  config: NormalizedConfig,
   buildManager: BuildManager,
   root: string,
   logger: Logger,
 ) {
-  if (!publicDir.length) {
-    return;
-  }
-
-  const watchPaths = publicDir
-    .filter((item) => item.watch)
-    .map((item) => item.name);
+  const watchPaths = getPublicDirPaths(config, true);
 
   if (!watchPaths.length) {
     return;
