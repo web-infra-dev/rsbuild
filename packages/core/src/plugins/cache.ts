@@ -2,10 +2,13 @@ import { isAbsolute, join } from 'node:path';
 import { hash } from '../helpers';
 import { findExists, isFileExists } from '../helpers/fs';
 import type {
+  BuildCacheDiagnostics,
   BuildCacheOptions,
   EnvironmentContext,
+  OnAfterEnvironmentCompileFn,
   RsbuildContext,
   RsbuildPlugin,
+  Rspack,
 } from '../types';
 
 function getCacheDirectory(
@@ -71,6 +74,70 @@ async function getBuildDependencies(
   return buildDependencies;
 }
 
+function isPersistentCache(cache: Rspack.Configuration['cache']) {
+  return (
+    typeof cache === 'object' &&
+    cache !== null &&
+    (cache.type === 'persistent' || cache.type === 'filesystem')
+  );
+}
+
+export function enableCacheDiagnostics(config: Rspack.Configuration): void {
+  if (!isPersistentCache(config.cache)) return;
+
+  const { stats } = config;
+  const options: Rspack.StatsOptions =
+    typeof stats === 'boolean'
+      ? { preset: stats ? 'normal' : 'none' }
+      : typeof stats === 'string'
+        ? { preset: stats }
+        : (stats ?? {});
+  config.stats = Object.assign({}, options, { cacheInfo: true });
+}
+
+const reportBuildCacheDiagnostics: OnAfterEnvironmentCompileFn = (event) => {
+  const callback = event.environment.config.performance.buildCacheDiagnostics;
+  if (!callback) return;
+
+  const { environment, stats, ...timing } = event;
+  const cache = stats?.compilation.options.cache;
+  const configuration = isPersistentCache(cache) ? cache : null;
+  const report: BuildCacheDiagnostics = {
+    environment: environment.name,
+    ...timing,
+    mode: configuration
+      ? 'persistent'
+      : cache === false
+        ? 'disabled'
+        : cache?.type === 'memory'
+          ? 'memory'
+          : 'unknown',
+    configuration,
+    persistent: configuration ? { status: 'unknown', reason: null } : null,
+    persistentSessionInitialization: null,
+    moduleBuilds: null,
+    counters: null,
+    statsError: null,
+  };
+  if (configuration && stats) {
+    try {
+      // Older Rspack releases omit cacheInfo.
+      const options = { all: false, cacheInfo: true };
+      const info: Partial<BuildCacheDiagnostics> | undefined =
+        stats.toJson(options).cacheInfo;
+      report.persistent = info?.persistent ?? report.persistent;
+      report.persistentSessionInitialization =
+        info?.persistentSessionInitialization ?? null;
+      report.moduleBuilds = info?.moduleBuilds ?? null;
+      report.counters = info?.counters ?? null;
+    } catch (error) {
+      report.statsError =
+        error instanceof Error ? error.message : String(error);
+    }
+  }
+  return callback(report);
+};
+
 export const pluginCache = (): RsbuildPlugin => ({
   name: 'rsbuild:cache',
 
@@ -121,5 +188,7 @@ export const pluginCache = (): RsbuildPlugin => ({
         api.logger.debug('Rspack persistent cache enabled');
       }
     });
+
+    api.onAfterEnvironmentCompile(reportBuildCacheDiagnostics);
   },
 });

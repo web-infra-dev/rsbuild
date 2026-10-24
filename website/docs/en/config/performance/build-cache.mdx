@@ -23,6 +23,14 @@ To enable or configure persistent build cache.
 
 When enabled, Rspack will store the build snapshots in the cache directory. In subsequent builds, if the cache is hit, Rspack can reuse the cached results instead of rebuilding from scratch, which can reduce the build time.
 
+## Inspect cache diagnostics
+
+Set `performance.buildCacheDiagnostics` to a function such as `({ environment, moduleBuilds }) => console.log(environment, moduleBuilds)`. Rsbuild calls it after each environment compilation, including watch rebuilds. The report includes compilation time, persistent cache settings, validation results, and module-build counts. [Rspack cache fields](https://rspack.rs/config/stats#statscacheinfo)
+
+`counters` contains Rspack’s per-operation hit and total counts. The new cache reports filesystem reads during compilation and logs completed writes later through the `rspack.cache.IdleFileCache` infrastructure logger.
+
+Older Rspack versions report `unknown` for persistent validation and `null` for counts. Disabled and memory caches skip the stats read. Read errors populate `statsError` and the build continues. If the callback throws or rejects, the compilation hook fails. Settings and errors can include file paths.
+
 ## Enable cache
 
 Setting `performance.buildCache` to `true` will enable the persistent build cache:

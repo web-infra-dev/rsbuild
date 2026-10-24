@@ -23,6 +23,14 @@ type BuildCacheConfig =
 
 当启用时，Rspack 会在缓存目录中存储构建快照。在后续的构建中，如果命中缓存，Rspack 可以重用缓存的结果，而不是从头开始重新构建，这可以显著减少构建时间。
 
+## 查看缓存诊断信息
+
+将 `performance.buildCacheDiagnostics` 设置为回调，例如 `({ environment, moduleBuilds }) => console.log(environment, moduleBuilds)`。每个环境编译结束时都会调用回调，包括监听模式下的重新编译。报告包含编译耗时、持久化缓存配置、验证结果和模块构建计数。[Rspack 缓存字段](https://rspack.rs/zh/config/stats#statscacheinfo)
+
+`counters` 包含 Rspack 按操作统计的命中次数和总次数。新版缓存会在编译期间统计文件系统缓存的读取次数，写入完成后通过 `rspack.cache.IdleFileCache` 基础设施日志报告写入结果。
+
+使用旧版 Rspack 时，持久化缓存的验证状态为 `unknown`，模块计数为 `null`。禁用缓存或使用内存缓存时会跳过统计信息的读取。读取错误会记录在 `statsError` 中，构建会继续。回调抛出异常或返回被拒绝的 Promise 会使编译钩子失败。配置和错误信息可能包含文件路径。
+
 ## 启用缓存
 
 设置 `performance.buildCache` 为 `true` 将启用持久化构建缓存：

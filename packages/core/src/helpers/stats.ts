@@ -62,6 +62,15 @@ export const getStatsWarnings = ({
   return [];
 };
 
+function getDisplayStats(compiler: Rspack.Compiler) {
+  const stats = compiler.options?.stats;
+  // Cache diagnostics are read separately so their errors cannot break HMR.
+  return typeof stats === 'object' &&
+    (stats.all || ('cacheInfo' in stats && stats.cacheInfo))
+    ? { ...stats, cacheInfo: false }
+    : stats;
+}
+
 function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
   logger: Logger,
@@ -92,13 +101,11 @@ function getStatsOptions(
   if (isMultiCompiler(compiler)) {
     return {
       ...defaultOptions,
-      children: compiler.compilers.map((compiler) =>
-        compiler.options ? compiler.options.stats : undefined,
-      ),
+      children: compiler.compilers.map(getDisplayStats),
     } as unknown as Rspack.StatsOptions;
   }
 
-  const { stats } = compiler.options;
+  const stats = getDisplayStats(compiler);
 
   if (typeof stats === 'string') {
     return { ...defaultOptions, preset: stats };

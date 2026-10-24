@@ -687,6 +687,30 @@ export type BuildCacheOptions = {
   buildDependencies?: string[];
 };
 
+export type BuildCacheDiagnostics = {
+  environment: string;
+  isFirstCompile: boolean;
+  isWatch: boolean;
+  time: number;
+  mode: 'disabled' | 'memory' | 'persistent' | 'unknown';
+  configuration: Readonly<
+    Extract<
+      Rspack.Compiler['options']['cache'],
+      { type: 'persistent' | 'filesystem' }
+    >
+  > | null;
+  persistent: {
+    status: 'cold' | 'valid' | 'invalidated' | 'error' | 'unknown';
+    reason: 'version' | 'buildDependencies' | 'recovery' | null;
+  } | null;
+  /** Initial validation of a shared filesystem cache session, when available. */
+  persistentSessionInitialization: BuildCacheDiagnostics['persistent'];
+  moduleBuilds: { reused: number; total: number } | null;
+  counters:
+    { logger: string; label: string; hit: number; total: number }[] | null;
+  statsError: string | null;
+};
+
 export type PrintFileSizeAsset = {
   /**
    * The name of the asset.
@@ -836,6 +860,13 @@ export interface PerformanceConfig {
    * @default false
    */
   buildCache?: BuildCacheOptions | boolean;
+
+  /**
+   * Receive persistent-cache diagnostics after each environment compilation.
+   */
+  buildCacheDiagnostics?: (
+    diagnostics: BuildCacheDiagnostics,
+  ) => MaybePromise<void>;
 
   /**
    * Whether to print the file sizes after production build.
