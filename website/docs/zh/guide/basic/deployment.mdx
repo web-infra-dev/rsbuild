@@ -109,7 +109,7 @@ Cloudflare 提供了多种部署 Rsbuild 项目的方式。如果只需要托管
 
 #### Cloudflare workers
 
-Cloudflare Workers 属于运行时部署目标，而不是静态托管。对于需要运行在 Cloudflare Workers runtime 中的 Rsbuild 项目，[rsbuild-cloudflare](https://github.com/Nsttt/rsbuild-cloudflare) 是一个实验性插件，可以读取 Wrangler 配置、通过 Miniflare 提供开发服务，并生成可部署的 Worker 产物。
+Cloudflare Workers 属于运行时部署目标，而不是静态托管。对于需要运行在 Cloudflare Workers runtime 中的 Rsbuild 项目，[rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare) 是一个实验性插件，可以读取 `cloudflare.config.ts`，在开发和预览时通过 workerd 运行 Workers，并将 Workers 和客户端资源构建为可部署的 Cloudflare Build Output。
 
 如果需要手动配置 Worker 打包，请参考 [output.target - Cloudflare Workers](/config/output/target#cloudflare-workers)。
 
