@@ -124,7 +124,7 @@ export default {
 
 #### Multiple environments
 
-When performing [multi-environment builds](/guide/advanced/environments), Rsbuild copies files from the public directory to the output directory of each environment. If there are nested output directories, files will only be copied to the root of the output directory. For example:
+When performing [multi-environment builds](/guide/advanced/environments), Rsbuild copies files from the public directory to the output directory of each environment. For environments with the same public directory copy settings, nested output directories are deduplicated: files are only copied to the outermost output directory. For example:
 
 - The distDir of the `web` environment is `dist`, and the distDir of the `web1` environment is `dist/web1`. Due to the nested relationship between `dist` and `dist/web1`, the public directory files are only copied to the `dist` directory.
 - The distDir of the `esm` environment is `dist/esm`, and the distDir of the `cjs` environment is `dist/cjs`. Since there is no nesting relationship between `dist/esm` and `dist/cjs`, the public directory files will be copied to both the `dist/esm` and `dist/cjs` directories.
@@ -203,8 +203,44 @@ export default {
 };
 ```
 
+## Environments
+
+- **Version:** `>= 2.3.0`
+
+Each environment inherits the global `server.publicDir` unless it defines its own value. An explicit object, array, or `false` replaces the entire value; `false` disables public directories for that environment.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    publicDir: { name: 'public' },
+  },
+  environments: {
+    client: {},
+    admin: {
+      server: {
+        publicDir: { name: 'public-admin', watch: true },
+      },
+    },
+    worker: {
+      output: { target: 'web-worker' },
+      server: { publicDir: false },
+    },
+  },
+};
+```
+
+In this example, `client` uses `public`, `admin` uses `public-admin`, and `worker` has no public directory.
+
+- **Build:** each environment copies files from its own directories, respecting `copyOnBuild` and `ignore`.
+- **Dev:** the shared server serves directories from all enabled environments. Directories are checked in environment configuration order, then array order; the first matching file is served. Duplicate directory paths are served once. A path is watched if any environment sets `watch: true` for it.
+
+Replacement does not merge fields with the global value. For example, `{ copyOnBuild: false }` uses the default directory name `public`, even if the global configuration uses a different name. An environment can also enable a directory when the global `publicDir` is `false`.
+
+Disabling a directory in one environment does not prevent access to directories enabled by other environments on the shared dev server.
+
 ## Version history
 
-| Version | Changes                   |
-| ------- | ------------------------- |
-| v2.0.0  | Added the `ignore` option |
+| Version | Changes                                           |
+| ------- | ------------------------------------------------- |
+| v2.3.0  | Added environment-level `publicDir` configuration |
+| v2.0.0  | Added the `ignore` option                         |
