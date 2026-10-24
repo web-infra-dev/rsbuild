@@ -2279,6 +2279,11 @@ export type AllowedEnvironmentDevKeys =
  */
 export interface EnvironmentConfig {
   /**
+   * Configure public directories for this environment.
+   * Other server options are shared across environments.
+   */
+  server?: Pick<ServerConfig, 'publicDir'>;
+  /**
    * Options for local development.
    */
   dev?: Pick<DevConfig, AllowedEnvironmentDevKeys>;
@@ -2380,6 +2385,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 }
 
 export type MergedEnvironmentConfig = {
+  server?: EnvironmentConfig['server'];
   mode: RsbuildMode;
   root: string;
   dev: Pick<NormalizedDevConfig, AllowedEnvironmentDevKeys>;
@@ -2401,7 +2407,7 @@ export type MergedEnvironmentConfig = {
  * The normalized Rsbuild environment config.
  */
 export type NormalizedEnvironmentConfig = TwoLevelReadonly<
-  Omit<MergedEnvironmentConfig, 'dev'> & {
+  Omit<MergedEnvironmentConfig, 'dev' | 'server'> & {
     dev: NormalizedDevConfig;
     server: NormalizedServerConfig;
     _privateMeta?: RsbuildConfigMeta;
