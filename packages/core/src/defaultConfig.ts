@@ -354,7 +354,7 @@ const normalizeHost = (host?: string | boolean): string => {
   return host === true ? ALL_INTERFACES_IPV4 : LOCALHOST;
 };
 
-const normalizePublicDirs = (
+export const normalizePublicDirs = (
   rootPath: string,
   publicDir?: PublicDir,
 ): Required<PublicDirOptions>[] => {
