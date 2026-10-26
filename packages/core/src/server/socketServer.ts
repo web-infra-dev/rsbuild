@@ -11,6 +11,7 @@ import type {
   ClientConfig,
   DevConfig,
   InternalContext,
+  RsbuildStats,
   RsbuildStatsItem,
   Rspack,
 } from '../types';
@@ -171,6 +172,12 @@ export class SocketServer {
 
   private currentHash = new Map<string, string>();
 
+  /**
+   * Stats of web environments that finished compiling before the whole
+   * multi-environment build is done, keyed by WebSocket token.
+   */
+  private environmentStats = new Map<string, RsbuildStats>();
+
   private onSocketConnect?: SocketConnectionListener;
 
   constructor(
@@ -270,7 +277,30 @@ export class SocketServer {
     });
   }
 
+  /**
+   * Called when a single web environment finishes compiling while other
+   * environments (for example, a Node.js SSR bundle) are still compiling.
+   * Clients of this environment can apply HMR updates immediately instead of
+   * waiting for the slowest environment.
+   */
+  public onEnvironmentDone(token: string, getStats: () => RsbuildStats): void {
+    if (
+      this.context.buildState.status === 'done' ||
+      !this.socketsMap.has(token)
+    ) {
+      return;
+    }
+
+    this.environmentStats.set(token, getStats());
+    this.sendStats({ token });
+  }
+
+  public clearEnvironmentStats(): void {
+    this.environmentStats.clear();
+  }
+
   public onBuildDone(): void {
+    this.environmentStats.clear();
     this.reportedBrowserLogs.clear();
     this.ensureInitialChunks();
 
@@ -592,6 +622,15 @@ export class SocketServer {
 
   // Only use stats when environment is matched
   private getStats(token: string) {
+    const environmentStats = this.environmentStats.get(token);
+    if (environmentStats) {
+      return {
+        stats: environmentStats,
+        errors: getStatsErrors(environmentStats),
+        warnings: getStatsWarnings(environmentStats),
+      };
+    }
+
     const { stats } = this.context.buildState;
     const environment = this.getEnvironmentByToken(token);
 

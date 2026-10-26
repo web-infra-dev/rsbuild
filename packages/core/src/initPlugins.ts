@@ -323,13 +323,17 @@ export function initPluginAPI({
             : 'transformLoader.mjs';
           const loaderPath = join(LOADER_PATH, loaderName);
 
-          rule
+          const use = rule
             .use(id)
             .loader(loaderPath)
             .options({
               id,
               getEnvironment: () => environmentContext,
             } satisfies TransformLoaderOptions);
+
+          if (descriptor.codeFilter !== undefined) {
+            use.set('codeFilter', descriptor.codeFilter);
+          }
         },
       });
     };

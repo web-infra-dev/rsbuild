@@ -256,6 +256,141 @@ test('should copy publicDir to the environment distDir when multiple environment
   ).toBeFalsy();
 });
 
+test('should inherit, replace or disable publicDir per environment', async ({
+  build,
+  cwd,
+}) => {
+  const publicA = 'test-temp-build-public-a';
+  const publicB = 'test-temp-build-public-b';
+  await fse.outputFile(join(cwd, publicA, 'a.txt'), 'a');
+  await fse.outputFile(join(cwd, publicB, 'b.txt'), 'b');
+
+  const { distPath } = await build({
+    config: {
+      server: { publicDir: { name: publicA } },
+      environments: {
+        inherited: { output: { distPath: 'dist-copy/inherited' } },
+        custom: {
+          // Different public directories must still be copied to nested outputs.
+          output: { distPath: 'dist-copy/inherited/custom' },
+          server: {
+            publicDir: [
+              { name: publicB },
+              { name: publicA, copyOnBuild: false },
+            ],
+          },
+        },
+        worker: {
+          output: { target: 'web-worker', distPath: 'dist-copy/worker' },
+          server: { publicDir: false },
+        },
+      },
+    },
+  });
+
+  expect(await fse.pathExists(join(distPath, 'inherited/a.txt'))).toBe(true);
+  expect(await fse.pathExists(join(distPath, 'inherited/b.txt'))).toBe(false);
+  expect(await fse.pathExists(join(distPath, 'inherited/custom/a.txt'))).toBe(
+    false,
+  );
+  expect(await fse.pathExists(join(distPath, 'inherited/custom/b.txt'))).toBe(
+    true,
+  );
+  expect(await fse.pathExists(join(distPath, 'worker/a.txt'))).toBe(false);
+});
+
+test('should enable publicDir copying to a node environment and respect ignore', async ({
+  build,
+  cwd,
+}) => {
+  const publicDir = 'test-temp-copy-options';
+  await fse.outputFile(join(cwd, publicDir, 'copied.txt'), 'copied');
+  await fse.outputFile(join(cwd, publicDir, 'ignored.txt'), 'ignored');
+
+  const { distPath } = await build({
+    config: {
+      environments: {
+        node: {
+          output: { target: 'node', distPath: 'dist-copy-options' },
+          server: {
+            publicDir: {
+              name: publicDir,
+              copyOnBuild: true,
+              ignore: ['ignored.txt'],
+            },
+          },
+        },
+      },
+    },
+  });
+
+  expect(await fse.pathExists(join(distPath, 'copied.txt'))).toBe(true);
+  expect(await fse.pathExists(join(distPath, 'ignored.txt'))).toBe(false);
+});
+
+test('should serve environment public directories in order', async ({
+  devOnly,
+  cwd,
+  page,
+}) => {
+  const publicA = 'test-temp-dev-public-a';
+  const publicB = 'test-temp-dev-public-b';
+  await fse.outputFile(join(cwd, publicA, 'a.txt'), 'a');
+  await fse.outputFile(join(cwd, publicB, 'b.txt'), 'b');
+  await fse.outputFile(join(cwd, publicA, 'shared.txt'), 'first');
+  await fse.outputFile(join(cwd, publicB, 'shared.txt'), 'second');
+
+  const rsbuild = await devOnly({
+    config: {
+      server: { publicDir: { name: publicA }, htmlFallback: false },
+      environments: {
+        inherited: {},
+        custom: {
+          server: {
+            publicDir: { name: publicB, copyOnBuild: false, ignore: ['b.txt'] },
+          },
+        },
+      },
+    },
+  });
+
+  for (const [file, content] of [
+    ['a.txt', 'a'],
+    ['b.txt', 'b'],
+    ['shared.txt', 'first'],
+  ]) {
+    const response = await page.request.get(
+      `http://localhost:${rsbuild.port}/${file}`,
+    );
+    expect(await response.text()).toBe(content);
+  }
+});
+
+test('should watch a shared public directory if any environment enables it', async ({
+  dev,
+  cwd,
+  page,
+}) => {
+  const publicDir = 'test-temp-watched-public';
+  const file = join(cwd, publicDir, 'watched.txt');
+  await fse.outputFile(file, 'original');
+
+  await dev({
+    config: {
+      server: { publicDir: { name: publicDir } },
+      environments: {
+        unwatched: {},
+        watched: { server: { publicDir: { name: publicDir, watch: true } } },
+      },
+    },
+  });
+
+  await Promise.all([
+    page.waitForEvent('load'),
+    fse.outputFile(file, 'updated'),
+  ]);
+});
+
 test('should copy publicDir to the node distDir when copyOnBuild is specified as true', async ({
   build,
 }) => {

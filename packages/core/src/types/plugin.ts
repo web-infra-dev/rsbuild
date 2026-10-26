@@ -342,12 +342,25 @@ export type TransformHandler<Raw extends boolean = false> = (
   context: TransformContext<Raw>,
 ) => MaybePromise<TransformResult>;
 
+/**
+ * Options that control when and how a transform function runs.
+ */
 export type TransformDescriptor = {
   /**
    * Include modules that match the test assertion, the same as `rules[].test`
    * @see https://rspack.rs/config/module-rules#rulestest
    */
   test?: Rspack.RuleSetCondition;
+  /**
+   * Run the transform function registered by this `api.transform` call only when
+   * its input code contains the given string or matches the regular expression.
+   * If there is no match, skip this transform and pass its input code on unchanged.
+   *
+   * The filter checks the code this function is about to receive, including
+   * changes made by earlier loaders or transforms.
+   * @see https://rspack.rs/config/module-rules#rulesusecodefilter
+   */
+  codeFilter?: Rspack.RuleSetLoaderWithOptions['codeFilter'];
   /**
    * A condition that matches the resource query.
    * @see https://rspack.rs/config/module-rules#rulesresourcequery
@@ -690,8 +703,8 @@ export type RsbuildPluginAPI = Readonly<{
   /**
    * A simplified wrapper around Rspack loaders, `api.transform` lets you
    * easily transform the code of specific modules during the build process.
-   * You can match files by module path, query, or other conditions, and
-   * apply custom transformations to their contents.
+   * Each call registers a transform function. The descriptor controls which
+   * modules to transform and how the function runs.
    */
   transform: TransformHook;
   /**

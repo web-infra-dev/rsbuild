@@ -580,7 +580,7 @@ export const getAddressUrls = async ({
   port: number;
   host?: string;
 }): Promise<AddressUrl[]> => {
-  if (host && host !== ALL_INTERFACES_IPV4) {
+  if (host && !isWildcardHost(host)) {
     const url = concatUrl({
       port,
       host: await getHostInUrl(host),
@@ -734,4 +734,21 @@ export type RsbuildServerBase = {
    * Print the server URLs.
    */
   printUrls: () => void;
+};
+
+export const getPublicDirPaths = (
+  config: NormalizedConfig,
+  watchOnly = false,
+): string[] => {
+  const paths = new Set<string>();
+
+  for (const { server } of Object.values(config.environments)) {
+    for (const { name, watch } of server.publicDir) {
+      if (!watchOnly || watch) {
+        paths.add(name);
+      }
+    }
+  }
+
+  return [...paths];
 };

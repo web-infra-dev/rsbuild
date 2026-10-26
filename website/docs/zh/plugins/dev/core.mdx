@@ -306,7 +306,7 @@ export default () => ({
 
 `api.transform` 是 [Rspack loader](https://rspack.rs/zh/guide/features/loader) 的简化封装，让你能够在构建过程中轻松转换特定模块的代码。
 
-你可以通过模块路径、查询参数或其他条件匹配文件，并对其内容应用自定义转换。
+每次调用都会注册一个转换函数。你可以通过 `descriptor` 配置该函数的匹配条件和执行方式。
 
 - **类型：**
 
@@ -319,7 +319,7 @@ function Transform(
 
 `api.transform` 接受两个参数：
 
-- `descriptor`：一个对象，用于描述模块的匹配条件。
+- `descriptor`：一个对象，用于配置转换函数的匹配条件和执行方式。
 - `handler`：一个转换函数，接收模块当前的代码，并返回转换后的代码。
 
 ### 示例
@@ -342,13 +342,14 @@ const pluginPug = () => ({
 
 ### descriptor 参数
 
-`descriptor` 参数是一个对象，用于描述模块的匹配条件。
+`descriptor` 参数是一个对象，用于配置转换函数的匹配条件和执行方式。
 
 - **类型：**
 
 ```ts
 type TransformDescriptor = {
   test?: RuleSetCondition;
+  codeFilter?: string | RegExp;
   targets?: RsbuildTarget[];
   environments?: string[];
   resourceQuery?: RuleSetCondition;
@@ -364,9 +365,13 @@ type TransformDescriptor = {
 };
 ```
 
-`descriptor` 参数支持设置以下匹配条件：
+`descriptor` 参数支持以下选项：
 
-- `test`：匹配模块的路径（不包含 query），等价于 Rspack 的 [rules[].test](https://rspack.rs/zh/config/module-rules#rulestest)。
+#### test
+
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
+
+匹配模块的路径（不包含 query），等价于 Rspack 的 [rules[].test](https://rspack.rs/zh/config/module-rules#rulestest)。
 
 ```js
 api.transform({ test: /\.md$/ }, ({ code }) => {
@@ -374,7 +379,28 @@ api.transform({ test: /\.md$/ }, ({ code }) => {
 });
 ```
 
-- `targets`：匹配 Rsbuild [output.target](/config/output/target)，仅对匹配的 targets 应用当前 transform 函数。
+#### codeFilter
+
+- **类型：** `string | RegExp`
+- **版本：** `>= 2.3.0`
+
+根据输入代码，决定是否执行本次 `api.transform` 注册的转换函数。代码中包含指定字符串或匹配指定正则表达式时，才会执行；否则会跳过当前转换函数，并将代码原样传递给后续处理。
+
+例如，以下转换函数只处理代码中包含 `console.log` 的 JavaScript 模块：
+
+```js
+api.transform({ test: /\.js$/, codeFilter: 'console.log' }, ({ code }) => {
+  return code.replaceAll('console.log', 'console.debug');
+});
+```
+
+匹配的是当前转换函数即将接收的代码。如果此前的 loader 或转换函数已修改代码，会使用修改后的内容进行匹配。该选项对应 Rspack 的 [rules[].use.codeFilter](https://rspack.rs/zh/config/module-rules#rulesusecodefilter)。
+
+#### targets
+
+- **类型：** `('web' | 'node' | 'web-worker')[]`
+
+匹配 Rsbuild [output.target](/config/output/target)，仅对匹配的构建目标应用当前转换函数。
 
 ```js
 api.transform({ test: /\.md$/, targets: ['web'] }, ({ code }) => {
@@ -382,7 +408,11 @@ api.transform({ test: /\.md$/, targets: ['web'] }, ({ code }) => {
 });
 ```
 
-- `environments`：匹配 Rsbuild [environment](/guide/advanced/environments) name，仅对匹配的 environments 应用当前 transform 函数。
+#### environments
+
+- **类型：** `string[]`
+
+匹配 Rsbuild [environment](/guide/advanced/environments) 的名称，仅对匹配的环境应用当前转换函数。
 
 ```js
 api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
@@ -390,7 +420,11 @@ api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
 });
 ```
 
-- `resourceQuery`：匹配模块的 query，等价于 Rspack 的 [rules[].resourceQuery](https://rspack.rs/zh/config/module-rules#rulesresourcequery)。
+#### resourceQuery
+
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
+
+匹配模块的 query，等价于 Rspack 的 [rules[].resourceQuery](https://rspack.rs/zh/config/module-rules#rulesresourcequery)。
 
 ```js
 // 匹配 raw query: "foo.ext?raw"
@@ -399,7 +433,12 @@ api.transform({ resourceQuery: /^\?raw$/ }, ({ code }) => {
 });
 ```
 
-- `raw`：如果 `raw` 为 `true`，则 transform 函数将接收到 Buffer 类型的代码，而不是 string 类型。
+#### raw
+
+- **类型：** `boolean`
+- **默认值：** `false`
+
+当 `raw` 为 `true` 时，转换函数接收 Buffer 类型的代码；否则接收字符串类型的代码。
 
 ```js
 api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
@@ -407,7 +446,11 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`：标识匹配的模块的 [layer](https://rspack.rs/zh/guide/advanced/layer)，可以将一组模块聚合到一个 layer 中，等同于 Rspack 的 [rules[].layer](https://rspack.rs/zh/config/module-rules#ruleslayer)。
+#### layer
+
+- **类型：** `string`
+
+将匹配的模块归入指定的 [layer](https://rspack.rs/zh/guide/advanced/layer)，等同于 Rspack 的 [rules[].layer](https://rspack.rs/zh/config/module-rules#ruleslayer)。
 
 ```js
 api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
@@ -415,7 +458,11 @@ api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuerLayer`：与"引入当前模块"的模块的 [layer](https://rspack.rs/zh/guide/advanced/layer) 进行匹配，等同于 Rspack 的 [rules[].issuerLayer](https://rspack.rs/zh/config/module-rules#rulesissuerlayer)。
+#### issuerLayer
+
+- **类型：** `string`
+
+匹配引入当前模块的模块所属的 [layer](https://rspack.rs/zh/guide/advanced/layer)，等同于 Rspack 的 [rules[].issuerLayer](https://rspack.rs/zh/config/module-rules#rulesissuerlayer)。
 
 ```js
 api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
@@ -423,7 +470,11 @@ api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuer`：匹配"引入当前模块"的模块的绝对路径，等同于 Rspack 的 [rules[].issuer](https://rspack.rs/zh/config/module-rules#rulesissuer)。
+#### issuer
+
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
+
+匹配引入当前模块的模块的绝对路径，等同于 Rspack 的 [rules[].issuer](https://rspack.rs/zh/config/module-rules#rulesissuer)。
 
 ```js
 api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
@@ -431,7 +482,11 @@ api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
 });
 ```
 
-- `with`：匹配 [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)，等同于 Rspack 的 [rules[].with](https://rspack.rs/zh/config/module-rules#ruleswith)。
+#### with
+
+- **类型：** `Record<string, RuleSetCondition>`
+
+匹配 [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)，等同于 Rspack 的 [rules[].with](https://rspack.rs/zh/config/module-rules#ruleswith)。
 
 ```js
 api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
@@ -439,7 +494,11 @@ api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
 });
 ```
 
-- `mimetype`：根据 MIME 类型（而非文件扩展名）匹配模块。主要用于 data URI 模块（例如 `data:text/javascript,...`），等同于 Rspack 的 [rules[].mimetype](https://rspack.rs/zh/config/module-rules#rulesmimetype)。
+#### mimetype
+
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
+
+根据 MIME 类型匹配模块，等同于 Rspack 的 [rules[].mimetype](https://rspack.rs/zh/config/module-rules#rulesmimetype)。主要用于 data URI 模块，例如 `data:text/javascript,...`。
 
 ```js
 api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
@@ -447,10 +506,16 @@ api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
 });
 ```
 
-- `order`：指定 transform 函数的执行顺序，对应 Rspack 的 [rules[].enforce](https://rspack.rs/zh/config/module-rules#rulesenforce)。
-  - 当 `order` 为 `pre` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之前执行。
-  - 当 `order` 为 `post` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之后执行。
-  - 当 `order` 为 `default` 时，transform 函数会使用默认的 loader 顺序。
+#### order
+
+- **类型：** `'pre' | 'post' | 'default'`
+- **默认值：** `'default'`
+
+指定转换函数的执行顺序，对应 Rspack 的 [rules[].enforce](https://rspack.rs/zh/config/module-rules#rulesenforce)。
+
+- 当 `order` 为 `pre` 时，转换函数会在其他转换函数（或 Rspack loader）之前执行。
+- 当 `order` 为 `post` 时，转换函数会在其他转换函数（或 Rspack loader）之后执行。
+- 当 `order` 为 `default` 时，转换函数会使用默认的 loader 顺序。
 
 ```js
 api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
@@ -458,7 +523,11 @@ api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
 });
 ```
 
-- `enforce`：已废弃，请使用 `order` 代替。
+#### enforce
+
+- **类型：** `'pre' | 'post'`
+
+已废弃，请使用 [order](#order) 代替。
 
 ### handler 参数
 

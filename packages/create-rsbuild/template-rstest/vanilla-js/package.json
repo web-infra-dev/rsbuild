@@ -4,10 +4,10 @@
     "test:watch": "rstest --watch"
   },
   "devDependencies": {
-    "@rstest/adapter-rsbuild": "^0.12.3",
-    "@rstest/core": "^0.12.3",
+    "@rstest/adapter-rsbuild": "^0.12.4",
+    "@rstest/core": "^0.12.4",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
-    "happy-dom": "^21.0.3"
+    "happy-dom": "^21.0.4"
   }
 }
