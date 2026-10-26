@@ -71,7 +71,7 @@ catalog:
   'babel-loader': '10.1.1'
   'browserslist-load-config': '^1.0.4'
   'cac': '^7.1.0'
-  'chokidar': '^5.0.0'
+  'chokidar': '^6.0.0'
   'connect-next': '5.0.0'
   'core-js': '^3.51.0'
   'cors': '^2.8.6'
