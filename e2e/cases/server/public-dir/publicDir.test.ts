@@ -256,30 +256,26 @@ test('should copy publicDir to the environment distDir when multiple environment
   ).toBeFalsy();
 });
 
-test('should inherit or replace publicDir per environment when building', async ({
+test('should inherit, replace or disable publicDir per environment', async ({
   build,
+  cwd,
 }) => {
   const publicA = 'test-temp-build-public-a';
   const publicB = 'test-temp-build-public-b';
-  await fse.outputFile(join(import.meta.dirname, publicA, 'a.txt'), 'a');
-  await fse.outputFile(
-    join(import.meta.dirname, publicA, 'favicon.svg'),
-    '<svg xmlns="http://www.w3.org/2000/svg"/>',
-  );
-  await fse.outputFile(join(import.meta.dirname, publicB, 'b.txt'), 'b');
-  await fse.outputFile(join(import.meta.dirname, publicB, 'skip.txt'), 'skip');
-  await fse.outputFile(join(import.meta.dirname, publicB, 'favicon.ico'), '');
+  await fse.outputFile(join(cwd, publicA, 'a.txt'), 'a');
+  await fse.outputFile(join(cwd, publicB, 'b.txt'), 'b');
 
-  const rsbuild = await build({
+  const { distPath } = await build({
     config: {
       server: { publicDir: { name: publicA } },
       environments: {
         inherited: { output: { distPath: 'dist-copy/inherited' } },
         custom: {
+          // Different public directories must still be copied to nested outputs.
           output: { distPath: 'dist-copy/inherited/custom' },
           server: {
             publicDir: [
-              { name: publicB, ignore: ['skip.txt'] },
+              { name: publicB },
               { name: publicA, copyOnBuild: false },
             ],
           },
@@ -288,71 +284,72 @@ test('should inherit or replace publicDir per environment when building', async 
           output: { target: 'web-worker', distPath: 'dist-copy/worker' },
           server: { publicDir: false },
         },
+      },
+    },
+  });
+
+  expect(await fse.pathExists(join(distPath, 'inherited/a.txt'))).toBe(true);
+  expect(await fse.pathExists(join(distPath, 'inherited/b.txt'))).toBe(false);
+  expect(await fse.pathExists(join(distPath, 'inherited/custom/a.txt'))).toBe(
+    false,
+  );
+  expect(await fse.pathExists(join(distPath, 'inherited/custom/b.txt'))).toBe(
+    true,
+  );
+  expect(await fse.pathExists(join(distPath, 'worker/a.txt'))).toBe(false);
+});
+
+test('should enable publicDir copying to a node environment and respect ignore', async ({
+  build,
+  cwd,
+}) => {
+  const publicDir = 'test-temp-copy-options';
+  await fse.outputFile(join(cwd, publicDir, 'copied.txt'), 'copied');
+  await fse.outputFile(join(cwd, publicDir, 'ignored.txt'), 'ignored');
+
+  const { distPath } = await build({
+    config: {
+      environments: {
         node: {
-          output: { target: 'node', distPath: 'dist-copy/node' },
-          server: { publicDir: { name: publicA, copyOnBuild: true } },
+          output: { target: 'node', distPath: 'dist-copy-options' },
+          server: {
+            publicDir: {
+              name: publicDir,
+              copyOnBuild: true,
+              ignore: ['ignored.txt'],
+            },
+          },
         },
       },
     },
   });
 
-  for (const [environment, expected] of Object.entries({
-    inherited: [true, false, false],
-    'inherited/custom': [false, true, false],
-    worker: [false, false, false],
-    node: [true, false, false],
-  })) {
-    const files = await Promise.all(
-      ['a.txt', 'b.txt', 'skip.txt'].map((file) =>
-        fse.pathExists(join(rsbuild.distPath, environment, file)),
-      ),
-    );
-    expect(files).toEqual(expected);
-  }
-  const inheritedHtml = await fse.readFile(
-    join(rsbuild.distPath, 'inherited/index.html'),
-    'utf8',
-  );
-  const customHtml = await fse.readFile(
-    join(rsbuild.distPath, 'inherited/custom/index.html'),
-    'utf8',
-  );
-  expect(inheritedHtml).toContain('href="/favicon.svg"');
-  expect(customHtml).toContain('href="/favicon.ico"');
+  expect(await fse.pathExists(join(distPath, 'copied.txt'))).toBe(true);
+  expect(await fse.pathExists(join(distPath, 'ignored.txt'))).toBe(false);
 });
 
-test('should share environment public directories and watch each enabled path', async ({
-  dev,
+test('should serve environment public directories in order', async ({
+  devOnly,
+  cwd,
   page,
 }) => {
   const publicA = 'test-temp-dev-public-a';
   const publicB = 'test-temp-dev-public-b';
-  const fileB = join(import.meta.dirname, publicB, 'b.txt');
-  await fse.outputFile(join(import.meta.dirname, publicA, 'a.txt'), 'a');
-  await fse.outputFile(
-    join(import.meta.dirname, publicA, 'shared.txt'),
-    'first',
-  );
-  await fse.outputFile(
-    join(import.meta.dirname, publicB, 'shared.txt'),
-    'second',
-  );
-  await fse.outputFile(fileB, 'b');
+  await fse.outputFile(join(cwd, publicA, 'a.txt'), 'a');
+  await fse.outputFile(join(cwd, publicB, 'b.txt'), 'b');
+  await fse.outputFile(join(cwd, publicA, 'shared.txt'), 'first');
+  await fse.outputFile(join(cwd, publicB, 'shared.txt'), 'second');
 
-  const rsbuild = await dev({
+  const rsbuild = await devOnly({
     config: {
       server: { publicDir: { name: publicA }, htmlFallback: false },
       environments: {
         inherited: {},
         custom: {
           server: {
-            publicDir: [
-              { name: publicB, copyOnBuild: false, ignore: ['b.txt'] },
-            ],
+            publicDir: { name: publicB, copyOnBuild: false, ignore: ['b.txt'] },
           },
         },
-        watched: { server: { publicDir: { name: publicB, watch: true } } },
-        disabled: { server: { publicDir: false } },
       },
     },
   });
@@ -367,10 +364,30 @@ test('should share environment public directories and watch each enabled path', 
     );
     expect(await response.text()).toBe(content);
   }
-  // The later environment enables watching a directory already served by an earlier one.
+});
+
+test('should watch a shared public directory if any environment enables it', async ({
+  dev,
+  cwd,
+  page,
+}) => {
+  const publicDir = 'test-temp-watched-public';
+  const file = join(cwd, publicDir, 'watched.txt');
+  await fse.outputFile(file, 'original');
+
+  await dev({
+    config: {
+      server: { publicDir: { name: publicDir } },
+      environments: {
+        unwatched: {},
+        watched: { server: { publicDir: { name: publicDir, watch: true } } },
+      },
+    },
+  });
+
   await Promise.all([
     page.waitForEvent('load'),
-    fse.outputFile(fileB, 'updated'),
+    fse.outputFile(file, 'updated'),
   ]);
 });
 

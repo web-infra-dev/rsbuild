@@ -289,13 +289,13 @@ export async function initRsbuildConfig({
         ...normalizedBaseConfig.dev,
         ...environmentConfig.dev,
       },
-      server:
-        publicDir === undefined
-          ? normalizedBaseConfig.server
-          : {
-              ...normalizedBaseConfig.server,
-              publicDir: normalizePublicDirs(context.rootPath, publicDir),
-            },
+      server: {
+        ...normalizedBaseConfig.server,
+        publicDir:
+          publicDir === undefined
+            ? normalizedBaseConfig.server.publicDir
+            : normalizePublicDirs(context.rootPath, publicDir),
+      },
     };
 
     const { tsconfigPath } = normalizedEnvironmentConfig.source;
