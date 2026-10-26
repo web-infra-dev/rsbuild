@@ -122,13 +122,6 @@ export default {
 };
 ```
 
-#### Multiple environments
-
-When performing [multi-environment builds](/guide/advanced/environments), Rsbuild copies files from the public directory to the output directory of each environment. If there are nested output directories, files will only be copied to the root of the output directory. For example:
-
-- The distDir of the `web` environment is `dist`, and the distDir of the `web1` environment is `dist/web1`. Due to the nested relationship between `dist` and `dist/web1`, the public directory files are only copied to the `dist` directory.
-- The distDir of the `esm` environment is `dist/esm`, and the distDir of the `cjs` environment is `dist/cjs`. Since there is no nesting relationship between `dist/esm` and `dist/cjs`, the public directory files will be copied to both the `dist/esm` and `dist/cjs` directories.
-
 ### ignore
 
 - **Type:** `string[]`
@@ -203,8 +196,81 @@ export default {
 };
 ```
 
+## Multiple environments
+
+### Directory configuration
+
+- **Version:** `>= 2.3.0`
+
+Set `server.publicDir` for each environment under `environments`. If an environment omits `publicDir`, it inherits the global `server.publicDir`. Set `publicDir: false` to disable public directories for that environment.
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    client: {},
+    admin: {
+      server: {
+        publicDir: {
+          name: 'public-admin',
+        },
+      },
+    },
+    worker: {
+      server: {
+        publicDir: false,
+      },
+    },
+  },
+};
+```
+
+In this example, `client` uses `public`, `admin` uses `public-admin`, and `worker` has no public directory.
+
+During development, all environments share one dev server, which serves the public files configured by each environment. Setting `publicDir: false` in one environment does not affect access to public files from other environments.
+
+### Configuration inheritance
+
+An environment's own `publicDir` replaces the global `publicDir`. Omitted options use their default values.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    publicDir: {
+      name: 'assets',
+    },
+  },
+  environments: {
+    client: {
+      server: {
+        publicDir: {
+          copyOnBuild: false,
+        },
+      },
+    },
+  },
+};
+```
+
+Here, `client` does not set `name`, so it uses the default directory `public`. To use `assets`, also set `name: 'assets'` in `client.server.publicDir`.
+
+Even when the global `publicDir` is `false`, an environment can enable its own public directories by setting `publicDir` to an object or array.
+
+### Build behavior
+
+During production builds, each environment copies files from its public directories to its output directory. `copyOnBuild` controls whether files are copied, and `ignore` specifies which files to exclude.
+
+For example, two web environments using the default `publicDir` settings copy `public/logo.png` as follows:
+
+| Output directories        | Copied files                                                     |
+| ------------------------- | ---------------------------------------------------------------- |
+| `dist` and `dist/web1`    | Only `dist/logo.png`, with no extra copy at `dist/web1/logo.png` |
+| `dist/esm` and `dist/cjs` | Both `dist/esm/logo.png` and `dist/cjs/logo.png`                 |
+
+If the directory lists, directory order, or `copyOnBuild` and `ignore` settings differ, each environment copies files to its own output directory, even when the output directories are nested.
+
 ## Version history
 
-| Version | Changes                   |
-| ------- | ------------------------- |
-| v2.0.0  | Added the `ignore` option |
+| Version | Changes                                           |
+| ------- | ------------------------------------------------- |
+| v2.3.0  | Added environment-level `publicDir` configuration |
+| v2.0.0  | Added the `ignore` option                         |
