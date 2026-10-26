@@ -39,12 +39,15 @@ test('should reject path traversal after stripping the asset prefix', async ({
   runBothServe,
 }) => {
   await runBothServe(async ({ result }) => {
-    const response = await request.get(
-      `http://localhost:${result.port}/browser-assets/${encodedUpPath}server/server.js`,
-    );
+    // Also reject paths that leave and re-enter the output directory.
+    for (const asset of ['server/server.js', 'client/static/js/shared.js']) {
+      const response = await request.get(
+        `http://localhost:${result.port}/browser-assets/${encodedUpPath}${asset}`,
+      );
 
-    expect(response.status()).toBe(403);
-    expect(await response.text()).toContain('Forbidden');
+      expect(response.status()).toBe(403);
+      expect(await response.text()).toContain('Forbidden');
+    }
   });
 });
 

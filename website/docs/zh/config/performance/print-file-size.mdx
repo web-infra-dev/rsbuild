@@ -11,7 +11,7 @@ type PrintFileSizeOptions =
   | boolean
   | {
       total?: boolean | Function;
-      detail?: boolean;
+      detail?: boolean | number;
       compressed?: boolean | { type?: 'gzip' | 'brotli'; level?: number };
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
@@ -115,22 +115,32 @@ export default {
 
 ### detail
 
-- **类型：** `boolean`
+- **类型：** `boolean | number`
 - **默认值：** `true`
 
-是否输出每个静态资源的体积。
+控制每个环境的体积报告中显示多少个文件：
 
-如果你不需要查看每个静态资源文件的体积，可以把 `detail` 设置为 false，此时仅输出总体积：
+- `true`：显示所有文件。
+- `false` 或 `0`：不显示文件明细。
+- 正整数：最多显示指定数量的文件，按未压缩体积选取最大的文件。
+
+例如，显示每个环境中最大的 20 个文件：
 
 ```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: {
-      detail: false,
+      detail: 20,
     },
   },
 };
 ```
+
+Rsbuild 会先应用 `include` 和 `exclude` 筛选，再选取要显示的文件。如果筛选后的文件数量超过上限，报告会提示省略的文件数量。
+
+该限制仅影响文件列表。省略的文件仍会计入总体积，并在启用 `diff` 时参与体积对比。
+
+自定义总计输出时，`total` 回调接收的 `assets` 参数不受 `detail` 数量上限的影响。例如，筛选后有 100 个文件，设置 `detail: 20` 只会展示其中最大的 20 个文件，但 `assets` 仍包含全部 100 个文件。
 
 ### compressed
 
@@ -335,5 +345,6 @@ dist/static/css/index.2960ac62ab.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 k
 
 | 版本    | 变更内容                                                                  |
 | ------- | ------------------------------------------------------------------------- |
+| v2.3.0  | `detail` 支持数字，用于限制显示的文件数量                                 |
 | v2.2.5  | 新增 `compressed.type` 和 `compressed.level` 选项，支持选择压缩算法和等级 |
 | v1.6.13 | 新增 `diff` 选项                                                          |

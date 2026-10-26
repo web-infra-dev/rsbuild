@@ -47,6 +47,7 @@ Called when running the `rsbuild preview` command or the `rsbuild.preview()` met
 
 - [onBeforeStartPreviewServer](#onbeforestartpreviewserver): Called before starting the preview server.
 - [onAfterStartPreviewServer](#onafterstartpreviewserver): Called after starting the preview server.
+- [onClosePreviewServer](#onclosepreviewserver): Called when closing the preview server.
 
 ## Hooks order
 
@@ -116,6 +117,7 @@ When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbu
 - [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [onBeforeStartPreviewServer](#onbeforestartpreviewserver)
 - [onAfterStartPreviewServer](#onafterstartpreviewserver)
+- [onClosePreviewServer](#onclosepreviewserver)
 - [onExit](#onexit)
 
 ## Global hooks vs environment hooks
@@ -142,6 +144,7 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [onCloseBuild](#onclosebuild)
 - [onBeforeStartPreviewServer](#onbeforestartpreviewserver)
 - [onAfterStartPreviewServer](#onafterstartpreviewserver)
+- [onClosePreviewServer](#onclosepreviewserver)
 - [onRestart](#onrestart)
 - [onExit](#onexit)
 
@@ -970,6 +973,24 @@ const myPlugin = () => ({
     api.onAfterStartPreviewServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
+    });
+  },
+});
+```
+
+### onClosePreviewServer
+
+import OnClosePreviewServer from '@en/shared/onClosePreviewServer.mdx';
+
+<OnClosePreviewServer />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onClosePreviewServer(() => {
+      console.log('close preview server!');
     });
   },
 });

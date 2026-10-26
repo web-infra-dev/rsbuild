@@ -41,65 +41,112 @@ The following commands create a project without interactive prompts:
 - **Vanilla**
 
 ```bash
+# Basic (JavaScript)
 npx -y create-rsbuild@latest my-app -t vanilla-js
+
+# Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t vanilla-ts
 ```
 
 - **React**
 
 ```bash
+# Basic (JavaScript)
 npx -y create-rsbuild@latest my-app -t react-js
+
+# Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t react-ts
+
+# TanStack Start (with Rsbuild)
+npx -y create-rsbuild@latest my-app -t tanstack-start-react
 ```
 
 - **Vue**
 
 ```bash
+# Basic (JavaScript)
 npx -y create-rsbuild@latest my-app -t vue-js
+
+# Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t vue-ts
 ```
 
 - **Lit**
 
 ```bash
+# Basic (JavaScript)
 npx -y create-rsbuild@latest my-app -t lit-js
+
+# Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t lit-ts
 ```
 
 - **Preact**
 
 ```bash
+# Basic (JavaScript)
 npx -y create-rsbuild@latest my-app -t preact-js
+
+# Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t preact-ts
 ```
 
 - **Svelte**
 
 ```bash
+# Basic (JavaScript)
 npx -y create-rsbuild@latest my-app -t svelte-js
+
+# Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t svelte-ts
 ```
 
 - **Solid 1**
 
 ```bash
+# Basic (JavaScript)
 npx -y create-rsbuild@latest my-app -t solid-js
+
+# Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t solid-ts
+
+# TanStack Start (with Rsbuild)
+npx -y create-rsbuild@latest my-app -t tanstack-start-solid
 ```
 
 - **Solid 2**
 
 ```bash
+# Basic (JavaScript)
 npx -y create-rsbuild@latest my-app -t solid2-js
+
+# Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t solid2-ts
 ```
 
 - **Octane**
 
 ```bash
+# Basic (JavaScript)
 npx -y create-rsbuild@latest my-app -t octane-js
+
+# Basic (TypeScript)
 npx -y create-rsbuild@latest my-app -t octane-ts
 ```
+
+- **Lynx**
+
+Creates a ReactLynx app with Rsbuild using `@lynx-js/create-lynx`.
+
+```bash
+# Basic (JavaScript)
+npx -y create-rsbuild@latest my-app -t lynx-js
+
+# Basic (TypeScript)
+npx -y create-rsbuild@latest my-app -t lynx-ts
+```
+
+See the [Lynx guide](https://lynxjs.org/next/guide/build/index.html) for configuration and development instructions.
 
 ## Documentation
 

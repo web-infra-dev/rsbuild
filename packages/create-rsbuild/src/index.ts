@@ -8,6 +8,8 @@ import {
   type ESLintTemplateName,
   type RslintTemplateName,
   select,
+  type TemplateCreateContext,
+  xSync,
 } from '@rstackjs/create-toolkit';
 import {
   addPluginsToRsbuildConfig,
@@ -20,8 +22,18 @@ const frameworkAlias: Record<string, string> = {
   'solid-js': 'solid',
 };
 
-async function getTemplateName({ template }: Argv) {
+let isNonInteractive = false;
+
+async function getTemplateName({ dir, template }: Argv) {
+  isNonInteractive = typeof dir === 'string' && typeof template === 'string';
+
   if (typeof template === 'string') {
+    if (
+      template === 'tanstack-start-react' ||
+      template === 'tanstack-start-solid'
+    ) {
+      return template;
+    }
     const pair = template.split('-');
     const language = pair[1] ?? 'js';
     const framework = pair[0];
@@ -39,27 +51,127 @@ async function getTemplateName({ template }: Argv) {
         { value: 'lit', label: 'Lit' },
         { value: 'preact', label: 'Preact' },
         { value: 'svelte', label: 'Svelte' },
-        { value: 'solid', label: 'Solid 1' },
-        { value: 'solid2', label: 'Solid 2' },
+        { value: 'solid', label: 'Solid' },
         { value: 'octane', label: 'Octane' },
+        { value: 'lynx', label: 'Lynx' },
       ],
     }),
   );
 
-  const language = checkCancel<string>(
+  if (framework === 'solid') {
+    return checkCancel<string>(
+      await select({
+        message: 'Select template',
+        options: [
+          { value: 'solid-ts', label: 'Solid 1 (TypeScript)' },
+          { value: 'solid-js', label: 'Solid 1 (JavaScript)' },
+          { value: 'solid2-ts', label: 'Solid 2 (TypeScript)' },
+          { value: 'solid2-js', label: 'Solid 2 (JavaScript)' },
+          { value: 'tanstack-start-solid', label: 'TanStack Start' },
+        ],
+      }),
+    );
+  }
+
+  const variant = checkCancel<string>(
     await select({
-      message: 'Select language',
+      message: 'Select template',
       options: [
-        { value: 'ts', label: 'TypeScript' },
-        { value: 'js', label: 'JavaScript' },
+        { value: 'ts', label: 'Basic (TypeScript)' },
+        { value: 'js', label: 'Basic (JavaScript)' },
+        ...(framework === 'react'
+          ? [{ value: 'tanstack-start', label: 'TanStack Start' }]
+          : []),
       ],
     }),
   );
 
-  return `${framework}-${language}`;
+  if (variant === 'tanstack-start') {
+    return `tanstack-start-${framework}`;
+  }
+
+  return `${framework}-${variant}`;
 }
 
-function mapESLintTemplate(templateName: string): ESLintTemplateName {
+function createTanStackProject(
+  framework: 'React' | 'Solid',
+  { distFolder, packageName, gitEnabled, override }: TemplateCreateContext,
+) {
+  const args = [
+    '@tanstack/cli@latest',
+    'create',
+    '--framework',
+    framework,
+    '--build-tool',
+    'rsbuild',
+    '--target-dir',
+    distFolder,
+    packageName,
+  ];
+  if (isNonInteractive) {
+    // Skip npx's install confirmation and TanStack's setup prompts.
+    args.unshift('--yes');
+    args.push('--yes');
+  }
+  if (!gitEnabled) {
+    args.push('--no-git');
+  }
+  if (override) {
+    args.push('--force');
+  }
+  const result = xSync('npx', args, {
+    nodePath: false,
+    nodeOptions: { stdio: 'inherit' },
+  });
+  process.exitCode = result.exitCode ?? 1;
+}
+
+function createLynxProject(
+  language: 'ts' | 'js',
+  { distFolder, packageName, gitEnabled, override }: TemplateCreateContext,
+) {
+  const args = [
+    '@lynx-js/create-lynx@latest',
+    distFolder,
+    '--template',
+    `rsbuild-react-${language}`,
+    '--package-name',
+    packageName,
+  ];
+  if (isNonInteractive) {
+    args.unshift('--yes');
+  }
+  if (!gitEnabled) {
+    args.push('--no-git');
+  }
+  if (override) {
+    args.push('--override');
+  }
+  const result = xSync('npx', args, {
+    nodePath: false,
+    nodeOptions: { stdio: 'inherit' },
+  });
+  process.exitCode = result.exitCode ?? 1;
+}
+
+function mapESLintTemplate(
+  templateName: string,
+  { distFolder }: { distFolder: string },
+): ESLintTemplateName {
+  const packageJsonPath = path.join(distFolder, 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8')) as {
+    devDependencies: Record<string, string>;
+  };
+
+  // typescript-eslint still requires TypeScript 6's JavaScript API.
+  if (/^[~^]?7\./.test(packageJson.devDependencies.typescript ?? '')) {
+    packageJson.devDependencies.typescript = '^6.0.3';
+    fs.writeFileSync(
+      packageJsonPath,
+      `${JSON.stringify(packageJson, null, 2)}\n`,
+    );
+  }
+
   switch (templateName) {
     case 'react-js':
     case 'react-ts':
@@ -105,15 +217,23 @@ function mapRslintTemplate(templateName: string): RslintTemplateName {
 }
 
 const root = path.join(import.meta.dirname, '..');
+const { version } = JSON.parse(
+  fs.readFileSync(path.join(root, 'package.json'), 'utf-8'),
+) as { version: string };
 
 await create({
   root,
   name: 'rsbuild',
+  banner: `create-rsbuild v${version}`,
   templates: [
     'vanilla-js',
     'vanilla-ts',
     'react-js',
     'react-ts',
+    {
+      name: 'tanstack-start-react',
+      create: (context) => createTanStackProject('React', context),
+    },
     'vue-js',
     'vue-ts',
     'lit-js',
@@ -124,10 +244,22 @@ await create({
     'svelte-ts',
     'solid-js',
     'solid-ts',
+    {
+      name: 'tanstack-start-solid',
+      create: (context) => createTanStackProject('Solid', context),
+    },
     'solid2-js',
     'solid2-ts',
     'octane-js',
     'octane-ts',
+    {
+      name: 'lynx-js',
+      create: (context) => createLynxProject('js', context),
+    },
+    {
+      name: 'lynx-ts',
+      create: (context) => createLynxProject('ts', context),
+    },
   ],
   getTemplateName,
   mapESLintTemplate,

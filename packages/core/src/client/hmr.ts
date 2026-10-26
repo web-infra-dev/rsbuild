@@ -11,6 +11,7 @@ import type {
   NormalizedClientConfig,
   WebSocketUrlResolver,
 } from '../types';
+import { resolveLocation } from './location';
 import { logger } from './log';
 
 let createOverlay: undefined | ((title: string, content: string) => void);
@@ -113,7 +114,7 @@ export function init(
   const base = serverBase.endsWith('/') ? serverBase : `${serverBase}/`;
 
   function formatURL(fallback?: boolean) {
-    const { location } = self;
+    const location = resolveLocation(self.location);
     const hostname = (fallback ? serverHost : config.host) || location.hostname;
     const port = (fallback ? serverPort : config.port) || location.port;
     const protocol =
@@ -454,7 +455,7 @@ export function init(
   }
 
   function fullReload(data?: ServerMessageFullReload['data']) {
-    if (!liveReload) {
+    if (!liveReload || typeof document === 'undefined') {
       return;
     }
 

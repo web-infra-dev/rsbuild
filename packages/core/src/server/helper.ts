@@ -580,7 +580,7 @@ export const getAddressUrls = async ({
   port: number;
   host?: string;
 }): Promise<AddressUrl[]> => {
-  if (host && host !== ALL_INTERFACES_IPV4) {
+  if (host && !isWildcardHost(host)) {
     const url = concatUrl({
       port,
       host: await getHostInUrl(host),
@@ -704,7 +704,8 @@ export const HttpCode = {
 export type RsbuildServerBase = {
   /**
    * Close the server.
-   * In the dev server, this will call the `onCloseDevServer` hook.
+   * Calls the `onCloseDevServer` or `onClosePreviewServer` hook and waits for
+   * async cleanup callbacks to complete.
    */
   close: () => Promise<void>;
   /**

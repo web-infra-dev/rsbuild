@@ -1,4 +1,5 @@
 import net from 'node:net';
+import { setImmediate } from 'node:timers/promises';
 import { expect, recordPluginHooks, test } from '@e2e/helper';
 import {
   createRsbuild,
@@ -129,10 +130,17 @@ test('should run plugin hooks correctly when running preview', async () => {
     },
   });
 
+  rsbuild.onClosePreviewServer(async () => {
+    // Verify that close() waits for async hooks to complete.
+    await setImmediate();
+    hooks.push('AsyncPreviewCleanup');
+  });
+
   const result = await rsbuild.preview({
     checkDistDir: false,
   });
 
+  await Promise.all([result.server.close(), result.server.close()]);
   await result.server.close();
 
   expect(hooks).toEqual([
@@ -140,6 +148,8 @@ test('should run plugin hooks correctly when running preview', async () => {
     'ModifyEnvironmentConfig',
     'BeforeStartPreviewServer',
     'AfterStartPreviewServer',
+    'AsyncPreviewCleanup',
+    'ClosePreviewServer',
   ]);
 });
 
@@ -183,6 +193,7 @@ test('should close dev server when onAfterStartDevServer throws', async () => {
 test('should close preview server when onAfterStartPreviewServer throws', async () => {
   const port = await getRandomPort();
   let previewServer: RsbuildPreviewServer | undefined;
+  let closeHookCalled = false;
   const plugin: RsbuildPlugin = {
     name: 'throw-in-after-start-preview-server',
     setup(api) {
@@ -191,6 +202,9 @@ test('should close preview server when onAfterStartPreviewServer throws', async 
       });
       api.onAfterStartPreviewServer(() => {
         throw new Error('Failed to start preview server');
+      });
+      api.onClosePreviewServer(() => {
+        closeHookCalled = true;
       });
     },
   };
@@ -206,6 +220,7 @@ test('should close preview server when onAfterStartPreviewServer throws', async 
     await expect(
       rsbuild.preview({ checkDistDir: false, getPortSilently: true }),
     ).rejects.toThrow('Failed to start preview server');
+    expect(closeHookCalled).toBe(true);
     await expectPortAvailable(port);
   } finally {
     await previewServer?.close();

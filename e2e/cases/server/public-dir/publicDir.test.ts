@@ -138,6 +138,50 @@ test('should not serve publicDir when publicDir is false', async ({
   expect(res?.status()).toBe(404);
 });
 
+test('should only serve publicDir for GET and HEAD requests in dev server', async ({
+  devOnly,
+}) => {
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'test-temp-file.txt'),
+    'a',
+  );
+
+  const rsbuild = await devOnly({
+    config: {
+      server: {
+        setup: ({ server }) => {
+          return () => {
+            server.middlewares.use((req, res, next) => {
+              if (req.method === 'POST') {
+                res.end('POST handled by middleware');
+                return;
+              }
+              next();
+            });
+          };
+        },
+      },
+      output: {
+        distPath: 'dist-dev-1',
+      },
+    },
+  });
+
+  const url = `http://localhost:${rsbuild.port}/test-temp-file.txt`;
+
+  const getRes = await fetch(url);
+  expect((await getRes.text()).trim()).toBe('a');
+
+  const headRes = await fetch(url, { method: 'HEAD' });
+  expect(headRes.status).toBe(200);
+
+  const postRes = await fetch(url, { method: 'POST' });
+  expect(await postRes.text()).toBe('POST handled by middleware');
+
+  const putRes = await fetch(url, { method: 'PUT' });
+  expect(putRes.status).toBe(404);
+});
+
 test('should serve publicDir for preview server correctly', async ({
   page,
   buildPreview,

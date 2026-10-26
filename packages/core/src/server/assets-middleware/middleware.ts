@@ -4,8 +4,8 @@ import type {
   OutgoingHttpHeaders,
   ServerResponse,
 } from 'node:http';
+import { finished } from 'node:stream';
 import { lookup } from 'mrmime';
-import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import { isWebTarget } from '../../helpers';
 import { cachedImport } from '../../helpers/cachedImport';
@@ -526,7 +526,7 @@ export function createAssetsMiddleware(
 
       readStream.pipe(res);
 
-      onFinished(res, cleanup);
+      finished(res, cleanup);
     }
 
     // rslint-disable-next-line @typescript-eslint/no-misused-promises -- `ready` does not consume callback return values.

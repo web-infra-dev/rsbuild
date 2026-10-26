@@ -39,16 +39,16 @@ import { PackageManagerTabs } from '@theme';
 
 按照提示操作即可。
 
-创建完成后，执行以下步骤：
+按照 CLI 输出的提示启动应用：
 
-- 执行 `pnpm install`（或其他包管理器的 install 命令）安装依赖。
+- 如果尚未安装依赖，执行 `pnpm install`（或其他包管理器的 install 命令）。
 - 执行 `pnpm run dev` 启动 [开发服务器](/guide/basic/server)。
 
 ### 模板
 
 创建应用时，可选择 `create-rsbuild` 提供的下列模板，查看集成指南了解更多信息。
 
-| 模板    | 官方文档                        | Rsbuild 集成指南                                             |
+| 框架    | 官方文档                        | Rsbuild 集成指南                                             |
 | ------- | ------------------------------- | ------------------------------------------------------------ |
 | vanilla | 原生 JavaScript                 | -                                                            |
 | react   | [React](https://react.dev/)     | [使用 React](/guide/framework/react)                         |
@@ -58,8 +58,9 @@ import { PackageManagerTabs } from '@theme';
 | svelte  | [Svelte](https://svelte.dev/)   | [使用 Svelte](/guide/framework/svelte)                       |
 | solid   | [Solid](https://solidjs.com/)   | [使用 Solid](/guide/framework/solid)                         |
 | octane  | [Octane](https://octanejs.dev/) | [使用 Octane](https://octanejs.dev/docs/build-tools#rsbuild) |
+| lynx    | [Lynx](https://lynxjs.org/)     | -                                                            |
 
-`create-rsbuild` 提供了开箱即用的基础模板，你还可以通过以下方式获取更丰富的模板：
+你还可以通过以下方式获取更多工具和模板：
 
 - 前往 [Rspack - 生态](https://rspack.rs/zh/guide/start/quick-start#%E7%94%9F%E6%80%81) 了解基于 Rsbuild 的各种上层工具。
 - 前往 [awesome-rstack - Starter](https://github.com/rstackjs/awesome-rstack#starter) 获取更多社区维护的模板。
@@ -127,7 +128,7 @@ Options:
   --package-name <name>     specify the package name
   --template-version <ver>  specify the npm template version
 
-Available templates: vanilla-js, vanilla-ts, react-js, react-ts, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts, solid2-js, solid2-ts, octane-js, octane-ts
+Available templates: vanilla-js, vanilla-ts, react-js, react-ts, tanstack-start-react, vue-js, vue-ts, lit-js, lit-ts, preact-js, preact-ts, svelte-js, svelte-ts, solid-js, solid-ts, tanstack-start-solid, solid2-js, solid2-ts, octane-js, octane-ts, lynx-js, lynx-ts
 
 Optional tools: react-compiler, rstest, eslint, rslint, biome, prettier, tailwindcss, storybook
 

@@ -235,6 +235,12 @@ const applyDefaultMiddlewares = async ({
         dev: true,
       });
       middlewares.use(function publicDirMiddleware(req, res, next) {
+        // sirv serves files for any method, which would mask non-GET routes
+        // added later and differ from the assets middleware and preview server.
+        if (req.method && req.method !== 'GET' && req.method !== 'HEAD') {
+          next();
+          return;
+        }
         sirvMiddleware(req, res, next);
       });
     }

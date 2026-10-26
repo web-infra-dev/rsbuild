@@ -1,6 +1,7 @@
 import type { FSWatcher } from 'chokidar';
 import { castArray } from '../helpers';
 import { cachedImport, getTinyglobby } from '../helpers/cachedImport';
+import type { Logger } from '../logger';
 import type {
   ChokidarOptions,
   DevConfig,
@@ -23,6 +24,7 @@ export const DEFAULT_WATCH_FILE_EVENTS: readonly WatchFileEvent[] = [
 
 type WatchFilesOptions = {
   root: string;
+  logger: Logger;
   config: NormalizedConfig;
   buildManager?: BuildManager;
 };
@@ -34,7 +36,7 @@ export type WatchFilesResult = {
 export async function setupWatchFiles(
   options: WatchFilesOptions,
 ): Promise<WatchFilesResult | undefined> {
-  const { config, root, buildManager } = options;
+  const { config, root, logger, buildManager } = options;
 
   const { hmr, liveReload } = config.dev;
   if ((!hmr && !liveReload) || !buildManager) {
@@ -45,11 +47,13 @@ export async function setupWatchFiles(
     config.dev,
     buildManager,
     root,
+    logger,
   );
   const serverFilesWatcher = await watchServerFiles(
     config.server,
     buildManager,
     root,
+    logger,
   );
 
   return {
@@ -66,6 +70,7 @@ async function watchDevFiles(
   devConfig: DevConfig,
   buildManager: BuildManager,
   root: string,
+  logger: Logger,
 ) {
   const { watchFiles } = devConfig;
   if (!watchFiles) {
@@ -76,7 +81,12 @@ async function watchDevFiles(
 
   for (const { paths, events, options, type } of castArray(watchFiles)) {
     const watchOptions = prepareWatchOptions(paths, options, type, events);
-    const watcher = await startWatchFiles(watchOptions, buildManager, root);
+    const watcher = await startWatchFiles(
+      watchOptions,
+      buildManager,
+      root,
+      logger,
+    );
     if (watcher) {
       watchers.push(watcher);
     }
@@ -93,6 +103,7 @@ function watchServerFiles(
   { publicDir }: NormalizedServerConfig,
   buildManager: BuildManager,
   root: string,
+  logger: Logger,
 ) {
   if (!publicDir.length) {
     return;
@@ -107,7 +118,7 @@ function watchServerFiles(
   }
 
   const watchOptions = prepareWatchOptions(watchPaths);
-  return startWatchFiles(watchOptions, buildManager, root);
+  return startWatchFiles(watchOptions, buildManager, root, logger);
 }
 
 function prepareWatchOptions(
@@ -135,6 +146,7 @@ export async function createChokidar(
   pathOrGlobs: string[],
   root: string,
   options: ChokidarOptions,
+  logger: Logger,
 ): Promise<FSWatcher> {
   const { default: chokidar } = await getChokidar();
 
@@ -160,7 +172,11 @@ export async function createChokidar(
     }
   }
 
-  return chokidar.watch(Array.from(watchFiles), options);
+  const watcher = chokidar.watch(Array.from(watchFiles), options);
+  watcher.on('error', (error) => {
+    logger.error('File watcher error:', error);
+  });
+  return watcher;
 }
 
 async function startWatchFiles(
@@ -172,6 +188,7 @@ async function startWatchFiles(
   }: ReturnType<typeof prepareWatchOptions>,
   buildManager: BuildManager,
   root: string,
+  logger: Logger,
 ) {
   if (type !== 'reload-page') {
     return;
@@ -181,11 +198,16 @@ async function startWatchFiles(
     return;
   }
 
-  const watcher = await createChokidar(paths, root, {
-    // Avoid triggering page reloads for files that already exist.
-    ignoreInitial: true,
-    ...options,
-  });
+  const watcher = await createChokidar(
+    paths,
+    root,
+    {
+      // Avoid triggering page reloads for files that already exist.
+      ignoreInitial: true,
+      ...options,
+    },
+    logger,
+  );
 
   const reloadPage = () => {
     buildManager.socketServer.sendMessage({

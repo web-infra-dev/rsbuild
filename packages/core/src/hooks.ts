@@ -25,6 +25,7 @@ import type {
   OnBeforeStartPreviewServerFn,
   OnCloseBuildFn,
   OnCloseDevServerFn,
+  OnClosePreviewServerFn,
   OnExitFn,
   OnRestartFn,
   Rspack,
@@ -229,6 +230,7 @@ export function initHooks(): {
   onBeforeDevCompile: AsyncHook<OnBeforeDevCompileFn>;
   onAfterDevCompile: AsyncHook<OnAfterDevCompileFn>;
   onCloseDevServer: AsyncHook<OnCloseDevServerFn>;
+  onClosePreviewServer: AsyncHook<OnClosePreviewServerFn>;
   onAfterStartDevServer: AsyncHook<OnAfterStartDevServerFn>;
   onBeforeStartDevServer: AsyncHook<OnBeforeStartDevServerFn>;
   onAfterStartPreviewServer: AsyncHook<OnAfterStartPreviewServerFn>;
@@ -254,6 +256,7 @@ export function initHooks(): {
     onBeforeDevCompile: createAsyncHook<OnBeforeDevCompileFn>(),
     onAfterDevCompile: createAsyncHook<OnAfterDevCompileFn>(),
     onCloseDevServer: createAsyncHook<OnCloseDevServerFn>(),
+    onClosePreviewServer: createAsyncHook<OnClosePreviewServerFn>(),
     onAfterStartDevServer: createAsyncHook<OnAfterStartDevServerFn>(),
     onBeforeStartDevServer: createAsyncHook<OnBeforeStartDevServerFn>(),
     onAfterStartPreviewServer: createAsyncHook<OnAfterStartPreviewServerFn>(),

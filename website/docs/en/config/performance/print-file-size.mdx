@@ -11,7 +11,7 @@ type PrintFileSizeOptions =
   | boolean
   | {
       total?: boolean | Function;
-      detail?: boolean;
+      detail?: boolean | number;
       compressed?: boolean | { type?: 'gzip' | 'brotli'; level?: number };
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
@@ -115,22 +115,32 @@ Function parameters:
 
 ### detail
 
-- **Type:** `boolean`
+- **Type:** `boolean | number`
 - **Default:** `true`
 
-Whether to output the size of each static asset.
+Controls how many files to display in each environment's size report:
 
-If you do not need to view the size of each static asset, you can set `detail` to false. In this case, only the total size will be output:
+- `true`: Display all files.
+- `false` or `0`: Hide individual files.
+- A positive integer: Display at most this many files, selecting the largest by uncompressed size.
+
+For example, display the 20 largest files in each environment:
 
 ```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: {
-      detail: false,
+      detail: 20,
     },
   },
 };
 ```
+
+Rsbuild applies the `include` and `exclude` filters before selecting files. If the remaining files exceed the limit, the report shows how many files were omitted.
+
+The limit only affects the file list. Omitted files still contribute to the totals and size comparisons when `diff` is enabled.
+
+When customizing the total output, the `assets` parameter passed to the `total` callback is unaffected by the `detail` limit. For example, if 100 files pass the filters, `detail: 20` displays only the 20 largest files, but `assets` still contains all 100 files.
 
 ### compressed
 
@@ -335,5 +345,6 @@ Snapshots are stored at `<root>/node_modules/.cache/rsbuild/file-sizes-[hash].js
 
 | Version | Changes                                                                                              |
 | ------- | ---------------------------------------------------------------------------------------------------- |
+| v2.3.0  | Added numeric `detail` values to limit the number of files displayed                                 |
 | v2.2.5  | Added `compressed.type` and `compressed.level` options to select the compression algorithm and level |
 | v1.6.13 | Added `diff` option                                                                                  |

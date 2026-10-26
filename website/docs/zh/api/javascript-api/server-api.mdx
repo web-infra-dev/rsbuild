@@ -115,7 +115,7 @@ async function startDevServer() {
 
 调用 `close()` 方法来执行必要的清理操作。
 
-在 dev server 中，这还会触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子。
+这还会触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 或 [onClosePreviewServer](/plugins/dev/hooks#onclosepreviewserver) 钩子，并等待异步清理回调完成。
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';

@@ -13,6 +13,7 @@ import {
 } from '../constants';
 import { castArray, color, getFilename, isPlainObject } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
+import { findWorkspaceRoot } from '../helpers/workspace';
 import type {
   CSSLoaderModulesMode,
   CSSLoaderOptions,
@@ -154,7 +155,9 @@ async function loadUserPostcssrc(
     return clonePostCSSConfig(await cached);
   }
 
-  const promise = postcssrc({}, root).catch((err: unknown) => {
+  const promise = postcssrc({}, root, {
+    stopDir: findWorkspaceRoot(root),
+  }).catch((err: unknown) => {
     // ignore the config not found error
     if ((err as Error).message?.includes('No PostCSS Config found')) {
       return {};
