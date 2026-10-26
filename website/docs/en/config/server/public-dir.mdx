@@ -202,7 +202,7 @@ export default {
 
 - **Version:** `>= 2.3.0`
 
-Configure `server.publicDir` under `environments` to use different public directories for each environment. Environments without this option use the global setting. Set it to `false` to disable public directories for an environment.
+Set `server.publicDir` for each environment under `environments`. If an environment omits `publicDir`, it inherits the global `server.publicDir`. Set `publicDir: false` to disable public directories for that environment.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -226,27 +226,29 @@ export default {
 
 In this example, `client` uses `public`, `admin` uses `public-admin`, and `worker` has no public directory.
 
-An environment's `publicDir` replaces the global value entirely. Omitted options use their defaults rather than inheriting the global settings. For example, `{ copyOnBuild: false }` uses the default directory name `public`, even if the global configuration specifies a different directory. You can also configure an environment's public directory when the global `publicDir` is `false`.
+When an environment defines its own `publicDir`, omitted options use their default values, not the global `publicDir` settings. For example, if the global `name` is `'assets'` and the environment only sets `copyOnBuild: false`, its `name` defaults to `'public'`. To use `assets` in that environment, also set `name: 'assets'`.
+
+If the global `publicDir` is `false`, an environment can still enable its own public directories by setting `publicDir` to an object or array.
 
 ### Build behavior
 
-During production builds, Rsbuild copies each environment's public files to its output directory according to its `copyOnBuild` and `ignore` settings.
+During production builds, each environment copies files from its public directories to its output directory. `copyOnBuild` controls whether files are copied, and `ignore` specifies which files to exclude.
 
-For example, if two web environments both use the default `public` directory, a file at `public/logo.png` is copied to the following locations:
+For example, two web environments using the default `publicDir` settings copy `public/logo.png` as follows:
 
 | Output directories        | Copied files                                                     |
 | ------------------------- | ---------------------------------------------------------------- |
 | `dist` and `dist/web1`    | Only `dist/logo.png`, with no extra copy at `dist/web1/logo.png` |
 | `dist/esm` and `dist/cjs` | Both `dist/esm/logo.png` and `dist/cjs/logo.png`                 |
 
-Skipping the extra copy in a nested output directory only applies when the environments have the same public directory list, in the same order, with matching `copyOnBuild` and `ignore` settings. If the environments use different public directories or copy settings, Rsbuild copies their files separately, even when one output directory is inside the other.
+The first row applies when both environments use the same directory list in the same order, with identical `copyOnBuild` and `ignore` settings for each directory. If these settings differ, each environment copies files according to its own configuration, including to nested output directories such as `dist/web1`.
 
 ### Dev server
 
-During development, all environments share one dev server, which serves their public files together. For the example above, files from both `public` and `public-admin` are accessible, even though `worker` has `publicDir: false`.
+The dev server serves public files from all environments. In the example above, files from both `public` and `public-admin` are accessible. Setting `publicDir: false` for `worker` does not disable either directory.
 
-- If directories contain files with the same URL, the server returns the first match. It checks environments in configuration order and directories within each environment in array order.
-- If multiple environments use the same directory, setting `watch: true` in any one of them enables file watching and page reloads for that directory.
+- The server checks environments in the order they appear in `environments`. Within each environment, it checks directories in `publicDir` array order. If multiple directories contain a file at the same relative path, such as `logo.png`, it serves the first match.
+- If multiple environments use the same directory, setting `watch: true` in any one of them enables watching for that directory. File changes reload the page.
 
 ## Version history
 
