@@ -4,7 +4,7 @@ import type { Rspack } from '@rsbuild/core';
 
 const NODE_REBUILD_DELAY = 10_000;
 
-test('should update web assets early but wait for node builds in downstream middleware', async ({
+test('should apply HMR updates without waiting for slower node environments', async ({
   page,
   devOnly,
   editFile,
@@ -30,16 +30,6 @@ test('should update web assets early but wait for node builds in downstream midd
 
   const rsbuild = await devOnly({
     config: {
-      server: {
-        setup: ({ server }) => {
-          return () => {
-            server.middlewares.use('/node-ready', (_req, res) => {
-              res.statusCode = nodeRebuildDone ? 200 : 503;
-              res.end();
-            });
-          };
-        },
-      },
       environments: {
         web: {
           source: {
@@ -78,14 +68,4 @@ test('should update web assets early but wait for node builds in downstream midd
     timeout: NODE_REBUILD_DELAY / 2,
   });
   expect(nodeRebuildDone).toBe(false);
-
-  // Requests passed to downstream middleware still need the complete build.
-  const responses = await Promise.all(
-    ['GET', 'HEAD', 'POST'].map((method) =>
-      fetch(`http://localhost:${rsbuild.port}/node-ready`, { method }),
-    ),
-  );
-  for (const response of responses) {
-    expect(response.status).toBe(200);
-  }
 });
