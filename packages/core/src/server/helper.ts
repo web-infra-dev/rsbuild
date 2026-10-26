@@ -735,3 +735,20 @@ export type RsbuildServerBase = {
    */
   printUrls: () => void;
 };
+
+export const getPublicDirPaths = (
+  config: NormalizedConfig,
+  watchOnly = false,
+): string[] => {
+  const paths = new Set<string>();
+
+  for (const { server } of Object.values(config.environments)) {
+    for (const { name, watch } of server.publicDir) {
+      if (!watchOnly || watch) {
+        paths.add(name);
+      }
+    }
+  }
+
+  return [...paths];
+};
