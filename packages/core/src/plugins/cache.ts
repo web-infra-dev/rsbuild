@@ -74,18 +74,9 @@ async function getBuildDependencies(
   return buildDependencies;
 }
 
-function isPersistentCache(cache: Rspack.Configuration['cache']) {
-  return (
-    typeof cache === 'object' &&
-    cache !== null &&
-    (cache.type === 'persistent' || cache.type === 'filesystem')
-  );
-}
-
 export function enableCacheDiagnostics(config: Rspack.Configuration): void {
-  if (!isPersistentCache(config.cache)) return;
-
-  const { stats } = config;
+  const { cache, stats } = config;
+  if (typeof cache !== 'object' || cache.type !== 'persistent') return;
   const options: Rspack.StatsOptions =
     typeof stats === 'boolean'
       ? { preset: stats ? 'normal' : 'none' }
@@ -101,7 +92,7 @@ const reportBuildCacheDiagnostics: OnAfterEnvironmentCompileFn = (event) => {
 
   const { environment, stats, ...timing } = event;
   const cache = stats?.compilation.options.cache;
-  const configuration = isPersistentCache(cache) ? cache : null;
+  const configuration = cache && cache.type === 'persistent' ? cache : null;
   const report: BuildCacheDiagnostics = {
     environment: environment.name,
     ...timing,

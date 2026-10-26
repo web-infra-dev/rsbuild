@@ -694,10 +694,7 @@ export type BuildCacheDiagnostics = {
   time: number;
   mode: 'disabled' | 'memory' | 'persistent' | 'unknown';
   configuration: Readonly<
-    Extract<
-      Rspack.Compiler['options']['cache'],
-      { type: 'persistent' | 'filesystem' }
-    >
+    Extract<Rspack.Compiler['options']['cache'], { type: 'persistent' }>
   > | null;
   persistent: {
     status: 'cold' | 'valid' | 'invalidated' | 'error' | 'unknown';
