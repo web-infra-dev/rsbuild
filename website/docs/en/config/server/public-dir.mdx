@@ -226,6 +226,8 @@ export default {
 
 In this example, `client` uses `public`, `admin` uses `public-admin`, and `worker` has no public directory.
 
+During development, all environments share one dev server, which serves the public files configured by each environment. Setting `publicDir: false` in one environment does not affect access to public files from other environments.
+
 ### Configuration inheritance
 
 An environment's own `publicDir` replaces the global `publicDir`. Omitted options use their default values.
@@ -265,13 +267,6 @@ For example, two web environments using the default `publicDir` settings copy `p
 | `dist/esm` and `dist/cjs` | Both `dist/esm/logo.png` and `dist/cjs/logo.png`                 |
 
 If the directory lists, directory order, or `copyOnBuild` and `ignore` settings differ, each environment copies files to its own output directory, even when the output directories are nested.
-
-### Dev server
-
-The dev server serves public files from all environments. In the [directory configuration](#directory-configuration) example, files from both `public` and `public-admin` are accessible. Setting `publicDir: false` for `worker` does not disable either directory.
-
-- The server checks environments in the order they appear in `environments`. Within each environment, it checks directories in `publicDir` array order. If multiple directories contain a file at the same relative path, such as `logo.png`, it serves the first match.
-- If multiple environments use the same directory, setting `watch: true` in any one of them enables watching for that directory. File changes reload the page.
 
 ## Version history
 

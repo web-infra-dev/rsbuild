@@ -226,6 +226,8 @@ export default {
 
 在这个示例中，`client` 使用 `public`，`admin` 使用 `public-admin`，`worker` 不使用 public 目录。
 
+开发时，所有环境共用一个开发服务器，各环境配置的 public 文件都可以通过它访问。在某个环境中设置 `publicDir: false`，不会影响其他环境的 public 文件访问。
+
 ### 配置继承 \{#configuration-inheritance}
 
 环境中单独配置的 `publicDir` 会替换全局 `publicDir`。未填写的选项使用默认值。
@@ -265,13 +267,6 @@ export default {
 | `dist/esm` 和 `dist/cjs` | 分别生成 `dist/esm/logo.png` 和 `dist/cjs/logo.png`       |
 
 如果目录列表、目录顺序或 `copyOnBuild`、`ignore` 设置不同，两个环境会分别复制到自己的输出目录，即使输出目录存在嵌套关系。
-
-### 开发服务器 \{#dev-server}
-
-开发服务器同时提供各环境的 public 文件。在[目录配置](#directory-configuration)的示例中，`public` 和 `public-admin` 中的文件都可以访问。在 `worker` 中设置 `publicDir: false`，不会禁用这两个目录。
-
-- 服务器按 `environments` 中的环境顺序查找文件。同一环境配置多个目录时，按 `publicDir` 数组的顺序查找。如果多个目录中存在相同相对路径的文件（如 `logo.png`），返回最先找到的文件。
-- 多个环境使用同一个目录时，只要其中一个设置了 `watch: true`，就会监听该目录。文件发生变化时，页面会刷新。
 
 ## 版本历史
 
