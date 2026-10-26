@@ -208,8 +208,18 @@ export default {
 export default {
   environments: {
     client: {},
-    admin: { server: { publicDir: { name: 'public-admin' } } },
-    worker: { server: { publicDir: false } },
+    admin: {
+      server: {
+        publicDir: {
+          name: 'public-admin',
+        },
+      },
+    },
+    worker: {
+      server: {
+        publicDir: false,
+      },
+    },
   },
 };
 ```

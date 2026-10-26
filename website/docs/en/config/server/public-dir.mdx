@@ -208,8 +208,18 @@ Configure `server.publicDir` under `environments` to use different public direct
 export default {
   environments: {
     client: {},
-    admin: { server: { publicDir: { name: 'public-admin' } } },
-    worker: { server: { publicDir: false } },
+    admin: {
+      server: {
+        publicDir: {
+          name: 'public-admin',
+        },
+      },
+    },
+    worker: {
+      server: {
+        publicDir: false,
+      },
+    },
   },
 };
 ```
