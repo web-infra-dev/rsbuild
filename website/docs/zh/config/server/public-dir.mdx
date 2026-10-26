@@ -122,19 +122,6 @@ export default {
 };
 ```
 
-#### 多环境 \{#multiple-environments}
-
-执行[多环境构建](/guide/advanced/environments)时，每个环境通过自己的 `copyOnBuild` 设置决定是否复制 public 文件。
-
-例如，两个 web 环境都使用默认的 `public` 目录，其中的 `public/logo.png` 会被复制到以下位置：
-
-| 两个环境的输出目录       | 复制后的文件                                              |
-| ------------------------ | --------------------------------------------------------- |
-| `dist` 和 `dist/web1`    | 只有 `dist/logo.png`，不会再生成一份 `dist/web1/logo.png` |
-| `dist/esm` 和 `dist/cjs` | 分别生成 `dist/esm/logo.png` 和 `dist/cjs/logo.png`       |
-
-只有当两个环境的 public 目录列表、目录顺序以及各目录的 `copyOnBuild`、`ignore` 设置都相同时，Rsbuild 才会省略嵌套目录中的重复复制。如果环境使用不同的 public 目录或复制设置，即使一个输出目录位于另一个内部，也会分别复制文件。
-
 ### ignore
 
 - **类型：** `string[]`
@@ -209,7 +196,9 @@ export default {
 };
 ```
 
-## 环境配置 \{#environments}
+## 多环境 \{#multiple-environments}
+
+### 目录配置 \{#directory-configuration}
 
 - **版本：** `>= 2.3.0`
 
@@ -217,32 +206,32 @@ export default {
 
 ```ts title="rsbuild.config.ts"
 export default {
-  server: {
-    publicDir: { name: 'public' },
-  },
   environments: {
-    client: {
-      output: { distPath: 'dist/client' },
-    },
-    admin: {
-      output: { distPath: 'dist/admin' },
-      server: {
-        publicDir: { name: 'public-admin', watch: true },
-      },
-    },
-    worker: {
-      output: { target: 'web-worker', distPath: 'dist/worker' },
-      server: { publicDir: false },
-    },
+    client: {},
+    admin: { server: { publicDir: { name: 'public-admin' } } },
+    worker: { server: { publicDir: false } },
   },
 };
 ```
 
-在这个示例中，`client` 使用 `public`，`admin` 使用 `public-admin` 并监听文件变化，`worker` 不使用 public 目录。
+在这个示例中，`client` 使用 `public`，`admin` 使用 `public-admin`，`worker` 不使用 public 目录。
 
 环境中的 `publicDir` 会整体替换全局配置。未填写的选项使用默认值，不会继承全局设置。例如，即使全局配置了其他目录，`{ copyOnBuild: false }` 仍使用默认目录名 `public`。全局 `publicDir` 为 `false` 时，也可以在环境中单独配置 public 目录来启用它。
 
-生产构建时，Rsbuild 根据每个环境的 `copyOnBuild` 和 `ignore` 设置，将 public 文件复制到对应的输出目录。输出目录存在嵌套关系时，具体行为见[多环境](#multiple-environments)。
+### 构建行为 \{#build-behavior}
+
+生产构建时，Rsbuild 根据每个环境的 `copyOnBuild` 和 `ignore` 设置，将 public 文件复制到对应的输出目录。
+
+例如，两个 web 环境都使用默认的 `public` 目录，其中的 `public/logo.png` 会被复制到以下位置：
+
+| 两个环境的输出目录       | 复制后的文件                                              |
+| ------------------------ | --------------------------------------------------------- |
+| `dist` 和 `dist/web1`    | 只有 `dist/logo.png`，不会再生成一份 `dist/web1/logo.png` |
+| `dist/esm` 和 `dist/cjs` | 分别生成 `dist/esm/logo.png` 和 `dist/cjs/logo.png`       |
+
+只有当两个环境的 public 目录列表、目录顺序以及各目录的 `copyOnBuild`、`ignore` 设置都相同时，Rsbuild 才会省略嵌套目录中的重复复制。如果环境使用不同的 public 目录或复制设置，即使一个输出目录位于另一个内部，也会分别复制文件。
+
+### 开发服务器 \{#dev-server}
 
 开发时，所有环境共用一个开发服务器，各环境的 public 文件都通过这个服务器提供访问。以上面的配置为例，`public` 和 `public-admin` 中的文件都可以访问，`worker` 的 `publicDir: false` 不会禁用其他环境的 public 目录。
 

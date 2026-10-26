@@ -122,19 +122,6 @@ export default {
 };
 ```
 
-#### Multiple environments
-
-When performing [multi-environment builds](/guide/advanced/environments), each environment's `copyOnBuild` setting determines whether to copy its public files.
-
-For example, if two web environments both use the default `public` directory, a file at `public/logo.png` is copied to the following locations:
-
-| Output directories        | Copied files                                                     |
-| ------------------------- | ---------------------------------------------------------------- |
-| `dist` and `dist/web1`    | Only `dist/logo.png`, with no extra copy at `dist/web1/logo.png` |
-| `dist/esm` and `dist/cjs` | Both `dist/esm/logo.png` and `dist/cjs/logo.png`                 |
-
-Skipping the extra copy in a nested output directory only applies when the environments have the same public directory list, in the same order, with matching `copyOnBuild` and `ignore` settings. If the environments use different public directories or copy settings, Rsbuild copies their files separately, even when one output directory is inside the other.
-
 ### ignore
 
 - **Type:** `string[]`
@@ -209,7 +196,9 @@ export default {
 };
 ```
 
-## Environments
+## Multiple environments
+
+### Directory configuration
 
 - **Version:** `>= 2.3.0`
 
@@ -217,32 +206,32 @@ Configure `server.publicDir` under `environments` to use different public direct
 
 ```ts title="rsbuild.config.ts"
 export default {
-  server: {
-    publicDir: { name: 'public' },
-  },
   environments: {
-    client: {
-      output: { distPath: 'dist/client' },
-    },
-    admin: {
-      output: { distPath: 'dist/admin' },
-      server: {
-        publicDir: { name: 'public-admin', watch: true },
-      },
-    },
-    worker: {
-      output: { target: 'web-worker', distPath: 'dist/worker' },
-      server: { publicDir: false },
-    },
+    client: {},
+    admin: { server: { publicDir: { name: 'public-admin' } } },
+    worker: { server: { publicDir: false } },
   },
 };
 ```
 
-In this example, `client` uses `public`, `admin` uses `public-admin` and watches it for changes, and `worker` has no public directory.
+In this example, `client` uses `public`, `admin` uses `public-admin`, and `worker` has no public directory.
 
 An environment's `publicDir` replaces the global value entirely. Omitted options use their defaults rather than inheriting the global settings. For example, `{ copyOnBuild: false }` uses the default directory name `public`, even if the global configuration specifies a different directory. You can also configure an environment's public directory when the global `publicDir` is `false`.
 
-During production builds, Rsbuild copies each environment's public files to its output directory according to its `copyOnBuild` and `ignore` settings. See [Multiple environments](#multiple-environments) for how nested output directories affect copying.
+### Build behavior
+
+During production builds, Rsbuild copies each environment's public files to its output directory according to its `copyOnBuild` and `ignore` settings.
+
+For example, if two web environments both use the default `public` directory, a file at `public/logo.png` is copied to the following locations:
+
+| Output directories        | Copied files                                                     |
+| ------------------------- | ---------------------------------------------------------------- |
+| `dist` and `dist/web1`    | Only `dist/logo.png`, with no extra copy at `dist/web1/logo.png` |
+| `dist/esm` and `dist/cjs` | Both `dist/esm/logo.png` and `dist/cjs/logo.png`                 |
+
+Skipping the extra copy in a nested output directory only applies when the environments have the same public directory list, in the same order, with matching `copyOnBuild` and `ignore` settings. If the environments use different public directories or copy settings, Rsbuild copies their files separately, even when one output directory is inside the other.
+
+### Dev server
 
 During development, all environments share one dev server, which serves their public files together. For the example above, files from both `public` and `public-admin` are accessible, even though `worker` has `publicDir: false`.
 
