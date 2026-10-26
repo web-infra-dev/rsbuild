@@ -226,9 +226,32 @@ export default {
 
 In this example, `client` uses `public`, `admin` uses `public-admin`, and `worker` has no public directory.
 
-When an environment defines its own `publicDir`, omitted options use their default values, not the global `publicDir` settings. For example, if the global `name` is `'assets'` and the environment only sets `copyOnBuild: false`, its `name` defaults to `'public'`. To use `assets` in that environment, also set `name: 'assets'`.
+### Configuration inheritance
 
-If the global `publicDir` is `false`, an environment can still enable its own public directories by setting `publicDir` to an object or array.
+An environment's own `publicDir` replaces the global `publicDir`. Omitted options use their default values.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    publicDir: {
+      name: 'assets',
+    },
+  },
+  environments: {
+    client: {
+      server: {
+        publicDir: {
+          copyOnBuild: false,
+        },
+      },
+    },
+  },
+};
+```
+
+Here, `client` does not set `name`, so it uses the default directory `public`. To use `assets`, also set `name: 'assets'` in `client.server.publicDir`.
+
+Even when the global `publicDir` is `false`, an environment can enable its own public directories by setting `publicDir` to an object or array.
 
 ### Build behavior
 
@@ -245,7 +268,7 @@ The first row applies when both environments use the same directory list in the 
 
 ### Dev server
 
-The dev server serves public files from all environments. In the example above, files from both `public` and `public-admin` are accessible. Setting `publicDir: false` for `worker` does not disable either directory.
+The dev server serves public files from all environments. In the [directory configuration](#directory-configuration) example, files from both `public` and `public-admin` are accessible. Setting `publicDir: false` for `worker` does not disable either directory.
 
 - The server checks environments in the order they appear in `environments`. Within each environment, it checks directories in `publicDir` array order. If multiple directories contain a file at the same relative path, such as `logo.png`, it serves the first match.
 - If multiple environments use the same directory, setting `watch: true` in any one of them enables watching for that directory. File changes reload the page.
