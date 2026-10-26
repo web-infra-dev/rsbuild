@@ -1,39 +1,28 @@
-import { join } from 'node:path';
 import { setTimeout } from 'node:timers/promises';
 import { expect, test } from '@e2e/helper';
 import type { Rspack } from '@rsbuild/core';
 
 test('should serve web assets early but wait for the full build before downstream middleware', async ({
-  copySrcDir,
   devOnly,
-  editFile,
 }) => {
-  const tempSrc = await copySrcDir();
-  const nodeStarted = Promise.withResolvers<void>();
   const releaseNode = Promise.withResolvers<void>();
   const requestsArrived = Promise.withResolvers<void>();
   const methods = ['GET', 'HEAD', 'POST'];
-  let rebuilding = false;
-  let nodeRebuildDone = false;
+  let nodeBuildDone = false;
   let requestCount = 0;
 
-  const pauseNodeRebuild: Rspack.RspackPluginInstance = {
+  const pauseNodeBuild: Rspack.RspackPluginInstance = {
     apply(compiler) {
-      compiler.hooks.afterEmit.tapPromise('pause-node-rebuild', async () => {
-        if (rebuilding) {
-          nodeStarted.resolve();
-          await releaseNode.promise;
-          nodeRebuildDone = true;
-        }
+      compiler.hooks.afterEmit.tapPromise('pause-node-build', async () => {
+        await releaseNode.promise;
+        nodeBuildDone = true;
       });
     },
   };
 
   const rsbuild = await devOnly({
+    waitFirstCompileDone: false,
     config: {
-      source: {
-        entry: { index: join(tempSrc, 'index.js') },
-      },
       server: {
         setup: ({ server }) => {
           server.middlewares.use('/node-ready', (_req, _res, next) => {
@@ -44,7 +33,7 @@ test('should serve web assets early but wait for the full build before downstrea
           });
           return () => {
             server.middlewares.use('/node-ready', (_req, res) => {
-              res.statusCode = nodeRebuildDone ? 200 : 503;
+              res.statusCode = nodeBuildDone ? 200 : 503;
               res.end();
             });
           };
@@ -55,7 +44,7 @@ test('should serve web assets early but wait for the full build before downstrea
         node: {
           output: { target: 'node' },
           tools: {
-            rspack: { plugins: [pauseNodeRebuild] },
+            rspack: { plugins: [pauseNodeBuild] },
           },
         },
       },
@@ -63,24 +52,14 @@ test('should serve web assets early but wait for the full build before downstrea
   });
 
   const url = `http://localhost:${rsbuild.port}`;
-  rebuilding = true;
   try {
-    await editFile(join(tempSrc, 'index.js'), (code) =>
-      code.replace('hello world', 'changed'),
-    );
-    await nodeStarted.promise;
-
     // Web output must be available while the Node.js build is still paused.
-    await expect
-      .poll(async () => {
-        const response = await fetch(`${url}/static/js/index.js`, {
-          signal: AbortSignal.timeout(2_000),
-        });
-        expect(response.status).toBe(200);
-        return response.text();
-      })
-      .toContain('changed');
-    expect(nodeRebuildDone).toBe(false);
+    const asset = await fetch(`${url}/static/js/index.js`, {
+      signal: AbortSignal.timeout(5_000),
+    });
+    expect(asset.status).toBe(200);
+    expect(await asset.text()).toContain('hello world');
+    expect(nodeBuildDone).toBe(false);
 
     const responses = Promise.all(
       methods.map((method) =>
