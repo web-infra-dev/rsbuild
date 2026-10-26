@@ -17,6 +17,7 @@ import {
 import { CLIENT_PATH } from '../../constants';
 import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
+import { getRsbuildStats } from '../../helpers/stats';
 import { isOverlayEnabled } from '../../helpers/overlayConfig';
 import { toPosixPath } from '../../helpers/path';
 import type {
@@ -128,6 +129,20 @@ export const setupServerHooks = ({
     const { errors, warnings } = stats.compilation;
     if (errors.length === errorsCount && warnings.length === warningsCount) {
       return;
+    }
+
+    // In multi-environment builds, notify this environment's clients as soon
+    // as it is compiled instead of waiting for all environments. Builds with
+    // errors still wait so the overlay shows errors from every environment.
+    if (
+      errorsCount === null &&
+      warningsCount === null &&
+      context.environmentList.length > 1 &&
+      !stats.hasErrors()
+    ) {
+      socketServer.onEnvironmentDone(token, () =>
+        getRsbuildStats(stats, compiler, context.logger, context.action),
+      );
     }
 
     const isRecalled = errorsCount !== null || warningsCount !== null;
@@ -312,6 +327,40 @@ export const assetsMiddleware = async ({
     });
   });
 
+  // When both web and Node.js environments exist, serve web assets (such as
+  // HMR update files) once every web environment is compiled, without waiting
+  // for Node.js environments. Node.js bundles are loaded via `loadBundle`,
+  // which waits for its own environment.
+  const webCompilers = compilers.filter((item) => !isNodeCompiler(item));
+  const compiledWebCompilers = new Set<Compiler>();
+  const hasEarlyWebAssets =
+    webCompilers.length > 0 && webCompilers.length < compilers.length;
+  const isWebReady = () =>
+    hasEarlyWebAssets && compiledWebCompilers.size === webCompilers.length;
+
+  if (hasEarlyWebAssets) {
+    for (const item of webCompilers) {
+      const reset = () => {
+        compiledWebCompilers.delete(item);
+      };
+      item.hooks.invalid.tap('rsbuild-dev-middleware', reset);
+      item.hooks.watchRun.tap('rsbuild-dev-middleware', reset);
+      item.hooks.done.tap('rsbuild-dev-middleware', (stats) => {
+        if (stats.hasErrors()) {
+          return;
+        }
+        compiledWebCompilers.add(item);
+        if (isWebReady()) {
+          process.nextTick(() => {
+            if (isWebReady()) {
+              flushCallbacks();
+            }
+          });
+        }
+      });
+    }
+  }
+
   const writeToDiskList = environmentList.map(
     (environment) => environment.config.dev.writeToDisk,
   );
@@ -327,7 +376,8 @@ export const assetsMiddleware = async ({
   const ready = (callback: () => void) => {
     if (
       context.buildState.status === 'done' ||
-      context.buildState.status === 'failed'
+      context.buildState.status === 'failed' ||
+      isWebReady()
     ) {
       callback();
     } else {
