@@ -124,10 +124,16 @@ export default {
 
 #### Multiple environments
 
-When performing [multi-environment builds](/guide/advanced/environments), Rsbuild copies files from the public directory to the output directory of each environment. For environments with the same public directory copy settings, nested output directories are deduplicated: files are only copied to the outermost output directory. For example:
+When performing [multi-environment builds](/guide/advanced/environments), each environment's `copyOnBuild` setting determines whether to copy its public files.
 
-- The distDir of the `web` environment is `dist`, and the distDir of the `web1` environment is `dist/web1`. Due to the nested relationship between `dist` and `dist/web1`, the public directory files are only copied to the `dist` directory.
-- The distDir of the `esm` environment is `dist/esm`, and the distDir of the `cjs` environment is `dist/cjs`. Since there is no nesting relationship between `dist/esm` and `dist/cjs`, the public directory files will be copied to both the `dist/esm` and `dist/cjs` directories.
+For example, if two web environments both use the default `public` directory, a file at `public/logo.png` is copied to the following locations:
+
+| Output directories        | Copied files                                                     |
+| ------------------------- | ---------------------------------------------------------------- |
+| `dist` and `dist/web1`    | Only `dist/logo.png`, with no extra copy at `dist/web1/logo.png` |
+| `dist/esm` and `dist/cjs` | Both `dist/esm/logo.png` and `dist/cjs/logo.png`                 |
+
+Skipping the extra copy in a nested output directory only applies when the environments have the same public directory list, in the same order, with matching `copyOnBuild` and `ignore` settings. If the environments use different public directories or copy settings, Rsbuild copies their files separately, even when one output directory is inside the other.
 
 ### ignore
 
@@ -207,7 +213,7 @@ export default {
 
 - **Version:** `>= 2.3.0`
 
-Each environment inherits the global `server.publicDir` unless it defines its own value. An explicit object, array, or `false` replaces the entire value; `false` disables public directories for that environment.
+Configure `server.publicDir` under `environments` to use different public directories for each environment. Environments without this option use the global setting. Set it to `false` to disable public directories for an environment.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -215,28 +221,33 @@ export default {
     publicDir: { name: 'public' },
   },
   environments: {
-    client: {},
+    client: {
+      output: { distPath: 'dist/client' },
+    },
     admin: {
+      output: { distPath: 'dist/admin' },
       server: {
         publicDir: { name: 'public-admin', watch: true },
       },
     },
     worker: {
-      output: { target: 'web-worker' },
+      output: { target: 'web-worker', distPath: 'dist/worker' },
       server: { publicDir: false },
     },
   },
 };
 ```
 
-In this example, `client` uses `public`, `admin` uses `public-admin`, and `worker` has no public directory.
+In this example, `client` uses `public`, `admin` uses `public-admin` and watches it for changes, and `worker` has no public directory.
 
-- **Build:** each environment copies files from its own directories, respecting `copyOnBuild` and `ignore`.
-- **Dev:** the shared server serves directories from all enabled environments. Directories are checked in environment configuration order, then array order; the first matching file is served. Duplicate directory paths are served once. A path is watched if any environment sets `watch: true` for it.
+An environment's `publicDir` replaces the global value entirely. Omitted options use their defaults rather than inheriting the global settings. For example, `{ copyOnBuild: false }` uses the default directory name `public`, even if the global configuration specifies a different directory. You can also configure an environment's public directory when the global `publicDir` is `false`.
 
-Replacement does not merge fields with the global value. For example, `{ copyOnBuild: false }` uses the default directory name `public`, even if the global configuration uses a different name. An environment can also enable a directory when the global `publicDir` is `false`.
+During production builds, Rsbuild copies each environment's public files to its output directory according to its `copyOnBuild` and `ignore` settings. See [Multiple environments](#multiple-environments) for how nested output directories affect copying.
 
-Disabling a directory in one environment does not prevent access to directories enabled by other environments on the shared dev server.
+During development, all environments share one dev server, which serves their public files together. For the example above, files from both `public` and `public-admin` are accessible, even though `worker` has `publicDir: false`.
+
+- If directories contain files with the same URL, the server returns the first match. It checks environments in configuration order and directories within each environment in array order.
+- If multiple environments use the same directory, setting `watch: true` in any one of them enables file watching and page reloads for that directory.
 
 ## Version history
 

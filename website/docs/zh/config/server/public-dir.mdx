@@ -122,12 +122,18 @@ export default {
 };
 ```
 
-#### 多环境
+#### 多环境 \{#multiple-environments}
 
-当执行 [多环境构建](/guide/advanced/environments) 时，Rsbuild 会将文件从 public 目录拷贝到各个环境的输出目录下。对于 public 目录复制设置相同的 environment，嵌套的输出目录会被去重，文件仅复制到最外层目录。例如：
+执行[多环境构建](/guide/advanced/environments)时，每个环境通过自己的 `copyOnBuild` 设置决定是否复制 public 文件。
 
-- `web` 环境的构建产物目录设置为 `dist`，`web1` 环境的构建产物目录设置为 `dist/web1`。由于 `dist` 和 `dist/web1` 存在嵌套关系，此时，public 目录文件仅复制到 `dist` 目录下。
-- `esm` 环境的构建产物目录设置为 `dist/esm`，`cjs` 环境的构建产物目录设置为 `dist/cjs`。由于 `dist/esm` 和 `dist/cjs` 不存在嵌套关系，此时，public 目录文件将分别复制到 `dist/esm` 和 `dist/cjs` 目录下。
+例如，两个 web 环境都使用默认的 `public` 目录，其中的 `public/logo.png` 会被复制到以下位置：
+
+| 两个环境的输出目录       | 复制后的文件                                              |
+| ------------------------ | --------------------------------------------------------- |
+| `dist` 和 `dist/web1`    | 只有 `dist/logo.png`，不会再生成一份 `dist/web1/logo.png` |
+| `dist/esm` 和 `dist/cjs` | 分别生成 `dist/esm/logo.png` 和 `dist/cjs/logo.png`       |
+
+只有当两个环境的 public 目录列表、目录顺序以及各目录的 `copyOnBuild`、`ignore` 设置都相同时，Rsbuild 才会省略嵌套目录中的重复复制。如果环境使用不同的 public 目录或复制设置，即使一个输出目录位于另一个内部，也会分别复制文件。
 
 ### ignore
 
@@ -207,7 +213,7 @@ export default {
 
 - **版本：** `>= 2.3.0`
 
-每个 environment 默认继承全局 `server.publicDir`；显式配置对象、数组或 `false` 时，整体替换全局值。`false` 表示禁用该 environment 的 public 目录。
+你可以在 `environments` 中为不同环境单独配置 `server.publicDir`。未配置时，环境会使用全局设置；设置为 `false` 则禁用该环境的 public 目录。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -215,32 +221,37 @@ export default {
     publicDir: { name: 'public' },
   },
   environments: {
-    client: {},
+    client: {
+      output: { distPath: 'dist/client' },
+    },
     admin: {
+      output: { distPath: 'dist/admin' },
       server: {
         publicDir: { name: 'public-admin', watch: true },
       },
     },
     worker: {
-      output: { target: 'web-worker' },
+      output: { target: 'web-worker', distPath: 'dist/worker' },
       server: { publicDir: false },
     },
   },
 };
 ```
 
-在这个示例中，`client` 使用 `public`，`admin` 使用 `public-admin`，`worker` 不使用 public 目录。
+在这个示例中，`client` 使用 `public`，`admin` 使用 `public-admin` 并监听文件变化，`worker` 不使用 public 目录。
 
-- **构建时：** 每个 environment 按自己的 `copyOnBuild` 和 `ignore` 设置复制 public 文件。
-- **开发时：** 共享服务器统一提供所有启用的 environment 的 public 目录。先按 environment 的配置顺序，再按目录数组顺序查找文件，返回第一个匹配结果。同一路径只提供一次；只要有一个 environment 为该路径设置了 `watch: true`，就会监听它。
+环境中的 `publicDir` 会整体替换全局配置。未填写的选项使用默认值，不会继承全局设置。例如，即使全局配置了其他目录，`{ copyOnBuild: false }` 仍使用默认目录名 `public`。全局 `publicDir` 为 `false` 时，也可以在环境中单独配置 public 目录来启用它。
 
-整体替换不会与全局值合并字段。例如，即使全局配置了其他目录名，`{ copyOnBuild: false }` 仍使用默认目录名 `public`。全局 `publicDir` 为 `false` 时，environment 也可以显式配置目录来启用它。
+生产构建时，Rsbuild 根据每个环境的 `copyOnBuild` 和 `ignore` 设置，将 public 文件复制到对应的输出目录。输出目录存在嵌套关系时，具体行为见[多环境](#multiple-environments)。
 
-在一个 environment 中禁用 public 目录，不会阻止访问其他 environment 在共享开发服务器中启用的目录。
+开发时，所有环境共用一个开发服务器，各环境的 public 文件都通过这个服务器提供访问。以上面的配置为例，`public` 和 `public-admin` 中的文件都可以访问，`worker` 的 `publicDir: false` 不会禁用其他环境的 public 目录。
+
+- 多个目录中的文件对应同一个 URL 时，服务器返回最先找到的文件：先按环境的配置顺序查找，再按各环境中目录数组的顺序查找。
+- 多个环境使用同一个目录时，只要其中一个设置了 `watch: true`，就会监听该目录的文件变化并刷新页面。
 
 ## 版本历史
 
-| 版本   | 变更内容                            |
-| ------ | ----------------------------------- |
-| v2.3.0 | 支持按 environment 配置 `publicDir` |
-| v2.0.0 | 新增 `ignore` 选项                  |
+| 版本   | 变更内容                   |
+| ------ | -------------------------- |
+| v2.3.0 | 支持按环境配置 `publicDir` |
+| v2.0.0 | 新增 `ignore` 选项         |
