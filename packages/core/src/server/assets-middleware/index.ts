@@ -86,6 +86,22 @@ const isNodeCompiler = (compiler: Compiler) => {
   return false;
 };
 
+const getCompilerInfo = (compiler: Compiler | MultiCompiler) => {
+  const allCompilers = isMultiCompiler(compiler)
+    ? compiler.compilers
+    : [compiler];
+  const webCompilers = allCompilers.filter(
+    (compiler) => !isNodeCompiler(compiler),
+  );
+
+  // Only mixed web and Node.js builds need early updates. Use the same flag
+  // for client notifications and asset requests so both can skip waiting for Node.js.
+  const earlyWebUpdates =
+    webCompilers.length > 0 && webCompilers.length < allCompilers.length;
+
+  return { allCompilers, webCompilers, earlyWebUpdates };
+};
+
 const isTsError = (error: Rspack.RspackError) =>
   'message' in error && error.stack?.includes('ts-checker-rspack-plugin');
 
@@ -95,12 +111,14 @@ export const setupServerHooks = ({
   token,
   socketServer,
   liveReload,
+  earlyWebUpdates,
 }: {
   context: InternalContext;
   compiler: Compiler;
   token: string;
   socketServer: SocketServer;
   liveReload: LiveReload;
+  earlyWebUpdates: boolean;
 }): void => {
   // Node HMR is not supported yet
   if (isNodeCompiler(compiler)) {
@@ -131,13 +149,12 @@ export const setupServerHooks = ({
       return;
     }
 
-    // In multi-environment builds, notify this environment's clients as soon
-    // as it is compiled instead of waiting for all environments. Builds with
-    // errors still wait so the overlay shows errors from every environment.
+    // In mixed web and Node.js builds, notify this environment's clients as
+    // soon as it compiles successfully, without waiting for Node.js environments.
     if (
       errorsCount === null &&
       warningsCount === null &&
-      context.environmentList.length > 1 &&
+      earlyWebUpdates &&
       !stats.hasErrors()
     ) {
       socketServer.onEnvironmentDone(token, () =>
@@ -276,6 +293,8 @@ export const assetsMiddleware = async ({
   const { logger } = context;
   const resolvedHost = await resolveHostname(config.server.host);
   const { environmentList } = context;
+  const { allCompilers, webCompilers, earlyWebUpdates } =
+    getCompilerInfo(compiler);
 
   const setupCompiler = (compiler: Compiler, index: number) => {
     const environment = environmentList[index];
@@ -303,12 +322,12 @@ export const assetsMiddleware = async ({
       socketServer,
       token,
       liveReload: environment.config.dev.liveReload,
+      earlyWebUpdates,
     });
   };
 
   applyToCompiler(compiler, setupCompiler);
 
-  const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
   const callbacks: (() => void)[] = [];
 
   const flushCallbacks = () => {
@@ -331,14 +350,11 @@ export const assetsMiddleware = async ({
   // HMR update files) once every web environment is compiled, without waiting
   // for Node.js environments. Node.js bundles are loaded via `loadBundle`,
   // which waits for its own environment.
-  const webCompilers = compilers.filter((item) => !isNodeCompiler(item));
   const compiledWebCompilers = new Set<Compiler>();
-  const hasEarlyWebAssets =
-    webCompilers.length > 0 && webCompilers.length < compilers.length;
   const isWebReady = () =>
-    hasEarlyWebAssets && compiledWebCompilers.size === webCompilers.length;
+    earlyWebUpdates && compiledWebCompilers.size === webCompilers.length;
 
-  if (hasEarlyWebAssets) {
+  if (earlyWebUpdates) {
     for (const item of webCompilers) {
       const reset = () => {
         compiledWebCompilers.delete(item);
@@ -365,12 +381,12 @@ export const assetsMiddleware = async ({
     (environment) => environment.config.dev.writeToDisk,
   );
   if (writeToDiskList.some(Boolean)) {
-    setupWriteToDisk(compilers, writeToDiskList, logger);
+    setupWriteToDisk(allCompilers, writeToDiskList, logger);
   }
 
   const outputFileSystem = await setupOutputFileSystem(
     writeToDiskList.every((writeToDisk) => writeToDisk === true),
-    compilers,
+    allCompilers,
   );
 
   const ready = (callback: () => void) => {
@@ -399,9 +415,9 @@ export const assetsMiddleware = async ({
       watching = compiler.watching;
     } else {
       const watchOptions =
-        compilers.length > 1
-          ? compilers.map(({ options }) => options.watchOptions || {})
-          : compilers[0].options.watchOptions || {};
+        allCompilers.length > 1
+          ? allCompilers.map(({ options }) => options.watchOptions || {})
+          : allCompilers[0].options.watchOptions || {};
 
       watching = compiler.watch(watchOptions, (error) => {
         if (error) {
