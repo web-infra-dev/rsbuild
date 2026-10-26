@@ -739,13 +739,16 @@ export type RsbuildServerBase = {
 export const getPublicDirPaths = (
   config: NormalizedConfig,
   watchOnly = false,
-): string[] =>
-  Array.from(
-    new Set(
-      Object.values(config.environments).flatMap(({ server }) =>
-        server.publicDir
-          .filter((dir) => !watchOnly || dir.watch)
-          .map((dir) => dir.name),
-      ),
-    ),
-  );
+): string[] => {
+  const paths = new Set<string>();
+
+  for (const { server } of Object.values(config.environments)) {
+    for (const { name, watch } of server.publicDir) {
+      if (!watchOnly || watch) {
+        paths.add(name);
+      }
+    }
+  }
+
+  return [...paths];
+};
