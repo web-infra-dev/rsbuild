@@ -264,7 +264,12 @@ For example, two web environments using the default `publicDir` settings copy `p
 | `dist` and `dist/web1`    | Only `dist/logo.png`, with no extra copy at `dist/web1/logo.png` |
 | `dist/esm` and `dist/cjs` | Both `dist/esm/logo.png` and `dist/cjs/logo.png`                 |
 
-The first row applies when both environments use the same directory list in the same order, with identical `copyOnBuild` and `ignore` settings for each directory. If these settings differ, each environment copies files according to its own configuration, including to nested output directories such as `dist/web1`.
+Environments with different public directories copy their files separately. For example, one environment uses `public` and outputs to `dist`; another uses `public-admin` and outputs to `dist/web1`. During the build, files from `public` are copied to `dist`, and files from `public-admin` are copied to `dist/web1`.
+
+Rsbuild only copies once to `dist`, as in the first table row, when both environments meet these conditions:
+
+- They use the same public directory list in the same order.
+- Each directory has the same `copyOnBuild` and `ignore` settings.
 
 ### Dev server
 

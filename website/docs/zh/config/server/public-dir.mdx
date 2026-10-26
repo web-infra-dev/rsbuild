@@ -264,7 +264,12 @@ export default {
 | `dist` 和 `dist/web1`    | 只有 `dist/logo.png`，不会再生成一份 `dist/web1/logo.png` |
 | `dist/esm` 和 `dist/cjs` | 分别生成 `dist/esm/logo.png` 和 `dist/cjs/logo.png`       |
 
-表格第一行的行为要求两个环境使用相同的目录列表和顺序，且对应目录的 `copyOnBuild`、`ignore` 设置也相同。配置不同时，每个环境会按自己的设置复制文件，不再因为目录嵌套而跳过 `dist/web1`。
+如果两个环境使用不同的 public 目录，则会分别复制。例如，一个环境使用 `public`，输出到 `dist`；另一个使用 `public-admin`，输出到 `dist/web1`。构建时，`public` 中的文件复制到 `dist`，`public-admin` 中的文件复制到 `dist/web1`。
+
+只有两个环境满足以下条件时，Rsbuild 才会像表格第一行那样，只向 `dist` 复制一次：
+
+- public 目录列表相同，顺序也相同。
+- 每个目录的 `copyOnBuild` 和 `ignore` 设置相同。
 
 ### 开发服务器 \{#dev-server}
 
