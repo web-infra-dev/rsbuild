@@ -210,6 +210,33 @@ pluginReact({
 
 For more options, refer to the official [React Compiler configuration documentation](https://react.dev/reference/react-compiler/configuration).
 
+#### Enable in non-web environments
+
+The `reactCompiler` option only applies to environments whose [output.target](/config/output/target) is `web`. React Compiler primarily reduces computation during component re-renders. This offers limited benefit for typical server-side rendering, so skipping this step saves build time.
+
+If your React app runs in Node.js or a Web Worker, you can enable React Compiler manually through `jsc.transform.reactCompiler` in [tools.swc](/config/tools/swc) to optimize component re-renders. For example, in a `node` environment:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  output: {
+    target: 'node',
+  },
+  tools: {
+    swc: {
+      jsc: {
+        transform: {
+          reactCompiler: true,
+        },
+      },
+    },
+  },
+});
+```
+
 ### splitChunks
 
 When using Rsbuild's [default split chunks preset](/config/split-chunks#default), this plugin splits `react` and `react-router` related packages into separate chunks:

@@ -1,5 +1,5 @@
 import { matchPlugin } from '@scripts/test-helper';
-import { createRsbuild } from '../src';
+import { createRsbuild, type Rspack } from '../src';
 
 describe('plugin-output', () => {
   it('should set output correctly', async () => {
@@ -169,6 +169,25 @@ describe('plugin-output', () => {
     expect(rspackConfigs[0].output).toMatchSnapshot();
   });
 
+  it('should output ES modules when target is web-worker and output.module is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          target: 'web-worker',
+          module: true,
+        },
+      },
+    });
+
+    const [config] = await rsbuild.initConfigs();
+    expect(config.output).toMatchObject({
+      module: true,
+      chunkFormat: 'module',
+      chunkLoading: 'import',
+      workerChunkLoading: 'import',
+    });
+  });
+
   it('should allow using copy plugin', async () => {
     const rsbuild = await createRsbuild({
       config: {
@@ -201,11 +220,13 @@ describe('plugin-output', () => {
         },
         tools: {
           bundlerChain: (chain, { CHAIN_ID }) => {
-            chain.plugin(CHAIN_ID.PLUGIN.COPY).tap((args) => [
-              {
-                patterns: [...(args[0]?.patterns || []), 'tests/'],
-              },
-            ]);
+            chain
+              .plugin(CHAIN_ID.PLUGIN.COPY)
+              .tap((args: Rspack.CopyRspackPluginOptions[]) => [
+                {
+                  patterns: [...(args[0]?.patterns || []), 'tests/'],
+                },
+              ]);
           },
         },
       },

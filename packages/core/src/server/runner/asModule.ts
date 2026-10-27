@@ -17,11 +17,12 @@ const normalizeModuleExports = (
 };
 
 export const asModule = async (
+  vm: typeof import('node:vm'),
   moduleExports: unknown,
   context: Record<string, unknown>,
   unlinked?: boolean,
 ): Promise<Module | SyntheticModule> => {
-  const { Module, SyntheticModule } = await import('node:vm');
+  const { Module, SyntheticModule } = vm;
 
   if (moduleExports instanceof Module) {
     return moduleExports;

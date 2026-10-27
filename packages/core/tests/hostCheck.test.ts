@@ -1,0 +1,61 @@
+import type { IncomingHttpHeaders } from 'node:http';
+import { isHostAllowed, isRequestHostAllowed } from '../src/server/hostCheck';
+
+it.each<[string | undefined, string[], boolean]>([
+  ['localhost', [], true],
+  ['LOCALHOST.:3000', [], true],
+  ['app.localhost', [], true],
+  ['127.0.0.1:3000', [], true],
+  ['192.168.1.2', [], true],
+  ['127.1', [], true],
+  ['[::1]:3000', [], true],
+  ['[2001:db8::1]', [], true],
+  ['app.example.test', [], false],
+  ['app.example.test:3000', ['app.example.test'], true],
+  ['APP.EXAMPLE.TEST.:3000', ['App.Example.Test.'], true],
+  ['sub.app.example.test', ['app.example.test'], false],
+  ['example.test', ['.example.test'], true],
+  ['a.b.example.test:3000', ['.EXAMPLE.TEST.'], true],
+  ['app.example.test', ['other.test', '.example.test'], true],
+  ['fakeexample.test', ['.example.test'], false],
+  ['example.test.attacker.test', ['.example.test'], false],
+  ['fakelocalhost', [], false],
+  ['localhost.attacker.test', [], false],
+  [undefined, [], false],
+  ['', [], false],
+  ['localhost:65536', [], false],
+  ['localhost:', [], true],
+  ['localhost:abc', [], false],
+  ['localhost:3000:4000', [], false],
+  ['::1', [], false],
+  ['[::1', [], false],
+  ['[:::1]', [], false],
+  ['[localhost]', [], false],
+  ['http://localhost', [], false],
+  ['attacker.test@localhost', [], false],
+  ['localhost/attacker.test', [], false],
+  ['localhost\\attacker.test', [], false],
+  ['localhost?query', [], false],
+  ['localhost#fragment', [], false],
+  ['%6cocalhost', [], false],
+  ['localhost\n', [], false],
+  [' localhost', [], false],
+  ['localhost,attacker.test', [], false],
+  ['.localhost', [], true],
+  ['app..localhost', [], true],
+])('isHostAllowed(%j, %j) should return %s', (host, allowedHosts, expected) => {
+  expect(isHostAllowed(host, allowedHosts)).toBe(expected);
+});
+
+it.each<[IncomingHttpHeaders, boolean]>([
+  [{ host: 'localhost' }, true],
+  [{ ':authority': 'localhost:3000' }, true],
+  [{ ':authority': 'attacker.test' }, false],
+  [{ ':authority': 'localhost', host: 'localhost' }, true],
+  [{ ':authority': 'localhost', host: '127.0.0.1' }, false],
+  [{ ':authority': ['localhost'] }, false],
+  [{ 'x-forwarded-host': 'localhost' }, false],
+  [{ host: 'attacker.test', 'x-forwarded-host': 'localhost' }, false],
+])('isRequestHostAllowed(%j) should return %s', (headers, expected) => {
+  expect(isRequestHostAllowed(headers, [])).toBe(expected);
+});

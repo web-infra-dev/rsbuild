@@ -158,7 +158,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
   // Collect lazy compiled modules from the infrastructure logs
   compiler.hooks.infrastructureLog.tap(HOOK_NAME, (name, _, args) => {
-    const log = args[0];
+    const log: unknown = args[0];
     if (
       name === 'LazyCompilation' &&
       typeof log === 'string' &&
@@ -170,10 +170,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       }
 
       const { rootPath } = context;
+      const rootPrefix = rootPath.endsWith(sep) ? rootPath : rootPath + sep;
       const absolutePath = resource.split('!').pop();
 
-      if (absolutePath?.startsWith(rootPath)) {
-        const relativePath = absolutePath.replace(rootPath, '');
+      if (absolutePath?.startsWith(rootPrefix)) {
+        const relativePath = absolutePath.slice(rootPrefix.length);
         lazyModules.add(relativePath);
       }
     }
@@ -207,6 +208,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     context.buildState.stats = null;
     context.buildState.status = 'idle';
     context.buildState.hasErrors = false;
+    context.socketServer?.clearEnvironmentStats();
   });
 
   for (const item of compilers) {

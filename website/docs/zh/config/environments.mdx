@@ -22,14 +22,14 @@ type Environments = {
 
 `EnvironmentConfig` 是 Rsbuild 配置的一个子集，支持大部分配置项。
 
-由于多个 environment 共享同一个 server 实例，以下选项暂不支持在 `EnvironmentConfig` 中配置：
+以下选项只能在全局配置，不能放在 `environments` 中：
 
 - `root`
 - `mode`
 - `logLevel`
 - `customLogger`
 - `environments`
-- `server.*`
+- `server.*`（[server.publicDir](/config/server/public-dir#multiple-environments) 除外）
 - `dev.watchFiles`
 - `dev.cliShortcuts`
 

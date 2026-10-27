@@ -14,6 +14,7 @@ exports[`plugin-less > should add less-loader 1`] = `
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -176,6 +177,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -341,6 +343,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -509,6 +512,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -671,6 +675,7 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,

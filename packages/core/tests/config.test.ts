@@ -1,8 +1,9 @@
 import { rspack } from '@rspack/core';
+import type { RsbuildConfig } from '../src';
 import { stringifyConfig } from '../src/inspectConfig';
 
 describe('stringifyConfig', () => {
-  it('should stringify Rspack config correctly', async () => {
+  it('should stringify Rspack config correctly', () => {
     const { DefinePlugin } = rspack;
     const config = {
       mode: 'development',
@@ -12,7 +13,7 @@ describe('stringifyConfig', () => {
     expect(stringifyConfig(config)).toMatchSnapshot();
   });
 
-  it('should stringify Rspack config with verbose option correctly', async () => {
+  it('should stringify Rspack config with verbose option correctly', () => {
     const { DefinePlugin } = rspack;
     const config = {
       mode: 'development',
@@ -32,10 +33,10 @@ describe('stringifyConfig', () => {
     expect(stringifyConfig(config, true)).toMatchSnapshot();
   });
 
-  it('should stringify Rsbuild config correctly', async () => {
-    const config = {
+  it('should stringify Rsbuild config correctly', () => {
+    const config: RsbuildConfig = {
       tools: {
-        bundlerChain(chain: any) {
+        bundlerChain(chain) {
           chain.devtool('eval');
         },
       },

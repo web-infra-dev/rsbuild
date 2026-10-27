@@ -1,5 +1,6 @@
 import fs from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { Config } from 'prebundle';
 
 function replaceFileContent(
@@ -38,6 +39,17 @@ export default {
     {
       name: 'chokidar',
       dtsOnly: true,
+    },
+    {
+      name: 'ws',
+      dtsOnly: true,
+      copyDts: true,
+      beforeBundle(task) {
+        // ws declarations are provided by @types/ws.
+        task.depPath = dirname(
+          fileURLToPath(import.meta.resolve('@types/ws/package.json')),
+        );
+      },
     },
     {
       name: 'cors',

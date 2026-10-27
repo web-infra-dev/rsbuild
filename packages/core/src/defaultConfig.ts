@@ -24,6 +24,7 @@ import { getNodeEnv, require } from './helpers';
 import { findExists, isFileExists } from './helpers/fs';
 import { mergeRsbuildConfig } from './mergeConfig';
 import type {
+  EnvironmentConfig,
   NormalizedConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
@@ -87,6 +88,7 @@ const getDefaultServerConfig = (): Omit<
 > => ({
   port: DEFAULT_PORT,
   host: LOCALHOST,
+  allowedHosts: true,
   open: false,
   base: '/',
   htmlFallback: 'index',
@@ -305,6 +307,10 @@ export const withDefaultConfig = async (
   return config;
 };
 
+type NormalizedBaseConfig = Omit<NormalizedConfig, 'environments'> & {
+  environments: Record<string, EnvironmentConfig>;
+};
+
 /**
  * Normalizes the user configuration by merging it with defaults and ensuring
  * consistent structure.
@@ -312,7 +318,7 @@ export const withDefaultConfig = async (
 export const normalizeConfig = (
   config: RsbuildConfig,
   rootPath: string,
-): NormalizedConfig => {
+): NormalizedBaseConfig => {
   const getMode = (): RsbuildMode => {
     if (config.mode) {
       return config.mode;
@@ -336,7 +342,7 @@ export const normalizeConfig = (
   const mergedConfig = mergeRsbuildConfig(
     defaultConfig,
     config,
-  ) as NormalizedConfig;
+  ) as NormalizedBaseConfig;
 
   return mergedConfig;
 };
@@ -348,7 +354,7 @@ const normalizeHost = (host?: string | boolean): string => {
   return host === true ? ALL_INTERFACES_IPV4 : LOCALHOST;
 };
 
-const normalizePublicDirs = (
+export const normalizePublicDirs = (
   rootPath: string,
   publicDir?: PublicDir,
 ): Required<PublicDirOptions>[] => {

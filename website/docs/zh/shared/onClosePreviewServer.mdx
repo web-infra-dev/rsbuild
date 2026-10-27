@@ -1,0 +1,11 @@
+关闭预览服务器时调用，可用于在预览服务器关闭时执行清理操作。
+
+Rsbuild CLI 会自动在合适的时机调用此钩子，使用 JavaScript API 的用户需要手动调用 [server.close()](/api/javascript-api/server-api#close) 方法来触发此钩子。
+
+- **类型：**
+
+```ts
+function onClosePreviewServer(callback: () => Promise<void> | void): void;
+```
+
+- **版本：** `>= 2.3.0`

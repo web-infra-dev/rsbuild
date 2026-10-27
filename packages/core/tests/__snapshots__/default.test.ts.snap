@@ -77,6 +77,7 @@ exports[`should apply default plugins correctly 1`] = `
                 "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
                 "options": {
                   "filename": "static/css/[name].css",
+                  "minimized": false,
                   "modules": {
                     "auto": true,
                     "exportGlobals": false,
@@ -646,6 +647,7 @@ exports[`should apply default plugins correctly in production 1`] = `
                 "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
                 "options": {
                   "filename": "static/css/[name].[contenthash:10].css",
+                  "minimized": true,
                   "modules": {
                     "auto": true,
                     "exportGlobals": false,
@@ -1243,6 +1245,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
                 "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
                 "options": {
                   "filename": "static/css/[name].css",
+                  "minimized": false,
                   "modules": {
                     "auto": true,
                     "exportGlobals": false,
@@ -1814,6 +1817,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
                 "options": {
                   "filename": "static/css/[name].css",
+                  "minimized": false,
                   "modules": {
                     "auto": true,
                     "exportGlobals": false,

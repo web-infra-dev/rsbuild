@@ -4,7 +4,7 @@ import { getPathnameFromUrl } from '../../helpers/path';
 import type { InternalContext, Rspack } from '../../types';
 import { HttpCode, isUrlPathUnderBase } from '../helper';
 
-const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
+export const UP_PATH_REGEXP: RegExp = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
 
 const stat = (
   filename: string,
@@ -67,12 +67,24 @@ export async function getFileFromUrl(
     if (prefix && prefix !== '/' && isUrlPathUnderBase(pathname, prefix)) {
       // Strip the `pathname` property from the `publicPath` option from the start
       // of requested url. (`/prefix/foo.js` => `foo.js`)
+      const relativePathname = pathname.slice(prefix.length);
+
+      // Whole-path normalization can hide traversal after the prefix is removed.
+      // Check the remainder before joining, including paths that leave and
+      // re-enter the output directory.
+      if (
+        hasUpPath &&
+        UP_PATH_REGEXP.test(path.normalize(`./${relativePathname}`))
+      ) {
+        return { errorCode: HttpCode.Forbidden };
+      }
+
       // And add outputPath (`foo.js` => `/home/user/my-project/dist/foo.js`)
-      const candidatePath = path.join(distPath, pathname.slice(prefix.length));
+      const candidatePath = path.join(distPath, relativePathname);
 
       if (hasUpPath) {
-        // Whole-path normalization can hide traversal after the public prefix
-        // is removed, so validate the final candidate against its output path.
+        // Keep the final containment check as a backstop for platform-specific
+        // path behavior.
         const relativePath = path.relative(distPath, candidatePath);
         if (UP_PATH_REGEXP.test(relativePath)) {
           return { errorCode: HttpCode.Forbidden };

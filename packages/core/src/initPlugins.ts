@@ -323,13 +323,17 @@ export function initPluginAPI({
             : 'transformLoader.mjs';
           const loaderPath = join(LOADER_PATH, loaderName);
 
-          rule
+          const use = rule
             .use(id)
             .loader(loaderPath)
             .options({
               id,
               getEnvironment: () => environmentContext,
             } satisfies TransformLoaderOptions);
+
+          if (descriptor.codeFilter !== undefined) {
+            use.set('codeFilter', descriptor.codeFilter);
+          }
         },
       });
     };
@@ -376,6 +380,7 @@ export function initPluginAPI({
     onCloseBuild: hooks.onCloseBuild.tap,
     onBeforeBuild: hooks.onBeforeBuild.tap,
     onCloseDevServer: hooks.onCloseDevServer.tap,
+    onClosePreviewServer: hooks.onClosePreviewServer.tap,
     onBeforeDevCompile: hooks.onBeforeDevCompile.tap,
     onAfterDevCompile: hooks.onAfterDevCompile.tap,
     // alias for `onAfterDevCompile`

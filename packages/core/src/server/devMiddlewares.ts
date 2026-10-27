@@ -12,7 +12,7 @@ import type {
 import type { BuildManager } from './buildManager';
 import type { RsbuildDevServer } from './devServer';
 import { gzipMiddleware } from './gzipMiddleware';
-import type { UpgradeEvent } from './helper';
+import { getPublicDirPaths, type UpgradeEvent } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import {
   faviconFallbackMiddleware,
@@ -194,8 +194,20 @@ const applyDefaultMiddlewares = async ({
     upgradeEvents.push(buildManager.socketServer.upgrade);
 
     middlewares.use(function hotUpdateJsonFallbackMiddleware(req, res, next) {
-      // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
-      if (req.url?.endsWith('.hot-update.json') && req.method !== 'OPTIONS') {
+      const url = req.url;
+      if (!url || req.method === 'OPTIONS') {
+        next();
+        return;
+      }
+
+      const queryIndex = url.indexOf('?');
+      const end = queryIndex === -1 ? url.length : queryIndex;
+
+      // Missing HMR manifests should return 404 after a restart, including ESM output.
+      if (
+        url.endsWith('.hot-update.json', end) ||
+        url.endsWith('.hot-update.json.mjs', end)
+      ) {
         notFoundMiddleware(req, res, next);
       } else {
         next();
@@ -213,16 +225,23 @@ const applyDefaultMiddlewares = async ({
     );
   }
 
-  if (server.publicDir.length) {
+  const publicDirPaths = getPublicDirPaths(config);
+  if (publicDirPaths.length) {
     const { default: sirv } = await import(
       /* rspackChunkName: "sirv" */ 'sirv'
     );
-    for (const { name } of server.publicDir) {
+    for (const name of publicDirPaths) {
       const sirvMiddleware = sirv(name, {
         etag: true,
         dev: true,
       });
       middlewares.use(function publicDirMiddleware(req, res, next) {
+        // sirv serves files for any method, which would mask non-GET routes
+        // added later and differ from the assets middleware and preview server.
+        if (req.method && req.method !== 'GET' && req.method !== 'HEAD') {
+          next();
+          return;
+        }
         sirvMiddleware(req, res, next);
       });
     }

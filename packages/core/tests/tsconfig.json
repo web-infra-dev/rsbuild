@@ -1,7 +1,10 @@
 {
   "extends": "@scripts/config/tsconfig",
   "compilerOptions": {
-    "types": ["rstack/test/globals"]
+    "types": ["rstack/test/globals"],
+    "paths": {
+      "@rsbuild/core": ["../src/index.ts"]
+    }
   },
   "include": ["./**/*.ts", "../src/env.d.ts"]
 }

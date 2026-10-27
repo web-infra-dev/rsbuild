@@ -122,13 +122,6 @@ export default {
 };
 ```
 
-#### 多环境
-
-当执行 [多环境构建](/guide/advanced/environments) 时，Rsbuild 会将文件从 public 目录拷贝到各个环境的输出目录下。如果输出目录存在嵌套的情况，则只会拷贝文件到输出目录的根目录下。例如：
-
-- `web` 环境的构建产物目录设置为 `dist`，`web1` 环境的构建产物目录设置为 `dist/web1`。由于 `dist` 和 `dist/web1` 存在嵌套关系，此时，public 目录文件仅复制到 `dist` 目录下。
-- `esm` 环境的构建产物目录设置为 `dist/esm`，`cjs` 环境的构建产物目录设置为 `dist/cjs`。由于 `dist/esm` 和 `dist/cjs` 不存在嵌套关系，此时，public 目录文件将分别复制到 `dist/esm` 和 `dist/cjs` 目录下。
-
 ### ignore
 
 - **类型：** `string[]`
@@ -203,8 +196,81 @@ export default {
 };
 ```
 
+## 多环境 \{#multiple-environments}
+
+### 目录配置 \{#directory-configuration}
+
+- **版本：** `>= 2.3.0`
+
+你可以在 `environments` 中为每个环境配置 `server.publicDir`。环境中未配置 `publicDir` 时，会继承全局的 `server.publicDir`；设置 `publicDir: false` 则禁用该环境的 public 目录。
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    client: {},
+    admin: {
+      server: {
+        publicDir: {
+          name: 'public-admin',
+        },
+      },
+    },
+    worker: {
+      server: {
+        publicDir: false,
+      },
+    },
+  },
+};
+```
+
+在这个示例中，`client` 使用 `public`，`admin` 使用 `public-admin`，`worker` 不使用 public 目录。
+
+开发时，所有环境共用一个开发服务器，各环境配置的 public 文件都可以通过它访问。在某个环境中设置 `publicDir: false`，不会影响其他环境的 public 文件访问。
+
+### 配置继承 \{#configuration-inheritance}
+
+环境中单独配置的 `publicDir` 会替换全局 `publicDir`。未填写的选项使用默认值。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    publicDir: {
+      name: 'assets',
+    },
+  },
+  environments: {
+    client: {
+      server: {
+        publicDir: {
+          copyOnBuild: false,
+        },
+      },
+    },
+  },
+};
+```
+
+这里 `client` 没有设置 `name`，所以使用默认目录 `public`。如果要使用 `assets`，需要在 `client.server.publicDir` 中同时设置 `name: 'assets'`。
+
+全局 `publicDir` 为 `false` 时，环境也可以通过配置 `publicDir` 对象或数组来启用自己的 public 目录。
+
+### 构建行为 \{#build-behavior}
+
+生产构建时，每个环境将自己的 public 文件复制到输出目录。`copyOnBuild` 决定是否复制，`ignore` 指定复制时排除的文件。
+
+例如，两个 web 环境都使用默认的 `publicDir` 设置，`public/logo.png` 的复制位置如下：
+
+| 两个环境的输出目录       | 复制后的文件                                              |
+| ------------------------ | --------------------------------------------------------- |
+| `dist` 和 `dist/web1`    | 只有 `dist/logo.png`，不会再生成一份 `dist/web1/logo.png` |
+| `dist/esm` 和 `dist/cjs` | 分别生成 `dist/esm/logo.png` 和 `dist/cjs/logo.png`       |
+
+如果目录列表、目录顺序或 `copyOnBuild`、`ignore` 设置不同，两个环境会分别复制到自己的输出目录，即使输出目录存在嵌套关系。
+
 ## 版本历史
 
-| 版本   | 变更内容           |
-| ------ | ------------------ |
-| v2.0.0 | 新增 `ignore` 选项 |
+| 版本   | 变更内容                   |
+| ------ | -------------------------- |
+| v2.3.0 | 支持按环境配置 `publicDir` |
+| v2.0.0 | 新增 `ignore` 选项         |

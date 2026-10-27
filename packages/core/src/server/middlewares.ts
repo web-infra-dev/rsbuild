@@ -1,8 +1,9 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
-import onFinished from 'on-finished';
+import { finished } from 'node:stream';
 import { color } from '../helpers';
 import { addTrailingSlash } from '../helpers/url';
+import { UP_PATH_REGEXP } from './assets-middleware/getFileFromUrl';
 import { isVerbose, type Logger } from '../logger';
 import type { Connect, EnvironmentAPI, RequestHandler, Rspack } from '../types';
 import {
@@ -62,7 +63,7 @@ export const getRequestLoggerMiddleware = (
       );
     };
 
-    onFinished(res, logRequest);
+    finished(res, logRequest);
 
     next();
   };
@@ -100,8 +101,29 @@ const isFileExistsInDistPaths = async (
   filename: string,
   outputFileSystem: Rspack.OutputFileSystem,
 ): Promise<boolean> => {
+  let decodedFilename: string;
+  try {
+    // The filename can be a percent-encoded URL path
+    decodedFilename = decodeURIComponent(filename);
+  } catch {
+    return false;
+  }
+
+  if (decodedFilename.includes('\0')) {
+    return false;
+  }
+
+  // Only normalize paths with a parent directory segment, as in the assets middleware.
+  if (
+    UP_PATH_REGEXP.test(decodedFilename) &&
+    UP_PATH_REGEXP.test(path.normalize(`./${decodedFilename}`))
+  ) {
+    return false;
+  }
+
   for (const distPath of distPaths) {
-    if (await isFileExists(path.join(distPath, filename), outputFileSystem)) {
+    const filePath = path.join(distPath, decodedFilename);
+    if (await isFileExists(filePath, outputFileSystem)) {
       return true;
     }
   }

@@ -11,6 +11,8 @@ test.beforeEach(async ({ prepareDist }) => {
     'dist-2',
     'dist-same',
     'dist-same-1',
+    'dist-filter',
+    'dist-filter-1',
   ];
   await Promise.all(
     distFolderNames.map((distFolderName) => prepareDist(distFolderName)),
@@ -92,4 +94,39 @@ test('should writeToDisk correctly when environment writeToDisk configuration sa
 
   expect(fs.existsSync(join(cwd, 'dist-same/index.html'))).toBeTruthy();
   expect(fs.existsSync(join(cwd, 'dist-same-1/index.html'))).toBeTruthy();
+});
+
+test('should apply writeToDisk functions per environment', async ({
+  page,
+  dev,
+}) => {
+  await dev({
+    config: {
+      environments: {
+        web: {
+          output: {
+            distPath: 'dist-filter',
+          },
+          dev: {
+            writeToDisk: (file) => file.endsWith('.html'),
+          },
+        },
+        web1: {
+          output: {
+            distPath: 'dist-filter-1',
+          },
+          dev: {
+            writeToDisk: false,
+          },
+        },
+      },
+    },
+  });
+
+  const test = page.locator('#test');
+  await expect(test).toHaveText('Hello Rsbuild!');
+
+  expect(fs.existsSync(join(cwd, 'dist-filter/index.html'))).toBeTruthy();
+  expect(fs.existsSync(join(cwd, 'dist-filter/static/js'))).toBeFalsy();
+  expect(fs.existsSync(join(cwd, 'dist-filter-1/index.html'))).toBeFalsy();
 });

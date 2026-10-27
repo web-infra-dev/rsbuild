@@ -139,7 +139,7 @@ describe('initPlugins', () => {
 });
 
 describe('plugin manager', () => {
-  it('should add, remove, and get environment-specific plugins correctly', async () => {
+  it('should add, remove, and get environment-specific plugins correctly', () => {
     const pluginManager = createPluginManager(logger);
 
     pluginManager.addPlugins([

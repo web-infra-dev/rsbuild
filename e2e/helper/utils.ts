@@ -99,6 +99,9 @@ export const recordPluginHooks = () => {
       api.onAfterStartPreviewServer(() => {
         hooks.push('AfterStartPreviewServer');
       });
+      api.onClosePreviewServer(() => {
+        hooks.push('ClosePreviewServer');
+      });
       api.onAfterDevCompile(() => {
         hooks.push('AfterDevCompile');
       });

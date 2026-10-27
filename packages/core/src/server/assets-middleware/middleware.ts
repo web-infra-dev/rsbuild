@@ -4,10 +4,11 @@ import type {
   OutgoingHttpHeaders,
   ServerResponse,
 } from 'node:http';
+import { finished } from 'node:stream';
 import { lookup } from 'mrmime';
-import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import { isWebTarget } from '../../helpers';
+import { cachedImport } from '../../helpers/cachedImport';
 import type { InternalContext, RequestHandler, Rspack } from '../../types';
 import { HttpCode } from '../helper';
 import { getFileFromUrl } from './getFileFromUrl';
@@ -264,13 +265,14 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
   }
 }
 
+const getRangeParser = cachedImport(
+  () => import(/* rspackChunkName: "range-parser" */ 'range-parser'),
+);
+
 const parseRangeHeaders = async (
   value: string,
 ): Promise<RangeResult | Ranges> => {
-  const { default: rangeParser } = await import(
-    /* rspackChunkName: "range-parser" */
-    'range-parser'
-  );
+  const { default: rangeParser } = await getRangeParser();
   const [len, rangeHeader] = value.split('|');
   return rangeParser(Number(len), rangeHeader, {
     combine: true,
@@ -481,6 +483,15 @@ export function createAssetsMiddleware(
         }
       }
 
+      if (req.method === 'HEAD') {
+        res.setHeader('Content-Length', len);
+        if (res.statusCode === HttpCode.NotFound) {
+          res.statusCode = HttpCode.Ok;
+        }
+        res.end();
+        return;
+      }
+
       let readStream: ReadStream;
 
       const [start, end] = calcStartAndEnd(offset, len);
@@ -493,14 +504,6 @@ export function createAssetsMiddleware(
       }
 
       res.setHeader('Content-Length', len);
-
-      if (req.method === 'HEAD') {
-        if (res.statusCode === HttpCode.NotFound) {
-          res.statusCode = HttpCode.Ok;
-        }
-        res.end();
-        return;
-      }
 
       const cleanup = () => {
         destroyStream(readStream, true);
@@ -523,7 +526,7 @@ export function createAssetsMiddleware(
 
       readStream.pipe(res);
 
-      onFinished(res, cleanup);
+      finished(res, cleanup);
     }
 
     // rslint-disable-next-line @typescript-eslint/no-misused-promises -- `ready` does not consume callback return values.

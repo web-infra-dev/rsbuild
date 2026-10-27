@@ -12,7 +12,7 @@ export class EsmRunner extends CommonJsRunner {
     this.requirers.set('cjs', this.getRequire());
     this.requirers.set('esm', this.createEsmRequirer());
 
-    const outputModule = this._options.compilerOptions.output.module;
+    const outputModule = this.options.compilerOptions.output.module;
 
     this.requirers.set('entry', (currentDirectory, modulePath, context) => {
       const file = this.getFile(modulePath, currentDirectory);
@@ -35,7 +35,7 @@ export class EsmRunner extends CommonJsRunner {
 
   protected createEsmRequirer(): RunnerRequirer {
     const esmCache = new Map<string, SourceTextModule>();
-    const esmIdentifier = this._options.name;
+    const esmIdentifier = this.options.name;
     // rslint-disable-next-line @typescript-eslint/no-require-imports
     const vm = require('node:vm') as typeof import('node:vm');
     type SourceTextModuleOptionsWithUrl = NonNullable<
@@ -70,16 +70,20 @@ export class EsmRunner extends CommonJsRunner {
             const result = await _require(path.dirname(file.path), specifier, {
               esmMode: EsmMode.Evaluated,
             });
-            return asModule(result, module.context);
+            return asModule(vm, result, module.context);
           },
         };
-        esm = new vm.SourceTextModule(file.content, sourceTextModuleOptions);
+        esm = new vm.SourceTextModule(
+          this.getFileContent(file),
+          sourceTextModuleOptions,
+        );
         esmCache.set(file.path, esm);
       }
       if (context.esmMode === EsmMode.Unlinked) return esm;
       return (async () => {
         await esm.link(async (specifier, referencingModule) => {
           return asModule(
+            vm,
             await _require(
               path.dirname(referencingModule.identifier),
               specifier,

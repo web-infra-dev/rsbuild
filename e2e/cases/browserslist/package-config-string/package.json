@@ -1,4 +1,5 @@
 {
+  "name": "@e2e/browserslist-package-config-string",
   "private": true,
   "type": "module",
   "browserslist": [

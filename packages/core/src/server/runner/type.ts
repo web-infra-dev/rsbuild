@@ -11,7 +11,7 @@ export type RunnerRequirer = (
 
 export type BasicRunnerFile = {
   path: string;
-  content: string;
+  content?: string;
   subPath: string;
 };
 

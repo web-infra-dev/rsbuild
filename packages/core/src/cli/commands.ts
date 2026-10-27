@@ -1,4 +1,4 @@
-import cac, { type CAC, type Command } from 'cac';
+import { type CAC, type Command, cac } from 'cac';
 import { RSPACK_BUILD_ERROR } from '../build';
 import { color } from '../helpers';
 import type { ConfigLoader } from '../loadConfig';

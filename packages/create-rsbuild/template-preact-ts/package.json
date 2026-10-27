@@ -9,12 +9,12 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "preact": "^10.29.8"
+    "preact": "^11.0.2"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.2.6",
+    "@rsbuild/core": "^2.3.0-beta.0",
     "@rsbuild/plugin-preact": "^2.1.0",
-    "@types/node": "^24.13.4",
-    "typescript": "^6.0.3"
+    "@types/node": "^24.19.2",
+    "typescript": "^7.0.2"
   }
 }

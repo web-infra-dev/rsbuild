@@ -227,19 +227,6 @@ export function pluginExternals(): RsbuildPlugin {
           chain.externals(mergedExternals);
         }
       });
-
-      api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-        for (const config of bundlerConfigs) {
-          const isWebWorker = Array.isArray(config.target)
-            ? config.target.includes('webworker')
-            : config.target === 'webworker';
-
-          // externals will not take effect, the Worker environment can not access global variables.
-          if (isWebWorker && config.externals) {
-            delete config.externals;
-          }
-        }
-      });
     },
   };
 }

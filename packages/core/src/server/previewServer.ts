@@ -1,5 +1,6 @@
 import { once } from 'node:events';
 import fs from 'node:fs';
+import { constants } from 'node:zlib';
 import { isVerbose } from '../logger';
 import type {
   InternalContext,
@@ -28,6 +29,7 @@ import {
 } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import { createHttpServer } from './httpServer';
+import { createHostCheckMiddleware, withHostCheck } from './hostCheck';
 import {
   faviconFallbackMiddleware,
   getBaseUrlMiddleware,
@@ -60,6 +62,15 @@ export async function startPreviewServer(
   const serverConfig = config.server;
   const { host, headers, proxy, historyApiFallback, compress, base, cors } =
     serverConfig;
+  const allowedHosts =
+    serverConfig.allowedHosts === true
+      ? undefined
+      : [...serverConfig.allowedHosts, host];
+
+  // Validate before server.setup and plugin hooks can register middleware.
+  if (allowedHosts) {
+    middlewares.use(createHostCheckMiddleware(allowedHosts));
+  }
 
   const assetPrefixes = context.environmentList.map(
     (environment) => environment.config.output.assetPrefix,
@@ -81,6 +92,7 @@ export async function startPreviewServer(
   const serverTerminator = getServerTerminator(httpServer);
 
   let closingPromise: Promise<void> | null = null;
+  let cleanupCliShortcuts: (() => void) | undefined;
 
   const closeServer = async () => {
     if (!closingPromise) {
@@ -88,7 +100,9 @@ export async function startPreviewServer(
         // ensure closeServer is only called once
         removeCleanup(closeServer);
         cleanupGracefulShutdown();
+        cleanupCliShortcuts?.();
         await serverTerminator();
+        await context.hooks.onClosePreviewServer.callBatch();
       })();
     }
     return closingPromise;
@@ -182,13 +196,15 @@ export async function startPreviewServer(
       middlewares.use(middleware);
     }
 
-    httpServer.on('upgrade', upgrade);
+    httpServer.on(
+      'upgrade',
+      allowedHosts ? withHostCheck(upgrade, allowedHosts) : upgrade,
+    );
   }
 
   // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
   // but before other middlewares to ensure responses are properly compressed
   if (compress) {
-    const { constants } = await import('node:zlib');
     middlewares.use(
       gzipMiddleware({
         // simulates the common gzip compression rates
@@ -256,7 +272,7 @@ export async function startPreviewServer(
           ? {}
           : config.dev.cliShortcuts;
 
-      await setupCliShortcuts({
+      cleanupCliShortcuts = await setupCliShortcuts({
         openPage,
         closeServer,
         printUrls,

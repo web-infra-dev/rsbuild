@@ -36,7 +36,11 @@ export { ensureAssetPrefix } from './helpers/url';
 // Helpers
 export { createLogger, type Logger, defaultLogger as logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
-export type { RsbuildDevServer } from './server/devServer';
+export type {
+  HotClient,
+  HotOnConnect,
+  RsbuildDevServer,
+} from './server/devServer';
 export type {
   RsbuildServerBase,
   ServerStartResult,
@@ -145,6 +149,7 @@ export type {
   OnBeforeStartPreviewServerFn,
   OnCloseBuildFn,
   OnCloseDevServerFn,
+  OnClosePreviewServerFn,
   OnDevCompileDoneFn,
   OnExitFn,
   OnRestartFn,
@@ -184,10 +189,12 @@ export type {
   RsbuildEntry,
   RsbuildEntryDescription,
   RsbuildInstance,
+  RsbuildMiddlewares,
   RsbuildMode,
   RsbuildPlugin,
   RsbuildPluginAPI,
   RsbuildPlugins,
+  RsbuildServerResponse,
   RsbuildTarget,
   RspackChain,
   RspackRule,

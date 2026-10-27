@@ -1,6 +1,8 @@
 import { createServer } from 'node:http';
 import { gzipMiddleware } from '../src/server/gzipMiddleware';
-import type { Server } from 'node:http';
+import type { Server, ServerResponse } from 'node:http';
+
+type FlushableResponse = ServerResponse & { flush?: () => void };
 
 const closeServer = (server: Server) => {
   return new Promise<void>((resolve, reject) => {
@@ -208,3 +210,39 @@ test('should not compress text/event-stream responses', async () => {
     await closeServer(server);
   }
 });
+
+test.each([
+  { contentType: 'text/html', encoding: 'gzip' },
+  { contentType: 'text/event-stream', encoding: null },
+])(
+  'should support flush before and after writing $contentType responses',
+  async ({ contentType, encoding }) => {
+    let headersSentBeforeWrite = false;
+    const body = 'hello '.repeat(300);
+    const server = createServer((req, res: FlushableResponse) => {
+      gzipMiddleware()(req, res, () => {
+        res.flush?.();
+        headersSentBeforeWrite = res.headersSent;
+        res.setHeader('Content-Type', contentType);
+        res.write(body);
+        res.flush?.();
+        res.flush?.();
+        res.end('done');
+      });
+    });
+
+    const port = await listen(server);
+
+    try {
+      const result = await fetch(`http://localhost:${port}`, {
+        headers: { 'accept-encoding': 'gzip' },
+      });
+
+      expect(await result.text()).toBe(`${body}done`);
+      expect(result.headers.get('content-encoding')).toBe(encoding);
+      expect(headersSentBeforeWrite).toBe(false);
+    } finally {
+      await closeServer(server);
+    }
+  },
+);

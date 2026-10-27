@@ -1,6 +1,7 @@
 import { once } from 'node:events';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
+import type { WebSocket } from 'ws';
 import { color, pick } from '../helpers';
 import {
   getPublicPathFromCompiler,
@@ -41,6 +42,7 @@ import {
   type StartDevServerResult,
 } from './helper';
 import { createHttpServer } from './httpServer';
+import { createHostCheckMiddleware, withHostCheck } from './hostCheck';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
 import { getPublicPathnames } from './publicPathnames';
@@ -59,6 +61,15 @@ export type HotSend = <T extends ServerMessage['type']>(
   type: T,
   data?: ExtractSocketMessageData<T>,
 ) => void;
+
+export type HotClient = {
+  /** Send an HMR message to this connection only. */
+  send: HotSend;
+};
+
+type HotConnectCallback = (client: HotClient) => void | Promise<void>;
+
+export type HotOnConnect = (callback: HotConnectCallback) => () => void;
 
 export type RsbuildDevServer = RsbuildServerBase & {
   /**
@@ -137,6 +148,8 @@ export async function createDevServer<
   };
 
   const compileState = createCompileState(context.environmentList.length);
+  let hotConnectCallbacks: Map<string, Set<HotConnectCallback>> | undefined =
+    new Map();
 
   const startCompile: () => Promise<BuildManager> = async () => {
     const compiler = await createCompiler();
@@ -184,6 +197,23 @@ export async function createDevServer<
       config,
       compiler,
       resolvedPort: port,
+      onSocketConnect: (socket, token) => {
+        const callbacks = hotConnectCallbacks?.get(token);
+        if (!callbacks?.size) {
+          return;
+        }
+
+        const client: HotClient = { send: createHotSend(socket) };
+        for (const callback of [...callbacks]) {
+          try {
+            Promise.resolve(callback(client)).catch((error: unknown) => {
+              logger.error(error);
+            });
+          } catch (error) {
+            logger.error(error);
+          }
+        }
+      },
     });
 
     await buildManager.init();
@@ -227,6 +257,18 @@ export async function createDevServer<
     devMiddlewares?: GetDevMiddlewaresResult;
     buildManager?: BuildManager;
   } = {};
+  let webSocketServers: Set<HTTPServer> | undefined = new Set();
+
+  // Detach upgrade listeners so external servers do not retain closed compilers.
+  const removeWebSocketListeners = () => {
+    const onUpgrade = state.devMiddlewares?.onUpgrade;
+    if (onUpgrade && webSocketServers) {
+      for (const server of webSocketServers) {
+        server.removeListener('upgrade', onUpgrade);
+      }
+    }
+    webSocketServers = undefined;
+  };
 
   const cleanupGracefulShutdown = middlewareMode
     ? null
@@ -238,19 +280,26 @@ export async function createDevServer<
   // Keep the restart watcher active when closing server resources,
   // so failed restarts can be retried.
   const closeServerResources = () => {
-    if (!closingPromise) {
-      unregisterRestart?.();
-      unregisterRestart = undefined;
-      closingPromise = (async () => {
-        removeCleanup(closeServer);
-        cleanupGracefulShutdown?.();
-        await context.hooks.onCloseDevServer.callBatch();
-        await Promise.all([
-          state.devMiddlewares?.close(),
-          state.fileWatcher?.close(),
-        ]);
-      })();
+    if (closingPromise) {
+      return closingPromise;
     }
+
+    // Prevent new subscriptions during and after shutdown.
+    hotConnectCallbacks = undefined;
+    removeWebSocketListeners();
+    unregisterRestart?.();
+    unregisterRestart = undefined;
+
+    closingPromise = (async () => {
+      removeCleanup(closeServer);
+      cleanupGracefulShutdown?.();
+      await context.hooks.onCloseDevServer.callBatch();
+      await Promise.all([
+        state.devMiddlewares?.close(),
+        state.fileWatcher?.close(),
+      ]);
+    })();
+
     return closingPromise;
   };
 
@@ -300,7 +349,7 @@ export async function createDevServer<
         customShortcuts: shortcutsOptions.custom,
         logger,
       });
-      context.hooks.onCloseDevServer.tap(cleanup);
+      context.hooks.onCloseDevServer.tapOnce(cleanup);
     }
 
     if (!getPortSilently && portTip) {
@@ -315,14 +364,14 @@ export async function createDevServer<
 
   const environmentAPI: EnvironmentAPI = {};
   const createHotSend =
-    (token?: string): HotSend =>
+    (target?: string | WebSocket): HotSend =>
     (type, data) =>
       state.buildManager?.socketServer.sendMessage(
         {
           type,
           data,
         } as ServerMessage,
-        token,
+        target,
       );
 
   const getErrorMsg = (method: string) =>
@@ -331,10 +380,31 @@ export async function createDevServer<
     `${color.yellow('runCompile')} is false`;
 
   context.environmentList.forEach((environment, index) => {
+    const { webSocketToken } = environment;
+
     environmentAPI[environment.name] = {
       context: environment,
       hot: {
-        send: createHotSend(environment.webSocketToken),
+        send: createHotSend(webSocketToken),
+        onConnect: (callback) => {
+          if (!runCompile) {
+            throw new Error(getErrorMsg('hot.onConnect'));
+          }
+          if (!hotConnectCallbacks) {
+            return () => {};
+          }
+
+          let callbacks = hotConnectCallbacks.get(webSocketToken);
+          if (!callbacks) {
+            callbacks = new Set();
+            hotConnectCallbacks.set(webSocketToken, callbacks);
+          }
+          callbacks.add(callback);
+
+          return () => {
+            hotConnectCallbacks?.get(webSocketToken)?.delete(callback);
+          };
+        },
       },
       getStats: async () => {
         if (!state.buildManager) {
@@ -369,6 +439,15 @@ export async function createDevServer<
     /* rspackChunkName: "connect-next" */ 'connect-next'
   );
   const middlewares = connect();
+  const allowedHosts =
+    config.server.allowedHosts === true
+      ? undefined
+      : [...config.server.allowedHosts, host];
+
+  // Validate before server.setup and plugin hooks can register middleware.
+  if (allowedHosts) {
+    middlewares.use(createHostCheckMiddleware(allowedHosts));
+  }
 
   const httpServer = middlewareMode
     ? null
@@ -396,7 +475,7 @@ export async function createDevServer<
       const serverTerminator = getServerTerminator(httpServer);
       logger.debug('listen dev server');
 
-      context.hooks.onCloseDevServer.tap(serverTerminator);
+      context.hooks.onCloseDevServer.tapOnce(serverTerminator);
 
       try {
         httpServer.listen({
@@ -413,9 +492,7 @@ export async function createDevServer<
         // 404 fallback middleware should be the last middleware
         middlewares.use(notFoundMiddleware);
 
-        if (state.devMiddlewares) {
-          httpServer.on('upgrade', state.devMiddlewares.onUpgrade);
-        }
+        devServer.connectWebSocket({ server: httpServer });
 
         logger.debug('listen dev server done');
 
@@ -444,8 +521,13 @@ export async function createDevServer<
       });
     },
     connectWebSocket: ({ server }: { server: HTTPServer }) => {
-      if (state.devMiddlewares) {
+      if (
+        state.devMiddlewares &&
+        webSocketServers &&
+        !webSocketServers.has(server)
+      ) {
         server.on('upgrade', state.devMiddlewares.onUpgrade);
+        webSocketServers.add(server);
       }
     },
     close: closeServer,
@@ -470,7 +552,7 @@ export async function createDevServer<
 
   if (runCompile) {
     // print server url should between listen and beforeCompile
-    context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
+    context.hooks.onBeforeCreateCompiler.tapOnce(beforeCreateCompiler);
   } else {
     await beforeCreateCompiler();
   }
@@ -479,6 +561,7 @@ export async function createDevServer<
 
   state.fileWatcher = await setupWatchFiles({
     config,
+    logger,
     buildManager: state.buildManager,
     root: context.rootPath,
   });
@@ -490,6 +573,13 @@ export async function createDevServer<
     context,
     postCallbacks,
   });
+
+  if (allowedHosts) {
+    state.devMiddlewares.onUpgrade = withHostCheck(
+      state.devMiddlewares.onUpgrade,
+      allowedHosts,
+    );
+  }
 
   // start watching
   state.buildManager?.watch();

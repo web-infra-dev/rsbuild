@@ -1,10 +1,10 @@
 import path from 'node:path';
-import glob from 'fast-glob';
+import fastGlob from 'fast-glob';
 import type { RsbuildPlugin } from 'rstack/app';
 import type { Group } from './components/Overview';
 
 const camelCase = (input: string): string =>
-  input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
+  input.replace(/[-_](\w)/g, (_, c: string) => c.toUpperCase());
 
 export const rsbuildPluginOverview: RsbuildPlugin = {
   name: 'rsbuild-doc:overview',
@@ -13,7 +13,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
     const root = path.join(import.meta.dirname, '../docs/en/config/');
     const globPath = path.join(root, '**/*.{mdx,md}');
 
-    const files = await glob(globPath);
+    const files = await fastGlob(globPath);
     const groups: Group[] = [
       {
         name: 'base',

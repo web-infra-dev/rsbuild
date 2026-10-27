@@ -2,10 +2,6 @@
   "name": "rsbuild-monorepo",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "packages/*",
-    "scripts/*"
-  ],
   "scripts": {
     "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
     "check": "rs check --type-check",
@@ -28,9 +24,9 @@
     "rstack": "catalog:",
     "typescript": "catalog:"
   },
-  "packageManager": "pnpm@12.4.1",
+  "packageManager": "pnpm@12.15.0",
   "engines": {
     "node": ">=22.18.0",
-    "pnpm": ">=12.4.0"
+    "pnpm": ">=12.6.0"
   }
 }

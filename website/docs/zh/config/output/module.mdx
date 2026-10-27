@@ -11,7 +11,6 @@ description: '是否以 ES 模块格式输出 JavaScript 文件。'
 
 :::tip
 
-- 该选项仅在 [output.target](/config/output/target) 为 `'web'` 或 `'node'` 时可用。
 - 如果你需要构建 ESM 格式的 JavaScript 库，推荐使用 [Rslib](https://rslib.rs)，它是一个开箱即用的库开发工具，基于 Rsbuild 实现。
 
 :::
@@ -33,6 +32,19 @@ export default {
 :::tip
 开启 `output.module` 后，Rsbuild 生成的 `<script>` 标签会自动添加 `type="module"` 属性，即 [html.scriptLoading](/config/html/script-loading) 为 `'module'`。
 :::
+
+## Web Workers
+
+当 [output.target](/config/output/target) 为 `'web-worker'` 时，可以将 `output.module` 设置为 `true` 以输出 ES 模块格式的 worker 产物，例如用于通过 `type: 'module'` 加载 worker 的运行时：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'web-worker',
+    module: true,
+  },
+};
+```
 
 ## Node.js 应用
 

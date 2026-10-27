@@ -13,7 +13,6 @@ import {
 } from '../helpers/url';
 import type { Logger } from '../logger';
 import type {
-  Connect,
   InternalContext,
   NormalizedConfig,
   OutputStructure,
@@ -22,6 +21,7 @@ import type {
   Routes,
   RsbuildConfig,
   RsbuildEntry,
+  RsbuildMiddlewares,
 } from '../types';
 import type { RsbuildDevServer } from './devServer';
 import type { RsbuildPreviewServer } from './previewServer';
@@ -465,8 +465,8 @@ export const getPort = async ({
           server.close(resolve);
         });
       });
-    } catch (e: any) {
-      if (e.code !== 'EADDRINUSE') {
+    } catch (e) {
+      if (!(e instanceof Error) || !('code' in e) || e.code !== 'EADDRINUSE') {
         throw e;
       }
       port++;
@@ -580,7 +580,7 @@ export const getAddressUrls = async ({
   port: number;
   host?: string;
 }): Promise<AddressUrl[]> => {
-  if (host && host !== ALL_INTERFACES_IPV4) {
+  if (host && !isWildcardHost(host)) {
     const url = concatUrl({
       port,
       host: await getHostInUrl(host),
@@ -704,7 +704,8 @@ export const HttpCode = {
 export type RsbuildServerBase = {
   /**
    * Close the server.
-   * In the dev server, this will call the `onCloseDevServer` hook.
+   * Calls the `onCloseDevServer` or `onClosePreviewServer` hook and waits for
+   * async cleanup callbacks to complete.
    */
   close: () => Promise<void>;
   /**
@@ -718,7 +719,7 @@ export type RsbuildServerBase = {
    * The `connect` app instance.
    * Can be used to attach custom middlewares to the server.
    */
-  middlewares: Connect.Server;
+  middlewares: RsbuildMiddlewares;
   /**
    * Open URL in the browser after starting the server.
    */
@@ -733,4 +734,21 @@ export type RsbuildServerBase = {
    * Print the server URLs.
    */
   printUrls: () => void;
+};
+
+export const getPublicDirPaths = (
+  config: NormalizedConfig,
+  watchOnly = false,
+): string[] => {
+  const paths = new Set<string>();
+
+  for (const { server } of Object.values(config.environments)) {
+    for (const { name, watch } of server.publicDir) {
+      if (!watchOnly || watch) {
+        paths.add(name);
+      }
+    }
+  }
+
+  return [...paths];
 };

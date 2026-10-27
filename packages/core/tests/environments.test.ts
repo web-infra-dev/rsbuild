@@ -1,8 +1,43 @@
 import { join } from 'node:path';
 import { matchPlugin } from '@scripts/test-helper';
-import { createRsbuild, type RsbuildPlugin } from '../src';
+import {
+  createRsbuild,
+  type EnvironmentConfig,
+  type RsbuildConfig,
+  type RsbuildPlugin,
+  type RsbuildPluginAPI,
+} from '../src';
 
 describe('environment config', () => {
+  it('should allow an environment to replace a disabled global publicDir', async () => {
+    const config: RsbuildConfig = {
+      server: { publicDir: { copyOnBuild: true } },
+    };
+    const environment: EnvironmentConfig = config;
+    const rsbuild = await createRsbuild({
+      config: {
+        server: { publicDir: false },
+        environments: { inherited: {}, web: environment },
+      },
+    });
+    await rsbuild.initConfigs();
+
+    expect(
+      rsbuild.getNormalizedConfig({ environment: 'inherited' }).server
+        .publicDir,
+    ).toEqual([]);
+    expect(
+      rsbuild.getNormalizedConfig({ environment: 'web' }).server.publicDir,
+    ).toEqual([
+      {
+        name: join(process.cwd(), 'public'),
+        copyOnBuild: true,
+        watch: false,
+        ignore: [],
+      },
+    ]);
+  });
+
   it('should normalize context correctly', async () => {
     rs.stubEnv('NODE_ENV', 'development');
     const cwd = process.cwd();
@@ -438,7 +473,7 @@ describe('environment config', () => {
         plugins: [
           {
             name: 'global-provider',
-            setup(api) {
+            setup(api: RsbuildPluginAPI) {
               api.expose('test-api', 'global');
             },
           },
@@ -449,7 +484,7 @@ describe('environment config', () => {
             plugins: [
               {
                 name: 'web-provider',
-                setup(api) {
+                setup(api: RsbuildPluginAPI) {
                   api.expose('test-api', 'web', { environment: 'web' });
                 },
               },

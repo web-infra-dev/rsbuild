@@ -1,4 +1,41 @@
+import { createServer } from 'node:http';
 import { expect, gotoPage, test } from '@e2e/helper';
+import { createRsbuild } from '@rsbuild/core';
+
+test('should remove WebSocket listeners from external servers on close', async () => {
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+    config: {
+      server: {
+        port: 0,
+        middlewareMode: true,
+      },
+    },
+  });
+  const rsbuildServer = await rsbuild.createDevServer();
+  const servers = [createServer(), createServer()];
+  const onUpgrade = () => {};
+
+  try {
+    for (const server of servers) {
+      server.on('upgrade', onUpgrade);
+      rsbuildServer.connectWebSocket({ server });
+      rsbuildServer.connectWebSocket({ server });
+      expect(server.listenerCount('upgrade')).toBe(2);
+    }
+
+    await rsbuildServer.environments.web.getStats();
+    await rsbuildServer.close();
+
+    for (const server of servers) {
+      expect(server.listeners('upgrade')).toEqual([onUpgrade]);
+      rsbuildServer.connectWebSocket({ server });
+      expect(server.listeners('upgrade')).toEqual([onUpgrade]);
+    }
+  } finally {
+    await rsbuildServer.close();
+  }
+});
 
 test('should support a custom dev server', async ({ page }) => {
   const { startDevServer } = await import('./scripts/server.ts');

@@ -182,6 +182,31 @@ describe('plugins/react', () => {
     );
   });
 
+  it('should apply react compiler only to web environments', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        environments: {
+          web: {},
+          node: { output: { target: 'node' } },
+          worker: { output: { target: 'web-worker' } },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([pluginReact({ reactCompiler: true })]);
+    const [web, node, worker] = await rsbuild.initConfigs();
+
+    expect(JSON.stringify(matchRules(web, 'a.tsx'))).toContain(
+      `"reactCompiler":true`,
+    );
+    expect(JSON.stringify(matchRules(node, 'a.tsx'))).not.toContain(
+      'reactCompiler',
+    );
+    expect(JSON.stringify(matchRules(worker, 'a.tsx'))).not.toContain(
+      'reactCompiler',
+    );
+  });
+
   it('should allow to add react plugin as single environment plugin', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 

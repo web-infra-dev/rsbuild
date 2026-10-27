@@ -15,14 +15,14 @@ export default defineConfig({
           return next();
         }
 
-        const bundle: ServerBundle =
+        const bundle =
           action === 'dev'
             ? await server.environments.node.loadBundle<ServerBundle>('index')
-            : await import(
+            : ((await import(
                 pathToFileURL(
                   path.join(environments.node.distPath, 'index.mjs'),
                 ).href
-              );
+              )) as ServerBundle);
         const template =
           action === 'dev'
             ? await server.environments.web.getTransformedHtml('index')

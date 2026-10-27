@@ -11,6 +11,7 @@ import type {
   NormalizedClientConfig,
   WebSocketUrlResolver,
 } from '../types';
+import { resolveLocation } from './location';
 import { logger } from './log';
 
 let createOverlay: undefined | ((title: string, content: string) => void);
@@ -113,7 +114,7 @@ export function init(
   const base = serverBase.endsWith('/') ? serverBase : `${serverBase}/`;
 
   function formatURL(fallback?: boolean) {
-    const { location } = self;
+    const location = resolveLocation(self.location);
     const hostname = (fallback ? serverHost : config.host) || location.hostname;
     const port = (fallback ? serverPort : config.port) || location.port;
     const protocol =
@@ -204,11 +205,12 @@ export function init(
       return;
     }
 
-    for (const item of clientErrors) {
-      if (item.id === id) {
-        item.message = message;
-      }
+    const clientError = clientErrors.find((item) => item.id === id);
+    // Ignore responses for errors cleared by a newer compilation.
+    if (!clientError) {
+      return;
     }
+    clientError.message = message;
 
     createOverlay(
       'Runtime errors',
@@ -304,15 +306,16 @@ export function init(
   }
 
   function onMessage(e: MessageEvent<string>) {
-    const message: ServerMessage = JSON.parse(e.data);
+    const message = JSON.parse(e.data) as ServerMessage;
 
     switch (message.type) {
       case 'hash':
         // Update the last compilation hash
         lastHash = message.data;
 
-        if (clearOverlay && shouldUpdate()) {
-          clearOverlay();
+        if (shouldUpdate()) {
+          clientErrors.length = 0;
+          clearOverlay?.();
         }
         break;
       case 'ok':
@@ -452,7 +455,7 @@ export function init(
   }
 
   function fullReload(data?: ServerMessageFullReload['data']) {
-    if (!liveReload) {
+    if (!liveReload || typeof document === 'undefined') {
       return;
     }
 

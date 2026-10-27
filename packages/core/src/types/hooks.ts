@@ -77,6 +77,8 @@ export type OnAfterBuildFn = (
 
 export type OnCloseDevServerFn = () => MaybePromise<void>;
 
+export type OnClosePreviewServerFn = () => MaybePromise<void>;
+
 export type OnAfterDevCompileFn = (params: {
   isFirstCompile: boolean;
   stats: Rspack.Stats | Rspack.MultiStats;

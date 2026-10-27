@@ -14,6 +14,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -203,6 +204,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -395,6 +397,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -590,6 +593,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,

@@ -241,3 +241,34 @@ for (const filename of ['favicon.ico', 'favicon.png', 'favicon.svg']) {
     expect(html).toContain(`<link rel="icon" href="/${filename}"`);
   });
 }
+
+test('should resolve the default favicon from each environment publicDir', async ({
+  build,
+  cwd,
+}) => {
+  const publicA = 'test-temp-favicon-a';
+  const publicB = 'test-temp-favicon-b';
+  await fse.outputFile(path.join(cwd, publicA, 'favicon.svg'), '');
+  await fse.outputFile(path.join(cwd, publicB, 'favicon.ico'), '');
+
+  const rsbuild = await build({
+    config: {
+      server: { publicDir: { name: publicA } },
+      environments: {
+        inherited: { output: { distPath: 'dist-favicon/inherited' } },
+        custom: {
+          output: { distPath: 'dist-favicon/custom' },
+          server: { publicDir: { name: publicB } },
+        },
+      },
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+  expect(getFileContent(files, 'inherited/index.html')).toContain(
+    'href="/favicon.svg"',
+  );
+  expect(getFileContent(files, 'custom/index.html')).toContain(
+    'href="/favicon.ico"',
+  );
+});

@@ -1,16 +1,16 @@
 ---
-description: 'Rsdoctor is a build analyzer tailored for the Rspack ecosystem.'
+description: 'Enable and configure Rsdoctor in Rsbuild to analyze build outputs and the build process.'
 ---
 
 # Use Rsdoctor
 
-[Rsdoctor](https://rsdoctor.rs/) is a build analyzer tailored for the Rspack ecosystem.
-
-Rsdoctor aims to be a one-stop, intelligent build analyzer that makes the build process transparent, predictable, and optimizable through visualization and smart analysis, helping teams pinpoint bottlenecks, improve performance, and raise engineering quality.
-
-Use Rsdoctor to debug build outputs or the build process.
+[Rsdoctor](https://rsdoctor.rs/) is a build analysis tool for the Rspack ecosystem. It visualizes the build process and output to help developers investigate build issues and identify performance bottlenecks. It also provides build data to agents for automated diagnosis and optimization of JavaScript programs.
 
 ## Quick start
+
+:::tip
+This guide applies to Rsbuild v2.2.6 and later. For Rsbuild v1, see the [v1 documentation](https://v1.rsbuild.rs/guide/debug/rsdoctor).
+:::
 
 In an Rsbuild project, enable Rsdoctor as follows:
 
@@ -18,7 +18,9 @@ In an Rsbuild project, enable Rsdoctor as follows:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsdoctor/rspack-plugin -D" />
+<PackageManagerTabs command="add @rsdoctor/core@latest -D" />
+
+To upgrade from Rsdoctor 1.x, see the [Rsdoctor 2.0 migration guide](https://rsdoctor.rs/guide/migration/migration-v2).
 
 2. Set the `RSDOCTOR=true` environment variable before running the CLI command:
 
@@ -52,7 +54,7 @@ After running these scripts, Rsbuild automatically registers the Rsdoctor plugin
 To configure the [options](https://rsdoctor.rs/config/options/options) exposed by the Rsdoctor plugin, manually register the plugin:
 
 ```ts title="rsbuild.config.ts"
-import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { RsdoctorRspackPlugin } from '@rsdoctor/core';
 
 export default {
   tools: {

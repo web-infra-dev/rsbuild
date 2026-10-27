@@ -1,0 +1,67 @@
+---
+description: '指定可以用来访问 Rsbuild 开发服务器和预览服务器的主机名。'
+---
+
+# server.allowedHosts
+
+- **类型：** `string[] | true`
+- **默认值：** `true`
+
+指定可以用来访问开发服务器和预览服务器的主机名，适用于 HTTP 和 WebSocket 请求。
+
+## 使用方式 \{#usage}
+
+默认不进行 Host 校验。将此选项设为数组即可启用：
+
+- `true`：关闭校验，接受任意主机名。
+- `[]`：仅允许 `localhost`、它的子域名（如 `app.localhost`）、IP 地址，以及通过 [server.host](/config/server/host) 或 `--host` 配置的主机名。
+- `string[]`：在上述范围之外，额外允许数组中的主机名。
+
+允许指定的主机名，不包括它的子域名：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    allowedHosts: ['app.example.test'],
+  },
+};
+```
+
+允许某个域名及其所有子域名，在域名前加上 `.`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    // 允许 example.test、app.example.test、a.b.example.test 等
+    allowedHosts: ['.example.test'],
+  },
+};
+```
+
+配置时只填写主机名，不包含协议、端口或路径。例如，应填写 `app.example.test`，而不是 `https://app.example.test:3000/`。主机名不区分大小写。
+
+:::warning
+请只添加你能控制 DNS 记录的域名，或来自可信所有者的域名。不要添加 `.com` 这样的宽泛后缀，否则其他人拥有的域名也会被允许访问。
+
+`allowedHosts: true` 会关闭 Host 校验，恶意网站可能通过 DNS 重绑定攻击读取服务器内容。建议使用 `[]` 或明确的可信主机名列表来启用防护。Host 校验不能替代身份认证或 [CORS 配置](/config/server/cors)。
+:::
+
+## 与 server.host 的区别 \{#difference-from-serverhost}
+
+[server.host](/config/server/host) 决定服务器监听哪个网络地址，`server.allowedHosts` 决定服务器接受哪些主机名的请求。
+
+例如，`host: '0.0.0.0'` 表示监听所有 IPv4 网络接口，访问时使用的主机名仍需符合 `allowedHosts` 的配置。
+
+## 请求校验 \{#request-validation}
+
+启用校验后，使用未被允许的主机名访问服务器会收到 `403 Forbidden`。如果你信任该主机名，可以将其添加到 `server.allowedHosts`。
+
+如果使用反向代理，请确保它转发给 Rsbuild 的主机名在允许范围内。
+
+在开发服务器的中间件模式下，此选项仅保护由 Rsbuild 处理的请求。应用自行处理的请求需要自行校验。
+
+## 版本历史 \{#version-history}
+
+| 版本    | 变更内容                                                 |
+| ------- | -------------------------------------------------------- |
+| v2.2.13 | 新增 `server.allowedHosts`，支持开发服务器和预览服务器。 |

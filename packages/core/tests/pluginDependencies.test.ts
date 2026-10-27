@@ -142,42 +142,43 @@ describe('sort plugins by dependency order', () => {
   });
 
   it('should handle multiple plugins with same name in different environments', () => {
+    const setup = () => {};
     const cases = [
       {
-        instance: { name: 'plugin-b', pre: ['plugin-a'] },
+        instance: { name: 'plugin-b', pre: ['plugin-a'], setup },
         environment: 'web',
       },
       {
-        instance: { name: 'plugin-c', pre: ['plugin-a'] },
+        instance: { name: 'plugin-c', pre: ['plugin-a'], setup },
         environment: 'node',
       },
       {
-        instance: { name: 'plugin-a' },
+        instance: { name: 'plugin-a', setup },
         environment: 'web',
       },
       {
-        instance: { name: 'plugin-a' },
+        instance: { name: 'plugin-a', setup },
         environment: 'node',
       },
     ];
 
-    const result = sortPluginsByDependencies(cases as any[]);
+    const result = sortPluginsByDependencies(cases);
 
     expect(result).toEqual([
       {
-        instance: { name: 'plugin-a' },
+        instance: { name: 'plugin-a', setup },
         environment: 'web',
       },
       {
-        instance: { name: 'plugin-a' },
+        instance: { name: 'plugin-a', setup },
         environment: 'node',
       },
       {
-        instance: { name: 'plugin-b', pre: ['plugin-a'] },
+        instance: { name: 'plugin-b', pre: ['plugin-a'], setup },
         environment: 'web',
       },
       {
-        instance: { name: 'plugin-c', pre: ['plugin-a'] },
+        instance: { name: 'plugin-c', pre: ['plugin-a'], setup },
         environment: 'node',
       },
     ]);

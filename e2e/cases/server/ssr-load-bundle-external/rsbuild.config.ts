@@ -20,7 +20,9 @@ export default defineConfig({
             result: string;
           }>('index');
           const packageName = 'esm-pkg';
-          const nativeModule = await import(packageName);
+          const nativeModule = (await import(packageName)) as {
+            default: unknown;
+          };
           const nativeDefault: unknown = nativeModule.default;
 
           const payload = {

@@ -23,6 +23,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": [Function],
                 "exportGlobals": false,
@@ -155,6 +156,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -281,6 +283,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -413,6 +416,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -590,6 +594,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
             "options": {
               "filename": "static/css/[name].css",
+              "minimized": false,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,

@@ -100,7 +100,15 @@ export function gzipMiddleware({
     const end = res.end.bind(res);
     const write = res.write.bind(res);
     const writeHead = res.writeHead.bind(res);
+
     const listeners: [string | symbol, (...args: any[]) => void][] = [];
+
+    // Node.js responses do not have flush(). Add it so frameworks can flush the gzip buffer.
+    res.flush = () => {
+      // Do not call start(): headers must remain editable if no body has been written yet.
+      // Flush without ending the stream or resetting compression history.
+      gzip?.flush(zlib.constants.Z_SYNC_FLUSH);
+    };
 
     const start = () => {
       if (started) {
@@ -110,10 +118,16 @@ export function gzipMiddleware({
 
       const compress = shouldCompress(res);
       if (compress) {
+        const contentLength = Number(res.getHeader('Content-Length'));
         res.setHeader('Content-Encoding', 'gzip');
         res.removeHeader('Content-Length');
 
-        gzip = zlib.createGzip({ level });
+        gzip = zlib.createGzip({
+          level,
+          // Reduce output callbacks for large assets without enlarging the
+          // buffer for small responses or streams with an unknown length.
+          chunkSize: contentLength > 512 * 1024 ? 64 * 1024 : undefined,
+        });
 
         gzip.on('data', (chunk) => {
           if (!write(chunk)) {
@@ -122,6 +136,7 @@ export function gzipMiddleware({
         });
 
         on('drain', () => gzip!.resume());
+        on('close', () => gzip!.destroy());
 
         gzip.on('end', () => {
           end();

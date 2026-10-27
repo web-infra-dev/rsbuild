@@ -48,7 +48,9 @@ Rsbuild 还会将 `minSize` 设置为 `0`，使较小的共享模块也能被提
 
 - **默认值：** `false`
 
-由于 Web Worker 产物不支持 dynamic import，当 `output.target` 为 `'web-worker'` 时，Rsbuild 默认关闭 chunk 拆分。
+当 [output.target](/config/output/target) 为 `'web-worker'` 时，Rsbuild 默认关闭拆包。通过 `import()` 引用的模块也会打包到产物中，不会单独生成异步 chunk。
+
+你可以通过 `splitChunks` 手动为 worker 提取共享 chunk。
 
 ## splitChunks.preset
 
@@ -163,6 +165,8 @@ export default {
 ```
 
 对于单入口应用，这会将应用代码和动态导入的模块打包到同一个 JavaScript chunk 中。多入口应用仍会为每个入口生成独立的 chunk。
+
+当 `output.target` 为 `'web-worker'` 时，默认不会生成异步 chunk，无需额外配置。
 
 ## 版本历史 \{#version-history}
 

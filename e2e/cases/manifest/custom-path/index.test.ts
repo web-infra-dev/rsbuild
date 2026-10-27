@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
+import type { ManifestData } from '@rsbuild/core';
 
 test('should generate manifest file at specified path', async ({ build }) => {
   await build();
@@ -9,7 +10,7 @@ test('should generate manifest file at specified path', async ({ build }) => {
   const manifestContent = readFileSync(manifest, 'utf-8');
   expect(manifestContent).toBeDefined();
 
-  const parsed = JSON.parse(manifestContent);
+  const parsed = JSON.parse(manifestContent) as ManifestData;
 
   // index.js, index.html
   expect(parsed.allFiles).toHaveLength(2);

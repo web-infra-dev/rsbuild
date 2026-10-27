@@ -11,7 +11,6 @@ Whether to output JavaScript files in ES modules format.
 
 :::tip
 
-- This option is only available when [output.target](/config/output/target) is `'web'` or `'node'`.
 - If you need to build JavaScript libraries in ESM format, we recommend using [Rslib](https://rslib.rs), which is an out-of-the-box library development tool built on top of Rsbuild.
 
 :::
@@ -33,6 +32,19 @@ export default {
 :::tip
 When `output.module` is enabled, Rsbuild automatically adds `type="module"` to the generated `<script>` tags, meaning [html.scriptLoading](/config/html/script-loading) is set to `module`.
 :::
+
+## Web Workers
+
+When [output.target](/config/output/target) is `'web-worker'`, set `output.module` to `true` to output an ES module worker bundle, for example for runtimes that load workers with `type: 'module'`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'web-worker',
+    module: true,
+  },
+};
+```
 
 ## Node.js applications
 

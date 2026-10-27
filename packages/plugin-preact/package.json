@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
+    "@rspack/core": "catalog:",
     "@types/node": "catalog:",
     "preact": "catalog:",
     "typescript": "catalog:"

@@ -50,6 +50,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
                   "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
                   "options": {
                     "filename": "static/css/[name].css",
+                    "minimized": false,
                     "modules": {
                       "auto": true,
                       "exportGlobals": false,
@@ -612,6 +613,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
                   "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
                   "options": {
                     "filename": "static/css/[name].css",
+                    "minimized": false,
                     "modules": {
                       "auto": true,
                       "exportGlobals": false,
@@ -1247,6 +1249,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     },
   },
   "server": {
+    "allowedHosts": true,
     "base": "/",
     "compress": true,
     "cors": {
@@ -1404,6 +1407,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     },
   },
   "server": {
+    "allowedHosts": true,
     "base": "/",
     "compress": true,
     "cors": {
@@ -1565,6 +1569,7 @@ exports[`environment config > should print environment config when inspecting co
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -1722,6 +1727,7 @@ exports[`environment config > should print environment config when inspecting co
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -1899,6 +1905,7 @@ exports[`environment config > should support modifying environment config by api
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -2057,6 +2064,7 @@ exports[`environment config > should support modifying environment config by api
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -2215,6 +2223,7 @@ exports[`environment config > should support modifying environment config by api
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -2375,6 +2384,7 @@ exports[`environment config > should support modifying single environment config
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {
@@ -2533,6 +2543,7 @@ exports[`environment config > should support modifying single environment config
       },
     },
     "server": {
+      "allowedHosts": true,
       "base": "/",
       "compress": true,
       "cors": {

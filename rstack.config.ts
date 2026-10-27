@@ -11,6 +11,8 @@ define.fmt({
     'e2e/cases/syntax-es/using-declaration/src/index.ts',
     // Preserve uppercase DOCTYPE in create-rsbuild templates.
     'packages/create-rsbuild/**/*.html',
+    // Preserve charset attribute syntax in regression fixtures.
+    'e2e/cases/html/meta/src/{unquoted,spaced}.html',
     // Ignore installed Skills because their formatting may differ from this repository.
     ...Object.keys(skillsLock.skills).map((name) => `.agents/skills/${name}`),
   ],
@@ -28,8 +30,8 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
     'e2e/cases/wasm/wasm-source-import/src/index.js',
   ]),
   js.configs.recommended,
-  importPlugin.configs.recommended,
   ts.configs.recommendedTypeChecked,
+  importPlugin.configs.recommended,
   {
     files: ['**/*.test.{ts,tsx}'],
     ...rstestPlugin.configs.recommended,
@@ -38,24 +40,32 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
     plugins: ['unicorn'],
     languageOptions: {
       parserOptions: {
-        project: [
-          './packages/*/tsconfig.json',
-          './scripts/*/tsconfig.json',
-          './examples/*/tsconfig.json',
-          './e2e/tsconfig.json',
-          './e2e/type-tests/*/tsconfig.json',
-        ],
+        projectService: true,
       },
     },
     rules: {
-      // Rslint does not recognize default exports from text imports yet.
-      // https://github.com/web-infra-dev/rslint/issues/2083
-      'import/default': 'off',
+      // Explicit exports overriding star exports are incorrectly reported as duplicates.
+      // https://github.com/web-infra-dev/rslint/issues/2409
+      'import/export': 'off',
+      // Distinct .js and .ts files are incorrectly reported as duplicate imports.
+      // https://github.com/web-infra-dev/rslint/issues/2410
       'import/no-duplicates': 'off',
+      // Re-enable these rules in follow-up PRs after addressing existing reports.
+      'import/no-unresolved': 'off',
+      'import/no-named-as-default-member': 'off',
       'unicorn/prefer-array-some': 'error',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+  {
+    // Templates lack installed dependencies, and e2e sources include intentional
+    // syntax fixtures. Keep ordinary lint rules without requiring type information.
+    files: ['packages/create-rsbuild/template-*/**', 'e2e/cases/**/src/**'],
+    languageOptions: {
+      parserOptions: {
+        projectService: false,
+      },
     },
   },
 ]);

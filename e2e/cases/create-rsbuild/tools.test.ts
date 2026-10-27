@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
+import reactTsPackageJson from '../../../packages/create-rsbuild/template-react-ts/package.json';
 import { createAndValidate } from './helper';
 
 const readCreatedFile = (dir: string, ...paths: string[]) => {
@@ -162,6 +163,9 @@ test('should create React project with ESLint as expected', async () => {
   );
   expect(pkgJson.devDependencies.eslint).toBeTruthy();
   expect(pkgJson.devDependencies['eslint-plugin-react-hooks']).toBeTruthy();
+  expect(pkgJson.devDependencies.typescript).not.toBe(
+    reactTsPackageJson.devDependencies.typescript,
+  );
   expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
   await clean();
 });

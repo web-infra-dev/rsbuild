@@ -11,10 +11,11 @@ import type {
   ClientConfig,
   DevConfig,
   InternalContext,
+  RsbuildStats,
   RsbuildStatsItem,
   Rspack,
 } from '../types';
-import { type CachedTraceMap, formatBrowserErrorLog } from './browserLogs';
+import { type BrowserLogsCache, formatBrowserErrorLog } from './browserLogs';
 import { renderErrorToHtml } from './overlay';
 
 interface ExtWebSocket extends WebSocket {
@@ -116,6 +117,11 @@ export type ClientMessagePing = {
 
 export type ClientMessage = ClientMessagePing | ClientMessageError;
 
+export type SocketConnectionListener = (
+  socket: WebSocket,
+  token: string,
+) => void;
+
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
   return queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {};
@@ -166,14 +172,24 @@ export class SocketServer {
 
   private currentHash = new Map<string, string>();
 
+  /**
+   * Stats of web environments that finished compiling before the whole
+   * multi-environment build is done, keyed by WebSocket token.
+   */
+  private environmentStats = new Map<string, RsbuildStats>();
+
+  private onSocketConnect?: SocketConnectionListener;
+
   constructor(
     context: InternalContext,
     options: DevConfig,
     getOutputFileSystem: () => Rspack.OutputFileSystem,
+    onSocketConnect?: SocketConnectionListener,
   ) {
     this.context = context;
     this.options = options;
     this.getOutputFileSystem = getOutputFileSystem;
+    this.onSocketConnect = onSocketConnect;
   }
 
   // subscribe upgrade event to handle socket
@@ -261,7 +277,30 @@ export class SocketServer {
     });
   }
 
+  /**
+   * Called when a single web environment finishes compiling while other
+   * environments (for example, a Node.js SSR bundle) are still compiling.
+   * Clients of this environment can apply HMR updates immediately instead of
+   * waiting for the slowest environment.
+   */
+  public onEnvironmentDone(token: string, getStats: () => RsbuildStats): void {
+    if (
+      this.context.buildState.status === 'done' ||
+      !this.socketsMap.has(token)
+    ) {
+      return;
+    }
+
+    this.environmentStats.set(token, getStats());
+    this.sendStats({ token });
+  }
+
+  public clearEnvironmentStats(): void {
+    this.environmentStats.clear();
+  }
+
   public onBuildDone(): void {
+    this.environmentStats.clear();
     this.reportedBrowserLogs.clear();
     this.ensureInitialChunks();
 
@@ -339,11 +378,19 @@ export class SocketServer {
   /**
    * Send a server message to matching client sockets.
    * @param message - The message to send
-   * @param token - The token of the socket to send the message to,
-   * if not provided, the message will be sent to all sockets
+   * @param target - An environment token or a single socket.
+   * If not provided, the message will be sent to all sockets.
    */
-  public sendMessage(message: ServerMessage, token?: string): void {
+  public sendMessage(
+    message: ServerMessage,
+    target?: string | WebSocket,
+  ): void {
     const messageStr = JSON.stringify(message);
+
+    if (typeof target === 'object') {
+      this.sendRawMessage(target, messageStr);
+      return;
+    }
 
     const sendToSockets = (sockets: Set<WebSocket>) => {
       for (const socket of sockets) {
@@ -351,8 +398,8 @@ export class SocketServer {
       }
     };
 
-    if (token) {
-      const sockets = this.socketsMap.get(token);
+    if (target) {
+      const sockets = this.socketsMap.get(target);
       if (sockets) {
         sendToSockets(sockets);
       }
@@ -365,6 +412,7 @@ export class SocketServer {
 
   public async close(): Promise<void> {
     this.clearHeartbeatTimer();
+    this.onSocketConnect = undefined;
 
     // Remove all event listeners
     this.wsServer.removeAllListeners();
@@ -407,10 +455,10 @@ export class SocketServer {
     // rslint-disable-next-line @typescript-eslint/no-misused-promises -- ws does not consume listener return values.
     socket.on('message', async (data) => {
       try {
-        const payload: ClientMessage = JSON.parse(
+        const payload = JSON.parse(
           // rslint-disable-next-line @typescript-eslint/no-base-to-string
           typeof data === 'string' ? data : data.toString(),
-        );
+        ) as ClientMessage;
 
         const { context } = this;
         const config = context.normalizedConfig;
@@ -436,7 +484,11 @@ export class SocketServer {
           const outputFs = this.getOutputFileSystem();
 
           const stackFrames = payload.stack ? parseStack(payload.stack) : null;
-          const cachedTraceMap: CachedTraceMap = new Map();
+          // Share source map lookups and parsed maps for this error only.
+          const cache: BrowserLogsCache = {
+            sourceMapPaths: new Map(),
+            traceMaps: new Map(),
+          };
 
           const log = await formatBrowserErrorLog(
             payload.message,
@@ -444,7 +496,7 @@ export class SocketServer {
             outputFs,
             stackTrace,
             stackFrames,
-            cachedTraceMap,
+            cache,
           );
 
           if (!this.reportedBrowserLogs.has(log)) {
@@ -467,7 +519,7 @@ export class SocketServer {
                     outputFs,
                     'full',
                     stackFrames,
-                    cachedTraceMap,
+                    cache,
                   );
 
             this.sendMessage(
@@ -511,6 +563,8 @@ export class SocketServer {
       force: true,
       token,
     });
+
+    this.onSocketConnect?.(socket, token);
   }
 
   private getEnvironmentByToken(token: string) {
@@ -568,6 +622,15 @@ export class SocketServer {
 
   // Only use stats when environment is matched
   private getStats(token: string) {
+    const environmentStats = this.environmentStats.get(token);
+    if (environmentStats) {
+      return {
+        stats: environmentStats,
+        errors: getStatsErrors(environmentStats),
+        warnings: getStatsWarnings(environmentStats),
+      };
+    }
+
     const { stats } = this.context.buildState;
     const environment = this.getEnvironmentByToken(token);
 

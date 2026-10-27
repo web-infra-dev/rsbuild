@@ -22,14 +22,14 @@ type Environments = {
 
 `EnvironmentConfig` is a subset of the Rsbuild configuration, supporting most options.
 
-Since multiple environments share the same server instance, the following options are currently not supported in `EnvironmentConfig`:
+The following options can only be configured globally, not inside `environments`:
 
 - `root`
 - `mode`
 - `logLevel`
 - `customLogger`
 - `environments`
-- `server.*`
+- `server.*` (except [server.publicDir](/config/server/public-dir#multiple-environments))
 - `dev.watchFiles`
 - `dev.cliShortcuts`
 

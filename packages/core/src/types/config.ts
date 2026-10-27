@@ -20,7 +20,11 @@ import type {
 } from 'http-proxy-middleware';
 import type { RspackChain } from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
-import type { HotSend, RsbuildDevServer } from '../server/devServer';
+import type {
+  HotOnConnect,
+  HotSend,
+  RsbuildDevServer,
+} from '../server/devServer';
 import type { RsbuildPreviewServer } from '../server/previewServer';
 import type { Logger } from '../logger';
 import type {
@@ -494,6 +498,14 @@ export interface ServerConfig {
    */
   host?: string | boolean;
   /**
+   * Hostnames allowed to access the dev or preview server.
+   * `true` disables Host validation.
+   * Localhost, IP addresses, and `server.host` are always allowed.
+   * A leading dot allows a hostname and all its subdomains.
+   * @default true
+   */
+  allowedHosts?: string[] | true;
+  /**
    * Adds headers to all responses.
    */
   headers?: Record<string, string | string[]>;
@@ -564,7 +576,7 @@ export interface ServerConfig {
    * such as registering custom middleware or running pre-start tasks.
    *
    * When `server.setup` is called, Rsbuild built-in middlewares are not registered yet,
-   * so middlewares you add run earlier than built-ins.
+   * so middlewares you add run earlier than built-ins, except Host validation.
    *
    * `server.setup` can return a callback function. After built-in middlewares are registered,
    * Rsbuild will execute that callback. Middlewares registered in the callback run later than built-ins.
@@ -703,10 +715,13 @@ export type PrintFileSizeOptions = {
         totalBrotliSize?: number;
       }) => string);
   /**
-   * Whether to print the size of each static asset.
+   * Controls how many asset sizes to print in each environment.
+   * Set to `true` to print all assets, or `false` or `0` to hide individual assets.
+   * A positive integer limits the list to the largest assets by uncompressed size.
+   * Omitted assets still contribute to totals and size comparisons when `diff` is enabled.
    * @default true
    */
-  detail?: boolean;
+  detail?: boolean | number;
   /**
    * Whether to print the compressed size of each static asset.
    * Set to `true` to use gzip, or specify `type` to select gzip or Brotli.
@@ -1872,7 +1887,26 @@ export type ProgressBarConfig = {
   id?: string;
 };
 
-export type RequestHandler = Connect.NextHandleFunction;
+export interface RsbuildServerResponse extends ServerResponse {
+  /**
+   * Flush buffered gzip data without ending the response.
+   * May be absent when compression is disabled or the middleware has not run.
+   */
+  flush?: () => void;
+}
+
+export type RequestHandler = (
+  req: Connect.IncomingMessage,
+  res: RsbuildServerResponse,
+  next: Connect.NextFunction,
+) => unknown;
+
+export interface RsbuildMiddlewares extends Connect.Server {
+  use(fn: RequestHandler): this;
+  use(fn: Connect.ServerHandle): this;
+  use(route: string, fn: RequestHandler): this;
+  use(route: string, fn: Connect.ServerHandle): this;
+}
 
 export type EnvironmentAPI = Record<
   string,
@@ -1896,10 +1930,15 @@ export type EnvironmentAPI = Record<
     getTransformedHtml: (entryName: string) => Promise<string>;
 
     /**
-     * Send HMR message to the current environment only.
+     * HMR communication for the current environment.
      */
     hot: {
       send: HotSend;
+      /**
+       * Listen for accepted HMR connections in this environment.
+       * Returns a function that removes the listener.
+       */
+      onConnect: HotOnConnect;
     };
 
     /**
@@ -2240,6 +2279,11 @@ export type AllowedEnvironmentDevKeys =
  */
 export interface EnvironmentConfig {
   /**
+   * Configure public directories for this environment.
+   * Other server options are shared across environments.
+   */
+  server?: Pick<ServerConfig, 'publicDir'>;
+  /**
    * Options for local development.
    */
   dev?: Pick<DevConfig, AllowedEnvironmentDevKeys>;
@@ -2341,6 +2385,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 }
 
 export type MergedEnvironmentConfig = {
+  server?: NonNullable<EnvironmentConfig['server']>;
   mode: RsbuildMode;
   root: string;
   dev: Pick<NormalizedDevConfig, AllowedEnvironmentDevKeys>;
@@ -2362,7 +2407,7 @@ export type MergedEnvironmentConfig = {
  * The normalized Rsbuild environment config.
  */
 export type NormalizedEnvironmentConfig = TwoLevelReadonly<
-  Omit<MergedEnvironmentConfig, 'dev'> & {
+  Omit<MergedEnvironmentConfig, 'dev' | 'server'> & {
     dev: NormalizedDevConfig;
     server: NormalizedServerConfig;
     _privateMeta?: RsbuildConfigMeta;

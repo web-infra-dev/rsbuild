@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "2.2.6",
+  "version": "2.3.0-beta.0",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
@@ -17,6 +17,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./jiti": {
+      "types": "./compiled/jiti/lib/jiti.d.mts",
+      "default": "./compiled/jiti/lib/jiti.mjs"
     },
     "./types": {
       "types": "./types.d.ts"
@@ -47,10 +51,10 @@
   "devDependencies": {
     "@jridgewell/remapping": "catalog:",
     "@jridgewell/trace-mapping": "catalog:",
+    "@jsonjoy.com/fs-core": "catalog:",
     "@rstackjs/load-config": "catalog:",
     "@types/cors": "catalog:",
     "@types/node": "catalog:",
-    "@types/on-finished": "catalog:",
     "@types/range-parser": "catalog:",
     "@types/ws": "catalog:",
     "browserslist-load-config": "catalog:",
@@ -69,7 +73,6 @@
     "launch-editor-middleware": "catalog:",
     "memfs": "catalog:",
     "mrmime": "catalog:",
-    "on-finished": "catalog:",
     "open": "catalog:",
     "postcss": "catalog:",
     "postcss-load-config": "catalog:",

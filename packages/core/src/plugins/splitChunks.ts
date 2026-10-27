@@ -266,7 +266,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
       const { config } = environment;
       const { splitChunks } = config;
 
-      // Web Workers do not support dynamic imports; dynamicImportMode needs to be set to 'eager'
+      // Bundle dynamic imports eagerly by default to avoid creating async worker chunks.
       if (isWebWorker) {
         chain.module.parser.merge({
           javascript: {
@@ -292,7 +292,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
       }
 
       if (isWebWorker) {
-        // Disable split chunks by default because Web Workers do not support dynamic imports
+        // Disable automatic splitting for workers unless explicitly configured.
         if (splitChunks === false || Object.keys(splitChunks).length === 0) {
           chain.optimization.splitChunks(false);
         } else {

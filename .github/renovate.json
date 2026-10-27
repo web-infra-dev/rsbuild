@@ -4,7 +4,8 @@
     "config:recommended",
     "schedule:weekly",
     "helpers:pinGitHubActionDigests",
-    "github>rstackjs/renovate:security"
+    "github>rstackjs/renovate:security",
+    ":semanticCommitTypeAll(chore)"
   ],
   "ignorePaths": ["**/node_modules/**"],
   "rangeStrategy": "bump",
@@ -60,6 +61,12 @@
       "groupSlug": "all-patch",
       "matchUpdateTypes": ["patch"],
       "matchPackageNames": ["*"]
+    },
+    {
+      "groupName": "memfs",
+      "groupSlug": "memfs",
+      "matchPackageNames": ["memfs", "@jsonjoy.com/*"],
+      "separateMajorMinor": false
     },
     {
       "matchManagers": ["npm"],

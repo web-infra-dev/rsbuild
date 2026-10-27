@@ -4,6 +4,8 @@ import type { CliShortcut, NormalizedConfig } from '../types/config';
 
 type PrintUrlsHandler = (options?: { showAllRoutes?: boolean }) => void;
 
+let activeInterfaces = 0;
+
 export const isCliShortcutsEnabled = (config: NormalizedConfig): boolean =>
   config.dev.cliShortcuts && isTTY('stdin');
 
@@ -90,6 +92,15 @@ export async function setupCliShortcuts({
   const { createInterface } = await import('node:readline');
   const rl = createInterface({
     input: process.stdin,
+  });
+
+  activeInterfaces++;
+  rl.once('close', () => {
+    activeInterfaces--;
+    // Closing a readline interface pauses stdin, even when other servers use it.
+    if (activeInterfaces > 0) {
+      process.stdin.resume();
+    }
   });
 
   rl.on('line', (input) => {

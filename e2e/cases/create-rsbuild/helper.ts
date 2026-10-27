@@ -4,8 +4,15 @@ import path from 'node:path';
 import { CREATE_RSBUILD_BIN_PATH, expect } from '@e2e/helper';
 import fse from 'fs-extra';
 
+type PackageJson = {
+  name: string;
+  scripts: Record<string, string>;
+  dependencies: Record<string, string>;
+  devDependencies: Record<string, string>;
+};
+
 export const expectPackageJson = (
-  pkgJson: Record<string, any>,
+  pkgJson: PackageJson,
   name: string,
   expectedBuildScript = 'rsbuild build',
 ) => {
@@ -49,9 +56,9 @@ export const createAndValidate = async (
     });
   });
 
-  const pkgJson: Record<string, any> = await fse.readJSON(
+  const pkgJson = (await fse.readJSON(
     path.join(dir, 'package.json'),
-  );
+  )) as PackageJson;
   expectPackageJson(pkgJson, path.basename(name), expectedBuildScript);
 
   if (template.endsWith('-ts')) {

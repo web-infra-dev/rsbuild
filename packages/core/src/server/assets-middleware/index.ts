@@ -17,6 +17,7 @@ import {
 import { CLIENT_PATH } from '../../constants';
 import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
+import { getRsbuildStats } from '../../helpers/stats';
 import { isOverlayEnabled } from '../../helpers/overlayConfig';
 import { toPosixPath } from '../../helpers/path';
 import type {
@@ -31,7 +32,7 @@ import { resolveHostname } from './../hmrFallback';
 import type { SocketServer } from '../socketServer';
 import { createAssetsMiddleware } from './middleware';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
-import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
+import { setupWriteToDisk } from './setupWriteToDisk';
 
 const noop = () => {};
 
@@ -85,6 +86,22 @@ const isNodeCompiler = (compiler: Compiler) => {
   return false;
 };
 
+const getCompilerInfo = (compiler: Compiler | MultiCompiler) => {
+  const allCompilers = isMultiCompiler(compiler)
+    ? compiler.compilers
+    : [compiler];
+  const webCompilers = allCompilers.filter(
+    (compiler) => !isNodeCompiler(compiler),
+  );
+
+  // Only mixed web and Node.js builds need early updates. Use the same flag
+  // for client notifications and asset requests so both can skip waiting for Node.js.
+  const earlyWebUpdates =
+    webCompilers.length > 0 && webCompilers.length < allCompilers.length;
+
+  return { allCompilers, webCompilers, earlyWebUpdates };
+};
+
 const isTsError = (error: Rspack.RspackError) =>
   'message' in error && error.stack?.includes('ts-checker-rspack-plugin');
 
@@ -94,12 +111,14 @@ export const setupServerHooks = ({
   token,
   socketServer,
   liveReload,
+  earlyWebUpdates,
 }: {
   context: InternalContext;
   compiler: Compiler;
   token: string;
   socketServer: SocketServer;
   liveReload: LiveReload;
+  earlyWebUpdates: boolean;
 }): void => {
   // Node HMR is not supported yet
   if (isNodeCompiler(compiler)) {
@@ -128,6 +147,19 @@ export const setupServerHooks = ({
     const { errors, warnings } = stats.compilation;
     if (errors.length === errorsCount && warnings.length === warningsCount) {
       return;
+    }
+
+    // In mixed web and Node.js builds, notify this environment's clients as
+    // soon as it compiles successfully, without waiting for Node.js environments.
+    if (
+      errorsCount === null &&
+      warningsCount === null &&
+      earlyWebUpdates &&
+      !stats.hasErrors()
+    ) {
+      socketServer.onEnvironmentDone(token, () =>
+        getRsbuildStats(stats, compiler, context.logger, context.action),
+      );
     }
 
     const isRecalled = errorsCount !== null || warningsCount !== null;
@@ -260,7 +292,9 @@ export const assetsMiddleware = async ({
 }): Promise<AssetsMiddleware> => {
   const { logger } = context;
   const resolvedHost = await resolveHostname(config.server.host);
-  const { environments, environmentList } = context;
+  const { environmentList } = context;
+  const { allCompilers, webCompilers, earlyWebUpdates } =
+    getCompilerInfo(compiler);
 
   const setupCompiler = (compiler: Compiler, index: number) => {
     const environment = environmentList[index];
@@ -288,12 +322,12 @@ export const assetsMiddleware = async ({
       socketServer,
       token,
       liveReload: environment.config.dev.liveReload,
+      earlyWebUpdates,
     });
   };
 
   applyToCompiler(compiler, setupCompiler);
 
-  const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
   const callbacks: (() => void)[] = [];
 
   const flushCallbacks = () => {
@@ -312,21 +346,54 @@ export const assetsMiddleware = async ({
     });
   });
 
-  const writeToDisk = resolveWriteToDiskConfig(
-    config.dev,
-    environments,
-    environmentList,
-  );
-  if (writeToDisk) {
-    setupWriteToDisk(compilers, writeToDisk, logger);
+  // When both web and Node.js environments exist, serve web assets (such as
+  // HMR update files) once every web environment is compiled, without waiting
+  // for Node.js environments. Node.js bundles are loaded via `loadBundle`,
+  // which waits for its own environment.
+  const compiledWebCompilers = new Set<Compiler>();
+  const isWebReady = () =>
+    earlyWebUpdates && compiledWebCompilers.size === webCompilers.length;
+
+  if (earlyWebUpdates) {
+    for (const item of webCompilers) {
+      const reset = () => {
+        compiledWebCompilers.delete(item);
+      };
+      item.hooks.invalid.tap('rsbuild-dev-middleware', reset);
+      item.hooks.watchRun.tap('rsbuild-dev-middleware', reset);
+      item.hooks.done.tap('rsbuild-dev-middleware', (stats) => {
+        if (stats.hasErrors()) {
+          return;
+        }
+        compiledWebCompilers.add(item);
+        if (isWebReady()) {
+          process.nextTick(() => {
+            if (isWebReady()) {
+              flushCallbacks();
+            }
+          });
+        }
+      });
+    }
   }
 
-  const outputFileSystem = await setupOutputFileSystem(writeToDisk, compilers);
+  const writeToDiskList = environmentList.map(
+    (environment) => environment.config.dev.writeToDisk,
+  );
+  if (writeToDiskList.some(Boolean)) {
+    setupWriteToDisk(allCompilers, writeToDiskList, logger);
+  }
+
+  const outputFileSystem = await setupOutputFileSystem(
+    writeToDiskList.every((writeToDisk) => writeToDisk === true),
+    allCompilers,
+  );
 
   const ready = (callback: () => void) => {
     if (
       context.buildState.status === 'done' ||
-      context.buildState.status === 'failed'
+      context.buildState.status === 'failed' ||
+      isWebReady()
     ) {
       callback();
     } else {
@@ -348,9 +415,9 @@ export const assetsMiddleware = async ({
       watching = compiler.watching;
     } else {
       const watchOptions =
-        compilers.length > 1
-          ? compilers.map(({ options }) => options.watchOptions || {})
-          : compilers[0].options.watchOptions || {};
+        allCompilers.length > 1
+          ? allCompilers.map(({ options }) => options.watchOptions || {})
+          : allCompilers[0].options.watchOptions || {};
 
       watching = compiler.watch(watchOptions, (error) => {
         if (error) {

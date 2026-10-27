@@ -1,4 +1,4 @@
 {
   "extends": "@scripts/config/tsconfig",
-  "include": ["src", "*.test.ts"]
+  "include": ["src"]
 }

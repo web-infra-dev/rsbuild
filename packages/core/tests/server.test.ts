@@ -364,6 +364,14 @@ test('should resolve network interface names for server URLs', async () => {
 
   await expect(
     getAddressUrls({
+      host: '::',
+      port: 3000,
+      protocol: 'http',
+    }),
+  ).resolves.toEqual([localUrl, ...networkUrls]);
+
+  await expect(
+    getAddressUrls({
       host: 'example.com',
       port: 3000,
       protocol: 'http',

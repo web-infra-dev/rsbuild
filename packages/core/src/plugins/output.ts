@@ -137,14 +137,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
         }
 
         if (isESM) {
-          if (target === 'web-worker') {
-            throw new Error(
-              '[rsbuild:config] `output.module: true` is not supported for web-worker target.',
-            );
-          }
-
           // For ESM targets, import.meta.dirname / import.meta.filename / __dirname / __filename
-          // are preserved as-is. This matches the native behavior in browsers and Node.js.
+          // are preserved as-is. This matches the native behavior in browsers, workers and Node.js.
           chain.node.set('__dirname', false).set('__filename', false);
           chain.output
             .module(true)

@@ -85,9 +85,11 @@ export class CommonJsRunner extends BasicRunner {
   }
 
   protected createCjsRequirer(): RunnerRequirer {
-    const requireCache: Record<string, ModuleObject> = Object.create(null);
+    const requireCache = Object.create(null) as Record<string, ModuleObject>;
     // rslint-disable-next-line @typescript-eslint/no-require-imports
     const vm = require('node:vm') as typeof import('node:vm');
+    let cachedDynamicImport:
+      ((specifier: string) => Promise<Module>) | undefined;
 
     return (currentDirectory, modulePath, context = {}) => {
       const file = context.file || this.getFile(modulePath, currentDirectory);
@@ -99,6 +101,7 @@ export class CommonJsRunner extends BasicRunner {
         return requireCache[file.path].exports;
       }
 
+      const content = this.getFileContent(file);
       const m = {
         exports: {},
       };
@@ -111,19 +114,17 @@ export class CommonJsRunner extends BasicRunner {
 
       const args = Object.keys(currentModuleScope);
       const argValues = args.map((arg) => currentModuleScope[arg]);
-      this.preExecute(file.content, file);
+      this.preExecute(content, file);
       // rslint-disable-next-line @typescript-eslint/no-implied-eval -- Evaluate import() in the main context instead of the VM context.
-      const dynamicImport = new Function(
+      const dynamicImport = (cachedDynamicImport ??= new Function(
         'specifier',
         'return import(specifier)',
-      ) as (specifier: string) => Promise<Module>;
-      const fn = vm.compileFunction(file.content, args, {
+      ) as (specifier: string) => Promise<Module>);
+      const fn = vm.compileFunction(content, args, {
         filename: file.path,
         // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.
-        importModuleDynamically: async (specifier) => {
-          const result = await dynamicImport(specifier);
-          return result;
-        },
+        // Pass the import function directly to avoid retaining the module scope in a callback closure.
+        importModuleDynamically: dynamicImport,
       });
 
       fn.call(m.exports, ...argValues);
