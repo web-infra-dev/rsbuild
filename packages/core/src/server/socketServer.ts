@@ -60,6 +60,12 @@ export type ServerMessageHash = {
   data: string;
 };
 
+// Apply an early web update without settling full-build diagnostics.
+export type ServerMessageEarlyUpdate = {
+  type: 'early-update';
+  data: string;
+};
+
 export type ServerMessageOk = {
   type: 'ok';
 };
@@ -98,6 +104,7 @@ export type ServerMessage =
   | ServerMessageFullReload
   | ServerMessageStaticChanged
   | ServerMessageHash
+  | ServerMessageEarlyUpdate
   | ServerMessageWarnings
   | ServerMessageErrors
   | ServerMessageResolvedClientError
@@ -686,6 +693,16 @@ export class SocketServer {
 
     if (shouldReload) {
       this.sendMessage({ type: 'full-reload' }, token);
+      return;
+    }
+
+    // A completed web environment can update, but cannot settle diagnostics
+    // from other environments that are still compiling.
+    if (this.environmentStats.has(token)) {
+      if (stats.hash) {
+        this.currentHash.set(token, stats.hash);
+        this.sendMessage({ type: 'early-update', data: stats.hash }, token);
+      }
       return;
     }
 
