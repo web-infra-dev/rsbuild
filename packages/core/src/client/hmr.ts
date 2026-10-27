@@ -145,10 +145,11 @@ export function init(
     // Clean up outdated compile errors
     if (hasBuildErrors) {
       console.clear?.();
+      hasBuildErrors = false;
       // Another environment can recover without changing this client's hash.
       clearOverlay?.();
+      renderClientErrors();
     }
-    hasBuildErrors = false;
   }
 
   // Successful compilation.
@@ -176,7 +177,9 @@ export function init(
 
   // Compilation with errors (e.g. syntax error or missing modules).
   function handleErrors({ text, html }: ServerMessageErrors['data']) {
-    clearBuildErrors();
+    if (hasBuildErrors) {
+      console.clear?.();
+    }
     hasBuildErrors = true;
 
     // Also log them to the console.
@@ -202,25 +205,28 @@ export function init(
     id,
     message,
   }: ServerMessageResolvedClientError['data']): void {
-    // If build failed, do not render client errors on overlay
-    if (!createOverlay || hasBuildErrors) {
-      return;
-    }
-
     const clientError = clientErrors.find((item) => item.id === id);
     // Ignore responses for errors cleared by a newer compilation.
     if (!clientError) {
       return;
     }
+    // Keep errors from early updates until full-build diagnostics allow displaying them.
     clientError.message = message;
+    renderClientErrors();
+  }
 
-    createOverlay(
-      'Runtime errors',
-      clientErrors
-        .map((item) => item.message)
-        .filter(Boolean)
-        .join('\n\n'),
-    );
+  function renderClientErrors() {
+    if (!createOverlay || hasBuildErrors) {
+      return;
+    }
+
+    const message = clientErrors
+      .map((item) => item.message)
+      .filter(Boolean)
+      .join('\n\n');
+    if (message) {
+      createOverlay('Runtime errors', message);
+    }
   }
 
   // BUILD_HASH is replaced with import.meta.rspackHash when the client is prebuilt,
