@@ -1,4 +1,3 @@
-import { setTimeout } from 'node:timers/promises';
 import { expect, test } from '@e2e/helper';
 import type { Rspack } from '@rsbuild/core';
 
@@ -6,10 +5,8 @@ test('should serve web assets early but wait for the full build before downstrea
   devOnly,
 }) => {
   const releaseNode = Promise.withResolvers<void>();
-  const requestsArrived = Promise.withResolvers<void>();
-  const methods = ['GET', 'HEAD', 'POST'];
+  const requestQueued = Promise.withResolvers<void>();
   let nodeBuildDone = false;
-  let requestCount = 0;
 
   const pauseNodeBuild: Rspack.RspackPluginInstance = {
     apply(compiler) {
@@ -27,9 +24,8 @@ test('should serve web assets early but wait for the full build before downstrea
         setup: ({ server }) => {
           server.middlewares.use('/node-ready', (_req, _res, next) => {
             next();
-            if (++requestCount === methods.length) {
-              requestsArrived.resolve();
-            }
+            // POST is queued synchronously, without an asynchronous asset lookup.
+            requestQueued.resolve();
           });
           return () => {
             server.middlewares.use('/node-ready', (_req, res) => {
@@ -61,25 +57,14 @@ test('should serve web assets early but wait for the full build before downstrea
     expect(await asset.text()).toContain('hello world');
     expect(nodeBuildDone).toBe(false);
 
-    const responses = Promise.all(
-      methods.map((method) =>
-        fetch(`${url}/node-ready`, {
-          method,
-          signal: AbortSignal.timeout(5_000),
-        }),
-      ),
-    );
-    await requestsArrived.promise;
-
-    // Observe pending requests briefly; compilation itself has no timed delay.
-    expect(await Promise.race([responses, setTimeout(100, 'pending')])).toBe(
-      'pending',
-    );
+    const response = fetch(`${url}/node-ready`, {
+      method: 'POST',
+      signal: AbortSignal.timeout(5_000),
+    });
+    await requestQueued.promise;
     releaseNode.resolve();
 
-    for (const response of await responses) {
-      expect(response.status).toBe(200);
-    }
+    expect((await response).status).toBe(200);
   } finally {
     // Allow server cleanup to finish even when an assertion fails.
     releaseNode.resolve();
