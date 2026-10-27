@@ -155,7 +155,10 @@ export async function startPreviewServer(
   const webEnvironments = filterWebEnvironments(context.environmentList);
   const assetsMiddleware = createAssetsMiddleware(
     context,
-    (callback) => callback(),
+    {
+      waitForAssets: (callback) => callback(),
+      waitForBuild: (callback) => callback(),
+    },
     fs,
   );
   const htmlMiddlewareOptions = {

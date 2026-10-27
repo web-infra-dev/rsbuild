@@ -330,7 +330,13 @@ export const filterWebEnvironments = (
 
 export function createAssetsMiddleware(
   context: InternalContext,
-  ready: (callback: () => void) => void,
+  {
+    waitForAssets,
+    waitForBuild,
+  }: {
+    waitForAssets: (callback: () => void) => void;
+    waitForBuild: (callback: () => void) => void;
+  },
   outputFileSystem: Rspack.OutputFileSystem,
 ): RequestHandler {
   const { logger } = context;
@@ -344,9 +350,10 @@ export function createAssetsMiddleware(
   };
 
   return async function assetsMiddleware(req, res, next) {
-    async function goNext() {
+    // Downstream middleware may need Node.js output even when web assets are ready.
+    function goNext() {
       return new Promise<void>((resolve) => {
-        ready(() => {
+        waitForBuild(() => {
           next();
           resolve();
         });
@@ -529,7 +536,7 @@ export function createAssetsMiddleware(
       finished(res, cleanup);
     }
 
-    // rslint-disable-next-line @typescript-eslint/no-misused-promises -- `ready` does not consume callback return values.
-    ready(processRequest);
+    // rslint-disable-next-line @typescript-eslint/no-misused-promises -- `waitForAssets` does not consume callback return values.
+    waitForAssets(processRequest);
   };
 }

@@ -328,21 +328,29 @@ export const assetsMiddleware = async ({
 
   applyToCompiler(compiler, setupCompiler);
 
-  const callbacks: (() => void)[] = [];
+  // Keep separate queues so early web completion only releases asset requests.
+  const assetCallbacks: (() => void)[] = [];
+  const buildCallbacks: (() => void)[] = [];
 
-  const flushCallbacks = () => {
+  const flushCallbacks = (callbacks: (() => void)[]) => {
+    // Drain before invoking callbacks so newly queued work stays pending.
     for (const callback of callbacks.splice(0)) {
       callback();
     }
   };
 
+  const flushAllCallbacks = () => {
+    flushCallbacks(assetCallbacks);
+    flushCallbacks(buildCallbacks);
+  };
+
   compiler.hooks.done.tap('rsbuild-dev-middleware', () => {
     process.nextTick(() => {
-      if (!(context.buildState.status === 'done')) {
+      if (context.buildState.status !== 'done') {
         return;
       }
 
-      flushCallbacks();
+      flushAllCallbacks();
     });
   });
 
@@ -369,7 +377,7 @@ export const assetsMiddleware = async ({
         if (isWebReady()) {
           process.nextTick(() => {
             if (isWebReady()) {
-              flushCallbacks();
+              flushCallbacks(assetCallbacks);
             }
           });
         }
@@ -389,21 +397,29 @@ export const assetsMiddleware = async ({
     allCompilers,
   );
 
-  const ready = (callback: () => void) => {
-    if (
-      context.buildState.status === 'done' ||
-      context.buildState.status === 'failed' ||
-      isWebReady()
-    ) {
+  const isBuildReady = () =>
+    context.buildState.status === 'done' ||
+    context.buildState.status === 'failed';
+
+  const waitForAssets = (callback: () => void) => {
+    if (isBuildReady() || isWebReady()) {
       callback();
     } else {
-      callbacks.push(callback);
+      assetCallbacks.push(callback);
+    }
+  };
+
+  const waitForBuild = (callback: () => void) => {
+    if (isBuildReady()) {
+      callback();
+    } else {
+      buildCallbacks.push(callback);
     }
   };
 
   const instance = createAssetsMiddleware(
     context,
-    ready,
+    { waitForAssets, waitForBuild },
     outputFileSystem,
   ) as AssetsMiddleware;
 
@@ -426,7 +442,7 @@ export const assetsMiddleware = async ({
 
           // Fatal compiler errors do not trigger the `done` hook. Release
           // pending requests so the server can keep serving previous output.
-          process.nextTick(flushCallbacks);
+          process.nextTick(flushAllCallbacks);
 
           if (error.message?.includes('× Error:')) {
             error.message = error.message.replace('× Error:', '').trim();
