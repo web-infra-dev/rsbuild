@@ -11,25 +11,25 @@ test('should show runtime errors from early updates after Node recovers', async 
   const tempSrc = await copySrcDir();
   const hmrSocket = page.waitForEvent('websocket');
   const releaseNode = Promise.withResolvers<void>();
-  let pauseNode = false;
-  let failNode = true;
+  let firstBuild = true;
 
   const nodePlugin: Rspack.RspackPluginInstance = {
     apply(compiler) {
-      compiler.hooks.make.tapPromise('node-errors', async () => {
-        if (pauseNode) {
-          await releaseNode.promise;
-        }
-      });
-      compiler.hooks.afterCompile.tap('node-errors', (compilation) => {
-        if (failNode) {
-          compilation.errors.push(new Error('Node compilation error'));
-        }
-      });
+      compiler.hooks.afterCompile.tapPromise(
+        'node-errors',
+        async (compilation) => {
+          if (firstBuild) {
+            firstBuild = false;
+            compilation.errors.push(new Error('Node compilation error'));
+          } else {
+            await releaseNode.promise;
+          }
+        },
+      );
     },
   };
 
-  const rsbuild = await dev({
+  await dev({
     config: {
       dev: { client: { overlay: { runtime: true } } },
       environments: {
@@ -49,7 +49,6 @@ test('should show runtime errors from early updates after Node recovers', async 
   await expect(overlay).toContainText('Node compilation error');
 
   try {
-    pauseNode = true;
     await editFile(join(tempSrc, 'shared.js'), (code) =>
       code.replace('hello world', 'changed'),
     );
@@ -69,15 +68,8 @@ test('should show runtime errors from early updates after Node recovers', async 
     await resolvedError;
     await expect(overlay).toContainText('Node compilation error');
 
-    const failedBuild = Promise.withResolvers<void>();
-    rsbuild.instance.onAfterDevCompile(() => failedBuild.resolve());
+    // Node recovers after the runtime error arrives, without another web update.
     releaseNode.resolve();
-    await failedBuild.promise;
-    await expect(overlay).toContainText('Node compilation error');
-
-    // Only Node changes: recovery must clear build errors even with the same web hash.
-    failNode = false;
-    await editFile(join(tempSrc, 'server.js'), (code) => `${code}\n`);
     await expect(overlay).toContainText('Runtime error after early update');
     // A newer web update must still clear errors from the previous code.
     await editFile(join(tempSrc, 'shared.js'), (code) =>
