@@ -143,8 +143,10 @@ export function init(
 
   function clearBuildErrors() {
     // Clean up outdated compile errors
-    if (console.clear && hasBuildErrors) {
-      console.clear();
+    if (hasBuildErrors) {
+      console.clear?.();
+      // Another environment can recover without changing this client's hash.
+      clearOverlay?.();
     }
     hasBuildErrors = false;
   }
@@ -310,12 +312,19 @@ export function init(
 
     switch (message.type) {
       case 'hash':
+      case 'early-update':
         // Update the last compilation hash
         lastHash = message.data;
 
         if (shouldUpdate()) {
           clientErrors.length = 0;
-          clearOverlay?.();
+          if (!hasBuildErrors) {
+            clearOverlay?.();
+          }
+        }
+        if (message.type === 'early-update') {
+          // Apply web updates without clearing errors from the last full build.
+          tryApplyUpdates();
         }
         break;
       case 'ok':
