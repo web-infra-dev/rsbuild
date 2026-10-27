@@ -2,6 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
 import { finished } from 'node:stream';
 import { color } from '../helpers';
+import { getAssetNames } from '../helpers/compilation';
 import { addTrailingSlash } from '../helpers/url';
 import { UP_PATH_REGEXP } from './assets-middleware/getFileFromUrl';
 import { isVerbose, type Logger } from '../logger';
@@ -368,7 +369,7 @@ export const viewingServedFilesMiddleware: (params: {
         const list = [];
         const environment = environments[key];
         const stats = await environment.getStats();
-        const assets = Object.keys(stats.compilation.assets);
+        const assets = getAssetNames(stats.compilation);
 
         res.write('<ul>');
 
