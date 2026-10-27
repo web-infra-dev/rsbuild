@@ -7,6 +7,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
 import { color, hash } from '../helpers';
+import { getAssetNames } from '../helpers/compilation';
 import { applyToCompiler } from '../helpers/compiler';
 import type { Logger } from '../logger';
 import type {
@@ -329,8 +330,7 @@ async function getFileSizes(
   }[] = [];
   const compilationAssets = compilation.assets;
 
-  // Avoid per-file property descriptor lookups on the assets proxy.
-  const names = Object.getOwnPropertyNames(compilationAssets);
+  const names = getAssetNames(compilation);
   await processAssets(names, async (assetName, index) => {
     const filePath = getFilePath(assetName);
 

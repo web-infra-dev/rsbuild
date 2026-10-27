@@ -1,6 +1,7 @@
 import { join } from 'node:path';
 import type { Compiler } from '@rspack/core';
 import type { IFs } from 'memfs';
+import { getAssetNames } from '../../helpers/compilation';
 
 export function setupMemoryFileSystemCleanup(
   fileSystem: IFs,
@@ -34,9 +35,8 @@ export function setupMemoryFileSystemCleanup(
         }
 
         const outputPath = compilation.getPath(compiler.outputPath);
-        // Include unchanged assets that Rspack skipped writing, without reading
-        // Sources or performing per-file proxy descriptor lookups.
-        for (const name of Object.getOwnPropertyNames(compilation.assets)) {
+        // Include unchanged assets that Rspack skipped writing.
+        for (const name of getAssetNames(compilation)) {
           const queryIndex = name.indexOf('?');
           const filename = queryIndex === -1 ? name : name.slice(0, queryIndex);
           const filePath = join(outputPath, filename);

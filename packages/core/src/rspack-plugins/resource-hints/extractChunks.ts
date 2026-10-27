@@ -17,6 +17,7 @@
  */
 
 import type { Chunk, ChunkGroup, Compilation } from '@rspack/core';
+import { getAssetNames } from '../../helpers/compilation';
 import type { ResourceHintsIncludeType } from '../../types';
 
 const LICENSE_ASSET_REGEX = /\.LICENSE\.txt$/;
@@ -64,7 +65,7 @@ export function extractChunks(
     // should not be hinted.
     return [
       {
-        files: Object.keys(compilation.assets).filter(
+        files: getAssetNames(compilation).filter(
           (file) => !LICENSE_ASSET_REGEX.test(file),
         ),
       },
