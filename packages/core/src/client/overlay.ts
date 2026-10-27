@@ -55,10 +55,6 @@ class ErrorOverlay extends HTMLElement {
 
 const overlayId = 'rsbuild-error-overlay';
 
-if (customElements && !customElements.get(overlayId)) {
-  customElements.define(overlayId, ErrorOverlay);
-}
-
 function getOverlayHtml(title: string, content: string) {
   return `
 <style>
@@ -227,9 +223,8 @@ function clearOverlay() {
 }
 
 if (typeof document !== 'undefined') {
+  if (customElements && !customElements.get(overlayId)) {
+    customElements.define(overlayId, ErrorOverlay);
+  }
   registerOverlay(createOverlay, clearOverlay);
-} else {
-  logger.info(
-    '[rsbuild] Error overlay unavailable: Running in non-browser environment. To suppress this message, set `dev.client.overlay: false` in your configuration.',
-  );
 }
