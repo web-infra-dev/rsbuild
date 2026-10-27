@@ -2385,7 +2385,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 }
 
 export type MergedEnvironmentConfig = {
-  server?: EnvironmentConfig['server'];
+  server?: NonNullable<EnvironmentConfig['server']>;
   mode: RsbuildMode;
   root: string;
   dev: Pick<NormalizedDevConfig, AllowedEnvironmentDevKeys>;
