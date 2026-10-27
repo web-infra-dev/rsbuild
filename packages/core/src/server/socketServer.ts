@@ -696,8 +696,9 @@ export class SocketServer {
       return;
     }
 
-    // A completed web environment can update, but cannot settle diagnostics
-    // from other environments that are still compiling.
+    // Apply web updates early without clearing existing build errors.
+    // Other environments may still be compiling, so wait for the full build
+    // before sending ok, warnings, or errors.
     if (this.environmentStats.has(token)) {
       if (stats.hash) {
         this.currentHash.set(token, stats.hash);
