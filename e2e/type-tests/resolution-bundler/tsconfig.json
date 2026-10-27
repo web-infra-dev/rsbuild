@@ -3,7 +3,14 @@
   "compilerOptions": {
     "module": "ES2022",
     "moduleResolution": "bundler",
-    "skipLibCheck": false
+    "skipLibCheck": false,
+    "strictNullChecks": true,
+    "exactOptionalPropertyTypes": true
   },
-  "include": ["defineConfig.ts", "index.ts", "thirdParty.ts"]
+  "include": [
+    "defineConfig.ts",
+    "environmentConfig.ts",
+    "index.ts",
+    "thirdParty.ts"
+  ]
 }
