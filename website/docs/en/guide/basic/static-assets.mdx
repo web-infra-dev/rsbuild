@@ -200,6 +200,25 @@ console.log(fooText); // The original content of foo.js
 `type: 'text'` is supported in Rsbuild >= 2.1.3 and is recommended over the `?raw` query parameter.
 :::
 
+#### TypeScript support
+
+To infer text imports as `string`, TypeScript 7.1 or later supports [import attributes in ambient module declarations](https://devblogs.microsoft.com/typescript/announcing-typescript-7-1-beta/#support-for-import-attributes-in-ambient-modules). Add the following declaration to `src/env.d.ts`:
+
+```ts title="src/env.d.ts"
+/// <reference types="@rsbuild/core/types" />
+
+declare module '*' with { type: 'text' } {
+  const content: string;
+  export default content;
+}
+```
+
+Keep this declaration file free of top-level `import` and `export` statements so the declaration applies globally.
+
+This declaration covers both static and dynamic imports with `type: 'text'`. Without it, TypeScript may use the file's original type, such as a JSON object or a script's exports, causing incorrect type hints or type errors. Normal imports without `type: 'text'` keep their original types.
+
+Earlier TypeScript versions cannot parse this declaration, even with `skipLibCheck` enabled. For these versions, use the `?raw` query parameter instead, which is covered by the preset types in `@rsbuild/core/types`.
+
 ### With query parameters
 
 Rsbuild also supports using the `?raw` query parameter to import file content as a string:

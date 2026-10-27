@@ -200,6 +200,25 @@ console.log(fooText); // foo.js 的原始内容
 `type: 'text'` 在 Rsbuild >= 2.1.3 中支持，推荐优先使用它，而不是 `?raw` 查询参数。
 :::
 
+#### TypeScript 支持 \{#typescript-support}
+
+TypeScript 7.1 及以上版本支持[在环境模块声明中使用导入属性](https://devblogs.microsoft.com/typescript/announcing-typescript-7-1-beta/#support-for-import-attributes-in-ambient-modules)，可以将文本导入推断为 `string`。在 `src/env.d.ts` 中添加以下声明：
+
+```ts title="src/env.d.ts"
+/// <reference types="@rsbuild/core/types" />
+
+declare module '*' with { type: 'text' } {
+  const content: string;
+  export default content;
+}
+```
+
+请勿在此声明文件中添加顶层 `import` 或 `export` 语句，以确保声明在全局生效。
+
+此声明同时适用于带有 `type: 'text'` 的静态导入和动态导入。缺少此声明时，TypeScript 可能仍使用文件原本的类型，例如 JSON 对象或脚本的导出类型，导致不准确的类型提示或类型错误。不带 `type: 'text'` 的普通导入会保留原有类型。
+
+较早的 TypeScript 版本无法解析此声明，即使开启 `skipLibCheck` 也会报错。使用这些版本时，请改用 `?raw` 查询参数，`@rsbuild/core/types` 已提供对应的预设类型。
+
 ### 通过查询参数
 
 Rsbuild 也支持通过 `?raw` 查询参数将文件内容作为字符串导入：
