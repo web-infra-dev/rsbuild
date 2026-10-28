@@ -20,7 +20,7 @@ test('should apply a queued web update before Node finishes', async ({
   await dev({
     config: {
       environments: {
-        web: { source: { entry: { index: './src/index.js' } } },
+        web: {},
         node: {
           source: { entry: { server: './src/server.js' } },
           output: { target: 'node' },
