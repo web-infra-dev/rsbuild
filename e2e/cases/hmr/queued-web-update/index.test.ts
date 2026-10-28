@@ -32,7 +32,7 @@ test('should apply a queued web update before Node finishes', async ({
             config.module.rules ??= [];
             config.module.rules.push({
               test: /index\.js$/,
-              use: join(cwd, 'build-number-loader.cjs'),
+              use: join(cwd, 'build-number-loader.mjs'),
             });
           }
           config.plugins.push({
