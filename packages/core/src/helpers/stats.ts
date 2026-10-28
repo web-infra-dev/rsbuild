@@ -122,9 +122,7 @@ export function getRsbuildStats(
 }
 
 export function getEarlyStats(stats: Rspack.Stats): RsbuildStats {
-  // Read only HMR metadata from the completed compilation, avoiding an extra
-  // toJson() pass. Full-build stats still collect the latest diagnostics.
-  // Treat entry names such as __proto__ as ordinary dictionary keys.
+  // Avoid an extra toJson() call; early updates only need the hash and chunk IDs.
   const entrypoints: NonNullable<RsbuildStats['entrypoints']> =
     Object.create(null);
 

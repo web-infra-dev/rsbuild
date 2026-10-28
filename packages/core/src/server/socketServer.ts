@@ -690,8 +690,8 @@ export class SocketServer {
       initialChunks &&
       !isEqualSet(initialChunks, newInitialChunks);
 
-    // Full-build stats can omit entrypoints or chunk IDs via user options.
-    // Missing data must not replace a valid early-update baseline with an empty set.
+    // User stats options may omit entrypoints or chunk IDs. Preserve the previous
+    // baseline so missing data does not cause an unnecessary reload.
     if (newInitialChunks) {
       this.initialChunksMap.set(token, newInitialChunks);
     }
