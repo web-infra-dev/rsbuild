@@ -125,13 +125,22 @@ export const setupServerHooks = ({
     return;
   }
 
-  // Track errors and warnings count to detect if the `done` hook is called multiple times
+  // Track error and warning counts to skip repeated `done` notifications
+  // within the same build when these counts have not changed.
   let errorsCount: number | null = null;
   let warningsCount: number | null = null;
 
-  compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
+  const resetCounts = () => {
     errorsCount = null;
     warningsCount = null;
+  };
+
+  // The previous build's `done` can run after `invalid` and restore these counts.
+  // Reset when the queued build starts, but keep counts across repeated `done` calls.
+  compiler.hooks.watchRun.tap('rsbuild-dev-server', resetCounts);
+
+  compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
+    resetCounts();
 
     // reload page when HTML template changed
     if (
