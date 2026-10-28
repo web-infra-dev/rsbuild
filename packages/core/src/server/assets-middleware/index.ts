@@ -130,17 +130,18 @@ export const setupServerHooks = ({
   let errorsCount: number | null = null;
   let warningsCount: number | null = null;
 
-  const resetCounts = () => {
+  const reset = () => {
     errorsCount = null;
     warningsCount = null;
+    socketServer.clearEnvironmentStats(token);
   };
 
-  // The previous build's `done` can run after `invalid` and restore these counts.
-  // Reset when the queued build starts, but keep counts across repeated `done` calls.
-  compiler.hooks.watchRun.tap('rsbuild-dev-server', resetCounts);
+  // The previous build's `done` can run after `invalid` and restore its state.
+  // Reset when the queued build starts, but keep state across repeated `done` calls.
+  compiler.hooks.watchRun.tap('rsbuild-dev-server', reset);
 
   compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
-    resetCounts();
+    reset();
 
     // reload page when HTML template changed
     if (
