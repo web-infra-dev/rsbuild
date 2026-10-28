@@ -23,8 +23,8 @@ The following are official plugins that can be used in Rsbuild.
 Plugins available for the React:
 
 - [@rsbuild/plugin-react](/plugins/list/plugin-react): Support for React.
+- [@rsbuild/plugin-styled-components](https://github.com/rstackjs/rsbuild-plugin-styled-components): Provide compile-time support for styled-components.
 - [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr): Support convert SVG to React components.
-- [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components): Provide compile-time support for styled-components.
 
 ### Vue
 
@@ -59,40 +59,113 @@ The following are common framework-agnostic plugins:
 
 - [@rsbuild/plugin-assets-retry](https://github.com/rstackjs/rsbuild-plugin-assets-retry): Used to automatically resend requests when static assets fail to load.
 - [@rsbuild/plugin-babel](/plugins/list/plugin-babel): Support for Babel transpilation capabilities.
-- [@rsbuild/plugin-tailwindcss](/plugins/list/plugin-tailwindcss): Use Tailwind CSS v4.
-- [@rsbuild/plugin-sass](/plugins/list/plugin-sass): Use Sass as the CSS preprocessor.
-- [@rsbuild/plugin-less](/plugins/list/plugin-less): Use Less as the CSS preprocessor.
 - [@rsbuild/plugin-basic-ssl](https://github.com/rstackjs/rsbuild-plugin-basic-ssl): Generate an untrusted, self-signed certificate for the HTTPS server.
-- [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint): Run ESLint checks during the compilation.
-- [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check): Run TypeScript type checker on a separate process.
-- [@rsbuild/plugin-image-compress](https://github.com/rstackjs/rsbuild-plugin-image-compress): Compress the image assets.
-- [@rsbuild/plugin-mdx](https://github.com/rstackjs/rsbuild-plugin-mdx): Provide support for MDX.
-- [@rsbuild/plugin-node-polyfill](https://github.com/rstackjs/rsbuild-plugin-node-polyfill): Used to inject polyfills of Node core modules in the browser side.
-- [@rsbuild/plugin-source-build](https://github.com/rstackjs/rsbuild-plugin-source-build): This plugin is designed for the monorepo scenario. It supports referencing source code from other subdirectories and performs build and hot update.
 - [@rsbuild/plugin-check-syntax](https://github.com/rstackjs/rsbuild-plugin-check-syntax): Check the syntax compatibility of output files and determine if there are any advanced syntaxes that could cause compatibility issues.
 - [@rsbuild/plugin-css-minimizer](https://github.com/rstackjs/rsbuild-plugin-css-minimizer): Customize the CSS minimizer, switching to [cssnano](https://github.com/cssnano/cssnano) or other tools for CSS compression.
-- [@rsbuild/plugin-typed-css-modules](https://github.com/rstackjs/rsbuild-plugin-typed-css-modules): Generate TypeScript declaration file for CSS Modules.
+- [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint): Run ESLint checks during the compilation.
+- [@rsbuild/plugin-image-compress](https://github.com/rstackjs/rsbuild-plugin-image-compress): Compress the image assets.
+- [@rsbuild/plugin-less](/plugins/list/plugin-less): Use Less as the CSS preprocessor.
+- [@rsbuild/plugin-mdx](https://github.com/rstackjs/rsbuild-plugin-mdx): Provide support for MDX.
+- [@rsbuild/plugin-node-polyfill](https://github.com/rstackjs/rsbuild-plugin-node-polyfill): Used to inject polyfills of Node core modules in the browser side.
 - [@rsbuild/plugin-pug](https://github.com/rstackjs/rsbuild-plugin-pug): Support for the Pug template engine.
 - [@rsbuild/plugin-rem](https://github.com/rstackjs/rsbuild-plugin-rem): Implements the rem adaptive layout for mobile pages.
+- [@rsbuild/plugin-sass](/plugins/list/plugin-sass): Use Sass as the CSS preprocessor.
+- [@rsbuild/plugin-source-build](https://github.com/rstackjs/rsbuild-plugin-source-build): This plugin is designed for the monorepo scenario. It supports referencing source code from other subdirectories and performs build and hot update.
+- [@rsbuild/plugin-stylus](https://github.com/rstackjs/rsbuild-plugin-stylus): Use Stylus as the CSS preprocessor.
+- [@rsbuild/plugin-tailwindcss](/plugins/list/plugin-tailwindcss): Use Tailwind CSS v4.
+- [@rsbuild/plugin-toml](https://github.com/rstackjs/rsbuild-plugin-toml): Import TOML files and convert them into JavaScript objects.
+- [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check): Run TypeScript type checker on a separate process.
+- [@rsbuild/plugin-typed-css-modules](https://github.com/rstackjs/rsbuild-plugin-typed-css-modules): Generate TypeScript declaration file for CSS Modules.
 - [@rsbuild/plugin-umd](https://github.com/rstackjs/rsbuild-plugin-umd): Generate outputs in UMD format.
 - [@rsbuild/plugin-yaml](https://github.com/rstackjs/rsbuild-plugin-yaml): Import YAML files and convert them into JavaScript objects.
-- [@rsbuild/plugin-toml](https://github.com/rstackjs/rsbuild-plugin-toml): Import TOML files and convert them into JavaScript objects.
-
-:::tip
-You can find the source code of all official plugins in [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) and [rstackjs](https://github.com/rstackjs).
-:::
 
 ## Community plugins
 
-You can check out the Rsbuild plugins provided by the community at [awesome-rstack - Rsbuild Plugins](https://github.com/rstackjs/awesome-rstack#rsbuild-plugins).
-
-You can also discover more Rsbuild plugins on npm by searching for the keyword [rsbuild-plugin](https://npmjs.com/search?q=rsbuild-plugin&ranking=popularity).
+Community plugins are grouped by framework and listed alphabetically by package name within each group. We welcome PRs to add your published plugins to this list!
 
 ### React
 
-- [rsbuild-plugin-react-router](https://github.com/rstackjs/rsbuild-plugin-react-router): Provides seamless integration with React Router.
 - [@lynx-js/react-rsbuild-plugin](https://lynxjs.org/api/rspeedy/react-rsbuild-plugin): Support for [ReactLynx](/guide/framework/react-lynx), building Lynx bundles.
+- [rsbuild-plugin-react-inspector](https://github.com/hunghg255/rsbuild-plugin-react-inspector): Allows automatic jumping to the local IDE when clicking on a browser element.
+- [rsbuild-plugin-react-router](https://github.com/rstackjs/rsbuild-plugin-react-router): Provides seamless integration with React Router.
+- [rsbuild-plugin-rsc](https://github.com/rstackjs/rsbuild-plugin-rsc): React Server Components (RSC) support for Rsbuild.
+- [rsbuild-react-generate-pages](https://github.com/hunghg255/rsbuild-react-generate-pages): Generate pages for React app based on the directory structure and `react-router-dom` configuration.
+
+### Vue
+
+- [@mutsuntsai/rsbuild-plugin-vue-ssg](https://github.com/mutsuntsai/rsbuild-plugin-vue-ssg): Generate Vue SSG contents and inject those into HTML for Rsbuild.
+- [@vizejs/rspack-plugin](https://github.com/ubugeeei-prod/vize): A high-performance Vue.js toolchain written in Rust.
+- [@vue-devtools-rstack/rsbuild](https://github.com/OskarLebuda/vue-devtools-rstack/tree/main/packages/rsbuild): Integrates Vue DevTools with Rsbuild, with feature parity with `vite-plugin-vue-devtools`.
+- [@vue-vine/rsbuild-plugin](https://github.com/vue-vine/vue-vine): Rsbuild plugin for Vue Vine.
+- [rsbuild-plugin-unplugin-vue](https://github.com/rstackjs/rsbuild-plugin-unplugin-vue): Integrates `unplugin-vue` for Vue SFC compilation.
+- [rsbuild-plugin-vue-inspector](https://github.com/hunghg255/rsbuild-plugin-vue-inspector): Allows automatic jumping to the local IDE when clicking on a browser element.
+- [rsbuild-plugin-vue-mcp](https://github.com/BrightX/rsbuild-plugin-vue-mcp): Integrates Vue DevTools with MCP to expose Vue component trees, component state, and Pinia stores to AI tools.
+
+### Svelte
+
+- [rsbuild-plugin-svelte-inspector](https://github.com/hunghg255/rsbuild-plugin-svelte-inspector): Allows automatic jumping to the local IDE when clicking on a browser element.
 
 ### Angular
 
-- [@ng-rsbuild/plugin-angular](https://github.com/nrwl/angular-rspack): Allows you to build Angular applications easily.
+- [@nx/angular-rsbuild](https://github.com/nrwl/nx): Allows you to build Angular applications easily.
+
+### Lynx
+
+- [lynxjs-app-config-plugin](https://github.com/HimanshuKumarDutt094/lynxjs-app-config-plugin): Rsbuild plugin to inject application icons, permissions and minimal app config changes into Android / iOS project folders.
+- [ngrok-rsbuild-plugin](https://github.com/nanofuxion/ngrok-rsbuild-plugin): Expose your Rsbuild dev server over the internet via ngrok — built for use with the LynxJS app.
+- [relog-rsbuild-plugin](https://github.com/nanofuxion/relog-rsbuild-plugin): Allows you to intercept `console.log()` calls from your LynxJS app running on a device or emulator and send them back to the Rsbuild dev server.
+
+### Common
+
+- [@agney/rsbuild-content-collections](https://github.com/agneym/rsbuild-content-collections): An Rsbuild plugin for Content Collections.
+- [@devjskit/rsbuild-plugin-langs](https://github.com/devjskit/rsbuild-plugin-langs): Extract content from JSON files and merge into a multi-language file.
+- [@golar-rstack/rsbuild](https://github.com/OskarLebuda/golar-rstack-plugin/tree/main/packages/rsbuild): Runs golar type checking and type-aware linting in a separate process as an Rsbuild plugin.
+- [@module-federation/rsbuild-plugin](https://module-federation.io/guide/basic/rsbuild): An Rsbuild plugin for integrating Module Federation v2.
+- [@mpaynesecurity/rsbuild-plugin-fusion](https://github.com/mpaynesecurity/rsbuild-plugin-fusion): Run server code directly from any Rsbuild supported UI framework.
+- [@mpaynesecurity/rsbuild-plugin-hydra](https://github.com/mpaynesecurity/rsbuild-plugin-hydra): Turn any Rsbuild app into a lightweight fullstack framework.
+- [@octanejs/rsbuild-plugin](https://octanejs.dev/docs/build-tools#rsbuild): Provides routing, SSR, hydration, and production builds for Octane.
+- [@plugin-cra-proxy/rsbuild](https://github.com/robertpanvip/plugin-cra-proxy/tree/main/packages/rsbuild): A development proxy plugin for Rsbuild, mimicking Create React App proxy behavior.
+- [@seed-design/rsbuild-plugin](https://github.com/daangn/seed-design): An Rsbuild plugin for the Seed design system.
+- [@webx-kit/rsbuild-plugin](https://github.com/tmkx/webx-kit): Rsbuild plugin for Web eXtension development.
+- [plugin-sails-content](https://github.com/sailscastshq/sails-content/tree/main/packages/plugin-sails-content): Rsbuild plugin for [Sails Content](https://docs.sailscasts.com/content/).
+- [rsbuild-auto-i18n-plugin](https://github.com/auto-i18n/auto-i18n-translation-plugins): An Rsbuild plugin for automatic translation with support for multiple translation services and custom translators.
+- [rsbuild-plugin-arco](https://github.com/zhmushan/rsbuild-plugin-arco): Rsbuild plugins for Arco Design.
+- [rsbuild-plugin-arethetypeswrong](https://github.com/rstackjs/rsbuild-plugin-arethetypeswrong): Checking TypeScript type definitions with `arethetypeswrong`.
+- [rsbuild-plugin-auto-alias](https://github.com/jwyGithub/rsbuild-plugin-auto-alias): Automatically generate alias based on path.
+- [rsbuild-plugin-aws-lambda](https://github.com/wxiaoyun/rsbuild-plugin-aws-lambda): Configure Rsbuild to bundle JavaScript assets for AWS Lambda.
+- [rsbuild-plugin-biome](https://github.com/robertpanvip/rsbuild-plugin-lint/tree/main/packages/biome): Integrate Biome into the Rsbuild build process.
+- [rsbuild-plugin-block-imports](https://github.com/malekabdelkader/rsbuild-plugin-block-imports): Rsbuild plugin to detect and block forbidden imports in Module Federation builds.
+- [rsbuild-plugin-cdn-import](https://github.com/fuxichen/rsbuild-plugin-cdn-import): Import modules from CDN with Rsbuild plugin.
+- [rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare): An Rsbuild plugin for developing and building Cloudflare Workers, with local execution in workerd.
+- [rsbuild-plugin-compression](https://github.com/s-r-x/rsbuild-plugin-compression): Compress the assets using gzip, brotli or zstd.
+- [rsbuild-plugin-css-optimizer](https://github.com/aliezzahn/rsbuild-plugin-css-optimizer): Customize CSS minification, allowing you to choose between cssnano (JavaScript-based) or Lightning CSS (Rust-based) for high-performance CSS compression.
+- [rsbuild-plugin-devtools-json](https://github.com/rstackjs/rsbuild-plugin-devtools-json): Generating `com.chrome.devtools.json` on the fly in the dev server.
+- [rsbuild-plugin-dts](https://github.com/web-infra-dev/rslib/tree/main/packages/plugin-dts): Generate TypeScript declaration files.
+- [rsbuild-plugin-ejs](https://github.com/rstackjs/rsbuild-plugin-ejs): Provide support for the EJS template engine.
+- [rsbuild-plugin-generate-file](https://github.com/sumy7/rsbuild-plugin-generate-file): Generate static files and write them to the output directory after the build.
+- [rsbuild-plugin-glsl](https://github.com/sakitam-fdd/rsbuild-plugin-glsl): Import GLSL shaders as inline strings, with optional compression.
+- [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics): Setup Google Analytics in your website.
+- [rsbuild-plugin-html-minifier-terser](https://github.com/rstackjs/rsbuild-plugin-html-minifier-terser): An Rsbuild plugin to use `html-minifier-terser` to minify the HTML outputs.
+- [rsbuild-plugin-i18next-extractor](https://github.com/rstackjs/rsbuild-plugin-i18next-extractor): An Rsbuild plugin using [i18next-cli](https://github.com/i18next/i18next-cli) to extract i18n translations.
+- [rsbuild-plugin-iconify](https://github.com/pathscale/iconify-preload): A Rsbuild plugin that automatically generates optimized CSS with embedded SVG icons from Iconify.
+- [rsbuild-plugin-mcp](https://github.com/colinaaa/rsbuild-plugin-mcp): Enable an MCP server that provides information about your Rsbuild configuration and module graphs.
+- [rsbuild-plugin-monaco-editor-nls](https://github.com/zackshen/rsbuild-plugin-monaco-editor-nls): An Rsbuild plugin to localize monaco-editor.
+- [rsbuild-plugin-open-graph](https://github.com/rstackjs/rsbuild-plugin-open-graph): Generate Open Graph meta tags.
+- [rsbuild-plugin-oxlint](https://github.com/robertpanvip/rsbuild-plugin-lint/tree/main/packages/oxlint): Integrate Oxlint into the Rsbuild build process.
+- [rsbuild-plugin-print](https://github.com/hunghg255/rsbuild-plugin-print): Print text and display the server URL as a QR code.
+- [rsbuild-plugin-protobufjs](https://github.com/baranwang/rsbuild-plugin-protobufjs): An Rsbuild plugin that integrates `protobufjs`.
+- [rsbuild-plugin-publint](https://github.com/rstackjs/rsbuild-plugin-publint): Run `publint` to lint npm packages after the build.
+- [rsbuild-plugin-pwa](https://github.com/s-r-x/rsbuild-plugin-pwa): Zero-config PWA support for Rsbuild.
+- [rsbuild-plugin-rempa](https://github.com/sumy7/rsbuild-plugin-rempa): A Rsbuild plugin designed to collect pages and generate a Multi-Page Application (MPA).
+- [rsbuild-plugin-rslint](https://github.com/robertpanvip/rsbuild-plugin-lint/tree/main/packages/rslint): Integrate Rslint into the Rsbuild build process.
+- [rsbuild-plugin-ssg](https://github.com/jhanca-vm/rsbuild-plugin-ssg): Prerender pages at build time with zero-JS by default and Islands Architecture support.
+- [rsbuild-plugin-stylelint](https://github.com/zalishchuk/rsbuild-plugin-stylelint): Used to run Stylelint checks during the compilation.
+- [rsbuild-plugin-tailwindcss](https://github.com/rstackjs/rsbuild-plugin-tailwindcss): An Rsbuild plugin to integrate with Tailwind CSS.
+- [rsbuild-plugin-virtual-module](https://github.com/rstackjs/rsbuild-plugin-virtual-module): Used to create virtual modules with loader API.
+- [rsbuild-plugin-wasmpack](https://github.com/im-neiru/rsbuild-plugin-wasmpack): Compile Rust crates to WebAssembly using wasm-pack.
+- [rsbuild-plugin-web-ext](https://github.com/xbzhang2020/rsbuild-plugin-web-ext/tree/main/packages/rsbuild): A Rsbuild plugin for developing and building browser extensions.
+- [rsbuild-plugin-web-extension](https://github.com/filc-dev/rsbuild-plugin-web-extension): Rsbuild plugin for Chrome/web extension.
+- [rsbuild-plugin-workspace-dev](https://github.com/rstackjs/rsbuild-plugin-workspace-dev): Start monorepo sub-projects in topological order.
+- [zephyr-rsbuild-plugin](https://www.npmjs.com/package/zephyr-rsbuild-plugin): An Rsbuild plugin for deploying applications with Zephyr Cloud.
+
+You can discover more Rsbuild plugins on npm by searching for the keyword [rsbuild-plugin](https://npmjs.com/search?q=rsbuild-plugin&ranking=popularity).
