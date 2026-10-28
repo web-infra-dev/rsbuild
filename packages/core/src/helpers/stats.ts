@@ -122,13 +122,21 @@ export function getRsbuildStats(
 }
 
 export function getEarlyStats(stats: Rspack.Stats): RsbuildStats {
-  // Early updates only need the hash and initial chunks. Keep user stats
-  // options and diagnostics for full-build reporting.
-  return stats.toJson({
-    all: false,
-    hash: true,
-    entrypoints: true,
-  }) as RsbuildStats;
+  // Read only HMR metadata from the completed compilation, avoiding an extra
+  // toJson() pass. Full-build stats still collect the latest diagnostics.
+  return {
+    hash: stats.hash ?? undefined,
+    entrypoints: Object.fromEntries(
+      Array.from(stats.compilation.entrypoints, ([name, entrypoint]) => [
+        name,
+        {
+          chunks: entrypoint.chunks
+            .map((chunk) => chunk.id)
+            .filter((id) => id !== null && id !== undefined),
+        },
+      ]),
+    ),
+  } as RsbuildStats;
 }
 
 export function formatStats(
