@@ -23,8 +23,8 @@ description: '查找用于框架支持和构建功能的 Rsbuild 官方及社区
 适用于 React 框架的插件有：
 
 - [@rsbuild/plugin-react](/plugins/list/plugin-react)：提供对 React 的支持。
-- [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr)：支持将 SVG 图片转换为一个 React 组件使用。
 - [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components)：提供对 styled-components 的编译时支持。
+- [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr)：支持将 SVG 图片转换为一个 React 组件使用。
 
 ### Vue
 
@@ -59,24 +59,25 @@ description: '查找用于框架支持和构建功能的 Rsbuild 官方及社区
 
 - [@rsbuild/plugin-assets-retry](https://github.com/rstackjs/rsbuild-plugin-assets-retry)：用于在静态资源加载失败时自动发起重试请求。
 - [@rsbuild/plugin-babel](/plugins/list/plugin-babel)：提供对 Babel 转译能力的支持。
-- [@rsbuild/plugin-tailwindcss](/plugins/list/plugin-tailwindcss)：使用 Tailwind CSS v4。
-- [@rsbuild/plugin-sass](/plugins/list/plugin-sass)：使用 Sass 作为 CSS 预处理器。
-- [@rsbuild/plugin-less](/plugins/list/plugin-less)：使用 Less 作为 CSS 预处理器。
 - [@rsbuild/plugin-basic-ssl](https://github.com/rstackjs/rsbuild-plugin-basic-ssl): 为 HTTPS server 生成不受信任的自签名证书。
-- [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint)：用于在编译过程中运行 ESLint 检查。
-- [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check)：用于在单独的进程中运行 TypeScript 类型检查。
-- [@rsbuild/plugin-image-compress](https://github.com/rstackjs/rsbuild-plugin-image-compress)：压缩图片资源。
-- [@rsbuild/plugin-mdx](https://github.com/rstackjs/rsbuild-plugin-mdx)：提供 MDX 支持。
-- [@rsbuild/plugin-node-polyfill](https://github.com/rstackjs/rsbuild-plugin-node-polyfill)：用于注入 Node 核心模块在浏览器端的 polyfills。
-- [@rsbuild/plugin-source-build](https://github.com/rstackjs/rsbuild-plugin-source-build)：用于 monorepo 场景，支持引用其他子目录的源代码，并完成构建和热更新。
 - [@rsbuild/plugin-check-syntax](https://github.com/rstackjs/rsbuild-plugin-check-syntax)：检查构建产物的语法兼容性，判断是否存在导致兼容性问题的高级语法。
 - [@rsbuild/plugin-css-minimizer](https://github.com/rstackjs/rsbuild-plugin-css-minimizer)：用于自定义 CSS 压缩工具，切换到 [cssnano](https://github.com/cssnano/cssnano) 或其他工具进行 CSS 压缩。
-- [@rsbuild/plugin-typed-css-modules](https://github.com/rstackjs/rsbuild-plugin-typed-css-modules)：用于为 CSS Modules 文件生成类型声明。
+- [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint)：用于在编译过程中运行 ESLint 检查。
+- [@rsbuild/plugin-image-compress](https://github.com/rstackjs/rsbuild-plugin-image-compress)：压缩图片资源。
+- [@rsbuild/plugin-less](/plugins/list/plugin-less)：使用 Less 作为 CSS 预处理器。
+- [@rsbuild/plugin-mdx](https://github.com/rstackjs/rsbuild-plugin-mdx)：提供 MDX 支持。
+- [@rsbuild/plugin-node-polyfill](https://github.com/rstackjs/rsbuild-plugin-node-polyfill)：用于注入 Node 核心模块在浏览器端的 polyfills。
 - [@rsbuild/plugin-pug](https://github.com/rstackjs/rsbuild-plugin-pug)：提供对 Pug 模板引擎的支持。
 - [@rsbuild/plugin-rem](https://github.com/rstackjs/rsbuild-plugin-rem)：用于实现移动端页面的 rem 自适应布局。
+- [@rsbuild/plugin-sass](/plugins/list/plugin-sass)：使用 Sass 作为 CSS 预处理器。
+- [@rsbuild/plugin-source-build](https://github.com/rstackjs/rsbuild-plugin-source-build)：用于 monorepo 场景，支持引用其他子目录的源代码，并完成构建和热更新。
+- [@rsbuild/plugin-stylus](https://github.com/rstackjs/rsbuild-plugin-stylus)：使用 Stylus 作为 CSS 预处理器。
+- [@rsbuild/plugin-tailwindcss](/plugins/list/plugin-tailwindcss)：使用 Tailwind CSS v4。
+- [@rsbuild/plugin-toml](https://github.com/rstackjs/rsbuild-plugin-toml)：引用 TOML 文件，并将其转换为 JavaScript 对象。
+- [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check)：用于在单独的进程中运行 TypeScript 类型检查。
+- [@rsbuild/plugin-typed-css-modules](https://github.com/rstackjs/rsbuild-plugin-typed-css-modules)：用于为 CSS Modules 文件生成类型声明。
 - [@rsbuild/plugin-umd](https://github.com/rstackjs/rsbuild-plugin-umd)：用于构建 UMD 格式的产物。
 - [@rsbuild/plugin-yaml](https://github.com/rstackjs/rsbuild-plugin-yaml)：引用 YAML 文件，并将其转换为 JavaScript 对象。
-- [@rsbuild/plugin-toml](https://github.com/rstackjs/rsbuild-plugin-toml)：引用 TOML 文件，并将其转换为 JavaScript 对象。
 
 :::tip
 你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 和 [rstackjs](https://github.com/rstackjs) 中找到这些插件的源代码。
@@ -84,15 +85,96 @@ description: '查找用于框架支持和构建功能的 Rsbuild 官方及社区
 
 ## 社区插件
 
-你可以在 [awesome-rstack - Rsbuild Plugins](https://github.com/rstackjs/awesome-rstack#rsbuild-plugins) 中查看社区提供的 Rsbuild 插件。
-
-也可以在 npm 上搜索 [rsbuild-plugin](https://npmjs.com/search?q=rsbuild-plugin&ranking=popularity) 关键词来发现更多 Rsbuild 插件。
+社区插件按框架分类，各分类内按包名的字母顺序排列。欢迎提交 PR，将你已发布的插件添加到列表中！
 
 ### React
 
-- [rsbuild-plugin-react-router](https://github.com/rstackjs/rsbuild-plugin-react-router)：提供与 React Router 的集成。
 - [@lynx-js/react-rsbuild-plugin](https://lynxjs.org/zh/api/rspeedy/react-rsbuild-plugin)：支持 [ReactLynx](/guide/framework/react-lynx)，构建 Lynx bundle。
+- [rsbuild-plugin-react-inspector](https://github.com/hunghg255/rsbuild-plugin-react-inspector)：点击浏览器中的元素时，自动跳转到本地 IDE 中的对应代码。
+- [rsbuild-plugin-react-router](https://github.com/rstackjs/rsbuild-plugin-react-router)：提供与 React Router 的集成。
+- [rsbuild-plugin-rsc](https://github.com/rstackjs/rsbuild-plugin-rsc)：为 Rsbuild 提供 React Server Components（RSC）支持。
+- [rsbuild-react-generate-pages](https://github.com/hunghg255/rsbuild-react-generate-pages)：根据目录结构和 `react-router-dom` 配置为 React 应用生成页面。
+
+### Vue
+
+- [@mutsuntsai/rsbuild-plugin-vue-ssg](https://github.com/mutsuntsai/rsbuild-plugin-vue-ssg)：生成 Vue 静态页面内容并注入 Rsbuild 的 HTML 产物。
+- [@vizejs/rspack-plugin](https://github.com/ubugeeei-prod/vize)：基于 Rust 的高性能 Vue.js 工具链。
+- [@vue-devtools-rstack/rsbuild](https://github.com/OskarLebuda/vue-devtools-rstack/tree/main/packages/rsbuild)：为 Rsbuild 集成 Vue DevTools，提供与 `vite-plugin-vue-devtools` 对等的功能。
+- [@vue-vine/rsbuild-plugin](https://github.com/vue-vine/vue-vine)：为 Rsbuild 提供 Vue Vine 支持。
+- [rsbuild-plugin-unplugin-vue](https://github.com/rstackjs/rsbuild-plugin-unplugin-vue)：集成 `unplugin-vue`，用于编译 Vue 单文件组件。
+- [rsbuild-plugin-vue-inspector](https://github.com/hunghg255/rsbuild-plugin-vue-inspector)：点击浏览器中的元素时，自动跳转到本地 IDE 中的对应代码。
+- [rsbuild-plugin-vue-legacy](https://github.com/skymoonya/rsbuild-plugin-vue-legacy)：通过设置 `vue` 别名，支持低于 2.7 的 Vue 版本。
+- [rsbuild-plugin-vue-mcp](https://github.com/BrightX/rsbuild-plugin-vue-mcp)：将 Vue DevTools 与 MCP 集成，向 AI 工具提供 Vue 组件树、组件状态和 Pinia store 信息。
+- [rspack-plugin-svg](https://github.com/fuxichen/rspack-plugin-svg)：将 SVG 文件加载为 Vue 组件，并使用 SVGO 优化。
+
+### Svelte
+
+- [rsbuild-plugin-svelte-inspector](https://github.com/hunghg255/rsbuild-plugin-svelte-inspector)：点击浏览器中的元素时，自动跳转到本地 IDE 中的对应代码。
 
 ### Angular
 
 - [@ng-rsbuild/plugin-angular](https://github.com/nrwl/angular-rspack)：允许你轻松直接地构建 Angular 应用程序。
+
+### Lynx
+
+- [lynxjs-app-config-plugin](https://github.com/HimanshuKumarDutt094/lynxjs-app-config-plugin)：向 Android / iOS 项目目录注入应用图标、权限和基本应用配置。
+- [ngrok-rsbuild-plugin](https://github.com/nanofuxion/ngrok-rsbuild-plugin)：通过 ngrok 将 Rsbuild 开发服务器暴露到互联网，适用于 LynxJS 应用。
+- [relog-rsbuild-plugin](https://github.com/nanofuxion/relog-rsbuild-plugin)：拦截设备或模拟器上运行的 LynxJS 应用的 `console.log()` 调用，并将日志发送回 Rsbuild 开发服务器。
+
+### 通用插件 \{#common-1}
+
+- [@agney/rsbuild-content-collections](https://github.com/agneym/rsbuild-content-collections)：为 Rsbuild 集成 Content Collections。
+- [@devjskit/rsbuild-plugin-langs](https://github.com/devjskit/rsbuild-plugin-langs)：从 JSON 文件提取内容并合并为多语言文件。
+- [@golar-rstack/rsbuild](https://github.com/OskarLebuda/golar-rstack-plugin/tree/main/packages/rsbuild)：在独立进程中运行 golar 类型检查和类型感知的代码检查。
+- [@module-federation/rsbuild-plugin](https://module-federation.io/guide/basic/rsbuild)：为 Rsbuild 集成 Module Federation v2。
+- [@octanejs/rsbuild-plugin](https://octanejs.dev/docs/build-tools#rsbuild)：为 Octane 提供基于 Rsbuild 的路由、SSR、hydration 和生产构建支持。
+- [@plugin-cra-proxy/rsbuild](https://github.com/robertpanvip/plugin-cra-proxy/tree/main/packages/rsbuild)：模拟 Create React App 代理行为的 Rsbuild 开发代理插件。
+- [@seed-design/rsbuild-plugin](https://github.com/daangn/seed-design)：为 Rsbuild 集成 Seed 设计系统。
+- [@webx-kit/rsbuild-plugin](https://github.com/tmkx/webx-kit)：为 Rsbuild 提供浏览器扩展开发支持。
+- [plugin-sails-content](https://github.com/sailscastshq/sails-content/tree/main/packages/plugin-sails-content)：为 Rsbuild 集成 [Sails Content](https://docs.sailscasts.com/content/)。
+- [rsbuild-auto-i18n-plugin](https://github.com/auto-i18n/auto-i18n-translation-plugins)：自动翻译插件，支持多种翻译服务和自定义翻译器。
+- [rsbuild-plugin-arco](https://github.com/zhmushan/rsbuild-plugin-arco)：为 Rsbuild 集成 Arco Design。
+- [rsbuild-plugin-arethetypeswrong](https://github.com/rstackjs/rsbuild-plugin-arethetypeswrong)：使用 `arethetypeswrong` 检查 TypeScript 类型定义。
+- [rsbuild-plugin-auto-alias](https://github.com/jwyGithub/rsbuild-plugin-auto-alias)：根据路径自动生成别名。
+- [rsbuild-plugin-aws-lambda](https://github.com/wxiaoyun/rsbuild-plugin-aws-lambda)：配置 Rsbuild，将 JavaScript 资源打包为适用于 AWS Lambda 的产物。
+- [rsbuild-plugin-biome](https://github.com/robertpanvip/rsbuild-plugin-lint/tree/main/packages/biome)：在 Rsbuild 构建过程中集成 Biome。
+- [rsbuild-plugin-block-imports](https://github.com/malekabdelkader/rsbuild-plugin-block-imports)：在 Module Federation 构建中检测并阻止不允许的导入。
+- [rsbuild-plugin-cdn-import](https://github.com/fuxichen/rsbuild-plugin-cdn-import)：通过 CDN 导入模块。
+- [rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare)：开发和构建 Cloudflare Workers，并使用 workerd 在本地运行。
+- [rsbuild-plugin-compression](https://github.com/s-r-x/rsbuild-plugin-compression)：使用 gzip、brotli 或 zstd 压缩资源。
+- [rsbuild-plugin-console-debug](https://github.com/hunghg255/rsbuild-plugin-console-debug)：在控制台输出调试信息。
+- [rsbuild-plugin-css-optimizer](https://github.com/aliezzahn/rsbuild-plugin-css-optimizer)：自定义 CSS 压缩，支持选择 cssnano 或 Lightning CSS。
+- [rsbuild-plugin-devtools-json](https://github.com/rstackjs/rsbuild-plugin-devtools-json)：在开发服务器中动态生成 `com.chrome.devtools.json`。
+- [rsbuild-plugin-dts](https://github.com/web-infra-dev/rslib/tree/main/packages/plugin-dts)：生成 TypeScript 类型声明文件。
+- [rsbuild-plugin-ejs](https://github.com/rstackjs/rsbuild-plugin-ejs)：提供 EJS 模板引擎支持。
+- [rsbuild-plugin-fusion](https://github.com/mpaynesecurity/rsbuild-plugin-fusion)：在 Rsbuild 支持的 UI 框架中直接运行服务端代码。
+- [rsbuild-plugin-generate-file](https://github.com/sumy7/rsbuild-plugin-generate-file)：在打包后生成静态文件并写入产物目录。
+- [rsbuild-plugin-glsl](https://github.com/sakitam-fdd/rsbuild-plugin-glsl)：导入内联 GLSL 着色器并支持压缩。
+- [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics)：为网站集成 Google Analytics。
+- [rsbuild-plugin-html-minifier-terser](https://github.com/rstackjs/rsbuild-plugin-html-minifier-terser)：使用 `html-minifier-terser` 压缩 HTML 产物。
+- [rsbuild-plugin-hydra](https://github.com/mpaynesecurity/rsbuild-plugin-hydra)：将 Rsbuild 应用扩展为轻量级全栈框架。
+- [rsbuild-plugin-i18next-extractor](https://github.com/rstackjs/rsbuild-plugin-i18next-extractor)：使用 [i18next-cli](https://github.com/i18next/i18next-cli) 提取国际化翻译内容。
+- [rsbuild-plugin-iconify](https://github.com/pathscale/iconify-preload)：自动生成包含内嵌 Iconify SVG 图标的优化 CSS。
+- [rsbuild-plugin-mcp](https://github.com/colinaaa/rsbuild-plugin-mcp)：为 Rsbuild 应用启用 MCP 服务器，提供项目配置和模块图信息。
+- [rsbuild-plugin-monaco-editor-nls](https://github.com/zackshen/rsbuild-plugin-monaco-editor-nls)：为 Monaco Editor 提供本地化支持。
+- [rsbuild-plugin-open-graph](https://github.com/rstackjs/rsbuild-plugin-open-graph)：生成 Open Graph 元标签。
+- [rsbuild-plugin-oxlint](https://github.com/robertpanvip/rsbuild-plugin-lint/tree/main/packages/oxlint)：在 Rsbuild 构建过程中集成 Oxlint。
+- [rsbuild-plugin-posthog](https://github.com/m1911star/rsbuild-plugin-posthog)：为 Rsbuild 集成 PostHog。
+- [rsbuild-plugin-print](https://github.com/hunghg255/rsbuild-plugin-print)：打印文本，并通过二维码展示访问地址。
+- [rsbuild-plugin-protobufjs](https://github.com/baranwang/rsbuild-plugin-protobufjs)：为 Rsbuild 集成 `protobufjs`。
+- [rsbuild-plugin-publint](https://github.com/rstackjs/rsbuild-plugin-publint)：在构建后运行 `publint` 检查 npm 包。
+- [rsbuild-plugin-pwa](https://github.com/s-r-x/rsbuild-plugin-pwa)：为 Rsbuild 提供零配置的 PWA 支持。
+- [rsbuild-plugin-rempa](https://github.com/sumy7/rsbuild-plugin-rempa)：收集页面并生成多页面应用（MPA）。
+- [rsbuild-plugin-rslint](https://github.com/robertpanvip/rsbuild-plugin-lint/tree/main/packages/rslint)：在 Rsbuild 构建过程中集成 Rslint。
+- [rsbuild-plugin-ssg](https://github.com/jhanca-vm/rsbuild-plugin-ssg)：在构建时预渲染页面，默认不包含 JavaScript，并支持孤岛架构。
+- [rsbuild-plugin-stylelint](https://github.com/zalishchuk/rsbuild-plugin-stylelint)：在编译过程中运行 Stylelint 检查。
+- [rsbuild-plugin-svg-sprite](https://www.npmjs.com/package/rspack-plugin-svg-sprite)：为 Rsbuild 提供 SVG sprite 支持，可替代 svg-sprite-loader。
+- [rsbuild-plugin-tailwindcss](https://github.com/rstackjs/rsbuild-plugin-tailwindcss)：为 Rsbuild 集成 Tailwind CSS。
+- [rsbuild-plugin-virtual-module](https://github.com/rstackjs/rsbuild-plugin-virtual-module)：使用 loader API 创建虚拟模块。
+- [rsbuild-plugin-wasmpack](https://github.com/im-neiru/rsbuild-plugin-wasmpack)：使用 wasm-pack 将 Rust crate 编译为 WebAssembly。
+- [rsbuild-plugin-web-ext](https://github.com/xbzhang2020/rsbuild-plugin-web-ext/tree/main/packages/rsbuild)：开发和构建浏览器扩展。
+- [rsbuild-plugin-web-extension](https://github.com/filc-dev/rsbuild-plugin-web-extension)：为 Rsbuild 提供 Chrome 和其他浏览器扩展支持。
+- [rsbuild-plugin-workspace-dev](https://github.com/rstackjs/rsbuild-plugin-workspace-dev)：按拓扑顺序启动 monorepo 子项目。
+- [zephyr-rsbuild-plugin](https://www.npmjs.com/package/zephyr-rsbuild-plugin)：使用 Zephyr Cloud 部署 Rsbuild 应用。
+
+你也可以在 npm 上搜索 [rsbuild-plugin](https://npmjs.com/search?q=rsbuild-plugin&ranking=popularity) 关键词来发现更多 Rsbuild 插件。
