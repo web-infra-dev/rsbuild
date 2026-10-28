@@ -121,6 +121,27 @@ export function getRsbuildStats(
   return statsInstance.toJson(statsOptions) as RsbuildStats;
 }
 
+export function getEarlyStats(stats: Rspack.Stats): RsbuildStats {
+  // Avoid an extra toJson() call; early updates only need the hash and chunk IDs.
+  const entrypoints: NonNullable<RsbuildStats['entrypoints']> =
+    Object.create(null);
+
+  for (const [name, entrypoint] of stats.compilation.entrypoints) {
+    const chunks: (string | number)[] = [];
+    for (const { id } of entrypoint.chunks) {
+      if (id !== null && id !== undefined) {
+        chunks.push(id);
+      }
+    }
+    entrypoints[name] = { chunks };
+  }
+
+  return {
+    hash: stats.hash ?? undefined,
+    entrypoints,
+  } as RsbuildStats;
+}
+
 export function formatStats(
   stats: RsbuildStats,
   hasErrors: boolean,
