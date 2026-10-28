@@ -302,8 +302,9 @@ export class SocketServer {
     this.sendStats({ token });
   }
 
-  public clearEnvironmentStats(): void {
-    this.environmentStats.clear();
+  public clearEnvironmentStats(token: string): void {
+    // Other environments can still have valid early results while this one rebuilds.
+    this.environmentStats.delete(token);
   }
 
   public onBuildDone(): void {

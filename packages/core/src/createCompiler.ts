@@ -208,7 +208,6 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     context.buildState.stats = null;
     context.buildState.status = 'idle';
     context.buildState.hasErrors = false;
-    context.socketServer?.clearEnvironmentStats();
   });
 
   for (const item of compilers) {
