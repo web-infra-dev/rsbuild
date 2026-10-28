@@ -23,7 +23,7 @@ The following are official plugins that can be used in Rsbuild.
 Plugins available for the React:
 
 - [@rsbuild/plugin-react](/plugins/list/plugin-react): Support for React.
-- [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components): Provide compile-time support for styled-components.
+- [@rsbuild/plugin-styled-components](https://github.com/rstackjs/rsbuild-plugin-styled-components): Provide compile-time support for styled-components.
 - [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr): Support convert SVG to React components.
 
 ### Vue
@@ -101,11 +101,11 @@ Community plugins are grouped by framework and listed alphabetically by package 
 - [@vizejs/rspack-plugin](https://github.com/ubugeeei-prod/vize): A high-performance Vue.js toolchain written in Rust.
 - [@vue-devtools-rstack/rsbuild](https://github.com/OskarLebuda/vue-devtools-rstack/tree/main/packages/rsbuild): Integrates Vue DevTools with Rsbuild, with feature parity with `vite-plugin-vue-devtools`.
 - [@vue-vine/rsbuild-plugin](https://github.com/vue-vine/vue-vine): Rsbuild plugin for Vue Vine.
+- [rsbuild-plugin-svg](https://github.com/fuxichen/rspack-plugin-svg): Rsbuild plugin to load SVG files as Vue components, using SVGO for optimization.
 - [rsbuild-plugin-unplugin-vue](https://github.com/rstackjs/rsbuild-plugin-unplugin-vue): Integrates `unplugin-vue` for Vue SFC compilation.
 - [rsbuild-plugin-vue-inspector](https://github.com/hunghg255/rsbuild-plugin-vue-inspector): Allows automatic jumping to the local IDE when clicking on a browser element.
 - [rsbuild-plugin-vue-legacy](https://github.com/skymoonya/rsbuild-plugin-vue-legacy): Support for Vue versions below 2.7 by setting an alias for `vue`.
 - [rsbuild-plugin-vue-mcp](https://github.com/BrightX/rsbuild-plugin-vue-mcp): Integrates Vue DevTools with MCP to expose Vue component trees, component state, and Pinia stores to AI tools.
-- [rspack-plugin-svg](https://github.com/fuxichen/rspack-plugin-svg): Rsbuild plugin to load SVG files as Vue components, using SVGO for optimization.
 
 ### Svelte
 
@@ -113,7 +113,7 @@ Community plugins are grouped by framework and listed alphabetically by package 
 
 ### Angular
 
-- [@ng-rsbuild/plugin-angular](https://github.com/nrwl/angular-rspack): Allows you to build Angular applications easily.
+- [@nx/angular-rsbuild](https://github.com/nrwl/nx): Allows you to build Angular applications easily.
 
 ### Lynx
 
@@ -127,6 +127,8 @@ Community plugins are grouped by framework and listed alphabetically by package 
 - [@devjskit/rsbuild-plugin-langs](https://github.com/devjskit/rsbuild-plugin-langs): Extract content from JSON files and merge into a multi-language file.
 - [@golar-rstack/rsbuild](https://github.com/OskarLebuda/golar-rstack-plugin/tree/main/packages/rsbuild): Runs golar type checking and type-aware linting in a separate process as an Rsbuild plugin.
 - [@module-federation/rsbuild-plugin](https://module-federation.io/guide/basic/rsbuild): An Rsbuild plugin for integrating Module Federation v2.
+- [@mpaynesecurity/rsbuild-plugin-fusion](https://github.com/mpaynesecurity/rsbuild-plugin-fusion): Run server code directly from any Rsbuild supported UI framework.
+- [@mpaynesecurity/rsbuild-plugin-hydra](https://github.com/mpaynesecurity/rsbuild-plugin-hydra): Turn any Rsbuild app into a lightweight fullstack framework.
 - [@octanejs/rsbuild-plugin](https://octanejs.dev/docs/build-tools#rsbuild): Provides routing, SSR, hydration, and production builds for Octane.
 - [@plugin-cra-proxy/rsbuild](https://github.com/robertpanvip/plugin-cra-proxy/tree/main/packages/rsbuild): A development proxy plugin for Rsbuild, mimicking Create React App proxy behavior.
 - [@seed-design/rsbuild-plugin](https://github.com/daangn/seed-design): An Rsbuild plugin for the Seed design system.
@@ -147,12 +149,10 @@ Community plugins are grouped by framework and listed alphabetically by package 
 - [rsbuild-plugin-devtools-json](https://github.com/rstackjs/rsbuild-plugin-devtools-json): Generating `com.chrome.devtools.json` on the fly in the dev server.
 - [rsbuild-plugin-dts](https://github.com/web-infra-dev/rslib/tree/main/packages/plugin-dts): Generate TypeScript declaration files.
 - [rsbuild-plugin-ejs](https://github.com/rstackjs/rsbuild-plugin-ejs): Provide support for the EJS template engine.
-- [rsbuild-plugin-fusion](https://github.com/mpaynesecurity/rsbuild-plugin-fusion): Run server code directly from any Rsbuild supported UI framework.
 - [rsbuild-plugin-generate-file](https://github.com/sumy7/rsbuild-plugin-generate-file): Generate static files and write them to the output directory after the build.
 - [rsbuild-plugin-glsl](https://github.com/sakitam-fdd/rsbuild-plugin-glsl): Import GLSL shaders as inline strings, with optional compression.
 - [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics): Setup Google Analytics in your website.
 - [rsbuild-plugin-html-minifier-terser](https://github.com/rstackjs/rsbuild-plugin-html-minifier-terser): An Rsbuild plugin to use `html-minifier-terser` to minify the HTML outputs.
-- [rsbuild-plugin-hydra](https://github.com/mpaynesecurity/rsbuild-plugin-hydra): Turn any Rsbuild app into a lightweight fullstack framework.
 - [rsbuild-plugin-i18next-extractor](https://github.com/rstackjs/rsbuild-plugin-i18next-extractor): An Rsbuild plugin using [i18next-cli](https://github.com/i18next/i18next-cli) to extract i18n translations.
 - [rsbuild-plugin-iconify](https://github.com/pathscale/iconify-preload): A Rsbuild plugin that automatically generates optimized CSS with embedded SVG icons from Iconify.
 - [rsbuild-plugin-mcp](https://github.com/colinaaa/rsbuild-plugin-mcp): Enable an MCP server that provides information about your Rsbuild configuration and module graphs.
@@ -168,7 +168,6 @@ Community plugins are grouped by framework and listed alphabetically by package 
 - [rsbuild-plugin-rslint](https://github.com/robertpanvip/rsbuild-plugin-lint/tree/main/packages/rslint): Integrate Rslint into the Rsbuild build process.
 - [rsbuild-plugin-ssg](https://github.com/jhanca-vm/rsbuild-plugin-ssg): Prerender pages at build time with zero-JS by default and Islands Architecture support.
 - [rsbuild-plugin-stylelint](https://github.com/zalishchuk/rsbuild-plugin-stylelint): Used to run Stylelint checks during the compilation.
-- [rsbuild-plugin-svg-sprite](https://www.npmjs.com/package/rspack-plugin-svg-sprite): SVG sprite plugin for Rsbuild — drop-in replacement for svg-sprite-loader.
 - [rsbuild-plugin-tailwindcss](https://github.com/rstackjs/rsbuild-plugin-tailwindcss): An Rsbuild plugin to integrate with Tailwind CSS.
 - [rsbuild-plugin-virtual-module](https://github.com/rstackjs/rsbuild-plugin-virtual-module): Used to create virtual modules with loader API.
 - [rsbuild-plugin-wasmpack](https://github.com/im-neiru/rsbuild-plugin-wasmpack): Compile Rust crates to WebAssembly using wasm-pack.

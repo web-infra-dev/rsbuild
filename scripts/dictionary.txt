@@ -91,6 +91,7 @@ minifiers
 miniflare
 mjsx
 modularly
+mpaynesecurity
 mrmime
 mtsx
 mutsuntsai
