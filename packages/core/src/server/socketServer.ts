@@ -586,14 +586,14 @@ export class SocketServer {
     const { entrypoints } = stats;
 
     if (!entrypoints) {
-      return initialChunks;
+      return;
     }
 
     const entryNames = Object.keys(entrypoints);
     for (let entryIndex = 0; entryIndex < entryNames.length; entryIndex++) {
       const chunks = entrypoints[entryNames[entryIndex]]?.chunks;
       if (!Array.isArray(chunks)) {
-        continue;
+        return;
       }
 
       for (let index = 0; index < chunks.length; index++) {
@@ -620,10 +620,10 @@ export class SocketServer {
 
       const result = this.getStats(webSocketToken);
       if (result) {
-        this.initialChunksMap.set(
-          webSocketToken,
-          this.getInitialChunks(result.stats),
-        );
+        const initialChunks = this.getInitialChunks(result.stats);
+        if (initialChunks) {
+          this.initialChunksMap.set(webSocketToken, initialChunks);
+        }
       }
     }
   }
@@ -686,11 +686,15 @@ export class SocketServer {
 
     const initialChunks = this.initialChunksMap.get(token);
     const shouldReload =
-      stats.entrypoints &&
+      newInitialChunks &&
       initialChunks &&
       !isEqualSet(initialChunks, newInitialChunks);
 
-    this.initialChunksMap.set(token, newInitialChunks);
+    // Full-build stats can omit entrypoints or chunk IDs via user options.
+    // Missing data must not replace a valid early-update baseline with an empty set.
+    if (newInitialChunks) {
+      this.initialChunksMap.set(token, newInitialChunks);
+    }
 
     if (shouldReload) {
       this.sendMessage({ type: 'full-reload' }, token);

@@ -121,6 +121,16 @@ export function getRsbuildStats(
   return statsInstance.toJson(statsOptions) as RsbuildStats;
 }
 
+export function getEarlyStats(stats: Rspack.Stats): RsbuildStats {
+  // Early updates only need the hash and initial chunks. Keep user stats
+  // options and diagnostics for full-build reporting.
+  return stats.toJson({
+    all: false,
+    hash: true,
+    entrypoints: true,
+  }) as RsbuildStats;
+}
+
 export function formatStats(
   stats: RsbuildStats,
   hasErrors: boolean,

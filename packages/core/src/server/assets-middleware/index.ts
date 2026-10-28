@@ -17,7 +17,7 @@ import {
 import { CLIENT_PATH } from '../../constants';
 import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
-import { getRsbuildStats } from '../../helpers/stats';
+import { getEarlyStats } from '../../helpers/stats';
 import { isOverlayEnabled } from '../../helpers/overlayConfig';
 import { toPosixPath } from '../../helpers/path';
 import type {
@@ -167,9 +167,7 @@ export const setupServerHooks = ({
       earlyWebUpdates &&
       !stats.hasErrors()
     ) {
-      socketServer.onEnvironmentDone(token, () =>
-        getRsbuildStats(stats, compiler, context.logger, context.action),
-      );
+      socketServer.onEnvironmentDone(token, () => getEarlyStats(stats));
     }
 
     const isRecalled = errorsCount !== null || warningsCount !== null;
