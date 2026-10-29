@@ -439,6 +439,8 @@ export class SocketServer {
     // Reset all properties
     this.socketsMap.clear();
     this.initialChunksMap.clear();
+    this.environmentStats.clear();
+    this.currentHash.clear();
     this.reportedBrowserLogs.clear();
 
     return new Promise<void>((resolve, reject) => {
