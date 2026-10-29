@@ -7,12 +7,9 @@ description: 'output.externals 用于指定哪些模块不需要被 Rsbuild 打�
 - **类型：**
 
 ```ts
-type Externals =
-  | string
-  | object
-  | function
-  | RegExp
-  | Array<string | object | function | RegExp>;
+import type { Rspack } from '@rsbuild/core';
+
+type Externals = Rspack.Externals;
 ```
 
 - **默认值：** `undefined`

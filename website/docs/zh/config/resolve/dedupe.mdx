@@ -28,6 +28,8 @@ app/
 在这种情况下，你可以使用 `resolve.dedupe` 配置项来移除重复的 React 包，将所有 `react` 和 `react-dom` 包都解析到 `/node_modules/react` 和 `/node_modules/react-dom`：
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
 export default defineConfig({
   resolve: {
     dedupe: ['react', 'react-dom'],

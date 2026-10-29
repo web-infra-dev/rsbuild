@@ -28,6 +28,8 @@ app/
 In this case, you can use the `resolve.dedupe` config to remove the duplicate React packages, and resolve all `react` and `react-dom` packages to `/node_modules/react` and `/node_modules/react-dom`:
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
 export default defineConfig({
   resolve: {
     dedupe: ['react', 'react-dom'],
