@@ -31,9 +31,9 @@ type Auto =
 
 Type descriptions:
 
-- `true`: Enable CSS Modules for all files matching the `/\.module\.\w+$/i.test(filename)` regexp.
+- `true`: Enable CSS Modules for `.module.*` and `.modules.*` files, and ICSS processing for `.icss.*` files (case-insensitive).
 - `false`: Disable CSS Modules.
-- `RegExp`: Enable CSS Modules for all files matching `/RegExp/i.test(filename)` regexp.
+- `RegExp`: Enable CSS Modules for files matched by the supplied regular expression, using its configured flags.
 - `function`: Enable CSS Modules for files based on the filename satisfying your filter function check.
 
 For example, to additionally enable CSS Modules for files in the `shared/` directory:
@@ -242,7 +242,11 @@ type Mode =
   | 'global'
   | 'pure'
   | 'icss'
-  | ((resourcePath: string) => 'local' | 'global' | 'pure' | 'icss');
+  | ((
+      resourcePath: string,
+      resourceQuery: string,
+      resourceFragment: string,
+    ) => 'local' | 'global' | 'pure' | 'icss');
 ```
 
 - **Default:** `'local'`
@@ -254,8 +258,8 @@ Controls the mode of compilation applied to the CSS Modules.
 `cssModules.mode` can take one of the following values:
 
 1. `'local'` (default): This enables the CSS Modules specification for scoping CSS locally. Class and ID selectors are rewritten to be module-scoped, and `@value` bindings are injected.
-2. `'global'`: This opts-out of the CSS Modules behavior, disabling both local scoping and injecting `@value` bindings. Global selectors are preserved as-is.
-3. `'pure'`: This enables dead-code elimination by removing any unused local classnames and values from the final CSS. It still performs local scoping and `@value` injection.
+2. `'global'`: Selectors are global by default. Use `:local` for locally scoped selectors. `@value` processing remains enabled.
+3. `'pure'`: Uses local scoping and requires each selector to contain at least one local class or ID. It does not automatically remove unused CSS classes.
 4. `'icss'`: This compiles to the low-level Interoperable CSS format, which provides a syntax for declaring `:import` and `:export` dependencies between CSS and other languages. It does not perform any scoping or `@value` injection.
 
 The `'local'` mode is the most common use case for CSS Modules, enabling modular and locally-scoped styles within components. The other modes may be used in specific scenarios.

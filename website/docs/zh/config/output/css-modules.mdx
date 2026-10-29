@@ -31,7 +31,7 @@ type Auto =
 
 类型说明：
 
-- `true`: 为所有匹配 `/\.module\.\w+$/i.test(filename)` 正则表达式的文件启用 CSS Modules。
+- `true`: 为所有匹配 `/\.modules?\.\w+$/i.test(filename)` 正则表达式的文件启用 CSS Modules。
 - `false`: 禁用 CSS Modules。
 - `RegExp`: 为所有匹配 `/RegExp/i.test(filename)` 正则表达式的文件启用 CSS Modules。
 - `function`: 为所有通过基于文件名的过滤函数校验的文件启用 CSS Modules。
@@ -242,7 +242,11 @@ type Mode =
   | 'global'
   | 'pure'
   | 'icss'
-  | ((resourcePath: string) => 'local' | 'global' | 'pure' | 'icss');
+  | ((
+      resourcePath: string,
+      resourceQuery: string,
+      resourceFragment: string,
+    ) => 'local' | 'global' | 'pure' | 'icss');
 ```
 
 - **默认值：** `'local'`
@@ -254,8 +258,8 @@ type Mode =
 `cssModules.mode` 可以取以下值之一：
 
 1. `'local'` (默认值)：启用 CSS Modules 规范和局部作用域。类名和 ID 选择器会被重写为模块作用域，并注入 `@value` 绑定。
-2. `'global'`：不启用 CSS Modules 的行为，禁用局部作用域和 `@value` 绑定注入。全局选择器将按照原样保留。
-3. `'pure'`：通过删除最终 CSS 中未使用的本地类名和值来实现死代码消除。仍然执行局部作用域和 `@value` 注入。
+2. `'global'`：选择器默认为全局作用域，可以通过 `:local` 声明局部选择器。仍会处理 `@value`。
+3. `'pure'`：使用局部作用域，并要求每个选择器至少包含一个局部类名或 ID。它不会自动删除未使用的 CSS 类。
 4. `'icss'`：编译成 low-level 可互操作的 CSS 格式，该格式提供在 CSS 和其他语言之间声明 `:import` 和 `:export` 依赖项的语法。它不执行任何作用域或 `@value` 注入。
 
 `'local'` 模式是 CSS Modules 最常见的用法，在组件内启用模块化和局部作用域样式。其他模式可能在特定场景下被使用。
