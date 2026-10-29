@@ -169,7 +169,7 @@ startDevServer();
 
 ## 修改启动脚本
 
-使用自定义 Server 后，需要将启动命令由 `rsbuild dev` 改为 `node ./server.mjs`。
+使用自定义 Server 后，需要将启动命令由 `rsbuild dev` 改为 `node --experimental-vm-modules ./server.mjs`。
 
 如果需要预览 SSR 的线上效果，同样需要修改预览命令。SSR Prod Server 示例参考：[Example](https://github.com/rstackjs/rstack-examples/blob/main/rsbuild/ssr-express/prod-server.mjs)。
 
@@ -177,7 +177,7 @@ startDevServer();
 {
   "scripts": {
     "build": "rsbuild build",
-    "dev": "node ./server.mjs",
+    "dev": "node --experimental-vm-modules ./server.mjs",
     "preview": "node ./prod-server.mjs"
   }
 }

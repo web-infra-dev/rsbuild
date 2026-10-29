@@ -259,7 +259,7 @@ type EnvironmentAPI = {
 ```ts
 const webManifest = environments.web.context.manifest;
 
-console.log(webManifest.entries);
+console.log(webManifest?.entries);
 ```
 
 ### getStats
@@ -284,7 +284,9 @@ console.log(webStats.toJson({ all: false }));
 
 用于在服务端加载并执行构建产物。调用该方法后，会返回指定入口模块导出的内容，通常用于在服务端环境中运行由 Rsbuild 构建生成的产物。
 
-`loadBundle` 会在构建完成且 [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile) hook 执行结束后返回结果。因此，无法在 `onAfterDevCompile` hook 内调用 `loadBundle`。
+`loadBundle` 会等待指定环境编译完成。可以在 [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile) 中等待此方法，它不需要等该钩子执行结束。
+
+加载 ESM 产物时，需要为 Node.js 添加 `--experimental-vm-modules`，例如 `node --experimental-vm-modules server.mjs`。Node.js 构建默认输出 ESM；CommonJS 产物（`output.module: false`）不需要此参数。
 
 - **类型：**
 

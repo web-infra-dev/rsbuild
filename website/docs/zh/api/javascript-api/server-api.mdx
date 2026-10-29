@@ -139,7 +139,7 @@ Node.js HTTP 服务实例。
 
 - **类型：** `Connect.Server`
 
-`connect` 实例，可用于向服务器附加自定义中间件。
+`connect-next` 实例，可用于向服务器附加自定义中间件。
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
@@ -206,13 +206,18 @@ server.printUrls();
 import express from 'express';
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = await createRsbuild();
+const rsbuild = await createRsbuild({
+  config: { server: { middlewareMode: true } },
+});
 const rsbuildServer = await rsbuild.createDevServer();
 const app = express();
+app.use(rsbuildServer.middlewares);
 
 const server = app.listen(rsbuildServer.port, async () => {
   await rsbuildServer.afterListen();
 });
+
+rsbuildServer.connectWebSocket({ server });
 ```
 
 ### connectWebSocket
@@ -240,11 +245,16 @@ Rsbuild 内置了 WebSocket 处理器以支持 HMR 功能：
 import express from 'express';
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = await createRsbuild();
+const rsbuild = await createRsbuild({
+  config: { server: { middlewareMode: true } },
+});
 const rsbuildServer = await rsbuild.createDevServer();
 const app = express();
+app.use(rsbuildServer.middlewares);
 
-const httpServer = app.listen(rsbuildServer.port);
+const httpServer = app.listen(rsbuildServer.port, async () => {
+  await rsbuildServer.afterListen();
+});
 
 rsbuildServer.connectWebSocket({ server: httpServer });
 ```

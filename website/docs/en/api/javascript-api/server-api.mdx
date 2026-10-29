@@ -139,7 +139,7 @@ The Node.js HTTP server instance.
 
 - **Type:** `Connect.Server`
 
-The `connect` instance. Can be used to attach custom middleware to the server.
+The `connect-next` instance. Can be used to attach custom middleware to the server.
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
@@ -206,13 +206,18 @@ For example:
 import express from 'express';
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = await createRsbuild();
+const rsbuild = await createRsbuild({
+  config: { server: { middlewareMode: true } },
+});
 const rsbuildServer = await rsbuild.createDevServer();
 const app = express();
+app.use(rsbuildServer.middlewares);
 
 const server = app.listen(rsbuildServer.port, async () => {
   await rsbuildServer.afterListen();
 });
+
+rsbuildServer.connectWebSocket({ server });
 ```
 
 ### connectWebSocket
@@ -242,11 +247,16 @@ At this time, you need to use the `connectWebSocket` method to enable Rsbuild to
 import express from 'express';
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = await createRsbuild();
+const rsbuild = await createRsbuild({
+  config: { server: { middlewareMode: true } },
+});
 const rsbuildServer = await rsbuild.createDevServer();
 const app = express();
+app.use(rsbuildServer.middlewares);
 
-const httpServer = app.listen(rsbuildServer.port);
+const httpServer = app.listen(rsbuildServer.port, async () => {
+  await rsbuildServer.afterListen();
+});
 
 rsbuildServer.connectWebSocket({ server: httpServer });
 ```

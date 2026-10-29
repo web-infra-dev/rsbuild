@@ -169,7 +169,7 @@ startDevServer();
 
 ## Modify startup script
 
-When you use a custom server, change the startup command from `rsbuild dev` to `node ./server.mjs`.
+When you use a custom server, change the startup command from `rsbuild dev` to `node --experimental-vm-modules ./server.mjs`.
 
 To preview the production SSR output, update the preview command as well. For an example of a production SSR server, see [Example](https://github.com/rstackjs/rstack-examples/blob/main/rsbuild/ssr-express/prod-server.mjs).
 
@@ -177,7 +177,7 @@ To preview the production SSR output, update the preview command as well. For an
 {
   "scripts": {
     "build": "rsbuild build",
-    "dev": "node ./server.mjs",
+    "dev": "node --experimental-vm-modules ./server.mjs",
     "preview": "node ./prod-server.mjs"
   }
 }
