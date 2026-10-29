@@ -30,6 +30,8 @@ import { PackageManagerTabs } from '@theme';
 `moduleFederation.options` 的类型与 Rspack 的 ModuleFederationPlugin 插件完全一致：
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
 export default defineConfig({
   moduleFederation: {
     options: {
@@ -78,7 +80,7 @@ import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   server: {
-    port: 3002,
+    port: 3001,
   },
   moduleFederation: {
     options: {
