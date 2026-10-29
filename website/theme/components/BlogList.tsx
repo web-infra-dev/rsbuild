@@ -23,6 +23,23 @@ type BlogFrontmatter = {
 const EXTERNAL_BLOG_PAGES: Record<string, BlogListItem[]> = {
   en: [
     {
+      title: 'Announcing Rsbuild 2.3',
+      description:
+        'Rsbuild 2.3 adds options to create TanStack Start and Lynx projects, supports Brotli file size reporting, and reduces production bundle size.',
+      date: '2026-10-29',
+      href: 'https://rspack.rs/blog/announcing-2-3#rsbuild',
+      authors: [
+        {
+          name: 'Jiahan Chen',
+          avatar: 'https://github.com/chenjiahan.png',
+        },
+        {
+          name: 'Zhixin Jin',
+          avatar: 'https://github.com/intellild.png',
+        },
+      ],
+    },
+    {
       title: 'Announcing Rsbuild 2.2',
       description:
         'Rsbuild 2.2 adds source text imports, enables chunk splitting by default for Node.js builds, supports Solid v2 and Octane, and adds dynamic ports, and custom restart handling.',
@@ -37,6 +54,23 @@ const EXTERNAL_BLOG_PAGES: Record<string, BlogListItem[]> = {
     },
   ],
   zh: [
+    {
+      title: 'Rsbuild 2.3 发布',
+      description:
+        'Rsbuild 2.3 新增 TanStack Start 和 Lynx 项目创建入口，支持 Brotli 文件体积统计，并减小生产构建产物体积。',
+      date: '2026-10-29',
+      href: 'https://rspack.rs/zh/blog/announcing-2-3#rsbuild',
+      authors: [
+        {
+          name: 'Jiahan Chen',
+          avatar: 'https://github.com/chenjiahan.png',
+        },
+        {
+          name: 'Zhixin Jin',
+          avatar: 'https://github.com/intellild.png',
+        },
+      ],
+    },
     {
       title: 'Rsbuild 2.2 发布',
       description:
