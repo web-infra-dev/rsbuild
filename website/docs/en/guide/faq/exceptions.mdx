@@ -57,6 +57,7 @@ export const bar = 'bar';
 
 // index.ts
 import { foo } from './utils';
+console.log(foo);
 ```
 
 In this case, Rsbuild will throw the following error:
@@ -79,17 +80,18 @@ export const bar = 'bar';
 
 // index.ts
 import { foo } from './utils';
+console.log(foo);
 ```
 
-- Re-exporting a type without the `type` modifier, which prevents transpilers like SWC or Babel from recognizing the type export.
+- Re-exporting a type without the `type` modifier when using a transpiler that cannot identify cross-module type exports. Rsbuild's default SWC pipeline can recognize these exports, but explicit `export type` is recommended for compatibility with other transpilers and `isolatedModules`.
 
 ```ts
 // utils.ts
 export type Foo = 'bar';
 
 // index.ts
-export { Foo } from './utils'; // Incorrect
-export type { Foo } from './utils'; // Correct
+export { Foo } from './utils'; // Requires cross-module type information
+export type { Foo } from './utils'; // Recommended
 ```
 
 In some cases, a third-party dependency you can't modify causes this error. If you're sure it doesn't affect your application, you can downgrade the log level from `error` to `warn`:
@@ -126,24 +128,24 @@ If tree shaking isn't working as expected, check the `sideEffects` configuration
 
 ### `JavaScript heap out of memory` when compiling?
 
-This error indicates a memory overflow during the build process. This typically happens when the bundled content exceeds Node.js's default memory limit.
+This error means the V8 JavaScript heap reached its limit. A large build, a memory leak, or a loader or plugin can cause it.
 
-To fix out-of-memory issues, the easiest solution is to increase the memory limit using Node.js's `--max-old-space-size` option. Set this by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before your CLI command.
+If the machine or container has enough available memory, you can increase the V8 old-space limit with Node.js's `--max-old-space-size` option. Set this by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before your CLI command.
 
-For example, add parameters before the `rsbuild build` command:
+For example, run the Rsbuild CLI with a 4096 MiB old-space limit:
 
 ```json title="package.json"
 {
   "scripts": {
     "build": "rsbuild build" // [!code --]
-    "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build" // [!code ++]
+    "build": "node --max-old-space-size=4096 ./node_modules/@rsbuild/core/bin/rsbuild.js build" // [!code ++]
   }
 }
 ```
 
-For other commands like `rsbuild dev`, add the parameters before that command instead.
+For other commands, replace the trailing `build` argument with the desired subcommand, such as `dev`.
 
-The value of the `max_old_space_size` parameter represents the upper limit of the memory size (MB). Generally, it can be set to `16384` (16GB).
+`--max-old-space-size` limits V8 old-space memory in MiB, not total process memory. The example uses 4096 MiB; choose a limit below the machine or container memory budget, leaving room for Rspack's native allocations and other processes.
 
 The following parameters are explained in more detail in the official Node.js documentation:
 

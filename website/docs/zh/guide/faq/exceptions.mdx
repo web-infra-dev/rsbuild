@@ -57,6 +57,7 @@ export const bar = 'bar';
 
 // index.ts
 import { foo } from './utils';
+console.log(foo);
 ```
 
 在这种情况下，Rsbuild 会抛出以下错误：
@@ -79,17 +80,18 @@ export const bar = 'bar';
 
 // index.ts
 import { foo } from './utils';
+console.log(foo);
 ```
 
-- re-export 了一个类型，但是没有添加 `type` 修饰符，导致 SWC、Babel 等转译工具无法识别到类型导出，导致编译异常。
+- 使用无法识别跨模块类型导出的转译器时，重新导出类型却没有添加 `type` 修饰符。Rsbuild 默认的 SWC 流程可以识别此类导出，但建议显式使用 `export type`，以兼容其他转译器和 `isolatedModules`。
 
 ```ts
 // utils.ts
 export type Foo = 'bar';
 
 // index.ts
-export { Foo } from './utils'; // 错误写法
-export type { Foo } from './utils'; // 正确写法
+export { Foo } from './utils'; // 需要跨模块类型信息
+export type { Foo } from './utils'; // 推荐写法
 ```
 
 在个别情况下，以上报错是由第三方依赖引入的，你无法直接修改它。此时，如果你确定该问题不影响你的应用，那么可以添加以下配置，将 `error` 日志修改为 `warn` 级别：
@@ -130,24 +132,24 @@ Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree 
 
 ### 打包时出现 `JavaScript heap out of memory`?
 
-该报错表示打包过程中出现了内存溢出问题，大多数情况下是由于打包的内容较多，超出了 Node.js 默认的内存上限。
+该报错表示 V8 JavaScript 堆达到内存上限。大型构建、内存泄漏或 loader、插件都可能导致此问题。
 
-如果出现 OOM 问题，最简单的方法是通过增加内存上限来解决，Node.js 提供了 `--max-old-space-size` 选项来对此进行设置。你可以在 CLI 命令前添加 [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) 来设置此参数。
+如果机器或容器有足够的可用内存，可以通过 Node.js 的 `--max-old-space-size` 选项增加 V8 老生代内存上限。你可以在 CLI 命令前添加 [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) 来设置此参数。
 
-比如，在 `rsbuild build` 命令前添加参数：
+例如，以 4096 MiB 的老生代内存上限运行 Rsbuild CLI：
 
 ```json title="package.json"
 {
   "scripts": {
     "build": "rsbuild build" // [!code --]
-    "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build" // [!code ++]
+    "build": "node --max-old-space-size=4096 ./node_modules/@rsbuild/core/bin/rsbuild.js build" // [!code ++]
   }
 }
 ```
 
-如果你执行的是其他命令，比如 `rsbuild dev`，请在对应的命令前添加参数。
+执行其他命令时，将末尾的 `build` 替换为所需子命令，例如 `dev`。
 
-`max_old_space_size` 参数的值代表内存上限大小（MB），一般情况下设置为 `16384`（16GB）即可。
+`--max-old-space-size` 限制的是 V8 老生代内存，单位为 MiB，并非整个进程的内存。示例使用 4096 MiB；请根据机器或容器的内存预算选择更低的上限，为 Rspack 的原生内存分配和其他进程留出空间。
 
 Node.js 官方文档中有对以下参数更详细的解释：
 
