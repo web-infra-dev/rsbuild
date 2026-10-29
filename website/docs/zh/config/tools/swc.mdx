@@ -16,17 +16,16 @@ type ToolsSwc =
 
 ```js
 const defaultOptions = {
+  detectSyntax: 'auto',
   jsc: {
     externalHelpers: true,
     parser: {
-      tsx: false,
-      syntax: 'typescript',
       decorators: true,
     },
-  },
-  experimental: {
-    cacheRoot: './node_modules/.cache/.swc',
-    keepImportAttributes: true,
+    experimental: {
+      cacheRoot: '<root>/node_modules/.cache/.swc',
+      keepImportAttributes: true,
+    },
   },
   isModule: 'unknown',
   env: {
@@ -36,6 +35,8 @@ const defaultOptions = {
   // ...some other conditional options
 };
 ```
+
+`<root>` 表示项目根目录的绝对路径。`detectSyntax: 'auto'` 根据每个文件的扩展名选择解析语法。
 
 通过 `tools.swc` 可以设置 [builtin:swc-loader](https://rspack.rs/zh/guide/features/builtin-swc-loader) 的选项。
 
@@ -84,4 +85,4 @@ export default {
 为了避免冲突，Rsbuild 采取以下处理策略：
 
 - 当 Rsbuild 检测到你在 `tools.swc` 中手动设置了 `jsc.target` 时，会自动移除内置的 `env.targets`。
-- 如果你配置了 [output.polyfill](/config/output/polyfill)，Rsbuild 会强制设置 `env.mode`，此时你无法再设置 `jsc.target`。
+- 如果在 Web 目标中将 [output.polyfill](/config/output/polyfill) 设置为 `usage` 或 `entry`，Rsbuild 会设置 `env.mode`，此时你无法再设置 `jsc.target`。

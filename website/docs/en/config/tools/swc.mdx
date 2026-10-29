@@ -16,17 +16,16 @@ type ToolsSwc =
 
 ```js
 const defaultOptions = {
+  detectSyntax: 'auto',
   jsc: {
     externalHelpers: true,
     parser: {
-      tsx: false,
-      syntax: 'typescript',
       decorators: true,
     },
-  },
-  experimental: {
-    cacheRoot: './node_modules/.cache/.swc',
-    keepImportAttributes: true,
+    experimental: {
+      cacheRoot: '<root>/node_modules/.cache/.swc',
+      keepImportAttributes: true,
+    },
   },
   isModule: 'unknown',
   env: {
@@ -36,6 +35,8 @@ const defaultOptions = {
   // ...some other conditional options
 };
 ```
+
+`<root>` represents the absolute project root. `detectSyntax: 'auto'` selects the parser syntax from each file's extension.
 
 You can set the options of [builtin:swc-loader](https://rspack.rs/guide/features/builtin-swc-loader) through `tools.swc`.
 
@@ -84,4 +85,4 @@ In the SWC configuration, `jsc.target` (which specifies the ECMAScript version, 
 To avoid conflicts, Rsbuild adopts the following handling strategies:
 
 - If Rsbuild detects that you have manually set `jsc.target` in `tools.swc`, it will automatically remove the built-in `env.targets`.
-- If [output.polyfill](/config/output/polyfill) is configured, Rsbuild will force set `env.mode`. In this case, you cannot use `jsc.target`.
+- If [output.polyfill](/config/output/polyfill) is set to `usage` or `entry` for a web target, Rsbuild sets `env.mode`. In this case, you cannot use `jsc.target`.

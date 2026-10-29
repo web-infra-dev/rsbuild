@@ -12,10 +12,10 @@ const defaultOptions = {
   errorRecovery: true,
   // 使用当前项目的 browserslist 配置
   targets: browserslist,
-  // 在生产模式，且 output.injectStyles 为 true 时，minify 会被启用
-  minify: config.mode === 'production' && config.output.injectStyles,
 };
 ```
+
+对于通过 `?inline`、`?url` 导入的样式，以及通过 [output.injectStyles](/config/output/inject-styles) 注入的样式，Rsbuild 会在启用 [CSS 压缩](/config/output/minify) 时同时启用 loader 的压缩。其他提取出的 CSS 由 CSS 压缩器单独压缩。
 
 通过 `tools.lightningcssLoader` 可以设置 [builtin:lightningcss-loader](https://rspack.rs/zh/guide/features/builtin-lightningcss-loader) 的选项。
 

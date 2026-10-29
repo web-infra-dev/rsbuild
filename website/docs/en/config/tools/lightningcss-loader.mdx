@@ -1,5 +1,7 @@
 ---
-description: 'You can set the options for builtin:lightningcss-loader through tools.lightningcssLoader.'
+description: 'For styles imported with `?inline` or `?url`, and styles injected through [output.injectStyles](/config/output/inject-styles), Rsbuild also enables loader minification when [CSS minification](/config/output/minify) is enabled. Other extracted CSS is minified separately by the CSS minimizer.
+
+You can set the options for builtin:lightningcss-loader through tools.lightningcssLoader.'
 ---
 
 # tools.lightningcssLoader
@@ -12,8 +14,6 @@ const defaultOptions = {
   errorRecovery: true,
   // use current project's browserslist config
   targets: browserslist,
-  // minify is enabled when output.injectStyles is true and in production mode
-  minify: config.mode === 'production' && config.output.injectStyles,
 };
 ```
 
