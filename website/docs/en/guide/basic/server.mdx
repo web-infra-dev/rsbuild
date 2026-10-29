@@ -4,7 +4,7 @@ description: 'Rsbuild includes a built-in dev server that enhances the developme
 
 # Dev server
 
-Rsbuild includes a built-in dev server that enhances the development experience. When you run `rsbuild dev` or `rsbuild preview`, the server starts and provides features like page preview, routing, and hot module replacement.
+Rsbuild includes a built-in dev server that enhances the development experience. `rsbuild dev` compiles your application, serves it, and provides hot module replacement. `rsbuild preview` serves existing build output for local preview; it does not rebuild files or provide hot module replacement.
 
 ## Base path
 
@@ -60,7 +60,7 @@ export default {
 If a request meets the following conditions but no corresponding static asset exists, [server.htmlFallback](/config/server/html-fallback) triggers and falls back to `index.html` by default:
 
 - The request method is `GET` or `HEAD`
-- The `Accept` header contains `text/html` (for example, `text/html` or `*/*`)
+- The `Accept` header contains `text/html` or `*/*`
 
 ### Custom fallback behavior
 
@@ -87,7 +87,7 @@ Normally, `/` points to the dist root directory, and HTML files are output there
 
 If you output HTML files to other subdirectories using [output.distPath.html](/config/output/dist-path), access HTML pages at `/[htmlPath]/some-path` instead.
 
-For example, if you set HTML files to output to the `HTML` directory, access index.html at `/html/`, and foo.html at `/html/foo`.
+For example, if you set HTML files to output to the `html` directory, access index.html at `/html/`, and foo.html at `/html/foo`.
 
 ```ts
 export default {
@@ -115,7 +115,7 @@ Compared to the dev server in Rspack CLI, Rsbuild's dev server has the following
 
 - **Configuration**: Rsbuild provides richer server configuration options.
 - **Log Format**: The log format of Rspack CLI is largely consistent with webpack CLI, while Rsbuild's logs are clearer and more readable.
-- **Dependencies**: Rsbuild is built on lightweight libraries like `connect`, which has fewer dependencies and faster startup than `express` used by `@rspack/dev-server`.
+- **Dependencies**: Rsbuild uses `connect-next` for middleware, while `@rspack/dev-server` uses `express`.
 
 ### Configuration
 
@@ -170,6 +170,7 @@ export default {
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       server.middlewares.use((req, res, next) => {

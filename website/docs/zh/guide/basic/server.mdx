@@ -1,10 +1,10 @@
 ---
-description: 'Rsbuild 配备了一个内置的开发服务器，旨在提升开发体验。当你执行 rsbuild dev 或 rsbuild preview 命令时，该服务器将启动，并提供页面预览、路由、模块热更新等功能。'
+description: '了解 Rsbuild 开发服务器与预览服务器的区别、路由规则和中间件配置。'
 ---
 
 # 开发服务器
 
-Rsbuild 配备了一个内置的开发服务器，旨在提升开发体验。当你执行 `rsbuild dev` 或 `rsbuild preview` 命令时，该服务器将启动，并提供页面预览、路由、模块热更新等功能。
+Rsbuild 配备了一个内置的开发服务器，旨在提升开发体验。`rsbuild dev` 会编译应用、启动服务，并提供模块热更新。`rsbuild preview` 提供已有构建产物的本地预览，不会重新构建文件或提供模块热更新。
 
 ## 基础路径 \{#base-path}
 
@@ -60,7 +60,7 @@ export default {
 当请求满足以下条件且未找到对应的静态资源时，[server.htmlFallback](/config/server/html-fallback) 将生效，默认会回退到 `index.html`：
 
 - 请求方法为 `GET` 或 `HEAD`
-- 请求头中的 `Accept` 包含 `text/html`（即类型为 `text/html` 或 `*/*`）
+- 请求头中的 `Accept` 包含 `text/html` 或 `*/*`
 
 ### 自定义 Fallback 行为
 
@@ -87,7 +87,7 @@ export default {
 
 若通过修改 [output.distPath.html](/config/output/dist-path) 将 HTML 文件输出到其他子目录下，此时需通过 `/[htmlPath]/some-path` 访问对应的 HTML 页面。
 
-例如，设置将 HTML 文件输出到 `HTML` 目录下，此时将通过 `/html/` 访问到 index.html，通过 `/html/foo` 访问到 foo.html。
+例如，设置将 HTML 文件输出到 `html` 目录下，此时将通过 `/html/` 访问到 index.html，通过 `/html/foo` 访问到 foo.html。
 
 ```ts
 export default {
@@ -115,7 +115,7 @@ Rsbuild 内置了一个轻量级的开发服务器，这与 Rspack CLI 或 webpa
 
 - **配置项**：Rsbuild 提供了更丰富的 server 配置项。
 - **日志格式**：Rspack CLI 日志格式与 webpack CLI 基本一致，而 Rsbuild 的日志则更加清晰和易读。
-- **底层依赖**：Rsbuild 基于 `connect` 等轻量级库实现，相较于 `@rspack/dev-server` 使用的 `express`，具有更少的依赖和更快的启动速度。
+- **底层依赖**：Rsbuild 使用 `connect-next` 处理中间件，而 `@rspack/dev-server` 使用 `express`。
 
 ### 配置项
 
@@ -170,6 +170,7 @@ export default {
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       server.middlewares.use((req, res, next) => {
