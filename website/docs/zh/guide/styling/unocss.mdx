@@ -35,13 +35,13 @@ Rsbuild 默认使用 [Lightning CSS](/guide/styling/css-usage#lightning-css) 添
 在当前项目的根目录创建 `uno.config.ts` 文件，并添加以下内容：
 
 ```js title="uno.config.ts"
-import { defineConfig, presetUno } from 'unocss';
+import { defineConfig, presetWind3 } from 'unocss';
 
 export default defineConfig({
   content: {
     filesystem: ['./src/**/*.{html,js,ts,jsx,tsx}'],
   },
-  presets: [presetUno()],
+  presets: [presetWind3()],
 });
 ```
 

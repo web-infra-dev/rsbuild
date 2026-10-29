@@ -63,7 +63,7 @@ export default defineConfig({
 });
 ```
 
-请注意，你需要选择和当前 `@swc/core` 版本匹配的 SWC 插件，才能使 SWC 正常执行，详见 [tools.swc](/config/tools/swc)。
+请选择与 Rspack 内置 SWC 版本兼容的 SWC 插件版本。安装其他版本的 `@swc/core` 不会改变 Rspack 内置的编译器。详见 [SWC 插件版本](/guide/configuration/swc#swc-plugin-version)。
 
 > 参考示例：[styled-jsx](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/styled-jsx)。
 
