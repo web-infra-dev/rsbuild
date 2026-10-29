@@ -320,17 +320,7 @@ export default {
 
 使用 `@rsbuild/plugin-babel` 后，Rsbuild 会使用 `babel-loader` 和 `builtin:swc-loader` 分别对 JavaScript 文件进行编译，且 Babel 的执行时机早于 SWC。
 
-这意味着，当代码中使用某些 ECMAScript 新特性时，你可能需要添加 Babel 插件，使 Babel 能够正确编译这些新特性。
-
-例如，添加 [@babel/plugin-transform-private-methods](https://www.npmjs.com/package/@babel/plugin-transform-private-methods) 插件，使 Babel 能够正确编译 [private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties)：
-
-```ts
-pluginBabel({
-  babelLoaderOptions: {
-    plugins: ['@babel/plugin-transform-private-methods'],
-  },
-});
-```
+Babel 需要在 SWC 执行前成功解析代码。私有方法等现代 JavaScript 语法已被 Babel 解析器支持，无需仅为解析它们而添加转换插件。当某个特性无法被当前 Babel 配置处理时，再添加相应的语法或转换插件。
 
 ## 使用指南
 

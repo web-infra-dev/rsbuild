@@ -121,9 +121,9 @@ pluginSass({
 
 ### Modify Sass implementation
 
-Sass provides several implementations, including [sass](https://npmjs.com/package/sass), [sass-embedded](https://npmjs.com/package/sass-embedded), and [node-sass](https://npmjs.com/package/node-sass).
+Dart Sass is available through [sass](https://npmjs.com/package/sass) and [sass-embedded](https://npmjs.com/package/sass-embedded). The older [node-sass implementation has reached end of life](https://sass-lang.com/blog/node-sass-is-end-of-life/).
 
-Rsbuild uses the latest `sass-embedded` implementation by default. `sass-embedded` is a JavaScript wrapper around the native Dart Sass executable, providing a consistent API and optimal performance.
+Rsbuild uses the `sass-embedded` implementation bundled with the plugin by default. `sass-embedded` is a JavaScript wrapper around the native Dart Sass executable, providing a consistent API and optimal performance.
 
 To use a different Sass implementation instead of the built-in `sass-embedded` included in Rsbuild, install the preferred Sass implementation in your project and specify it using the `sass-loader`'s [implementation](https://github.com/webpack/sass-loader#implementation) option.
 
@@ -141,7 +141,7 @@ Switching from `sass-embedded` to another Sass implementation can significantly 
 
 ### Select Sass API
 
-Rsbuild uses the latest `modern-compiler` API by default. If you rely on the `legacy` API of Sass, you can set the `api` option of the sass-loader to `legacy` to maintain compatibility with some deprecated Sass syntax.
+Rsbuild uses the `modern-compiler` JavaScript API by default. If a custom importer or function still depends on Sass's legacy JavaScript API, you can temporarily set sass-loader's `api` option to `legacy`. This changes the JavaScript integration API; it does not restore removed Sass language features.
 
 ```ts
 pluginSass({

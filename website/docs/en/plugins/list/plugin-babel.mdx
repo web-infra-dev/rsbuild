@@ -87,7 +87,6 @@ When configuration is of type `Function`, the default Babel configuration will b
 pluginBabel({
   babelLoaderOptions: (config) => {
     // Add a Babel plugin
-    // note: the plugin have been added to the default config to support antd load on demand
     config.plugins ||= [];
     config.plugins.push([
       'babel-plugin-import',
@@ -321,17 +320,7 @@ export default {
 
 After using `@rsbuild/plugin-babel`, Rsbuild will use both `babel-loader` and `builtin:swc-loader` to compile JavaScript files, with Babel running before SWC.
 
-This means that if you are using some new ECMAScript features in your code, you may need to add Babel plugins to ensure that Babel can correctly compile these new features.
-
-For example, add the [@babel/plugin-transform-private-methods](https://www.npmjs.com/package/@babel/plugin-transform-private-methods) plugin to enable Babel to correctly compile [private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties):
-
-```ts
-pluginBabel({
-  babelLoaderOptions: {
-    plugins: ['@babel/plugin-transform-private-methods'],
-  },
-});
-```
+Babel must be able to parse the syntax before SWC runs. Modern JavaScript syntax such as private methods is already supported by Babel's parser and does not require an extra transform plugin just for parsing. Add syntax or transform plugins when a feature is not supported by your Babel configuration.
 
 ## Usage guides
 
