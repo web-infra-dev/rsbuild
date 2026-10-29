@@ -24,7 +24,7 @@ Rsbuild CLI 支持使用 `--env-mode` 选项来指定 env 模式，详见 ["Env 
 - 如果 `NODE_ENV` 为 `development`，则默认值为 `development`。
 - 如果 `NODE_ENV` 为其他值，则默认值为 `none`。
 
-如果你设置了 `mode` 的值，则 `NODE_ENV` 的值会被忽略。
+显式设置的 `mode` 会优先用于确定构建模式，但不会修改 Node.js 进程中的 `process.env.NODE_ENV`。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -48,9 +48,9 @@ export default {
 
 ## Development 模式
 
-当 `mode` 的值为 `development` 时：
+当 `mode` 的值为 `development` 时，除非被配置覆盖，否则默认行为如下：
 
-- 开启 HMR，注册 [HotModuleReplacementPlugin](https://rspack.rs/zh/plugins/hot-module-replacement-plugin)。
+- 为 web 目标运行开发服务器且启用 `dev.hmr` 时，注册 [HotModuleReplacementPlugin](https://rspack.rs/zh/plugins/hot-module-replacement-plugin)。
 - 生成 JavaScript 的 source map，不生成 CSS 的 source map，详见 [output.sourceMap](/config/output/source-map)。
 - 源代码中的 `process.env.NODE_ENV` 会被替换为 `'development'`。
 - 源代码中的 `import.meta.env.MODE` 会被替换为 `'development'`。
@@ -60,11 +60,11 @@ export default {
 
 ## Production 模式
 
-当 `mode` 的值为 `production` 时：
+当 `mode` 的值为 `production` 时，除非被配置覆盖，否则默认行为如下：
 
-- 开启 JavaScript 代码压缩，注册 [SwcJsMinimizerRspackPlugin](https://rspack.rs/zh/plugins/swc-js-minimizer-rspack-plugin)。
-- 开启 CSS 代码压缩，注册 [LightningCssMinimizerRspackPlugin](https://rspack.rs/zh/plugins/lightning-css-minimizer-rspack-plugin)。
-- 生成的 JavaScript 和 CSS 文件名会带有 hash 后缀，详见 [output.filenameHash](/config/output/filename-hash)。
+- 对 web 和 web-worker 目标开启 JavaScript 代码压缩，注册 [SwcJsMinimizerRspackPlugin](https://rspack.rs/zh/plugins/swc-js-minimizer-rspack-plugin)。
+- 对 web 和 web-worker 目标开启 CSS 代码压缩，注册 [LightningCssMinimizerRspackPlugin](https://rspack.rs/zh/plugins/lightning-css-minimizer-rspack-plugin)。
+- 生成的 JavaScript 和 CSS 文件名会带有 hash 后缀，但 Node.js 目标的 JavaScript 文件除外，详见 [output.filenameHash](/config/output/filename-hash)。
 - 生成的 CSS Modules 类名更简短，详见 [cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname)。
 - 不生成 JavaScript 和 CSS 的 source map，详见 [output.sourceMap](/config/output/source-map)。
 - 源代码中的 `process.env.NODE_ENV` 会被替换为 `'production'`。
@@ -77,7 +77,7 @@ export default {
 
 当 `mode` 的值为 `none` 时：
 
-- 不开启任何优化。
+- 默认不开启生产模式的优化，但仍可通过显式配置开启代码压缩等功能。
 - 源代码中的 `process.env.NODE_ENV` 不会被替换。
 - 源代码中的 `import.meta.env.MODE` 会被替换为 `'none'`。
 - 源代码中的 `import.meta.env.DEV` 会被替换为 `false`。

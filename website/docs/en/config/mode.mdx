@@ -24,7 +24,7 @@ The default value of `mode` depends on the `process.env.NODE_ENV` environment va
 - If `NODE_ENV` is `development`, the default value is `development`.
 - If `NODE_ENV` has any other value, the default value is `none`.
 
-If you set `mode`, the `NODE_ENV` value will be ignored.
+An explicit `mode` takes precedence when choosing the build mode. It does not change `process.env.NODE_ENV` in the Node.js process.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -48,9 +48,9 @@ When using the Rsbuild JavaScript API:
 
 ## Development mode
 
-If `mode` is `development`:
+If `mode` is `development`, the following defaults apply unless overridden:
 
-- Enable HMR and register the [HotModuleReplacementPlugin](https://rspack.rs/plugins/hot-module-replacement-plugin).
+- When running the dev server for a web target with `dev.hmr` enabled, register the [HotModuleReplacementPlugin](https://rspack.rs/plugins/hot-module-replacement-plugin).
 - Generate JavaScript source maps, but do not generate CSS source maps. See [output.sourceMap](/config/output/source-map) for details.
 - The `process.env.NODE_ENV` in the source code will be replaced with `'development'`.
 - The `import.meta.env.MODE` in the source code will be replaced with `'development'`.
@@ -60,11 +60,11 @@ If `mode` is `development`:
 
 ## Production mode
 
-If `mode` is `production`:
+If `mode` is `production`, the following defaults apply unless overridden:
 
-- Enable JavaScript code minification and register the [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/swc-js-minimizer-rspack-plugin).
-- Enable CSS code minification and register the [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/lightning-css-minimizer-rspack-plugin).
-- JavaScript and CSS filenames include hash suffixes. See [output.filenameHash](/config/output/filename-hash).
+- For web and web-worker targets, enable JavaScript code minification and register the [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/swc-js-minimizer-rspack-plugin).
+- For web and web-worker targets, enable CSS code minification and register the [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/lightning-css-minimizer-rspack-plugin).
+- JavaScript and CSS filenames include hash suffixes, except JavaScript files for Node.js targets. See [output.filenameHash](/config/output/filename-hash).
 - CSS Modules class names are shorter. See [cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname).
 - JavaScript and CSS source maps are disabled. See [output.sourceMap](/config/output/source-map).
 - The `process.env.NODE_ENV` in the source code will be replaced with `'production'`.
@@ -77,7 +77,7 @@ If `mode` is `production`:
 
 If `mode` is `none`:
 
-- Do not enable any optimizations.
+- Do not enable production-mode optimizations by default. Explicit configuration can still enable features such as minification.
 - The `process.env.NODE_ENV` in the source code will not be replaced.
 - The `import.meta.env.MODE` in the source code will be replaced with `'none'`.
 - The `import.meta.env.DEV` in the source code will be replaced with `false`.
