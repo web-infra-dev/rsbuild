@@ -23,7 +23,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### usage
 
-With `output.polyfill` set to `'usage'`, Rsbuild injects polyfills based on the APIs used in each file. This provides optimal bundle size by including only needed polyfills.
+With `output.polyfill` set to `'usage'`, Rsbuild injects polyfills based on the APIs used in each file. The selected polyfills also depend on the target browsers. APIs used only in files excluded from compilation are not analyzed.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -35,7 +35,7 @@ export default {
 
 ### entry
 
-With `output.polyfill` set to `'entry'`, Rsbuild injects polyfills in each entry file. This ensures all polyfills are available but may increase bundle size.
+With `output.polyfill` set to `'entry'`, Rsbuild injects polyfills in each entry file. The injected core-js polyfills are selected for the target browsers, regardless of which APIs your code uses. This can increase bundle size.
 
 ```ts title="rsbuild.config.ts"
 export default {

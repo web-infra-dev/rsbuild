@@ -14,7 +14,7 @@ Before addressing compatibility issues, decide which browsers your project needs
 
 - If you haven't set browserslist yet, please read the [Browserslist](/guide/advanced/browserslist) chapter first.
 
-- If you have set a browserslist, Rsbuild automatically compiles code to match that scope, downgrades JavaScript and CSS syntax, and injects required polyfills. In most cases, you can safely use modern ECMAScript features without worrying about compatibility.
+- Rsbuild uses browserslist to transform JavaScript and CSS syntax for the target browsers. Runtime APIs require a separate polyfill strategy; [polyfill injection](#polyfills) is disabled by default.
 
 After setting the browserslist, if you still encounter compatibility issues, continue reading to find solutions.
 
@@ -38,7 +38,7 @@ When you use higher-version syntax and APIs in your project, you need to downgra
 
 **Syntax is a set of rules for how a programming language organizes code**. Code that doesn't follow these rules cannot be correctly recognized by the programming language's engine and therefore cannot run. In JavaScript, the following are examples of syntax rules:
 
-- In `const foo = 1`, `const` means to declare an immutable constant.
+- In `const foo = 1`, `const` declares a binding that cannot be reassigned; an object bound to it can still be mutated.
 - In `foo?.bar?.baz`, `?.` indicates optional chaining of access properties.
 - In `async function () {}`, `async` means to declare an asynchronous function.
 
@@ -141,8 +141,6 @@ When you find that a third-party dependency causes compatibility issues, you can
 Taking the npm package `query-string` as an example, you can add the following config:
 
 ```ts title="rsbuild.config.ts"
-import path from 'node:path';
-
 export default {
   source: {
     include: [/node_modules[\\/]query-string[\\/]/],
@@ -154,9 +152,9 @@ See [source.include](/config/source/include) for detailed usage.
 
 ## Polyfills
 
-Rsbuild compiles JavaScript code using SWC and supports injecting polyfills such as [core-js](https://github.com/zloirock/core-js) and [@swc/helpers](https://npmjs.com/package/@swc/helpers).
+Rsbuild uses SWC to inject [core-js](https://github.com/zloirock/core-js) polyfills when enabled. The [@swc/helpers](https://npmjs.com/package/@swc/helpers) package supplies helpers for syntax transformations; it does not polyfill built-in APIs.
 
-In different usage scenarios, you may need different polyfill solutions. Rsbuild provides [output.polyfill](/config/output/polyfill) config to switch between different polyfill modes.
+In different usage scenarios, you may need different polyfill solutions. Rsbuild provides [output.polyfill](/config/output/polyfill) config to switch between different polyfill modes. Before enabling `usage` or `entry`, [install core-js v3](/config/output/polyfill#install-core-js) in your project.
 
 ### Default behavior
 
@@ -180,7 +178,7 @@ For example, the code uses the `Map` object:
 var b = new Map();
 ```
 
-After compilation, only the polyfills for `Map` will be injected into this file:
+If the target browsers need a `Map` polyfill, the compiled output can include imports such as:
 
 ```js
 import 'core-js/modules/es.map';
@@ -201,7 +199,7 @@ export default {
 
 ### Entry mode
 
-When using entry mode, Rsbuild will analyze which `core-js` methods need to be injected according to the browserslist set for the current project and inject them into the entry file of each page. Polyfills injected this way are more comprehensive, eliminating concerns about polyfill issues in project source code and third-party dependencies. However, because some unused polyfill code is included, the bundle size may increase.
+When using entry mode, Rsbuild will analyze which `core-js` methods need to be injected according to the browserslist set for the current project and inject them into the entry file of each page. This covers core-js APIs needed by the target browsers, including those used in untranspiled dependencies. It does not cover every browser API (see [Missing polyfills](#missing-polyfills)), and including unused polyfills may increase bundle size.
 
 The config of entry mode is:
 

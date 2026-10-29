@@ -50,7 +50,7 @@ npx yarn-deduplicate && yarn
 
 ## 提升 Browserslist 范围 \{#adjust-browserslist}
 
-Rsbuild 会根据项目的 Browserslist 配置范围进行代码编译，并注入相应的 Polyfill。如果项目不需要兼容旧版浏览器，可以根据实际情况来提升 Browserslist 范围，从而减少在语法和 Polyfill 上的编译开销。
+Rsbuild 会根据项目的 Browserslist 配置范围进行代码编译，并在启用 Polyfill 注入时添加相应的 Polyfill。如果项目不需要兼容旧版浏览器，可以根据实际情况来提升 Browserslist 范围，从而减少在语法和 Polyfill 上的编译开销。
 
 Rsbuild 默认的 Browserslist 配置为：
 

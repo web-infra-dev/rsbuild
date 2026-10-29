@@ -23,7 +23,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### usage
 
-当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会在每个文件中根据代码中使用的 API 注入 polyfills。这提供了最优的包体积，因为只包含所需的 polyfills。
+当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会在每个文件中根据代码中使用的 API 注入 polyfills。注入哪些 polyfill 还取决于目标浏览器。仅在编译范围之外的文件中使用的 API 不会被分析。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -35,7 +35,7 @@ export default {
 
 ### entry
 
-当 `output.polyfill` 配置为 `'entry'` 时，Rsbuild 会在每个入口文件中注入 polyfills。这确保了所有 polyfills 都可用，但可能会增加包体积。
+当 `output.polyfill` 配置为 `'entry'` 时，Rsbuild 会在每个入口文件中注入 polyfills。注入的 core-js polyfill 根据目标浏览器选择，不取决于代码中使用了哪些 API，因此可能会增加产物体积。
 
 ```ts title="rsbuild.config.ts"
 export default {
