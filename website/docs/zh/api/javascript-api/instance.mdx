@@ -553,14 +553,14 @@ rsbuild.addPlugins([pluginFoo()], { environment: 'node' });
 
 ## rsbuild.getPlugins
 
-获取当前 Rsbuild 实例中注册的所有 Rsbuild 插件。
+默认获取全局插件。指定 `environment` 时，还会包含在该环境中注册的插件。
 
 - **类型：**
 
 ```ts
 function GetPlugins(options?: {
   /**
-   * Get the plugins in the specified environment.
+   * Get global plugins and plugins in the specified environment.
    * If environment is not specified, get the global plugins.
    */
   environment: string;
@@ -570,10 +570,10 @@ function GetPlugins(options?: {
 - **示例：**
 
 ```ts
-// get all plugins
+// get global plugins
 console.log(rsbuild.getPlugins());
 
-// get plugins in `web` environment
+// get global plugins and plugins in the `web` environment
 console.log(rsbuild.getPlugins({ environment: 'web' }));
 ```
 

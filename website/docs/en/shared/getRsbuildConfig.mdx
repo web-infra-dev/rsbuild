@@ -1,4 +1,4 @@
-Get the Rsbuild config, this method must be called after the `modifyRsbuildConfig` hook is executed.
+Get the Rsbuild config. The `original` and `current` forms are available during plugin `setup`; `normalized` requires configuration normalization to finish.
 
 - **Type:**
 
@@ -24,7 +24,7 @@ getRsbuildConfig('original');
 getRsbuildConfig('current');
 
 // Get the normalized Rsbuild config.
-// This method must be called after the `modifyRsbuildConfig` hook has been executed.
+// Call after configuration normalization, for example in `onBeforeBuild`.
 // It is equivalent to the `getNormalizedConfig` method.
 getRsbuildConfig('normalized');
 ```

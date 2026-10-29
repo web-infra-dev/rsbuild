@@ -536,8 +536,8 @@ The handler param is a transformation function that takes the current module cod
 - **Type:**
 
 ```ts
-type TransformContext = {
-  code: string;
+type TransformContext<Raw extends boolean = false> = {
+  code: Raw extends true ? Buffer : string;
   context: string | null;
   resource: string;
   resourcePath: string;
@@ -559,8 +559,8 @@ type TransformResult =
       map?: string | Rspack.sources.RawSourceMap | null;
     };
 
-type TransformHandler = (
-  context: TransformContext,
+type TransformHandler<Raw extends boolean = false> = (
+  context: TransformContext<Raw>,
 ) => MaybePromise<TransformResult>;
 ```
 
@@ -586,9 +586,10 @@ api.transform(
   { test: /\.md$/ },
   ({ code, resource, resourcePath, resourceQuery }) => {
     console.log(code); // -> some code
-    console.log(resource); // -> '/home/user/project/src/template.pug?foo=123'
-    console.log(resourcePath); // -> '/home/user/project/src/template.pug'
+    console.log(resource); // -> '/home/user/project/src/template.md?foo=123'
+    console.log(resourcePath); // -> '/home/user/project/src/template.md'
     console.log(resourceQuery); // -> '?foo=123'
+    return code;
   },
 );
 ```

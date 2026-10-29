@@ -1,4 +1,4 @@
-Returns either the complete normalized Rsbuild config, including all environments, or the normalized config for a specific environment. You can call this method only after the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) hook has completed.
+Returns either the complete normalized Rsbuild config, including all environments, or the normalized config for a specific environment. Call this method after configuration normalization finishes, for example in `modifyBundlerChain` or `onBeforeBuild`. It is not available during `setup`, `modifyRsbuildConfig`, or `modifyEnvironmentConfig`.
 
 Unlike [`getRsbuildConfig`](/plugins/dev/core#apigetrsbuildconfig), this method returns a normalized config with narrower types. For example, the type of `config.html` no longer includes `undefined`.
 

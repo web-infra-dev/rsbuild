@@ -1,4 +1,4 @@
-获取规范化后的完整 Rsbuild 配置（包含所有环境），或指定环境的规范化配置。该方法只能在 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 钩子执行完毕后调用。
+获取规范化后的完整 Rsbuild 配置（包含所有环境），或指定环境的规范化配置。请在配置规范化完成后调用，例如在 `modifyBundlerChain` 或 `onBeforeBuild` 中。此方法在 `setup`、`modifyRsbuildConfig` 和 `modifyEnvironmentConfig` 中尚不可用。
 
 与 [`getRsbuildConfig`](/plugins/dev/core#apigetrsbuildconfig) 相比，该方法返回经过规范化处理、类型更明确的配置。例如，`config.html` 的类型不再包含 `undefined`。
 
