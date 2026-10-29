@@ -199,7 +199,7 @@ export default {
 
 ### Entry mode
 
-When using entry mode, Rsbuild will analyze which `core-js` methods need to be injected according to the browserslist set for the current project and inject them into the entry file of each page. This covers core-js APIs needed by the target browsers, including those used in untranspiled dependencies. It does not cover every browser API (see [Missing polyfills](#missing-polyfills)), and including unused polyfills may increase bundle size.
+When using entry mode, Rsbuild will analyze which `core-js` methods need to be injected according to the browserslist set for the current project and inject them into the entry file of each page. This covers core-js APIs needed by the target browsers, including those used in dependencies that have not been transpiled. It does not cover every browser API (see [Missing polyfills](#missing-polyfills)), and including unused polyfills may increase bundle size.
 
 The config of entry mode is:
 
