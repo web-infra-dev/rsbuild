@@ -1,5 +1,5 @@
 ---
-description: 'Controls how legal comments are handled in the build output.'
+description: 'Controls how legal comments are handled during JavaScript minification.'
 ---
 
 # output.legalComments
@@ -7,11 +7,11 @@ description: 'Controls how legal comments are handled in the build output.'
 - **Type:** `'linked' | 'inline' | 'none'`
 - **Default:** `'linked'`
 
-Controls how legal comments are handled in the build output.
+Controls how legal comments are handled by the built-in JavaScript minifier. This option takes effect when [JavaScript minification](/config/output/minify) is enabled and does not control CSS comments.
 
 ## What are legal comments?
 
-A "legal comment" is any statement-level comment in JS or rule-level comment in CSS that contains @license or @preserve, or that starts with //! or /\*!. These comments are preserved in output files by default since that follows the intent of the original authors of the code.
+Legal comments include JavaScript comments containing `@license` or `@preserve`, or starting with `//!` or `/*!`. By default, Rsbuild extracts these comments into separate license files.
 
 For example, the `LICENSE` comment in React:
 
@@ -47,7 +47,7 @@ export default {
 
 ### `inline`
 
-Preserves all legal comments in their original position. This may increase the size of the output bundles.
+Preserves legal comments in the minified JavaScript. This may increase the size of the output bundles.
 
 ```js title="rsbuild.config.js"
 export default {

@@ -1,5 +1,5 @@
 ---
-description: '配置 legal comments 的处理方式。'
+description: '配置 JavaScript 压缩时 legal comments 的处理方式。'
 ---
 
 # output.legalComments
@@ -7,11 +7,11 @@ description: '配置 legal comments 的处理方式。'
 - **类型：** `'linked' | 'inline' | 'none'`
 - **默认值：** `'linked'`
 
-配置 legal comments 的处理方式。
+配置内置 JavaScript 压缩器处理 legal comments 的方式。此选项在启用 [JavaScript 压缩](/config/output/minify) 时生效，不控制 CSS 注释。
 
 ## 什么是 legal comments？
 
-Legal comments 是 JS 或 CSS 文件中的一些特殊注释，这些注释包含 `@license` 或 `@preserve`，或是以 `//!` 开头。默认情况下，这些注释保留在输出文件中，因为这遵循了代码原作者的意图。
+Legal comments 包括包含 `@license` 或 `@preserve`，或以 `//!`、`/*!` 开头的 JavaScript 注释。默认情况下，Rsbuild 会将这些注释提取到单独的许可证文件中。
 
 例如 React 的 `LICENSE` 注释：
 
@@ -47,7 +47,7 @@ export default {
 
 ### `inline`
 
-保留所有 legal comments 在代码的原始位置。这可能会导致输出文件的体积变大。
+在压缩后的 JavaScript 中保留 legal comments。这可能会导致输出文件的体积变大。
 
 ```js title="rsbuild.config.js"
 export default {

@@ -1,5 +1,5 @@
 ---
-description: 'Whether to remove console.[methodName] in production build.'
+description: 'Whether to remove console calls during JavaScript minification.'
 ---
 
 # performance.removeConsole
@@ -7,7 +7,9 @@ description: 'Whether to remove console.[methodName] in production build.'
 - **Type:** `boolean | ConsoleType[]`
 - **Default:** `false`
 
-Whether to remove `console.[methodName]` in production build.
+Whether to remove `console.[methodName]` calls during JavaScript minification. This requires [JavaScript minification](/config/output/minify) to be enabled.
+
+Side effects in the arguments are preserved. For example, removing `console.log(doWork())` still evaluates `doWork()`.
 
 ## Remove all
 
