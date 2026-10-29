@@ -33,6 +33,11 @@ const EXTERNAL_BLOG_PAGES: Record<string, BlogListItem[]> = {
           name: 'Jiahan Chen',
           avatar: 'https://github.com/chenjiahan.png',
         },
+        {
+          name: 'Zhixin Jin',
+          avatar: 'https://github.com/intellild.png',
+          github: 'https://github.com/intellild',
+        },
       ],
     },
     {
@@ -60,6 +65,11 @@ const EXTERNAL_BLOG_PAGES: Record<string, BlogListItem[]> = {
         {
           name: 'Jiahan Chen',
           avatar: 'https://github.com/chenjiahan.png',
+        },
+        {
+          name: 'Zhixin Jin',
+          avatar: 'https://github.com/intellild.png',
+          github: 'https://github.com/intellild',
         },
       ],
     },
