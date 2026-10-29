@@ -49,6 +49,7 @@ export default defineConfig({
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('hello'),
@@ -102,7 +103,9 @@ npm add postcss-flexbugs-fixes -D
 
 ```js
 module.exports = {
-  'postcss-flexbugs-fixes': {},
+  plugins: {
+    'postcss-flexbugs-fixes': {},
+  },
 };
 ```
 

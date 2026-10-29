@@ -112,12 +112,12 @@ pluginBabel({
 - after:
 
 ```ts
-pluginBabel([
+pluginBabel({
   babelLoaderOptions: {
     plugins: [],
     presets: [],
-  }
-]);
+  },
+});
 ```
 
 This change allows us to add more options for `pluginBabel`, such as `include` and `exclude`.
