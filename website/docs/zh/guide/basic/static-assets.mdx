@@ -32,9 +32,9 @@ SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能�
 
 ```tsx
 // 引用 static 目录下的 logo.png 图片
-import logo from './static/logo.png';
+import logo from './static/logo.png?url';
 
-console.log(logo); // "/static/logo.[hash].png"
+console.log(logo); // "/static/image/logo.[hash].png"
 
 export default () => <img src={logo} />;
 ```
@@ -42,9 +42,9 @@ export default () => <img src={logo} />;
 也可以使用[路径别名](/guide/advanced/alias)来引用：
 
 ```tsx
-import logo from '@/static/logo.png';
+import logo from '@/static/logo.png?url';
 
-console.log(logo); // "/static/logo.[hash].png"
+console.log(logo); // "/static/image/logo.[hash].png"
 
 export default () => <img src={logo} />;
 ```
@@ -54,9 +54,9 @@ export default () => <img src={logo} />;
 Rsbuild 支持使用 JavaScript 原生的 [URL](https://developer.mozilla.org/docs/Web/API/URL) 和 [import.meta.url](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import.meta) 相配合，来引用静态资源。
 
 ```tsx
-const logo = new URL('./static/logo.png', import.meta.url).href;
+const logo = new URL('./static/logo.png?url', import.meta.url).href;
 
-console.log(logo); // "/static/logo.[hash].png"
+console.log(logo); // "https://example.com/static/image/logo.[hash].png"
 
 export default () => <img src={logo} />;
 ```
@@ -67,7 +67,7 @@ export default () => <img src={logo} />;
 // foo.ts 文件将保持原始内容被输出到产物目录下
 const fooTs = new URL('./foo.ts', import.meta.url).href;
 
-console.log(fooTs); // "/static/foo.[hash].ts"
+console.log(fooTs); // 输出的原始文件的绝对 URL
 ```
 
 同理，当使用 `new URL()` 引用 `.css` 或 `.scss` 文件时，它们将被视为 URL assets，不会经过 Rsbuild 内置的 CSS loaders 处理。
@@ -76,7 +76,7 @@ console.log(fooTs); // "/static/foo.[hash].ts"
 // foo.css 文件将保持原始内容被输出到产物目录下
 const fooCss = new URL('./foo.css', import.meta.url).href;
 
-console.log(fooCss); // "/static/foo.[hash].css"
+console.log(fooCss); // 输出的原始文件的绝对 URL
 ```
 
 ## 在 CSS 文件中引用
@@ -129,14 +129,14 @@ export default {
 
 引用静态资源的结果取决于文件体积：
 
-- 当文件体积小于 4KiB 时，会自动被转换为 base64 字符串并内联到代码中。
+- 当文件体积不超过 4KiB 时，会自动被转换为 base64 字符串并内联到代码中。
 - 当文件体积大于 4KiB 时，会返回一个 URL，同时文件会被输出到构建产物目录下。
 
 ```js
 import largeImage from './static/largeImage.png';
 import smallImage from './static/smallImage.png';
 
-console.log(largeImage); // "/static/largeImage.[hash].png"
+console.log(largeImage); // "/static/image/largeImage.[hash].png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
@@ -145,7 +145,7 @@ console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```js
 import image from './static/image.png?url';
 
-console.log(image); // "/static/image.[hash].png"
+console.log(image); // "/static/image/image.[hash].png"
 ```
 
 添加 `?inline` query 参数，可以强制将资源内联到代码中，无论文件体积如何：
@@ -231,7 +231,7 @@ console.log(rawSvg); // 输出 SVG 文件的原始内容
 
 ## 构建产物
 
-当静态资源被引用后，会自动被输出到构建产物的目录下，你可以：
+以独立文件形式引用的静态资源会被输出到构建产物目录；内联资源和作为字符串导入的资源不会输出独立文件。你可以：
 
 - 通过 [output.filename](/config/output/filename) 来修改产物的文件名。
 - 通过 [output.distPath](/config/output/dist-path) 来修改产物的输出路径。
@@ -243,7 +243,7 @@ console.log(rawSvg); // 输出 SVG 文件的原始内容
 引用静态资源后返回的 URL 中会自动包含路径前缀：
 
 - 在开发模式下，通过 [dev.assetPrefix](/config/dev/asset-prefix) 设置路径前缀。
-- 在生产模式下，通过 [output.assetPrefix](/config/output/asset-prefix) 设置路径前缀。
+- 在 production 和 none 模式下，通过 [output.assetPrefix](/config/output/asset-prefix) 设置路径前缀。
 - 当 `dev.assetPrefix` 或 `output.assetPrefix` 未配置时，将自动使用 [server.base](/config/server/base) 的值作为默认前缀。
 
 比如将 `output.assetPrefix` 设置为 `https://example.com`：
@@ -257,9 +257,9 @@ export default {
 ```
 
 ```js
-import logo from './static/logo.png';
+import logo from './static/logo.png?url';
 
-console.log(logo); // "https://example.com/static/logo.[hash].png"
+console.log(logo); // "https://example.com/static/image/logo.[hash].png"
 ```
 
 ## public 目录 \{#public-folder}
@@ -446,5 +446,5 @@ export default {
 | ---- | ---------------------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------- |
 | PNG  | 无损压缩，不会丢失图片细节，不失真，支持半透明                   | 不适合色表复杂的图片                   | 适合颜色数量少，边界层次分明的图片，适合用在 logo、icon、透明图等场景        |
 | JPG  | 颜色丰富                                                         | 有损压缩，会导致图片失真，不支持透明度 | 适合颜色数量多，颜色带有渐变、过度复杂的图片，适合用在人像照片、风景图等场景 |
-| WebP | 同时支持有损压缩与无损压缩，支持透明度，体积比 PNG 和 JPG 小很多 | iOS 兼容性不好                         | 几乎任何场景的像素图片，支持 WebP 的宿主环境，都应该首选 WebP 图片格式       |
+| WebP | 同时支持有损压缩与无损压缩，支持透明度，体积比 PNG 和 JPG 小很多 | 旧浏览器可能需要备用格式               | 几乎任何场景的像素图片，支持 WebP 的宿主环境，都应该首选 WebP 图片格式       |
 | SVG  | 无损格式，不失真,支持透明度                                      | 不适合复杂图形                         | 适合矢量图,适合用于 icon                                                     |

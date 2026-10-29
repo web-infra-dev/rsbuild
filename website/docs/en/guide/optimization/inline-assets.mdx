@@ -8,11 +8,11 @@ Inlining static assets refers to embedding the content of a static asset directl
 
 However, inlining static assets has some disadvantages, such as increasing the size of a single file, which may lead to slower loading. Decide whether to inline assets based on your specific situation.
 
-Rsbuild automatically inlines static assets smaller than 4KiB. Sometimes you may need to manually control whether assets are inlined. This document explains how to precisely control the inlining behavior of static assets.
+Rsbuild automatically inlines static assets at most 4KiB. Sometimes you may need to manually control whether assets are inlined. This document explains how to precisely control the inlining behavior of static assets.
 
 ## Automatic inlining
 
-By default, Rsbuild inlines assets when the file size is less than a threshold (default is 4KiB). When inlined, the asset is converted to a Base64 encoded string and no longer requires a separate HTTP request. When the file size is greater than this threshold, it is loaded as a separate file with its own HTTP request.
+By default, Rsbuild inlines assets when the file size is at most a threshold (default is 4KiB). When inlined, the asset is converted to a Base64 encoded string and no longer requires a separate HTTP request. When the file size is greater than this threshold, it is loaded as a separate file with its own HTTP request.
 
 ```js
 import smallImage from './static/smallImage.png';

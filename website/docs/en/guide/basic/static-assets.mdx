@@ -32,9 +32,9 @@ In JavaScript files, import static assets using relative paths:
 
 ```tsx
 // Import the logo.png image in the static directory
-import logo from './static/logo.png';
+import logo from './static/logo.png?url';
 
-console.log(logo); // "/static/logo.[hash].png"
+console.log(logo); // "/static/image/logo.[hash].png"
 
 export default () => <img src={logo} />;
 ```
@@ -42,9 +42,9 @@ export default () => <img src={logo} />;
 Importing with [alias](/guide/advanced/alias) is also supported:
 
 ```tsx
-import logo from '@/static/logo.png';
+import logo from '@/static/logo.png?url';
 
-console.log(logo); // "/static/logo.[hash].png"
+console.log(logo); // "/static/image/logo.[hash].png"
 
 export default () => <img src={logo} />;
 ```
@@ -54,9 +54,9 @@ export default () => <img src={logo} />;
 Rsbuild supports using JavaScript's native [URL](https://developer.mozilla.org/docs/Web/API/URL) and [import.meta.url](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import.meta) to import static assets.
 
 ```tsx
-const logo = new URL('./static/logo.png', import.meta.url).href;
+const logo = new URL('./static/logo.png?url', import.meta.url).href;
 
-console.log(logo); // "/static/logo.[hash].png"
+console.log(logo); // "https://example.com/static/image/logo.[hash].png"
 
 export default () => <img src={logo} />;
 ```
@@ -67,7 +67,7 @@ When using `new URL()` to reference `.js` or `.ts` files, they're treated as URL
 // foo.ts will remain the original content and be output to the dist directory
 const fooTs = new URL('./foo.ts', import.meta.url).href;
 
-console.log(fooTs); // "/static/foo.[hash].ts"
+console.log(fooTs); // Absolute URL of the emitted original file
 ```
 
 Similarly, when using `new URL()` to reference `.css` or `.scss` files, they're treated as URL assets and aren't processed by Rsbuild's built-in CSS loaders.
@@ -76,7 +76,7 @@ Similarly, when using `new URL()` to reference `.css` or `.scss` files, they're 
 // foo.css will remain the original content and be output to the dist directory
 const fooCss = new URL('./foo.css', import.meta.url).href;
 
-console.log(fooCss); // "/static/foo.[hash].css"
+console.log(fooCss); // Absolute URL of the emitted original file
 ```
 
 ## Importing assets in CSS files
@@ -129,14 +129,14 @@ export default {
 
 The result of importing static assets depends on the file size:
 
-- If the file size is less than 4KiB, it will be converted to a base64 string and inlined in the code.
+- If the file size is at most 4KiB, it will be converted to a base64 string and inlined in the code.
 - If the file size is larger than 4KiB, a URL will be returned and the file will be emitted to the output directory.
 
 ```js
 import largeImage from './static/largeImage.png';
 import smallImage from './static/smallImage.png';
 
-console.log(largeImage); // "/static/largeImage.[hash].png"
+console.log(largeImage); // "/static/image/largeImage.[hash].png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
@@ -145,7 +145,7 @@ Adding the `?url` query parameter ensures the asset is always loaded as a separa
 ```js
 import image from './static/image.png?url';
 
-console.log(image); // "/static/image.[hash].png"
+console.log(image); // "/static/image/image.[hash].png"
 ```
 
 Adding the `?inline` query parameter ensures the asset is always inlined in the code, regardless of file size:
@@ -231,7 +231,7 @@ console.log(rawSvg); // The original content of the SVG file
 
 ## Output files
 
-When static assets are imported, they will be output to the dist directory. You can:
+Assets imported as separate files are emitted to the dist directory. Inlined assets and imports as strings do not emit separate files. You can:
 
 - Use [output.filename](/config/output/filename) to modify the output filename.
 - Use [output.distPath](/config/output/dist-path) to modify the output path.
@@ -243,7 +243,7 @@ Read [Output files](/guide/basic/output-files) for details.
 The URL returned after importing an asset will automatically include the path prefix:
 
 - In development, use [dev.assetPrefix](/config/dev/asset-prefix) to set the path prefix.
-- In production, use [output.assetPrefix](/config/output/asset-prefix) to set the path prefix.
+- In production and none modes, use [output.assetPrefix](/config/output/asset-prefix) to set the path prefix.
 - When either `dev.assetPrefix` or `output.assetPrefix` is not configured, the value of [server.base](/config/server/base) will be automatically used as the default prefix.
 
 For example, you can set `output.assetPrefix` to `https://example.com`:
@@ -257,9 +257,9 @@ export default {
 ```
 
 ```js
-import logo from './static/logo.png';
+import logo from './static/logo.png?url';
 
-console.log(logo); // "https://example.com/static/logo.[hash].png"
+console.log(logo); // "https://example.com/static/image/logo.[hash].png"
 ```
 
 ## Public folder
@@ -446,5 +446,5 @@ When using image assets, you can choose an appropriate image format according to
 | ------ | --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | PNG    | Lossless compression, no loss of picture details, no distortion, support for translucency                 | Not suitable for pictures with complex color tables                                 | Suitable for pictures with few colors and well-defined borders, suitable for logos, icons, transparent images and other scenes                         |
 | JPG    | Rich colors                                                                                               | Lossy compression, which will cause image distortion, does not support transparency | Suitable for pictures with a large number of colors, gradients, and overly complex pictures, suitable for portrait photos, landscapes and other scenes |
-| WebP   | Supports both lossy and lossless compression, supports transparency, and is much smaller than PNG and JPG | iOS compatibility is not good                                                       | Pixel images of almost any scene, and the hosting environment that supports WebP, should prefer WebP image format                                      |
+| WebP   | Supports both lossy and lossless compression, supports transparency, and is much smaller than PNG and JPG | Older browsers may require a fallback                                               | Pixel images of almost any scene, and the hosting environment that supports WebP, should prefer WebP image format                                      |
 | SVG    | Lossless format, no distortion, supports transparency                                                     | Not suitable for complex graphics                                                   | Suitable for vector graphics, suitable for icons                                                                                                       |
