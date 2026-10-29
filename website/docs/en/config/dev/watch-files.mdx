@@ -174,6 +174,27 @@ export default {
 };
 ```
 
+## Array configuration
+
+`dev.watchFiles` accepts an array, allowing watchers with different `type` values or different `options` for each directory.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    watchFiles: [
+      {
+        type: 'reload-page',
+        paths: 'public',
+      },
+      {
+        type: 'restart',
+        paths: ['./config/*.ts'],
+      },
+    ],
+  },
+};
+```
+
 ## Notes
 
 `watchFiles` is not applicable for watching build dependency files. When an Rsbuild build starts, the underlying Rspack automatically watches all build dependencies. Any changes to these files will trigger a new build.
