@@ -13,7 +13,7 @@ description: '通过 html.favicon 使用本地文件、URL 或按入口执行的
 - 文件的绝对路径。
 - 相对于项目 [root](/config/root) 的相对路径。
 
-配置该选项后，在编译过程中会自动将图标拷贝至 dist 目录下，并在 HTML 中添加相应的 `link` 标签。
+编译时，本地图标文件会被拷贝至输出目录；URL 地址会被直接引用，不会下载图标。两种情况下，Rsbuild 都会在 HTML 中添加相应的 `link` 标签。
 
 :::tip
 Rsbuild 还提供了 [html.appIcon](/config/html/app-icon) 来设置 Web 应用的图标。
@@ -56,8 +56,6 @@ export default {
 设置为 URL：
 
 ```js
-import path from 'node:path';
-
 export default {
   html: {
     favicon: 'https://foo.com/favicon.ico',
@@ -68,7 +66,7 @@ export default {
 重新编译后，HTML 中自动生成了以下标签：
 
 ```html
-<link rel="icon" href="/favicon.ico" />
+<link rel="icon" href="https://foo.com/favicon.ico" />
 ```
 
 ## 输出路径

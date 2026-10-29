@@ -1,5 +1,5 @@
 ---
-description: 'Set the crossorigin attribute of the script and style tags.'
+description: 'Set the crossorigin attribute of the script and stylesheet link tags.'
 ---
 
 # html.crossorigin
@@ -7,7 +7,7 @@ description: 'Set the crossorigin attribute of the script and style tags.'
 - **Type:** `boolean | 'anonymous' | 'use-credentials'`
 - **Default:** `false`
 
-Set the [crossorigin](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) attribute of the `<script>` and `<style>` tags.
+Set the [crossorigin](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) attribute of the `<script>` and `<link rel="stylesheet">` tags.
 
 - If `true` is passed, it will automatically be set to `crossorigin="anonymous"`.
 - If `false` is passed, it will not set the `crossorigin` attr.
@@ -35,7 +35,7 @@ After compilation, the `<script>` tag in HTML becomes:
 ></script>
 ```
 
-The `<style>` tag becomes:
+The `<link rel="stylesheet">` tag becomes:
 
 ```html
 <link
@@ -46,12 +46,12 @@ The `<style>` tag becomes:
 ```
 
 :::tip
-If the domain of static assets is the same as the current page, Rsbuild will not add the crossorigin="anonymous" attribute, as this attribute is not required for non-cross-domain scenario.
+Rsbuild adds this attribute to external script and stylesheet tags, including same-origin assets. Existing `crossorigin` attributes on individual tags are preserved.
 :::
 
 ## Optional values
 
-`crossorigin` can the set to the following values:
+`crossorigin` can be set to the following values:
 
 - `anonymous`: Request uses CORS headers and credentials flag is set to 'same-origin'. There is no exchange of user credentials via cookies, client-side SSL certificates or HTTP authentication, unless destination is the same origin.
 - `use-credentials`: Request uses CORS headers, credentials flag is set to 'include' and user credentials are always included.
