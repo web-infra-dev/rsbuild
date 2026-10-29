@@ -25,7 +25,7 @@ const EXTERNAL_BLOG_PAGES: Record<string, BlogListItem[]> = {
     {
       title: 'Announcing Rsbuild 2.3',
       description:
-        'Rsbuild 2.3 improves TanStack Start and Lynx integration, adds Brotli file size reporting, reduces production bundle size, and speeds up frontend updates in full-stack apps.',
+        'Rsbuild 2.3 improves TanStack Start and Lynx integration, adds Brotli file size reporting, and reduces production bundle size.',
       date: '2026-10-28',
       href: 'https://rspack.rs/blog/announcing-2-3#rsbuild',
       authors: [
@@ -53,7 +53,7 @@ const EXTERNAL_BLOG_PAGES: Record<string, BlogListItem[]> = {
     {
       title: 'Rsbuild 2.3 发布',
       description:
-        'Rsbuild 2.3 改进了 TanStack Start 和 Lynx 集成，新增 Brotli 文件体积统计，减小生产构建产物体积，并加快全栈应用的前端更新。',
+        'Rsbuild 2.3 改进了 TanStack Start 和 Lynx 集成，新增 Brotli 文件体积统计，减小生产构建产物体积。',
       date: '2026-10-28',
       href: 'https://rspack.rs/zh/blog/announcing-2-3#rsbuild',
       authors: [
