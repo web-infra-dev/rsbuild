@@ -29,7 +29,7 @@ A typical SSR application will have the following files:
 
 ```
 - index.html
-- server.js          # main application server
+- server.mjs         # main application server
 - src/
   - App.js           # exports app code
   - index.client.js  # client entry, mounts the app to a DOM element
@@ -120,15 +120,21 @@ Here is a basic example:
 
 ```ts title="server.mjs"
 import express from 'express';
-import { createRsbuild } from '@rsbuild/core';
+import {
+  createRsbuild,
+  loadConfig,
+  logger,
+  mergeRsbuildConfig,
+} from '@rsbuild/core';
 
 async function initRsbuild() {
+  const { content } = await loadConfig();
   const rsbuild = await createRsbuild({
-    config: {
+    config: mergeRsbuildConfig(content, {
       server: {
         middlewareMode: true,
       },
-    },
+    }),
   });
   return rsbuild.createDevServer();
 }

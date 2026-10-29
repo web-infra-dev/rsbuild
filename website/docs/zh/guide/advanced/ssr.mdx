@@ -29,7 +29,7 @@ SSR 是 "Server-side rendering"（服务端渲染）的缩写。它表示由服�
 
 ```
 - index.html
-- server.js          # 自定义服务器脚本
+- server.mjs         # 自定义服务器脚本
 - src/
   - App.js           # 导出 App 代码
   - index.client.js  # 客户端入口，挂载 App 组件到 Dom 元素
@@ -120,15 +120,21 @@ Rsbuild 提供了 [Server API](/api/javascript-api/server-api) 和 [Environment 
 
 ```ts title="server.mjs"
 import express from 'express';
-import { createRsbuild } from '@rsbuild/core';
+import {
+  createRsbuild,
+  loadConfig,
+  logger,
+  mergeRsbuildConfig,
+} from '@rsbuild/core';
 
 async function initRsbuild() {
+  const { content } = await loadConfig();
   const rsbuild = await createRsbuild({
-    config: {
+    config: mergeRsbuildConfig(content, {
       server: {
         middlewareMode: true,
       },
-    },
+    }),
   });
   return rsbuild.createDevServer();
 }
