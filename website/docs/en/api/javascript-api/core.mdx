@@ -55,6 +55,8 @@ type CreateRsbuildOptions = {
 - `config`: Rsbuild configuration object or the result returned by [`loadConfig`](#loadconfig). Refer to [Config overview](/config/) for all available configuration options.
 - `restart`: A function that handles restart requests for the current dev server or watch build. See [restart](#restart-handling).
 
+`createRsbuild()` does not load `rsbuild.config.*` or `.env` files by default. Pass the result of `loadConfig()` through `config`, and enable `loadEnv` when environment-file loading is needed.
+
 ### Pass configuration
 
 You can pass an Rsbuild configuration object to the `config` option:
@@ -116,7 +118,7 @@ Setting `loadEnv: true` automatically completes these steps:
 
 1. Call the `loadEnv` method to load environment variables.
 2. Add [source.define](/config/source/define) configuration, defining the `publicVars` returned by `loadEnv` as global variables.
-3. Watch the `.env` file for changes, restart the dev server when the file changes, and invalidate the build cache.
+3. Register the loaded `.env` files for restart requests and add them to enabled persistent-cache dependencies. To actually restart a dev server or watch build, provide a [restart handler](#restart-handling).
 4. Automatically call the `cleanup` method returned by `loadEnv` when closing the build or dev server.
 
 You can also pass in the options of the [loadEnv](/api/javascript-api/core#loadenv) method, for example:
@@ -228,7 +230,7 @@ function loadConfig<Config = RsbuildConfig>(params?: {
    * - 'auto': Use native Node.js loader first, fallback to jiti if failed
    * - 'jiti': Use jiti as loader, which supports TypeScript and ESM out of the box
    * - 'native': Use native Node.js loader. TypeScript config files require
-   *   native TypeScript support, such as Node.js 22.6+.
+   *   native TypeScript support with type stripping enabled.
    * @default 'auto'
    */
   loader?: 'auto' | 'jiti' | 'native';
@@ -242,7 +244,7 @@ function loadConfig<Config = RsbuildConfig>(params?: {
 - **Example:**
 
 ```ts
-import { loadConfig } from '@rsbuild/core';
+import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 // Load `rsbuild.config.*` from cwd using the default lookup order
 const result = await loadConfig();
@@ -254,7 +256,7 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-If the Rsbuild config file does not exist in the cwd directory, the return value of the loadConfig method is `{ content: {}, filePath: null }`.
+If the Rsbuild config file does not exist in the cwd directory, the return value of the loadConfig method is `{ content: {}, filePath: null, dependencies: [] }`.
 
 When `path` is not specified, `loadConfig` searches for config files in the following order:
 
@@ -288,7 +290,7 @@ import { join } from 'node:path';
 import { loadConfig } from '@rsbuild/core';
 
 const { content } = await loadConfig({
-  path: join(__dirname, 'my-config.ts'),
+  path: join(import.meta.dirname, 'my-config.ts'),
 });
 ```
 
@@ -325,7 +327,6 @@ const { content } = await loadConfig({
 Load the configuration file and pass in a custom meta object:
 
 ```ts
-import { join } from 'node:path';
 import { loadConfig } from '@rsbuild/core';
 
 const { content } = await loadConfig({
@@ -338,9 +339,11 @@ const { content } = await loadConfig({
 In the `defineConfig` configuration function, you can access the `foo` variable through the `meta` object:
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
 export default defineConfig(({ meta }) => {
-  console.log(meta.foo); // bar
-  return config;
+  console.log(meta?.foo); // bar
+  return {};
 });
 ```
 
@@ -564,7 +567,7 @@ const mergedConfig = {
 
 By this way, we can ensure that when merging multiple configuration objects, the same multiple `tools.rspack` fields can all be effective.
 
-In Rsbuild, most options that support function values use this rule, such as `tools.postcss`, `tools.less`, `tools.bundlerChain`, etc.
+In Rsbuild, most options that support function values use this rule, such as `tools.postcss`, `tools.cssLoader`, `tools.bundlerChain`, etc.
 
 ## createLogger
 
@@ -648,7 +651,7 @@ function ensureAssetPrefix(
   url: string,
   // URL prefix to be appended
   assetPrefix?: Rspack.PublicPath,
-) => string;
+): string;
 ```
 
 If `assetPrefix` is not passed, Rsbuild uses the default asset prefix `/`. If `assetPrefix` is `'auto'` or a function, this helper returns the input URL unchanged.

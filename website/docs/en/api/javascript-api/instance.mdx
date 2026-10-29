@@ -45,7 +45,7 @@ type Version = string;
 
 ### context.rootPath
 
-The root path of the current build, corresponding to the `cwd` option of the [createRsbuild](/api/javascript-api/core#creatersbuild) method.
+The absolute root path of the current build. It uses the [root](/config/root) configuration when set, resolving relative paths against the `cwd` option of [createRsbuild](/api/javascript-api/core#creatersbuild). Otherwise, it uses `cwd`.
 
 - **Type:**
 

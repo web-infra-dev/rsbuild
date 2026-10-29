@@ -242,7 +242,7 @@ export default {
 
 ## `.env` 文件 \{#env-file}
 
-当项目根目录存在 `.env` 文件时，Rsbuild CLI 会自动使用 [dotenv](https://npmjs.com/package/dotenv) 来加载这些环境变量，并添加到当前 Node.js 进程中，其中的 [public 变量](#public-variables) 会被暴露在 `client` 代码中。
+当项目根目录存在 `.env` 文件时，Rsbuild CLI 会自动调用 [loadEnv](/api/javascript-api/core#loadenv) 来加载这些环境变量，并添加到当前 Node.js 进程中，其中的 [public 变量](#public-variables) 会被暴露在 `client` 代码中。
 
 你可以通过 `import.meta.env.[name]` 或 `process.env.[name]` 来访问这些环境变量。
 
@@ -259,7 +259,7 @@ Rsbuild 支持读取以下 env 文件：
 | `.env.development.local` | `.env.development` 文件的本地用法，需要添加到 .gitignore 中。 |
 | `.env.production.local`  | `.env.production` 文件的本地用法，需要添加到 .gitignore 中。  |
 
-如果同时存在上述的多个文件，那么多个文件都会被读取，并且表格下方的文件具有更高的优先级。
+Rsbuild 依次加载 `.env`、`.env.local`、`.env.[mode]` 和 `.env.[mode].local`，仅加载与当前 env 模式匹配的文件。后加载文件中的值覆盖先加载的值。已有的进程环境变量优先，但 `NODE_ENV` 可以被 env 文件覆盖。
 
 ### Env 模式 \{#env-mode}
 
@@ -353,7 +353,7 @@ console.log(process.env.BAR); // '2'
 
 ### 手动加载
 
-如果你没有使用 Rsbuild 的 CLI，而是使用了 Rsbuild 的 [JavaScript API](/api/start/index)，那么你需要手动调用 Rsbuild 提供的 [loadEnv](/api/javascript-api/core#loadenv) 方法来读取环境变量，并通过 [source.define](/config/source/define) 配置项注入到代码中。
+使用 [JavaScript API](/api/start/index) 时，可以启用 [`createRsbuild({ loadEnv: true })`](/api/javascript-api/core#load-environment-variables) 来自动加载环境变量文件并定义 public 变量。也可以手动调用 [loadEnv](/api/javascript-api/core#loadenv)，将返回的 public 变量合并到 [source.define](/config/source/define)：
 
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';

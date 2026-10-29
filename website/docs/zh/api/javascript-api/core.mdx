@@ -55,6 +55,8 @@ type CreateRsbuildOptions = {
 - `config`：Rsbuild 配置对象或 [`loadConfig`](#loadconfig) 返回的结果。参考 [配置总览](/config/) 查看所有可用的配置项。
 - `restart`：处理当前 dev server 或监听构建重启请求的函数，详见 [restart](#restart-handling)。
 
+`createRsbuild()` 默认不会加载 `rsbuild.config.*` 或 `.env` 文件。请通过 `config` 传入 `loadConfig()` 的结果，并在需要加载环境变量文件时启用 `loadEnv`。
+
 ### 传入配置
 
 你可以将 Rsbuild 配置对象传入 `config` 选项：
@@ -102,7 +104,7 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-### 加载环境变量
+### 加载环境变量 \{#load-environment-variables}
 
 `createRsbuild` 的 `loadEnv` 选项可以帮助你调用 [loadEnv](/api/javascript-api/core#loadenv) 方法来加载环境变量：
 
@@ -116,7 +118,7 @@ const rsbuild = await createRsbuild({
 
 1. 调用 `loadEnv` 方法来加载环境变量。
 2. 添加 [source.define](/config/source/define) 配置，将 `loadEnv` 返回的 `publicVars` 定义为全局变量。
-3. 监听 `.env` 文件的变化，在文件变化时重新启动开发服务器，并使构建缓存失效。
+3. 将已加载的 `.env` 文件注册为重启请求的监听目标，并加入已启用的持久化缓存依赖。要实际重启开发服务器或 watch 构建，需要提供[重启处理函数](#restart-handling)。
 4. 在关闭构建或开发服务器时，自动调用 `loadEnv` 返回的 `cleanup` 方法来清除环境变量。
 
 你也可以传入 [loadEnv](/api/javascript-api/core#loadenv) 方法的选项，比如：
@@ -228,7 +230,7 @@ function loadConfig<Config = RsbuildConfig>(params?: {
    * - `auto`：优先使用 Node.js 原生加载器，若加载失败则回退到 jiti
    * - `jiti`：使用 jiti 作为加载器，开箱即用地支持 TypeScript 和 ESM
    * - `native`：使用 Node.js 原生加载器。TypeScript 配置文件要求运行时原生支持
-   *   TypeScript，例如 Node.js 22.6+
+   *   TypeScript，并启用类型剥离
    * @default 'auto'
    */
   loader?: 'auto' | 'jiti' | 'native';
@@ -242,7 +244,7 @@ function loadConfig<Config = RsbuildConfig>(params?: {
 - **示例：**
 
 ```ts
-import { loadConfig } from '@rsbuild/core';
+import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 // 按默认查找顺序从 cwd 加载 `rsbuild.config.*` 配置文件
 const result = await loadConfig();
@@ -254,7 +256,7 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-如果 cwd 目录下不存在 Rsbuild 配置文件，loadConfig 方法的返回值为 `{ content: {}, filePath: null }`。
+如果 cwd 目录下不存在 Rsbuild 配置文件，loadConfig 方法的返回值为 `{ content: {}, filePath: null, dependencies: [] }`。
 
 当未指定 `path` 时，`loadConfig` 会按以下顺序查找配置文件：
 
@@ -288,7 +290,7 @@ import { join } from 'node:path';
 import { loadConfig } from '@rsbuild/core';
 
 const { content } = await loadConfig({
-  path: join(__dirname, 'my-config.ts'),
+  path: join(import.meta.dirname, 'my-config.ts'),
 });
 ```
 
@@ -325,7 +327,6 @@ const { content } = await loadConfig({
 加载配置文件，并传入自定义的 meta 对象：
 
 ```ts
-import { join } from 'node:path';
 import { loadConfig } from '@rsbuild/core';
 
 const { content } = await loadConfig({
@@ -338,9 +339,11 @@ const { content } = await loadConfig({
 在 `defineConfig` 定义的配置函数中，你可以通过 `meta` 对象访问到 `foo` 变量：
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
 export default defineConfig(({ meta }) => {
-  console.log(meta.foo); // bar
-  return config;
+  console.log(meta?.foo); // bar
+  return {};
 });
 ```
 
@@ -564,7 +567,7 @@ const mergedConfig = {
 
 通过这种方法，我们可以确保合并多份配置对象时，相同的多个 `tools.rspack` 字段均能够生效。
 
-在 Rsbuild 中，大部分支持函数值的选项都使用上述规则，比如 `tools.postcss`、`tools.less`、`tools.bundlerChain` 等。
+在 Rsbuild 中，大部分支持函数值的选项都使用上述规则，比如 `tools.postcss`、`tools.cssLoader`、`tools.bundlerChain` 等。
 
 ## createLogger
 
@@ -649,7 +652,7 @@ function ensureAssetPrefix(
   url: string,
   // 需要拼接的 URL 前缀
   assetPrefix?: Rspack.PublicPath,
-) => string;
+): string;
 ```
 
 如果未传入 `assetPrefix`，Rsbuild 会使用默认的资源前缀 `/`。如果 `assetPrefix` 为 `'auto'` 或函数，该函数会直接返回传入的 URL。

@@ -240,7 +240,7 @@ export default {
 
 ## `.env` file
 
-When a `.env` file exists in the project root directory, Rsbuild CLI automatically uses [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process. [Public variables](#public-variables) are then exposed in client code.
+When a `.env` file exists in the project root directory, Rsbuild CLI automatically calls [loadEnv](/api/javascript-api/core#loadenv) to load these environment variables and add them to the current Node.js process. [Public variables](#public-variables) are then exposed in client code.
 
 You can access these environment variables through `import.meta.env.[name]` or `process.env.[name]`.
 
@@ -257,7 +257,7 @@ Rsbuild supports reading the following types of env files:
 | `.env.development.local` | Local overrides for `.env.development`, should be added to `.gitignore`. |
 | `.env.production.local`  | Local overrides for `.env.production`, should be added to `.gitignore`.  |
 
-If multiple of the above files exist, they will all be loaded. Files listed lower in the table have higher priority.
+Rsbuild loads `.env`, `.env.local`, `.env.[mode]`, and `.env.[mode].local`, in that order. Only files matching the current env mode are loaded. Values from later files override earlier ones. Existing process environment variables take precedence, except `NODE_ENV`, which can be overridden by an env file.
 
 ### Env mode
 
@@ -351,7 +351,7 @@ console.log(process.env.BAR); // '2'
 
 ### Manually load env
 
-If you are not using the Rsbuild CLI and instead use the [JavaScript API](/api/start/index), you need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them via the [source.define](/config/source/define) config.
+When using the [JavaScript API](/api/start/index), enable [`createRsbuild({ loadEnv: true })`](/api/javascript-api/core#load-environment-variables) to load environment files and define public variables automatically. Alternatively, call [loadEnv](/api/javascript-api/core#loadenv) and merge its public variables into [source.define](/config/source/define):
 
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
