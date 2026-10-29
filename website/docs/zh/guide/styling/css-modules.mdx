@@ -81,7 +81,7 @@ export default () => {
 
 ## CSS Modules 识别规则
 
-在默认情况下，只有 `*.module.css` 结尾的文件才被视为 CSS Modules 模块。
+默认情况下，文件名包含 `.module.` 或 `.modules.` 时会启用 CSS Modules，也支持上面列出的预处理器扩展名，匹配不区分大小写。包含 `.icss.` 的文件使用 ICSS 模式，只处理导入和导出，不会将选择器转换为局部作用域。
 
 如果你想将其他 CSS 文件也当做 CSS Modules 模块进行处理，可以通过配置 [output.cssModules.auto](/config/output/css-modules#cssmodulesauto) 来实现。
 

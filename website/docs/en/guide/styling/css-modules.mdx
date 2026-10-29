@@ -81,7 +81,7 @@ export default () => {
 
 ## CSS Modules recognition rules
 
-By default, only files ending with `*.module.css` are recognized as CSS Modules.
+By default, filenames containing `.module.` or `.modules.` enable CSS Modules, including the preprocessor extensions listed above. Matching is case-insensitive. Files containing `.icss.` use ICSS mode, which processes imports and exports without making selectors local.
 
 If you want to treat other CSS files as CSS Modules, you can configure [output.cssModules.auto](/config/output/css-modules#cssmodulesauto).
 
