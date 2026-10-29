@@ -115,40 +115,30 @@ pluginSvelte({
 
 Currently, `svelte-loader` does not support HMR for Svelte v5, see [svelte-loader - Hot Reload](https://github.com/sveltejs/svelte-loader#hot-reload).
 
-### Alias handling in Less/Sass
+### Import paths in Less/Sass
 
-When using aliases to import Less or Sass files within Svelte components, you need to manually configure the preprocessor to handle alias resolution. Otherwise, you may encounter `"file not found"` errors.
+Install the preprocessors you use (omit either package if it is not needed):
 
-- **Example:**
+<PackageManagerTabs command="add sass less -D" />
+
+Svelte preprocessors do not automatically use Rsbuild's path aliases. To resolve imports such as `@import 'styles/variables.scss'` or `@import 'styles/variables.less'` from `src`, configure the preprocessor's search paths:
 
 ```ts title="rsbuild.config.ts"
+import { fileURLToPath } from 'node:url';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
+
+const srcPath = fileURLToPath(new URL('./src', import.meta.url));
 
 export default {
   plugins: [
     pluginSvelte({
       preprocessOptions: {
-        scss: {
-          importer: [
-            // Handle alias imports for SCSS files
-            (url, prev) => {
-              if (url.startsWith('@/')) {
-                return { file: url.replace('@/', 'src/') };
-              }
-              return null;
-            },
-          ],
-        },
-        less: {
-          // recommend simple alias handling for Less files
-          replace: [['@/style', 'style']],
-          // use less plugin to handle alias imports
-          plugins: [],
-        },
+        scss: { includePaths: [srcPath] },
+        less: { paths: [srcPath] },
       },
     }),
   ],
 };
 ```
 
-This ensures that alias imports like `@import '@/styles/variables.scss'` or `@import '@/styles/variables.less'` are properly resolved within Svelte components.
+These options add search directories; they do not define an `@/` alias. For custom aliases, use a Sass importer or a Less plugin.

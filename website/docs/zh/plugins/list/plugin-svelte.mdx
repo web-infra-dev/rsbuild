@@ -115,40 +115,30 @@ pluginSvelte({
 
 目前 `svelte-loader` 暂不支持 Svelte v5 热更新，详见 [svelte-loader - Hot Reload](https://github.com/sveltejs/svelte-loader#hot-reload)。
 
-### Less/Sass 中的别名处理
+### Less/Sass 导入路径 \{#import-paths-in-lesssass}
 
-在 Svelte 组件中使用别名来引入 Less 或 Sass 文件时，需要手动处理别名的路径解析，否则会出现 `"file not found"` 的错误。
+安装需要的预处理器（不需要的包可以省略）：
 
-- **示例：**
+<PackageManagerTabs command="add sass less -D" />
+
+Svelte 预处理器不会自动使用 Rsbuild 的路径别名。要从 `src` 目录解析 `@import 'styles/variables.scss'` 或 `@import 'styles/variables.less'` 等导入，请配置预处理器的搜索路径：
 
 ```ts title="rsbuild.config.ts"
+import { fileURLToPath } from 'node:url';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
+
+const srcPath = fileURLToPath(new URL('./src', import.meta.url));
 
 export default {
   plugins: [
     pluginSvelte({
       preprocessOptions: {
-        scss: {
-          importer: [
-            // 处理 SCSS 文件的别名导入
-            (url, prev) => {
-              if (url.startsWith('@/')) {
-                return { file: url.replace('@/', 'src/') };
-              }
-              return null;
-            },
-          ],
-        },
-        less: {
-          // 推荐使用 replace 来处理别名导入，更简单
-          replace: [['@/style', 'style']],
-          // 使用 less plugin 来处理别名导入
-          plugins: [],
-        },
+        scss: { includePaths: [srcPath] },
+        less: { paths: [srcPath] },
       },
     }),
   ],
 };
 ```
 
-通过配置 `preprocessOptions`，可以保证在 Svelte 组件中引入的 `@import '@/styles/variables.scss` 或者 `@import '@/styles/variables.less'` 能够被正确解析。
+这些选项用于添加搜索目录，不会定义 `@/` 别名。自定义别名需要使用 Sass importer 或 Less 插件。
