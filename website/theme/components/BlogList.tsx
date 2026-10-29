@@ -36,7 +36,6 @@ const EXTERNAL_BLOG_PAGES: Record<string, BlogListItem[]> = {
         {
           name: 'Zhixin Jin',
           avatar: 'https://github.com/intellild.png',
-          github: 'https://github.com/intellild',
         },
       ],
     },
@@ -69,7 +68,6 @@ const EXTERNAL_BLOG_PAGES: Record<string, BlogListItem[]> = {
         {
           name: 'Zhixin Jin',
           avatar: 'https://github.com/intellild.png',
-          github: 'https://github.com/intellild',
         },
       ],
     },
