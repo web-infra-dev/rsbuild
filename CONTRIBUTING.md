@@ -16,17 +16,19 @@ Fork this repository to your own GitHub account and then clone it locally.
 
 ### Install Node.js
 
-Use Node.js LTS or newer. For installation instructions, see [Install Node.js](https://nodejs.org/en/download).
+Use the Node.js version specified in [`.node-version`](./.node-version). For installation instructions, see [Install Node.js](https://nodejs.org/en/download).
 
 ### Install dependencies
 
-Enable [pnpm](https://pnpm.io/) with Corepack and install dependencies:
+Use the pnpm version specified by `packageManager` in [`package.json`](./package.json). Enable [pnpm](https://pnpm.io/) with Corepack and install dependencies:
 
 ```sh
 npm i corepack@latest -g
 corepack enable
 pnpm install
 ```
+
+Keep shared dependency versions in the catalogs in [`pnpm-workspace.yaml`](./pnpm-workspace.yaml).
 
 ---
 
@@ -58,9 +60,13 @@ pnpm run build
 
 ## Testing
 
+Run `pnpm build` once before running unit or end-to-end tests, including focused runs. The tests depend on built workspace packages.
+
 ### Add new tests
 
-Add tests for every bug fix or feature. Unit tests live in `<PACKAGE_DIR>/tests` and use [Rstest](https://rstest.rs/).
+Add focused tests for bug fixes and features. Prefer end-to-end tests for build and dev server behavior, and unit tests for individual functions. Update all affected snapshots when behavior changes.
+
+Unit tests live in `<PACKAGE_DIR>/tests` and use [Rstest](https://rstest.rs/).
 
 ### Run unit tests
 
@@ -145,7 +151,7 @@ feat(core): Add `myOption` config
 
 Repository maintainers can publish a new version of changed packages to npm.
 
-1. Use `release-core` skill to update the version.
+1. Use the `release-core` skill for `@rsbuild/core` and `create-rsbuild`, or `release-plugin-package` for an official plugin, to prepare the version changes and release pull request.
 2. Run the [release action](https://github.com/web-infra-dev/rsbuild/actions/workflows/release.yml) to publish packages to npm.
 3. Merge the release pull request to `main`.
 4. Generate the [release notes](https://github.com/web-infra-dev/rsbuild/releases) via `create-draft-release-notes` skill.
