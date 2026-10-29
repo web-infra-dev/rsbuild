@@ -24,7 +24,7 @@ type InlineChunkConfig =
 
 Whether to inline output style files (.css files) into HTML with `<style>` tags.
 
-When this option is enabled, style files are no longer written to the dist directory and only exist inside the HTML file.
+Only matching stylesheets referenced by the generated HTML are inlined and removed from the output directory. CSS loaded by async chunks remains in separate files.
 
 ## Example
 
