@@ -171,7 +171,7 @@ Rsbuild 的 [plugins](/config/plugins) 配置项支持传入一个嵌套的数�
 ```ts
 import { pluginBar } from 'rsbuild-plugin-bar';
 
-export const pluginFoo = (): RsbuildPlugin => {
+export const pluginFoo = (): RsbuildPlugin[] => {
   const foo = {
     name: 'plugin-foo',
     setup(api) {

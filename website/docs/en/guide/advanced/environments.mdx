@@ -229,6 +229,7 @@ Rsbuild supports modifying or adding environment config through the [modifyRsbui
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       return mergeRsbuildConfig(config, {
@@ -253,6 +254,7 @@ Rsbuild supports modifying the Rsbuild config of a specific environment through 
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyEnvironmentConfig((config, { name }) => {
       if (name !== 'web') {
@@ -272,6 +274,7 @@ For some plugin hooks related to the build environment (such as [modifyRspackCon
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyRspackConfig((rspackConfig, { environment }) => {
       if (environment.name === 'node') {
@@ -286,6 +289,7 @@ For some global plugin hooks (such as [onAfterDevCompile](/plugins/dev/hooks#ona
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterDevCompile(({ environments }) => {
       for (const name in environments) {

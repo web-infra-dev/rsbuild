@@ -28,6 +28,7 @@ Plugin authors can access dev and preview server instances through the [onBefore
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       console.log('the dev server is ', server);

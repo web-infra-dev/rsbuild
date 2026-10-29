@@ -168,18 +168,20 @@ description: '使用 Rsbuild 插件钩子定制配置、编译、HTML 和服务�
 
 ```ts
 const plugin1 = () => ({
+  name: 'plugin1',
   setup(api) {
     api.modifyRsbuildConfig(() => console.log('1'));
   },
 });
 
 const plugin2 = () => ({
+  name: 'plugin2',
   setup(api) {
     api.modifyRsbuildConfig(() => console.log('2'));
   },
 });
 
-rsbuild.addPlugins([plugin1, plugin2]);
+rsbuild.addPlugins([plugin1(), plugin2()]);
 ```
 
 ### order 字段
@@ -197,12 +199,14 @@ type HookDescriptor<T extends (...args: any[]) => any> = {
 
 ```ts
 const plugin1 = () => ({
+  name: 'plugin1',
   setup(api) {
     api.modifyRsbuildConfig(() => console.log('1'));
   },
 });
 
 const plugin2 = () => ({
+  name: 'plugin2',
   setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('2'),
@@ -211,7 +215,7 @@ const plugin2 = () => ({
   },
 });
 
-rsbuild.addPlugins([plugin1, plugin2]);
+rsbuild.addPlugins([plugin1(), plugin2()]);
 ```
 
 ## Common hooks
@@ -243,6 +247,7 @@ function ModifyRsbuildConfig(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyRsbuildConfig((config) => {
       config.html ||= {};
@@ -258,6 +263,7 @@ const myPlugin = () => ({
 import type { RsbuildConfig } from '@rsbuild/core';
 
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const extraConfig: RsbuildConfig = {
@@ -312,6 +318,7 @@ function ModifyEnvironmentConfig(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyEnvironmentConfig((config, { name }) => {
       if (name !== 'web') {
@@ -329,6 +336,7 @@ const myPlugin = () => ({
 import type { EnvironmentConfig } from '@rsbuild/core';
 
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
       const extraConfig: EnvironmentConfig = {
@@ -386,6 +394,7 @@ function ModifyRspackConfig(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyRspackConfig((config, utils) => {
       if (utils.env === 'development') {
@@ -437,6 +446,7 @@ function ModifyBundlerChain(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyBundlerChain((chain, utils) => {
       if (utils.env === 'development') {
@@ -492,6 +502,7 @@ function ModifyHTML(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyHTML((html) => {
       return html.replace('foo', 'bar');
@@ -504,6 +515,7 @@ const myPlugin = () => ({
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyHTML((html, { filename }) => {
       if (filename === 'foo.html') {
@@ -523,6 +535,7 @@ const myPlugin = () => ({
 import cheerio from 'cheerio';
 
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyHTML((html) => {
       const $ = cheerio.load(html);
@@ -648,6 +661,7 @@ import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
       console.log('the bundler configs are ', bundlerConfigs);
@@ -666,6 +680,7 @@ import OnAfterCreateCompiler from '@zh/shared/onAfterCreateCompiler.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterCreateCompiler(({ compiler }) => {
       console.log('the compiler is ', compiler);
@@ -684,6 +699,7 @@ import OnBeforeEnvironmentCompile from '@zh/shared/onBeforeEnvironmentCompile.md
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
       console.log(
@@ -705,6 +721,7 @@ import OnAfterEnvironmentCompile from '@zh/shared/onAfterEnvironmentCompile.mdx'
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
       console.log(stats?.toJson(), isFirstCompile);
@@ -725,6 +742,7 @@ import OnBeforeBuild from '@zh/shared/onBeforeBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       console.log('the bundler configs are ', bundlerConfigs);
@@ -743,6 +761,7 @@ import OnAfterBuild from '@zh/shared/onAfterBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterBuild(({ isFirstCompile, stats }) => {
       console.log(stats?.toJson(), isFirstCompile);
@@ -761,6 +780,7 @@ import OnCloseBuild from '@zh/shared/onCloseBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onCloseBuild(() => {
       console.log('close build!');
@@ -781,6 +801,7 @@ import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server, environments }) => {
       console.log('before starting dev server.');
@@ -797,6 +818,7 @@ const myPlugin = () => ({
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       server.middlewares.use((req, res, next) => {
@@ -813,6 +835,7 @@ const myPlugin = () => ({
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       // the returned callback will be called when the default
@@ -835,6 +858,7 @@ const myPlugin = () => ({
 import type { RsbuildDevServer } from '@rsbuild/core';
 
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     let devServer: RsbuildDevServer | null = null;
 
@@ -866,6 +890,7 @@ import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
@@ -885,6 +910,7 @@ import OnBeforeDevCompile from '@zh/shared/onBeforeDevCompile.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeDevCompile(({ bundlerConfigs }) => {
       console.log('the bundler configs are ', bundlerConfigs);
@@ -903,6 +929,7 @@ import OnAfterDevCompile from '@zh/shared/onAfterDevCompile.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterDevCompile(({ isFirstCompile }) => {
       if (isFirstCompile) {
@@ -925,6 +952,7 @@ import OnCloseDevServer from '@zh/shared/onCloseDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onCloseDevServer(async () => {
       console.log('close dev server!');
@@ -945,6 +973,7 @@ import OnBeforeStartPreviewServer from '@zh/shared/onBeforeStartPreviewServer.md
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartPreviewServer(({ server, environments }) => {
       console.log('before start!');
@@ -965,6 +994,7 @@ import OnAfterStartPreviewServer from '@zh/shared/onAfterStartPreviewServer.mdx'
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterStartPreviewServer(({ port, routes }) => {
       console.log('this port is: ', port);
@@ -984,6 +1014,7 @@ import OnClosePreviewServer from '@zh/shared/onClosePreviewServer.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onClosePreviewServer(() => {
       console.log('close preview server!');
@@ -1004,6 +1035,7 @@ import OnRestart from '@zh/shared/onRestart.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onRestart(async ({ action, event, filePath }) => {
       console.log('restart!', action, event, filePath);
@@ -1022,6 +1054,7 @@ import OnExit from '@zh/shared/onExit.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onExit(({ exitCode }) => {
       console.log('exit: ', exitCode);

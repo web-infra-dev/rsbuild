@@ -168,18 +168,20 @@ In the following example, the console will output `'1'` and `'2'` in sequence:
 
 ```ts
 const plugin1 = () => ({
+  name: 'plugin1',
   setup(api) {
     api.modifyRsbuildConfig(() => console.log('1'));
   },
 });
 
 const plugin2 = () => ({
+  name: 'plugin2',
   setup(api) {
     api.modifyRsbuildConfig(() => console.log('2'));
   },
 });
 
-rsbuild.addPlugins([plugin1, plugin2]);
+rsbuild.addPlugins([plugin1(), plugin2()]);
 ```
 
 ### `order` Field
@@ -197,12 +199,14 @@ In the following example, the console will sequentially output `'2'` and `'1'`, 
 
 ```ts
 const plugin1 = () => ({
+  name: 'plugin1',
   setup(api) {
     api.modifyRsbuildConfig(() => console.log('1'));
   },
 });
 
 const plugin2 = () => ({
+  name: 'plugin2',
   setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('2'),
@@ -211,7 +215,7 @@ const plugin2 = () => ({
   },
 });
 
-rsbuild.addPlugins([plugin1, plugin2]);
+rsbuild.addPlugins([plugin1(), plugin2()]);
 ```
 
 ## Common hooks
@@ -243,6 +247,7 @@ function ModifyRsbuildConfig(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyRsbuildConfig((config) => {
       config.html ||= {};
@@ -258,6 +263,7 @@ const myPlugin = () => ({
 import type { RsbuildConfig } from '@rsbuild/core';
 
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const extraConfig: RsbuildConfig = {
@@ -315,6 +321,7 @@ function ModifyEnvironmentConfig(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyEnvironmentConfig((config, { name }) => {
       if (name !== 'web') {
@@ -332,6 +339,7 @@ const myPlugin = () => ({
 import type { EnvironmentConfig } from '@rsbuild/core';
 
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
       const extraConfig: EnvironmentConfig = {
@@ -390,6 +398,7 @@ function ModifyRspackConfig(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyRspackConfig((config, utils) => {
       if (utils.env === 'development') {
@@ -441,6 +450,7 @@ function ModifyBundlerChain(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyBundlerChain((chain, utils) => {
       if (utils.env === 'development') {
@@ -496,6 +506,7 @@ function ModifyHTML(
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyHTML((html) => {
       return html.replace('foo', 'bar');
@@ -508,6 +519,7 @@ Modify HTML content based on `filename`:
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyHTML((html, { filename }) => {
       if (filename === 'foo.html') {
@@ -527,6 +539,7 @@ For example, `cheerio` provides a jQuery-like API for HTML manipulation:
 import cheerio from 'cheerio';
 
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.modifyHTML((html) => {
       const $ = cheerio.load(html);
@@ -652,6 +665,7 @@ import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
       console.log('the bundler configs are ', bundlerConfigs);
@@ -670,6 +684,7 @@ import OnAfterCreateCompiler from '@en/shared/onAfterCreateCompiler.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterCreateCompiler(({ compiler }) => {
       console.log('the compiler is ', compiler);
@@ -688,6 +703,7 @@ import OnBeforeEnvironmentCompile from '@en/shared/onBeforeEnvironmentCompile.md
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
       console.log(
@@ -709,6 +725,7 @@ import OnAfterEnvironmentCompile from '@en/shared/onAfterEnvironmentCompile.mdx'
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
       console.log(stats?.toJson(), isFirstCompile);
@@ -729,6 +746,7 @@ import OnBeforeBuild from '@en/shared/onBeforeBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       console.log('the bundler configs are ', bundlerConfigs);
@@ -747,6 +765,7 @@ import OnAfterBuild from '@en/shared/onAfterBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterBuild(({ isFirstCompile, stats }) => {
       console.log(stats?.toJson(), isFirstCompile);
@@ -765,6 +784,7 @@ import OnCloseBuild from '@en/shared/onCloseBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onCloseBuild(() => {
       console.log('close build!');
@@ -785,6 +805,7 @@ import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server, environments }) => {
       console.log('before starting dev server.');
@@ -801,6 +822,7 @@ A common usage scenario is to register custom middleware in `onBeforeStartDevSer
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       server.middlewares.use((req, res, next) => {
@@ -817,6 +839,7 @@ When `onBeforeStartDevServer` is called, the default Rsbuild middlewares are not
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       // the returned callback will be called when the default
@@ -839,6 +862,7 @@ If you need to access `server` in other hooks, you can store the `server` instan
 import type { RsbuildDevServer } from '@rsbuild/core';
 
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     let devServer: RsbuildDevServer | null = null;
 
@@ -870,6 +894,7 @@ import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
@@ -889,6 +914,7 @@ import OnBeforeDevCompile from '@en/shared/onBeforeDevCompile.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeDevCompile(({ bundlerConfigs }) => {
       console.log('the bundler configs are ', bundlerConfigs);
@@ -907,6 +933,7 @@ import OnAfterDevCompile from '@en/shared/onAfterDevCompile.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterDevCompile(({ isFirstCompile }) => {
       if (isFirstCompile) {
@@ -929,6 +956,7 @@ import OnCloseDevServer from '@en/shared/onCloseDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onCloseDevServer(async () => {
       console.log('close dev server!');
@@ -949,6 +977,7 @@ import OnBeforeStartPreviewServer from '@en/shared/onBeforeStartPreviewServer.md
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartPreviewServer(({ server, environments }) => {
       console.log('before start!');
@@ -969,6 +998,7 @@ import OnAfterStartPreviewServer from '@en/shared/onAfterStartPreviewServer.mdx'
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onAfterStartPreviewServer(({ port, routes }) => {
       console.log('this port is: ', port);
@@ -988,6 +1018,7 @@ import OnClosePreviewServer from '@en/shared/onClosePreviewServer.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onClosePreviewServer(() => {
       console.log('close preview server!');
@@ -1008,6 +1039,7 @@ import OnRestart from '@en/shared/onRestart.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onRestart(async ({ action, event, filePath }) => {
       console.log('restart!', action, event, filePath);
@@ -1026,6 +1058,7 @@ import OnExit from '@en/shared/onExit.mdx';
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onExit(({ exitCode }) => {
       console.log('exit: ', exitCode);
