@@ -40,11 +40,11 @@ export default {
 ```ts title="rsbuild.config.ts"
 const isDev = process.env.NODE_ENV === 'development';
 
-export default defineConfig({
+export default {
   performance: {
     buildCache: isDev,
   },
-});
+};
 ```
 
 ## 选项
@@ -52,9 +52,9 @@ export default defineConfig({
 ### cacheDirectory
 
 - **类型：** `string`
-- **默认值：** `node_modules/.cache`
+- **默认值：** `<root>/node_modules/.cache/rspack`
 
-用于设置缓存文件的输出目录。
+用于设置缓存文件的输出目录，相对路径基于项目根目录解析。
 
 ```ts title="rsbuild.config.ts"
 import path from 'node:path';
@@ -100,10 +100,10 @@ export default {
 Rsbuild 会将以下配置文件作为默认的构建依赖：
 
 - `package.json`
-- `tsconfig.json`
-- `.env`, `.env.*`
+- [source.tsconfigPath](/config/source/tsconfig-path) 指定的文件
+- 启用自动加载环境变量时，Rsbuild 实际加载的 `.env` 文件
 - `.browserslistrc`
-- `tailwindcss.config.*`
+- `tailwind.config.*`
 
 此外：
 

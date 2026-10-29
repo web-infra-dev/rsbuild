@@ -52,9 +52,9 @@ export default {
 ### cacheDirectory
 
 - **Type:** `string`
-- **Default:** `node_modules/.cache`
+- **Default:** `<root>/node_modules/.cache/rspack`
 
-Set the output directory of the cache files.
+Set the output directory of the cache files. Relative paths are resolved from the project root.
 
 ```ts title="rsbuild.config.ts"
 import path from 'node:path';
@@ -78,13 +78,13 @@ Add additional cache digests, the previous build cache will be invalidated when 
 `cacheDigest` allows you to add variables that affect the build result, for example `process.env.SOME_ENV`.
 
 ```ts title="rsbuild.config.ts"
-export default defineConfig({
+export default {
   performance: {
     buildCache: {
       cacheDigest: [process.env.SOME_ENV],
     },
   },
-});
+};
 ```
 
 ### buildDependencies
@@ -100,10 +100,10 @@ Equivalent to Rspack's [cache.buildDependencies](https://rspack.rs/config/cache#
 Rsbuild will use the following configuration files as the default build dependencies:
 
 - `package.json`
-- `tsconfig.json`
-- `.env`, `.env.*`
+- The file selected by [source.tsconfigPath](/config/source/tsconfig-path)
+- The `.env` files loaded by Rsbuild, when automatic env loading is enabled
 - `.browserslistrc`
-- `tailwindcss.config.*`
+- `tailwind.config.*`
 
 Additionally:
 
