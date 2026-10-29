@@ -17,7 +17,7 @@ The `server.historyApiFallback` option has a higher priority than [server.htmlFa
 
 ## Example
 
-When `server.historyApiFallback` is set to `true`, all HTML GET requests that do not match an actual resource will return `index.html`. This ensures that routing in single-page applications works correctly.
+Set `server.historyApiFallback` to `true` to serve `index.html` for unmatched requests that meet the conditions below.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -30,8 +30,8 @@ export default {
 Rsbuild will change the requested location to the [index](#index) you specify whenever there is a request which fulfills the following criteria:
 
 - The request is a `GET` or `HEAD` request
-- The request accepts `text/html`
-- The requested path does not contain a `.` (dot), meaning it is not a direct file request
+- The `Accept` header includes `text/html` or `*/*` by default, and does not start with `application/json`
+- The last path segment does not contain a `.` (dot), unless [disableDotRule](#disabledotrule) is enabled
 - The requested path does not match any pattern defined in [rewrites](#rewrites)
 
 ## Options
@@ -41,11 +41,11 @@ Rsbuild will change the requested location to the [index](#index) you specify wh
 ### index
 
 - **Type:** `string`
-- **Default:** `'index.html'`
+- **Default:** `'/index.html'`
 
 Specifies the default HTML file to return when the History API fallback is enabled.
 
-For example, if you set `historyApiFallback.index` to `main.html`, the server will automatically serve `main.html` as the fallback page when users access any unmatched routes.
+For example, if you set `historyApiFallback.index` to `/main.html`, the server will automatically serve `main.html` as the fallback page when users access any unmatched routes.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -77,14 +77,14 @@ type Rewrites = Array<{
 
 `rewrites` lets you customize how request paths are mapped to HTML files when a History API fallback occurs.
 
-These rules only apply when no static asset matches the request, meaning it has entered the fallback stage. Each rule is evaluated in order until a match is found and executed.
+These rules only apply when no static asset matches the request, meaning it has entered the fallback stage. Each rule is evaluated in order until a match is found and executed. Rewrites run before the dot rule and change the URL internally without sending an HTTP redirect.
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
     historyApiFallback: {
       rewrites: [
-        // Redirect the root path to the landing page
+        // Serve the landing page for the root path
         { from: /^\/$/, to: '/views/landing.html' },
         // Return subpage.html for any path starting with /subpage
         { from: /^\/subpage/, to: '/views/subpage.html' },
@@ -105,7 +105,7 @@ If you want to modify or forward requests outside of the fallback scenario, use 
 - **Type:** `string[]`
 - **Default:** `['text/html', '*/*']`
 
-Override the default `Accepts:` headers that are queried when matching HTML content requests.
+Specify the values to match in the request’s `Accept` header. Requests whose `Accept` header starts with `application/json` are skipped even if they also match this list.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -122,9 +122,9 @@ export default {
 - **Type:** `boolean`
 - **Default:** `false`
 
-By default, requests containing a dot (`.`) in the path are treated as direct file requests and are not redirected.
+By default, unmatched requests containing a dot (`.`) in the last path segment are treated as file requests and are not rewritten to `index`.
 
-Setting `disableDotRule` to `true` will disable this behavior and allow such requests to be redirected as well.
+Setting `disableDotRule` to `true` will disable this behavior and allow such requests to be rewritten to `index` as well.
 
 ```ts title="rsbuild.config.ts"
 export default {

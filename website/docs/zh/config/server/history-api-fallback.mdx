@@ -17,7 +17,7 @@ description: 'historyApiFallback 用于支持基于 history API 的路由，当�
 
 ## 示例
 
-将 `server.historyApiFallback` 设置为 `true` 时，所有未匹配到实际资源的 HTML GET 请求都会返回 `index.html`，从而保证单页应用的路由能够正常工作。
+将 `server.historyApiFallback` 设置为 `true` 后，未匹配到资源且满足以下条件的请求会返回 `index.html`。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -27,11 +27,11 @@ export default {
 };
 ```
 
-当满足以下条件时，Rsbuild 会将请求的路径重定向到你指定的 [index](#index) 文件：
+当满足以下条件时，Rsbuild 会将请求的路径重写为你指定的 [index](#index) 文件：
 
 - 请求方式为 `GET` 或 `HEAD`
-- 请求头包含 `text/html`
-- 请求路径中不包含 `.`，即不是直接的文件请求
+- `Accept` 请求头默认包含 `text/html` 或 `*/*`，且不以 `application/json` 开头
+- 请求路径的最后一段不包含 `.`，除非启用了 [disableDotRule](#disabledotrule)
 - 请求路径未匹配到 [rewrites](#rewrites) 中定义的任何模式
 
 ## 选项
@@ -41,11 +41,11 @@ export default {
 ### index
 
 - **类型：** `string`
-- **默认值：** `'index.html'`
+- **默认值：** `'/index.html'`
 
 指定当启用 History API fallback 时返回的默认 HTML 文件。
 
-例如，设置 `historyApiFallback.index` 为 `main.html` 后，当用户访问未命中的路由时，服务器会自动返回 `main.html` 作为回退页面。
+例如，设置 `historyApiFallback.index` 为 `/main.html` 后，当用户访问未命中的路由时，服务器会自动返回 `main.html` 作为回退页面。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -77,14 +77,14 @@ type Rewrites = Array<{
 
 `rewrites` 用于在 History API fallback 发生时，自定义请求路径与页面文件之间的映射。
 
-仅当请求未命中任何静态资源（即进入 fallback 阶段）时，这些规则才会被应用。所有规则会按照数组中的顺序依次匹配并执行。
+仅当请求未命中任何静态资源（即进入 fallback 阶段）时，这些规则才会被应用。规则按数组顺序匹配，执行第一条匹配的规则后停止。重写规则在点号规则之前执行，只在服务器内部修改 URL，不会发送 HTTP 重定向。
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
     historyApiFallback: {
       rewrites: [
-        // 将根路径重定向到 landing 页面
+        // 为根路径返回 landing 页面
         { from: /^\/$/, to: '/views/landing.html' },
         // 当访问 /subpage 开头的路径时，返回 subpage.html
         { from: /^\/subpage/, to: '/views/subpage.html' },
@@ -105,7 +105,7 @@ export default {
 - **类型：** `string[]`
 - **默认值：** `['text/html', '*/*']`
 
-用于覆盖匹配 HTML 内容请求时默认查询的 `Accepts:` 请求头。
+指定用于匹配 `Accept` 请求头的值。如果 `Accept` 请求头以 `application/json` 开头，即使同时匹配此列表，也会跳过该请求。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -122,9 +122,9 @@ export default {
 - **类型：** `boolean`
 - **默认值：** `false`
 
-默认情况下，路径中包含点（`.`）的请求会被视为直接的文件请求，不会被重定向。
+默认情况下，未匹配到重写规则且路径最后一段包含点（`.`）的请求会被视为文件请求，不会被重写为 `index`。
 
-将 `disableDotRule` 设置为 `true` 后，这一行为会被关闭，此类请求也会被重定向。
+将 `disableDotRule` 设置为 `true` 后，这一行为会被关闭，此类请求也会被重写为 `index`。
 
 ```ts title="rsbuild.config.ts"
 export default {
