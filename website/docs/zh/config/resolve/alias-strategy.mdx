@@ -46,8 +46,8 @@ export default {
 
 由于 tsconfig paths 的优先级更高，所以：
 
-- `@common` 会使用 tsconfig paths 定义的值，指向 `./src/common-1`
-- `@utils` 会使用 `resolve.alias` 定义的值，指向 `./src/utils`
+- `@common/foo` 会使用 tsconfig paths 定义的值，指向 `./src/common-1/foo`
+- `@utils/foo` 会使用 `resolve.alias` 定义的值，指向 `./src/utils/foo`
 
 ## prefer-alias
 

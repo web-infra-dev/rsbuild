@@ -33,7 +33,7 @@ export default {
   tools: {
     rspack: {
       resolve: {
-        conditionNames: ['custom'],
+        conditionNames: ['...', 'custom'],
       },
     },
   },
@@ -42,4 +42,4 @@ export default {
 
 The difference between them is how the configuration is merged.
 
-`tools.rspack` merges the configuration arrays based on [rspack-merge](https://github.com/rstackjs/rspack-merge), which means `tools.rspack.resolve.conditionNames` will merge with the default value of Rsbuild, rather than overriding it.
+`tools.rspack` uses [rspack-merge](https://github.com/rstackjs/rspack-merge) to merge arrays already present in the Rspack config. Rspack applies its default condition names later, so this does not automatically preserve those defaults. Include `'...'`, as shown above, to extend the default conditions. This placeholder also works in `resolve.conditionNames`.

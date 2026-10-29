@@ -33,7 +33,7 @@ export default {
   tools: {
     rspack: {
       resolve: {
-        conditionNames: ['custom'],
+        conditionNames: ['...', 'custom'],
       },
     },
   },
@@ -42,4 +42,4 @@ export default {
 
 这两种用法的区别在于配置合并的方式。
 
-`tools.rspack` 基于 [rspack-merge](https://github.com/rstackjs/rspack-merge) 来合并配置中的数组，这意味着 `tools.rspack.resolve.conditionNames` 会与 Rsbuild 的默认值合并，而不是覆盖它。
+`tools.rspack` 使用 [rspack-merge](https://github.com/rstackjs/rspack-merge) 合并 Rspack 配置中已有的数组。Rspack 会在之后应用默认条件名称，因此这种合并不会自动保留这些默认值。要扩展默认条件，请像上例一样包含 `'...'`。此占位符也适用于 `resolve.conditionNames`。
