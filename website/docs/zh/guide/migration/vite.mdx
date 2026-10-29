@@ -127,7 +127,7 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 | Vite                                  | Rsbuild                                                                                           |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | root                                  | [root](/config/root)                                                                              |
-| mode                                  | [mode](/config/mode)                                                                              |
+| mode                                  | [`--env-mode`](/guide/advanced/env-vars#env-mode)                                                 |
 | base                                  | [server.base](/config/server/base)                                                                |
 | define                                | [source.define](/config/source/define)                                                            |
 | appType                               | [server.historyApiFallback](/config/server/history-api-fallback)                                  |
@@ -170,7 +170,7 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 | build.lib                             | 使用 [Rslib](https://github.com/web-infra-dev/rslib)                                              |
 | build.manifest                        | [output.manifest](/config/output/manifest)                                                        |
 | build.ssrEmitAssets                   | [output.emitAssets](/config/output/emit-assets)                                                   |
-| build.minify, build.terserOptions     | [output.minify](/config/output/minify)                                                            |
+| build.minify                          | [output.minify](/config/output/minify)                                                            |
 | build.emptyOutDir                     | [output.cleanDistPath](/config/output/clean-dist-path)                                            |
 | build.copyPublicDir                   | [server.publicDir](/config/server/public-dir)                                                     |
 | build.reportCompressedSize            | [performance.printFileSize](/config/performance/print-file-size)                                  |
@@ -180,6 +180,10 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 
 说明：
 
+- 表中列出的是相关配置，并非完全相同的 API。Vite 的 `mode` 用于选择环境变量文件，对应 Rsbuild 的 `--env-mode`。Rsbuild 的 [mode](/config/mode) 则用于选择 `development`、`production` 或 `none`，并决定 `import.meta.env.MODE` 的值。
+- `resolve.preserveSymlinks: true` 对应 `tools.rspack.resolve.symlinks: false`，两者的布尔值含义相反。
+- 路径前缀使用 `server.base`；完整的 CDN URL 使用 [output.assetPrefix](/config/output/asset-prefix)，必要时也配置 [dev.assetPrefix](/config/dev/asset-prefix)。
+- Rsbuild 使用 SWC 压缩 JavaScript，因此不能将 Vite 的 `build.terserOptions` 直接复制到 `output.minify.jsOptions`。如需保留 Terser 配置，请[切换为 Terser 压缩器](/guide/configuration/swc#switching-minifier)。
 - 上述表格尚未覆盖到 Vite 的所有配置，欢迎补充。
 
 ## 服务器端口

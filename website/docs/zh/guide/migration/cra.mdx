@@ -210,8 +210,8 @@ export default defineConfig({
 
 ```ts title="src/index.js"
 // CRA 中可以这样访问
-const { PUBLIC_URL } = process.env;
-console.log(PUBLIC_URL);
+const { REACT_APP_API_URL } = process.env;
+console.log(REACT_APP_API_URL);
 console.log(process.env);
 ```
 
@@ -260,9 +260,9 @@ export default {
       module: {
         rules: [
           {
-            // 匹配 .png 文件
+            // 匹配 .gltf 文件
             // 你可以调整该正则表达式，以匹配不同类型的文件
-            test: /\.png$/,
+            test: /\.gltf$/,
             type: 'asset/resource',
             generator: {
               filename: 'static/media/[name].[hash][ext]',
@@ -341,7 +341,7 @@ export default {
 };
 ```
 
-注册后，在开发 (`npm run dev`) 和生产构建 (`npm run build`) 过程中，ESLint 会自动运行。插件会在控制台输出 ESLint 警告和错误。
+注册后，在开发 (`npm run start`) 和生产构建 (`npm run build`) 过程中，ESLint 会自动运行。插件会在控制台输出 ESLint 警告和错误。
 
 :::warning
 我们并不推荐使用 `@rsbuild/plugin-eslint`，因为在构建过程中运行 ESLint 检查会显著增加构建时间。更推荐的做法是使用单独的 `lint` 命令来执行 ESLint 检查。
@@ -349,7 +349,7 @@ export default {
 
 ## 读取 jsconfig.json
 
-在非 TypeScript 项目中，CRA 支持读取 jsconfig.json 中的 `paths` 字段作为路径别名。
+在非 TypeScript 项目中，CRA 会读取 `jsconfig.json` 中的 `compilerOptions.baseUrl` 来支持绝对路径导入。
 
 如果你需要在 Rsbuild 中使用该特性，可以参考 [路径别名 - jsconfig.json](/guide/advanced/alias#jsconfigjson)。
 

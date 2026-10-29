@@ -112,6 +112,7 @@ export default defineConfig({
 说明：
 
 - 在迁移 configureWebpack 时，注意大部分 webpack 和 Rspack 配置是相同的，但也存在一些差异或 Rspack 未实现的功能。
+- `css.extract: false` 对应 `output.injectStyles: true`，两者的布尔值含义相反；CSS 提取插件的选项需要单独迁移。
 - 上述表格尚未覆盖到 Vue CLI 的所有配置，欢迎补充。
 
 ## 环境变量

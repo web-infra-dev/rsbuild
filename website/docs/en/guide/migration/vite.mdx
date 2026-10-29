@@ -127,7 +127,7 @@ Here is the corresponding Rsbuild configuration for each Vite option:
 | Vite                                  | Rsbuild                                                                                           |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | root                                  | [root](/config/root)                                                                              |
-| mode                                  | [mode](/config/mode)                                                                              |
+| mode                                  | [`--env-mode`](/guide/advanced/env-vars#env-mode)                                                 |
 | base                                  | [server.base](/config/server/base)                                                                |
 | define                                | [source.define](/config/source/define)                                                            |
 | plugins                               | [plugins](/config/plugins)                                                                        |
@@ -170,7 +170,7 @@ Here is the corresponding Rsbuild configuration for each Vite option:
 | build.lib                             | Use [Rslib](https://github.com/web-infra-dev/rslib)                                               |
 | build.manifest                        | [output.manifest](/config/output/manifest)                                                        |
 | build.ssrEmitAssets                   | [output.emitAssets](/config/output/emit-assets)                                                   |
-| build.minify, build.terserOptions     | [output.minify](/config/output/minify)                                                            |
+| build.minify                          | [output.minify](/config/output/minify)                                                            |
 | build.emptyOutDir                     | [output.cleanDistPath](/config/output/clean-dist-path)                                            |
 | build.copyPublicDir                   | [server.publicDir](/config/server/public-dir)                                                     |
 | build.reportCompressedSize            | [performance.printFileSize](/config/performance/print-file-size)                                  |
@@ -180,6 +180,10 @@ Here is the corresponding Rsbuild configuration for each Vite option:
 
 Notes:
 
+- These are related options, not necessarily identical APIs. Vite `mode` selects environment files; use `--env-mode` for this in Rsbuild. Rsbuild [mode](/config/mode) instead selects `development`, `production`, or `none`, and determines `import.meta.env.MODE`.
+- `resolve.preserveSymlinks: true` corresponds to `tools.rspack.resolve.symlinks: false`; the Boolean meanings are opposite.
+- Use `server.base` for a pathname prefix. For a full CDN URL, configure [output.assetPrefix](/config/output/asset-prefix) and, if needed, [dev.assetPrefix](/config/dev/asset-prefix).
+- Rsbuild uses SWC for JavaScript minification, so Vite `build.terserOptions` cannot be copied into `output.minify.jsOptions`. To keep Terser options, [switch the minifier to Terser](/guide/configuration/swc#switching-minifier).
 - The table above doesn't cover every Vite option; feel free to add more.
 
 ## Server port
