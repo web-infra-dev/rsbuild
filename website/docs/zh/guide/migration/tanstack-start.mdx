@@ -310,7 +310,9 @@ COPY --from=builder /app/dist ./dist
 CMD ["./node_modules/.bin/srvx", "--prod", "-s", "../client", "dist/server/index.js"]
 ```
 
-对于 pnpm、Yarn 或 monorepo，请根据包管理器和 workspace 结构调整依赖安装步骤，并包含所需的 workspace 清单、包管理器配置和补丁。现代 Yarn 使用 [`yarn workspaces focus --all --production`](https://yarnpkg.com/cli/workspaces/focus)，而不是 Yarn Classic 的 `yarn install --production`。运行时依赖需要安装脚本时，应保持启用。
+如果使用 pnpm、Yarn 或 monorepo，请调整安装命令，并复制项目所需的 workspace 清单、包管理器配置和补丁。
+
+现代 Yarn 使用 [`yarn workspaces focus --all --production`](https://yarnpkg.com/cli/workspaces/focus) 安装生产依赖。如果运行时依赖需要安装脚本，请保持启用。
 
 请按照 TanStack Start 的 [React](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) 或 [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting) 部署指南配置之前的构建 stages。
 
