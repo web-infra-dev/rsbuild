@@ -13,7 +13,7 @@ Sets the favicon icon path for all pages. It can be set to:
 - an absolute file path.
 - a relative path relative to the project [root](/config/root).
 
-Local favicon files are copied to the output directory during compilation. URLs are referenced directly without downloading the icon. In both cases, Rsbuild adds the corresponding `link` tag to the HTML.
+After you configure this option, the favicon will be automatically copied to the dist directory during compilation, and the corresponding `link` tag will be added to the HTML.
 
 :::tip
 Rsbuild also provides [html.appIcon](/config/html/app-icon) to set the icon of the web application.
@@ -56,6 +56,8 @@ export default {
 Set to a URL:
 
 ```js
+import path from 'node:path';
+
 export default {
   html: {
     favicon: 'https://foo.com/favicon.ico',
@@ -66,7 +68,7 @@ export default {
 After recompiling, the following tags are automatically generated in the HTML:
 
 ```html
-<link rel="icon" href="https://foo.com/favicon.ico" />
+<link rel="icon" href="/favicon.ico" />
 ```
 
 ## Output path
