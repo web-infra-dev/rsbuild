@@ -40,4 +40,6 @@ export default {
 };
 ```
 
+The difference between them is how the configuration is merged.
+
 `resolve.conditionNames` replaces existing arrays when merging Rsbuild configurations, while `tools.rspack.resolve.conditionNames` merges with explicitly configured values. This does not include Rspack's defaults, which are applied later during initialization.

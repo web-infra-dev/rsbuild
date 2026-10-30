@@ -40,4 +40,6 @@ export default {
 };
 ```
 
+这两种用法的区别在于配置合并的方式。
+
 `resolve.conditionNames` 在合并 Rsbuild 配置时覆盖已有数组，而 `tools.rspack.resolve.conditionNames` 会合并显式配置的值，不包含 Rspack 在后续初始化时应用的默认值。
