@@ -126,9 +126,9 @@ If tree shaking isn't working as expected, check the `sideEffects` configuration
 
 ### `JavaScript heap out of memory` when compiling?
 
-This error indicates a memory overflow during the build process. This typically happens when the bundled content exceeds Node.js's default memory limit.
+This error means the V8 JavaScript heap reached its limit.
 
-To fix out-of-memory issues, the easiest solution is to increase the memory limit using Node.js's `--max-old-space-size` option. Set this by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before your CLI command.
+If the machine or container has enough available memory, increase the V8 old-space limit using Node.js's `--max-old-space-size` option. Set this by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before your CLI command.
 
 For example, add parameters before the `rsbuild build` command:
 
@@ -143,7 +143,7 @@ For example, add parameters before the `rsbuild build` command:
 
 For other commands like `rsbuild dev`, add the parameters before that command instead.
 
-The value of the `max_old_space_size` parameter represents the upper limit of the memory size (MB). Generally, it can be set to `16384` (16GB).
+`--max_old_space_size` sets the V8 old-space limit in MiB, not the total process memory limit. The value `16384` (16 GiB) is only an example. Choose a limit that leaves enough memory for Rspack's native allocations and other processes.
 
 The following parameters are explained in more detail in the official Node.js documentation:
 
