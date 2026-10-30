@@ -75,7 +75,7 @@ export default {
 };
 ```
 
-存在多个入口时，这等价于以下配置。只有一个入口时，`true` 仅启用 `imports`，不会启用 `entries`：
+有多个入口时，`true` 等价于以下配置。只有一个入口时，它只启用 `imports`，入口仍会立即编译：
 
 ```ts title="rsbuild.config.ts"
 export default {
