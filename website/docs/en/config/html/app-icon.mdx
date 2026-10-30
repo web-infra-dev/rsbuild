@@ -111,7 +111,7 @@ The list of icons:
 - `src` is the path of the icon, which can be a URL, an absolute file path, or a relative path to the project [root](/config/root).
 - `size` is the size of the icon in pixels.
 - `target` refers to the intended target for the icon, which can be either `apple-touch-icon` or `web-app-manifest`. If `target` is not set, by default, the manifest file will include all icons, while the `apple-touch-icon` tags will only include icons smaller than `200x200`.
-- `purpose` is a case-sensitive keyword string that specifies one or more contexts in which the icon can be used by the browser or operating system. This field applies to icons included in the manifest, whether `target` is `'web-app-manifest'` or omitted. See [MDN - purpose](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/icons#purpose) for more details.
+- `purpose` specifies how the browser or operating system can use an icon. Its value is a string of case-sensitive keywords. It applies to icons in the manifest, including when `target` is omitted. See [MDN - purpose](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/icons#purpose).
 
 ### Example
 
