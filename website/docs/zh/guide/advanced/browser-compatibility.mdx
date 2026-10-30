@@ -154,7 +154,7 @@ export default {
 
 启用 polyfill 后，Rsbuild 通过 SWC 注入 [core-js](https://github.com/zloirock/core-js) polyfill。[@swc/helpers](https://npmjs.com/package/@swc/helpers) 提供语法转换所需的辅助函数，不会为内置 API 提供 polyfill。
 
-在不同的使用场景下，你可能会需要不同的 polyfill 方案。Rsbuild 提供了 [output.polyfill](/config/output/polyfill) 配置项来切换不同的 polyfill 方案。启用 `usage` 或 `entry` 之前，请先在项目中[安装 core-js v3](/config/output/polyfill#install-core-js)。
+通过 [output.polyfill](/config/output/polyfill) 选择适合项目的 polyfill 方案。启用 `usage` 或 `entry` 前，请先在项目中[安装 core-js v3](/config/output/polyfill#install-core-js)。
 
 ### 默认行为
 
@@ -199,7 +199,7 @@ export default {
 
 ### entry 方案 \{#entry-mode}
 
-在使用 entry 方案时，Rsbuild 会根据当前项目设置的浏览器范围来计算需要注入哪些 `core-js` 方法，并在每个页面的入口文件中进行注入。这种方式涵盖目标浏览器所需的 core-js API，包括未转译的依赖中使用的 API。它并不涵盖所有浏览器 API（参阅[缺少的 polyfill](#missing-polyfills)），而且注入未使用的 polyfill 可能会增加产物体积。
+entry 方案会根据 Browserslist 配置，在每个页面的入口文件中注入目标浏览器所需的 core-js polyfill。这也能覆盖未转译的依赖中使用的 API，但可能注入代码并未使用的 polyfill。此方案仅涵盖 core-js 支持的 API，详见[缺少的 polyfill](#missing-polyfills)。
 
 entry 方案对应的配置为：
 

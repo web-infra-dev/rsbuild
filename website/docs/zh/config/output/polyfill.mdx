@@ -23,7 +23,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### usage
 
-当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会在每个文件中根据代码中使用的 API 注入 polyfills。注入哪些 polyfill 还取决于目标浏览器。仅在编译范围之外的文件中使用的 API 不会被分析。
+当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会检查每个编译文件中使用的 API，并注入目标浏览器所需的 polyfill。编译范围之外的文件不会被检查。
 
 ```ts title="rsbuild.config.ts"
 export default {
