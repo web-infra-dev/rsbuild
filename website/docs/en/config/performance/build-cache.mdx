@@ -128,7 +128,7 @@ export default {
 
 Use the [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile) hook to read cache statistics after each compilation and check whether cached results are being reused.
 
-This requires Rsbuild >= 2.3.0. Enable `performance.buildCache` and the experimental [experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) option, which is disabled by default:
+This requires Rsbuild >= 2.3.0. Enable `performance.buildCache` and the experimental [experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) option:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
