@@ -257,7 +257,7 @@ Rsbuild supports reading the following types of env files:
 | `.env.development.local` | Local overrides for `.env.development`, should be added to `.gitignore`. |
 | `.env.production.local`  | Local overrides for `.env.production`, should be added to `.gitignore`.  |
 
-Rsbuild loads `.env`, `.env.local`, `.env.[mode]`, and `.env.[mode].local`, in that order. Only files matching the current env mode are loaded. Values from later files override earlier ones. Existing process environment variables take precedence, except `NODE_ENV`, which can be overridden by an env file.
+Rsbuild loads `.env`, `.env.local`, `.env.[mode]`, and `.env.[mode].local` in that order, using the current env mode for `[mode]`. Values from later files override earlier ones. Variables already set in the Node.js process take precedence, except `NODE_ENV`, which an env file can override.
 
 ### Env mode
 

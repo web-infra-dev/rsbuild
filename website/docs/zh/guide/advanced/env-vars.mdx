@@ -259,7 +259,7 @@ Rsbuild 支持读取以下 env 文件：
 | `.env.development.local` | `.env.development` 文件的本地用法，需要添加到 .gitignore 中。 |
 | `.env.production.local`  | `.env.production` 文件的本地用法，需要添加到 .gitignore 中。  |
 
-Rsbuild 依次加载 `.env`、`.env.local`、`.env.[mode]` 和 `.env.[mode].local`，仅加载与当前 env 模式匹配的文件。后加载文件中的值覆盖先加载的值。已有的进程环境变量优先，但 `NODE_ENV` 可以被 env 文件覆盖。
+Rsbuild 依次加载 `.env`、`.env.local`、`.env.[mode]` 和 `.env.[mode].local`，其中 `[mode]` 为当前 env 模式。后加载的文件会覆盖先加载文件中的同名变量。Node.js 进程中已有的环境变量优先，但 `NODE_ENV` 可以被 env 文件覆盖。
 
 ### Env 模式 \{#env-mode}
 

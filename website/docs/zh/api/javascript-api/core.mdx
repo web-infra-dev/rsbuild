@@ -55,7 +55,7 @@ type CreateRsbuildOptions = {
 - `config`：Rsbuild 配置对象或 [`loadConfig`](#loadconfig) 返回的结果。参考 [配置总览](/config/) 查看所有可用的配置项。
 - `restart`：处理当前 dev server 或监听构建重启请求的函数，详见 [restart](#restart-handling)。
 
-`createRsbuild()` 默认不会加载 `rsbuild.config.*` 或 `.env` 文件。请通过 `config` 传入 `loadConfig()` 的结果，并在需要加载环境变量文件时启用 `loadEnv`。
+`createRsbuild()` 默认不会加载 `rsbuild.config.*` 或 `.env` 文件。如需加载配置文件，请调用 `loadConfig()`，并将返回的 `content` 传入 `config`。如需加载环境变量文件，请设置 `loadEnv: true`。
 
 ### 传入配置
 
@@ -118,7 +118,7 @@ const rsbuild = await createRsbuild({
 
 1. 调用 `loadEnv` 方法来加载环境变量。
 2. 添加 [source.define](/config/source/define) 配置，将 `loadEnv` 返回的 `publicVars` 定义为全局变量。
-3. 将已加载的 `.env` 文件注册为重启请求的监听目标，并加入已启用的持久化缓存依赖。要实际重启开发服务器或 watch 构建，需要提供[重启处理函数](#restart-handling)。
+3. 监听已加载的 `.env` 文件，在文件变化时请求重启。如果启用了持久化缓存，也会将这些文件加入缓存依赖。请提供[重启处理函数](#restart-handling)，以处理 dev server 或 watch 构建的重启请求。
 4. 在关闭构建或开发服务器时，自动调用 `loadEnv` 返回的 `cleanup` 方法来清除环境变量。
 
 你也可以传入 [loadEnv](/api/javascript-api/core#loadenv) 方法的选项，比如：
