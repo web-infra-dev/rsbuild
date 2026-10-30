@@ -159,7 +159,7 @@ export default {
 - **类型：** `ChokidarOptions`
 - **默认值：** `undefined`
 
-`watchFiles` 是基于 [chokidar](https://github.com/paulmillr/chokidar#getting-started) 实现的，你可以通过 `options` 传入 chokidar 的选项。
+`watchFiles` 是基于 [chokidar v4](https://github.com/paulmillr/chokidar#getting-started) 实现的，你可以通过 `options` 传入 chokidar 的选项。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -174,9 +174,9 @@ export default {
 };
 ```
 
-## 传入数组 \{#array-configuration}
+## 传入数组
 
-`dev.watchFiles` 支持传入一个数组，这允许你同时配置不同 `type` 的监听器，或是为不同的目录配置不同的 `options`。
+`dev.watchFiles` 支持传入一个数组，这允许你同时配置不同 `type` 的监听器，或是为不同的目录配置不同的 `watchOptions`。
 
 ```ts title="rsbuild.config.ts"
 export default {

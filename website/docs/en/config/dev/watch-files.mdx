@@ -159,7 +159,7 @@ export default {
 - **Type:** `ChokidarOptions`
 - **Default:** `undefined`
 
-`watchFiles` is implemented based on [chokidar](https://github.com/paulmillr/chokidar#getting-started), and you can pass chokidar options through `options`.
+`watchFiles` is implemented based on [chokidar v4](https://github.com/paulmillr/chokidar#getting-started), and you can pass chokidar options through `options`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -170,27 +170,6 @@ export default {
         usePolling: false,
       },
     },
-  },
-};
-```
-
-## Array configuration
-
-`dev.watchFiles` accepts an array, allowing watchers with different `type` values or different `options` for each directory.
-
-```ts title="rsbuild.config.ts"
-export default {
-  dev: {
-    watchFiles: [
-      {
-        type: 'reload-page',
-        paths: 'public',
-      },
-      {
-        type: 'restart',
-        paths: ['./config/*.ts'],
-      },
-    ],
   },
 };
 ```
