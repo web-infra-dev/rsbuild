@@ -262,7 +262,7 @@ const rsbuildPlugin = {
 
 ## `apply` property
 
-Rsbuild supports `apply: 'build'` and `apply: 'serve'` through its [apply property](/plugins/dev/core#conditional-application). When migrating a function-valued `apply`, update its arguments: Rsbuild passes an Rsbuild config and a context with `action`, while Vite passes a Vite config and a context with `command`.
+Like Vite, Rsbuild supports `apply: 'build'` and `apply: 'serve'` through its [apply property](/plugins/dev/core#conditional-application). If `apply` is a function, update its parameters when migrating: Rsbuild passes its own configuration and a context with `action`; Vite passes a Vite configuration and a context with `command`.
 
 - Vite plugin:
 

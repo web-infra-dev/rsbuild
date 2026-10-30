@@ -262,7 +262,7 @@ const rsbuildPlugin = {
 
 ## `apply` 属性
 
-Rsbuild 的 [apply 属性](/plugins/dev/core#conditional-application) 支持 `apply: 'build'` 和 `apply: 'serve'`。迁移函数形式的 `apply` 时，需要调整参数：Rsbuild 传入 Rsbuild 配置和包含 `action` 的上下文，而 Vite 传入 Vite 配置和包含 `command` 的上下文。
+与 Vite 一样，Rsbuild 的 [apply 属性](/plugins/dev/core#conditional-application) 支持 `apply: 'build'` 和 `apply: 'serve'`。如果 `apply` 是函数，迁移时需要调整参数：Rsbuild 传入自身的配置和包含 `action` 的上下文；Vite 传入 Vite 配置和包含 `command` 的上下文。
 
 - Vite 插件：
 
