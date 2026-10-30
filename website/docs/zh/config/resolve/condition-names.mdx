@@ -33,13 +33,11 @@ export default {
   tools: {
     rspack: {
       resolve: {
-        conditionNames: ['...', 'custom'],
+        conditionNames: ['custom'],
       },
     },
   },
 };
 ```
 
-这两种用法的区别在于配置合并的方式。
-
-添加自定义条件时，像上例一样加入 `'...'` 即可保留 Rspack 的默认条件。`tools.rspack` 的数组合并不会自动保留这些默认值。`resolve.conditionNames` 也支持使用 `'...'`。
+`resolve.conditionNames` 在合并 Rsbuild 配置时覆盖已有数组，而 `tools.rspack.resolve.conditionNames` 会合并显式配置的值，不包含 Rspack 在后续初始化时应用的默认值。
