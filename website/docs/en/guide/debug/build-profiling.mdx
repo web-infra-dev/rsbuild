@@ -16,9 +16,9 @@ See [Use Rsdoctor](/guide/debug/rsdoctor) for more information.
 
 A build runs both JavaScript and Rust code and incurs communication overhead between them.
 
-JavaScript overhead is usually higher than Rust overhead. Use Node.js profiling to understand where time is spent in JavaScript and pinpoint bottlenecks.
+Use Node.js profiling to identify time spent in JavaScript, including loaders and plugins. To investigate Rspack's Rust execution, use the Rspack profiling workflow below. The relative cost depends on the project.
 
-For example, to capture a [CPU profile](https://nodejs.org/docs/v20.17.0/api/cli.html#--cpu-prof), run the following commands from your project root:
+For example, to capture a [CPU profile](https://nodejs.org/api/cli.html#--cpu-prof), run the following commands from your project root:
 
 ```bash
 # dev
