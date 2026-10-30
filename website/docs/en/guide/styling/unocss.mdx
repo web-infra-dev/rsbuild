@@ -35,13 +35,13 @@ Rsbuild uses [Lightning CSS](/guide/styling/css-usage#lightning-css) to add vend
 Create a `uno.config.ts` file in the root directory of your project and add the following content:
 
 ```js title="uno.config.ts"
-import { defineConfig, presetWind3 } from 'unocss';
+import { defineConfig, presetUno } from 'unocss';
 
 export default defineConfig({
   content: {
     filesystem: ['./src/**/*.{html,js,ts,jsx,tsx}'],
   },
-  presets: [presetWind3()],
+  presets: [presetUno()],
 });
 ```
 
@@ -51,7 +51,7 @@ The above configuration is for reference only and can be modified to suit the ne
 
 ## Importing CSS
 
-Add the `@unocss` directives in your CSS file and import that file from your JavaScript entry (for example, `import './main.css'`):
+Add the `@unocss` directives in your CSS entry file:
 
 ```css title="main.css"
 @unocss preflights;

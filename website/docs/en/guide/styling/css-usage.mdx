@@ -19,7 +19,7 @@ Rsbuild uses Rspack's built-in [lightningcss-loader](https://rspack.rs/guide/fea
 ### Features
 
 - Lightning CSS automatically adds vendor prefixes like `-webkit-`, `-moz-`, `-ms-`, etc., so you don't need to manually add prefixes or use the [autoprefixer](https://github.com/postcss/autoprefixer) plugin.
-- Lightning CSS transforms supported modern CSS syntax, such as CSS nesting, based on the target browsers. Draft features such as [custom media queries](https://lightningcss.dev/transpilation.html#custom-media-queries) require explicit configuration: set `tools.lightningcssLoader.drafts.customMedia` to `true`.
+- Lightning CSS automatically downgrades CSS syntax, allowing you to use modern CSS features such as CSS nesting and custom media queries without worrying about browser compatibility.
 - Use [tools.lightningcssLoader](/config/tools/lightningcss-loader) to customize `lightningcss-loader` options.
 
 ### Disabling Lightning CSS
