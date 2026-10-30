@@ -123,7 +123,7 @@ pluginSass({
 
 Dart Sass is available through [sass](https://npmjs.com/package/sass) and [sass-embedded](https://npmjs.com/package/sass-embedded). The older [node-sass implementation has reached end of life](https://sass-lang.com/blog/node-sass-is-end-of-life/).
 
-Rsbuild uses the `sass-embedded` implementation bundled with the plugin by default. `sass-embedded` is a JavaScript wrapper around the native Dart Sass executable, providing a consistent API and optimal performance.
+Rsbuild uses the `sass-embedded` version included with the plugin by default. This package provides a JavaScript API for the native Dart Sass executable.
 
 To use a different Sass implementation instead of the built-in `sass-embedded` included in Rsbuild, install the preferred Sass implementation in your project and specify it using the `sass-loader`'s [implementation](https://github.com/webpack/sass-loader#implementation) option.
 
