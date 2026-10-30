@@ -29,7 +29,7 @@ SSR 是 "Server-side rendering"（服务端渲染）的缩写。它表示由服�
 
 ```
 - index.html
-- server.mjs         # 自定义服务器脚本
+- server.js          # 自定义服务器脚本
 - src/
   - App.js           # 导出 App 代码
   - index.client.js  # 客户端入口，挂载 App 组件到 Dom 元素
@@ -120,21 +120,15 @@ Rsbuild 提供了 [Server API](/api/javascript-api/server-api) 和 [Environment 
 
 ```ts title="server.mjs"
 import express from 'express';
-import {
-  createRsbuild,
-  loadConfig,
-  logger,
-  mergeRsbuildConfig,
-} from '@rsbuild/core';
+import { createRsbuild } from '@rsbuild/core';
 
 async function initRsbuild() {
-  const { content } = await loadConfig();
   const rsbuild = await createRsbuild({
-    config: mergeRsbuildConfig(content, {
+    config: {
       server: {
         middlewareMode: true,
       },
-    }),
+    },
   });
   return rsbuild.createDevServer();
 }
@@ -175,7 +169,7 @@ startDevServer();
 
 ## 修改启动脚本
 
-使用自定义 Server 后，需要将启动命令由 `rsbuild dev` 改为 `node --experimental-vm-modules ./server.mjs`。
+使用自定义 Server 后，需要将启动命令由 `rsbuild dev` 改为 `node ./server.mjs`。
 
 如果需要预览 SSR 的线上效果，同样需要修改预览命令。SSR Prod Server 示例参考：[Example](https://github.com/rstackjs/rstack-examples/blob/main/rsbuild/ssr-express/prod-server.mjs)。
 
@@ -183,7 +177,7 @@ startDevServer();
 {
   "scripts": {
     "build": "rsbuild build",
-    "dev": "node --experimental-vm-modules ./server.mjs",
+    "dev": "node ./server.mjs",
     "preview": "node ./prod-server.mjs"
   }
 }
