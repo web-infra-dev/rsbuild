@@ -49,7 +49,6 @@ In Rsbuild plugin, you can now declare the order of hooks using the `order` fiel
 
 ```ts
 const myPlugin = () => ({
-  name: 'my-plugin',
   setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('hello'),
@@ -103,9 +102,7 @@ npm add postcss-flexbugs-fixes -D
 
 ```js
 module.exports = {
-  plugins: {
-    'postcss-flexbugs-fixes': {},
-  },
+  'postcss-flexbugs-fixes': {},
 };
 ```
 
