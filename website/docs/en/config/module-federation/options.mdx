@@ -30,6 +30,8 @@ When you set the `moduleFederation.options` option, Rsbuild will take the follow
 The type of `moduleFederation.options` is exactly the same as the ModuleFederationPlugin plugin of Rspack:
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
 export default defineConfig({
   moduleFederation: {
     options: {
@@ -78,7 +80,7 @@ import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   server: {
-    port: 3002,
+    port: 3001,
   },
   moduleFederation: {
     options: {
