@@ -46,8 +46,8 @@ export default {
 
 Since the tsconfig paths have a higher priority, the following will happen:
 
-- `@common` will use the value defined in tsconfig paths, pointing to `./src/common-1`
-- `@utils` will use the value defined in `resolve.alias`, pointing to `./src/utils`
+- `@common/foo` resolves to `./src/common-1/foo` using tsconfig paths.
+- `@utils/foo` resolves to `./src/utils/foo` using `resolve.alias`.
 
 ## prefer-alias
 
