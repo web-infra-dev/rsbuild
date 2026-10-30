@@ -112,12 +112,12 @@ pluginBabel({
 - after:
 
 ```ts
-pluginBabel([
+pluginBabel({
   babelLoaderOptions: {
     plugins: [],
     presets: [],
-  }
-]);
+  },
+});
 ```
 
 这种改变使我们能为 `pluginBabel` 添加更多选项，如 `include` 和 `exclude`。
