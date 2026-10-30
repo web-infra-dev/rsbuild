@@ -128,7 +128,7 @@ export default {
 
 通过 [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile) 钩子，可以在每次编译完成后读取缓存统计信息，查看缓存结果是否被复用。
 
-此功能需要 Rsbuild >= 2.3.0 版本。需要启用 `performance.buildCache`，并开启实验性选项 [experiments.newCache](https://rspack.rs/zh/config/experiments#experimentsnewcache)：
+此功能需要 Rsbuild >= 2.3.0 版本，并开启实验性选项 [experiments.newCache](https://rspack.rs/zh/config/experiments#experimentsnewcache)：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
