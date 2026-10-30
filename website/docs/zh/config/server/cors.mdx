@@ -108,7 +108,7 @@ const defaultCorsOptions = {
 };
 ```
 
-未设置 `server.cors` 时，Rsbuild 会将 `origin` 限制为上文的 `defaultAllowedOrigins`。对象形式的配置会与此 Rsbuild 默认值合并。
+未设置 `server.cors` 时，Rsbuild 使用上文的 `defaultAllowedOrigins`。传入对象时，其中的选项会与 Rsbuild 的默认配置合并。
 
 ### origin
 
