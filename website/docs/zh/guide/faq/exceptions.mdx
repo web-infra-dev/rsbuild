@@ -130,24 +130,24 @@ Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree 
 
 ### 打包时出现 `JavaScript heap out of memory`?
 
-该报错表示打包过程中出现了内存溢出问题，大多数情况下是由于打包的内容较多，超出了 Node.js 默认的内存上限。
+该报错表示 V8 JavaScript 堆达到内存上限。大型构建、内存泄漏或 loader、插件都可能导致此问题。
 
-如果出现 OOM 问题，最简单的方法是通过增加内存上限来解决，Node.js 提供了 `--max-old-space-size` 选项来对此进行设置。你可以在 CLI 命令前添加 [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) 来设置此参数。
+如果机器或容器有足够的可用内存，可以通过 Node.js 的 `--max-old-space-size` 选项增加 V8 老生代内存上限。你可以在 CLI 命令前添加 [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) 来设置此参数。
 
-比如，在 `rsbuild build` 命令前添加参数：
+例如，以 4096 MiB 的老生代内存上限运行 Rsbuild CLI：
 
 ```json title="package.json"
 {
   "scripts": {
     "build": "rsbuild build" // [!code --]
-    "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build" // [!code ++]
+    "build": "node --max-old-space-size=4096 ./node_modules/@rsbuild/core/bin/rsbuild.js build" // [!code ++]
   }
 }
 ```
 
-如果你执行的是其他命令，比如 `rsbuild dev`，请在对应的命令前添加参数。
+执行其他命令时，将末尾的 `build` 替换为所需子命令，例如 `dev`。
 
-`max_old_space_size` 参数的值代表内存上限大小（MB），一般情况下设置为 `16384`（16GB）即可。
+`--max-old-space-size` 限制的是 V8 老生代内存，单位为 MiB，并非整个进程的内存。示例使用 4096 MiB；请根据机器或容器的内存预算选择更低的上限，为 Rspack 的原生内存分配和其他进程留出空间。
 
 Node.js 官方文档中有对以下参数更详细的解释：
 
