@@ -231,7 +231,7 @@ console.log(rawSvg); // 输出 SVG 文件的原始内容
 
 ## 构建产物
 
-以独立文件形式引用的静态资源会被输出到构建产物目录；内联资源和作为字符串导入的资源不会输出独立文件。你可以：
+Rsbuild 会将资源输出到构建产物目录，但内联资源和作为字符串导入的资源除外。你可以通过以下配置自定义输出：
 
 - 通过 [output.filename](/config/output/filename) 来修改产物的文件名。
 - 通过 [output.distPath](/config/output/dist-path) 来修改产物的输出路径。

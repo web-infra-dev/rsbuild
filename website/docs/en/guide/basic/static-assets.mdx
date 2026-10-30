@@ -231,7 +231,7 @@ console.log(rawSvg); // The original content of the SVG file
 
 ## Output files
 
-Assets imported as separate files are emitted to the dist directory. Inlined assets and imports as strings do not emit separate files. You can:
+Rsbuild emits assets to the dist directory unless they are inlined or imported as strings. To customize the output, you can:
 
 - Use [output.filename](/config/output/filename) to modify the output filename.
 - Use [output.distPath](/config/output/dist-path) to modify the output path.
