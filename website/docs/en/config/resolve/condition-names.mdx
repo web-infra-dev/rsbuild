@@ -42,4 +42,4 @@ export default {
 
 The difference between them is how the configuration is merged.
 
-`tools.rspack` uses [rspack-merge](https://github.com/rstackjs/rspack-merge) to merge arrays already present in the Rspack config. Rspack applies its default condition names later, so this does not automatically preserve those defaults. Include `'...'`, as shown above, to extend the default conditions. This placeholder also works in `resolve.conditionNames`.
+Include `'...'` to keep Rspack's default conditions when adding custom ones, as shown above. Array merging in `tools.rspack` does not preserve these defaults automatically. You can also use `'...'` in `resolve.conditionNames`.

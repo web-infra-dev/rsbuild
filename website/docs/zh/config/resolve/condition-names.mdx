@@ -42,4 +42,4 @@ export default {
 
 这两种用法的区别在于配置合并的方式。
 
-`tools.rspack` 使用 [rspack-merge](https://github.com/rstackjs/rspack-merge) 合并 Rspack 配置中已有的数组。Rspack 会在之后应用默认条件名称，因此这种合并不会自动保留这些默认值。要扩展默认条件，请像上例一样包含 `'...'`。此占位符也适用于 `resolve.conditionNames`。
+添加自定义条件时，像上例一样加入 `'...'` 即可保留 Rspack 的默认条件。`tools.rspack` 的数组合并不会自动保留这些默认值。`resolve.conditionNames` 也支持使用 `'...'`。
