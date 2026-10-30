@@ -47,8 +47,8 @@ Rsbuild 现已支持 Storybook！
 
 我们还提供了 `storybook-react-rsbuild` 和 `storybook-vue3-rsbuild`，用于支持 React 和 Vue 3。比如集成 React：
 
-```js title=".storybook/main.js"
-import { StorybookConfig } from 'storybook-react-rsbuild';
+```ts title=".storybook/main.ts"
+import type { StorybookConfig } from 'storybook-react-rsbuild';
 
 const config: StorybookConfig = {
   framework: 'storybook-react-rsbuild',
