@@ -132,7 +132,7 @@ Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree 
 
 该报错表示 V8 JavaScript 堆达到内存上限。大型构建、内存泄漏或 loader、插件都可能导致此问题。
 
-如果机器或容器有足够的可用内存，可以通过 Node.js 的 `--max-old-space-size` 选项增加 V8 老生代内存上限。你可以在 CLI 命令前添加 [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) 来设置此参数。
+如果机器或容器有足够的可用内存，可以通过 Node.js 的 `--max-old-space-size` 选项增加 V8 老生代内存上限。可以像下面的示例一样直接传给 Node.js，也可以通过 [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) 设置。
 
 例如，以 4096 MiB 的老生代内存上限运行 Rsbuild CLI：
 
@@ -147,7 +147,7 @@ Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree 
 
 执行其他命令时，将末尾的 `build` 替换为所需子命令，例如 `dev`。
 
-`--max-old-space-size` 限制的是 V8 老生代内存，单位为 MiB，并非整个进程的内存。示例使用 4096 MiB；请根据机器或容器的内存预算选择更低的上限，为 Rspack 的原生内存分配和其他进程留出空间。
+`--max-old-space-size` 设置 V8 老生代的内存上限，单位为 MiB。整个进程的内存占用可能更高。请为 Rspack 的原生内存和其他进程留出足够空间，4096 MiB 仅作为示例。
 
 Node.js 官方文档中有对以下参数更详细的解释：
 

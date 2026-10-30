@@ -128,7 +128,7 @@ If tree shaking isn't working as expected, check the `sideEffects` configuration
 
 This error means the V8 JavaScript heap reached its limit. A large build, a memory leak, or a loader or plugin can cause it.
 
-If the machine or container has enough available memory, you can increase the V8 old-space limit with Node.js's `--max-old-space-size` option. Set this by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before your CLI command.
+If the machine or container has enough free memory, increase the V8 old-space limit with Node.js's `--max-old-space-size` option. Pass it directly to Node.js, as shown below, or set it through [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions).
 
 For example, run the Rsbuild CLI with a 4096 MiB old-space limit:
 
@@ -143,7 +143,7 @@ For example, run the Rsbuild CLI with a 4096 MiB old-space limit:
 
 For other commands, replace the trailing `build` argument with the desired subcommand, such as `dev`.
 
-`--max-old-space-size` limits V8 old-space memory in MiB, not total process memory. The example uses 4096 MiB; choose a limit below the machine or container memory budget, leaving room for Rspack's native allocations and other processes.
+`--max-old-space-size` sets the V8 old-space limit in MiB. Total process memory can be higher. Choose a limit that leaves enough memory for Rspack's native allocations and other processes; 4096 MiB is only an example.
 
 The following parameters are explained in more detail in the official Node.js documentation:
 
