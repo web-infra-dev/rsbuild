@@ -31,9 +31,9 @@ type Auto =
 
 Type descriptions:
 
-- `true`: Enable CSS Modules for `.module.*` and `.modules.*` files, and ICSS processing for `.icss.*` files (case-insensitive).
+- `true`: Enable CSS Modules for files ending in `.module.*` or `.modules.*`, and ICSS processing for files ending in `.icss.*`. Matching is case-insensitive.
 - `false`: Disable CSS Modules.
-- `RegExp`: Enable CSS Modules for files matched by the supplied regular expression, using its configured flags.
+- `RegExp`: Enable CSS Modules for files that match the regular expression, using the flags you specify.
 - `function`: Enable CSS Modules for files based on the filename satisfying your filter function check.
 
 For example, to additionally enable CSS Modules for files in the `shared/` directory:

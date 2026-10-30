@@ -31,9 +31,9 @@ type Auto =
 
 类型说明：
 
-- `true`: 为所有匹配 `/\.modules?\.\w+$/i.test(filename)` 正则表达式的文件启用 CSS Modules。
+- `true`：为以 `.module.*` 或 `.modules.*` 结尾的文件启用 CSS Modules，为以 `.icss.*` 结尾的文件启用 ICSS 处理。匹配不区分大小写。
 - `false`: 禁用 CSS Modules。
-- `RegExp`: 为所有匹配 `/RegExp/i.test(filename)` 正则表达式的文件启用 CSS Modules。
+- `RegExp`：为匹配该正则表达式的文件启用 CSS Modules，并使用你指定的正则标志。
 - `function`: 为所有通过基于文件名的过滤函数校验的文件启用 CSS Modules。
 
 例如，为 `shared/` 目录下的文件额外启用 CSS Modules：

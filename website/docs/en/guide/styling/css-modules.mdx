@@ -81,7 +81,7 @@ export default () => {
 
 ## CSS Modules recognition rules
 
-By default, filenames containing `.module.` or `.modules.` enable CSS Modules, including the preprocessor extensions listed above. Matching is case-insensitive. Files containing `.icss.` use ICSS mode, which processes imports and exports without making selectors local.
+By default, Rsbuild enables CSS Modules for files ending in `.module.*` or `.modules.*`, including the preprocessor extensions listed above. Matching is case-insensitive. Files ending in `.icss.*` use ICSS mode: imports and exports are processed, but selectors keep their original scope.
 
 If you want to treat other CSS files as CSS Modules, you can configure [output.cssModules.auto](/config/output/css-modules#cssmodulesauto).
 
