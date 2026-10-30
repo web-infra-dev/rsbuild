@@ -83,7 +83,7 @@ import { foo } from './utils';
 console.log(foo);
 ```
 
-- 使用无法识别跨模块类型导出的转译器时，重新导出类型却没有添加 `type` 修饰符。Rsbuild 默认的 SWC 流程可以识别此类导出，但建议显式使用 `export type`，以兼容其他转译器和 `isolatedModules`。
+- 部分转译器无法识别未加 `type` 修饰符的跨模块类型导出，会因此报错。Rsbuild 默认的 SWC 编译流程可以处理此类导出，但使用 `export type` 还可以兼容其他转译器和 TypeScript 的 `isolatedModules` 选项。
 
 ```ts
 // utils.ts
