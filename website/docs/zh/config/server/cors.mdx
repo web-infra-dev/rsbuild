@@ -97,7 +97,7 @@ export default {
 
 `cors` 选项可以是一个对象，与 [cors](https://github.com/expressjs/cors) 中间件的选项相同。
 
-默认配置等同于：
+当 `server.cors` 为 `true` 时，使用的是 `cors` 中间件的默认配置：
 
 ```js
 const defaultCorsOptions = {
@@ -107,6 +107,8 @@ const defaultCorsOptions = {
   optionsSuccessStatus: 204,
 };
 ```
+
+未设置 `server.cors` 时，Rsbuild 会将 `origin` 限制为上文的 `defaultAllowedOrigins`。对象形式的配置会与此 Rsbuild 默认值合并。
 
 ### origin
 
