@@ -57,6 +57,7 @@ export const bar = 'bar';
 
 // index.ts
 import { foo } from './utils';
+console.log(foo);
 ```
 
 In this case, Rsbuild will throw the following error:
@@ -79,17 +80,18 @@ export const bar = 'bar';
 
 // index.ts
 import { foo } from './utils';
+console.log(foo);
 ```
 
-- Re-exporting a type without the `type` modifier, which prevents transpilers like SWC or Babel from recognizing the type export.
+- Some transpilers report this error when a type is re-exported without the `type` modifier. Rsbuild's default SWC pipeline handles these exports, but we still recommend using `export type` for compatibility with other transpilers.
 
 ```ts
 // utils.ts
 export type Foo = 'bar';
 
 // index.ts
-export { Foo } from './utils'; // Incorrect
-export type { Foo } from './utils'; // Correct
+export { Foo } from './utils'; // Does not explicitly mark Foo as a type
+export type { Foo } from './utils'; // Explicit type export (recommended)
 ```
 
 In some cases, a third-party dependency you can't modify causes this error. If you're sure it doesn't affect your application, you can downgrade the log level from `error` to `warn`:

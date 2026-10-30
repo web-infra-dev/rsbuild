@@ -57,6 +57,7 @@ export const bar = 'bar';
 
 // index.ts
 import { foo } from './utils';
+console.log(foo);
 ```
 
 在这种情况下，Rsbuild 会抛出以下错误：
@@ -79,17 +80,18 @@ export const bar = 'bar';
 
 // index.ts
 import { foo } from './utils';
+console.log(foo);
 ```
 
-- re-export 了一个类型，但是没有添加 `type` 修饰符，导致 SWC、Babel 等转译工具无法识别到类型导出，导致编译异常。
+- 部分转译器无法识别未加 `type` 修饰符的跨模块类型导出，会因此报错。Rsbuild 默认的 SWC 编译流程可以处理此类导出，但仍然推荐使用 `export type` 来兼容其他转译器。
 
 ```ts
 // utils.ts
 export type Foo = 'bar';
 
 // index.ts
-export { Foo } from './utils'; // 错误写法
-export type { Foo } from './utils'; // 正确写法
+export { Foo } from './utils'; // 未明确标明 Foo 是类型
+export type { Foo } from './utils'; // 显式导出类型（推荐）
 ```
 
 在个别情况下，以上报错是由第三方依赖引入的，你无法直接修改它。此时，如果你确定该问题不影响你的应用，那么可以添加以下配置，将 `error` 日志修改为 `warn` 级别：
