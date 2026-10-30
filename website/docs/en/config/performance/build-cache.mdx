@@ -123,3 +123,46 @@ export default {
   },
 };
 ```
+
+## View cache statistics
+
+Use the [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile) hook to read cache statistics after each compilation and check whether cached results are being reused.
+
+This requires Rsbuild >= 2.3.0. Enable the experimental [experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) option:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  performance: {
+    buildCache: true,
+  },
+  tools: {
+    rspack: {
+      experiments: {
+        newCache: true,
+      },
+    },
+  },
+  plugins: [
+    {
+      name: 'cache-statistics',
+      setup(api) {
+        api.onAfterEnvironmentCompile(({ stats, environment }) => {
+          const cacheInfo = stats?.toJson({
+            all: false,
+            cacheInfo: true,
+          }).cacheInfo;
+
+          if (cacheInfo) {
+            console.log(`Cache statistics (${environment.name})`);
+            console.table(cacheInfo);
+          }
+        });
+      },
+    },
+  ],
+});
+```
+
+For the meaning of each field, see Rspack's [cacheInfo documentation](https://rspack.rs/api/javascript-api/stats-json#cacheinfo).

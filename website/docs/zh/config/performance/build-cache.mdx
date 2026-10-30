@@ -123,3 +123,46 @@ export default {
   },
 };
 ```
+
+## 查看缓存统计 \{#view-cache-statistics}
+
+通过 [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile) 钩子，可以在每次编译完成后读取缓存统计信息，查看缓存结果是否被复用。
+
+此功能需要 Rsbuild >= 2.3.0 版本，并开启实验性选项 [experiments.newCache](https://rspack.rs/zh/config/experiments#experimentsnewcache)：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  performance: {
+    buildCache: true,
+  },
+  tools: {
+    rspack: {
+      experiments: {
+        newCache: true,
+      },
+    },
+  },
+  plugins: [
+    {
+      name: 'cache-statistics',
+      setup(api) {
+        api.onAfterEnvironmentCompile(({ stats, environment }) => {
+          const cacheInfo = stats?.toJson({
+            all: false,
+            cacheInfo: true,
+          }).cacheInfo;
+
+          if (cacheInfo) {
+            console.log(`Cache statistics (${environment.name})`);
+            console.table(cacheInfo);
+          }
+        });
+      },
+    },
+  ],
+});
+```
+
+各字段的含义请参阅 Rspack 的 [cacheInfo 文档](https://rspack.rs/zh/api/javascript-api/stats-json#cacheinfo)。
