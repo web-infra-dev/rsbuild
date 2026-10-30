@@ -46,7 +46,7 @@ The `<link rel="stylesheet">` tag becomes:
 ```
 
 :::tip
-Rsbuild adds this attribute to external script and stylesheet tags, including same-origin assets. Existing `crossorigin` attributes on individual tags are preserved.
+Rsbuild adds this attribute to tags that load script and stylesheet files, including files from the same origin. If a tag already has a `crossorigin` attribute, its value is preserved.
 :::
 
 ## Optional values
