@@ -16,9 +16,9 @@ Rsdoctor 是一个构建分析工具，能够可视化地展示各个 loaders �
 
 当 Rsbuild 执行一次构建时，会包含 JavaScript 和 Rust 两侧的代码运行开销，以及 JavaScript 和 Rust 之间的数据通信开销。
 
-通常而言，JavaScript 侧的性能开销会大于 Rust 侧，你可以使用 Node.js 的 profiling 来分析 JS 侧的开销，这有助于发现 JS 侧的性能瓶颈。
+可以使用 Node.js profiling 定位 JavaScript 侧的耗时，包括 loader 和插件。要分析 Rspack 的 Rust 执行过程，请使用下方的 Rspack profiling 流程。两者的耗时占比取决于具体项目。
 
-例如，进行 [CPU profiling](https://nodejs.org/docs/v20.17.0/api/cli.html#--cpu-prof) 分析，在项目根目录执行以下命令：
+例如，进行 [CPU profiling](https://nodejs.org/api/cli.html#--cpu-prof) 分析，在项目根目录执行以下命令：
 
 ```bash
 # dev
