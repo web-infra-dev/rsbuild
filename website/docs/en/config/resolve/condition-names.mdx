@@ -42,4 +42,4 @@ export default {
 
 The difference between them is how the configuration is merged.
 
-`tools.rspack` merges the configuration arrays based on [rspack-merge](https://github.com/rstackjs/rspack-merge), which means `tools.rspack.resolve.conditionNames` will merge with the default value of Rsbuild, rather than overriding it.
+`resolve.conditionNames` replaces existing arrays when merging Rsbuild configurations, while `tools.rspack.resolve.conditionNames` merges with explicitly configured values. This does not include Rspack's defaults, which are applied later during initialization.
