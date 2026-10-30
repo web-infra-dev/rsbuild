@@ -75,13 +75,14 @@ export default {
 };
 ```
 
-For multiple entries, this is equivalent to the following configuration. With a single entry, `true` enables only `imports`, keeping `entries` disabled:
+This is equivalent to the following configuration:
 
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: {
       imports: true,
+      // If there is only one entry, Rsbuild will not enable the entries option by default
       entries: true,
     },
   },
@@ -118,7 +119,7 @@ With the `entries` option enabled, Rsbuild will not compile all pages when you s
 
 When lazily compiling entry modules, please note:
 
-- It is most useful for multi-page applications (MPA), where unvisited pages can remain uncompiled. Explicitly setting `entries: true` also enables it for a single entry, postponing compilation until that entry is requested.
+- It only applies to multi-page applications (MPA) and does not optimize single-page applications (SPA).
 - When you visit a page, you need to wait for the page to finish compiling before you can see its content.
 
 ### Async modules

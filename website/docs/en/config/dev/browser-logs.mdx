@@ -37,7 +37,7 @@ The browser will throw an error, and Rsbuild will forward this error to the term
 
 ```bash
 error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name')
- at App (src/App.jsx:3:20)
+ at handleClick (src/App.jsx:3:0)
 ```
 
 ## Options
@@ -69,7 +69,9 @@ The full stack trace will be like:
 
 ```bash
 error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name')
-    at App (src/App.jsx:3:20)
+    at handleClick (src/App.jsx:6:0)
+    at someFunction (src/App.jsx:12:0)
+    at App (src/App.jsx:6:0)
     ...
 ```
 

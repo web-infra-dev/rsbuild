@@ -75,13 +75,14 @@ export default {
 };
 ```
 
-存在多个入口时，这等价于以下配置。只有一个入口时，`true` 仅启用 `imports`，不会启用 `entries`：
+这等价于以下配置：
 
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: {
       imports: true,
+      // 如果只有一个入口，则 Rsbuild 默认不启用 entries 选项
       entries: true,
     },
   },
@@ -118,7 +119,7 @@ export default {
 
 延迟编译入口模块时，有以下注意事项：
 
-- 主要适用于多页应用（MPA），可以避免编译未访问的页面。显式设置 `entries: true` 也会对单个入口生效，将编译推迟到请求该入口时。
+- 只适用于多页应用（MPA），对单页应用（SPA）没有优化效果。
 - 当你访问一个页面时，你需要等待页面编译完成才能看到页面的内容。
 
 ### 异步模块
