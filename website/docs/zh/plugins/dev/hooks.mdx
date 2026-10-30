@@ -520,7 +520,7 @@ const myPlugin = () => ({
 以 `cheerio` 为例，它提供了类似 jQuery 的 API 来操作 HTML：
 
 ```ts
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 const myPlugin = () => ({
   setup(api) {
