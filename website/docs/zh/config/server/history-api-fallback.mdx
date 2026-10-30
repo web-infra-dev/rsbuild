@@ -30,7 +30,7 @@ export default {
 当满足以下条件时，Rsbuild 会将请求的路径重写为你指定的 [index](#index) 文件：
 
 - 请求方式为 `GET` 或 `HEAD`
-- `Accept` 请求头默认包含 `text/html` 或 `*/*`，且不以 `application/json` 开头
+- `Accept` 请求头包含 `text/html` 或 `*/*`（默认接受的类型），且不以 `application/json` 开头
 - 请求路径的最后一段不包含 `.`，除非启用了 [disableDotRule](#disabledotrule)
 - 请求路径未匹配到 [rewrites](#rewrites) 中定义的任何模式
 
@@ -77,7 +77,7 @@ type Rewrites = Array<{
 
 `rewrites` 用于在 History API fallback 发生时，自定义请求路径与页面文件之间的映射。
 
-仅当请求未命中任何静态资源（即进入 fallback 阶段）时，这些规则才会被应用。规则按数组顺序匹配，执行第一条匹配的规则后停止。重写规则在点号规则之前执行，只在服务器内部修改 URL，不会发送 HTTP 重定向。
+当请求未匹配到静态资源时，Rsbuild 会按顺序检查这些规则，并应用第一条匹配的规则。重写规则在点号规则之前执行，只修改服务器内部的 URL，不会发送 HTTP 重定向。
 
 ```ts title="rsbuild.config.ts"
 export default {

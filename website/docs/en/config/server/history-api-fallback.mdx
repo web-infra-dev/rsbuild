@@ -30,7 +30,7 @@ export default {
 Rsbuild will change the requested location to the [index](#index) you specify whenever there is a request which fulfills the following criteria:
 
 - The request is a `GET` or `HEAD` request
-- The `Accept` header includes `text/html` or `*/*` by default, and does not start with `application/json`
+- The `Accept` header contains `text/html` or `*/*` (the default accepted values) and does not start with `application/json`
 - The last path segment does not contain a `.` (dot), unless [disableDotRule](#disabledotrule) is enabled
 - The requested path does not match any pattern defined in [rewrites](#rewrites)
 
@@ -77,7 +77,7 @@ type Rewrites = Array<{
 
 `rewrites` lets you customize how request paths are mapped to HTML files when a History API fallback occurs.
 
-These rules only apply when no static asset matches the request, meaning it has entered the fallback stage. Each rule is evaluated in order until a match is found and executed. Rewrites run before the dot rule and change the URL internally without sending an HTTP redirect.
+When no static asset matches the request, Rsbuild checks these rules in order and applies the first match. Rewrites run before the dot rule. They change the URL within the server without sending an HTTP redirect.
 
 ```ts title="rsbuild.config.ts"
 export default {
