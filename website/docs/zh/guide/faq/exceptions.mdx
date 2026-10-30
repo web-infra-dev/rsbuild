@@ -90,8 +90,8 @@ console.log(foo);
 export type Foo = 'bar';
 
 // index.ts
-export { Foo } from './utils'; // 需要跨模块类型信息
-export type { Foo } from './utils'; // 推荐写法
+export { Foo } from './utils'; // 未明确标明 Foo 是类型
+export type { Foo } from './utils'; // 显式导出类型（推荐）
 ```
 
 在个别情况下，以上报错是由第三方依赖引入的，你无法直接修改它。此时，如果你确定该问题不影响你的应用，那么可以添加以下配置，将 `error` 日志修改为 `warn` 级别：

@@ -90,8 +90,8 @@ console.log(foo);
 export type Foo = 'bar';
 
 // index.ts
-export { Foo } from './utils'; // Requires cross-module type information
-export type { Foo } from './utils'; // Recommended
+export { Foo } from './utils'; // Does not explicitly mark Foo as a type
+export type { Foo } from './utils'; // Explicit type export (recommended)
 ```
 
 In some cases, a third-party dependency you can't modify causes this error. If you're sure it doesn't affect your application, you can downgrade the log level from `error` to `warn`:
