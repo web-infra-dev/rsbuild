@@ -476,7 +476,7 @@ export default {
 
 ### 标识符匹配
 
-`source.define` 在构建时替换 Rspack 能识别的表达式，并非通用的文本替换。对于 `process.env.NODE_ENV` 这样的键，支持点访问、静态方括号访问和可选链访问。解构或将 `process.env` 赋给其他变量，不会使该变量的属性被替换。
+`source.define` 会在构建时替换表达式。对于 `process.env.NODE_ENV` 这样的键，Rspack 支持点号访问、使用固定属性名的方括号访问，以及可选链。通过解构读取属性，或先将 `process.env` 赋给其他变量再访问属性，都不会触发替换。
 
 ```js
 // Good
@@ -522,7 +522,7 @@ export default {
 
 ### Public 变量
 
-请通过 `import.meta.env.PUBLIC_FOO` 或 `process.env.PUBLIC_FOO` 访问 public 变量，并使用下面的接口声明类型。Rsbuild 不会创建独立的 `PUBLIC_FOO` 全局标识符，仅添加 TypeScript 声明不会使该值在运行时可用。
+通过 `import.meta.env.PUBLIC_FOO` 或 `process.env.PUBLIC_FOO` 访问 public 变量，并使用下面的接口声明类型。Rsbuild 不会创建名为 `PUBLIC_FOO` 的全局变量，TypeScript 类型声明也不会创建运行时的值。
 
 ### import.meta.env
 

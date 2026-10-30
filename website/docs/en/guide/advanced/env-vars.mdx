@@ -474,7 +474,7 @@ The `NODE_ENV` environment variable shown in the example above is already inject
 
 ### Identifier matching
 
-`source.define` replaces expressions recognized by Rspack at build time; it is not a general text replacement. For a key such as `process.env.NODE_ENV`, dot access, static bracket access, and optional property access are supported. Destructuring and assigning `process.env` to another variable do not replace that variable's properties.
+`source.define` replaces expressions at build time. For a key such as `process.env.NODE_ENV`, Rspack supports dot notation, brackets with a fixed property name, and optional chaining. It does not replace properties accessed through destructuring or through another variable assigned to `process.env`.
 
 ```js
 // Good
@@ -520,7 +520,7 @@ Therefore, only inject the specific environment variables you need on `process.e
 
 ### Public variables
 
-Access public variables as `import.meta.env.PUBLIC_FOO` or `process.env.PUBLIC_FOO`, and declare their types using the interfaces below. Rsbuild does not create a bare `PUBLIC_FOO` global identifier. A TypeScript declaration alone does not make a value available at runtime.
+Access public variables through `import.meta.env.PUBLIC_FOO` or `process.env.PUBLIC_FOO`. Use the interfaces below to declare their types. Rsbuild does not create a global variable named `PUBLIC_FOO`, and a TypeScript declaration does not create a runtime value.
 
 ### import.meta.env
 
