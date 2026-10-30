@@ -126,24 +126,24 @@ If tree shaking isn't working as expected, check the `sideEffects` configuration
 
 ### `JavaScript heap out of memory` when compiling?
 
-This error means the V8 JavaScript heap reached its limit. A large build, a memory leak, or a loader or plugin can cause it.
+This error means the V8 JavaScript heap reached its limit.
 
-If the machine or container has enough free memory, increase the V8 old-space limit with Node.js's `--max-old-space-size` option. Pass it directly to Node.js, as shown below, or set it through [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions).
+If the machine or container has enough available memory, increase the V8 old-space limit using Node.js's `--max-old-space-size` option. Set this by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before your CLI command.
 
-For example, run the Rsbuild CLI with a 4096 MiB old-space limit:
+For example, add parameters before the `rsbuild build` command:
 
 ```json title="package.json"
 {
   "scripts": {
     "build": "rsbuild build" // [!code --]
-    "build": "node --max-old-space-size=4096 ./node_modules/@rsbuild/core/bin/rsbuild.js build" // [!code ++]
+    "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build" // [!code ++]
   }
 }
 ```
 
-For other commands, replace the trailing `build` argument with the desired subcommand, such as `dev`.
+For other commands like `rsbuild dev`, add the parameters before that command instead.
 
-`--max-old-space-size` sets the V8 old-space limit in MiB. Total process memory can be higher. Choose a limit that leaves enough memory for Rspack's native allocations and other processes; 4096 MiB is only an example.
+`--max_old_space_size` sets the V8 old-space limit in MiB, not the total process memory limit. The value `16384` (16 GiB) is only an example. Choose a limit that leaves enough memory for Rspack's native allocations and other processes.
 
 The following parameters are explained in more detail in the official Node.js documentation:
 
