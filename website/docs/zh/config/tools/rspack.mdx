@@ -25,7 +25,7 @@ export default {
     rspack: {
       resolve: {
         alias: {
-          '@util': 'src/util',
+          '@util': import.meta.dirname + '/src/util',
         },
       },
     },
@@ -59,7 +59,7 @@ export default {
   tools: {
     rspack: (config) => {
       config.resolve.alias ||= {};
-      config.resolve.alias['@util'] = 'src/util';
+      config.resolve.alias['@util'] = import.meta.dirname + '/src/util';
       return config;
     },
   },
@@ -99,7 +99,7 @@ export default {
   tools: {
     rspack: (config, { env }) => {
       if (env === 'development') {
-        config.devtool = 'cheap-module-eval-source-map';
+        config.devtool = 'eval-cheap-module-source-map';
       }
       return config;
     },
@@ -216,7 +216,9 @@ Rspack 实例，等价于 `import { rspack } from '@rsbuild/core'`。
 export default {
   tools: {
     rspack: (config, { rspack }) => {
-      config.plugins.push(new rspack.BannerPlugin());
+      config.plugins.push(
+        new rspack.BannerPlugin({ banner: 'My application' }),
+      );
       return config;
     },
   },

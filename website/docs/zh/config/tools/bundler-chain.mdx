@@ -47,7 +47,7 @@ export default {
   tools: {
     bundlerChain: (chain, { env }) => {
       if (env === 'development') {
-        chain.devtool('cheap-module-eval-source-map');
+        chain.devtool('eval-cheap-module-source-map');
       }
     },
   },
@@ -63,11 +63,10 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    bundlerChain: (config, { isDev }) => {
+    bundlerChain: (chain, { isDev }) => {
       if (isDev) {
-        config.devtool = 'eval-cheap-source-map';
+        chain.devtool('eval-cheap-source-map');
       }
-      return config;
     },
   },
 };
