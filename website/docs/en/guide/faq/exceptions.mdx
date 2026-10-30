@@ -83,7 +83,7 @@ import { foo } from './utils';
 console.log(foo);
 ```
 
-- Some transpilers report this error when a type is re-exported without the `type` modifier. Rsbuild's default SWC pipeline handles these exports, but using `export type` also works with other transpilers and TypeScript's `isolatedModules` option.
+- Some transpilers report this error when a type is re-exported without the `type` modifier. Rsbuild's default SWC pipeline handles these exports, but we still recommend using `export type` for compatibility with other transpilers.
 
 ```ts
 // utils.ts
