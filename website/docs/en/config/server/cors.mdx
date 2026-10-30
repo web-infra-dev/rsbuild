@@ -97,7 +97,7 @@ export default {
 
 The `cors` option can be an object, which is the same as the [cors](https://github.com/expressjs/cors) middleware options.
 
-The default configuration is the equivalent of:
+The `cors` middleware defaults, used when `server.cors` is `true`, are:
 
 ```js
 const defaultOptions = {
@@ -107,6 +107,8 @@ const defaultOptions = {
   optionsSuccessStatus: 204,
 };
 ```
+
+When `server.cors` is omitted, Rsbuild uses the `defaultAllowedOrigins` shown above. When you pass an object, its options are merged with these Rsbuild defaults.
 
 ### origin
 
