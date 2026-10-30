@@ -117,7 +117,7 @@ export default {
 
 常用的文件名占位符有：
 
-- `[name]` - 对于 JavaScript 和 CSS 是 chunk 名称，对于 HTML 是入口名称，对于其他资源则是不含扩展名的原始文件名。
+- `[name]` - entry 名称，即 [source.entry](/config/source/entry) 的 key。
 - `[contenthash]` - 基于文件内容生成的 hash 值。
 - `[contenthash:<length>]` - 基于文件内容生成的 hash 值，并指定 hash 长度。
 - `[ext]` - 文件后缀名，包含点号。
@@ -136,7 +136,7 @@ export default {
 当你在代码中通过 dynamic import 的方式引入模块时，该模块会被单独打包成一个文件，它默认的命名规则如下：
 
 - 在开发模式下会基于模块路径生成名称，比如 `dist/static/js/async/src_add_ts.js`。
-- 在生产模式下会是一个确定性的数字 ID，比如 `dist/static/js/async/798.27e3083eab.js`，这是为了避免在生产模式中泄露源代码的路径，同时字符数也更少。
+- 在生产模式下会是一个随机的数字 id，比如 `dist/static/js/async/798.27e3083eab.js`，这是为了避免在生产模式中泄露源代码的路径，同时字符数也更少。
 
 ```js title="src/index.ts"
 const { add } = await import('./add.ts');
@@ -148,7 +148,7 @@ const { add } = await import('./add.ts');
 const { add } = await import(/* rspackChunkName: "my-chunk-name" */ './add.ts');
 ```
 
-使用默认文件名时，开发模式下生成 `dist/static/js/async/my-chunk-name.js`，生产模式下生成 `dist/static/js/async/my-chunk-name.[contenthash:10].js`。
+通过以上写法指定模块名称后，生成的文件会是 `dist/static/js/async/my-chunk-name.js`。
 
 ## 使用函数
 

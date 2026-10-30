@@ -89,7 +89,7 @@ assetPrefix 可以设置为以下类型的路径：
 
 它与原生配置的区别在于：
 
-- `output.assetPrefix` 在 `production` 和 `none` 模式下生效。
+- `output.assetPrefix` 仅在生产模式下生效。
 - `output.assetPrefix` 默认值与 [server.base](/config/server/base) 相同。
 - `output.assetPrefix` 默认会自动补全尾部的 `/`。
 - `output.assetPrefix` 的值会写入 [process.env.ASSET_PREFIX](/guide/advanced/env-vars#processenvasset_prefix) 环境变量（只能在 client 代码中访问）。
