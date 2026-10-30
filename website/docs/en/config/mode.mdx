@@ -48,7 +48,7 @@ When using the Rsbuild JavaScript API:
 
 ## Development mode
 
-If `mode` is `development`, the following defaults apply unless overridden:
+With `mode: 'development'`, Rsbuild uses the following defaults. You can override them in your configuration:
 
 - When running the dev server for a web target with `dev.hmr` enabled, register the [HotModuleReplacementPlugin](https://rspack.rs/plugins/hot-module-replacement-plugin).
 - Generate JavaScript source maps, but do not generate CSS source maps. See [output.sourceMap](/config/output/source-map) for details.
@@ -60,7 +60,7 @@ If `mode` is `development`, the following defaults apply unless overridden:
 
 ## Production mode
 
-If `mode` is `production`, the following defaults apply unless overridden:
+With `mode: 'production'`, Rsbuild uses the following defaults. You can override them in your configuration:
 
 - For web and web-worker targets, enable JavaScript code minification and register the [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/swc-js-minimizer-rspack-plugin).
 - For web and web-worker targets, enable CSS code minification and register the [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/lightning-css-minimizer-rspack-plugin).

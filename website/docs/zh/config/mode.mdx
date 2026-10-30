@@ -48,7 +48,7 @@ export default {
 
 ## Development 模式
 
-当 `mode` 的值为 `development` 时，除非被配置覆盖，否则默认行为如下：
+设置 `mode: 'development'` 后，Rsbuild 的默认行为如下，可通过配置调整：
 
 - 为 web 目标运行开发服务器且启用 `dev.hmr` 时，注册 [HotModuleReplacementPlugin](https://rspack.rs/zh/plugins/hot-module-replacement-plugin)。
 - 生成 JavaScript 的 source map，不生成 CSS 的 source map，详见 [output.sourceMap](/config/output/source-map)。
@@ -60,7 +60,7 @@ export default {
 
 ## Production 模式
 
-当 `mode` 的值为 `production` 时，除非被配置覆盖，否则默认行为如下：
+设置 `mode: 'production'` 后，Rsbuild 的默认行为如下，可通过配置调整：
 
 - 对 web 和 web-worker 目标开启 JavaScript 代码压缩，注册 [SwcJsMinimizerRspackPlugin](https://rspack.rs/zh/plugins/swc-js-minimizer-rspack-plugin)。
 - 对 web 和 web-worker 目标开启 CSS 代码压缩，注册 [LightningCssMinimizerRspackPlugin](https://rspack.rs/zh/plugins/lightning-css-minimizer-rspack-plugin)。
