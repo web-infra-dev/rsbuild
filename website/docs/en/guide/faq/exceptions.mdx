@@ -128,24 +128,24 @@ If tree shaking isn't working as expected, check the `sideEffects` configuration
 
 ### `JavaScript heap out of memory` when compiling?
 
-This error means the V8 JavaScript heap reached its limit. A large build, a memory leak, or a loader or plugin can cause it.
+This error indicates a memory overflow during the build process. This typically happens when the bundled content exceeds Node.js's default memory limit.
 
-If the machine or container has enough available memory, you can increase the V8 old-space limit with Node.js's `--max-old-space-size` option. Set this by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before your CLI command.
+To fix out-of-memory issues, the easiest solution is to increase the memory limit using Node.js's `--max-old-space-size` option. Set this by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before your CLI command.
 
-For example, run the Rsbuild CLI with a 4096 MiB old-space limit:
+For example, add parameters before the `rsbuild build` command:
 
 ```json title="package.json"
 {
   "scripts": {
     "build": "rsbuild build" // [!code --]
-    "build": "node --max-old-space-size=4096 ./node_modules/@rsbuild/core/bin/rsbuild.js build" // [!code ++]
+    "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build" // [!code ++]
   }
 }
 ```
 
-For other commands, replace the trailing `build` argument with the desired subcommand, such as `dev`.
+For other commands like `rsbuild dev`, add the parameters before that command instead.
 
-`--max-old-space-size` limits V8 old-space memory in MiB, not total process memory. The example uses 4096 MiB; choose a limit below the machine or container memory budget, leaving room for Rspack's native allocations and other processes.
+The value of the `max_old_space_size` parameter represents the upper limit of the memory size (MB). Generally, it can be set to `16384` (16GB).
 
 The following parameters are explained in more detail in the official Node.js documentation:
 
