@@ -180,7 +180,7 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 
 说明：
 
-- 表中列出的是相关配置，并非完全相同的 API。Vite 的 `mode` 用于选择环境变量文件，对应 Rsbuild 的 `--env-mode`。Rsbuild 的 [mode](/config/mode) 则用于选择 `development`、`production` 或 `none`，并决定 `import.meta.env.MODE` 的值。
+- Vite 的 `mode` 用于选择要加载的环境变量文件，在 Rsbuild 中对应 `--env-mode`。Rsbuild 的 [mode](/config/mode) 控制构建行为（`development`、`production` 或 `none`）和 `import.meta.env.MODE` 的值。
 - `resolve.preserveSymlinks: true` 对应 `tools.rspack.resolve.symlinks: false`，两者的布尔值含义相反。
 - 路径前缀使用 `server.base`；完整的 CDN URL 使用 [output.assetPrefix](/config/output/asset-prefix)，必要时也配置 [dev.assetPrefix](/config/dev/asset-prefix)。
 - Rsbuild 使用 SWC 压缩 JavaScript，因此不能将 Vite 的 `build.terserOptions` 直接复制到 `output.minify.jsOptions`。如需保留 Terser 配置，请[切换为 Terser 压缩器](/guide/configuration/swc#switching-minifier)。

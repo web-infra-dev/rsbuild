@@ -180,7 +180,7 @@ Here is the corresponding Rsbuild configuration for each Vite option:
 
 Notes:
 
-- These are related options, not necessarily identical APIs. Vite `mode` selects environment files; use `--env-mode` for this in Rsbuild. Rsbuild [mode](/config/mode) instead selects `development`, `production`, or `none`, and determines `import.meta.env.MODE`.
+- Vite `mode` selects which environment files to load. Use `--env-mode` for this in Rsbuild. Rsbuild [mode](/config/mode) controls build behavior (`development`, `production`, or `none`) and the value of `import.meta.env.MODE`.
 - `resolve.preserveSymlinks: true` corresponds to `tools.rspack.resolve.symlinks: false`; the Boolean meanings are opposite.
 - Use `server.base` for a pathname prefix. For a full CDN URL, configure [output.assetPrefix](/config/output/asset-prefix) and, if needed, [dev.assetPrefix](/config/dev/asset-prefix).
 - Rsbuild uses SWC for JavaScript minification, so Vite `build.terserOptions` cannot be copied into `output.minify.jsOptions`. To keep Terser options, [switch the minifier to Terser](/guide/configuration/swc#switching-minifier).
