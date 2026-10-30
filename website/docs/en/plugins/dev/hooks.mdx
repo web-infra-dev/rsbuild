@@ -524,7 +524,7 @@ Instead of directly manipulating the HTML string, you can use [cheerio](https://
 For example, `cheerio` provides a jQuery-like API for HTML manipulation:
 
 ```ts
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 const myPlugin = () => ({
   setup(api) {
