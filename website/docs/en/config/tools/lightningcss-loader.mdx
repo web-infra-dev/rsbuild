@@ -12,8 +12,6 @@ const defaultOptions = {
   errorRecovery: true,
   // use current project's browserslist config
   targets: browserslist,
-  // minify is enabled when output.injectStyles is true and in production mode
-  minify: config.mode === 'production' && config.output.injectStyles,
 };
 ```
 
@@ -53,6 +51,13 @@ export default {
   },
 };
 ```
+
+## CSS minification
+
+When [CSS minification](/config/output/minify) is enabled, Rsbuild minifies styles as follows:
+
+- Styles imported with [`?inline`](/guide/styling/css-usage#inline) or [`?url`](/guide/styling/css-usage#url), or injected through [output.injectStyles](/config/output/inject-styles), are minified by `lightningcss-loader`.
+- Other styles are extracted into separate CSS files and processed by the CSS minimizer.
 
 ## Disable loader
 
