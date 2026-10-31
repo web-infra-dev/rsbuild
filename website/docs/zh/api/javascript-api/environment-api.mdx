@@ -284,10 +284,6 @@ console.log(webStats.toJson({ all: false }));
 
 用于在服务端加载并执行构建产物。调用该方法后，会返回指定入口模块导出的内容，通常用于在服务端环境中运行由 Rsbuild 构建生成的产物。
 
-`loadBundle` 会等待指定环境编译完成，但不会等待 [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile) 钩子结束。因此，可以在该钩子中使用 `await loadBundle()`。
-
-加载 ESM 产物时，需要为 Node.js 添加 `--experimental-vm-modules`，例如 `node --experimental-vm-modules server.mjs`。Node.js 构建默认输出 ESM；CommonJS 产物（`output.module: false`）不需要此参数。
-
 - **类型：**
 
 ```ts
@@ -304,6 +300,10 @@ type LoadBundle = <T = unknown>(entryName: string) => Promise<T>;
 // 加载 `main` 入口的 bundle
 const result = await environments.node.loadBundle('main');
 ```
+
+`loadBundle` 会等待指定环境编译完成，但不会等待 [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile) 钩子结束。因此，可以在该钩子中使用 `await loadBundle()`。
+
+加载 ESM 产物时，需要为 Node.js 添加 `--experimental-vm-modules`，例如 `node --experimental-vm-modules server.mjs`。Node.js 构建默认输出 ESM；CommonJS 产物（`output.module: false`）不需要此参数。
 
 ### getTransformedHtml
 
