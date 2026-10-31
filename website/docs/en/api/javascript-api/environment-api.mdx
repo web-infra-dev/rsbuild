@@ -302,7 +302,10 @@ const result = await environments.node.loadBundle('main');
 
 `loadBundle` waits for the requested environment to finish compiling. You can use `await loadBundle()` inside [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile) because it does not wait for the hook itself to finish.
 
-For ESM output, start Node.js with `--experimental-vm-modules`, for example `node --experimental-vm-modules server.mjs`. Node.js output uses ESM by default. CommonJS output (`output.module: false`) does not require this flag.
+The Node.js startup options depend on the bundle format:
+
+- **ESM (the default for Node.js builds):** Start Node.js with `--experimental-vm-modules`, for example `node --experimental-vm-modules server.mjs`.
+- **CommonJS (`output.module: false`):** This flag is not required.
 
 ### getTransformedHtml
 
