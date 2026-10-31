@@ -398,7 +398,10 @@ console.log(process.env.PUBLIC_NAME); // -> 'jack'
 console.log(process.env.PASSWORD); // ReferenceError: process is not defined
 ```
 
-`import.meta.env.PASSWORD` is absent from the generated environment object. `process.env.PASSWORD` is not replaced, and can throw a `ReferenceError` in browsers because Rsbuild does not provide a global `process` object.
+`PASSWORD` is not a public variable, so it is not exposed to client code:
+
+- `import.meta.env.PASSWORD` returns `undefined` because the generated environment object has no `PASSWORD` property.
+- `process.env.PASSWORD` is not replaced. Accessing it in a browser can throw a `ReferenceError`, because Rsbuild does not provide a global `process` object.
 
 :::tip
 
@@ -474,7 +477,10 @@ The `NODE_ENV` environment variable shown in the example above is already inject
 
 ### Identifier matching
 
-`source.define` replaces expressions at build time. For a key such as `process.env.NODE_ENV`, Rspack supports dot notation, brackets with a fixed property name, and optional chaining. It does not replace properties accessed through destructuring or through another variable assigned to `process.env`.
+`source.define` replaces expressions at build time. For a key such as `process.env.NODE_ENV`:
+
+- Dot notation, brackets with a fixed property name, and optional chaining are supported.
+- Destructuring or accessing the property through another variable assigned to `process.env` does not trigger replacement.
 
 ```js
 // Good
@@ -520,7 +526,9 @@ Therefore, only inject the specific environment variables you need on `process.e
 
 ### Public variables
 
-Access public variables through `import.meta.env.PUBLIC_FOO` or `process.env.PUBLIC_FOO`. Use the interfaces below to declare their types. Rsbuild does not create a global variable named `PUBLIC_FOO`, and a TypeScript declaration does not create a runtime value.
+Access public variables through `import.meta.env.PUBLIC_FOO` or `process.env.PUBLIC_FOO`, and use the interfaces below to declare their types.
+
+Rsbuild does not create a global variable named `PUBLIC_FOO`. Adding a TypeScript declaration for that name does not make it available at runtime.
 
 ### import.meta.env
 
