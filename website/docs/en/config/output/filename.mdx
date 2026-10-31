@@ -148,7 +148,10 @@ To specify a fixed name for the async module, use the [magic comments](https://r
 const { add } = await import(/* rspackChunkName: "my-chunk-name" */ './add.ts');
 ```
 
-With the default filenames, this produces `dist/static/js/async/my-chunk-name.js` in development and `dist/static/js/async/my-chunk-name.[contenthash:10].js` in production.
+With the default filename configuration, the generated path depends on the build mode:
+
+- Development: `dist/static/js/async/my-chunk-name.js`.
+- Production: `dist/static/js/async/my-chunk-name.[contenthash:10].js`.
 
 ## Using function
 
