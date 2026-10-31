@@ -310,9 +310,11 @@ COPY --from=builder /app/dist ./dist
 CMD ["./node_modules/.bin/srvx", "--prod", "-s", "../client", "dist/server/index.js"]
 ```
 
-For pnpm, Yarn, or a monorepo, adjust the install command and copy the workspace manifests, package manager configuration, and patches your project needs.
+To adapt this example to your project:
 
-Modern Yarn uses [`yarn workspaces focus --all --production`](https://yarnpkg.com/cli/workspaces/focus) to install production dependencies. Keep install scripts enabled if your runtime dependencies need them.
+- For pnpm or Yarn, use the corresponding production install command. Modern Yarn uses [`yarn workspaces focus --all --production`](https://yarnpkg.com/cli/workspaces/focus).
+- Copy any required workspace manifests, package manager configuration, and patches into the image before installing dependencies.
+- Keep install scripts enabled if your runtime dependencies need them.
 
 Configure the preceding build stages according to the TanStack Start [React](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) or [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting) deployment guide.
 
