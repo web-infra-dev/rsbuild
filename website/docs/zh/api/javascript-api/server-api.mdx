@@ -28,6 +28,7 @@ export default {
 
 ```ts
 const myPlugin = () => ({
+  name: 'my-plugin',
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       console.log('the server is ', server);

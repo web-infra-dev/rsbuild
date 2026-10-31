@@ -146,11 +146,13 @@ For example, consider the following two plugins:
 ```ts
 const pluginFoo = {
   name: 'plugin-foo',
+  setup() {},
 };
 
 const pluginBar = {
   name: 'plugin-bar',
   pre: ['plugin-foo'],
+  setup() {},
 };
 ```
 
@@ -163,11 +165,13 @@ By setting the `post` property, you can force some specific plugins to execute a
 ```ts
 const pluginFoo = {
   name: 'plugin-foo',
+  setup() {},
 };
 
 const pluginBar = {
   name: 'plugin-bar',
   post: ['plugin-foo'],
+  setup() {},
 };
 ```
 
@@ -180,11 +184,13 @@ You can remove other plugins within a plugin using the `remove` property.
 ```ts
 const pluginFoo = {
   name: 'plugin-foo',
+  setup() {},
 };
 
 const pluginBar = {
   name: 'plugin-bar',
   remove: ['plugin-foo'],
+  setup() {},
 };
 ```
 
@@ -202,6 +208,7 @@ The content of `api.context` is exactly the same as `rsbuild.context`, please re
 
 ```ts
 const pluginFoo = () => ({
+  name: 'plugin-foo',
   setup(api) {
     console.log(api.context.distPath);
   },
@@ -218,6 +225,7 @@ import GetRsbuildConfig from '@en/shared/getRsbuildConfig.mdx';
 
 ```ts
 const pluginFoo = () => ({
+  name: 'plugin-foo',
   setup(api) {
     const config = api.getRsbuildConfig();
     console.log(config.html?.title);
@@ -235,6 +243,7 @@ import GetNormalizedConfig from '@en/shared/getNormalizedConfig.mdx';
 
 ```ts
 const pluginFoo = () => ({
+  name: 'plugin-foo',
   setup(api) {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       const config = api.getNormalizedConfig();
@@ -248,6 +257,7 @@ When a plugin hook provides [`environment`](/api/javascript-api/environment-api#
 
 ```ts
 const pluginFoo = () => ({
+  name: 'plugin-foo',
   setup(api) {
     api.onBeforeEnvironmentCompile(({ environment }) => {
       const { config } = environment;
@@ -268,6 +278,7 @@ A logger instance that can be used to output logs in a format consistent with Rs
 
 ```ts
 const pluginLogging = () => ({
+  name: 'plugin-logging',
   setup(api) {
     api.logger.info('This is an info message');
     api.logger.warn('This is a warning message');
@@ -286,6 +297,7 @@ import IsPluginExists from '@en/shared/isPluginExists.mdx';
 
 ```ts
 export default () => ({
+  name: 'my-plugin',
   setup(api) {
     console.log(api.isPluginExists('plugin-foo'));
   },
@@ -296,6 +308,7 @@ Or check if a plugin exists in a specified environment:
 
 ```ts
 export default () => ({
+  name: 'my-plugin',
   setup(api) {
     console.log(api.isPluginExists('plugin-foo', { environment: 'web' }));
   },

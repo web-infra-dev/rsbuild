@@ -146,11 +146,13 @@ const pluginBar = () => ({
 ```ts
 const pluginFoo = {
   name: 'plugin-foo',
+  setup() {},
 };
 
 const pluginBar = {
   name: 'plugin-bar',
   pre: ['plugin-foo'],
+  setup() {},
 };
 ```
 
@@ -163,11 +165,13 @@ Bar 插件在 `pre` 属性中配置了 Foo 插件，因此 Foo 插件一定会�
 ```ts
 const pluginFoo = {
   name: 'plugin-foo',
+  setup() {},
 };
 
 const pluginBar = {
   name: 'plugin-bar',
   post: ['plugin-foo'],
+  setup() {},
 };
 ```
 
@@ -180,11 +184,13 @@ Bar 插件在 `post` 属性中配置了 Foo 插件，因此 Foo 插件一定会�
 ```ts
 const pluginFoo = {
   name: 'plugin-foo',
+  setup() {},
 };
 
 const pluginBar = {
   name: 'plugin-bar',
   remove: ['plugin-foo'],
+  setup() {},
 };
 ```
 
@@ -202,6 +208,7 @@ const pluginBar = {
 
 ```ts
 const pluginFoo = () => ({
+  name: 'plugin-foo',
   setup(api) {
     console.log(api.context.distPath);
   },
@@ -218,6 +225,7 @@ import GetRsbuildConfig from '@zh/shared/getRsbuildConfig.mdx';
 
 ```ts
 const pluginFoo = () => ({
+  name: 'plugin-foo',
   setup(api) {
     const config = api.getRsbuildConfig();
     console.log(config.html?.title);
@@ -235,6 +243,7 @@ import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.mdx';
 
 ```ts
 const pluginFoo = () => ({
+  name: 'plugin-foo',
   setup(api) {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       const config = api.getNormalizedConfig();
@@ -248,6 +257,7 @@ const pluginFoo = () => ({
 
 ```ts
 const pluginFoo = () => ({
+  name: 'plugin-foo',
   setup(api) {
     api.onBeforeEnvironmentCompile(({ environment }) => {
       const { config } = environment;
@@ -268,6 +278,7 @@ const pluginFoo = () => ({
 
 ```ts
 const pluginLogging = () => ({
+  name: 'plugin-logging',
   setup(api) {
     api.logger.info('This is an info message');
     api.logger.warn('This is a warning message');
@@ -286,6 +297,7 @@ import IsPluginExists from '@zh/shared/isPluginExists.mdx';
 
 ```ts
 export default () => ({
+  name: 'my-plugin',
   setup(api) {
     console.log(api.isPluginExists('plugin-foo'));
   },
@@ -296,6 +308,7 @@ export default () => ({
 
 ```ts
 export default () => ({
+  name: 'my-plugin',
   setup(api) {
     console.log(api.isPluginExists('plugin-foo', { environment: 'web' }));
   },
