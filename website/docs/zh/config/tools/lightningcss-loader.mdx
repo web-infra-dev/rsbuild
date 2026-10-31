@@ -54,7 +54,10 @@ export default {
 
 ## CSS 压缩 \{#css-minification}
 
-启用 [CSS 压缩](/config/output/minify) 后，Rsbuild 会在 loader 中压缩通过 `?inline`、`?url` 导入的样式，以及通过 [output.injectStyles](/config/output/inject-styles) 注入的样式。其他 CSS 会提取为文件，由 CSS 压缩器单独处理。
+启用 [CSS 压缩](/config/output/minify) 后，Rsbuild 会根据样式的引入方式进行压缩：
+
+- 通过 [`?inline`](/guide/styling/css-usage#inline) 或 [`?url`](/guide/styling/css-usage#url) 导入的样式，以及通过 [output.injectStyles](/config/output/inject-styles) 注入的样式，由 `lightningcss-loader` 压缩。
+- 其余样式会提取为独立的 CSS 文件，再由 CSS 压缩器处理。
 
 ## 禁用 loader
 
