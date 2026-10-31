@@ -1,5 +1,5 @@
 ---
-description: '在生产模式构建时，是否自动移除代码中的 console.[methodName]。'
+description: '是否在 JavaScript 压缩时移除 console 调用。'
 ---
 
 # performance.removeConsole
@@ -7,7 +7,9 @@ description: '在生产模式构建时，是否自动移除代码中的 console.
 - **类型：** `boolean | ConsoleType[]`
 - **默认值：** `false`
 
-在生产模式构建时，是否自动移除代码中的 `console.[methodName]`。
+是否在 JavaScript 压缩时移除 `console.[methodName]` 调用。此选项需要启用 [JavaScript 压缩](/config/output/minify) 才能生效。
+
+参数中的副作用会被保留。例如，移除 `console.log(doWork())` 后，仍会执行 `doWork()`。
 
 ## 全部移除
 
