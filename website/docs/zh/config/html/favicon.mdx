@@ -7,13 +7,12 @@ description: '通过 html.favicon 使用本地文件、URL 或按入口执行的
 - **类型：** `string | Function`
 - **默认值：** 自动读取 public 目录下的 favicon 文件
 
-设置页面的 favicon 图标，可以设置为：
+设置所有页面的 favicon 图标，Rsbuild 会根据配置值进行处理：
 
-- URL 地址。
-- 文件的绝对路径。
-- 相对于项目 [root](/config/root) 的相对路径。
+- **URL 地址：** 直接引用该 URL，不会下载文件。
+- **本地文件路径：** 在编译时将文件复制到输出目录。路径可以是绝对路径，也可以是相对于项目 [root](/config/root) 的相对路径。
 
-编译时，Rsbuild 会将本地图标复制到输出目录。如果配置的是图标 URL，则直接引用该 URL，不会下载文件。两种情况都会在 HTML 中添加 `<link>` 标签。
+两种情况都会在 HTML 中添加对应的 favicon `<link>` 标签。
 
 :::tip
 Rsbuild 还提供了 [html.appIcon](/config/html/app-icon) 来设置 Web 应用的图标。
