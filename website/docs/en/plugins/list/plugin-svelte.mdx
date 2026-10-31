@@ -117,11 +117,13 @@ Currently, `svelte-loader` does not support HMR for Svelte v5, see [svelte-loade
 
 ### Import paths in Less/Sass
 
-Install the preprocessors you use (omit either package if it is not needed):
+Svelte preprocessors do not automatically use Rsbuild's path aliases. Configure their search paths to resolve styles from a directory such as `src`.
+
+First, install the preprocessors you use. Omit either package if it is not needed:
 
 <PackageManagerTabs command="add sass less -D" />
 
-Svelte preprocessors do not automatically use Rsbuild's path aliases. To resolve imports such as `@import 'styles/variables.scss'` or `@import 'styles/variables.less'` from `src`, configure the preprocessor's search paths:
+Then add `src` to the search paths. This allows imports such as `@import 'styles/variables.scss'` or `@import 'styles/variables.less'` to resolve from that directory:
 
 ```ts title="rsbuild.config.ts"
 import { fileURLToPath } from 'node:url';
