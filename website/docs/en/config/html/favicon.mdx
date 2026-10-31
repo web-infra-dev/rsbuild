@@ -7,13 +7,12 @@ description: 'Set page favicons with html.favicon using local files, URLs, or pe
 - **Type:** `string | Function`
 - **Default:** Automatically detects favicon files in the `public` directory
 
-Sets the favicon icon path for all pages. It can be set to:
+Sets the favicon for all pages. Rsbuild handles the value as follows:
 
-- a URL.
-- an absolute file path.
-- a relative path relative to the project [root](/config/root).
+- **URL:** Uses the URL directly without downloading the file.
+- **Local file path:** Copies the file to the output directory during compilation. The path can be absolute or relative to the project [root](/config/root).
 
-During compilation, Rsbuild copies local favicon files to the output directory. For a favicon URL, it uses the URL directly without downloading the file. In both cases, Rsbuild adds a `<link>` tag to the HTML.
+In both cases, Rsbuild adds a `<link>` tag for the favicon to the HTML.
 
 :::tip
 Rsbuild also provides [html.appIcon](/config/html/app-icon) to set the icon of the web application.
