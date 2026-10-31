@@ -32,9 +32,7 @@ SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能�
 
 ```tsx
 // 引用 static 目录下的 logo.png 图片
-import logo from './static/logo.png?url';
-
-console.log(logo); // "/static/image/logo.[hash].png"
+import logo from './static/logo.png';
 
 export default () => <img src={logo} />;
 ```
@@ -42,9 +40,7 @@ export default () => <img src={logo} />;
 也可以使用[路径别名](/guide/advanced/alias)来引用：
 
 ```tsx
-import logo from '@/static/logo.png?url';
-
-console.log(logo); // "/static/image/logo.[hash].png"
+import logo from '@/static/logo.png';
 
 export default () => <img src={logo} />;
 ```
@@ -54,9 +50,7 @@ export default () => <img src={logo} />;
 Rsbuild 支持使用 JavaScript 原生的 [URL](https://developer.mozilla.org/docs/Web/API/URL) 和 [import.meta.url](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import.meta) 相配合，来引用静态资源。
 
 ```tsx
-const logo = new URL('./static/logo.png?url', import.meta.url).href;
-
-console.log(logo); // "https://example.com/static/image/logo.[hash].png"
+const logo = new URL('./static/logo.png', import.meta.url).href;
 
 export default () => <img src={logo} />;
 ```
