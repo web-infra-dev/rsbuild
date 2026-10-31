@@ -141,7 +141,9 @@ pluginSass({
 
 ### 选择 Sass API
 
-Rsbuild 默认使用 `modern-compiler` JavaScript API。如果自定义 importer 或函数仍依赖 Sass 的旧版 JavaScript API，可以暂时将 sass-loader 的 `api` 设置为 `legacy`。此选项改变的是 JavaScript 集成 API，不会恢复已移除的 Sass 语言特性。
+Rsbuild 默认使用 `modern-compiler` JavaScript API。
+
+如果自定义 importer 或函数仍依赖 Sass 的旧版 JavaScript API，可以暂时将 sass-loader 的 `api` 设置为 `legacy`：
 
 ```ts
 pluginSass({
@@ -150,6 +152,8 @@ pluginSass({
   },
 });
 ```
+
+此选项改变的是 JavaScript 集成 API，不会恢复已移除的 Sass 语言特性。
 
 :::tip
 Sass 的 `legacy` API 已经被废弃，并且将在 Sass 2.0 中被移除，建议迁移到 `modern-compiler` API，详见 [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/)。
