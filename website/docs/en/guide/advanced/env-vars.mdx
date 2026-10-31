@@ -257,7 +257,12 @@ Rsbuild supports reading the following types of env files:
 | `.env.development.local` | Local overrides for `.env.development`, should be added to `.gitignore`. |
 | `.env.production.local`  | Local overrides for `.env.production`, should be added to `.gitignore`.  |
 
-Rsbuild loads `.env`, `.env.local`, `.env.[mode]`, and `.env.[mode].local` in that order, using the current env mode for `[mode]`. Values from later files override earlier ones. Variables already set in the Node.js process take precedence, except `NODE_ENV`, which an env file can override.
+Rsbuild loads `.env`, `.env.local`, `.env.[mode]`, and `.env.[mode].local` in that order, using the current env mode for `[mode]`.
+
+If a variable is defined more than once:
+
+- Values from files loaded later override those from earlier files.
+- Variables already set in the Node.js process take precedence over env files. The exception is `NODE_ENV`, which an env file can override.
 
 ### Env mode
 
@@ -351,7 +356,9 @@ console.log(process.env.BAR); // '2'
 
 ### Manually load env
 
-When using the [JavaScript API](/api/start/index), enable [`createRsbuild({ loadEnv: true })`](/api/javascript-api/core#load-environment-variables) to load environment files and define public variables automatically. Alternatively, call [loadEnv](/api/javascript-api/core#loadenv) and merge its public variables into [source.define](/config/source/define):
+When using the [JavaScript API](/api/start/index), enable [`createRsbuild({ loadEnv: true })`](/api/javascript-api/core#load-environment-variables) to load environment files and define public variables automatically.
+
+To load them manually, call [loadEnv](/api/javascript-api/core#loadenv) and merge its public variables into [source.define](/config/source/define):
 
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
