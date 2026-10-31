@@ -55,8 +55,6 @@ type CreateRsbuildOptions = {
 - `config`: Rsbuild configuration object or the result returned by [`loadConfig`](#loadconfig). Refer to [Config overview](/config/) for all available configuration options.
 - `restart`: A function that handles restart requests for the current dev server or watch build. See [restart](#restart-handling).
 
-`createRsbuild()` does not load `rsbuild.config.*` or `.env` files by default. To load your configuration file, call `loadConfig()` and pass its `content` to `config`. Set `loadEnv: true` to load environment files.
-
 ### Pass configuration
 
 You can pass an Rsbuild configuration object to the `config` option:
@@ -71,7 +69,7 @@ const config: RsbuildConfig = {
 const rsbuild = await createRsbuild({ config });
 ```
 
-You can also pass the complete result returned by [`loadConfig`](#loadconfig) to `config`:
+`createRsbuild()` does not load `rsbuild.config.*` by default. To load a configuration file, call [`loadConfig`](#loadconfig) and pass its complete result to `config`:
 
 ```ts
 import { createRsbuild, loadConfig } from '@rsbuild/core';
@@ -106,7 +104,7 @@ const rsbuild = await createRsbuild({
 
 ### Load environment variables
 
-The `loadEnv` option in `createRsbuild` calls the [loadEnv](/api/javascript-api/core#loadenv) method to load environment variables:
+`createRsbuild()` does not load `.env` files by default. Set `loadEnv: true` to call [loadEnv](/api/javascript-api/core#loadenv) and load environment variables:
 
 ```ts
 const rsbuild = await createRsbuild({
@@ -118,7 +116,7 @@ Setting `loadEnv: true` automatically completes these steps:
 
 1. Call the `loadEnv` method to load environment variables.
 2. Add [source.define](/config/source/define) configuration, defining the `publicVars` returned by `loadEnv` as global variables.
-3. Watch the loaded `.env` files for changes that request a restart. If persistent caching is enabled, also add them as cache dependencies. To handle restart requests from the dev server or watch build, provide a [restart handler](#restart-handling).
+3. Watch the loaded `.env` files for changes and request a restart when they change.
 4. Automatically call the `cleanup` method returned by `loadEnv` when closing the build or dev server.
 
 You can also pass in the options of the [loadEnv](/api/javascript-api/core#loadenv) method, for example:
@@ -130,6 +128,8 @@ const rsbuild = await createRsbuild({
   },
 });
 ```
+
+If persistent caching is enabled, the loaded `.env` files are also added as cache dependencies. To handle restart requests from the dev server or watch build, provide a [restart handler](#restart-handling).
 
 ### Restart handling
 
