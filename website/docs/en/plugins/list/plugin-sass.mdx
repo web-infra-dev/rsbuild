@@ -141,7 +141,9 @@ Switching from `sass-embedded` to another Sass implementation can significantly 
 
 ### Select Sass API
 
-Rsbuild uses the `modern-compiler` JavaScript API by default. If a custom importer or function still depends on Sass's legacy JavaScript API, you can temporarily set sass-loader's `api` option to `legacy`. This changes the JavaScript integration API; it does not restore removed Sass language features.
+Rsbuild uses the `modern-compiler` JavaScript API by default.
+
+If a custom importer or function still depends on Sass's legacy JavaScript API, temporarily set sass-loader's `api` option to `legacy`:
 
 ```ts
 pluginSass({
@@ -150,6 +152,8 @@ pluginSass({
   },
 });
 ```
+
+This option changes the JavaScript integration API. It does not restore removed Sass language features.
 
 :::tip
 Sass's `legacy` API has been deprecated and will be removed in Sass 2.0. We recommend migrating to the `modern-compiler` API. For more details, see [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/).
