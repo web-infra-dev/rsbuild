@@ -117,11 +117,13 @@ pluginSvelte({
 
 ### Less/Sass 导入路径 \{#import-paths-in-lesssass}
 
-安装需要的预处理器（不需要的包可以省略）：
+Svelte 预处理器不会自动使用 Rsbuild 的路径别名。要从 `src` 等目录查找样式文件，需要配置预处理器的搜索路径。
+
+首先，安装需要的预处理器，不需要的包可以省略：
 
 <PackageManagerTabs command="add sass less -D" />
 
-Svelte 预处理器不会自动使用 Rsbuild 的路径别名。要从 `src` 目录解析 `@import 'styles/variables.scss'` 或 `@import 'styles/variables.less'` 等导入，请配置预处理器的搜索路径：
+然后，将 `src` 加入搜索路径。这样，`@import 'styles/variables.scss'` 或 `@import 'styles/variables.less'` 等导入就可以从该目录解析：
 
 ```ts title="rsbuild.config.ts"
 import { fileURLToPath } from 'node:url';
