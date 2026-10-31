@@ -32,7 +32,7 @@ const defaultDatUriLimit = {
 
 Set the size threshold to inline static assets such as images and fonts.
 
-By default, static assets will be Base64 encoded and inlined into the page if they are smaller than 4KiB.
+By default, static assets will be Base64 encoded and inlined into the page if they are at most 4KiB.
 
 You can adjust this threshold by setting the `dataUriLimit` config.
 
@@ -48,7 +48,7 @@ Details:
 
 ## Example
 
-- Inline all static assets less than 10KiB:
+- Inline all static assets at most 10KiB:
 
 ```ts title="rsbuild.config.ts"
 export default {
