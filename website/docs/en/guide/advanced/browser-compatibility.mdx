@@ -152,9 +152,9 @@ See [source.include](/config/source/include) for detailed usage.
 
 ## Polyfills
 
-Rsbuild uses SWC to inject [core-js](https://github.com/zloirock/core-js) polyfills when enabled. The [@swc/helpers](https://npmjs.com/package/@swc/helpers) package supplies helpers for syntax transformations; it does not polyfill built-in APIs.
+Rsbuild uses SWC to inject [core-js](https://github.com/zloirock/core-js) polyfills when enabled. Use [output.polyfill](/config/output/polyfill) to choose a mode. Before enabling `usage` or `entry`, [install core-js v3](/config/output/polyfill#install-core-js) in your project.
 
-Use [output.polyfill](/config/output/polyfill) to choose a polyfill mode. Before enabling `usage` or `entry`, [install core-js v3](/config/output/polyfill#install-core-js) in your project.
+The [@swc/helpers](https://npmjs.com/package/@swc/helpers) package serves a different purpose: it supplies helpers for syntax transformations, not polyfills for built-in APIs.
 
 ### Default behavior
 
@@ -199,7 +199,12 @@ export default {
 
 ### Entry mode
 
-Entry mode injects the core-js polyfills required by your Browserslist targets into each page's entry file. This also covers APIs used in dependencies that have not been transpiled, but may include polyfills your code does not use. Only APIs supported by core-js are covered; see [Missing polyfills](#missing-polyfills).
+Entry mode injects the core-js polyfills required by your Browserslist targets into each page's entry file.
+
+- It covers APIs used in dependencies even when those dependencies are not transpiled.
+- It may include polyfills your code does not use, increasing bundle size.
+
+This mode only covers APIs supported by core-js. See [Missing polyfills](#missing-polyfills) for other APIs.
 
 The config of entry mode is:
 
