@@ -15,8 +15,6 @@ const defaultOptions = {
 };
 ```
 
-启用 [CSS 压缩](/config/output/minify) 后，Rsbuild 会在 loader 中压缩通过 `?inline`、`?url` 导入的样式，以及通过 [output.injectStyles](/config/output/inject-styles) 注入的样式。其他 CSS 会提取为文件，由 CSS 压缩器单独处理。
-
 通过 `tools.lightningcssLoader` 可以设置 [builtin:lightningcss-loader](https://rspack.rs/zh/guide/features/builtin-lightningcss-loader) 的选项。
 
 ## Object 类型
@@ -53,6 +51,10 @@ export default {
   },
 };
 ```
+
+## CSS 压缩 \{#css-minification}
+
+启用 [CSS 压缩](/config/output/minify) 后，Rsbuild 会在 loader 中压缩通过 `?inline`、`?url` 导入的样式，以及通过 [output.injectStyles](/config/output/inject-styles) 注入的样式。其他 CSS 会提取为文件，由 CSS 压缩器单独处理。
 
 ## 禁用 loader
 

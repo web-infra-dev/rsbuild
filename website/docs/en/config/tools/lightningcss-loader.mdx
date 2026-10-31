@@ -15,8 +15,6 @@ const defaultOptions = {
 };
 ```
 
-When [CSS minification](/config/output/minify) is enabled, Rsbuild also enables minification in the loader for styles imported with `?inline` or `?url`, or injected through [output.injectStyles](/config/output/inject-styles). Other CSS is extracted into files and minified separately by the CSS minimizer.
-
 You can set the options for [builtin:lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) through `tools.lightningcssLoader`.
 
 ## Object type
@@ -53,6 +51,10 @@ export default {
   },
 };
 ```
+
+## CSS minification
+
+When [CSS minification](/config/output/minify) is enabled, Rsbuild also enables minification in the loader for styles imported with `?inline` or `?url`, or injected through [output.injectStyles](/config/output/inject-styles). Other CSS is extracted into files and minified separately by the CSS minimizer.
 
 ## Disable loader
 
