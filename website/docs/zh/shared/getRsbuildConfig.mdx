@@ -1,4 +1,4 @@
-获取 Rsbuild 配置。在插件 `setup` 中即可获取 `original` 或 `current` 配置；获取 `normalized` 配置则需要等待配置规范化完成。
+获取 Rsbuild 配置。
 
 - **类型：**
 
@@ -28,3 +28,7 @@ getRsbuildConfig('current');
 // 等价于 `getNormalizedConfig` 方法。
 getRsbuildConfig('normalized');
 ```
+
+- **调用时机：**
+
+在插件 `setup` 中即可获取 `original` 或 `current` 配置；获取 `normalized` 配置则需要等待配置规范化完成。
