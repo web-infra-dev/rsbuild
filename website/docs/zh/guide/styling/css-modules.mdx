@@ -81,7 +81,10 @@ export default () => {
 
 ## CSS Modules 识别规则
 
-默认情况下，Rsbuild 会为以 `.module.*` 或 `.modules.*` 结尾的文件启用 CSS Modules，包括上面列出的预处理器扩展名，匹配不区分大小写。以 `.icss.*` 结尾的文件使用 ICSS 模式：处理导入和导出，但保留选择器原有的作用域。
+Rsbuild 默认识别以下文件名模式。匹配不区分大小写，扩展名也可以是上面列出的预处理器扩展名。
+
+- `.module.*` 和 `.modules.*`：启用 CSS Modules。
+- `.icss.*`：使用 ICSS 模式，处理导入和导出，并保留选择器原有的作用域。
 
 如果你想将其他 CSS 文件也当做 CSS Modules 模块进行处理，可以通过配置 [output.cssModules.auto](/config/output/css-modules#cssmodulesauto) 来实现。
 
