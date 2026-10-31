@@ -395,8 +395,13 @@ console.log(import.meta.env.PUBLIC_NAME); // -> 'jack'
 console.log(import.meta.env.PASSWORD); // -> undefined
 
 console.log(process.env.PUBLIC_NAME); // -> 'jack'
-console.log(process.env.PASSWORD); // -> undefined
+console.log(process.env.PASSWORD); // ReferenceError: process is not defined
 ```
+
+`PASSWORD` is not a public variable, so it is not exposed to client code:
+
+- `import.meta.env.PASSWORD` returns `undefined` because the generated environment object has no `PASSWORD` property.
+- `process.env.PASSWORD` is not replaced. Accessing it in a browser can throw a `ReferenceError`, because Rsbuild does not provide a global `process` object.
 
 :::tip
 
@@ -472,19 +477,20 @@ The `NODE_ENV` environment variable shown in the example above is already inject
 
 ### Identifier matching
 
-Note that `source.define` can only match complete global identifiers. You can think of it as performing text replacement.
+`source.define` replaces expressions at build time. For a key such as `process.env.NODE_ENV`:
 
-If the identifier in the code doesn't exactly match the key defined in `define`, Rsbuild will not replace it.
+- Dot notation, brackets with a fixed property name, and optional chaining are supported.
+- Destructuring or accessing the property through another variable assigned to `process.env` does not trigger replacement.
 
 ```js
 // Good
 console.log(process.env.NODE_ENV); // 'production'
 
-// Bad
-console.log(process.env['NODE_ENV']); // process is not defined!
+// Good: a statically known property name
+console.log(process.env['NODE_ENV']); // 'production'
 
-// Bad
-console.log(process.env?.NODE_ENV); // process is not defined!
+// Good: optional property access
+console.log(process.env?.NODE_ENV); // 'production'
 
 // Bad
 const { NODE_ENV } = process.env;
@@ -520,19 +526,9 @@ Therefore, only inject the specific environment variables you need on `process.e
 
 ### Public variables
 
-When you access a public environment variable in a TypeScript file, TypeScript may report that the variable is missing a type definition. You'll need to add the corresponding type declaration.
+Access public variables through `import.meta.env.PUBLIC_FOO` or `process.env.PUBLIC_FOO`, and use the interfaces below to declare their types.
 
-For example, if you reference a `PUBLIC_FOO` variable, TypeScript will display the following error:
-
-```
-TS2304: Cannot find name 'PUBLIC_FOO'.
-```
-
-To fix this, you can create a `src/env.d.ts` file in your project and add the following content:
-
-```ts title="src/env.d.ts"
-declare const PUBLIC_FOO: string;
-```
+Rsbuild does not create a global variable named `PUBLIC_FOO`. Adding a TypeScript declaration for that name does not make it available at runtime.
 
 ### import.meta.env
 

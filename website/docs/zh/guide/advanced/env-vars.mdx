@@ -397,8 +397,13 @@ console.log(import.meta.env.PUBLIC_NAME); // -> 'jack'
 console.log(import.meta.env.PASSWORD); // -> undefined
 
 console.log(process.env.PUBLIC_NAME); // -> 'jack'
-console.log(process.env.PASSWORD); // -> undefined
+console.log(process.env.PASSWORD); // ReferenceError: process is not defined
 ```
+
+`PASSWORD` 不是 public 变量，因此不会暴露给 client 代码：
+
+- `import.meta.env.PASSWORD` 返回 `undefined`，因为生成的环境变量对象中没有 `PASSWORD` 属性。
+- `process.env.PASSWORD` 不会被替换。Rsbuild 不提供全局 `process` 对象，因此在浏览器中访问它可能抛出 `ReferenceError`。
 
 :::tip
 
@@ -474,19 +479,20 @@ export default {
 
 ### 标识符匹配
 
-需要注意的是，`source.define` 只能匹配完整的全局标识符，你可以将它理解为一个文本替换的过程。
+`source.define` 会在构建时替换表达式。对于 `process.env.NODE_ENV` 这样的键：
 
-如果代码里的标识符与 `define` 里定义的 key 不是完全相同的，Rsbuild 将无法替换它。
+- 支持点号访问、使用固定属性名的方括号访问，以及可选链。
+- 通过解构读取属性，或先将 `process.env` 赋给其他变量再访问属性，都不会触发替换。
 
 ```js
 // Good
 console.log(process.env.NODE_ENV); // 'production'
 
-// Bad
-console.log(process.env['NODE_ENV']); // process is not defined!
+// Good: a statically known property name
+console.log(process.env['NODE_ENV']); // 'production'
 
-// Bad
-console.log(process.env?.NODE_ENV); // process is not defined!
+// Good: optional property access
+console.log(process.env?.NODE_ENV); // 'production'
 
 // Bad
 const { NODE_ENV } = process.env;
@@ -522,19 +528,9 @@ export default {
 
 ### Public 变量
 
-当你在 TypeScript 代码中访问 Public 环境变量时，TypeScript 可能会提示该变量缺少类型定义，此时你需要添加相应的类型声明。
+通过 `import.meta.env.PUBLIC_FOO` 或 `process.env.PUBLIC_FOO` 访问 public 变量，并使用下面的接口声明类型。
 
-比如你引用了一个 `PUBLIC_FOO` 变量，在 TypeScript 文件中会出现如下提示：
-
-```
-TS2304: Cannot find name 'PUBLIC_FOO'.
-```
-
-此时，你可以在项目中创建 `src/env.d.ts` 文件，并添加以下内容：
-
-```ts title="src/env.d.ts"
-declare const PUBLIC_FOO: string;
-```
+Rsbuild 不会创建名为 `PUBLIC_FOO` 的全局变量。为这个名称添加 TypeScript 类型声明，也不会让它在运行时可用。
 
 ### import.meta.env
 
