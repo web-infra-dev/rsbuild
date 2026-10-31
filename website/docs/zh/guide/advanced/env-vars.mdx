@@ -259,7 +259,12 @@ Rsbuild 支持读取以下 env 文件：
 | `.env.development.local` | `.env.development` 文件的本地用法，需要添加到 .gitignore 中。 |
 | `.env.production.local`  | `.env.production` 文件的本地用法，需要添加到 .gitignore 中。  |
 
-Rsbuild 依次加载 `.env`、`.env.local`、`.env.[mode]` 和 `.env.[mode].local`，其中 `[mode]` 为当前 env 模式。后加载的文件会覆盖先加载文件中的同名变量。Node.js 进程中已有的环境变量优先，但 `NODE_ENV` 可以被 env 文件覆盖。
+Rsbuild 依次加载 `.env`、`.env.local`、`.env.[mode]` 和 `.env.[mode].local`，其中 `[mode]` 为当前 env 模式。
+
+如果同一个变量有多个定义：
+
+- 后加载的文件会覆盖先加载文件中的值。
+- Node.js 进程中已有的环境变量优先于 env 文件。`NODE_ENV` 是例外，它可以被 env 文件覆盖。
 
 ### Env 模式 \{#env-mode}
 
@@ -353,7 +358,9 @@ console.log(process.env.BAR); // '2'
 
 ### 手动加载
 
-使用 [JavaScript API](/api/start/index) 时，可以启用 [`createRsbuild({ loadEnv: true })`](/api/javascript-api/core#load-environment-variables) 来自动加载环境变量文件并定义 public 变量。也可以手动调用 [loadEnv](/api/javascript-api/core#loadenv)，将返回的 public 变量合并到 [source.define](/config/source/define)：
+使用 [JavaScript API](/api/start/index) 时，可以启用 [`createRsbuild({ loadEnv: true })`](/api/javascript-api/core#load-environment-variables) 来自动加载环境变量文件并定义 public 变量。
+
+如需手动加载，请调用 [loadEnv](/api/javascript-api/core#loadenv)，将返回的 public 变量合并到 [source.define](/config/source/define)：
 
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
