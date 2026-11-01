@@ -23,7 +23,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### usage
 
-With `output.polyfill` set to `'usage'`, Rsbuild checks the APIs used in each compiled file and injects the polyfills needed by the target browsers. Files excluded from compilation are not checked.
+With `output.polyfill` set to `'usage'`, Rsbuild checks the APIs used in each file compiled by SWC and injects the polyfills needed by the target browsers. Files not compiled by SWC are not checked. Use [source.include](/config/source/include) to compile additional files.
 
 ```ts title="rsbuild.config.ts"
 export default {

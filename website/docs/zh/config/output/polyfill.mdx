@@ -23,7 +23,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### usage
 
-当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会检查每个编译文件中使用的 API，并注入目标浏览器所需的 polyfill。编译范围之外的文件不会被检查。
+当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会检查每个经过 SWC 编译的文件中使用的 API，并注入目标浏览器所需的 polyfill。未经过 SWC 编译的文件不会被检查，可通过 [source.include](/config/source/include) 添加需要编译的文件。
 
 ```ts title="rsbuild.config.ts"
 export default {
