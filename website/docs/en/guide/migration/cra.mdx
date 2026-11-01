@@ -210,8 +210,8 @@ Note that CRA allows access to the full `process.env` object in the code and als
 
 ```ts title="src/index.js"
 // In CRA, you can access it like this
-const { PUBLIC_URL } = process.env;
-console.log(PUBLIC_URL);
+const { REACT_APP_API_URL } = process.env;
+console.log(REACT_APP_API_URL);
 console.log(process.env);
 ```
 
@@ -260,9 +260,9 @@ export default {
       module: {
         rules: [
           {
-            // Match .png asset
+            // Match .gltf asset
             // You can change this regular expression to match different types of files
-            test: /\.png$/,
+            test: /\.gltf$/,
             type: 'asset/resource',
             generator: {
               filename: 'static/media/[name].[hash][ext]',
@@ -341,7 +341,7 @@ export default {
 };
 ```
 
-After registration, ESLint runs automatically during development (`npm run dev`) and production builds (`npm run build`). The plugin displays ESLint warnings and errors in the console output.
+After registration, ESLint runs automatically during development (`npm run start`) and production builds (`npm run build`). The plugin displays ESLint warnings and errors in the console output.
 
 :::warning
 We do not recommend using the `@rsbuild/plugin-eslint` plugin, as running ESLint during the build process will significantly increase the build time. Instead, we recommend using a separate `lint` command to run ESLint checks.
@@ -349,7 +349,7 @@ We do not recommend using the `@rsbuild/plugin-eslint` plugin, as running ESLint
 
 ## Reading jsconfig.json
 
-In non-TypeScript projects, CRA supports reading the `paths` field in jsconfig.json as the path alias.
+In non-TypeScript projects, CRA reads `compilerOptions.baseUrl` from `jsconfig.json` to support absolute imports.
 
 To use this feature in Rsbuild, refer to the [Path Alias - jsconfig.json](/guide/advanced/alias#jsconfigjson).
 
