@@ -20,12 +20,14 @@ The built-in Rspack config in Rsbuild may change with iterations, and these chan
 For example, add `resolve.alias` configuration:
 
 ```ts title="rsbuild.config.ts"
+import path from 'node:path';
+
 export default {
   tools: {
     rspack: {
       resolve: {
         alias: {
-          '@util': import.meta.dirname + '/src/util',
+          '@util': path.join(import.meta.dirname, 'src/util'),
         },
       },
     },
@@ -55,11 +57,16 @@ If you need to override a configuration rather than merge it with the default va
 `tools.rspack` can be configured as a function. The first parameter of this function is the built-in Rspack configuration object, you can modify this object, and then return it. For example:
 
 ```ts title="rsbuild.config.ts"
+import path from 'node:path';
+
 export default {
   tools: {
     rspack: (config) => {
       config.resolve.alias ||= {};
-      config.resolve.alias['@util'] = import.meta.dirname + '/src/util';
+      config.resolve.alias['@util'] = path.join(
+        import.meta.dirname,
+        'src/util',
+      );
       return config;
     },
   },

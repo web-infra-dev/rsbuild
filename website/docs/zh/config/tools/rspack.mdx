@@ -20,12 +20,14 @@ Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不�
 比如添加 `resolve.alias` 配置：
 
 ```ts title="rsbuild.config.ts"
+import path from 'node:path';
+
 export default {
   tools: {
     rspack: {
       resolve: {
         alias: {
-          '@util': import.meta.dirname + '/src/util',
+          '@util': path.join(import.meta.dirname, 'src/util'),
         },
       },
     },
@@ -55,11 +57,16 @@ export default {
 `tools.rspack` 也可以配置为一个函数，这个函数接收一个参数，即内置的 Rspack 配置对象，你可以对这个对象进行修改，然后返回一份新的配置。比如：
 
 ```ts title="rsbuild.config.ts"
+import path from 'node:path';
+
 export default {
   tools: {
     rspack: (config) => {
       config.resolve.alias ||= {};
-      config.resolve.alias['@util'] = import.meta.dirname + '/src/util';
+      config.resolve.alias['@util'] = path.join(
+        import.meta.dirname,
+        'src/util',
+      );
       return config;
     },
   },
