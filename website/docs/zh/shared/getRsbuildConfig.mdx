@@ -24,7 +24,11 @@ getRsbuildConfig('original');
 getRsbuildConfig('current');
 
 // 获取规范化后的 Rsbuild 配置。
-// 该方法必须在 `modifyRsbuildConfig` 钩子执行完成后才能被调用。
+// 在配置规范化完成后调用，例如在 `onBeforeBuild` 中。
 // 等价于 `getNormalizedConfig` 方法。
 getRsbuildConfig('normalized');
 ```
+
+- **调用时机：**
+
+在插件 `setup` 中即可获取 `original` 或 `current` 配置；获取 `normalized` 配置则需要等待配置规范化完成。
