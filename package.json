@@ -12,7 +12,7 @@
     "lint": "rs lint",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
     "prepare": "rs hooks && node --run prebundle",
-    "test": "pnpm --parallel --filter \"./packages/*\" test"
+    "test": "rs test"
   },
   "devDependencies": {
     "@scripts/config": "workspace:*",
