@@ -111,6 +111,7 @@ export function init(
   // Hash of the last successful build
   let lastHash: string | undefined;
   let hasBuildErrors = false;
+  let reloadHash: string | undefined;
   const base = serverBase.endsWith('/') ? serverBase : `${serverBase}/`;
 
   function formatURL(fallback?: boolean) {
@@ -256,7 +257,7 @@ export function init(
   // Attempt to update code on the fly, fall back to a hard reload.
   function tryApplyUpdates() {
     // detect is there a newer version of this code available
-    if (!shouldUpdate()) {
+    if ((reloadHash && reloadHash === lastHash) || !shouldUpdate()) {
       return;
     }
 
@@ -338,7 +339,9 @@ export function init(
         break;
       // Triggered when the client must perform a full page reload.
       case 'full-reload':
-        fullReload(message.data);
+        if (!message.data?.hash || message.data.hash !== BUILD_HASH) {
+          fullReload(message.data);
+        }
         break;
       case 'static-changed':
         fullReload();
@@ -480,15 +483,16 @@ export function init(
       const targetPath = base + path.slice(1);
       const targetPathWithoutExt = targetPath.slice(0, -'.html'.length);
       if (
-        pathname === targetPath ||
-        pathname === targetPathWithoutExt ||
-        (pathname.endsWith('/') && `${pathname}index.html` === targetPath)
+        pathname !== targetPath &&
+        pathname !== targetPathWithoutExt &&
+        !(pathname.endsWith('/') && `${pathname}index.html` === targetPath)
       ) {
-        location.reload();
+        return;
       }
-      return;
     }
 
+    // Diagnostics may follow a reload message; do not also apply HMR for that build.
+    reloadHash = data?.hash || lastHash;
     location.reload();
   }
 

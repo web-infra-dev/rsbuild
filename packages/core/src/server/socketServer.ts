@@ -41,6 +41,8 @@ const CHECK_SOCKETS_INTERVAL = 30000;
 export type ServerMessageFullReload = {
   type: 'full-reload';
   data?: {
+    /** Skip the reload if the client already runs this build. */
+    hash?: string;
     /**
      * If `path` ends with `.html`, only the matching page will reload.
      * The HTML path should be relative to the dev server root and should not
@@ -699,8 +701,11 @@ export class SocketServer {
     }
 
     if (shouldReload) {
-      this.sendMessage({ type: 'full-reload' }, token);
-      return;
+      this.sendMessage(
+        { type: 'full-reload', data: { hash: stats.hash } },
+        token,
+      );
+      // Clients already running this build still need the diagnostics below.
     }
 
     // Apply web updates early without clearing existing build errors.
