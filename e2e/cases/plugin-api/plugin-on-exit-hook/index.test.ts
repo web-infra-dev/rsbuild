@@ -18,7 +18,7 @@ test('should run onExit hook before process exit', async () => {
     const childProcess = exec(
       'node ./run.js',
       { cwd: import.meta.dirname },
-      (error) => {
+      (error: Error | null) => {
         clearTimeout(timeoutId);
         if (error) {
           reject(error);

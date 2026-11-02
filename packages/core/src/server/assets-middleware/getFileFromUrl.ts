@@ -6,10 +6,12 @@ import { HttpCode, isUrlPathUnderBase } from '../helper';
 
 export const UP_PATH_REGEXP: RegExp = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
 
+type FileStats = Pick<FSStats, 'isFile' | 'isDirectory' | 'mtime' | 'size'>;
+
 const stat = (
   filename: string,
   outputFileSystem: Rspack.OutputFileSystem,
-): Promise<FSStats | undefined> =>
+): Promise<FileStats | undefined> =>
   new Promise((resolve, reject) => {
     outputFileSystem.stat(filename, (err, stats) => {
       if (err) {
@@ -29,7 +31,7 @@ export async function getFileFromUrl(
   outputFileSystem: Rspack.OutputFileSystem,
   context: InternalContext,
 ): Promise<
-  { filename: string; fsStats: FSStats } | { errorCode: number } | undefined
+  { filename: string; fsStats: FileStats } | { errorCode: number } | undefined
 > {
   let pathname = getPathnameFromUrl(url);
 
@@ -101,7 +103,7 @@ export async function getFileFromUrl(
   }
 
   for (let filename of possibleFilenames) {
-    let fsStats: FSStats | undefined;
+    let fsStats: FileStats | undefined;
 
     try {
       fsStats = await stat(filename, outputFileSystem);
