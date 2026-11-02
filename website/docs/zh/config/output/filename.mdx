@@ -148,10 +148,7 @@ const { add } = await import('./add.ts');
 const { add } = await import(/* rspackChunkName: "my-chunk-name" */ './add.ts');
 ```
 
-使用默认文件名配置时，生成路径取决于构建模式：
-
-- 开发模式：`dist/static/js/async/my-chunk-name.js`。
-- 生产模式：`dist/static/js/async/my-chunk-name.[contenthash:10].js`。
+这样会将文件名中的名称部分设为 `my-chunk-name`，生产构建默认仍会附加内容哈希，例如 `dist/static/js/async/my-chunk-name.27e3083eab.js`。
 
 ## 使用函数
 
