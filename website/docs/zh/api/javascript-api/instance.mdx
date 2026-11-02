@@ -45,7 +45,7 @@ type Version = string;
 
 ### context.rootPath
 
-当前执行构建的根路径，对应调用 [createRsbuild](/api/javascript-api/core#creatersbuild) 时传入的 `cwd` 选项。
+当前构建的根目录绝对路径。默认使用传给 [createRsbuild](/api/javascript-api/core#creatersbuild) 的 `cwd`。如果设置了 [root](/config/root)，则基于 `cwd` 解析该路径。
 
 - **类型：**
 
