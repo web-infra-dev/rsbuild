@@ -37,6 +37,12 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
   ts.configs.recommendedTypeChecked,
   importPlugin.configs.recommended,
   {
+    files: ['e2e/**', 'examples/**', 'packages/create-rsbuild/template-*/**'],
+    rules: {
+      'import/no-unresolved': 'off',
+    },
+  },
+  {
     files: ['**/*.test.{ts,tsx}'],
     ...rstestPlugin.configs.recommended,
   },
@@ -48,15 +54,6 @@ define.lint(({ globalIgnores, importPlugin, js, rstestPlugin, ts }) => [
       },
     },
     rules: {
-      // Explicit exports overriding star exports are incorrectly reported as duplicates.
-      // https://github.com/web-infra-dev/rslint/issues/2409
-      'import/export': 'off',
-      // Distinct .js and .ts files are incorrectly reported as duplicate imports.
-      // https://github.com/web-infra-dev/rslint/issues/2410
-      'import/no-duplicates': 'off',
-      // Re-enable these rules in follow-up PRs after addressing existing reports.
-      'import/no-unresolved': 'off',
-      'import/no-named-as-default-member': 'off',
       'unicorn/prefer-array-some': 'error',
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
