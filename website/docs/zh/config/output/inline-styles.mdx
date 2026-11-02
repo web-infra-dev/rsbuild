@@ -24,7 +24,7 @@ type InlineChunkConfig =
 
 用来控制是否用 `<style>` 标签将产物中的 style 文件（.css 文件）inline 到 HTML 中。
 
-注意，如果开启了这个选项，那么 style 文件将不会被写入产物目录中，而只会以 inline 样式的形式存在于 HTML 文件中。
+只有生成的 HTML 中引用且匹配规则的样式表才会被内联，并从输出目录中移除。异步 chunk 加载的 CSS 仍会保留为独立文件。
 
 ## 示例
 
