@@ -89,13 +89,13 @@ async function startDevServer() {
   // Apply Rsbuild's built-in middleware
   app.use(rsbuildServer.middlewares);
 
-  const server = app.listen(rsbuildServer.port, async () => {
+  const httpServer = app.listen(rsbuildServer.port, async () => {
     // Notify Rsbuild that the custom server has started
     await rsbuildServer.afterListen();
   });
 
   // Activate WebSocket connection
-  rsbuildServer.connectWebSocket({ server });
+  rsbuildServer.connectWebSocket({ server: httpServer });
 }
 ```
 
@@ -213,11 +213,11 @@ const rsbuildServer = await rsbuild.createDevServer();
 const app = express();
 app.use(rsbuildServer.middlewares);
 
-const server = app.listen(rsbuildServer.port, async () => {
+const httpServer = app.listen(rsbuildServer.port, async () => {
   await rsbuildServer.afterListen();
 });
 
-rsbuildServer.connectWebSocket({ server });
+rsbuildServer.connectWebSocket({ server: httpServer });
 ```
 
 ### connectWebSocket
