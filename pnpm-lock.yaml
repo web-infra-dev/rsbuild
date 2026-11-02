@@ -301,8 +301,8 @@ catalogs:
       specifier: ^3.0.8
       version: 3.0.8
     '@types/node':
-      specifier: ^24.19.2
-      version: 24.19.2
+      specifier: ^26.6.6
+      version: 26.6.6
     '@types/range-parser':
       specifier: ^1.2.7
       version: 1.2.7
@@ -541,7 +541,7 @@ importers:
         version: link:scripts/test-helper
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       cross-env:
         specifier: 'catalog:'
         version: 10.1.0
@@ -668,7 +668,7 @@ importers:
         version: 11.0.4
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       '@types/react':
         specifier: 'catalog:'
         version: 19.3.0
@@ -925,7 +925,7 @@ importers:
         version: link:../../packages/core
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1048,7 +1048,7 @@ importers:
         version: 2.8.19
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       '@types/range-parser':
         specifier: 'catalog:'
         version: 1.2.7
@@ -1184,7 +1184,7 @@ importers:
         version: link:../plugin-vue
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1221,7 +1221,7 @@ importers:
         version: link:../../scripts/test-helper
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1280,7 +1280,7 @@ importers:
         version: 2.3.0(@module-federation/runtime-tools@2.9.2)(@swc/helpers@0.5.23)
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       preact:
         specifier: 'catalog:'
         version: 11.0.2
@@ -1308,7 +1308,7 @@ importers:
         version: link:../../scripts/test-helper
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1339,7 +1339,7 @@ importers:
         version: link:../../scripts/test-helper
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       '@types/sass-loader':
         specifier: 'catalog:'
         version: 8.0.10
@@ -1401,7 +1401,7 @@ importers:
         version: link:../../scripts/test-helper
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       svelte:
         specifier: 'catalog:'
         version: 5.57.3
@@ -1438,7 +1438,7 @@ importers:
         version: link:../../scripts/test-helper
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       svgo:
         specifier: 'catalog:'
         version: 3.3.5
@@ -1460,7 +1460,7 @@ importers:
         version: link:../../scripts/test-helper
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1479,7 +1479,7 @@ importers:
         version: link:../../scripts/test-helper
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1491,7 +1491,7 @@ importers:
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       path-serializer:
         specifier: 'catalog:'
         version: 0.7.0
@@ -1509,7 +1509,7 @@ importers:
         version: link:../../packages/core
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -1539,7 +1539,7 @@ importers:
         version: 4.3.0
       '@types/node':
         specifier: 'catalog:'
-        version: 24.19.2
+        version: 26.6.6
       '@types/react':
         specifier: 'catalog:'
         version: 19.3.0
@@ -3282,8 +3282,8 @@ packages:
   '@types/node-sass@4.11.8':
     resolution: {integrity: sha512-dWWMGPX8uselSQ1MLzDvQnVz5Qy1pe7SJuUl1Yqi2NCNRkrk5DmHlP44VZmTWm+buR2T217+5zEAPbAmTwKIOQ==}
 
-  '@types/node@24.19.2':
-    resolution: {integrity: sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ==}
+  '@types/node@26.6.6':
+    resolution: {integrity: sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog==}
 
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
@@ -5444,8 +5444,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  undici-types@7.24.6:
-    resolution: {integrity: sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg==}
+  undici-types@8.9.0:
+    resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
 
   undici@7.29.1:
     resolution: {integrity: sha512-RYONW2MeafgYlkVOKYKkA/Ag7BmXqgIWCa8t1m0JcxrQg9pI9lEqRhAOruOBCbAohOa/gkCF+iPi9hrgvTzu6Q==}
@@ -7248,7 +7248,7 @@ snapshots:
 
   '@types/cors@2.8.19':
     dependencies:
-      '@types/node': 24.19.2
+      '@types/node': 26.6.6
 
   '@types/debug@4.1.13':
     dependencies:
@@ -7267,7 +7267,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 24.19.2
+      '@types/node': 26.6.6
 
   '@types/hast@3.0.5':
     dependencies:
@@ -7277,7 +7277,7 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 24.19.2
+      '@types/node': 26.6.6
 
   '@types/less@3.0.8': {}
 
@@ -7291,11 +7291,11 @@ snapshots:
 
   '@types/node-sass@4.11.8':
     dependencies:
-      '@types/node': 24.19.2
+      '@types/node': 26.6.6
 
-  '@types/node@24.19.2':
+  '@types/node@26.6.6':
     dependencies:
-      undici-types: 7.24.6
+      undici-types: 8.9.0
 
   '@types/range-parser@1.2.7': {}
 
@@ -7309,7 +7309,7 @@ snapshots:
 
   '@types/sass-loader@8.0.10':
     dependencies:
-      '@types/node': 24.19.2
+      '@types/node': 26.6.6
       '@types/node-sass': 4.11.8
       '@types/webpack': 4.41.40
       sass: 1.106.1
@@ -7330,13 +7330,13 @@ snapshots:
 
   '@types/webpack-sources@3.2.3':
     dependencies:
-      '@types/node': 24.19.2
+      '@types/node': 26.6.6
       '@types/source-list-map': 0.1.6
       source-map: 0.7.6
 
   '@types/webpack@4.41.40':
     dependencies:
-      '@types/node': 24.19.2
+      '@types/node': 26.6.6
       '@types/tapable': 1.0.12
       '@types/uglify-js': 3.17.5
       '@types/webpack-sources': 3.2.3
@@ -7345,7 +7345,7 @@ snapshots:
 
   '@types/ws@8.18.2':
     dependencies:
-      '@types/node': 24.19.2
+      '@types/node': 26.6.6
 
   '@ungap/structured-clone@1.4.0': {}
 
@@ -9715,7 +9715,7 @@ snapshots:
 
   typescript@6.0.3: {}
 
-  undici-types@7.24.6: {}
+  undici-types@8.9.0: {}
 
   undici@7.29.1: {}
 
