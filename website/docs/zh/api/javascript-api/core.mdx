@@ -230,7 +230,7 @@ function loadConfig<Config = RsbuildConfig>(params?: {
    * - `auto`：优先使用 Node.js 原生加载器，若加载失败则回退到 jiti
    * - `jiti`：使用 jiti 作为加载器，开箱即用地支持 TypeScript 和 ESM
    * - `native`：使用 Node.js 原生加载器。TypeScript 配置文件要求运行时原生支持
-   *   TypeScript，并启用类型剥离
+   *   TypeScript
    * @default 'auto'
    */
   loader?: 'auto' | 'jiti' | 'native';

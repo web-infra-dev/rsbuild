@@ -230,7 +230,7 @@ function loadConfig<Config = RsbuildConfig>(params?: {
    * - 'auto': Use native Node.js loader first, fallback to jiti if failed
    * - 'jiti': Use jiti as loader, which supports TypeScript and ESM out of the box
    * - 'native': Use native Node.js loader. TypeScript config files require
-   *   native TypeScript support with type stripping enabled.
+   *   native TypeScript support.
    * @default 'auto'
    */
   loader?: 'auto' | 'jiti' | 'native';
