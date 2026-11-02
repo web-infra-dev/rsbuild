@@ -193,7 +193,7 @@ export function gzipMiddleware({
       return end.apply(res, args as Parameters<typeof end>);
     };
 
-    res.on = (type, listener) => {
+    res.on = (type: string | symbol, listener: (...args: any[]) => void) => {
       if (started) {
         if (!gzip || type !== 'drain') {
           on(type, listener);

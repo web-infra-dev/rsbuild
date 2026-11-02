@@ -14,7 +14,7 @@ import { HttpCode } from '../helper';
 import { getFileFromUrl } from './getFileFromUrl';
 import { parseTokenList } from './parseTokenList';
 
-function getEtag(stat: FSStats): string {
+function getEtag(stat: Pick<FSStats, 'mtime' | 'size'>): string {
   const mtime = stat.mtime.getTime().toString(16);
   const size = stat.size.toString(16);
   return `W/"${size}-${mtime}"`;
