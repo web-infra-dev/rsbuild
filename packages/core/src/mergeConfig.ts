@@ -83,7 +83,7 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
     return y;
   }
 
-  const merged: Record<string, unknown> = {};
+  const merged: Record<PropertyKey, unknown> = {};
   const keys = new Set([...Object.keys(x), ...Object.keys(y)]);
 
   for (const key of keys) {
@@ -92,12 +92,13 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
   }
 
   // Symbol values are opaque metadata: preserve them without merging or chaining.
-  for (const source of [x, y]) {
+  const sources: Record<PropertyKey, unknown>[] = [x, y];
+  for (const source of sources) {
     for (const key of Object.getOwnPropertySymbols(source)) {
       if (Object.prototype.propertyIsEnumerable.call(source, key)) {
-        const value = Reflect.get(source, key);
+        const value = source[key];
         if (value !== undefined) {
-          Reflect.set(merged, key, value);
+          merged[key] = value;
         }
       }
     }
