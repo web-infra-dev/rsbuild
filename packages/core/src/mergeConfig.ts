@@ -84,7 +84,10 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
   }
 
   const merged: Record<PropertyKey, unknown> = {};
-  const keys = new Set([...Object.keys(x), ...Object.keys(y)]);
+  const keys = new Set(Object.keys(x));
+  for (const key of Object.keys(y)) {
+    keys.add(key);
+  }
 
   for (const key of keys) {
     const childPath = path ? `${path}.${key}` : key;
