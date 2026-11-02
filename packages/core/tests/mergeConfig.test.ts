@@ -2,6 +2,41 @@ import type { RsbuildConfig, Rspack } from '../src';
 import { mergeRsbuildConfig } from '../src/mergeConfig';
 
 describe('mergeRsbuildConfig', () => {
+  it('should preserve symbol values and override functions without chaining', () => {
+    const key = Symbol('loader');
+    const loader = () => {};
+    const override = () => {};
+    const config: { [key]?: () => void } = { [key]: loader };
+
+    expect(mergeRsbuildConfig(config)[key]).toBe(loader);
+    expect(mergeRsbuildConfig(config, {})[key]).toBe(loader);
+    expect(
+      mergeRsbuildConfig(config, { [key]: override }, { [key]: undefined })[
+        key
+      ],
+    ).toBe(override);
+  });
+
+  it('should only copy enumerable symbols and replace their object values', () => {
+    const key = Symbol('metadata');
+    const hidden = Symbol('hidden');
+    const metadata = Object.defineProperty(
+      { [key]: { value: 'original' } },
+      hidden,
+      {
+        value: 'private',
+      },
+    );
+    const replacement = { value: 'updated' };
+    const merged = mergeRsbuildConfig(
+      { metadata },
+      { metadata: { [key]: replacement } },
+    );
+
+    expect(merged.metadata[key]).toBe(replacement);
+    expect(Object.getOwnPropertySymbols(merged.metadata)).toEqual([key]);
+  });
+
   it('should use `false` to replace empty object', () => {
     expect(
       mergeRsbuildConfig(

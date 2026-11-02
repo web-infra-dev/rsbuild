@@ -91,6 +91,18 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
     merged[key] = merge(x[key], y[key], childPath);
   }
 
+  // Symbol values are opaque metadata: preserve them without merging or chaining.
+  for (const source of [x, y]) {
+    for (const key of Object.getOwnPropertySymbols(source)) {
+      if (Object.prototype.propertyIsEnumerable.call(source, key)) {
+        const value = Reflect.get(source, key);
+        if (value !== undefined) {
+          Reflect.set(merged, key, value);
+        }
+      }
+    }
+  }
+
   return merged;
 };
 
