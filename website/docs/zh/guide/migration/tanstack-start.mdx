@@ -297,28 +297,6 @@ afterEach(cleanup);
 
 生产构建会将 client 资源输出到 `dist/client`，并将 fetch 风格的 server entry 输出到 `dist/server/index.js`。如果构建输出 `dist/server/server.js`，请改用该路径。
 
-对于 Docker，请在最终 stage 中重新安装生产依赖。`runner` stage 从新的基础镜像开始：builder 的 `node_modules` 包含开发依赖，不应复制到 runtime image。
-
-在 Dockerfile 中使用以下 `runner` stage。它会通过项目的 lockfile 自动识别包管理器，并支持 npm、Yarn 和 pnpm：
-
-```dockerfile title="Dockerfile（runner stage）"
-FROM node:24-alpine AS runner
-WORKDIR /app
-COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* .npmrc* ./
-RUN corepack enable && \
-  if [ -f package-lock.json ]; then \
-    npm ci --omit=dev --ignore-scripts; \
-  elif [ -f yarn.lock ]; then \
-    yarn install --frozen-lockfile --production=true --ignore-scripts; \
-  elif [ -f pnpm-lock.yaml ]; then \
-    pnpm install --prod --frozen-lockfile --ignore-scripts; \
-  else \
-    echo "No lockfile found." && exit 1; \
-  fi
-COPY --from=builder /app/dist ./dist
-CMD ["./node_modules/.bin/srvx", "--prod", "-s", "../client", "dist/server/index.js"]
-```
-
-请按照 TanStack Start 的 [React](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) 或 [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting) 部署指南配置之前的构建 stages。
+Docker 部署可参考 TanStack Start 的 [React](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) 或 [Solid](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting) 部署指南。
 
 对于 Node.js 或 Docker 之外的部署目标，不能继续使用 Vite 专用的部署集成。请使用受支持的非 Vite adapter，或保留 Vite 集成。可参考 [React hosting guide](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) 和 [Solid hosting guide](https://tanstack.com/start/latest/docs/framework/solid/guide/hosting)。
