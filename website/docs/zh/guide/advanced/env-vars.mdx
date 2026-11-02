@@ -528,9 +528,7 @@ export default {
 
 ### Public 变量
 
-通过 `import.meta.env.PUBLIC_FOO` 或 `process.env.PUBLIC_FOO` 访问 public 变量，并使用下面的接口声明类型。
-
-Rsbuild 不会创建名为 `PUBLIC_FOO` 的全局变量。为这个名称添加 TypeScript 类型声明，也不会让它在运行时可用。
+Public 环境变量的类型声明方式取决于访问方式：使用 `import.meta.env` 时扩展 `ImportMetaEnv`，使用 `process.env` 时扩展 `NodeJS.ProcessEnv`。具体示例见下文。
 
 ### import.meta.env
 

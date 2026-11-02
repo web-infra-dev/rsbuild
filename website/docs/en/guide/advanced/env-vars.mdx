@@ -526,9 +526,7 @@ Therefore, only inject the specific environment variables you need on `process.e
 
 ### Public variables
 
-Access public variables through `import.meta.env.PUBLIC_FOO` or `process.env.PUBLIC_FOO`, and use the interfaces below to declare their types.
-
-Rsbuild does not create a global variable named `PUBLIC_FOO`. Adding a TypeScript declaration for that name does not make it available at runtime.
+How you declare types for public environment variables depends on how you access them: extend `ImportMetaEnv` for `import.meta.env`, or `NodeJS.ProcessEnv` for `process.env`. See the examples below.
 
 ### import.meta.env
 
