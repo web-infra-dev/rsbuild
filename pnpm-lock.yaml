@@ -367,8 +367,8 @@ catalogs:
       specifier: ^2.0.3
       version: 2.0.3
     hono:
-      specifier: ^4.13.14
-      version: 4.13.15
+      specifier: ^4.13.16
+      version: 4.13.16
     html-loader:
       specifier: ^5.1.0
       version: 5.1.0
@@ -596,7 +596,7 @@ importers:
         version: link:helper
       '@hono/node-server':
         specifier: 'catalog:'
-        version: 2.1.5(hono@4.13.15)
+        version: 2.1.5(hono@4.13.16)
       '@module-federation/enhanced':
         specifier: 'catalog:'
         version: 2.9.2(@rspack/core@2.3.0)(typescript@6.0.3)
@@ -683,7 +683,7 @@ importers:
         version: 11.4.1
       hono:
         specifier: 'catalog:'
-        version: 4.13.15
+        version: 4.13.16
       playwright:
         specifier: 'catalog:'
         version: 1.61.1
@@ -3983,8 +3983,8 @@ packages:
     peerDependencies:
       prettier: ^3.0.0
 
-  hono@4.13.15:
-    resolution: {integrity: sha512-BTUf5VVhV+eb9owxdzdfQBV6b7Uvh7oDPMMHOmpa9hRe9/fKUI5b3TsGiDro2R3hPl3cPT5FuGmb32H3MqReug==}
+  hono@4.13.16:
+    resolution: {integrity: sha512-AOLOEhvrV+iH92xXCnFr/5+3KjPKcI3xP63XJtX5spAnkznPdHijlIsUTpi7/9EhWqrTCekw5c5zh1K+YsVw7A==}
     engines: {node: '>=16.9.0'}
 
   hookable@6.1.1:
@@ -5888,9 +5888,9 @@ snapshots:
 
   '@epic-web/invariant@1.0.0': {}
 
-  '@hono/node-server@2.1.5(hono@4.13.15)':
+  '@hono/node-server@2.1.5(hono@4.13.16)':
     dependencies:
-      hono: 4.13.15
+      hono: 4.13.16
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -8038,7 +8038,7 @@ snapshots:
     dependencies:
       prettier: 3.9.10
 
-  hono@4.13.15: {}
+  hono@4.13.16: {}
 
   hookable@6.1.1: {}
 
