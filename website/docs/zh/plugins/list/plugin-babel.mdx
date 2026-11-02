@@ -320,7 +320,7 @@ export default {
 
 使用 `@rsbuild/plugin-babel` 后，Rsbuild 会使用 `babel-loader` 和 `builtin:swc-loader` 分别对 JavaScript 文件进行编译，且 Babel 的执行时机早于 SWC。
 
-Babel 需要先解析代码，再交由 SWC 处理。Babel 解析器已支持私有方法等现代 JavaScript 特性，只有当前配置无法处理某个特性时，才需要添加相应的语法或转换插件。
+因此，即使 SWC 支持代码中使用的语法，也需要确保 Babel 能够解析它。如果在 Babel 阶段遇到不支持的语法，可以添加相应的 Babel 语法或转换插件。
 
 ## 使用指南
 

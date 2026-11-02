@@ -320,7 +320,7 @@ export default {
 
 After using `@rsbuild/plugin-babel`, Rsbuild will use both `babel-loader` and `builtin:swc-loader` to compile JavaScript files, with Babel running before SWC.
 
-Babel needs to parse your code before SWC processes it. Its parser already supports modern JavaScript features such as private methods. Add syntax or transform plugins only for features your Babel configuration does not support.
+This means Babel must be able to parse the syntax in your code, even if SWC already supports it. If Babel encounters unsupported syntax, add the corresponding Babel syntax or transform plugin.
 
 ## Usage guides
 
