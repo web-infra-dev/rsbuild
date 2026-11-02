@@ -84,14 +84,21 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
   }
 
   const merged: Record<PropertyKey, unknown> = {};
-  const keys = new Set(Object.keys(x));
-  for (const key of Object.keys(y)) {
-    keys.add(key);
-  }
+  const xKeys = Object.keys(x);
+  const yKeys = Object.keys(y);
+  // Linear lookup avoids a Set allocation when either object has few keys.
+  const xKeySet =
+    xKeys.length > 8 && yKeys.length > 8 ? new Set(xKeys) : undefined;
 
-  for (const key of keys) {
+  for (const key of xKeys) {
     const childPath = path ? `${path}.${key}` : key;
     merged[key] = merge(x[key], y[key], childPath);
+  }
+  for (const key of yKeys) {
+    if (!(xKeySet ? xKeySet.has(key) : xKeys.includes(key))) {
+      const childPath = path ? `${path}.${key}` : key;
+      merged[key] = merge(x[key], y[key], childPath);
+    }
   }
 
   // Symbol values are opaque metadata: preserve them without merging or chaining.
