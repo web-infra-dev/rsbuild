@@ -1,6 +1,10 @@
 import { define } from 'rstack';
 import skillsLock from './skills-lock.json' with { type: 'json' };
 
+define.test({
+  projects: ['./packages/*/rstack.config.ts'],
+});
+
 define.fmt({
   singleQuote: true,
   sortPackageJson: true,
