@@ -9,7 +9,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "octane": "^0.15.0"
+    "octane": "^0.16.6"
   },
   "devDependencies": {
     "@octanejs/rsbuild-plugin": "^0.1.68",
