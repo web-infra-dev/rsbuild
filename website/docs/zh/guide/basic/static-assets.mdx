@@ -34,6 +34,8 @@ SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能�
 // 引用 static 目录下的 logo.png 图片
 import logo from './static/logo.png';
 
+console.log(logo); // "/static/image/logo.[hash].png"
+
 export default () => <img src={logo} />;
 ```
 
@@ -41,6 +43,8 @@ export default () => <img src={logo} />;
 
 ```tsx
 import logo from '@/static/logo.png';
+
+console.log(logo); // "/static/image/logo.[hash].png"
 
 export default () => <img src={logo} />;
 ```
@@ -51,6 +55,8 @@ Rsbuild 支持使用 JavaScript 原生的 [URL](https://developer.mozilla.org/do
 
 ```tsx
 const logo = new URL('./static/logo.png', import.meta.url).href;
+
+console.log(logo); // "http://localhost:3000/static/image/logo.[hash].png"
 
 export default () => <img src={logo} />;
 ```
