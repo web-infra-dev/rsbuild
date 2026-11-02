@@ -115,32 +115,57 @@ pluginSvelte({
 
 Currently, `svelte-loader` does not support HMR for Svelte v5, see [svelte-loader - Hot Reload](https://github.com/sveltejs/svelte-loader#hot-reload).
 
-### Import paths in Less/Sass
+### Alias handling in Less/Sass
 
-Svelte preprocessors do not automatically use Rsbuild's path aliases. Configure their search paths to resolve styles from a directory such as `src`.
+Svelte preprocessors do not automatically use Rsbuild's path aliases. To use `@/` in style imports, configure a Sass importer or a Less plugin.
 
 First, install the preprocessors you use. Omit either package if it is not needed:
 
 <PackageManagerTabs command="add sass less -D" />
 
-Then add `src` to the search paths. This allows imports such as `@import 'styles/variables.scss'` or `@import 'styles/variables.less'` to resolve from that directory:
+The following example maps `@/` to the `src` directory next to the configuration file. It supports imports such as `@use '@/styles/variables.scss' as *` in SCSS and `@import '@/styles/variables.less'` in Less:
 
-```ts title="rsbuild.config.ts"
-import { fileURLToPath } from 'node:url';
+```js title="rsbuild.config.mjs"
+import path from 'node:path';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
-const srcPath = fileURLToPath(new URL('./src', import.meta.url));
+const srcPath = path.join(import.meta.dirname, 'src');
 
 export default {
   plugins: [
     pluginSvelte({
       preprocessOptions: {
-        scss: { includePaths: [srcPath] },
-        less: { paths: [srcPath] },
+        scss: {
+          importer(url) {
+            return url.startsWith('@/')
+              ? { file: path.join(srcPath, url.slice(2)) }
+              : null;
+          },
+        },
+        less: {
+          plugins: [
+            {
+              install(less, pluginManager) {
+                class AliasFileManager extends less.FileManager {
+                  supports(filename) {
+                    return filename.startsWith('@/');
+                  }
+
+                  loadFile(filename, ...args) {
+                    return super.loadFile(
+                      path.join(srcPath, filename.slice(2)),
+                      ...args,
+                    );
+                  }
+                }
+
+                pluginManager.addFileManager(new AliasFileManager());
+              },
+            },
+          ],
+        },
       },
     }),
   ],
 };
 ```
-
-These options add search directories; they do not define an `@/` alias. For custom aliases, use a Sass importer or a Less plugin.

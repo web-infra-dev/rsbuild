@@ -115,32 +115,57 @@ pluginSvelte({
 
 目前 `svelte-loader` 暂不支持 Svelte v5 热更新，详见 [svelte-loader - Hot Reload](https://github.com/sveltejs/svelte-loader#hot-reload)。
 
-### Less/Sass 导入路径 \{#import-paths-in-lesssass}
+### Less/Sass 中的别名处理 \{#alias-handling-in-lesssass}
 
-Svelte 预处理器不会自动使用 Rsbuild 的路径别名。要从 `src` 等目录查找样式文件，需要配置预处理器的搜索路径。
+Svelte 预处理器不会自动使用 Rsbuild 的路径别名。要在样式导入中使用 `@/`，需要配置 Sass importer 或 Less 插件。
 
 首先，安装需要的预处理器，不需要的包可以省略：
 
 <PackageManagerTabs command="add sass less -D" />
 
-然后，将 `src` 加入搜索路径。这样，`@import 'styles/variables.scss'` 或 `@import 'styles/variables.less'` 等导入就可以从该目录解析：
+以下示例将 `@/` 映射到配置文件同级的 `src` 目录，支持在 SCSS 中使用 `@use '@/styles/variables.scss' as *`，以及在 Less 中使用 `@import '@/styles/variables.less'`：
 
-```ts title="rsbuild.config.ts"
-import { fileURLToPath } from 'node:url';
+```js title="rsbuild.config.mjs"
+import path from 'node:path';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
-const srcPath = fileURLToPath(new URL('./src', import.meta.url));
+const srcPath = path.join(import.meta.dirname, 'src');
 
 export default {
   plugins: [
     pluginSvelte({
       preprocessOptions: {
-        scss: { includePaths: [srcPath] },
-        less: { paths: [srcPath] },
+        scss: {
+          importer(url) {
+            return url.startsWith('@/')
+              ? { file: path.join(srcPath, url.slice(2)) }
+              : null;
+          },
+        },
+        less: {
+          plugins: [
+            {
+              install(less, pluginManager) {
+                class AliasFileManager extends less.FileManager {
+                  supports(filename) {
+                    return filename.startsWith('@/');
+                  }
+
+                  loadFile(filename, ...args) {
+                    return super.loadFile(
+                      path.join(srcPath, filename.slice(2)),
+                      ...args,
+                    );
+                  }
+                }
+
+                pluginManager.addFileManager(new AliasFileManager());
+              },
+            },
+          ],
+        },
       },
     }),
   ],
 };
 ```
-
-这些选项用于添加搜索目录，不会定义 `@/` 别名。自定义别名需要使用 Sass importer 或 Less 插件。
