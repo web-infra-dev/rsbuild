@@ -15,7 +15,7 @@ import {
   type Watching,
 } from '@rspack/core';
 import { CLIENT_PATH } from '../../constants';
-import { createVirtualModule, pick } from '../../helpers';
+import { createVirtualModule, isWebTarget, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
 import { getEarlyStats } from '../../helpers/stats';
 import { isOverlayEnabled } from '../../helpers/overlayConfig';
@@ -78,20 +78,17 @@ const isWebPageCompiler = (compiler: Compiler): boolean => {
   );
 };
 
-const isNodeCompiler = (compiler: Compiler) => {
-  const { target } = compiler.options;
-  if (target) {
-    return Array.isArray(target) ? target.includes('node') : target === 'node';
-  }
-  return false;
-};
-
-const getCompilerInfo = (compiler: Compiler | MultiCompiler) => {
+const getCompilerInfo = (
+  compiler: Compiler | MultiCompiler,
+  environmentList: InternalContext['environmentList'],
+) => {
   const allCompilers = isMultiCompiler(compiler)
     ? compiler.compilers
     : [compiler];
-  const webCompilers = allCompilers.filter(
-    (compiler) => !isNodeCompiler(compiler),
+  // Match HTTP asset visibility, which is determined by Rsbuild's output.target,
+  // independently of tools.rspack overrides to compilation capabilities.
+  const webCompilers = allCompilers.filter((_, index) =>
+    isWebTarget(environmentList[index].config.output.target),
   );
 
   // Only mixed web and Node.js builds need early updates. Use the same flag
@@ -120,11 +117,6 @@ export const setupServerHooks = ({
   liveReload: LiveReload;
   earlyWebUpdates: boolean;
 }): void => {
-  // Node HMR is not supported yet
-  if (isNodeCompiler(compiler)) {
-    return;
-  }
-
   // Track error and warning counts to skip repeated `done` notifications
   // within the same build when these counts have not changed.
   let errorsCount: number | null = null;
@@ -301,8 +293,10 @@ export const assetsMiddleware = async ({
   const { logger } = context;
   const resolvedHost = await resolveHostname(config.server.host);
   const { environmentList } = context;
-  const { allCompilers, webCompilers, earlyWebUpdates } =
-    getCompilerInfo(compiler);
+  const { allCompilers, webCompilers, earlyWebUpdates } = getCompilerInfo(
+    compiler,
+    environmentList,
+  );
 
   const setupCompiler = (compiler: Compiler, index: number) => {
     const environment = environmentList[index];
@@ -322,6 +316,10 @@ export const assetsMiddleware = async ({
       resolvedHost,
       resolvedPort,
     });
+
+    if (!isWebTarget(environment.config.output.target)) {
+      return;
+    }
 
     // register hooks for each compilation, update socket stats if recompiled
     setupServerHooks({
