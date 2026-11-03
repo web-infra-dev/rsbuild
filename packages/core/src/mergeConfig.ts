@@ -101,7 +101,7 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
     }
   }
 
-  // Symbol values are opaque metadata: preserve them without merging or chaining.
+  // Preserve symbol properties without deep merging or chaining functions.
   const sources: Record<PropertyKey, unknown>[] = [x, y];
   for (const source of sources) {
     for (const key of Object.getOwnPropertySymbols(source)) {
