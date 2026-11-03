@@ -13,6 +13,6 @@
   },
   "devDependencies": {
     "@octanejs/rsbuild-plugin": "^0.1.69",
-    "@rsbuild/core": "^2.3.0"
+    "@rsbuild/core": "^2.3.1"
   }
 }
