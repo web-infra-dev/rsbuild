@@ -119,10 +119,6 @@ pluginSvelte({
 
 Svelte 预处理器不会自动使用 Rsbuild 的路径别名。要在样式导入中使用 `@/`，需要配置 Sass importer 或 Less 插件。
 
-首先，安装需要的预处理器，不需要的包可以省略：
-
-<PackageManagerTabs command="add sass less -D" />
-
 以下示例将 `@/` 映射到配置文件同级的 `src` 目录，支持在 SCSS 中使用 `@use '@/styles/variables.scss' as *`，以及在 Less 中使用 `@import '@/styles/variables.less'`：
 
 ```js title="rsbuild.config.mjs"

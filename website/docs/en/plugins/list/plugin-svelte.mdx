@@ -119,10 +119,6 @@ Currently, `svelte-loader` does not support HMR for Svelte v5, see [svelte-loade
 
 Svelte preprocessors do not automatically use Rsbuild's path aliases. To use `@/` in style imports, configure a Sass importer or a Less plugin.
 
-First, install the preprocessors you use. Omit either package if it is not needed:
-
-<PackageManagerTabs command="add sass less -D" />
-
 The following example maps `@/` to the `src` directory next to the configuration file. It supports imports such as `@use '@/styles/variables.scss' as *` in SCSS and `@import '@/styles/variables.less'` in Less:
 
 ```js title="rsbuild.config.mjs"
