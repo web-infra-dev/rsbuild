@@ -1,0 +1,64 @@
+---
+description: '控制开发服务器和预览服务器是否提供构建产物，支持按环境覆盖配置。'
+---
+
+# server.serveAssets
+
+- **类型：** `boolean`
+- **默认值：** `web` 和 `web-worker` 目标为 `true`，`node` 目标为 `false`
+
+是否由 `rsbuild dev` 和 `rsbuild preview` 提供构建产物，包括 JavaScript、CSS、HTML 和 source map。
+
+当产物由其他服务器或运行时处理时，可以设为 `false`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    serveAssets: false,
+  },
+};
+```
+
+此配置不改变编译、文件监听和产物写盘的行为。开发服务器的 `loadBundle`、`getTransformedHtml` 等 API 仍然可用。
+
+你可以通过 [server.setup](/config/server/setup) 注册自己的路由，处理这些文件或页面的请求。
+
+## 多环境配置 \{#multiple-environments}
+
+每个环境继承顶层的 `server.serveAssets`，环境中的显式配置优先于顶层配置。两者均未配置时，Rsbuild 根据该环境的 [output.target](/config/output/target) 确定默认值。
+
+例如，关闭 Worker 环境的产物服务，同时继续提供浏览器资源：
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        distPath: 'dist/client',
+      },
+    },
+    worker: {
+      server: {
+        serveAssets: false,
+      },
+      output: {
+        target: 'web-worker',
+        distPath: 'dist/worker',
+      },
+    },
+  },
+};
+```
+
+## Public 目录 \{#public-directories}
+
+Public 文件的行为由 [server.publicDir](/config/server/public-dir) 控制：
+
+- **开发模式：** public 目录独立提供服务，不受 `serveAssets` 影响。如需同时关闭，请设置 `server.publicDir: false`。
+- **构建和预览：** 构建时仍按照 `publicDir.copyOnBuild` 复制文件。预览时，复制后的文件属于构建产物，受 `serveAssets` 控制。
+
+## 输出目录重叠 \{#overlapping-output-directories}
+
+当环境的 `serveAssets` 配置不同时，建议使用 `dist/client` 和 `dist/worker` 这样的独立目录。如果开启服务的环境提供整个 `dist` 目录，那么即使 Worker 环境设置了 `serveAssets: false`，`dist/worker` 下的文件仍可能被访问。
+
+此选项也不会阻止你自己的中间件提供相同文件。

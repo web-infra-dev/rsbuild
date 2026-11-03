@@ -1,0 +1,64 @@
+---
+description: 'Control whether the dev and preview servers serve build output, with per-environment overrides.'
+---
+
+# server.serveAssets
+
+- **Type:** `boolean`
+- **Default:** `true` for `web` and `web-worker` targets, `false` for `node`
+
+Whether `rsbuild dev` and `rsbuild preview` serve build output, including JavaScript, CSS, HTML, and source maps.
+
+Set to `false` when another server or runtime handles the output:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    serveAssets: false,
+  },
+};
+```
+
+This does not change compilation, file watching, or output writing. The dev server's `loadBundle` and `getTransformedHtml` APIs remain available.
+
+You can handle requests for these files or pages with your own routes using [server.setup](/config/server/setup).
+
+## Multiple environments
+
+Each environment inherits the top-level `server.serveAssets`. An explicit environment value overrides it. If neither is configured, Rsbuild determines the default from that environment's [output.target](/config/output/target).
+
+For example, disable serving for a Worker environment while keeping browser assets accessible:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        distPath: 'dist/client',
+      },
+    },
+    worker: {
+      server: {
+        serveAssets: false,
+      },
+      output: {
+        target: 'web-worker',
+        distPath: 'dist/worker',
+      },
+    },
+  },
+};
+```
+
+## Public directories
+
+Public files follow [server.publicDir](/config/server/public-dir):
+
+- **Development:** public directories are served independently of `serveAssets`. To disable their serving as well, set `server.publicDir: false`.
+- **Build and preview:** files are still copied according to `publicDir.copyOnBuild`. In preview, these copies are part of the build output and follow `serveAssets`.
+
+## Overlapping output directories
+
+Use separate directories such as `dist/client` and `dist/worker` when their `serveAssets` settings differ. If an enabled environment serves `dist`, it can also serve files under `dist/worker`, even when the Worker environment sets `serveAssets: false`.
+
+This option does not prevent your own middleware from serving the same files.
