@@ -2,6 +2,18 @@ import type { RsbuildConfig, Rspack } from '../src';
 import { mergeRsbuildConfig } from '../src/mergeConfig';
 
 describe('mergeRsbuildConfig', () => {
+  it('should preserve and override symbol properties', () => {
+    const key = Symbol('loader');
+    const loader = () => {};
+    const override = () => {};
+    const config: { [key]?: () => void } = { [key]: loader };
+
+    const merged = mergeRsbuildConfig(config, {}, { [key]: undefined });
+
+    expect(merged[key]).toBe(loader);
+    expect(mergeRsbuildConfig(merged, { [key]: override })[key]).toBe(override);
+  });
+
   it('should use `false` to replace empty object', () => {
     expect(
       mergeRsbuildConfig(

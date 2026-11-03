@@ -83,12 +83,35 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
     return y;
   }
 
-  const merged: Record<string, unknown> = {};
-  const keys = new Set([...Object.keys(x), ...Object.keys(y)]);
+  const merged: Record<PropertyKey, unknown> = {};
+  const xKeys = Object.keys(x);
+  const yKeys = Object.keys(y);
+  // Linear lookup avoids a Set allocation when either object has few keys.
+  const xKeySet =
+    xKeys.length > 8 && yKeys.length > 8 ? new Set(xKeys) : undefined;
 
-  for (const key of keys) {
+  for (const key of xKeys) {
     const childPath = path ? `${path}.${key}` : key;
     merged[key] = merge(x[key], y[key], childPath);
+  }
+  for (const key of yKeys) {
+    if (!(xKeySet ? xKeySet.has(key) : xKeys.includes(key))) {
+      const childPath = path ? `${path}.${key}` : key;
+      merged[key] = merge(x[key], y[key], childPath);
+    }
+  }
+
+  // Preserve symbol properties without deep merging or chaining functions.
+  const sources: Record<PropertyKey, unknown>[] = [x, y];
+  for (const source of sources) {
+    for (const key of Object.getOwnPropertySymbols(source)) {
+      if (Object.prototype.propertyIsEnumerable.call(source, key)) {
+        const value = source[key];
+        if (value !== undefined) {
+          merged[key] = value;
+        }
+      }
+    }
   }
 
   return merged;
