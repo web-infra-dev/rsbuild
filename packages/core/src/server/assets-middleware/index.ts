@@ -29,6 +29,7 @@ import type {
   Rspack,
 } from '../../types';
 import { resolveHostname } from './../hmrFallback';
+import { isServingAssets } from '../helper';
 import type { SocketServer } from '../socketServer';
 import { createAssetsMiddleware } from './middleware';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
@@ -85,13 +86,12 @@ const getCompilerInfo = (
   const allCompilers = isMultiCompiler(compiler)
     ? compiler.compilers
     : [compiler];
-  // Use Rsbuild's target to match the environments served over HTTP.
+  // Classify compilers by Rsbuild's target, even when tools.rspack overrides it.
   const webCompilers = allCompilers.filter((_, index) =>
     isWebTarget(environmentList[index].config.output.target),
   );
 
-  // Only mixed web and Node.js builds need early updates. Use the same flag
-  // for client notifications and asset requests so both can skip waiting for Node.js.
+  // Mixed web and Node.js builds can notify web clients before Node.js finishes.
   const earlyWebUpdates =
     webCompilers.length > 0 && webCompilers.length < allCompilers.length;
 
@@ -296,6 +296,14 @@ export const assetsMiddleware = async ({
     compiler,
     environmentList,
   );
+  // Explicitly served non-web output must also finish before resolving assets.
+  const canServeEarly =
+    earlyWebUpdates &&
+    !environmentList.some(
+      (environment) =>
+        isServingAssets(environment.config) &&
+        !isWebTarget(environment.config.output.target),
+    );
 
   const setupCompiler = (compiler: Compiler, index: number) => {
     const environment = environmentList[index];
@@ -359,15 +367,13 @@ export const assetsMiddleware = async ({
     });
   });
 
-  // When both web and Node.js environments exist, serve web assets (such as
-  // HMR update files) once every web environment is compiled, without waiting
-  // for Node.js environments. Node.js bundles are loaded via `loadBundle`,
-  // which waits for its own environment.
+  // Serve web assets early unless Node.js output is also served over HTTP.
+  // Programmatic reads through `loadBundle` wait for their own environment.
   const compiledWebCompilers = new Set<Compiler>();
   const isWebReady = () =>
-    earlyWebUpdates && compiledWebCompilers.size === webCompilers.length;
+    canServeEarly && compiledWebCompilers.size === webCompilers.length;
 
-  if (earlyWebUpdates) {
+  if (canServeEarly) {
     for (const item of webCompilers) {
       const reset = () => {
         compiledWebCompilers.delete(item);

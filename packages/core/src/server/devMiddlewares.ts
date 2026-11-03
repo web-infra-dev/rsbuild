@@ -12,7 +12,11 @@ import type {
 import type { BuildManager } from './buildManager';
 import type { RsbuildDevServer } from './devServer';
 import { gzipMiddleware } from './gzipMiddleware';
-import { getPublicDirPaths, type UpgradeEvent } from './helper';
+import {
+  getPublicDirPaths,
+  isServingAssets,
+  type UpgradeEvent,
+} from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import {
   faviconFallbackMiddleware,
@@ -87,6 +91,12 @@ const applyDefaultMiddlewares = async ({
   const upgradeEvents: UpgradeEvent[] = [];
   const { server } = config;
   const { logger } = context;
+  const servedEnvironments = context.environmentList.filter((environment) =>
+    isServingAssets(environment.config),
+  );
+  const distPaths = servedEnvironments.map(
+    (environment) => environment.distPath,
+  );
 
   if (server.cors) {
     const { default: corsMiddleware } = await import(
@@ -182,7 +192,10 @@ const applyDefaultMiddlewares = async ({
 
   middlewares.use(
     viewingServedFilesMiddleware({
-      environments: devServer.environments,
+      environments: pick(
+        devServer.environments,
+        servedEnvironments.map((environment) => environment.name),
+      ),
       logger,
     }),
   );
@@ -219,7 +232,7 @@ const applyDefaultMiddlewares = async ({
     middlewares.use(
       getHtmlCompletionMiddleware({
         assetsMiddleware: buildManager.assetsMiddleware,
-        distPaths: [context.distPath],
+        distPaths,
         outputFileSystem: buildManager.outputFileSystem,
       }),
     );
@@ -275,7 +288,7 @@ const applyDefaultMiddlewares = async ({
     middlewares.use(
       getHtmlFallbackMiddleware({
         assetsMiddleware: buildManager.assetsMiddleware,
-        distPaths: [context.distPath],
+        distPaths,
         logger,
         outputFileSystem: buildManager.outputFileSystem,
       }),

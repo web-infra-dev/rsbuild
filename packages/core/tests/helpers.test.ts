@@ -66,7 +66,7 @@ describe('readPackageJsonByPath', () => {
   });
 });
 
-test('should get routes correctly', () => {
+test('should get routes only for served environments', () => {
   const cwd = import.meta.dirname;
   expect(
     getRoutes({
@@ -83,7 +83,9 @@ test('should get routes correctly', () => {
             index: 'index.html',
           },
           config: {
+            server: {},
             output: {
+              target: 'web',
               distPath: {
                 html: '/',
               },
@@ -99,7 +101,9 @@ test('should get routes correctly', () => {
             index: 'index.html',
           },
           config: {
+            server: { serveAssets: false },
             output: {
+              target: 'web',
               distPath: {
                 html: '/',
               },
@@ -116,7 +120,9 @@ test('should get routes correctly', () => {
             main: 'main.html',
           },
           config: {
+            server: {},
             output: {
+              target: 'web',
               distPath: {
                 html: '/',
               },
@@ -132,10 +138,6 @@ test('should get routes correctly', () => {
     {
       entryName: 'index',
       pathname: '/',
-    },
-    {
-      entryName: 'index',
-      pathname: '/web1/',
     },
     {
       entryName: 'index',
