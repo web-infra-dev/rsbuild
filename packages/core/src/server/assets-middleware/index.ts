@@ -85,8 +85,7 @@ const getCompilerInfo = (
   const allCompilers = isMultiCompiler(compiler)
     ? compiler.compilers
     : [compiler];
-  // Match HTTP asset visibility, which is determined by Rsbuild's output.target,
-  // independently of tools.rspack overrides to compilation capabilities.
+  // Use Rsbuild's target to match the environments served over HTTP.
   const webCompilers = allCompilers.filter((_, index) =>
     isWebTarget(environmentList[index].config.output.target),
   );
