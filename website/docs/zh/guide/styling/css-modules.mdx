@@ -81,7 +81,7 @@ export default () => {
 
 ## CSS Modules 识别规则
 
-Rsbuild 默认为匹配 `.module.*` 或 `.modules.*` 的文件启用 CSS Modules。匹配不区分大小写，扩展名也可以是上面列出的预处理器扩展名。
+推荐使用 `.module.*` 命名 CSS Modules 文件，Rsbuild 默认识别此命名方式。匹配不区分大小写，扩展名也可以是上面列出的预处理器扩展名。
 
 如果你想将其他 CSS 文件也当做 CSS Modules 模块进行处理，可以通过配置 [output.cssModules.auto](/config/output/css-modules#cssmodulesauto) 来实现。
 

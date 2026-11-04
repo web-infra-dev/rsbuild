@@ -31,7 +31,7 @@ type Auto =
 
 Type descriptions:
 
-- `true`: Enable CSS Modules for files ending in `.module.*` or `.modules.*`.
+- `true`: Enable CSS Modules for files ending in `.module.*` (recommended). The underlying css-loader also supports `.modules.*`.
 - `false`: Disable CSS Modules.
 - `RegExp`: Enable CSS Modules for files that match the regular expression, using the flags you specify.
 - `function`: Enable CSS Modules for files based on the filename satisfying your filter function check.
@@ -45,18 +45,6 @@ export default {
       auto: (resource) => {
         return resource.includes('.module.') || resource.includes('shared/');
       },
-    },
-  },
-};
-```
-
-Another example, to treat all files containing `.module.` and `.modules.` as CSS Modules:
-
-```ts title="rsbuild.config.ts"
-export default {
-  output: {
-    cssModules: {
-      auto: /\.modules?\./,
     },
   },
 };
