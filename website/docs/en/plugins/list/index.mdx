@@ -81,7 +81,7 @@ The following are common framework-agnostic plugins:
 
 ## Community plugins
 
-Community plugins are grouped by framework and listed alphabetically by package name within each group. We welcome PRs to add your published plugins to this list!
+Community plugins are grouped by framework or purpose and listed alphabetically by package name within each group. We welcome PRs to add your published plugins to this list!
 
 ### React
 
@@ -115,6 +115,13 @@ Community plugins are grouped by framework and listed alphabetically by package 
 - [ngrok-rsbuild-plugin](https://github.com/nanofuxion/ngrok-rsbuild-plugin): Expose your Rsbuild dev server over the internet via ngrok — built for use with the LynxJS app.
 - [relog-rsbuild-plugin](https://github.com/nanofuxion/relog-rsbuild-plugin): Allows you to intercept `console.log()` calls from your LynxJS app running on a device or emulator and send them back to the Rsbuild dev server.
 
+### Deployment
+
+- [nitro](https://nitro.build/docs/rsbuild): Add API routes, SSR, and deployment presets through the experimental `nitro/rsbuild` plugin. Requires Rsbuild v2.3+.
+- [rsbuild-plugin-aws-lambda](https://github.com/wxiaoyun/rsbuild-plugin-aws-lambda): Configure Rsbuild to bundle JavaScript assets for AWS Lambda.
+- [rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare): An Rsbuild plugin for developing and building Cloudflare Workers, with local execution in workerd.
+- [zephyr-rsbuild-plugin](https://www.npmjs.com/package/zephyr-rsbuild-plugin): An Rsbuild plugin for deploying applications with Zephyr Cloud.
+
 ### Common
 
 - [@agney/rsbuild-content-collections](https://github.com/agneym/rsbuild-content-collections): An Rsbuild plugin for Content Collections.
@@ -132,11 +139,9 @@ Community plugins are grouped by framework and listed alphabetically by package 
 - [rsbuild-plugin-arco](https://github.com/zhmushan/rsbuild-plugin-arco): Rsbuild plugins for Arco Design.
 - [rsbuild-plugin-arethetypeswrong](https://github.com/rstackjs/rsbuild-plugin-arethetypeswrong): Checking TypeScript type definitions with `arethetypeswrong`.
 - [rsbuild-plugin-auto-alias](https://github.com/jwyGithub/rsbuild-plugin-auto-alias): Automatically generate alias based on path.
-- [rsbuild-plugin-aws-lambda](https://github.com/wxiaoyun/rsbuild-plugin-aws-lambda): Configure Rsbuild to bundle JavaScript assets for AWS Lambda.
 - [rsbuild-plugin-biome](https://github.com/robertpanvip/rsbuild-plugin-lint/tree/main/packages/biome): Integrate Biome into the Rsbuild build process.
 - [rsbuild-plugin-block-imports](https://github.com/malekabdelkader/rsbuild-plugin-block-imports): Rsbuild plugin to detect and block forbidden imports in Module Federation builds.
 - [rsbuild-plugin-cdn-import](https://github.com/fuxichen/rsbuild-plugin-cdn-import): Import modules from CDN with Rsbuild plugin.
-- [rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare): An Rsbuild plugin for developing and building Cloudflare Workers, with local execution in workerd.
 - [rsbuild-plugin-compression](https://github.com/s-r-x/rsbuild-plugin-compression): Compress the assets using gzip, brotli or zstd.
 - [rsbuild-plugin-css-optimizer](https://github.com/aliezzahn/rsbuild-plugin-css-optimizer): Customize CSS minification, allowing you to choose between cssnano (JavaScript-based) or Lightning CSS (Rust-based) for high-performance CSS compression.
 - [rsbuild-plugin-devtools-json](https://github.com/rstackjs/rsbuild-plugin-devtools-json): Generating `com.chrome.devtools.json` on the fly in the dev server.
@@ -167,6 +172,5 @@ Community plugins are grouped by framework and listed alphabetically by package 
 - [rsbuild-plugin-web-ext](https://github.com/xbzhang2020/rsbuild-plugin-web-ext/tree/main/packages/rsbuild): A Rsbuild plugin for developing and building browser extensions.
 - [rsbuild-plugin-web-extension](https://github.com/filc-dev/rsbuild-plugin-web-extension): Rsbuild plugin for Chrome/web extension.
 - [rsbuild-plugin-workspace-dev](https://github.com/rstackjs/rsbuild-plugin-workspace-dev): Start monorepo sub-projects in topological order.
-- [zephyr-rsbuild-plugin](https://www.npmjs.com/package/zephyr-rsbuild-plugin): An Rsbuild plugin for deploying applications with Zephyr Cloud.
 
 You can discover more Rsbuild plugins on npm by searching for the keyword [rsbuild-plugin](https://npmjs.com/search?q=rsbuild-plugin&ranking=popularity).
