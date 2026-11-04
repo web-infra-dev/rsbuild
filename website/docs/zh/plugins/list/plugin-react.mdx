@@ -175,6 +175,8 @@ type ReactCompiler =
       dynamicGating?: {
         source: string;
       };
+      include?: Rspack.RuleSetCondition;
+      exclude?: Rspack.RuleSetCondition;
     };
 ```
 
@@ -209,6 +211,21 @@ pluginReact({
 ```
 
 更多选项请参考官方 [React Compiler 配置说明](https://react.dev/reference/react-compiler/configuration)。
+
+#### 只编译部分代码 \{#compile-part-of-the-codebase}
+
+使用 `include` 和 `exclude` 选择由 React Compiler 编译的模块。两者都支持任意 Rspack [规则条件](https://rspack.rs/zh/config/module-rules#condition)，例如路径、正则表达式、函数或它们组成的数组，并且 `exclude` 的优先级高于 `include`。这样可以按目录逐步启用 React Compiler，或者跳过暂时不兼容的文件，而无需改用 Babel 运行 React Compiler：
+
+```ts
+pluginReact({
+  reactCompiler: {
+    include: /[\\/]src[\\/]features[\\/]/,
+    exclude: [/[\\/]legacy[\\/]/, /\.stories\.tsx$/],
+  },
+});
+```
+
+未匹配的模块仍会使用相同的选项由 SWC 编译，只是不启用 React Compiler。
 
 #### 在非 web 环境中启用 \{#enable-in-non-web-environments}
 
