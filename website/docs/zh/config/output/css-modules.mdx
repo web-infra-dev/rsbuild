@@ -50,6 +50,18 @@ export default {
 };
 ```
 
+你也可以使用正则表达式替换默认匹配规则。例如，为以 `.module.*` 或自定义的 `.scoped.*` 后缀结尾的文件启用 CSS Modules：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    cssModules: {
+      auto: /\.(module|scoped)\.\w+$/i,
+    },
+  },
+};
+```
+
 ## cssModules.exportLocalsConvention
 
 导出的 class 名称的命名风格。

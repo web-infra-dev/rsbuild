@@ -50,6 +50,18 @@ export default {
 };
 ```
 
+You can also use a regular expression to replace the default matching rule. For example, to enable CSS Modules for files ending in `.module.*` or a custom `.scoped.*` suffix:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    cssModules: {
+      auto: /\.(module|scoped)\.\w+$/i,
+    },
+  },
+};
+```
+
 ## cssModules.exportLocalsConvention
 
 Style of exported class names.
