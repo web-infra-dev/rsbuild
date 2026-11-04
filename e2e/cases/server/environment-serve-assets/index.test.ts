@@ -95,9 +95,15 @@ test('should disable output serving without disabling internal reads or custom r
             },
         },
         environments: {
-          worker: { server: { serveAssets: false } },
-          web: { server: { serveAssets: false } },
-          node: { server: { serveAssets: false } },
+          worker: {
+            server: { serveAssets: false },
+          },
+          web: {
+            server: { serveAssets: false },
+          },
+          node: {
+            server: { serveAssets: false },
+          },
         },
       },
     },

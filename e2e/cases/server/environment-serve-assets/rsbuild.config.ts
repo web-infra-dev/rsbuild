@@ -9,7 +9,9 @@ export default defineConfig({
   },
   environments: {
     worker: {
-      source: { entry: { worker: './src/index.js' } },
+      source: {
+        entry: { worker: './src/index.js' },
+      },
       dev: { assetPrefix: '/worker-assets/' },
       output: {
         target: 'web-worker',
@@ -19,7 +21,9 @@ export default defineConfig({
     },
     web: {
       server: { serveAssets: true },
-      source: { entry: { index: './src/index.js', about: './src/index.js' } },
+      source: {
+        entry: { index: './src/index.js', about: './src/index.js' },
+      },
       dev: { assetPrefix: '/web-assets/' },
       output: {
         distPath: { root: 'dist/web' },
@@ -28,8 +32,13 @@ export default defineConfig({
     },
     node: {
       server: { serveAssets: true },
-      source: { entry: { server: './src/index.js' } },
-      output: { target: 'node', distPath: { root: 'dist/node' } },
+      source: {
+        entry: { server: './src/index.js' },
+      },
+      output: {
+        target: 'node',
+        distPath: { root: 'dist/node' },
+      },
     },
   },
 });
