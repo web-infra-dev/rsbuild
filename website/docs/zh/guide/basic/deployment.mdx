@@ -88,9 +88,7 @@ export default defineConfig({
 
 [Nitro](https://nitro.build/docs/rsbuild) 通过 `nitro/rsbuild` 插件为 Rsbuild 应用提供 API 路由、服务端渲染和部署预设。
 
-:::warning
-Nitro 的 Rsbuild 插件目前处于实验阶段，需要 Rsbuild v2.3+，其行为可能在次要版本中发生变化。
-:::
+该插件需要 Rsbuild v2.3 或更高版本。
 
 在项目中安装 `nitro`：
 
@@ -116,13 +114,13 @@ export default defineConfig({
 });
 ```
 
-启用插件后，使用 Rsbuild CLI：
+配置插件后，即可使用 Rsbuild CLI 开发、构建和预览应用：
 
-- `rsbuild dev`：启动同时服务于客户端和 Nitro 服务端的 dev server。
-- `rsbuild build`：根据所选的 Nitro 部署预设，将客户端和服务端构建到 `.output/`，而不是前文介绍的默认 `dist` 目录。
+- `rsbuild dev`：启动同时处理前端和后端请求的 dev server。
+- `rsbuild build`：根据所选的 Nitro 部署预设，将客户端和服务端产物输出到 `.output/`。
 - `rsbuild preview`：通过 Nitro 在本地预览生产构建产物。
 
-你可以将 `preset` 等 Nitro 配置项传给 `nitro()`，或在 `nitro.config.ts` 中配置。请参考 [Nitro 部署指南](https://nitro.build/deploy)，选择预设并将生成的产物部署到目标托管平台。
+Nitro 使用 `.output/` 作为产物目录，替代 Rsbuild 默认的 `dist`。你可以在 `nitro()` 或 `nitro.config.ts` 中设置 `preset` 等选项。各平台的配置和部署步骤请参考 [Nitro 部署指南](https://nitro.build/deploy)。
 
 SSR 示例请参考 [使用 Nitro](/guide/advanced/ssr#nitro-ssr)。
 
