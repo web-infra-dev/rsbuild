@@ -31,7 +31,7 @@ type Auto =
 
 类型说明：
 
-- `true`：为以 `.module.*` 或 `.modules.*` 结尾的文件启用 CSS Modules。
+- `true`：为以 `.module.*` 结尾的文件启用 CSS Modules，推荐使用此命名方式。也兼容 `.modules.*`。
 - `false`: 禁用 CSS Modules。
 - `RegExp`：为匹配该正则表达式的文件启用 CSS Modules，并使用你指定的正则标志。
 - `function`: 为所有通过基于文件名的过滤函数校验的文件启用 CSS Modules。
@@ -50,13 +50,13 @@ export default {
 };
 ```
 
-再比如，将所有包含 .module. 和 .modules. 的文件都视为 CSS Modules：
+你也可以使用正则表达式替换默认匹配规则。例如，为以 `.module.*` 或自定义的 `.scoped.*` 后缀结尾的文件启用 CSS Modules：
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
-      auto: /\.modules?\./,
+      auto: /\.(module|scoped)\.\w+$/i,
     },
   },
 };
