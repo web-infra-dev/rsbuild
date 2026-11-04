@@ -15,6 +15,19 @@ If you want to use SSR directly, we recommend using a full-stack framework built
 - [React full-stack frameworks](/guide/framework/react#full-stack-frameworks)
 - [Solid full-stack frameworks](/guide/framework/solid#full-stack-frameworks)
 
+## Nitro SSR
+
+[Nitro](https://nitro.build/docs/rsbuild) provides a server integration for Rsbuild that handles SSR requests and builds your application for different deployment targets. Its Rsbuild plugin is experimental and requires Rsbuild v2.3+.
+
+You provide the client and server rendering entries, and Nitro integrates them with the dev server and production build. You can continue using `rsbuild dev`, `rsbuild build`, and `rsbuild preview`.
+
+The Nitro examples cover two approaches:
+
+- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html): render page content into an HTML template with an `<!--ssr-outlet-->` placeholder.
+- [React SSR](https://nitro.build/examples/rsbuild-ssr-react): render a complete HTML document with streaming, client asset injection, and hydration.
+
+For plugin setup and deployment, see [Deploy with Nitro](/guide/basic/deployment#nitro-deployment).
+
 ## What is SSR
 
 SSR stands for "Server-Side Rendering". It means that the server generates the page's HTML and sends it to the client, rather than sending only an empty HTML shell and relying on JavaScript to generate the page content.
@@ -24,6 +37,8 @@ In traditional client-side rendering, the server sends an empty HTML shell and s
 With SSR, the server generates HTML that already contains dynamic content and sends it to the client. This makes initial page loading faster and more SEO-friendly, as search engines can crawl the rendered page.
 
 ## File structure
+
+The following sections describe how to implement SSR manually with a custom server using Rsbuild's low-level APIs. When using Nitro, follow the examples above for the file structure and configuration.
 
 A typical SSR application will have the following files:
 

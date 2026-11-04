@@ -84,6 +84,48 @@ With this configuration, when referencing static assets in HTML, the specified p
 <script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
 ```
 
+## Nitro deployment
+
+[Nitro](https://nitro.build/docs/rsbuild) adds API routes, server-side rendering, and deployment presets to Rsbuild applications through the `nitro/rsbuild` plugin.
+
+:::warning
+The Nitro Rsbuild plugin is experimental and requires Rsbuild v2.3+. Its behavior may change in minor releases.
+:::
+
+Install `nitro` in your project:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm add nitro',
+    yarn: 'yarn add nitro',
+    pnpm: 'pnpm add nitro',
+    bun: 'bun add nitro',
+  }}
+/>
+
+Add the plugin to your Rsbuild config:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { nitro } from 'nitro/rsbuild';
+
+export default defineConfig({
+  plugins: [nitro({ serverDir: './' })],
+});
+```
+
+With the plugin enabled, use the Rsbuild CLI:
+
+- `rsbuild dev`: starts a dev server for both the client and Nitro server.
+- `rsbuild build`: builds the client and server into `.output/` using the selected Nitro deployment preset, instead of the default `dist` output described above.
+- `rsbuild preview`: previews the production build locally through Nitro.
+
+Pass Nitro options, such as `preset`, to `nitro()`, or configure them in `nitro.config.ts`. Follow the [Nitro deployment guide](https://nitro.build/deploy) to select a preset and deploy the generated output to your hosting provider.
+
+For SSR examples, see [Use Nitro](/guide/advanced/ssr#nitro-ssr).
+
 ## Deployment platforms
 
 The following sections describe how to deploy on several common platforms.

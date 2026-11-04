@@ -84,6 +84,48 @@ export default defineConfig({
 <script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
 ```
 
+## 使用 Nitro 部署 \{#nitro-deployment}
+
+[Nitro](https://nitro.build/docs/rsbuild) 通过 `nitro/rsbuild` 插件为 Rsbuild 应用提供 API 路由、服务端渲染和部署预设。
+
+:::warning
+Nitro 的 Rsbuild 插件目前处于实验阶段，需要 Rsbuild v2.3+，其行为可能在次要版本中发生变化。
+:::
+
+在项目中安装 `nitro`：
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm add nitro',
+    yarn: 'yarn add nitro',
+    pnpm: 'pnpm add nitro',
+    bun: 'bun add nitro',
+  }}
+/>
+
+在 Rsbuild 配置中添加插件：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { nitro } from 'nitro/rsbuild';
+
+export default defineConfig({
+  plugins: [nitro({ serverDir: './' })],
+});
+```
+
+启用插件后，使用 Rsbuild CLI：
+
+- `rsbuild dev`：启动同时服务于客户端和 Nitro 服务端的 dev server。
+- `rsbuild build`：根据所选的 Nitro 部署预设，将客户端和服务端构建到 `.output/`，而不是前文介绍的默认 `dist` 目录。
+- `rsbuild preview`：通过 Nitro 在本地预览生产构建产物。
+
+你可以将 `preset` 等 Nitro 配置项传给 `nitro()`，或在 `nitro.config.ts` 中配置。请参考 [Nitro 部署指南](https://nitro.build/deploy)，选择预设并将生成的产物部署到目标托管平台。
+
+SSR 示例请参考 [使用 Nitro](/guide/advanced/ssr#nitro-ssr)。
+
 ## 部署平台
 
 下面介绍一些常见平台的部署方式。
