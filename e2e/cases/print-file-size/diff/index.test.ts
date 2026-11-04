@@ -19,7 +19,12 @@ for (const [type, detail] of [
     await fse.remove(cacheDir);
     const srcDir = await copySrcDir();
     const config = {
-      performance: { printFileSize: { compressed: { type }, detail } },
+      performance: {
+        printFileSize: {
+          compressed: { type },
+          detail,
+        },
+      },
       source: {
         entry: {
           index: join(srcDir, 'index.js'),
@@ -108,7 +113,11 @@ test('should not compare compressed sizes across algorithms', async ({
   ] as const;
   for (const compressed of compressions) {
     const result = await build({
-      config: { performance: { printFileSize: { compressed } } },
+      config: {
+        performance: {
+          printFileSize: { compressed },
+        },
+      },
     });
     expect(extractFileSizeLogs(result.logs)).not.toMatch(/\([+-]/);
     result.clearLogs();

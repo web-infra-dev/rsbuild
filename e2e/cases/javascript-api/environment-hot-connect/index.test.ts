@@ -20,7 +20,11 @@ test('should replay to new connections and unsubscribe', async ({
       },
       environments: {
         web: {},
-        other: { output: { distPath: { root: 'dist/other' } } },
+        other: {
+          output: {
+            distPath: { root: 'dist/other' },
+          },
+        },
       },
     },
   });

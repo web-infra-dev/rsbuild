@@ -10,7 +10,9 @@ test.for([true, false])(
       config: {
         environments: {
           web: {
-            output: { minify: { css: minify } },
+            output: {
+              minify: { css: minify },
+            },
           },
         },
       },

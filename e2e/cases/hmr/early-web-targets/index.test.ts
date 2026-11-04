@@ -15,9 +15,13 @@ for (const target of ['node20', 'browserslist:last 2 node versions'] as const) {
         environments: {
           web: {},
           node: {
-            source: { entry: { server: './src/server.js' } },
+            source: {
+              entry: { server: './src/server.js' },
+            },
             output: { target: 'node' },
-            tools: { rspack: { target } },
+            tools: {
+              rspack: { target },
+            },
           },
         },
         tools: {

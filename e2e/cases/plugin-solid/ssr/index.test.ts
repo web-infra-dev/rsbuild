@@ -6,7 +6,9 @@ for (const compiler of ['native', 'babel'] as const) {
     const options = {
       config: {
         plugins: [pluginSolid({ compiler, ssr: true })],
-        output: { distPath: { root: `dist-${compiler}` } },
+        output: {
+          distPath: { root: `dist-${compiler}` },
+        },
       },
     };
 

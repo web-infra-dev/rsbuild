@@ -22,7 +22,9 @@ test('should apply a queued web update before Node finishes', async ({
       environments: {
         web: {},
         node: {
-          source: { entry: { server: './src/server.js' } },
+          source: {
+            entry: { server: './src/server.js' },
+          },
           output: { target: 'node' },
         },
       },

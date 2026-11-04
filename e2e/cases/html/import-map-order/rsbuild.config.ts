@@ -8,7 +8,10 @@ export default defineConfig({
         attrs: { id: 'first-map', type: 'importmap' },
         children: '{}',
       },
-      { tag: 'meta', attrs: { id: 'meta', name: 'description' } },
+      {
+        tag: 'meta',
+        attrs: { id: 'meta', name: 'description' },
+      },
       {
         tag: 'link',
         attrs: {

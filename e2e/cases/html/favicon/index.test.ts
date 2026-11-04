@@ -253,12 +253,18 @@ test('should resolve the default favicon from each environment publicDir', async
 
   const rsbuild = await build({
     config: {
-      server: { publicDir: { name: publicA } },
+      server: {
+        publicDir: { name: publicA },
+      },
       environments: {
-        inherited: { output: { distPath: 'dist-favicon/inherited' } },
+        inherited: {
+          output: { distPath: 'dist-favicon/inherited' },
+        },
         custom: {
           output: { distPath: 'dist-favicon/custom' },
-          server: { publicDir: { name: publicB } },
+          server: {
+            publicDir: { name: publicB },
+          },
         },
       },
     },
