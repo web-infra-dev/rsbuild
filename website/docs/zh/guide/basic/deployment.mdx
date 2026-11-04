@@ -86,23 +86,23 @@ export default defineConfig({
 
 ## 使用 Nitro 部署 \{#nitro-deployment}
 
-[Nitro](https://nitro.build/docs) 是一个用于开发和部署 JavaScript 应用的服务端框架。它可以处理 HTTP 请求、API 路由和服务端渲染，并通过部署预设支持 Node.js 服务器、Cloudflare Workers、Netlify、Vercel 等运行环境和平台。
+[Nitro](https://nitro.build/docs) 是一个 JavaScript 服务端框架，提供 API 路由和服务端渲染能力，支持将应用部署到 Node.js 服务器、Cloudflare Workers、Netlify、Vercel 等运行环境和平台。
 
 以下场景可以考虑使用 Nitro：
 
-- 为 Rsbuild 应用添加后端 API 路由，在同一个项目中开发前端和后端。
-- 为 SSR 应用提供服务端支持，既可以使用自己编写的渲染逻辑，也可以与 TanStack Start 等框架集成。
-- 通过部署预设，将服务端应用构建为适用于不同托管平台的产物。
+- 为 Rsbuild 应用添加后端 API，在同一个项目中开发前端和后端。
+- 运行 SSR 应用，使用自己编写的渲染逻辑，或与 TanStack Start 等框架配合使用。
+- 使用内置的部署预设，将服务端应用部署到不同平台。
 
-如果应用只需要静态托管，可以直接按照下文各平台的部署说明部署 Rsbuild 产物，无需引入 Nitro。前端调用独立部署的后端 API 时，也可以采用这种方式。
+如果应用只需要静态托管，可以直接部署 Rsbuild 产物，无需引入 Nitro。
 
-接入 Nitro 需要 Rsbuild v2.3 或更高版本，具体步骤请参考 [Nitro 的 Rsbuild 集成指南](https://nitro.build/docs/rsbuild)。你可以根据应用的页面渲染方式选择官方示例：
+Nitro 的 Rsbuild 集成需要 Rsbuild v2.3 或更高版本。接入步骤请参考[集成指南](https://nitro.build/docs/rsbuild)，也可以选择适合自己应用的示例：
 
 - [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html)：不使用 UI 框架，将页面内容渲染到 HTML 模板中。
-- [React SSR](https://nitro.build/examples/rsbuild-ssr-react)：使用 React 在服务端渲染页面，并在浏览器中进行 hydration。
-- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react)：为使用 TanStack Start 管理路由和页面渲染的应用集成 Nitro。
+- [React SSR](https://nitro.build/examples/rsbuild-ssr-react)：在服务端渲染 React 页面，并在浏览器中进行 hydration。
+- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react)：在 TanStack Start 应用中集成 Nitro。
 
-部署到生产环境时，请按照 [Nitro 部署指南](https://nitro.build/deploy)选择目标平台的部署方式。Nitro 会将客户端和服务端产物输出到 `.output/`，因此应使用对应 Nitro 预设的产物和部署配置，而不是直接套用下文针对 `dist` 的静态托管配置。
+准备部署时，请参考 [Nitro 部署指南](https://nitro.build/deploy)，选择部署预设并完成目标平台的配置。
 
 ## 部署平台
 

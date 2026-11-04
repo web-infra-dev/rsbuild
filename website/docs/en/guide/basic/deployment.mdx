@@ -86,23 +86,23 @@ With this configuration, when referencing static assets in HTML, the specified p
 
 ## Nitro deployment
 
-[Nitro](https://nitro.build/docs) is a server framework for building and deploying JavaScript applications. It handles HTTP requests, API routes, and server-side rendering, with deployment presets for Node.js servers and platforms such as Cloudflare Workers, Netlify, and Vercel.
+[Nitro](https://nitro.build/docs) is a server framework for JavaScript applications. It provides API routes and server-side rendering, and supports deployment to Node.js servers, Cloudflare Workers, Netlify, Vercel, and other platforms.
 
 Consider using Nitro when you want to:
 
-- Add backend API routes to an Rsbuild application and develop the frontend and backend together.
-- Serve an SSR application, either with your own rendering logic or with a framework such as TanStack Start.
-- Build a server application for different hosting platforms using deployment presets.
+- Add backend APIs to an Rsbuild application and develop the frontend and backend in the same project.
+- Run an SSR application with your own rendering logic or a framework such as TanStack Start.
+- Deploy a server application to different platforms using Nitro's built-in deployment presets.
 
-If your application only needs static hosting, follow the platform guides below to deploy Rsbuild's output directly. You do not need Nitro for this, including when your frontend calls a separately deployed backend.
+For applications that only need static hosting, you can deploy Rsbuild's output directly without Nitro.
 
-The integration requires Rsbuild v2.3 or later. Follow the [Nitro Rsbuild integration guide](https://nitro.build/docs/rsbuild) to get started, and choose an official example based on how your application renders pages:
+Nitro's Rsbuild integration requires Rsbuild v2.3 or later. See the [integration guide](https://nitro.build/docs/rsbuild) for setup instructions, and choose an example that fits your application:
 
-- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html): render page content into an HTML template without a UI framework.
-- [React SSR](https://nitro.build/examples/rsbuild-ssr-react): use React to render pages on the server and hydrate them in the browser.
-- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react): integrate Nitro with an application that uses TanStack Start for routing and rendering.
+- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html): render content into an HTML template without a UI framework.
+- [React SSR](https://nitro.build/examples/rsbuild-ssr-react): render React pages on the server and hydrate them in the browser.
+- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react): use Nitro with a TanStack Start application.
 
-For production, follow the [Nitro deployment guide](https://nitro.build/deploy) for your target platform. Nitro builds the client and server into `.output/`, so use the output and deployment settings for your Nitro preset rather than the static hosting settings for `dist` below.
+When you are ready to deploy, follow the [Nitro deployment guide](https://nitro.build/deploy) to choose a preset and configure your target platform.
 
 ## Deployment platforms
 
