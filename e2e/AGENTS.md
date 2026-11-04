@@ -2,6 +2,7 @@
 
 - Follow [README.md](./README.md) for helper imports, and nearby cases for fixture patterns.
 - Include a `src` directory in each case. Prefer static config in `rsbuild.config.ts` for CLI debugging; use inline config for dynamic values or small per-test variations.
+- Format nested configuration objects across multiple lines; do not put multiple levels of nesting on a single line.
 - Split case directories when they need different source files or Rsbuild configs.
 - Reuse `@e2e/assets` where possible.
 - Put case-specific package mocks in `_node_modules` and call `copyNodeModules()` before resolving them.
