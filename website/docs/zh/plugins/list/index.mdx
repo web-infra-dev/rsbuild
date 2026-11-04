@@ -81,7 +81,7 @@ description: '查找用于框架支持和构建功能的 Rsbuild 官方及社区
 
 ## 社区插件
 
-社区插件按框架分类，各分类内按包名的字母顺序排列。欢迎提交 PR，将你已发布的插件添加到列表中！
+社区插件按框架或用途分类，各分类内按包名的字母顺序排列。欢迎提交 PR，将你已发布的插件添加到列表中！
 
 ### React
 
@@ -115,6 +115,13 @@ description: '查找用于框架支持和构建功能的 Rsbuild 官方及社区
 - [ngrok-rsbuild-plugin](https://github.com/nanofuxion/ngrok-rsbuild-plugin)：通过 ngrok 将 Rsbuild 开发服务器暴露到互联网，适用于 LynxJS 应用。
 - [relog-rsbuild-plugin](https://github.com/nanofuxion/relog-rsbuild-plugin)：拦截设备或模拟器上运行的 LynxJS 应用的 `console.log()` 调用，并将日志发送回 Rsbuild 开发服务器。
 
+### 部署插件 \{#deployment}
+
+- [nitro](https://nitro.build/docs/rsbuild)：通过实验性的 `nitro/rsbuild` 插件提供 API 路由、SSR 和部署预设，需要 Rsbuild v2.3+。
+- [rsbuild-plugin-aws-lambda](https://github.com/wxiaoyun/rsbuild-plugin-aws-lambda)：配置 Rsbuild，将 JavaScript 资源打包为适用于 AWS Lambda 的产物。
+- [rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare)：开发和构建 Cloudflare Workers，并使用 workerd 在本地运行。
+- [zephyr-rsbuild-plugin](https://www.npmjs.com/package/zephyr-rsbuild-plugin)：使用 Zephyr Cloud 部署 Rsbuild 应用。
+
 ### 通用插件 \{#common-1}
 
 - [@agney/rsbuild-content-collections](https://github.com/agneym/rsbuild-content-collections)：为 Rsbuild 集成 Content Collections。
@@ -132,11 +139,9 @@ description: '查找用于框架支持和构建功能的 Rsbuild 官方及社区
 - [rsbuild-plugin-arco](https://github.com/zhmushan/rsbuild-plugin-arco)：为 Rsbuild 集成 Arco Design。
 - [rsbuild-plugin-arethetypeswrong](https://github.com/rstackjs/rsbuild-plugin-arethetypeswrong)：使用 `arethetypeswrong` 检查 TypeScript 类型定义。
 - [rsbuild-plugin-auto-alias](https://github.com/jwyGithub/rsbuild-plugin-auto-alias)：根据路径自动生成别名。
-- [rsbuild-plugin-aws-lambda](https://github.com/wxiaoyun/rsbuild-plugin-aws-lambda)：配置 Rsbuild，将 JavaScript 资源打包为适用于 AWS Lambda 的产物。
 - [rsbuild-plugin-biome](https://github.com/robertpanvip/rsbuild-plugin-lint/tree/main/packages/biome)：在 Rsbuild 构建过程中集成 Biome。
 - [rsbuild-plugin-block-imports](https://github.com/malekabdelkader/rsbuild-plugin-block-imports)：在 Module Federation 构建中检测并阻止不允许的导入。
 - [rsbuild-plugin-cdn-import](https://github.com/fuxichen/rsbuild-plugin-cdn-import)：通过 CDN 导入模块。
-- [rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare)：开发和构建 Cloudflare Workers，并使用 workerd 在本地运行。
 - [rsbuild-plugin-compression](https://github.com/s-r-x/rsbuild-plugin-compression)：使用 gzip、brotli 或 zstd 压缩资源。
 - [rsbuild-plugin-css-optimizer](https://github.com/aliezzahn/rsbuild-plugin-css-optimizer)：自定义 CSS 压缩，支持选择 cssnano 或 Lightning CSS。
 - [rsbuild-plugin-devtools-json](https://github.com/rstackjs/rsbuild-plugin-devtools-json)：在开发服务器中动态生成 `com.chrome.devtools.json`。
@@ -167,6 +172,5 @@ description: '查找用于框架支持和构建功能的 Rsbuild 官方及社区
 - [rsbuild-plugin-web-ext](https://github.com/xbzhang2020/rsbuild-plugin-web-ext/tree/main/packages/rsbuild)：开发和构建浏览器扩展。
 - [rsbuild-plugin-web-extension](https://github.com/filc-dev/rsbuild-plugin-web-extension)：为 Rsbuild 提供 Chrome 和其他浏览器扩展支持。
 - [rsbuild-plugin-workspace-dev](https://github.com/rstackjs/rsbuild-plugin-workspace-dev)：按拓扑顺序启动 monorepo 子项目。
-- [zephyr-rsbuild-plugin](https://www.npmjs.com/package/zephyr-rsbuild-plugin)：使用 Zephyr Cloud 部署 Rsbuild 应用。
 
 你也可以在 npm 上搜索 [rsbuild-plugin](https://npmjs.com/search?q=rsbuild-plugin&ranking=popularity) 关键词来发现更多 Rsbuild 插件。
