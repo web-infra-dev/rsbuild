@@ -15,19 +15,6 @@ description: '本章节介绍如何使用 Rsbuild 实现 SSR 功能。'
 - [React 全栈框架](/guide/framework/react#full-stack-frameworks)
 - [Solid 全栈框架](/guide/framework/solid#full-stack-frameworks)
 
-## 使用 Nitro \{#nitro-ssr}
-
-[Nitro](https://nitro.build/docs/rsbuild) 是一个服务端框架，可以为 Rsbuild SSR 应用提供服务端支持。你负责页面渲染逻辑，Nitro 负责处理请求，并为目标部署平台构建服务端产物。使用时需要 Rsbuild v2.3 或更高版本。
-
-配置客户端入口和服务端渲染入口后，即可通过 `rsbuild dev`、`rsbuild build` 和 `rsbuild preview` 开发、构建和预览 Nitro 应用。
-
-以下示例展示了如何使用 Nitro 实现 SSR：
-
-- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html)：将页面内容渲染到 HTML 模板的 `<!--ssr-outlet-->` 占位符中。
-- [React SSR](https://nitro.build/examples/rsbuild-ssr-react)：渲染完整的 HTML 文档，支持流式渲染、客户端资源注入和 hydration。
-
-插件配置和部署方式请参考 [使用 Nitro 部署](/guide/basic/deployment#nitro-deployment)。
-
 ## 什么是 SSR
 
 SSR 是 "Server-side rendering"（服务端渲染）的缩写。它表示由服务器生成网页的 HTML，并将其发送给客户端，而不是只发送一个空的 HTML 外壳，并依赖 JavaScript 来生成页面内容。
@@ -37,8 +24,6 @@ SSR 是 "Server-side rendering"（服务端渲染）的缩写。它表示由服�
 使用 SSR 后，服务器会生成已经包含动态内容的 HTML，并将其发送给客户端。这使得首屏加载速度更快，并对 SEO 更加友好，因为搜索引擎可以爬取到渲染后的页面。
 
 ## 文件结构
-
-以下章节介绍如何通过 Rsbuild 的 low-level API 和自定义 Server 实现 SSR。对于 Nitro 应用，请使用上述示例中的文件结构和配置。
 
 一个典型的 SSR 应用会包含以下文件：
 

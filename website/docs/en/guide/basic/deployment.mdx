@@ -96,43 +96,13 @@ Consider using Nitro when you want to:
 
 If your application only needs static hosting, follow the platform guides below to deploy Rsbuild's output directly. You do not need Nitro for this, including when your frontend calls a separately deployed backend.
 
-The [`nitro/rsbuild` plugin](https://nitro.build/docs/rsbuild) connects Nitro to Rsbuild so you can develop and build the client and server together.
+The integration requires Rsbuild v2.3 or later. Follow the [Nitro Rsbuild integration guide](https://nitro.build/docs/rsbuild) to get started, and choose an official example based on how your application renders pages:
 
-The plugin requires Rsbuild v2.3 or later.
+- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html): render page content into an HTML template without a UI framework.
+- [React SSR](https://nitro.build/examples/rsbuild-ssr-react): use React to render pages on the server and hydrate them in the browser.
+- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react): integrate Nitro with an application that uses TanStack Start for routing and rendering.
 
-Install `nitro` in your project:
-
-import { PackageManagerTabs } from '@theme';
-
-<PackageManagerTabs
-  command={{
-    npm: 'npm add nitro',
-    yarn: 'yarn add nitro',
-    pnpm: 'pnpm add nitro',
-    bun: 'bun add nitro',
-  }}
-/>
-
-Add the plugin to your Rsbuild config:
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { nitro } from 'nitro/rsbuild';
-
-export default defineConfig({
-  plugins: [nitro({ serverDir: './' })],
-});
-```
-
-Once the plugin is configured, use the Rsbuild CLI to develop, build, and preview your application:
-
-- `rsbuild dev`: starts a dev server that serves both the frontend and backend.
-- `rsbuild build`: builds the client and server into `.output/` using the selected Nitro deployment preset.
-- `rsbuild preview`: previews the production build locally through Nitro.
-
-Nitro uses `.output/` as its output directory instead of Rsbuild's default `dist`. You can set options such as `preset` in `nitro()` or `nitro.config.ts`. See the [Nitro deployment guide](https://nitro.build/deploy) for platform-specific configuration and deployment steps.
-
-For SSR examples, see [Use Nitro](/guide/advanced/ssr#nitro-ssr).
+For production, follow the [Nitro deployment guide](https://nitro.build/deploy) for your target platform. Nitro builds the client and server into `.output/`, so use the output and deployment settings for your Nitro preset rather than the static hosting settings for `dist` below.
 
 ## Deployment platforms
 

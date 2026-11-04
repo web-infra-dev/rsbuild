@@ -96,43 +96,13 @@ export default defineConfig({
 
 如果应用只需要静态托管，可以直接按照下文各平台的部署说明部署 Rsbuild 产物，无需引入 Nitro。前端调用独立部署的后端 API 时，也可以采用这种方式。
 
-[`nitro/rsbuild` 插件](https://nitro.build/docs/rsbuild)将 Nitro 集成到 Rsbuild 中，让你能够一起开发和构建客户端与服务端。
+接入 Nitro 需要 Rsbuild v2.3 或更高版本，具体步骤请参考 [Nitro 的 Rsbuild 集成指南](https://nitro.build/docs/rsbuild)。你可以根据应用的页面渲染方式选择官方示例：
 
-该插件需要 Rsbuild v2.3 或更高版本。
+- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html)：不使用 UI 框架，将页面内容渲染到 HTML 模板中。
+- [React SSR](https://nitro.build/examples/rsbuild-ssr-react)：使用 React 在服务端渲染页面，并在浏览器中进行 hydration。
+- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react)：为使用 TanStack Start 管理路由和页面渲染的应用集成 Nitro。
 
-在项目中安装 `nitro`：
-
-import { PackageManagerTabs } from '@theme';
-
-<PackageManagerTabs
-  command={{
-    npm: 'npm add nitro',
-    yarn: 'yarn add nitro',
-    pnpm: 'pnpm add nitro',
-    bun: 'bun add nitro',
-  }}
-/>
-
-在 Rsbuild 配置中添加插件：
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { nitro } from 'nitro/rsbuild';
-
-export default defineConfig({
-  plugins: [nitro({ serverDir: './' })],
-});
-```
-
-配置插件后，即可使用 Rsbuild CLI 开发、构建和预览应用：
-
-- `rsbuild dev`：启动同时处理前端和后端请求的 dev server。
-- `rsbuild build`：根据所选的 Nitro 部署预设，将客户端和服务端产物输出到 `.output/`。
-- `rsbuild preview`：通过 Nitro 在本地预览生产构建产物。
-
-Nitro 使用 `.output/` 作为产物目录，替代 Rsbuild 默认的 `dist`。你可以在 `nitro()` 或 `nitro.config.ts` 中设置 `preset` 等选项。各平台的配置和部署步骤请参考 [Nitro 部署指南](https://nitro.build/deploy)。
-
-SSR 示例请参考 [使用 Nitro](/guide/advanced/ssr#nitro-ssr)。
+部署到生产环境时，请按照 [Nitro 部署指南](https://nitro.build/deploy)选择目标平台的部署方式。Nitro 会将客户端和服务端产物输出到 `.output/`，因此应使用对应 Nitro 预设的产物和部署配置，而不是直接套用下文针对 `dist` 的静态托管配置。
 
 ## 部署平台
 
