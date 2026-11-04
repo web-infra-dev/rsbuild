@@ -7,7 +7,11 @@ test.for([false, true])(
     const entry = join(await copySrcDir(), 'index.js');
     const { port } = await dev({
       config: {
-        source: { entry: { index: entry } },
+        source: {
+          entry: {
+            index: entry,
+          },
+        },
         output: { module: esm },
       },
     });

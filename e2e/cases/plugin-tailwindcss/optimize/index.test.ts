@@ -81,7 +81,11 @@ test('should keep Tailwind minify disabled when optimize minify is omitted', asy
   const rsbuild = await build({
     config: {
       ...commonConfig,
-      plugins: [pluginTailwindcss({ optimize: {} })],
+      plugins: [
+        pluginTailwindcss({
+          optimize: {},
+        }),
+      ],
     },
   });
 
@@ -99,7 +103,13 @@ test('should enable Tailwind minify when optimize minify is true', async ({
   const rsbuild = await build({
     config: {
       ...commonConfig,
-      plugins: [pluginTailwindcss({ optimize: { minify: true } })],
+      plugins: [
+        pluginTailwindcss({
+          optimize: {
+            minify: true,
+          },
+        }),
+      ],
     },
   });
 

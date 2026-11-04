@@ -31,15 +31,33 @@ test('should show runtime errors from early updates after Node recovers', async 
 
   await dev({
     config: {
-      dev: { client: { overlay: { runtime: true } } },
+      dev: {
+        client: {
+          overlay: {
+            runtime: true,
+          },
+        },
+      },
       environments: {
         web: {
-          source: { entry: { index: join(tempSrc, 'index.js') } },
+          source: {
+            entry: {
+              index: join(tempSrc, 'index.js'),
+            },
+          },
         },
         node: {
-          source: { entry: { server: join(tempSrc, 'server.js') } },
+          source: {
+            entry: {
+              server: join(tempSrc, 'server.js'),
+            },
+          },
           output: { target: 'node' },
-          tools: { rspack: { plugins: [nodePlugin] } },
+          tools: {
+            rspack: {
+              plugins: [nodePlugin],
+            },
+          },
         },
       },
     },

@@ -33,7 +33,13 @@ test.for([
     const rsbuild = await build({
       config: {
         output: { filenameHash: false },
-        tools: { rspack: { output: { publicPath } } },
+        tools: {
+          rspack: {
+            output: {
+              publicPath,
+            },
+          },
+        },
       },
     });
     const css = getFileContent(
@@ -52,7 +58,13 @@ test('should update CSS `?url` hashes when the public path changes', async ({
     const rsbuild = await build({
       config: {
         output: { assetPrefix },
-        tools: { rspack: { optimization: { realContentHash: false } } },
+        tools: {
+          rspack: {
+            optimization: {
+              realContentHash: false,
+            },
+          },
+        },
       },
     });
     filenames.push(

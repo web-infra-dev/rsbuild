@@ -267,9 +267,17 @@ test('should inherit, replace or disable publicDir per environment', async ({
 
   const { distPath } = await build({
     config: {
-      server: { publicDir: { name: publicA } },
+      server: {
+        publicDir: {
+          name: publicA,
+        },
+      },
       environments: {
-        inherited: { output: { distPath: 'dist-copy/inherited' } },
+        inherited: {
+          output: {
+            distPath: 'dist-copy/inherited',
+          },
+        },
         custom: {
           // Different public directories must still be copied to nested outputs.
           output: { distPath: 'dist-copy/inherited/custom' },
@@ -342,7 +350,12 @@ test('should serve environment public directories in order', async ({
 
   const rsbuild = await devOnly({
     config: {
-      server: { publicDir: { name: publicA }, htmlFallback: false },
+      server: {
+        publicDir: {
+          name: publicA,
+        },
+        htmlFallback: false,
+      },
       environments: {
         inherited: {},
         custom: {
@@ -377,10 +390,21 @@ test('should watch a shared public directory if any environment enables it', asy
 
   await dev({
     config: {
-      server: { publicDir: { name: publicDir } },
+      server: {
+        publicDir: {
+          name: publicDir,
+        },
+      },
       environments: {
         unwatched: {},
-        watched: { server: { publicDir: { name: publicDir, watch: true } } },
+        watched: {
+          server: {
+            publicDir: {
+              name: publicDir,
+              watch: true,
+            },
+          },
+        },
       },
     },
   });

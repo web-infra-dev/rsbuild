@@ -34,7 +34,13 @@ test('should preserve a manually registered Rsdoctor plugin', async ({
   const plugin = new RsdoctorRspackPlugin();
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
-    config: { tools: { rspack: { plugins: [plugin] } } },
+    config: {
+      tools: {
+        rspack: {
+          plugins: [plugin],
+        },
+      },
+    },
   });
   const compiler = await rsbuild.createCompiler();
 

@@ -16,7 +16,11 @@ test('should invalidate early results only for the rebuilding environment', asyn
     config: {
       environments: {
         web: {},
-        node: { output: { target: 'node' } },
+        node: {
+          output: {
+            target: 'node',
+          },
+        },
       },
       tools: {
         rspack: (config, { environment }) => {

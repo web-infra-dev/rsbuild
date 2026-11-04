@@ -341,7 +341,11 @@ test('should print Brotli details and total', async ({ build }) => {
   const rsbuild = await build({
     config: {
       performance: {
-        printFileSize: { compressed: { type: 'brotli' } },
+        printFileSize: {
+          compressed: {
+            type: 'brotli',
+          },
+        },
       },
     },
   });

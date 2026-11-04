@@ -12,10 +12,22 @@ export default defineConfig({
         append: false,
       },
       (tags) => {
-        tags.push({ tag: 'script', attrs: { src: 'bar.js' }, append: false });
+        tags.push({
+          tag: 'script',
+          attrs: {
+            src: 'bar.js',
+          },
+          append: false,
+        });
         return tags;
       },
-      { tag: 'script', attrs: { src: 'baz.js' }, append: false },
+      {
+        tag: 'script',
+        attrs: {
+          src: 'baz.js',
+        },
+        append: false,
+      },
     ],
   },
 });

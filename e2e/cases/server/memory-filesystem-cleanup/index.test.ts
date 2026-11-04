@@ -13,7 +13,11 @@ test('should retain only recent HMR updates and lazy chunks', async ({
   let compiler!: Rspack.Compiler;
   await dev({
     config: {
-      source: { entry: { index: entry } },
+      source: {
+        entry: {
+          index: entry,
+        },
+      },
       tools: {
         rspack(_config, { appendPlugins }) {
           appendPlugins({
@@ -63,8 +67,20 @@ test('should preserve assets still owned by another environment', async ({
   const { port } = await dev({
     config: {
       environments: {
-        web: { source: { entry: { index: entry } } },
-        other: { source: { entry: { other: join(src, 'other.js') } } },
+        web: {
+          source: {
+            entry: {
+              index: entry,
+            },
+          },
+        },
+        other: {
+          source: {
+            entry: {
+              other: join(src, 'other.js'),
+            },
+          },
+        },
       },
       plugins: [
         {

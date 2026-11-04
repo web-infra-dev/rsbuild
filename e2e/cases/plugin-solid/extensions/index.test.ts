@@ -18,7 +18,11 @@ for (const compiler of ['native', 'babel'] as const) {
       runServer: true,
       config: {
         ...config,
-        output: { sourceMap: { js: 'source-map' } },
+        output: {
+          sourceMap: {
+            js: 'source-map',
+          },
+        },
       },
     });
     await gotoPage(page, rsbuild);
@@ -53,7 +57,11 @@ for (const compiler of ['native', 'babel'] as const) {
     await dev({
       config: {
         ...config,
-        source: { entry: { index: path.join(src, 'index.jsx') } },
+        source: {
+          entry: {
+            index: path.join(src, 'index.jsx'),
+          },
+        },
       },
     });
     const count = page.locator('#count');
