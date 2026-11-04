@@ -3,9 +3,7 @@ import { defineConfig } from '@rsbuild/core';
 export default defineConfig({
   dev: { lazyCompilation: false },
   output: {
-    sourceMap: {
-      js: 'source-map',
-    },
+    sourceMap: { js: 'source-map' },
   },
   tools: {
     rspack: {

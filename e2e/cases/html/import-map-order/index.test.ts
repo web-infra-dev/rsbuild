@@ -28,9 +28,7 @@ test('should move import maps with the native HTML plugin', async ({
 }) => {
   await runBothServe(() => expectTagOrder(page), {
     config: {
-      html: {
-        implementation: 'native',
-      },
+      html: { implementation: 'native' },
     },
   });
 });

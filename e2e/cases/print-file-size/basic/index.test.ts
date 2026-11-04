@@ -342,9 +342,7 @@ test('should print Brotli details and total', async ({ build }) => {
     config: {
       performance: {
         printFileSize: {
-          compressed: {
-            type: 'brotli',
-          },
+          compressed: { type: 'brotli' },
         },
       },
     },

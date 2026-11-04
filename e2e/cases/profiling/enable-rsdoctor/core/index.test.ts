@@ -36,9 +36,7 @@ test('should preserve a manually registered Rsdoctor plugin', async ({
     cwd: import.meta.dirname,
     config: {
       tools: {
-        rspack: {
-          plugins: [plugin],
-        },
+        rspack: { plugins: [plugin] },
       },
     },
   });

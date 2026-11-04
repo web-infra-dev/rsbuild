@@ -8,9 +8,7 @@ test.for([false, true])(
     const { port } = await dev({
       config: {
         source: {
-          entry: {
-            index: entry,
-          },
+          entry: { index: entry },
         },
         output: { module: esm },
       },

@@ -21,9 +21,7 @@ for (const [type, detail] of [
     const config = {
       performance: {
         printFileSize: {
-          compressed: {
-            type,
-          },
+          compressed: { type },
           detail,
         },
       },
@@ -117,9 +115,7 @@ test('should not compare compressed sizes across algorithms', async ({
     const result = await build({
       config: {
         performance: {
-          printFileSize: {
-            compressed,
-          },
+          printFileSize: { compressed },
         },
       },
     });

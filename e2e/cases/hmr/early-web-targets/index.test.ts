@@ -16,15 +16,11 @@ for (const target of ['node20', 'browserslist:last 2 node versions'] as const) {
           web: {},
           node: {
             source: {
-              entry: {
-                server: './src/server.js',
-              },
+              entry: { server: './src/server.js' },
             },
             output: { target: 'node' },
             tools: {
-              rspack: {
-                target,
-              },
+              rspack: { target },
             },
           },
         },

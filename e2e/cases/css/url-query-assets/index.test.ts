@@ -35,9 +35,7 @@ test.for([
         output: { filenameHash: false },
         tools: {
           rspack: {
-            output: {
-              publicPath,
-            },
+            output: { publicPath },
           },
         },
       },
@@ -60,9 +58,7 @@ test('should update CSS `?url` hashes when the public path changes', async ({
         output: { assetPrefix },
         tools: {
           rspack: {
-            optimization: {
-              realContentHash: false,
-            },
+            optimization: { realContentHash: false },
           },
         },
       },

@@ -17,9 +17,7 @@ test('should invalidate early results only for the rebuilding environment', asyn
       environments: {
         web: {},
         node: {
-          output: {
-            target: 'node',
-          },
+          output: { target: 'node' },
         },
       },
       tools: {

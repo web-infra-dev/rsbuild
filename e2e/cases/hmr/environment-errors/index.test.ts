@@ -33,22 +33,16 @@ test('should preserve Node errors during early web updates and clear them after 
       environments: {
         web: {
           source: {
-            entry: {
-              index: join(tempSrc, 'index.js'),
-            },
+            entry: { index: join(tempSrc, 'index.js') },
           },
         },
         node: {
           source: {
-            entry: {
-              server: join(tempSrc, 'server.js'),
-            },
+            entry: { server: join(tempSrc, 'server.js') },
           },
           output: { target: 'node' },
           tools: {
-            rspack: {
-              plugins: [nodePlugin],
-            },
+            rspack: { plugins: [nodePlugin] },
           },
         },
       },

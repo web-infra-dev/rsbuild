@@ -10,10 +10,7 @@ export default defineConfig({
       },
       {
         tag: 'meta',
-        attrs: {
-          id: 'meta',
-          name: 'description',
-        },
+        attrs: { id: 'meta', name: 'description' },
       },
       {
         tag: 'link',

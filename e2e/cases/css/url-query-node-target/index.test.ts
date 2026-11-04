@@ -11,9 +11,7 @@ test.for([true, false])(
         environments: {
           web: {
             output: {
-              minify: {
-                css: minify,
-              },
+              minify: { css: minify },
             },
           },
         },

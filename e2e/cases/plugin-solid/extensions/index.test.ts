@@ -19,9 +19,7 @@ for (const compiler of ['native', 'babel'] as const) {
       config: {
         ...config,
         output: {
-          sourceMap: {
-            js: 'source-map',
-          },
+          sourceMap: { js: 'source-map' },
         },
       },
     });
@@ -58,9 +56,7 @@ for (const compiler of ['native', 'babel'] as const) {
       config: {
         ...config,
         source: {
-          entry: {
-            index: path.join(src, 'index.jsx'),
-          },
+          entry: { index: path.join(src, 'index.jsx') },
         },
       },
     });

@@ -7,9 +7,7 @@ for (const compiler of ['native', 'babel'] as const) {
       config: {
         plugins: [pluginSolid({ compiler, ssr: true })],
         output: {
-          distPath: {
-            root: `dist-${compiler}`,
-          },
+          distPath: { root: `dist-${compiler}` },
         },
       },
     };

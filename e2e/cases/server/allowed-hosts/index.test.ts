@@ -51,9 +51,7 @@ test('should validate HMR and proxy upgrades after HTTP requests', async ({
   const target = await dev({
     config: {
       dev: {
-        client: {
-          path: '/proxy',
-        },
+        client: { path: '/proxy' },
       },
     },
   });

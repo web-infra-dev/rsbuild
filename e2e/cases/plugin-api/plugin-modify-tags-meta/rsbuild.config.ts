@@ -10,10 +10,7 @@ export default defineConfig({
           if (tag.metadata?.from === 'my-plugin') {
             return {
               ...tag,
-              attrs: {
-                ...tag.attrs,
-                id: 'foo',
-              },
+              attrs: { ...tag.attrs, id: 'foo' },
             };
           }
           return tag;

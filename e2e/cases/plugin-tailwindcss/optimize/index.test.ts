@@ -105,9 +105,7 @@ test('should enable Tailwind minify when optimize minify is true', async ({
       ...commonConfig,
       plugins: [
         pluginTailwindcss({
-          optimize: {
-            minify: true,
-          },
+          optimize: { minify: true },
         }),
       ],
     },

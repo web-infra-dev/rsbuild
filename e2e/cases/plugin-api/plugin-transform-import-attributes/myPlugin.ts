@@ -5,9 +5,7 @@ export const myPlugin: RsbuildPlugin = {
   setup(api) {
     api.transform(
       {
-        with: {
-          type: 'json',
-        },
+        with: { type: 'json' },
       },
       () => {
         return JSON.stringify({ type: 'with import attributes' });
