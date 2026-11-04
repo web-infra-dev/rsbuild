@@ -46,7 +46,7 @@ catalog:
   '@rstest/core': '^0.12.5'
   '@rstest/playwright': '^0.12.5'
   # Match the Shiki version used by Rspress to keep transformer types compatible.
-  '@shikijs/transformers': '4.3.0'
+  '@shikijs/transformers': '4.6.0'
   '@solidjs/babel-plugin': '2.0.0-rc.20'
   '@solidjs/compiler': '2.0.0-rc.20'
   '@solidjs/web': '^2.0.0-rc.20'
