@@ -84,26 +84,6 @@ export default defineConfig({
 <script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
 ```
 
-## 使用 Nitro 部署 \{#nitro-deployment}
-
-[Nitro](https://nitro.build/docs) 是一个 JavaScript 服务端框架，提供 API 路由和服务端渲染能力，支持将应用部署到 Node.js 服务器、Cloudflare Workers、Netlify、Vercel 等运行环境和平台。
-
-以下场景可以考虑使用 Nitro：
-
-- 为 Rsbuild 应用添加后端 API，在同一个项目中开发前端和后端。
-- 运行 SSR 应用，使用自己编写的渲染逻辑，或与 TanStack Start 等框架配合使用。
-- 使用内置的部署预设，将服务端应用部署到不同平台。
-
-如果应用只需要静态托管，可以直接部署 Rsbuild 产物，无需引入 Nitro。
-
-Nitro 的 Rsbuild 集成需要 Rsbuild v2.3 或更高版本。接入步骤请参考[集成指南](https://nitro.build/docs/rsbuild)，也可以选择适合自己应用的示例：
-
-- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html)：不使用 UI 框架，将页面内容渲染到 HTML 模板中。
-- [React SSR](https://nitro.build/examples/rsbuild-ssr-react)：在服务端渲染 React 页面，并在浏览器中进行 hydration。
-- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react)：在 TanStack Start 应用中集成 Nitro。
-
-准备部署时，请参考 [Nitro 部署指南](https://nitro.build/deploy)，选择部署预设并完成目标平台的配置。
-
 ## 部署平台
 
 下面介绍一些常见平台的部署方式。
@@ -128,6 +108,8 @@ Cloudflare 提供了多种部署 Rsbuild 项目的方式。如果只需要托管
 然后点击 **Save and Deploy** 按钮，就可以开始部署了。
 
 #### Cloudflare workers
+
+你也可以使用 Nitro 将包含 API 路由或 SSR 的应用部署到 Cloudflare Workers，详见[使用 Nitro 部署](#nitro-deployment)。
 
 Cloudflare Workers 属于运行时部署目标，而不是静态托管。对于需要运行在 Cloudflare Workers runtime 中的 Rsbuild 项目，[rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare) 是一个实验性插件，可以读取 `cloudflare.config.ts`，在开发和预览时通过 workerd 运行 Workers，并将 Workers 和客户端资源构建为可部署的 Cloudflare Build Output。
 
@@ -241,6 +223,8 @@ Netlify 提供了详细的指南，你可以按照 [Netlify - Add new site](http
 
 [Vercel](https://vercel.com/) 是一个为开发者提供的平台，它提供了构建和快速部署网络应用所需的工具、工作流程和基础设施，无需额外的配置。
 
+如果需要将包含 API 路由或 SSR 的应用部署到 Vercel，请参考[使用 Nitro 部署](#nitro-deployment)。
+
 #### 新增站点
 
 Vercel 提供了详细的指南，你可以按照 [Vercel - Projects](https://vercel.com/docs/projects/overview) 操作，在 dashboard 中创建一个项目，配置一些基础信息，就可以开始部署了。
@@ -268,3 +252,23 @@ Vercel 提供了详细的指南，你可以按照 [Vercel - Projects](https://ve
 在构建过程中，你的应用会被自动部署，并生成一个可访问的部署 URL。Zephyr Cloud 会负责资源优化、全球 CDN 分发、模块联邦配置，并提供自动回滚功能。
 
 参考 [zephyr-cloud.io](https://zephyr-cloud.io) 开始使用。
+
+## 使用 Nitro 部署 \{#nitro-deployment}
+
+[Nitro](https://nitro.build/docs) 是一个 JavaScript 服务端框架，提供 API 路由和服务端渲染能力，支持将应用部署到 Node.js 服务器、Cloudflare Workers、Netlify、Vercel 等运行环境和平台。
+
+以下场景可以考虑使用 Nitro：
+
+- 为 Rsbuild 应用添加后端 API，在同一个项目中开发前端和后端。
+- 运行 SSR 应用，使用自己编写的渲染逻辑，或与 TanStack Start 等框架配合使用。
+- 使用内置的部署预设，将服务端应用部署到不同平台。
+
+如果应用只需要静态托管，可以直接部署 Rsbuild 产物，无需引入 Nitro。
+
+Nitro 的 Rsbuild 集成需要 Rsbuild v2.3 或更高版本。接入步骤请参考[集成指南](https://nitro.build/docs/rsbuild)，也可以选择适合自己应用的示例：
+
+- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html)：不使用 UI 框架，将页面内容渲染到 HTML 模板中。
+- [React SSR](https://nitro.build/examples/rsbuild-ssr-react)：在服务端渲染 React 页面，并在浏览器中进行 hydration。
+- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react)：在 TanStack Start 应用中集成 Nitro。
+
+准备部署时，请参考 [Nitro 部署指南](https://nitro.build/deploy)，选择部署预设并完成目标平台的配置。

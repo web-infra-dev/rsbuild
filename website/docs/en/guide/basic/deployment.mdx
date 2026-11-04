@@ -84,26 +84,6 @@ With this configuration, when referencing static assets in HTML, the specified p
 <script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
 ```
 
-## Nitro deployment
-
-[Nitro](https://nitro.build/docs) is a server framework for JavaScript applications. It provides API routes and server-side rendering, and supports deployment to Node.js servers, Cloudflare Workers, Netlify, Vercel, and other platforms.
-
-Consider using Nitro when you want to:
-
-- Add backend APIs to an Rsbuild application and develop the frontend and backend in the same project.
-- Run an SSR application with your own rendering logic or a framework such as TanStack Start.
-- Deploy a server application to different platforms using Nitro's built-in deployment presets.
-
-For applications that only need static hosting, you can deploy Rsbuild's output directly without Nitro.
-
-Nitro's Rsbuild integration requires Rsbuild v2.3 or later. See the [integration guide](https://nitro.build/docs/rsbuild) for setup instructions, and choose an example that fits your application:
-
-- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html): render content into an HTML template without a UI framework.
-- [React SSR](https://nitro.build/examples/rsbuild-ssr-react): render React pages on the server and hydrate them in the browser.
-- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react): use Nitro with a TanStack Start application.
-
-When you are ready to deploy, follow the [Nitro deployment guide](https://nitro.build/deploy) to choose a preset and configure your target platform.
-
 ## Deployment platforms
 
 The following sections describe how to deploy on several common platforms.
@@ -128,6 +108,8 @@ When configuring, complete the following fields under "Build settings":
 Then click the **Save and Deploy** button to start the deployment.
 
 #### Cloudflare workers
+
+You can also use Nitro to deploy applications with API routes or SSR to Cloudflare Workers. See [Nitro deployment](#nitro-deployment).
 
 Cloudflare Workers is a runtime deployment target rather than static hosting. For Rsbuild projects that need to run in the Cloudflare Workers runtime, [rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare) is an experimental plugin that reads `cloudflare.config.ts`, runs Workers in workerd during development and preview, and builds Workers and client assets into deployable Cloudflare Build Output.
 
@@ -241,6 +223,8 @@ If you want to make your sites accessible at custom domain names, you can config
 
 [Vercel](https://vercel.com/) is a platform for developers that provides the tools, workflows, and infrastructure you need to build and deploy your web apps faster, without the need for additional configuration.
 
+To deploy an application with API routes or SSR to Vercel, see [Nitro deployment](#nitro-deployment).
+
 #### Add new site
 
 Vercel provides a detailed guide. You can follow [Vercel - Projects](https://vercel.com/docs/projects/overview) to create a project in your dashboard, configure the basic settings, and start the deployment.
@@ -268,3 +252,23 @@ Follow the steps in [zephyr-rsbuild-plugin](https://www.npmjs.com/package/zephyr
 During the build process, your application will be automatically deployed and you'll receive a deployment URL. Zephyr Cloud handles asset optimization, global CDN distribution, module federation setup, and provides automatic rollback capabilities.
 
 Start for free today at [zephyr-cloud.io](https://zephyr-cloud.io).
+
+## Nitro deployment
+
+[Nitro](https://nitro.build/docs) is a server framework for JavaScript applications. It provides API routes and server-side rendering, and supports deployment to Node.js servers, Cloudflare Workers, Netlify, Vercel, and other platforms.
+
+Consider using Nitro when you want to:
+
+- Add backend APIs to an Rsbuild application and develop the frontend and backend in the same project.
+- Run an SSR application with your own rendering logic or a framework such as TanStack Start.
+- Deploy a server application to different platforms using Nitro's built-in deployment presets.
+
+For applications that only need static hosting, you can deploy Rsbuild's output directly without Nitro.
+
+Nitro's Rsbuild integration requires Rsbuild v2.3 or later. See the [integration guide](https://nitro.build/docs/rsbuild) for setup instructions, and choose an example that fits your application:
+
+- [HTML SSR](https://nitro.build/examples/rsbuild-ssr-html): render content into an HTML template without a UI framework.
+- [React SSR](https://nitro.build/examples/rsbuild-ssr-react): render React pages on the server and hydrate them in the browser.
+- [TanStack Start](https://nitro.build/examples/rsbuild-ssr-tss-react): use Nitro with a TanStack Start application.
+
+When you are ready to deploy, follow the [Nitro deployment guide](https://nitro.build/deploy) to choose a preset and configure your target platform.
