@@ -109,11 +109,13 @@ Then click the **Save and Deploy** button to start the deployment.
 
 #### Cloudflare workers
 
-You can also use Nitro to deploy applications with API routes or SSR to Cloudflare Workers. See [Nitro deployment](#nitro-deployment).
+Cloudflare Workers is a runtime deployment target rather than static hosting.
 
-Cloudflare Workers is a runtime deployment target rather than static hosting. For Rsbuild projects that need to run in the Cloudflare Workers runtime, [rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare) is an experimental plugin that reads `cloudflare.config.ts`, runs Workers in workerd during development and preview, and builds Workers and client assets into deployable Cloudflare Build Output.
+For Rsbuild projects that need to run in the Cloudflare Workers runtime, [rsbuild-plugin-cloudflare](https://github.com/james-elicx/rsbuild-plugin-cloudflare) is an experimental plugin that reads `cloudflare.config.ts`, runs Workers in workerd during development and preview, and builds Workers and client assets into deployable Cloudflare Build Output.
 
 To configure Worker bundling manually, see [output.target - Cloudflare Workers](/config/output/target#cloudflare-workers).
+
+You can also use Nitro to deploy applications with API routes or SSR to Cloudflare Workers. See [Nitro deployment](#nitro-deployment).
 
 ### GitHub pages
 
@@ -213,6 +215,8 @@ You need to configure the following fields:
 
 Then click the **Deploy site** button to start the deployment.
 
+To deploy an application with API routes or SSR to Netlify, see [Nitro deployment](#nitro-deployment).
+
 #### Custom domains
 
 If you want to make your sites accessible at custom domain names, you can configure this in Netlify's "Domain management" section.
@@ -223,8 +227,6 @@ If you want to make your sites accessible at custom domain names, you can config
 
 [Vercel](https://vercel.com/) is a platform for developers that provides the tools, workflows, and infrastructure you need to build and deploy your web apps faster, without the need for additional configuration.
 
-To deploy an application with API routes or SSR to Vercel, see [Nitro deployment](#nitro-deployment).
-
 #### Add new site
 
 Vercel provides a detailed guide. You can follow [Vercel - Projects](https://vercel.com/docs/projects/overview) to create a project in your dashboard, configure the basic settings, and start the deployment.
@@ -234,6 +236,8 @@ Only the following fields under "Build and Output Settings" need to be configure
 - **Output directory**: fill in the project's output directory, which defaults to `dist`.
 
 Then click the **Deploy** button to start the deployment.
+
+To deploy an application with API routes or SSR to Vercel, see [Nitro deployment](#nitro-deployment).
 
 #### Configure domains
 
