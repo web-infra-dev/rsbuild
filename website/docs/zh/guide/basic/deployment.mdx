@@ -86,7 +86,17 @@ export default defineConfig({
 
 ## 使用 Nitro 部署 \{#nitro-deployment}
 
-[Nitro](https://nitro.build/docs/rsbuild) 通过 `nitro/rsbuild` 插件为 Rsbuild 应用提供 API 路由、服务端渲染和部署预设。
+[Nitro](https://nitro.build/docs) 是一个用于开发和部署 JavaScript 应用的服务端框架。它可以处理 HTTP 请求、API 路由和服务端渲染，并通过部署预设支持 Node.js 服务器、Cloudflare Workers、Netlify、Vercel 等运行环境和平台。
+
+以下场景可以考虑使用 Nitro：
+
+- 为 Rsbuild 应用添加后端 API 路由，在同一个项目中开发前端和后端。
+- 为 SSR 应用提供服务端支持，既可以使用自己编写的渲染逻辑，也可以与 TanStack Start 等框架集成。
+- 通过部署预设，将服务端应用构建为适用于不同托管平台的产物。
+
+如果应用只需要静态托管，可以直接按照下文各平台的部署说明部署 Rsbuild 产物，无需引入 Nitro。前端调用独立部署的后端 API 时，也可以采用这种方式。
+
+[`nitro/rsbuild` 插件](https://nitro.build/docs/rsbuild)将 Nitro 集成到 Rsbuild 中，让你能够一起开发和构建客户端与服务端。
 
 该插件需要 Rsbuild v2.3 或更高版本。
 

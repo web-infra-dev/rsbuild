@@ -17,7 +17,7 @@ description: '本章节介绍如何使用 Rsbuild 实现 SSR 功能。'
 
 ## 使用 Nitro \{#nitro-ssr}
 
-[Nitro](https://nitro.build/docs/rsbuild) 可以与 Rsbuild 集成，处理 SSR 请求，并为不同的部署平台构建应用。使用时需要 Rsbuild v2.3 或更高版本。
+[Nitro](https://nitro.build/docs/rsbuild) 是一个服务端框架，可以为 Rsbuild SSR 应用提供服务端支持。你负责页面渲染逻辑，Nitro 负责处理请求，并为目标部署平台构建服务端产物。使用时需要 Rsbuild v2.3 或更高版本。
 
 配置客户端入口和服务端渲染入口后，即可通过 `rsbuild dev`、`rsbuild build` 和 `rsbuild preview` 开发、构建和预览 Nitro 应用。
 

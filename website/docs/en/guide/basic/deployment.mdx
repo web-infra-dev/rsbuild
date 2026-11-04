@@ -86,7 +86,17 @@ With this configuration, when referencing static assets in HTML, the specified p
 
 ## Nitro deployment
 
-[Nitro](https://nitro.build/docs/rsbuild) adds API routes, server-side rendering, and deployment presets to Rsbuild applications through the `nitro/rsbuild` plugin.
+[Nitro](https://nitro.build/docs) is a server framework for building and deploying JavaScript applications. It handles HTTP requests, API routes, and server-side rendering, with deployment presets for Node.js servers and platforms such as Cloudflare Workers, Netlify, and Vercel.
+
+Consider using Nitro when you want to:
+
+- Add backend API routes to an Rsbuild application and develop the frontend and backend together.
+- Serve an SSR application, either with your own rendering logic or with a framework such as TanStack Start.
+- Build a server application for different hosting platforms using deployment presets.
+
+If your application only needs static hosting, follow the platform guides below to deploy Rsbuild's output directly. You do not need Nitro for this, including when your frontend calls a separately deployed backend.
+
+The [`nitro/rsbuild` plugin](https://nitro.build/docs/rsbuild) connects Nitro to Rsbuild so you can develop and build the client and server together.
 
 The plugin requires Rsbuild v2.3 or later.
 
