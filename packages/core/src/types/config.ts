@@ -479,6 +479,12 @@ export interface ServerConfig {
    */
   publicDir?: PublicDir;
   /**
+   * Whether the dev and preview servers serve this environment's build output.
+   * Does not affect compilation or programmatic access to the output.
+   * @default true for 'web' and 'web-worker' targets, false for 'node'
+   */
+  serveAssets?: boolean;
+  /**
    * Specify a port number for Rsbuild server to listen.
    * @default 3000
    */
@@ -592,7 +598,12 @@ export type NormalizedServerConfig = {
 } & Omit<
   Optional<
     Required<ServerConfig>,
-    'headers' | 'https' | 'historyApiFallback' | 'proxy' | 'setup'
+    | 'headers'
+    | 'https'
+    | 'historyApiFallback'
+    | 'proxy'
+    | 'setup'
+    | 'serveAssets'
   >,
   'host' | 'publicDir'
 >;
@@ -2279,10 +2290,10 @@ export type AllowedEnvironmentDevKeys =
  */
 export interface EnvironmentConfig {
   /**
-   * Configure public directories for this environment.
+   * Configure public directories and build output serving for this environment.
    * Other server options are shared across environments.
    */
-  server?: Pick<ServerConfig, 'publicDir'>;
+  server?: Pick<ServerConfig, 'publicDir' | 'serveAssets'>;
   /**
    * Options for local development.
    */

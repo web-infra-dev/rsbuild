@@ -291,6 +291,7 @@ export async function initRsbuildConfig({
       },
       server: {
         ...normalizedBaseConfig.server,
+        ...pick(environmentConfig.server ?? {}, ['serveAssets']),
         publicDir:
           publicDir === undefined
             ? normalizedBaseConfig.server.publicDir

@@ -7,10 +7,7 @@ import type {
   NormalizedConfig,
   PreviewOptions,
 } from '../types';
-import {
-  createAssetsMiddleware,
-  filterWebEnvironments,
-} from './assets-middleware/middleware';
+import { createAssetsMiddleware } from './assets-middleware/middleware';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import {
   registerCleanup,
@@ -22,6 +19,7 @@ import {
   getAddressUrls,
   getRoutes,
   getServerTerminator,
+  isServingAssets,
   printServerURLs,
   type RsbuildServerBase,
   resolvePort,
@@ -152,7 +150,9 @@ export async function startPreviewServer(
     environments: context.environments,
   });
 
-  const webEnvironments = filterWebEnvironments(context.environmentList);
+  const servedEnvironments = context.environmentList.filter((environment) =>
+    isServingAssets(environment.config),
+  );
   const assetsMiddleware = createAssetsMiddleware(
     context,
     {
@@ -163,7 +163,9 @@ export async function startPreviewServer(
   );
   const htmlMiddlewareOptions = {
     assetsMiddleware,
-    distPaths: webEnvironments.map((environment) => environment.distPath),
+    distPaths: [
+      ...new Set(servedEnvironments.map((environment) => environment.distPath)),
+    ],
     outputFileSystem: fs,
   };
 

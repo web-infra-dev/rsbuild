@@ -4,7 +4,7 @@ import type { Socket } from 'node:net';
 import os from 'node:os';
 import { posix, relative, sep } from 'node:path';
 import { ALL_INTERFACES_IPV4, LOCALHOST } from '../constants';
-import { color, isFunction } from '../helpers';
+import { color, isFunction, isWebTarget } from '../helpers';
 import { getCommonParentPath } from '../helpers/path';
 import {
   addTrailingSlash,
@@ -15,6 +15,7 @@ import type { Logger } from '../logger';
 import type {
   InternalContext,
   NormalizedConfig,
+  NormalizedEnvironmentConfig,
   OutputStructure,
   PrintUrls,
   PrintUrlsOptions,
@@ -161,9 +162,13 @@ export const removeBasePath = (url: string, base: string): string => {
   return url;
 };
 
+export const isServingAssets = (config: NormalizedEnvironmentConfig): boolean =>
+  config.server.serveAssets ?? isWebTarget(config.output.target);
+
 export const getRoutes = (context: InternalContext): Routes => {
   const environmentWithHtml = context.environmentList.filter(
-    (item) => Object.keys(item.htmlPaths).length > 0,
+    (item) =>
+      isServingAssets(item.config) && Object.keys(item.htmlPaths).length > 0,
   );
   if (environmentWithHtml.length === 0) {
     return [];
