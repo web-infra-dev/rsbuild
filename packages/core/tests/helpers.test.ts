@@ -101,7 +101,7 @@ test('should get routes only for served environments', () => {
             index: 'index.html',
           },
           config: {
-            server: { serveAssets: false },
+            server: {},
             output: {
               target: 'web',
               distPath: {
@@ -132,12 +132,34 @@ test('should get routes only for served environments', () => {
             },
           },
         },
+        {
+          distPath: join(cwd, 'dist/disabled'),
+          htmlPaths: {
+            index: 'index.html',
+          },
+          config: {
+            server: { serveAssets: false },
+            output: {
+              target: 'web',
+              distPath: {
+                html: '/',
+              },
+            },
+            html: {
+              outputStructure: 'flat',
+            },
+          },
+        },
       ],
     } as unknown as InternalContext),
   ).toEqual([
     {
       entryName: 'index',
       pathname: '/',
+    },
+    {
+      entryName: 'index',
+      pathname: '/web1/',
     },
     {
       entryName: 'index',
