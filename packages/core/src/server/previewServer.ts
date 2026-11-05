@@ -163,7 +163,9 @@ export async function startPreviewServer(
   );
   const htmlMiddlewareOptions = {
     assetsMiddleware,
-    distPaths: servedEnvironments.map((environment) => environment.distPath),
+    distPaths: [
+      ...new Set(servedEnvironments.map((environment) => environment.distPath)),
+    ],
     outputFileSystem: fs,
   };
 

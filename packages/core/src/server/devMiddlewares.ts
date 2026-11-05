@@ -94,9 +94,9 @@ const applyDefaultMiddlewares = async ({
   const servedEnvironments = context.environmentList.filter((environment) =>
     isServingAssets(environment.config),
   );
-  const distPaths = servedEnvironments.map(
-    (environment) => environment.distPath,
-  );
+  const distPaths = [
+    ...new Set(servedEnvironments.map((environment) => environment.distPath)),
+  ];
 
   if (server.cors) {
     const { default: corsMiddleware } = await import(

@@ -297,7 +297,7 @@ export const assetsMiddleware = async ({
     environmentList,
   );
   // Explicitly served non-web output must also finish before resolving assets.
-  const canServeEarly =
+  const canServeWebAssetsEarly =
     earlyWebUpdates &&
     !environmentList.some(
       (environment) =>
@@ -371,9 +371,9 @@ export const assetsMiddleware = async ({
   // Programmatic reads through `loadBundle` wait for their own environment.
   const compiledWebCompilers = new Set<Compiler>();
   const isWebReady = () =>
-    canServeEarly && compiledWebCompilers.size === webCompilers.length;
+    canServeWebAssetsEarly && compiledWebCompilers.size === webCompilers.length;
 
-  if (canServeEarly) {
+  if (canServeWebAssetsEarly) {
     for (const item of webCompilers) {
       const reset = () => {
         compiledWebCompilers.delete(item);
