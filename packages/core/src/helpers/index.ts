@@ -34,8 +34,15 @@ const objectPrototype = Object.prototype;
 const getProto = Object.getPrototypeOf;
 
 export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
+  if (obj === null || typeof obj !== 'object') {
+    return false;
+  }
+
+  const proto = getProto(obj);
+
+  // Object.prototype from another realm also has a null prototype.
   return (
-    obj !== null && typeof obj === 'object' && getProto(obj) === objectPrototype
+    proto === objectPrototype || (proto !== null && getProto(proto) === null)
   );
 };
 
