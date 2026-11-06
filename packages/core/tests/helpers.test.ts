@@ -418,10 +418,10 @@ test('should detect web targets correctly', () => {
 describe('isPlainObject', () => {
   it('should recognize plain objects from another realm', () => {
     expect(isPlainObject(runInNewContext('({ foo: "bar" })'))).toBe(true);
+    expect(isPlainObject(runInNewContext('Object.create(null)'))).toBe(true);
   });
 
   it.each([
-    'Object.create(null)',
     'Object.create({})',
     'new (class TestClass {})()',
     '[]',
@@ -434,7 +434,7 @@ describe('isPlainObject', () => {
   it('should return true for plain objects', () => {
     expect(isPlainObject({})).toBe(true);
     expect(isPlainObject({ foo: 'bar' })).toBe(true);
-    expect(isPlainObject(Object.create(null))).toBe(false);
+    expect(isPlainObject(Object.create(null))).toBe(true);
   });
 
   it('should return false for non-plain objects', () => {
