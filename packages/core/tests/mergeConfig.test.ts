@@ -536,6 +536,47 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  test('should override output.filename.js in environments', () => {
+    const fn1 = () => 'custom-output1.js';
+    const fn2 = () => 'custom-output2.js';
+    expect(
+      mergeRsbuildConfig(
+        {
+          environments: {
+            web: {
+              output: {
+                filename: {
+                  js: fn1,
+                },
+              },
+            },
+          },
+        },
+        {
+          environments: {
+            web: {
+              output: {
+                filename: {
+                  js: fn2,
+                },
+              },
+            },
+          },
+        },
+      ),
+    ).toEqual({
+      environments: {
+        web: {
+          output: {
+            filename: {
+              js: fn2,
+            },
+          },
+        },
+      },
+    });
+  });
+
   test('should merge output.copy as expected', () => {
     expect(
       mergeRsbuildConfig(
