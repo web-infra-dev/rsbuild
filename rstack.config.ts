@@ -2,6 +2,7 @@ import { define } from 'rstack';
 import skillsLock from './skills-lock.json' with { type: 'json' };
 
 define.test({
+  pool: 'vmForks',
   projects: ['./packages/*/rstack.config.ts'],
 });
 
