@@ -1,4 +1,61 @@
-# Redirect rsbuild.dev to rsbuild.rs
-https://rsbuild.dev/* https://rsbuild.rs/:splat 301
+# Redirect moved pages before serving HTML; keep destinations fragment-free to preserve anchors.
 
-/* /404.html 404
+# Individual page moves (these take precedence over directory rules).
+/guide/start/glossary /guide/faq/glossary 301
+/guide/start/glossary/ /guide/faq/glossary 301
+/config/dev/setup-middlewares /config/server/setup 301
+/config/dev/setup-middlewares/ /config/server/setup 301
+/api/javascript-api/dev-server-api /api/javascript-api/server-api 301
+/api/javascript-api/dev-server-api/ /api/javascript-api/server-api 301
+/config/performance/chunk-split /config/split-chunks 301
+/config/performance/chunk-split/ /config/split-chunks 301
+/plugins/list/plugin-assets-retry https://github.com/rstackjs/rsbuild-plugin-assets-retry 301
+/plugins/list/plugin-assets-retry/ https://github.com/rstackjs/rsbuild-plugin-assets-retry 301
+/plugins/list/plugin-stylus https://github.com/rstackjs/rsbuild-plugin-stylus 301
+/plugins/list/plugin-stylus/ https://github.com/rstackjs/rsbuild-plugin-stylus 301
+/guide/basic/tailwindcss /guide/styling/tailwindcss 301
+/guide/basic/tailwindcss/ /guide/styling/tailwindcss 301
+/guide/basic/tailwindcss-v3 /guide/styling/tailwindcss-v3 301
+/guide/basic/tailwindcss-v3/ /guide/styling/tailwindcss-v3 301
+/guide/basic/unocss /guide/styling/unocss 301
+/guide/basic/unocss/ /guide/styling/unocss 301
+/guide/basic/static-deploy /guide/basic/deployment 301
+/guide/basic/static-deploy/ /guide/basic/deployment 301
+/zh/guide/start/glossary /zh/guide/faq/glossary 301
+/zh/guide/start/glossary/ /zh/guide/faq/glossary 301
+/zh/config/dev/setup-middlewares /zh/config/server/setup 301
+/zh/config/dev/setup-middlewares/ /zh/config/server/setup 301
+/zh/api/javascript-api/dev-server-api /zh/api/javascript-api/server-api 301
+/zh/api/javascript-api/dev-server-api/ /zh/api/javascript-api/server-api 301
+/zh/config/performance/chunk-split /zh/config/split-chunks 301
+/zh/config/performance/chunk-split/ /zh/config/split-chunks 301
+/zh/plugins/list/plugin-assets-retry https://github.com/rstackjs/rsbuild-plugin-assets-retry 301
+/zh/plugins/list/plugin-assets-retry/ https://github.com/rstackjs/rsbuild-plugin-assets-retry 301
+/zh/plugins/list/plugin-stylus https://github.com/rstackjs/rsbuild-plugin-stylus 301
+/zh/plugins/list/plugin-stylus/ https://github.com/rstackjs/rsbuild-plugin-stylus 301
+/zh/guide/basic/tailwindcss /zh/guide/styling/tailwindcss 301
+/zh/guide/basic/tailwindcss/ /zh/guide/styling/tailwindcss 301
+/zh/guide/basic/tailwindcss-v3 /zh/guide/styling/tailwindcss-v3 301
+/zh/guide/basic/tailwindcss-v3/ /zh/guide/styling/tailwindcss-v3 301
+/zh/guide/basic/unocss /zh/guide/styling/unocss 301
+/zh/guide/basic/unocss/ /zh/guide/styling/unocss 301
+/zh/guide/basic/static-deploy /zh/guide/basic/deployment 301
+/zh/guide/basic/static-deploy/ /zh/guide/basic/deployment 301
+
+# Related pages and legacy directories.
+/config/source/alias*/ /config/resolve/alias:splat 301
+/config/source/alias* /config/resolve/alias:splat 301
+/guide/basic/css-:type/ /guide/styling/css-:type 301
+/guide/basic/css-:type /guide/styling/css-:type 301
+/guide/basic/configure-:tool/ /guide/configuration/:tool 301
+/guide/basic/configure-:tool /guide/configuration/:tool 301
+/community/releases/:version/ /blog/:version 301
+/community/releases/:version /blog/:version 301
+/zh/config/source/alias*/ /zh/config/resolve/alias:splat 301
+/zh/config/source/alias* /zh/config/resolve/alias:splat 301
+/zh/guide/basic/css-:type/ /zh/guide/styling/css-:type 301
+/zh/guide/basic/css-:type /zh/guide/styling/css-:type 301
+/zh/guide/basic/configure-:tool/ /zh/guide/configuration/:tool 301
+/zh/guide/basic/configure-:tool /zh/guide/configuration/:tool 301
+/zh/community/releases/:version/ /zh/blog/:version 301
+/zh/community/releases/:version /zh/blog/:version 301

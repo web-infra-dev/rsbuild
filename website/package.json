@@ -12,7 +12,6 @@
     "@rsbuild/plugin-sass": "workspace:*",
     "@rspress/core": "catalog:",
     "@rspress/plugin-algolia": "catalog:",
-    "@rspress/plugin-client-redirects": "catalog:",
     "@rspress/plugin-rss": "catalog:",
     "@rstackjs/doc-ui": "catalog:",
     "@shikijs/transformers": "catalog:",
