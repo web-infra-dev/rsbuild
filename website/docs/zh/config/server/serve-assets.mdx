@@ -62,3 +62,9 @@ Public 文件的行为由 [server.publicDir](/config/server/public-dir) 控制�
 当环境的 `serveAssets` 配置不同时，建议使用 `dist/client` 和 `dist/worker` 这样的独立目录。如果开启服务的环境提供整个 `dist` 目录，那么即使 Worker 环境设置了 `serveAssets: false`，`dist/worker` 下的文件仍可能被访问。
 
 此选项也不会阻止你自己的中间件提供相同文件。
+
+## 版本历史 \{#version-history}
+
+| 版本   | 变更内容                    |
+| ------ | --------------------------- |
+| v2.3.2 | 新增 `server.serveAssets`。 |

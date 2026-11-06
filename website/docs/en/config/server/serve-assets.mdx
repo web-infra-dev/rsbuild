@@ -62,3 +62,9 @@ Public files follow [server.publicDir](/config/server/public-dir):
 Use separate directories such as `dist/client` and `dist/worker` when their `serveAssets` settings differ. If an enabled environment serves `dist`, it can also serve files under `dist/worker`, even when the Worker environment sets `serveAssets: false`.
 
 This option does not prevent your own middleware from serving the same files.
+
+## Version history
+
+| Version | Changes                     |
+| ------- | --------------------------- |
+| v2.3.2  | Added `server.serveAssets`. |
