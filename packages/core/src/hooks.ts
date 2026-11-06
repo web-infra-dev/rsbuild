@@ -345,27 +345,35 @@ const onCompileDone = ({
 
     for (let index = 0; index < compilers.length; index++) {
       const compiler = compilers[index];
-      const compilerIndex = index;
       let compilerDone = false;
+      // Advances whenever this compiler is invalidated or restarted.
+      let generation = 0;
+      // Captured at compilation start; unchanged if that compilation is invalidated.
+      let compilationGeneration = 0;
 
       compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
+        const currentGeneration = compilationGeneration;
+        await onEnvironmentDone(index, stats);
+
+        // An invalidation or restart can supersede an asynchronous environment hook.
+        if (currentGeneration !== generation) {
+          return;
+        }
+
         if (!compilerDone) {
           compilerDone = true;
           doneCompilers++;
         }
 
-        compilerStats[compilerIndex] = stats;
+        compilerStats[index] = stats;
 
-        const lastCompilerDone = doneCompilers === compilers.length;
-
-        await onEnvironmentDone(index, stats);
-
-        if (lastCompilerDone) {
+        if (doneCompilers === compilers.length) {
           await onDone(new MultiStatsCtor(compilerStats));
         }
       });
 
       const resetDoneState = () => {
+        generation++;
         if (compilerDone) {
           compilerDone = false;
           doneCompilers--;
@@ -377,7 +385,10 @@ const onCompileDone = ({
       // Reset before asynchronous watchRun hooks can delay the new compilation.
       compiler.hooks.watchRun.tap(
         { name: 'rsbuild:done', stage: -Infinity },
-        resetDoneState,
+        () => {
+          resetDoneState();
+          compilationGeneration = generation;
+        },
       );
     }
   } else {
