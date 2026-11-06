@@ -19,9 +19,9 @@ export default {
 };
 ```
 
-Setting this option to `false` does not affect compilation, file watching, or writing output to disk. You can still access the output through the dev server's `loadBundle` and `getTransformedHtml` APIs.
+Setting this option to `false` does not affect compilation, file watching, or writing output to disk. You can still access the output through the dev server's [loadBundle](/api/javascript-api/environment-api#loadbundle) and [getTransformedHtml](/api/javascript-api/environment-api#gettransformedhtml) APIs.
 
-You can also use [server.setup](/config/server/setup) to add custom routes that serve these files or pages.
+You can also use [server.setup](/config/server/setup) to add custom routes that handle HTTP requests for build output.
 
 ## Multiple environments
 

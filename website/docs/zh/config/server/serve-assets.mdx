@@ -19,9 +19,9 @@ export default {
 };
 ```
 
-设为 `false` 不影响编译、文件监听和产物写盘。你仍然可以通过开发服务器的 `loadBundle` 和 `getTransformedHtml` API 访问产物。
+设为 `false` 不影响编译、文件监听和产物写盘。你仍然可以通过开发服务器的 [loadBundle](/api/javascript-api/environment-api#loadbundle) 和 [getTransformedHtml](/api/javascript-api/environment-api#gettransformedhtml) API 访问产物。
 
-你也可以通过 [server.setup](/config/server/setup) 添加自定义路由，提供这些文件或页面。
+你也可以通过 [server.setup](/config/server/setup) 添加自定义路由，自行处理构建产物的 HTTP 请求。
 
 ## 多环境配置 \{#multiple-environments}
 
