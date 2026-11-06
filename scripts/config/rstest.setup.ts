@@ -4,7 +4,9 @@ import { createSnapshotSerializer } from 'path-serializer';
 
 const repoRoot = path.join(__dirname, '../..');
 
-process.chdir(repoRoot);
+if (process.cwd() !== repoRoot) {
+  process.chdir(repoRoot);
+}
 
 beforeAll((suite) => {
   process.env.REBUILD_TEST_SUITE_CWD =
