@@ -5,11 +5,11 @@ description: 'Control whether the dev and preview servers serve build output, wi
 # server.serveAssets
 
 - **Type:** `boolean`
-- **Default:** `true` for `web` and `web-worker` targets, `false` for `node`
+- **Default:** `true` when [output.target](/config/output/target) is `web` or `web-worker`, `false` when it is `node`
 
-Whether `rsbuild dev` and `rsbuild preview` serve build output, including JavaScript, CSS, HTML, and source maps.
+Controls whether Rsbuild's dev and preview servers serve build output over HTTP, including JavaScript, CSS, HTML, and source maps.
 
-Set to `false` when another server or runtime handles the output:
+Set this option to `false` when another server or runtime handles the build output:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -19,15 +19,15 @@ export default {
 };
 ```
 
-This does not change compilation, file watching, or output writing. The dev server's `loadBundle` and `getTransformedHtml` APIs remain available.
+Setting this option to `false` does not affect compilation, file watching, or writing output to disk. You can still access the output through the dev server's `loadBundle` and `getTransformedHtml` APIs.
 
-You can handle requests for these files or pages with your own routes using [server.setup](/config/server/setup).
+You can also use [server.setup](/config/server/setup) to add custom routes that serve these files or pages.
 
 ## Multiple environments
 
-Each environment inherits the top-level `server.serveAssets`. An explicit environment value overrides it. If neither is configured, Rsbuild determines the default from that environment's [output.target](/config/output/target).
+Each environment inherits the top-level `server.serveAssets` value and can override it with its own setting. If neither is set, the default depends on that environment's [output.target](/config/output/target).
 
-For example, disable serving for a Worker environment while keeping browser assets accessible:
+For example, disable HTTP serving of a Worker's output while continuing to serve browser assets:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -52,16 +52,16 @@ export default {
 
 ## Public directories
 
-Public files follow [server.publicDir](/config/server/public-dir):
+Files in public directories are managed by [server.publicDir](/config/server/public-dir):
 
-- **Development:** public directories are served independently of `serveAssets`. To disable their serving as well, set `server.publicDir: false`.
-- **Build and preview:** files are still copied according to `publicDir.copyOnBuild`. In preview, these copies are part of the build output and follow `serveAssets`.
+- **Development:** the dev server serves public directories independently of `serveAssets`. To stop serving public files as well, set `server.publicDir: false`.
+- **Build and preview:** `publicDir.copyOnBuild` still controls whether files are copied to the output directory. The preview server treats these copies as build output, so `serveAssets` controls whether they are served.
 
 ## Overlapping output directories
 
-Use separate directories such as `dist/client` and `dist/worker` when their `serveAssets` settings differ. If an enabled environment serves `dist`, it can also serve files under `dist/worker`, even when the Worker environment sets `serveAssets: false`.
+When environments share an output directory, or one output directory contains another, an environment with `serveAssets: true` can also serve files from an environment with `serveAssets: false`.
 
-This option does not prevent your own middleware from serving the same files.
+For example, an environment serving `dist` can also serve files in `dist/worker`, even if the Worker environment sets `serveAssets: false`. Use separate directories such as `dist/client` and `dist/worker` when environments have different `serveAssets` settings.
 
 ## Version history
 
