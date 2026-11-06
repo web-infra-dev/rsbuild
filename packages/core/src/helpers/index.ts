@@ -42,7 +42,7 @@ export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
 
   // Object.prototype from another realm also has a null prototype.
   return (
-    proto === objectPrototype || (proto !== null && getProto(proto) === null)
+    proto === null || proto === objectPrototype || getProto(proto) === null
   );
 };
 
