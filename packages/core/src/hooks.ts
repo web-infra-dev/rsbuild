@@ -346,7 +346,9 @@ const onCompileDone = ({
     for (let index = 0; index < compilers.length; index++) {
       const compiler = compilers[index];
       let compilerDone = false;
+      // Advances whenever this compiler is invalidated or restarted.
       let generation = 0;
+      // Captured at compilation start; unchanged if that compilation is invalidated.
       let compilationGeneration = 0;
 
       compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
