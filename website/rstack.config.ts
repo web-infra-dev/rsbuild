@@ -1,6 +1,5 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
-import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginRss } from '@rspress/plugin-rss';
 import {
   transformerNotationDiff,
@@ -62,96 +61,6 @@ define.doc({
             type: 'atom',
           },
         },
-      ],
-    }),
-    pluginClientRedirects({
-      redirects: [
-        {
-          from: '/guide/start/glossary',
-          to: '/guide/faq/glossary',
-        },
-        {
-          from: '/config/source/alias',
-          to: '/config/resolve/alias',
-        },
-        {
-          from: '/config/dev/setup-middlewares',
-          to: '/config/server/setup',
-        },
-        {
-          from: '/api/javascript-api/dev-server-api',
-          to: '/api/javascript-api/server-api',
-        },
-        {
-          from: '/config/source/alias-strategy',
-          to: '/config/resolve/alias-strategy',
-        },
-        {
-          from: '/config/performance/chunk-split',
-          to: '/config/split-chunks',
-        },
-        {
-          from: '/plugins/list/plugin-assets-retry',
-          to: 'https://github.com/rstackjs/rsbuild-plugin-assets-retry',
-        },
-        {
-          from: '/plugins/list/plugin-stylus',
-          to: 'https://github.com/rstackjs/rsbuild-plugin-stylus',
-        },
-        {
-          from: '/zh/plugins/list/plugin-stylus',
-          to: 'https://github.com/rstackjs/rsbuild-plugin-stylus',
-        },
-        {
-          from: '/guide/basic/css-usage',
-          to: '/guide/styling/css-usage',
-        },
-        {
-          from: '/guide/basic/css-modules',
-          to: '/guide/styling/css-modules',
-        },
-        {
-          from: '/guide/basic/tailwindcss',
-          to: '/guide/styling/tailwindcss',
-        },
-        {
-          from: '/guide/basic/tailwindcss-v3',
-          to: '/guide/styling/tailwindcss-v3',
-        },
-        {
-          from: '/guide/basic/unocss',
-          to: '/guide/styling/unocss',
-        },
-        {
-          from: '/guide/basic/configure-rspack',
-          to: '/guide/configuration/rspack',
-        },
-        {
-          from: '/guide/basic/configure-rsbuild',
-          to: '/guide/configuration/rsbuild',
-        },
-        {
-          from: '/guide/basic/configure-swc',
-          to: '/guide/configuration/swc',
-        },
-        {
-          from: '/guide/basic/static-deploy',
-          to: '/guide/basic/deployment',
-        },
-        ...[
-          'v0-1',
-          'v0-2',
-          'v0-3',
-          'v0-4',
-          'v0-5',
-          'v0-6',
-          'v0-7',
-          'v1-0',
-          'v2-0',
-        ].map((version) => ({
-          from: `/community/releases/${version}`,
-          to: `/blog/${version}`,
-        })),
       ],
     }),
   ],
