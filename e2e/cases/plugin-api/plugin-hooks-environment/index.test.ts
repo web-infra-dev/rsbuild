@@ -80,6 +80,66 @@ const createPlugin = () => {
   return { plugin, names };
 };
 
+for (const mode of ['build', 'dev'] as const) {
+  test(`should await all asynchronous environment hooks in ${mode}`, async ({
+    build,
+    devOnly,
+  }) => {
+    const started = Promise.withResolvers<void>();
+    const release = Promise.withResolvers<void>();
+    const finished = Promise.withResolvers<void>();
+    const events: string[] = [];
+
+    await (mode === 'build' ? build : devOnly)({
+      config: {
+        environments: {
+          first: {},
+          second: {},
+        },
+        plugins: [
+          {
+            name: 'async-environment-hooks',
+            setup(api) {
+              api.onBeforeEnvironmentCompile(async ({ environment }) => {
+                if (environment.name === 'second') {
+                  await started.promise;
+                }
+              });
+              api.onAfterCreateCompiler(({ compiler }) => {
+                if ('compilers' in compiler) {
+                  // Release the first hook only after the second compiler's
+                  // entire done hook finishes, including Rsbuild's callbacks.
+                  compiler.compilers[1].hooks.afterDone.tap('release', () => {
+                    release.resolve();
+                  });
+                }
+              });
+              api.onAfterEnvironmentCompile(async ({ environment }) => {
+                if (environment.name === 'first') {
+                  started.resolve();
+                  await release.promise;
+                }
+                events.push(environment.name);
+                if (environment.name === 'first') {
+                  finished.resolve();
+                }
+              });
+              const onDone = () => {
+                events.push('all');
+              };
+              api.onAfterBuild(onDone);
+              api.onAfterDevCompile(onDone);
+            },
+          } satisfies RsbuildPlugin,
+        ],
+      },
+    });
+
+    await finished.promise;
+    expect(events).toEqual(['second', 'first', 'all']);
+  });
+}
+
 test('should run plugin hooks correctly when running build with multiple environments', async ({
   build,
 }) => {

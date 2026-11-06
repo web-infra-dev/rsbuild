@@ -119,7 +119,7 @@ describe('onExit hook', () => {
   });
 });
 
-test('should wait for a restarted compiler before onAfterDevCompile', async () => {
+const createDevHookTest = () => {
   const compiler = rspack([{ name: 'a' }, { name: 'b' }]);
   const [a, b] = compiler.compilers;
   const hooks = initHooks();
@@ -139,7 +139,11 @@ test('should wait for a restarted compiler before onAfterDevCompile', async () =
     } as unknown as InternalContext,
   });
 
-  const stats = {} as Rspack.Stats;
+  return { a, b, hooks, onAfterDevCompile, stats: {} as Rspack.Stats };
+};
+
+test('should wait for a restarted compiler before onAfterDevCompile', async () => {
+  const { a, b, onAfterDevCompile, stats } = createDevHookTest();
   await a.hooks.done.promise(stats);
 
   // A restarts without invalid; B finishes while A's watchRun is pending.
@@ -151,5 +155,54 @@ test('should wait for a restarted compiler before onAfterDevCompile', async () =
   await a.hooks.watchRun.promise(a);
   await a.hooks.done.promise(stats);
 
+  expect(onAfterDevCompile).toHaveBeenCalledTimes(1);
+});
+
+test.each(['invalid', 'watchRun'] as const)(
+  'should ignore an environment hook superseded by %s',
+  async (event) => {
+    const { a, b, hooks, onAfterDevCompile, stats } = createDevHookTest();
+    const started = Promise.withResolvers<void>();
+    const release = Promise.withResolvers<void>();
+    hooks.onAfterEnvironmentCompile.tapEnvironment({
+      environment: 'a',
+      handler: async () => {
+        started.resolve();
+        await release.promise;
+      },
+    });
+
+    const pending = a.hooks.done.promise(stats);
+    await started.promise;
+    if (event === 'invalid') {
+      a.hooks.invalid.call('entry.js', Date.now());
+    } else {
+      await a.hooks.watchRun.promise(a);
+    }
+    await b.hooks.done.promise(stats);
+    release.resolve();
+    await pending;
+    expect(onAfterDevCompile).not.toHaveBeenCalled();
+
+    await a.hooks.watchRun.promise(a);
+    await a.hooks.done.promise(stats);
+    expect(onAfterDevCompile).toHaveBeenCalledTimes(1);
+  },
+);
+
+test('should propagate environment hook failures and recover on rebuild', async () => {
+  const { a, b, hooks, onAfterDevCompile, stats } = createDevHookTest();
+  const handler = rstest.fn().mockRejectedValueOnce(new Error('hook failed'));
+  hooks.onAfterEnvironmentCompile.tapEnvironment({
+    environment: 'a',
+    handler,
+  });
+
+  await expect(a.hooks.done.promise(stats)).rejects.toThrow('hook failed');
+  await b.hooks.done.promise(stats);
+  expect(onAfterDevCompile).not.toHaveBeenCalled();
+
+  await a.hooks.watchRun.promise(a);
+  await a.hooks.done.promise(stats);
   expect(onAfterDevCompile).toHaveBeenCalledTimes(1);
 });
