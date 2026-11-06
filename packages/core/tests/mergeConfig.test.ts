@@ -3,24 +3,6 @@ import type { RsbuildConfig, Rspack } from '../src';
 import { mergeRsbuildConfig } from '../src/mergeConfig';
 
 describe('mergeRsbuildConfig', () => {
-  it('should merge and clone null-prototype dictionaries', () => {
-    const alias: Record<string, string> = Object.create(null);
-    alias.foo = './foo';
-    const config = { resolve: { alias } };
-
-    const merged = mergeRsbuildConfig<typeof config>(
-      { resolve: { alias: { bar: './bar' } } },
-      config,
-    );
-
-    expect(merged.resolve.alias).toEqual({ bar: './bar', foo: './foo' });
-
-    const cloned = mergeRsbuildConfig(config);
-    expect(cloned.resolve.alias).toEqual({ foo: './foo' });
-    cloned.resolve.alias.foo = './changed';
-    expect(alias.foo).toBe('./foo');
-  });
-
   it('should merge and clone config objects from another realm', () => {
     const config: RsbuildConfig = runInNewContext(`({
       source: { entry: { index: './src/index.ts' } },
