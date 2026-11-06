@@ -60,10 +60,6 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: node --run test
 
-      - name: Compare worker pools
-        if: steps.changes.outputs.changed == 'true'
-        run: node .github/scripts/benchmark-pools.mjs
-
   # ======== e2e ========
   e2e:
     runs-on: ${{ matrix.os }}
