@@ -1,6 +1,7 @@
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, sep } from 'node:path';
+import { runInNewContext } from 'node:vm';
 import {
   isCI,
   isPlainObject,
@@ -415,6 +416,21 @@ test('should detect web targets correctly', () => {
 });
 
 describe('isPlainObject', () => {
+  it('should recognize plain objects from another realm', () => {
+    expect(isPlainObject(runInNewContext('({ foo: "bar" })'))).toBe(true);
+  });
+
+  it.each([
+    'Object.create(null)',
+    'Object.create({})',
+    'new (class TestClass {})()',
+    '[]',
+    'new Date()',
+    '/regex/',
+  ])('should reject %s from another realm', (expression) => {
+    expect(isPlainObject(runInNewContext(expression))).toBe(false);
+  });
+
   it('should return true for plain objects', () => {
     expect(isPlainObject({})).toBe(true);
     expect(isPlainObject({ foo: 'bar' })).toBe(true);

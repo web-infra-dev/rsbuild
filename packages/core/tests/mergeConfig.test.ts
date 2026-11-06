@@ -1,7 +1,27 @@
+import { runInNewContext } from 'node:vm';
 import type { RsbuildConfig, Rspack } from '../src';
 import { mergeRsbuildConfig } from '../src/mergeConfig';
 
 describe('mergeRsbuildConfig', () => {
+  it('should merge and clone config objects from another realm', () => {
+    const config: RsbuildConfig = runInNewContext(`({
+      source: { entry: { index: './src/index.ts' } },
+    })`);
+
+    const merged = mergeRsbuildConfig(
+      { source: { decorators: { version: '2023-11' } } },
+      config,
+    );
+
+    expect(merged.source).toEqual({
+      decorators: { version: '2023-11' },
+      entry: { index: './src/index.ts' },
+    });
+
+    merged.source!.entry!.index = './src/main.ts';
+    expect(config.source!.entry!.index).toBe('./src/index.ts');
+  });
+
   it('should preserve and override symbol properties', () => {
     const key = Symbol('loader');
     const loader = () => {};
