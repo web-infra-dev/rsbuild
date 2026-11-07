@@ -14,7 +14,6 @@
     "@rspress/plugin-algolia": "catalog:",
     "@rspress/plugin-rss": "catalog:",
     "@rstackjs/doc-ui": "catalog:",
-    "@shikijs/transformers": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
