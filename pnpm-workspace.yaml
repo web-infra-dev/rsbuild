@@ -119,7 +119,7 @@ catalog:
   'rstack': '^0.9.0'
   'sass': '^1.108.1'
   'sass-embedded': '^1.108.1'
-  'sass-loader': '^16.0.8'
+  'sass-loader': '^17.1.0'
   'sirv': '^3.0.2'
   'solid-js': '^2.0.0-rc.21'
   'stacktrace-parser': '^0.1.11'
