@@ -1,4 +1,4 @@
-import { expect, expectPoll, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 test('should apply custom middleware via `server.setup`', async ({
   page,
@@ -32,7 +32,6 @@ test('should apply to trigger page reload via `environment.hot.send` in server.s
   page,
   dev,
 }) => {
-  let count = 0;
   let reloadPage: undefined | (() => void);
 
   await dev({
@@ -43,10 +42,6 @@ test('should apply to trigger page reload via `environment.hot.send` in server.s
             return;
           }
 
-          server.middlewares.use((_req, _res, next) => {
-            count++;
-            next();
-          });
           reloadPage = () => server.environments.web.hot.send('full-reload');
         },
       },
@@ -54,7 +49,8 @@ test('should apply to trigger page reload via `environment.hot.send` in server.s
   });
 
   await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
-  const previousCount = count;
+  const loaded = page.waitForEvent('load');
   reloadPage?.();
-  await expectPoll(() => count > previousCount).toBeTruthy();
+  await loaded;
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
 });
