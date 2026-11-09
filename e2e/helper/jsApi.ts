@@ -28,9 +28,9 @@ const updateConfigForTest = async (
       // make port random to avoid conflict
       port: await getRandomPort(),
     },
-    performance: {
-      buildCache: false,
-    },
+    ...(process.env.RSBUILD_E2E_CACHE === 'off' && {
+      performance: { buildCache: false },
+    }),
   };
 
   const mergedConfig = mergeRsbuildConfig(

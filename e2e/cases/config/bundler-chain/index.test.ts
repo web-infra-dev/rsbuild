@@ -52,6 +52,8 @@ test('should allow to use rspack in tools.bundlerChain', async ({
 }) => {
   await buildPreview({
     config: {
+      // TODO: Re-enable build cache when changes to DefinePlugin values invalidate cached modules.
+      performance: { buildCache: false },
       tools: {
         bundlerChain: (chain, { rspack }) => {
           chain.resolve.alias.set(

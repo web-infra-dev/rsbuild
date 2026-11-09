@@ -17,16 +17,16 @@ test('should support restart build when config changed', async ({
     'test-temp-rsbuild.config.mjs',
   );
 
-  fse.outputFileSync(indexFile, `console.log('hello!');`);
-  fse.outputFileSync(
-    tempConfig,
-    `export default {
+  // TODO: Re-enable build cache when this test waits for the restart watcher to be ready.
+  const config = `export default {
+  performance: { buildCache: false },
   output: {
     filenameHash: false,
   },
 };
-`,
-  );
+`;
+  fse.outputFileSync(indexFile, `console.log('hello!');`);
+  fse.outputFileSync(tempConfig, config);
 
   execCli(`build --watch -c ${tempConfig}`);
   const { clearLogs, expectLog, expectBuildEnd } = logHelper;
@@ -34,16 +34,7 @@ test('should support restart build when config changed', async ({
   await expectBuildEnd();
   await waitForFileContent(distIndexFile, 'hello!');
 
-  fse.outputFileSync(
-    tempConfig,
-    `export default {
-  // update
-  output: {
-    filenameHash: false,
-  },
-};
-`,
-  );
+  fse.outputFileSync(tempConfig, `${config}// update\n`);
 
   await expectLog('restarting build');
   await waitForFileContent(distIndexFile, 'hello!');

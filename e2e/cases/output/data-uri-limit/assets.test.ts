@@ -28,6 +28,8 @@ const cases = [
     name: 'assets(dataUriLimit max number)',
     cwd: import.meta.dirname,
     config: {
+      // TODO: Re-enable build cache when changes to dataUriLimit invalidate cached asset modules.
+      performance: { buildCache: false },
       output: {
         dataUriLimit: {
           image: Number.MAX_SAFE_INTEGER,

@@ -15,6 +15,8 @@ test('should not re-compile templates when the template is not changed', async (
 
   await dev({
     config: {
+      // TODO: Re-enable build cache when this test can account for cached template transforms.
+      performance: { buildCache: false },
       root: tempSrc,
       source: {
         entry: {

@@ -1,6 +1,8 @@
 import { defineConfig, type RsbuildPlugin } from '@rsbuild/core';
 
 export default defineConfig({
+  // TODO: Re-enable build cache when this test can observe the transform on cache hits.
+  performance: { buildCache: false },
   plugins: [
     {
       name: 'generate-marker',

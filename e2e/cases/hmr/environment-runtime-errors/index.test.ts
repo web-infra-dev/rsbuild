@@ -31,6 +31,8 @@ test('should show runtime errors from early updates after Node recovers', async 
 
   await dev({
     config: {
+      // TODO: Re-enable build cache when early HMR updates are reliable with cached builds.
+      performance: { buildCache: false },
       dev: {
         client: {
           overlay: { runtime: true },

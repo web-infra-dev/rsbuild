@@ -5,6 +5,8 @@ import {
 } from '@rsbuild/core';
 
 export default defineConfig({
+  // TODO: Re-enable build cache when this test waits for the restart watcher to be ready.
+  performance: { buildCache: false },
   dev: {
     watchFiles: {
       paths: './plugin-on-restart-hook-cwd/test-temp-watch.txt',

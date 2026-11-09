@@ -191,6 +191,18 @@ export async function createRsbuild(
   }
   config ||= {};
 
+  // Apply the same cache defaults to e2e fixtures, direct API calls, and CLI commands.
+  const e2eCache = process.env.RSBUILD_E2E_CACHE;
+  if (
+    (e2eCache === 'new' || e2eCache === 'legacy') &&
+    config.performance?.buildCache === undefined
+  ) {
+    config = {
+      ...config,
+      performance: { ...config.performance, buildCache: true },
+    };
+  }
+
   const logger =
     config.customLogger ??
     // Inherit the default logger options and level,

@@ -40,6 +40,8 @@ test('should add polyfill when set polyfill usage', async ({
 }) => {
   const rsbuild = await buildPreview({
     config: {
+      // TODO: Re-enable build cache when changing the polyfill strategy invalidates cached modules.
+      performance: { buildCache: false },
       output: {
         polyfill: 'usage',
         sourceMap: {
