@@ -85,6 +85,10 @@ export const pluginCache = (): RsbuildPlugin => ({
         return;
       }
 
+      if (process.env.RSBUILD_E2E_CACHE === 'new') {
+        chain.experiments({ ...chain.get('experiments'), newCache: true });
+      }
+
       cacheEnabled = true;
 
       const { context } = api;

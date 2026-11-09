@@ -14,12 +14,18 @@ const commonConfig = {
   },
 };
 
+const buildConfig = {
+  ...commonConfig,
+  // TODO: Re-enable build cache when changes to Tailwind optimization invalidate cached CSS.
+  performance: { buildCache: false },
+};
+
 test('should enable Tailwind optimization by default in production mode', async ({
   build,
 }) => {
   const rsbuild = await build({
     config: {
-      ...commonConfig,
+      ...buildConfig,
       plugins: [pluginTailwindcss()],
     },
   });
@@ -51,7 +57,7 @@ test('should disable Tailwind optimization when optimize is false', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      ...commonConfig,
+      ...buildConfig,
       plugins: [pluginTailwindcss({ optimize: false })],
     },
   });
@@ -65,7 +71,7 @@ test('should enable Tailwind minify when optimize is true', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      ...commonConfig,
+      ...buildConfig,
       plugins: [pluginTailwindcss({ optimize: true })],
     },
   });
@@ -80,7 +86,7 @@ test('should keep Tailwind minify disabled when optimize minify is omitted', asy
 }) => {
   const rsbuild = await build({
     config: {
-      ...commonConfig,
+      ...buildConfig,
       plugins: [
         pluginTailwindcss({
           optimize: {},
@@ -102,7 +108,7 @@ test('should enable Tailwind minify when optimize minify is true', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      ...commonConfig,
+      ...buildConfig,
       plugins: [
         pluginTailwindcss({
           optimize: { minify: true },

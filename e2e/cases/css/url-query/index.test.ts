@@ -76,6 +76,8 @@ test('should emit hashed CSS files for `?url` in production', async ({
 }) => {
   const rsbuild = await build({
     config: {
+      // TODO: Re-enable build cache when changes to filenameHash invalidate cached CSS URLs.
+      performance: { buildCache: false },
       output: {
         filenameHash: true,
       },

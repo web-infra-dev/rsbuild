@@ -1,6 +1,8 @@
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
+  // TODO: Re-enable build cache when changes to CSS minification invalidate cached CSS URLs.
+  performance: { buildCache: false },
   environments: {
     web: {
       output: {

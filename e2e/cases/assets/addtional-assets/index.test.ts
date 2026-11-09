@@ -60,6 +60,8 @@ test('should support disabling emission for additional assets', async ({
 }) => {
   const rsbuild = await build({
     config: {
+      // TODO: Re-enable build cache when changes to asset emission invalidate cached modules.
+      performance: { buildCache: false },
       source: {
         assetsInclude: [/\.json5$/],
       },

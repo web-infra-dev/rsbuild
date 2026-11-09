@@ -76,6 +76,8 @@ test('should allow to disable CSS minification when `injectStyles` is enabled', 
 }) => {
   const rsbuild = await build({
     config: {
+      // TODO: Re-enable build cache when changes to CSS minification invalidate cached inline styles.
+      performance: { buildCache: false },
       output: {
         minify: false,
       },

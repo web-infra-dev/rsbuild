@@ -8,6 +8,10 @@ test('should throw error when importing CSS Modules with `?url`', async ({
 }) => {
   const rsbuild = await build({
     catchBuildError: true,
+    config: {
+      // TODO: Re-enable build cache when changing CSS Modules options invalidates cached CSS URLs.
+      performance: { buildCache: false },
+    },
   });
 
   expect(rsbuild.buildError).toBeTruthy();

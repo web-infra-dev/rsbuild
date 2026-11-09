@@ -32,6 +32,8 @@ test.for([
   async ([publicPath, expected], { build }) => {
     const rsbuild = await build({
       config: {
+        // TODO: Re-enable build cache when changes to publicPath invalidate cached CSS URLs.
+        performance: { buildCache: false },
         output: { filenameHash: false },
         tools: {
           rspack: {
@@ -55,6 +57,8 @@ test('should update CSS `?url` hashes when the public path changes', async ({
   for (const assetPrefix of ['/a/', '/b/']) {
     const rsbuild = await build({
       config: {
+        // TODO: Re-enable build cache when changes to assetPrefix invalidate cached CSS URLs.
+        performance: { buildCache: false },
         output: { assetPrefix },
         tools: {
           rspack: {

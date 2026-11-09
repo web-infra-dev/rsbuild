@@ -34,9 +34,8 @@ for (const [name, include, compiler] of [
       cwd: import.meta.dirname,
       runServer: true,
       config: {
-        performance: {
-          buildCache: false,
-        },
+        // Give each compiler path its own cache entries.
+        performance: { buildCache: { cacheDigest: [compiler] } },
         plugins: [
           pluginBabel({
             include,

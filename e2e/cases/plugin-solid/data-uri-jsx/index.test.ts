@@ -23,6 +23,8 @@ for (const compiler of ['native', 'babel'] as const) {
   }) => {
     const rsbuild = await build({
       config: {
+        // TODO: Re-enable build cache when enabling source maps invalidates cached data URI modules.
+        performance: { buildCache: false },
         output: {
           sourceMap: {
             js: 'source-map',

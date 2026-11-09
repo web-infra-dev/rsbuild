@@ -17,6 +17,8 @@ test('should print size of multiple environments correctly', async ({
 }) => {
   const rsbuild = await build({
     config: {
+      // TODO: Re-enable build cache when changes to filenameHash invalidate cached asset names.
+      performance: { buildCache: false },
       output: {
         filenameHash: false,
       },
