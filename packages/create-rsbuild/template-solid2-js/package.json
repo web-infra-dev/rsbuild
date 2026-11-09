@@ -9,8 +9,8 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@solidjs/web": "^2.0.0-rc.20",
-    "solid-js": "^2.0.0-rc.20"
+    "@solidjs/web": "^2.0.0-rc.21",
+    "solid-js": "^2.0.0-rc.21"
   },
   "devDependencies": {
     "@rsbuild/core": "^2.3.1",
