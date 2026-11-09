@@ -1,4 +1,4 @@
-import { expect, expectPoll, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 test('should apply custom middleware via `setupMiddlewares`', async ({
   page,
@@ -28,17 +28,12 @@ test('should apply to trigger page reload via the `static-changed` type of sockW
   page,
   dev,
 }) => {
-  let count = 0;
   let reloadPage: undefined | (() => void);
 
   await dev({
     config: {
       dev: {
-        setupMiddlewares: (middlewares, { sockWrite }) => {
-          middlewares.unshift((_req, _res, next) => {
-            count++;
-            next();
-          });
+        setupMiddlewares: (_middlewares, { sockWrite }) => {
           reloadPage = () => sockWrite('static-changed');
         },
       },
@@ -46,7 +41,8 @@ test('should apply to trigger page reload via the `static-changed` type of sockW
   });
 
   await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
-  const previousCount = count;
+  const loaded = page.waitForEvent('load');
   reloadPage?.();
-  await expectPoll(() => count > previousCount).toBeTruthy();
+  await loaded;
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
 });
