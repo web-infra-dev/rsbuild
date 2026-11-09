@@ -68,9 +68,6 @@ define.doc({
     dark: 'https://assets.rspack.rs/rsbuild/navbar-logo-dark.png',
   },
   markdown: {
-    link: {
-      checkAnchors: true,
-    },
     shiki: {
       langs: ['styl', 'html', 'toml'],
       langAlias: {
@@ -79,7 +76,6 @@ define.doc({
     },
   },
   route: {
-    cleanUrls: true,
     // exclude document fragments from routes
     exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
