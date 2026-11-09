@@ -35,6 +35,7 @@ darkgrey
 datauri
 deepmerge
 devjskit
+devup
 docgen
 dotenvx
 dsns
@@ -132,6 +133,7 @@ preflights
 prefresh
 preprocessors
 pxtorem
+qrcode
 rebranded
 relog
 rempa
@@ -201,4 +203,5 @@ webm
 webp
 webx
 workerd
+zealakit
 Zhixin
