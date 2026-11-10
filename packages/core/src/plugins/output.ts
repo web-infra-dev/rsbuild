@@ -1,12 +1,8 @@
 import { posix } from 'node:path';
-import {
-  ALL_INTERFACES_IPV4,
-  DEFAULT_ASSET_PREFIX,
-  DEFAULT_PORT,
-  LOCALHOST,
-} from '../constants';
+import { DEFAULT_ASSET_PREFIX, DEFAULT_PORT, LOCALHOST } from '../constants';
 import { getFilename } from '../helpers';
 import { formatPublicPath, urlJoin } from '../helpers/url';
+import { getHostInUrl, isWildcardHost } from '../server/helper';
 import { replacePortPlaceholder } from '../server/open';
 import type {
   NormalizedEnvironmentConfig,
@@ -14,7 +10,7 @@ import type {
   RsbuildPlugin,
 } from '../types';
 
-function getPublicPath({
+async function getPublicPath({
   isDev,
   config,
   context,
@@ -22,7 +18,7 @@ function getPublicPath({
   isDev: boolean;
   config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
-}) {
+}): Promise<string> {
   const { dev, output, server } = config;
 
   let publicPath = DEFAULT_ASSET_PREFIX;
@@ -36,16 +32,15 @@ function getPublicPath({
     publicPath = dev.assetPrefix;
   } else if (dev.assetPrefix) {
     const protocol = context.devServer?.https ? 'https' : 'http';
-    const hostname = context.devServer?.hostname || LOCALHOST;
-
-    if (hostname === ALL_INTERFACES_IPV4) {
-      // http://0.0.0.0:port can't visit on Windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
-      // Relative to docs:
-      // - https://github.com/quarkusio/quarkus/issues/12246
-      publicPath = `${protocol}://localhost:<port>/`;
-    } else {
-      publicPath = `${protocol}://${hostname}:<port>/`;
-    }
+    const host = context.devServer?.hostname || LOCALHOST;
+    // Wildcard hosts (`0.0.0.0`, `::`) can't be visited on Windows and are printed as localhost,
+    // so use localhost for them and wrap other IPv6 hosts in brackets.
+    // Relative to docs:
+    // - https://github.com/quarkusio/quarkus/issues/12246
+    const hostname = isWildcardHost(host)
+      ? LOCALHOST
+      : await getHostInUrl(host);
+    publicPath = `${protocol}://${hostname}:<port>/`;
 
     if (server.base && server.base !== '/') {
       publicPath = urlJoin(publicPath, server.base);
@@ -77,13 +72,13 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (
+      async (
         chain,
         { CHAIN_ID, isDev, isProd, isServer, environment, rspack, target },
       ) => {
         const { distPath, config } = environment;
 
-        const publicPath = getPublicPath({
+        const publicPath = await getPublicPath({
           config,
           isDev,
           context: api.context,
