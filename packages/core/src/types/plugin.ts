@@ -347,6 +347,14 @@ export type TransformHandler<Raw extends boolean = false> = (
  */
 export type TransformDescriptor = {
   /**
+   * A path template used to match subsequent rules, the same as `rules[].as`.
+   * When combined with `order: 'pre'`, the rule matches before the built-in rules
+   * so the transformed code can reuse their compilation pipeline.
+   * Does not change the execution order or the original resource passed to the handler.
+   * @see https://rspack.rs/config/module-rules#rulesas
+   */
+  as?: Rspack.RuleSetRule['as'];
+  /**
    * Include modules that match the test assertion, the same as `rules[].test`
    * @see https://rspack.rs/config/module-rules#rulestest
    */

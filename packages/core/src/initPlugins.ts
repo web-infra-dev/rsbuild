@@ -168,6 +168,7 @@ export function initPluginAPI({
 
   let transformId = 0;
   const transformer: Record<string, TransformHandler<boolean>> = {};
+  const preTransformIds = new Set<string>();
   const processAssetsFns: {
     environment?: string;
     descriptor: ProcessAssetsDescriptor;
@@ -271,6 +272,10 @@ export function initPluginAPI({
       const id = `rsbuild-transform-${transformId++}`;
 
       transformer[id] = handler;
+      // Only explicit pre transforms with `as` need to match before the built-in rules.
+      if (descriptor.as !== undefined && descriptor.order === 'pre') {
+        preTransformIds.add(id);
+      }
 
       hooks.modifyBundlerChain.tapEnvironment({
         environment,
@@ -289,6 +294,19 @@ export function initPluginAPI({
           }
 
           const rule = chain.module.rule(id);
+          if (preTransformIds.has(id)) {
+            // Use the first ordinary rule as a shared anchor to preserve registration order.
+            const firstRuleName = chain.module.rules
+              .order()
+              .order.find((name) => !preTransformIds.has(name));
+            if (firstRuleName) {
+              rule.before(firstRuleName);
+            }
+          }
+
+          if (descriptor.as !== undefined) {
+            rule.set('as', descriptor.as);
+          }
 
           if (descriptor.test) {
             rule.test(descriptor.test);
