@@ -372,9 +372,10 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
+  order?: 'pre' | 'post' | 'default';
+  as?: string;
   /** @deprecated Use `order` instead. */
   enforce?: 'pre' | 'post';
-  order?: 'pre' | 'post' | 'default';
 };
 ```
 
@@ -535,6 +536,28 @@ api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
   // ...
 });
 ```
+
+#### as
+
+- **Type:** `string`
+- **Version:** `>= 2.3.3`
+
+Changes the path used to match subsequent rules with a path template, the same as Rspack's [rules[].as](https://rspack.rs/config/module-rules#rulesas). The original file is still read, and the handler receives the original `resource` and `resourcePath`.
+
+When both `as` and `order: 'pre'` are set, Rsbuild places the transform rule before its built-in rules. This lets the transform convert a custom format before the generated code passes through an existing compilation rule:
+
+```js
+api.transform(
+  { test: /\.template$/, as: '[resource-path].js', order: 'pre' },
+  ({ code }) => `export default ${JSON.stringify(code)};`,
+);
+```
+
+The matching path becomes `example.template.js`, allowing it to match the built-in JavaScript rule, subject to that rule's include and exclude conditions. The transform runs before the normal JavaScript loaders.
+
+`as` does not change the default execution order. Without an explicit `order: 'pre'`, the rule stays in its original position, including when using the deprecated `enforce: 'pre'` option. Earlier rules are not matched again, and previously applied module types are not reset.
+
+The path is changed during rule matching, before the handler runs. If `codeFilter` skips the handler, the path change still applies.
 
 #### enforce
 

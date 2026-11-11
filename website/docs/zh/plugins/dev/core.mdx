@@ -372,9 +372,10 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
+  order?: 'pre' | 'post' | 'default';
+  as?: string;
   /** @deprecated 请使用 `order` */
   enforce?: 'pre' | 'post';
-  order?: 'pre' | 'post' | 'default';
 };
 ```
 
@@ -535,6 +536,28 @@ api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
   // ...
 });
 ```
+
+#### as
+
+- **类型：** `string`
+- **版本：** `>= 2.3.3`
+
+通过路径模板修改后续规则用于匹配的路径，等价于 Rspack 的 [rules[].as](https://rspack.rs/zh/config/module-rules#rulesas)。实际读取的文件不变，handler 接收到的 `resource` 和 `resourcePath` 仍指向原始资源。
+
+同时设置 `as` 和 `order: 'pre'` 时，Rsbuild 会将这条 transform 规则放在内置规则之前。这样可以先转换自定义格式，再复用已有的编译规则处理生成的代码：
+
+```js
+api.transform(
+  { test: /\.template$/, as: '[resource-path].js', order: 'pre' },
+  ({ code }) => `export default ${JSON.stringify(code)};`,
+);
+```
+
+匹配路径会变为 `example.template.js`，从而可以匹配内置 JavaScript 规则，但仍需满足该规则的 include 和 exclude 条件。转换函数会先于普通 JavaScript loader 执行。
+
+`as` 不会改变默认执行顺序。未显式设置 `order: 'pre'` 时，规则保持原有位置，使用已废弃的 `enforce: 'pre'` 也是如此。此前检查过的规则不会重新匹配，已经设置的模块类型也不会重置。
+
+路径在规则匹配阶段就会改变，早于 handler 执行。即使 `codeFilter` 跳过了 handler，路径改写仍然生效。
 
 #### enforce
 
