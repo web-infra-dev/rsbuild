@@ -542,9 +542,11 @@ api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
 - **Type:** `string`
 - **Version:** `>= 2.3.3`
 
-Changes the path used to match subsequent rules with a path template, the same as Rspack's [rules[].as](https://rspack.rs/config/module-rules#rulesas). The original file is still read, and the handler receives the original `resource` and `resourcePath`.
+`as` changes the path used to match subsequent rules, letting a file match or skip certain rules, the same as Rspack's [rules[].as](https://rspack.rs/config/module-rules#rulesas). It only affects rule matching; file reading and the handler still use the original resource.
 
-When both `as` and `order: 'pre'` are set, Rsbuild places the transform rule before its built-in rules. This lets the transform convert a custom format before the generated code passes through an existing compilation rule:
+The value of `as` is a path template. The `[resource-path]` placeholder expands to the full file path currently used for matching, including its extension. For example, `[resource-path].js` appends `.js` to the current matching path.
+
+When both `as` and `order: 'pre'` are set, Rsbuild places the transform rule before its built-in rules, allowing files with different extensions to reuse existing compilation rules. For example, convert `.template` files to JavaScript and reuse the built-in SWC rule:
 
 ```js
 api.transform(
@@ -553,11 +555,9 @@ api.transform(
 );
 ```
 
-The matching path becomes `example.template.js`, allowing it to match the built-in JavaScript rule, subject to that rule's include and exclude conditions. The transform runs before the normal JavaScript loaders.
+When you import `./example.template`, its matching path becomes `example.template.js`, so it also matches the SWC rule. The handler converts the content to JavaScript, then SWC compiles it to the configured target.
 
-`as` does not change the default execution order. Without an explicit `order: 'pre'`, the rule stays in its original position, including when using the deprecated `enforce: 'pre'` option. Earlier rules are not matched again, and previously applied module types are not reset.
-
-The path is changed during rule matching, before the handler runs. If `codeFilter` skips the handler, the path change still applies.
+`as` itself does not change execution order; the handler performs the content conversion. In this example, `order: 'pre'` ensures the conversion runs before SWC. Without `order: 'pre'`, the rule stays in its original position.
 
 #### enforce
 
