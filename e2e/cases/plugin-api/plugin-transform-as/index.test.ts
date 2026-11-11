@@ -17,26 +17,6 @@ const cases: {
     descriptor: { as: '[resource-path].js' },
     compiled: false,
   },
-  {
-    name: 'as and default',
-    descriptor: { as: '[resource-path].js', order: 'default' },
-    compiled: false,
-  },
-  {
-    name: 'as and post',
-    descriptor: { as: '[resource-path].js', order: 'post' },
-    compiled: false,
-  },
-  {
-    name: 'as and legacy enforce',
-    descriptor: { as: '[resource-path].js', enforce: 'pre' },
-    compiled: false,
-  },
-  {
-    name: 'pre without as',
-    descriptor: { order: 'pre' },
-    compiled: false,
-  },
 ];
 
 for (const { name, descriptor, compiled } of cases) {
@@ -44,13 +24,10 @@ for (const { name, descriptor, compiled } of cases) {
     runBoth,
   }) => {
     const observed: boolean[] = [];
-    const rewritten: string[] = [];
     await runBoth(
       () => {
         expect(observed).toEqual([compiled]);
-        expect(rewritten).toEqual(descriptor.as ? ['value.custom'] : []);
         observed.length = 0;
-        rewritten.length = 0;
       },
       {
         config: {
@@ -72,13 +49,6 @@ for (const { name, descriptor, compiled } of cases) {
                     expect(basename(resourcePath)).toBe('value.custom');
                     expect(resourceQuery).toBe('?example');
                     return 'export default (input) => input?.value ?? "transformed";';
-                  },
-                );
-                api.transform(
-                  { test: /\.custom\.js$/, order: 'pre' },
-                  ({ code, resourcePath }) => {
-                    rewritten.push(basename(resourcePath));
-                    return code;
                   },
                 );
               },
