@@ -104,14 +104,14 @@ export const pluginCache = (): RsbuildPlugin => ({
         Array.isArray(cacheConfig.cacheDigest) &&
         cacheConfig.cacheDigest.length;
 
-      // set cache name to avoid cache conflicts between different environments
-      const cacheVersion = useDigest
-        ? `${environment.name}-${env}-${await hash(JSON.stringify(cacheConfig.cacheDigest))}`
-        : `${environment.name}-${env}`;
+      // Invalidate the cache when Rsbuild is upgraded.
+      const cacheVersion = `rsbuild-${RSBUILD_VERSION}-${environment.name}-${env}`;
 
       chain.cache({
         type: 'persistent',
-        version: cacheVersion,
+        version: useDigest
+          ? `${cacheVersion}-${await hash(JSON.stringify(cacheConfig.cacheDigest))}`
+          : cacheVersion,
         storage: {
           type: 'filesystem',
           directory: cacheDirectory,

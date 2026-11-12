@@ -10,7 +10,7 @@ exports[`plugin-cache > should add cache config correctly 1`] = `
     "type": "filesystem",
   },
   "type": "persistent",
-  "version": "web-test",
+  "version": "rsbuild-<version>-web-test",
 }
 `;
 
@@ -24,7 +24,7 @@ exports[`plugin-cache > should apply cacheDigest 1`] = `
     "type": "filesystem",
   },
   "type": "persistent",
-  "version": "web-test-fa1844c2988ad15a",
+  "version": "rsbuild-<version>-web-test-fa1844c2988ad15a",
 }
 `;
 
@@ -38,7 +38,7 @@ exports[`plugin-cache > should custom cache directory by user 1`] = `
     "type": "filesystem",
   },
   "type": "persistent",
-  "version": "web-test",
+  "version": "rsbuild-<version>-web-test",
 }
 `;
 
@@ -54,7 +54,7 @@ exports[`plugin-cache > should not apply cacheDigest 1`] = `
     "type": "filesystem",
   },
   "type": "persistent",
-  "version": "web-test",
+  "version": "rsbuild-<version>-web-test",
 }
 `;
 
@@ -68,6 +68,6 @@ exports[`plugin-cache > should watch tsconfig change 1`] = `
     "type": "filesystem",
   },
   "type": "persistent",
-  "version": "web-test",
+  "version": "rsbuild-<version>-web-test",
 }
 `;
