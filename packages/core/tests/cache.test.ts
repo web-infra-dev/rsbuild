@@ -1,4 +1,4 @@
-import { createRsbuild } from '../src';
+import { createRsbuild, version } from '../src';
 
 describe('plugin-cache', () => {
   const cases = [
@@ -60,8 +60,14 @@ describe('plugin-cache', () => {
       },
     });
 
-    const config = (await rsbuild.initConfigs())[0];
+    const [{ cache }] = await rsbuild.initConfigs();
+    if (cache && typeof cache === 'object' && cache.type === 'persistent') {
+      cache.version = cache.version?.replace(
+        `rsbuild-${version}-`,
+        'rsbuild-<version>-',
+      );
+    }
 
-    expect(config.cache).toMatchSnapshot();
+    expect(cache).toMatchSnapshot();
   });
 });
