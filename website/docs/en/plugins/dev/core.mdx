@@ -557,8 +557,6 @@ api.transform(
 
 When you import `./example.template`, its matching path becomes `example.template.js`, so it also matches the SWC rule. The handler converts the content to JavaScript, then SWC compiles it to the configured target.
 
-`as` itself does not change execution order; the handler performs the content conversion. In this example, `order: 'pre'` ensures the conversion runs before SWC. Without `order: 'pre'`, the rule stays in its original position.
-
 #### enforce
 
 - **Type:** `'pre' | 'post'`

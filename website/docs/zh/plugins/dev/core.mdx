@@ -557,8 +557,6 @@ api.transform(
 
 导入 `./example.template` 时，它的匹配路径会变为 `example.template.js`，因此也会命中 SWC 规则。handler 先将内容转换为 JavaScript，再由 SWC 编译为配置的目标版本。
 
-`as` 本身不会改变执行顺序，内容转换仍由 handler 完成。上例中的 `order: 'pre'` 保证转换先于 SWC 执行；未设置 `order: 'pre'` 时，规则保持原有位置。
-
 #### enforce
 
 - **类型：** `'pre' | 'post'`
