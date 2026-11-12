@@ -372,9 +372,10 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
+  order?: 'pre' | 'post' | 'default';
+  as?: string;
   /** @deprecated 请使用 `order` */
   enforce?: 'pre' | 'post';
-  order?: 'pre' | 'post' | 'default';
 };
 ```
 
@@ -535,6 +536,26 @@ api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
   // ...
 });
 ```
+
+#### as
+
+- **类型：** `string`
+- **版本：** `>= 2.3.3`
+
+`as` 可以改变后续规则用于匹配当前文件的路径，从而让文件命中或跳过某些规则，等价于 Rspack 的 [rules[].as](https://rspack.rs/zh/config/module-rules#rulesas)。它只影响规则匹配，文件读取和 handler 处理仍使用原始资源。
+
+`as` 的值是一个路径模板，其中的 `[resource-path]` 代表当前用于匹配的完整文件路径，包含扩展名。例如，`[resource-path].js` 会在当前匹配路径末尾追加 `.js`。
+
+同时设置 `as` 和 `order: 'pre'` 时，Rsbuild 会将这条 transform 规则放在内置规则之前，使不同扩展名的文件可以复用已有的编译规则。例如，将 `.template` 文件的内容转换为 JavaScript，并复用内置 SWC 规则：
+
+```js
+api.transform(
+  { test: /\.template$/, as: '[resource-path].js', order: 'pre' },
+  ({ code }) => `export default ${JSON.stringify(code)};`,
+);
+```
+
+导入 `./example.template` 时，它的匹配路径会变为 `example.template.js`，因此也会命中 SWC 规则。handler 先将内容转换为 JavaScript，再由 SWC 编译为配置的目标版本。
 
 #### enforce
 

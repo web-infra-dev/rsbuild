@@ -372,9 +372,10 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
+  order?: 'pre' | 'post' | 'default';
+  as?: string;
   /** @deprecated Use `order` instead. */
   enforce?: 'pre' | 'post';
-  order?: 'pre' | 'post' | 'default';
 };
 ```
 
@@ -535,6 +536,26 @@ api.transform({ test: /\.md$/, order: 'pre' }, ({ code }) => {
   // ...
 });
 ```
+
+#### as
+
+- **Type:** `string`
+- **Version:** `>= 2.3.3`
+
+`as` changes the path used to match subsequent rules, letting a file match or skip certain rules, the same as Rspack's [rules[].as](https://rspack.rs/config/module-rules#rulesas). It only affects rule matching; file reading and the handler still use the original resource.
+
+The value of `as` is a path template. The `[resource-path]` placeholder expands to the full file path currently used for matching, including its extension. For example, `[resource-path].js` appends `.js` to the current matching path.
+
+When both `as` and `order: 'pre'` are set, Rsbuild places the transform rule before its built-in rules, allowing files with different extensions to reuse existing compilation rules. For example, convert `.template` files to JavaScript and reuse the built-in SWC rule:
+
+```js
+api.transform(
+  { test: /\.template$/, as: '[resource-path].js', order: 'pre' },
+  ({ code }) => `export default ${JSON.stringify(code)};`,
+);
+```
+
+When you import `./example.template`, its matching path becomes `example.template.js`, so it also matches the SWC rule. The handler converts the content to JavaScript, then SWC compiles it to the configured target.
 
 #### enforce
 
