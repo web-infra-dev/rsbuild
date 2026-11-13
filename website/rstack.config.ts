@@ -135,6 +135,9 @@ define.doc({
     },
   ],
   builderConfig: {
+    output: {
+      module: true,
+    },
     plugins: [
       rsbuildPluginOverview,
       pluginSass(),
