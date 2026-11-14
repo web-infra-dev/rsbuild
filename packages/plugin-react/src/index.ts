@@ -32,6 +32,21 @@ export type ReactCompilerOptions = Exclude<
   boolean
 >;
 
+export type ReactCompilerFilter = {
+  /**
+   * Only compile matching modules with React Compiler. Accepts any Rspack rule condition,
+   * such as a path prefix, a RegExp, a function, or an array of them.
+   */
+  include?: Rspack.RuleSetCondition;
+  /**
+   * Skip React Compiler for matching modules. Takes precedence over `include`.
+   */
+  exclude?: Rspack.RuleSetCondition;
+};
+
+export type ReactCompilerConfig =
+  boolean | (ReactCompilerOptions & ReactCompilerFilter);
+
 export type PluginReactOptions = {
   /**
    * Configure the behavior of SWC to transform React code,
@@ -42,10 +57,12 @@ export type PluginReactOptions = {
    * Enable or configure React Compiler via `builtin:swc-loader`,
    * the same as Rspack's `jsc.transform.reactCompiler` option.
    * Only applied to environments whose `output.target` is `web`.
+   * Use `include` and `exclude` to compile only part of the codebase, for example to adopt
+   * React Compiler gradually or to skip files that are not compatible with it yet.
    *
    * @see https://rspack.rs/guide/integrations/react#using-builtinswc-loader
    */
-  reactCompiler?: Rspack.SwcLoaderTransformConfig['reactCompiler'];
+  reactCompiler?: ReactCompilerConfig;
   /**
    * Configuration for chunk splitting of React-related dependencies when `chunkSplit.strategy`
    * is set to `split-by-experience`.
@@ -95,6 +112,108 @@ function assertReactCompilerVersion(): void {
       `"@rsbuild/plugin-react" requires "@rspack/core" >= 2.1.0 to use the "reactCompiler" option, but found ${rspack.rspackVersion}.`,
     );
   }
+}
+
+const REACT_COMPILER_ONE_OF = 'js-react-compiler';
+
+function splitReactCompilerConfig(config: ReactCompilerConfig): {
+  compilerOptions: Rspack.SwcLoaderTransformConfig['reactCompiler'];
+  filter?: ReactCompilerFilter;
+} {
+  if (typeof config !== 'object' || config === null) {
+    return { compilerOptions: config };
+  }
+  const { include, exclude, ...compilerOptions } = config;
+  if (include === undefined && exclude === undefined) {
+    return { compilerOptions: config };
+  }
+  return {
+    compilerOptions: Object.keys(compilerOptions).length
+      ? compilerOptions
+      : true,
+    filter: { include, exclude },
+  };
+}
+
+/**
+ * Compile only the modules selected by `include` and `exclude` with React Compiler.
+ *
+ * The JS rule picks the first matching `oneOf` branch, so a copy of the main branch with
+ * React Compiler enabled is inserted before it. Selected modules go through the copy and
+ * every other module keeps the main branch, with the same loaders and options otherwise.
+ */
+function applyReactCompilerFilter(
+  api: RsbuildPluginAPI,
+  compilerOptions: Rspack.SwcLoaderTransformConfig['reactCompiler'],
+  filter: ReactCompilerFilter,
+): void {
+  api.modifyBundlerChain({
+    order: 'post',
+    handler: (chain, { CHAIN_ID, target }) => {
+      // React Compiler memoizes re-renders, which only happen in the browser.
+      if (target !== 'web') {
+        return;
+      }
+
+      const jsRule = chain.module.rule(CHAIN_ID.RULE.JS);
+      if (!jsRule.oneOfs.has(CHAIN_ID.ONE_OF.JS_MAIN)) {
+        return;
+      }
+      const mainRule = jsRule.oneOf(CHAIN_ID.ONE_OF.JS_MAIN);
+      if (!mainRule.uses.has(CHAIN_ID.USE.SWC)) {
+        return;
+      }
+
+      const compilerRule = jsRule
+        .oneOf(REACT_COMPILER_ONE_OF)
+        .before(CHAIN_ID.ONE_OF.JS_MAIN);
+      // `entries()` is undefined for an empty map.
+      compilerRule
+        .merge(
+          (mainRule.entries() ?? {}) as Parameters<
+            typeof compilerRule.merge
+          >[0],
+        )
+        .include.merge(mainRule.include.values())
+        .end()
+        .exclude.merge(mainRule.exclude.values());
+      compilerRule.resolve
+        .merge(
+          (mainRule.resolve.entries() ?? {}) as Parameters<
+            typeof compilerRule.resolve.merge
+          >[0],
+        )
+        .alias.merge(mainRule.resolve.alias.entries() ?? {});
+      // Merging deep-copies loader options, so the two branches don't share them.
+      for (const name of Object.keys(mainRule.uses.entries() ?? {})) {
+        const use = compilerRule.use(name);
+        use.merge(
+          mainRule.use(name).entries() as Parameters<typeof use.merge>[0],
+        );
+      }
+
+      if (filter.include !== undefined) {
+        compilerRule.include.add(filter.include);
+      }
+      if (filter.exclude !== undefined) {
+        compilerRule.exclude.add(filter.exclude);
+      }
+
+      compilerRule.use(CHAIN_ID.USE.SWC).tap((options) => {
+        const swcOptions = options as Rspack.SwcLoaderOptions;
+        return {
+          ...swcOptions,
+          jsc: {
+            ...swcOptions.jsc,
+            transform: {
+              ...swcOptions.jsc?.transform,
+              reactCompiler: compilerOptions,
+            },
+          },
+        };
+      });
+    },
+  });
 }
 
 function applyReactProfiler(api: RsbuildPluginAPI): void {
@@ -179,6 +298,11 @@ export const pluginReact = (
       assertReactCompilerVersion();
     }
 
+    const { compilerOptions, filter } =
+      finalOptions.reactCompiler === undefined
+        ? { compilerOptions: undefined, filter: undefined }
+        : splitReactCompilerConfig(finalOptions.reactCompiler);
+
     const reactRefreshPath = finalOptions.fastRefresh
       ? require.resolve('react-refresh')
       : '';
@@ -199,11 +323,13 @@ export const pluginReact = (
       };
 
       // React Compiler memoizes re-renders, which only happen in the browser.
+      // With a filter, it is enabled per module in `applyReactCompilerFilter` instead.
       if (
-        finalOptions.reactCompiler !== undefined &&
+        compilerOptions !== undefined &&
+        !filter &&
         config.output.target === 'web'
       ) {
-        transformOptions.reactCompiler = finalOptions.reactCompiler;
+        transformOptions.reactCompiler = compilerOptions;
       }
 
       return mergeEnvironmentConfig(
@@ -261,6 +387,10 @@ export const pluginReact = (
           ]);
       },
     );
+
+    if (filter) {
+      applyReactCompilerFilter(api, compilerOptions, filter);
+    }
 
     applySplitChunksRule(api, finalOptions.splitChunks);
 
