@@ -10,8 +10,12 @@ const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
 type WriteHeadHeaders = OutgoingHttpHeaders | OutgoingHttpHeader[];
 
-const getMimeType = (contentType: string) =>
-  contentType.split(';', 1)[0].trim().toLowerCase();
+const getMimeType = (contentType: string) => {
+  const index = contentType.indexOf(';');
+  return (index === -1 ? contentType : contentType.slice(0, index))
+    .trim()
+    .toLowerCase();
+};
 
 const setWriteHeadHeaders = (
   res: ServerResponse,
