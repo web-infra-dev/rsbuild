@@ -61,6 +61,10 @@ const applyFilter = (
   include?: ResourceHintsFilter,
   exclude?: ResourceHintsFilter,
 ) => {
+  if (!include && !exclude) {
+    return files;
+  }
+
   const includeRegExp: RegExp[] = [];
   const excludeRegExp: RegExp[] = [];
   const includeFn: ResourceHintsFilterFn[] = [];
