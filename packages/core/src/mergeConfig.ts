@@ -30,9 +30,11 @@ const OVERRIDE_PATHS = new Set([
  */
 const isOverridePath = (key: string) => {
   // ignore environments name prefix, such as `environments.web`
-  const realKey = key.startsWith('environments.')
-    ? key.split('.').slice(2).join('.')
-    : key;
+  let realKey = key;
+  if (key.startsWith('environments.')) {
+    const index = key.indexOf('.', 'environments.'.length);
+    realKey = index === -1 ? '' : key.slice(index + 1);
+  }
   return (
     OVERRIDE_PATHS.has(realKey) ||
     // output.filename.* supports function but we should not merge them as array
