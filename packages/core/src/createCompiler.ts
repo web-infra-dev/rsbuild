@@ -34,10 +34,7 @@ function formatFileList(paths: string[], rootPath: string) {
     files = [paths[0]];
   }
 
-  const fileInfo = files
-    .slice(0, 1)
-    .map((file) => cutPath(file, rootPath))
-    .join(', ');
+  const fileInfo = files.length ? cutPath(files[0], rootPath) : '';
 
   if (files.length > 1) {
     return `${fileInfo} and ${files.length - 1} more`;
