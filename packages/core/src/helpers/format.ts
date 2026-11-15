@@ -22,7 +22,7 @@ const formatFileName = (fileName: string, stats: StatsError, root: string) => {
   // Handle data-uri virtual modules
   const DATA_URI_PREFIX = 'data:text/javascript,';
   if (fileName.startsWith(DATA_URI_PREFIX)) {
-    let snippet = fileName.replace(DATA_URI_PREFIX, '');
+    let snippet = fileName.slice(DATA_URI_PREFIX.length);
     if (snippet.length > 30) {
       snippet = `${snippet.slice(0, 30)}...`;
     }
@@ -34,7 +34,7 @@ const formatFileName = (fileName: string, stats: StatsError, root: string) => {
   // "/Users/path/to/project/src/App.jsx" → "./src/App.jsx"
   const prefix = root + sep;
   if (fileName.startsWith(prefix)) {
-    fileName = fileName.replace(prefix, `.${sep}`);
+    fileName = `.${sep}${fileName.slice(prefix.length)}`;
   } else {
     fileName = formatDiagnosticPath(fileName, root);
   }
