@@ -91,11 +91,7 @@ const readPackageJsonList = async (
     }),
   );
 
-  return mergePackageJsonList(
-    packageJsonList.filter((pkgJson): pkgJson is PackageJson =>
-      Boolean(pkgJson),
-    ),
-  );
+  return mergePackageJsonList(packageJsonList.filter((pkgJson) => !!pkgJson));
 };
 
 const matchAutoExternalExclude = (
