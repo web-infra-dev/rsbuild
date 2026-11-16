@@ -126,11 +126,13 @@ export function createPluginManager(logger: Logger): PluginManager {
     );
 
   const getPlugins = (options: { environment?: string } = {}) => {
-    return plugins
-      .filter((plugin) =>
-        isEnvironmentMatch(plugin.environment, options.environment),
-      )
-      .map(({ instance }) => instance);
+    const result: RsbuildPlugin[] = [];
+    for (const plugin of plugins) {
+      if (isEnvironmentMatch(plugin.environment, options.environment)) {
+        result.push(plugin.instance);
+      }
+    }
+    return result;
   };
 
   return {
