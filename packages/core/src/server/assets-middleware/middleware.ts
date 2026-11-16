@@ -64,10 +64,7 @@ function getValueContentRangeHeader(
   size: number,
   range?: Range,
 ): string {
-  return `${type} ${range ? `${range.start}-${range.end}` : '*'}:${size}`.replace(
-    ':',
-    '/',
-  );
+  return `${type} ${range ? `${range.start}-${range.end}` : '*'}/${size}`;
 }
 
 function parseHttpDate(date: string): number {
