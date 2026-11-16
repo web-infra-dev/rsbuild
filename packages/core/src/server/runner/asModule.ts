@@ -29,9 +29,12 @@ export const asModule = async (
   }
 
   const normalizedModuleExports = normalizeModuleExports(moduleExports);
-  const exports = [
-    ...new Set(['default', ...Object.keys(normalizedModuleExports)]),
-  ];
+  const exports = ['default'];
+  for (const name of Object.keys(normalizedModuleExports)) {
+    if (name !== 'default') {
+      exports.push(name);
+    }
+  }
 
   const syntheticModule = new SyntheticModule(
     exports,
