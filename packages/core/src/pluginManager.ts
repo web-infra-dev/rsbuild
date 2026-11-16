@@ -178,16 +178,6 @@ export const sortPluginsByDependencies = (
   let allLines: [string, string][] = [];
   const pluginNames = new Set(plugins.map((item) => item.instance.name));
 
-  function getPlugin(name: string) {
-    const targets = plugins.filter((item) => item.instance.name === name);
-    if (!targets.length) {
-      throw new Error(
-        `${color.dim('[rsbuild:plugin]')} Plugin "${color.yellow(name)}" not existed`,
-      );
-    }
-    return targets;
-  }
-
   for (const plugin of plugins) {
     if (plugin.instance.pre) {
       for (const pre of plugin.instance.pre) {
@@ -208,6 +198,27 @@ export const sortPluginsByDependencies = (
 
   if (allLines.length === 0 && pluginNames.size === plugins.length) {
     return plugins.slice();
+  }
+
+  const pluginsByName = new Map<string, PluginMeta[]>();
+  for (const plugin of plugins) {
+    const { name } = plugin.instance;
+    const group = pluginsByName.get(name);
+    if (group) {
+      group.push(plugin);
+    } else {
+      pluginsByName.set(name, [plugin]);
+    }
+  }
+
+  function getPlugin(name: string) {
+    const targets = pluginsByName.get(name) ?? [];
+    if (!targets.length) {
+      throw new Error(
+        `${color.dim('[rsbuild:plugin]')} Plugin "${color.yellow(name)}" not existed`,
+      );
+    }
+    return targets;
   }
 
   let endPoints = new Set(allLines.map((line) => line[1]));
