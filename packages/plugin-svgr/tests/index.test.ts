@@ -53,21 +53,6 @@ describe('svgr', () => {
         },
       },
     },
-    {
-      name: 'merge repeated SVGO plugins',
-      pluginConfig: {
-        svgrOptions: {
-          svgoConfig: {
-            plugins: [
-              'prefixIds',
-              { name: 'prefixIds', params: { prefix: 'icon' } },
-              { name: 'prefixIds', params: { delim: '__' } },
-              'prefixIds',
-            ],
-          },
-        },
-      },
-    },
   ];
 
   it.each(cases)('$name', async (item) => {
@@ -81,6 +66,47 @@ describe('svgr', () => {
 
     const config = await rsbuild.initConfigs();
     expect(matchRules(config[0], 'a.svg')[0]).toMatchSnapshot();
+  });
+
+  it('should merge repeated SVGO plugins in order', async () => {
+    let svgrOptions: PluginSvgrOptions['svgrOptions'];
+    const rsbuild = await createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        plugins: [
+          pluginSvgr({
+            svgrOptions: {
+              svgoConfig: {
+                plugins: [
+                  'prefixIds',
+                  { name: 'prefixIds', params: { prefix: 'icon' } },
+                  { name: 'prefixIds', params: { delim: '__' } },
+                  'prefixIds',
+                ],
+              },
+            },
+          }),
+        ],
+        tools: {
+          bundlerChain(chain, { CHAIN_ID }) {
+            svgrOptions = chain.module
+              .rule(CHAIN_ID.RULE.SVG)
+              .oneOf(CHAIN_ID.ONE_OF.SVG_REACT)
+              .use(CHAIN_ID.USE.SVGR)
+              .get('options') as PluginSvgrOptions['svgrOptions'];
+          },
+        },
+      },
+    });
+    await rsbuild.initConfigs();
+
+    expect(svgrOptions?.svgoConfig?.plugins).toEqual([
+      {
+        name: 'preset-default',
+        params: { overrides: { removeViewBox: false } },
+      },
+      { name: 'prefixIds', params: { prefix: 'icon', delim: '__' } },
+    ]);
   });
 
   it('should publish as a pure ESM package', async () => {
