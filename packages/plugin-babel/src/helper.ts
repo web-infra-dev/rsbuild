@@ -49,7 +49,7 @@ const normalizeToPosixPath = (p: string | undefined) =>
 
 // compatible with Windows path
 const formatPath = (originPath: string) => {
-  if (isAbsolute(originPath)) {
+  if (sep !== '/' && isAbsolute(originPath)) {
     return originPath.split(sep).join('/');
   }
   return originPath;
