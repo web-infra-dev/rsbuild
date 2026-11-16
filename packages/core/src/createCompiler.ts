@@ -22,7 +22,7 @@ function cutPath(originalFilePath: string, root: string) {
 }
 
 function isLikelyFile(filePath: string): boolean {
-  const lastSegment = filePath.split(sep).pop() || '';
+  const lastSegment = filePath.slice(filePath.lastIndexOf(sep) + 1);
   return lastSegment.includes('.');
 }
 
