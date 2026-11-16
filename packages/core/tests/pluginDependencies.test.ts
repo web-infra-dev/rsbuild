@@ -2,6 +2,19 @@ import type { RsbuildPlugin } from '../src';
 import { sortPluginsByDependencies } from '../src/pluginManager';
 
 describe('sort plugins by dependency order', () => {
+  it('should group same-name plugins without dependencies', () => {
+    const setup = () => {};
+    const first = { instance: { name: 'a', setup }, environment: 'web' };
+    const second = { instance: { name: 'b', setup }, environment: 'web' };
+    const third = { instance: { name: 'a', setup }, environment: 'node' };
+
+    expect(sortPluginsByDependencies([first, second, third])).toEqual([
+      first,
+      third,
+      second,
+    ]);
+  });
+
   it('should sort plugins with dependencies correctly', () => {
     const cases = [
       { name: '1' },
