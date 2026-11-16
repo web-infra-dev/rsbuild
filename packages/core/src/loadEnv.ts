@@ -192,8 +192,9 @@ export function loadEnv({
   for (const key of Object.keys(processEnv)) {
     if (prefixes.some((prefix) => key.startsWith(prefix))) {
       const val = processEnv[key];
-      publicVars[`import.meta.env.${key}`] = JSON.stringify(val);
-      publicVars[`process.env.${key}`] = JSON.stringify(val);
+      const serialized = JSON.stringify(val);
+      publicVars[`import.meta.env.${key}`] = serialized;
+      publicVars[`process.env.${key}`] = serialized;
       rawPublicVars[key] = val;
     }
   }
