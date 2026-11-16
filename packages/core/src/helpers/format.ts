@@ -1,4 +1,4 @@
-import { builtinModules } from 'node:module';
+import { isBuiltin } from 'node:module';
 import { resolve, sep } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { StatsError } from '@rspack/core';
@@ -243,7 +243,7 @@ const hintNodePolyfill = (message: string): string => {
 
   const moduleName = matchArray[1];
 
-  if (moduleName && builtinModules.includes(moduleName)) {
+  if (moduleName && isBuiltin(moduleName)) {
     return getTips(moduleName);
   }
 
