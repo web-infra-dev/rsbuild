@@ -122,10 +122,7 @@ function formatModuleTrace(
   }
 
   // Current moduleTrace is usually error -> entry, so reverse to entry -> error.
-  let trace = moduleNames
-    .slice()
-    .reverse()
-    .map((name) => formatDiagnosticPath(name, root));
+  let trace = moduleNames.slice().reverse();
   const MAX = 4;
 
   // Truncate long traces in non-verbose mode
@@ -140,7 +137,7 @@ function formatModuleTrace(
   }
 
   return color.dim(
-    `Import traces (entry → ${level}):\n  ${trace.join('\n  ')} ${color.bold(color.red('×'))}`,
+    `Import traces (entry → ${level}):\n  ${trace.map((name) => formatDiagnosticPath(name, root)).join('\n  ')} ${color.bold(color.red('×'))}`,
   );
 }
 
