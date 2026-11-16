@@ -23,7 +23,7 @@ catalog:
   '@hono/node-server': '^2.1.6'
   '@jridgewell/remapping': '^2.3.5'
   '@jridgewell/trace-mapping': '^0.3.31'
-  '@jsonjoy.com/fs-core': '4.80.0'
+  '@jsonjoy.com/fs-core': '4.80.1'
   '@module-federation/enhanced': '2.9.3'
   '@module-federation/rsbuild-plugin': '2.9.3'
   '@module-federation/runtime-tools': '2.9.3'
@@ -92,7 +92,7 @@ catalog:
   'lit': '^3.3.3'
   'loader-utils': '^3.3.1'
   # Keep memfs and its storage extension on matching versions.
-  'memfs': '4.80.0'
+  'memfs': '4.80.1'
   'mrmime': '^2.0.1'
   'open': '^11.0.4'
   'path-serializer': '0.7.0'
