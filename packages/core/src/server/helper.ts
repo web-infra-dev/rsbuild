@@ -203,20 +203,23 @@ export const formatRoutes = (
 ): Routes => {
   const prefix = joinUrlPath(base, formatPrefix(distPathPrefix));
 
-  return (
-    Object.keys(entry)
-      .map((entryName) => {
-        // fix case: /html/index/index.html
-        const isIndex = entryName === 'index' && outputStructure !== 'nested';
-        const displayName = isIndex ? '' : entryName;
-        return {
-          entryName,
-          pathname: prefix + displayName,
-        };
-      })
-      // adjust the index route to be the first
-      .sort((a) => (a.entryName === 'index' ? -1 : 1))
-  );
+  const entryNames = Object.keys(entry);
+  // Adjust the index route to be the first without sorting the other routes.
+  const index = entryNames.indexOf('index');
+  if (index > 0) {
+    entryNames.splice(index, 1);
+    entryNames.unshift('index');
+  }
+
+  return entryNames.map((entryName) => {
+    // fix case: /html/index/index.html
+    const isIndex = entryName === 'index' && outputStructure !== 'nested';
+    const displayName = isIndex ? '' : entryName;
+    return {
+      entryName,
+      pathname: prefix + displayName,
+    };
+  });
 };
 
 type AddressUrl = {
