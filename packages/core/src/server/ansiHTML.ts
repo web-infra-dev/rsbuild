@@ -27,8 +27,8 @@ const closeCode = [0, 21, 22, 23, 24, 27, 28, 29, 39, 49];
  * Converts text with ANSI color codes to HTML markup
  */
 export function ansiHTML(text: string): string {
-  // Cache opened sequence
-  const ansiCodes: string[] = [];
+  // Track the number of unclosed spans.
+  let openSpans = 0;
   // Replace with markup
   let ret = text.replace(
     // rslint-disable-next-line no-control-regex
@@ -42,12 +42,12 @@ export function ansiHTML(text: string): string {
       }
 
       if (style) {
-        ansiCodes.push(sequences);
+        openSpans++;
         return `<span style="${style}">`;
       }
 
-      if (closeCode.includes(Number(sequences)) && ansiCodes.length > 0) {
-        ansiCodes.pop();
+      if (closeCode.includes(Number(sequences)) && openSpans > 0) {
+        openSpans--;
         return '</span>';
       }
       return '';
@@ -55,8 +55,8 @@ export function ansiHTML(text: string): string {
   );
 
   // Make sure tags are closed
-  if (ansiCodes.length > 0) {
-    ret += Array(ansiCodes.length + 1).join('</span>');
+  if (openSpans > 0) {
+    ret += '</span>'.repeat(openSpans);
   }
 
   return ret;
