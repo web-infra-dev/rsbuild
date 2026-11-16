@@ -49,15 +49,21 @@ export type PluginSolidOptions = {
   solid?: SolidPresetOptions;
 };
 
+const DEFAULT_SCRIPT_REGEX = /(?:\.jsx|\.tsx)$/i;
+
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
   const { compiler = 'native', dev, solid, ssr } = options;
   const extensions = options.extensions ?? [];
-  const scriptPattern = ['.jsx', '.tsx', ...extensions]
-    .map((ext) => ext.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-    .join('|');
-  const scriptRegex = new RegExp(`(?:${scriptPattern})$`, 'i');
+  const scriptRegex = extensions.length
+    ? new RegExp(
+        `(?:\\.jsx|\\.tsx|${extensions
+          .map((ext) => ext.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+          .join('|')})$`,
+        'i',
+      )
+    : DEFAULT_SCRIPT_REGEX;
   const isDevModeEnabled = (mode: RsbuildMode) => dev ?? mode === 'development';
 
   return {
