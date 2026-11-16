@@ -157,41 +157,52 @@ function hintUnknownFiles(message: string): string {
   const recommendPlugins = [
     {
       test: /File: .+\.s(c|a)ss/,
-      hint: createPluginHint('sass', 'Sass'),
+      name: 'sass',
+      keyword: 'Sass',
     },
     {
       test: /File: .+\.less/,
-      hint: createPluginHint('less', 'Less'),
+      name: 'less',
+      keyword: 'Less',
     },
     {
       test: /File: .+\.styl(us)?/,
-      hint: createPluginHint('stylus', 'Stylus'),
+      name: 'stylus',
+      keyword: 'Stylus',
     },
     {
       test: /File: .+\.vue?/,
-      hint: createPluginHint('vue', 'Vue'),
+      name: 'vue',
+      keyword: 'Vue',
     },
     {
       test: /File: .+\.svelte?/,
-      hint: createPluginHint('svelte', 'Svelte'),
+      name: 'svelte',
+      keyword: 'Svelte',
     },
     {
       test: /File: .+\.mdx/,
-      hint: createPluginHint('mdx', 'MDX'),
+      name: 'mdx',
+      keyword: 'MDX',
     },
     {
       test: /File: .+\.toml/,
-      hint: createPluginHint('toml', 'TOML'),
+      name: 'toml',
+      keyword: 'TOML',
     },
     {
       test: /File: .+\.yaml/,
-      hint: createPluginHint('yaml', 'YAML'),
+      name: 'yaml',
+      keyword: 'YAML',
     },
   ];
 
   for (const plugin of recommendPlugins) {
     if (plugin.test.test(message)) {
-      return message.replace(hint, plugin.hint);
+      return message.replace(
+        hint,
+        createPluginHint(plugin.name, plugin.keyword),
+      );
     }
   }
 
