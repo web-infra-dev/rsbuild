@@ -28,35 +28,38 @@ interface DoesChunkBelongToHtmlOptions {
 
 function recursiveChunkGroup(
   chunkGroup: ChunkGroup,
-  visited = new Set<ChunkGroup>(),
-): (string | undefined)[] {
-  // check if the chunkGroup has been visited to prevent circular reference
+  visited: Set<ChunkGroup>,
+  names: Set<string>,
+): void {
+  // Check shared ancestors and circular references only once per chunk.
   if (visited.has(chunkGroup)) {
-    return [];
+    return;
   }
   visited.add(chunkGroup);
 
   const parents = chunkGroup.getParents();
   if (!parents.length) {
-    // EntryPoint
-    return [chunkGroup.name];
+    const { name } = chunkGroup;
+    if (name) {
+      names.add(name);
+    }
+    return;
   }
 
-  return parents.flatMap((chunkParent) =>
-    recursiveChunkGroup(chunkParent, visited),
-  );
+  for (const parent of parents) {
+    recursiveChunkGroup(parent, visited, names);
+  }
 }
 
 export function recursiveChunkEntryNames(chunk: Chunk): string[] {
-  const isChunkName = (name: string | undefined): name is string =>
-    Boolean(name);
+  const names = new Set<string>();
+  const visited = new Set<ChunkGroup>();
 
-  const [...chunkGroups] = chunk.groupsIterable;
-  const names = chunkGroups
-    .flatMap((chunkGroup) => recursiveChunkGroup(chunkGroup))
-    .filter(isChunkName);
+  for (const chunkGroup of chunk.groupsIterable) {
+    recursiveChunkGroup(chunkGroup, visited, names);
+  }
 
-  return [...new Set(names)];
+  return [...names];
 }
 
 // modified from html-rspack-plugin/index.js `filterChunks`
