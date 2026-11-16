@@ -35,7 +35,8 @@ const assetLoader: RawLoaderDefinition<SvgAssetLoaderOptions> = function (
 
   if (buffer.length <= limit) {
     const dataUrl = `data:${SVG_MIME_TYPE};base64,${buffer.toString('base64')}`;
-    return `export default ${JSON.stringify(dataUrl)}`;
+    // Base64 needs no string escaping.
+    return `export default "${dataUrl}"`;
   }
 
   const filename = interpolateName(this, name, {
