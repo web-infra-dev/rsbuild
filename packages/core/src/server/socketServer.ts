@@ -210,12 +210,12 @@ export class SocketServer {
     }
 
     const query = parseQueryString(req);
-    const tokens = this.context.environmentList.map(
-      ({ webSocketToken }) => webSocketToken,
+    const hasValidToken = this.context.environmentList.some(
+      ({ webSocketToken }) => webSocketToken === query.token,
     );
 
     // If the request does not contain a valid token, reject the request.
-    if (!tokens.includes(query.token)) {
+    if (!hasValidToken) {
       socket.destroy();
       return;
     }
