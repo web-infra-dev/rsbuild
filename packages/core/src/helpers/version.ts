@@ -2,13 +2,13 @@
 export const rspackMinVersion = '2.2.3';
 
 const compareSemver = (version1: string, version2: string) => {
-  const parts1 = version1.split('.').map(Number);
-  const parts2 = version2.split('.').map(Number);
+  const parts1 = version1.split('.');
+  const parts2 = version2.split('.');
   const len = Math.max(parts1.length, parts2.length);
 
   for (let i = 0; i < len; i++) {
-    const item1 = parts1[i] ?? 0;
-    const item2 = parts2[i] ?? 0;
+    const item1 = Number(parts1[i] ?? 0);
+    const item2 = Number(parts2[i] ?? 0);
     if (item1 > item2) {
       return 1;
     }
