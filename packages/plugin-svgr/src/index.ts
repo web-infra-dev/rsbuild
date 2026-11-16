@@ -99,42 +99,20 @@ const dedupeSvgoPlugins = (config: SvgoConfig): SvgoConfig => {
     return config;
   }
 
-  let mergedPlugins: SvgoPluginConfig[] = [];
+  const mergedPlugins: SvgoPluginConfig[] = [];
 
   for (const plugin of config.plugins) {
-    if (typeof plugin === 'string') {
-      const exist = mergedPlugins.some(
-        (item) =>
-          item === plugin || (typeof item === 'object' && item.name === plugin),
-      );
-
-      if (!exist) {
-        mergedPlugins.push(plugin);
-      }
-
-      continue;
-    }
-
-    const strIndex = mergedPlugins.findIndex(
-      (item) => typeof item === 'string' && item === plugin.name,
+    const name = typeof plugin === 'string' ? plugin : plugin.name;
+    const index = mergedPlugins.findIndex(
+      (item) => (typeof item === 'string' ? item : item.name) === name,
     );
-    if (strIndex !== -1) {
-      mergedPlugins[strIndex] = plugin;
-      continue;
-    }
 
-    let isMerged = false;
-
-    mergedPlugins = mergedPlugins.map((item) => {
-      if (typeof item === 'object' && item.name === plugin.name) {
-        isMerged = true;
-        return deepmerge<SvgoPluginConfig>(item, plugin);
-      }
-      return item;
-    });
-
-    if (!isMerged) {
+    if (index === -1) {
       mergedPlugins.push(plugin);
+    } else if (typeof plugin !== 'string') {
+      const existing = mergedPlugins[index];
+      mergedPlugins[index] =
+        typeof existing === 'string' ? plugin : deepmerge(existing, plugin);
     }
   }
 

@@ -53,6 +53,21 @@ describe('svgr', () => {
         },
       },
     },
+    {
+      name: 'merge repeated SVGO plugins',
+      pluginConfig: {
+        svgrOptions: {
+          svgoConfig: {
+            plugins: [
+              'prefixIds',
+              { name: 'prefixIds', params: { prefix: 'icon' } },
+              { name: 'prefixIds', params: { delim: '__' } },
+              'prefixIds',
+            ],
+          },
+        },
+      },
+    },
   ];
 
   it.each(cases)('$name', async (item) => {

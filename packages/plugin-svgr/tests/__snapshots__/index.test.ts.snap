@@ -822,3 +822,116 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
   "test": /\\\\\\.svg\\$/,
 }
 `;
+
+exports[`svgr > merge repeated SVGO plugins 1`] = `
+{
+  "oneOf": [
+    {
+      "generator": {
+        "filename": "static/svg/[name].[contenthash:10].svg",
+      },
+      "resourceQuery": /\\^\\\\\\?url\\$/,
+      "type": "asset/resource",
+    },
+    {
+      "resourceQuery": /\\^\\\\\\?inline\\$/,
+      "type": "asset/inline",
+    },
+    {
+      "type": "asset/source",
+      "with": {
+        "type": "text",
+      },
+    },
+    {
+      "resourceQuery": /\\^\\\\\\?raw\\$/,
+      "type": "asset/source",
+    },
+    {
+      "resourceQuery": /react/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+            "detectSyntax": "auto",
+            "env": {
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+            "isModule": "unknown",
+            "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
+              },
+              "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
+              "parser": {
+                "decorators": true,
+              },
+              "transform": {
+                "decoratorVersion": "2023-11",
+                "legacyDecorator": false,
+                "react": {
+                  "development": true,
+                  "refresh": false,
+                  "runtime": "automatic",
+                },
+              },
+            },
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
+          "options": {
+            "exportType": "default",
+            "svgo": true,
+            "svgoConfig": {
+              "plugins": [
+                {
+                  "name": "preset-default",
+                  "params": {
+                    "overrides": {
+                      "removeViewBox": false,
+                    },
+                  },
+                },
+                {
+                  "name": "prefixIds",
+                  "params": {
+                    "delim": "__",
+                    "prefix": "icon",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
+    },
+    {
+      "generator": {
+        "filename": "static/svg/[name].[contenthash:10].svg",
+      },
+      "parser": {
+        "dataUrlCondition": {
+          "maxSize": 4096,
+        },
+      },
+      "type": "asset",
+    },
+  ],
+  "test": /\\\\\\.svg\\$/,
+}
+`;
