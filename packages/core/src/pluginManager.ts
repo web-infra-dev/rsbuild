@@ -211,22 +211,20 @@ export const sortPluginsByDependencies = (
   }
 
   let endPoints = new Set(allLines.map((line) => line[1]));
-  let zeroEndPoints = plugins.filter(
-    (item) => !endPoints.has(item.instance.name),
-  );
+  let zeroEndPoint = plugins.find((item) => !endPoints.has(item.instance.name));
 
   const sortedPoint: PluginMeta[] = [];
   const sortedPluginNames = new Set<string>();
 
-  while (zeroEndPoints.length) {
-    const { name } = zeroEndPoints[0].instance;
+  while (zeroEndPoint) {
+    const { name } = zeroEndPoint.instance;
     const pluginInstances = getPlugin(name);
     sortedPoint.push(...pluginInstances);
     sortedPluginNames.add(name);
     allLines = allLines.filter((line) => line[0] !== name);
     endPoints = new Set(allLines.map((line) => line[1]));
 
-    zeroEndPoints = plugins.filter(
+    zeroEndPoint = plugins.find(
       (item) =>
         !sortedPluginNames.has(item.instance.name) &&
         !endPoints.has(item.instance.name),
