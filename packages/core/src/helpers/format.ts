@@ -67,13 +67,11 @@ function resolveFileName(stats: StatsError, logger: Logger) {
   // `moduleIdentifier` is the absolute path with inline loaders
   // e.g. "builtin:react-refresh-loader!/Users/x/src/App.jsx"
   if (stats.moduleIdentifier) {
-    const regex = /(?:!|^)([^!]+)$/;
-    const matched = stats.moduleIdentifier.match(regex);
-    if (matched) {
-      const fileName = matched.pop();
-      if (fileName) {
-        return removeLoaderChainDelimiter(fileName, logger);
-      }
+    const fileName = stats.moduleIdentifier.slice(
+      stats.moduleIdentifier.lastIndexOf('!') + 1,
+    );
+    if (fileName) {
+      return removeLoaderChainDelimiter(fileName, logger);
     }
   }
 
