@@ -206,6 +206,10 @@ export const sortPluginsByDependencies = (
     }
   }
 
+  if (allLines.length === 0 && pluginNames.size === plugins.length) {
+    return plugins.slice();
+  }
+
   let endPoints = new Set(allLines.map((line) => line[1]));
   let zeroEndPoints = plugins.filter(
     (item) => !endPoints.has(item.instance.name),
