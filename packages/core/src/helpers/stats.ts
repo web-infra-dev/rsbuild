@@ -195,5 +195,6 @@ export const removeLoaderChainDelimiter = (
     return moduleId;
   }
   const LOADER_CHAIN_SEPARATOR = '!=!';
-  return moduleId.split(LOADER_CHAIN_SEPARATOR)[0];
+  const index = moduleId.indexOf(LOADER_CHAIN_SEPARATOR);
+  return index === -1 ? moduleId : moduleId.slice(0, index);
 };
