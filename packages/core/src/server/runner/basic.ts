@@ -61,9 +61,11 @@ export abstract class BasicRunner implements Runner {
   getRequire(): RunnerRequirer {
     const entryRequire = this.requirers.get('entry')!;
     return (currentDirectory, modulePath, context = {}) => {
-      const p = Array.isArray(modulePath)
-        ? modulePath
-        : modulePath.split('?')[0];
+      let p = modulePath;
+      if (typeof modulePath === 'string') {
+        const index = modulePath.indexOf('?');
+        if (index !== -1) p = modulePath.slice(0, index);
+      }
       return entryRequire(currentDirectory, p, context);
     };
   }
