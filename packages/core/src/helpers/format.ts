@@ -122,7 +122,7 @@ function formatModuleTrace(
   }
 
   // Current moduleTrace is usually error -> entry, so reverse to entry -> error.
-  let trace = moduleNames.slice().reverse();
+  let trace = moduleNames.toReversed();
   const MAX = 4;
 
   // Truncate long traces in non-verbose mode
