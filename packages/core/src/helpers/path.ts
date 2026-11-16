@@ -39,6 +39,10 @@ export function relativeWithin(
 }
 
 export function getCommonParentPath(paths: string[]): string {
+  if (paths.length === 1) {
+    return paths[0];
+  }
+
   const uniquePaths = [...new Set(paths)];
 
   if (uniquePaths.length === 1) {
