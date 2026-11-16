@@ -188,7 +188,7 @@ export const getRoutes = (context: InternalContext): Routes => {
       posix.join(distPrefix, config.output.distPath.html),
       config.html.outputStructure,
     );
-    return prev.concat(...routes);
+    return prev.concat(routes);
   }, []);
 };
 
