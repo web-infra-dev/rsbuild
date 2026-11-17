@@ -46,14 +46,15 @@ export const pluginNonce = (): RsbuildPlugin => ({
       handler: ({ headTags, bodyTags }, { environment }) => {
         const { config } = environment;
         const { nonce } = config.security;
-        const allTags = [...headTags, ...bodyTags];
+        if (!nonce) {
+          return { headTags, bodyTags };
+        }
 
-        if (nonce) {
-          for (const tag of allTags) {
-            if (isNonceTag(tag)) {
-              tag.attrs ??= {};
-              tag.attrs.nonce = nonce;
-            }
+        const allTags = [...headTags, ...bodyTags];
+        for (const tag of allTags) {
+          if (isNonceTag(tag)) {
+            tag.attrs ??= {};
+            tag.attrs.nonce = nonce;
           }
         }
 
