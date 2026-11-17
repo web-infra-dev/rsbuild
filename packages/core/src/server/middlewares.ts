@@ -87,7 +87,7 @@ export const optionsFallbackMiddleware: RequestHandler = (req, res, next) => {
   next();
 };
 
-const isFileExists = async (
+const isFileExists = (
   filePath: string,
   outputFileSystem: Rspack.OutputFileSystem,
 ): Promise<boolean> =>
