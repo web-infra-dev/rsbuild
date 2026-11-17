@@ -54,25 +54,18 @@ function getMatchedAsset(
   tests: InlineChunkTest[],
 ) {
   let asset: Rspack.sources.Source | undefined;
-  const matched = tests.some((test) => {
+  for (const test of tests) {
     if (isFunction(test)) {
       asset ??= assets[name];
-      if (!asset) {
-        return false;
+      if (asset && test({ name, size: asset.size() })) {
+        return asset;
       }
-      const size = asset.size();
-      return test({ name, size });
+    } else if (test.test(name)) {
+      // Accessing an asset retrieves its Source through the Rust-JS bridge,
+      // so defer the lookup until the filename matches.
+      return asset ?? assets[name];
     }
-    return test.exec(name);
-  });
-
-  if (!matched) {
-    return;
   }
-
-  // Accessing an asset retrieves its Source through the Rust-JS bridge,
-  // so defer the lookup until the filename matches.
-  return asset ?? assets[name];
 }
 
 export function getInlineTests(config: NormalizedEnvironmentConfig): {
