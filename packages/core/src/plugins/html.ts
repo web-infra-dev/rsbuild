@@ -130,7 +130,7 @@ function getTemplateParameters(
   config: NormalizedEnvironmentConfig,
   assetPrefix: string,
 ): HtmlRspackPlugin.Options['templateParameters'] {
-  return async (compilation, assets, assetTags, pluginOptions) => {
+  return (compilation, assets, assetTags, pluginOptions) => {
     const { mountId, templateParameters } = config.html;
     const rspackConfig = compilation.options;
     const htmlPlugin = {
