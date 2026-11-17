@@ -16,6 +16,20 @@ describe('plugin-vue', () => {
     expect(config[0].resolve).toMatchSnapshot();
   });
 
+  it('should skip disabled Vue and router chunk groups', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [pluginVue({ splitChunks: { vue: false, router: false } })],
+      },
+    });
+    const [config] = await rsbuild.initConfigs();
+    const splitChunks = config.optimization?.splitChunks;
+
+    expect(splitChunks).toEqual(expect.any(Object));
+    expect(splitChunks).not.toHaveProperty('cacheGroups.vue');
+    expect(splitChunks).not.toHaveProperty('cacheGroups.router');
+  });
+
   it('should allow to configure vueLoader options', async () => {
     const rsbuild = await createRsbuild({
       config: {

@@ -36,6 +36,10 @@ export function applySplitChunksRule(
       return;
     }
 
+    if (!options.vue && !options.router) {
+      return;
+    }
+
     const currentConfig =
       chain.optimization.splitChunks.values() as Rspack.Optimization['splitChunks'];
     if (!isPlainObject(currentConfig)) {
@@ -61,10 +65,6 @@ export function applySplitChunksRule(
         test: /node_modules[\\/]vue-router[\\/]/,
         priority: 0,
       };
-    }
-
-    if (!Object.keys(extraGroups).length) {
-      return;
     }
 
     chain.optimization.splitChunks({
