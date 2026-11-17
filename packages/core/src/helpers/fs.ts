@@ -45,7 +45,7 @@ export async function isFileExists(file: string): Promise<boolean> {
     .catch(() => false);
 }
 
-export async function fileExistsByCompilation(
+export function fileExistsByCompilation(
   { inputFileSystem }: Rspack.Compilation,
   filePath: string,
 ): Promise<boolean> {
