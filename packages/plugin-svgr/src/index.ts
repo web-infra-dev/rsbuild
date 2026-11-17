@@ -124,7 +124,7 @@ const dedupeSvgoPlugins = (config: SvgoConfig): SvgoConfig => {
 export const PLUGIN_SVGR_NAME = 'rsbuild:svgr';
 
 function assertCoreVersion(version: string): void {
-  if (version.split('.')[0] === '1') {
+  if (version === '1' || version.startsWith('1.')) {
     throw new Error(
       `"@rsbuild/plugin-svgr" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-svgr" v1.`,
     );
