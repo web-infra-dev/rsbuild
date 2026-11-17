@@ -23,7 +23,7 @@ export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
 function assertCoreVersion(version: string): void {
-  if (version.split('.')[0] === '1') {
+  if (version === '1' || version.startsWith('1.')) {
     throw new Error(
       `"@rsbuild/plugin-less" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-less" v1.`,
     );
