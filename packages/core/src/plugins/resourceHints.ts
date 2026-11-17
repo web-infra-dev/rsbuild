@@ -88,15 +88,15 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
     api.modifyBundlerChain((chain, { CHAIN_ID, environment, isDev }) => {
       const { config, htmlPaths } = environment;
 
-      if (Object.keys(htmlPaths).length === 0) {
-        return;
-      }
-
       const {
         performance: { preload, prefetch },
       } = config;
 
       if (!preload && !prefetch) {
+        return;
+      }
+
+      if (Object.keys(htmlPaths).length === 0) {
         return;
       }
 
