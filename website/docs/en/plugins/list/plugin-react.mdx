@@ -175,6 +175,8 @@ type ReactCompiler =
       dynamicGating?: {
         source: string;
       };
+      include?: Rspack.RuleSetCondition;
+      exclude?: Rspack.RuleSetCondition;
     };
 ```
 
@@ -209,6 +211,21 @@ pluginReact({
 ```
 
 For more options, refer to the official [React Compiler configuration documentation](https://react.dev/reference/react-compiler/configuration).
+
+#### Compile part of the codebase
+
+Use `include` and `exclude` to choose which modules React Compiler compiles. Both accept any Rspack [rule condition](https://rspack.rs/config/module-rules#condition), such as a path, a RegExp, a function, or an array of them, and `exclude` takes precedence over `include`. This lets you adopt React Compiler one directory at a time, or skip files that are not compatible with it yet, without moving the compiler to Babel:
+
+```ts
+pluginReact({
+  reactCompiler: {
+    include: /[\\/]src[\\/]features[\\/]/,
+    exclude: [/[\\/]legacy[\\/]/, /\.stories\.tsx$/],
+  },
+});
+```
+
+Modules that don't match are still compiled by SWC with the same options, just without React Compiler.
 
 #### Enable in non-web environments
 
