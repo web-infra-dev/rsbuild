@@ -38,7 +38,7 @@ const getCSSModulesLocalIdentName = (
     ? '[local]-[hash:base64:6]'
     : '[path][name]__[local]-[hash:base64:6]');
 
-export async function getLightningCSSLoaderOptions(
+export function getLightningCSSLoaderOptions(
   config: NormalizedEnvironmentConfig,
   targets: string[],
   minify: boolean,
