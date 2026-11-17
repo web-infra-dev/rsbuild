@@ -34,6 +34,10 @@ export function applySplitChunksRule(
     const normalizedOptions =
       options === true ? { react: true, router: true } : options;
 
+    if (!normalizedOptions.react && !normalizedOptions.router) {
+      return;
+    }
+
     const currentConfig =
       chain.optimization.splitChunks.values() as Rspack.Optimization['splitChunks'];
     if (typeof currentConfig !== 'object') {
@@ -61,10 +65,6 @@ export function applySplitChunksRule(
         test: /node_modules[\\/](?:react-router|react-router-dom|history|@remix-run[\\/]router)[\\/]/,
         priority: 0,
       };
-    }
-
-    if (!Object.keys(extraGroups).length) {
-      return;
     }
 
     chain.optimization.splitChunks({
