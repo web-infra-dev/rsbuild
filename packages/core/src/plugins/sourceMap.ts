@@ -56,9 +56,10 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       extract: SourceMapExtractOptions = {},
     ): ExtractRuleConfig | false => {
       const hasLegacyJs = 'js' in extract;
-      const hasFlatFields = (['test', 'include', 'exclude'] as const).some(
-        (key) => extract[key] !== undefined,
-      );
+      const hasFlatFields =
+        extract.test !== undefined ||
+        extract.include !== undefined ||
+        extract.exclude !== undefined;
 
       // TODO: remove legacy `extract.js` support in the next major release.
       // Keep `extract.js: false` as an explicit opt-out for merged configs.
