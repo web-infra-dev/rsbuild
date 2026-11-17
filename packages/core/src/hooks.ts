@@ -416,7 +416,7 @@ export const registerBuildHook = ({
 
   const { environmentList } = context;
 
-  const beforeCompile = async () =>
+  const beforeCompile = () =>
     context.hooks.onBeforeBuild.callBatch({
       bundlerConfigs: rspackConfigs,
       environments: context.environments,
@@ -424,7 +424,7 @@ export const registerBuildHook = ({
       isFirstCompile,
     });
 
-  const beforeEnvironmentCompile = async (buildIndex: number) => {
+  const beforeEnvironmentCompile = (buildIndex: number) => {
     const environment = environmentList[buildIndex];
     return context.hooks.onBeforeEnvironmentCompile.callBatch({
       environment: environment.name,
@@ -503,7 +503,7 @@ export const registerDevHook = ({
 
   const { environmentList } = context;
 
-  const beforeCompile = async () =>
+  const beforeCompile = () =>
     context.hooks.onBeforeDevCompile.callBatch({
       bundlerConfigs,
       environments: context.environments,
@@ -511,7 +511,7 @@ export const registerDevHook = ({
       isWatch: true,
     });
 
-  const beforeEnvironmentCompile = async (buildIndex: number) => {
+  const beforeEnvironmentCompile = (buildIndex: number) => {
     const environment = environmentList[buildIndex];
     return context.hooks.onBeforeEnvironmentCompile.callBatch({
       environment: environment.name,
