@@ -21,7 +21,7 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-然后在 `Select framework` 时选择 `Solid` 即可。
+在 `Select framework` 时选择 `Solid`，然后选择 Solid 2 模板。你也可以选择 Solid 1 模板。
 
 ## 全栈框架 \{#full-stack-frameworks}
 
@@ -49,21 +49,15 @@ import { PackageManagerTabs } from '@theme';
 
 ## 在已有项目中使用 Solid
 
-要编译 Solid 组件，需注册 Rsbuild 的 [Solid 插件](/plugins/list/plugin-solid)，插件会自动添加 Solid 构建所需的配置。
-
-例如，在 Rsbuild 配置中注册：
+在已有的 Solid v2 项目中，安装 [Solid 插件](/plugins/list/plugin-solid#solid-v2)，然后在 Rsbuild 配置中注册：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 
 export default defineConfig({
-  plugins: [
-    pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
-    }),
-    pluginSolid(),
-  ],
+  plugins: [pluginSolid()],
 });
 ```
+
+如果你使用 Solid v1，请参阅 [Solid v1 配置](/plugins/list/plugin-solid#solid-v1)。

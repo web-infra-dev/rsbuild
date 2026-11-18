@@ -44,11 +44,13 @@ This is the minimal configuration used by the [Rsbuild React example](https://gi
 
 ### Solid
 
+The following steps apply to TanStack Start projects using Solid v1.
+
 Remove Vite and its Solid plugin, then install the Rsbuild equivalents:
 
 <PackageManagerTabs command="remove vite vite-plugin-solid" />
 
-<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid@1 -D" />
 
 Keep `@tanstack/solid-start` and `@tanstack/solid-router` installed.
 

@@ -44,11 +44,13 @@ export default defineConfig({
 
 ### Solid
 
+以下步骤适用于使用 Solid v1 的 TanStack Start 项目。
+
 移除 Vite 及其 Solid 插件，然后安装对应的 Rsbuild 依赖：
 
 <PackageManagerTabs command="remove vite vite-plugin-solid" />
 
-<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid@1 -D" />
 
 请保留 `@tanstack/solid-start` 和 `@tanstack/solid-router`。
 
