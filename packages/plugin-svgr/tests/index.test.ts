@@ -116,18 +116,13 @@ describe('svgr', () => {
         'utf8',
       ),
     ) as {
-      exports: {
-        '.': {
-          default: string;
-          require?: string;
-          types: string;
-        };
-      };
+      type: string;
+      exports: Record<string, string>;
     };
 
-    expect(packageJson.exports['.']).toEqual({
-      types: './dist/index.d.ts',
-      default: './dist/index.js',
+    expect(packageJson.type).toBe('module');
+    expect(packageJson.exports).toEqual({
+      '.': './dist/index.js',
     });
   });
 });

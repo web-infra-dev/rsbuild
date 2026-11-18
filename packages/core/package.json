@@ -14,10 +14,7 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
+    ".": "./dist/index.js",
     "./jiti": {
       "types": "./compiled/jiti/lib/jiti.d.mts",
       "default": "./compiled/jiti/lib/jiti.mjs"
