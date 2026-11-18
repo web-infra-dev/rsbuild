@@ -1,3 +1,5 @@
+import type { TransformOptions } from '@solidjs/compiler';
+
 /**
  * Options passed to the Solid JSX compiler.
  *
@@ -20,6 +22,11 @@ export type SolidPresetOptions = {
    * Defaults to the resolved value of the top-level `dev` option.
    */
   dev?: boolean;
+  /**
+   * Include component names, binding names, and source locations in compiler output.
+   * Defaults to the compiler's `dev` setting.
+   */
+  sourceNames?: TransformOptions['sourceNames'];
   /**
    * The output mode of the compiler.
    * - `dom` generates DOM operations.
