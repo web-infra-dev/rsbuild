@@ -12,7 +12,8 @@ export type PluginSolidOptions = {
   compiler?: SolidCompiler;
   /**
    * Additional file extensions to compile as Solid JSX, including the leading dot.
-   * `.mtsx` and `.ctsx` are parsed as TypeScript.
+   * The standard JSX and TSX extensions, including their ESM and CommonJS variants,
+   * are supported by default.
    * @default []
    */
   extensions?: string[];
@@ -49,21 +50,23 @@ export type PluginSolidOptions = {
   solid?: SolidPresetOptions;
 };
 
-const DEFAULT_SCRIPT_REGEX = /(?:\.jsx|\.tsx)$/i;
-
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
   const { compiler = 'native', dev, solid, ssr } = options;
-  const extensions = options.extensions ?? [];
-  const scriptRegex = extensions.length
-    ? new RegExp(
-        `(?:\\.jsx|\\.tsx|${extensions
-          .map((ext) => ext.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-          .join('|')})$`,
-        'i',
-      )
-    : DEFAULT_SCRIPT_REGEX;
+  const extensions = [
+    '.mjsx',
+    '.cjsx',
+    '.mtsx',
+    '.ctsx',
+    ...(options.extensions ?? []),
+  ];
+  const scriptRegex = new RegExp(
+    `(?:\\.jsx|\\.tsx|${extensions
+      .map((ext) => ext.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('|')})$`,
+    'i',
+  );
   const isDevModeEnabled = (mode: RsbuildMode) => dev ?? mode === 'development';
 
   return {
@@ -110,12 +113,10 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
 
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
-          if (extensions.length) {
-            const test = jsRule.get('test');
-            jsRule.test(test ? { or: [test, scriptRegex] } : scriptRegex);
-            jsRule.include.add(scriptRegex);
-            chain.resolve.extensions.merge(extensions);
-          }
+          const test = jsRule.get('test');
+          jsRule.test(test ? [test, scriptRegex] : scriptRegex);
+          jsRule.include.add(scriptRegex);
+          chain.resolve.extensions.merge(extensions);
           const solidRules = [
             { rule: jsMainRule },
             {

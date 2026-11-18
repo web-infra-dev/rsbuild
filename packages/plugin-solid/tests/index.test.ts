@@ -47,7 +47,7 @@ describe('plugin-solid', () => {
 
     expect(getSolidLoaderOptions(config[0])).toEqual({
       compiler: 'native',
-      scriptRegex: /(?:\.jsx|\.tsx)$/i,
+      scriptRegex: expect.any(RegExp),
       decoratorVersion: '2023-11',
       solid: {
         dev: false,

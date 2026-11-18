@@ -7,7 +7,7 @@ const extensions = ['.mjsx', '.cjsx', '.mtsx', '.ctsx', '.solid'];
 
 for (const compiler of ['native', 'babel'] as const) {
   const config = {
-    plugins: [pluginSolid({ compiler, extensions })],
+    plugins: [pluginSolid({ compiler, extensions: ['.solid'] })],
   };
 
   test(`should build additional Solid extensions with ${compiler}`, async ({
