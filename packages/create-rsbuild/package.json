@@ -25,7 +25,7 @@
     "bin.js"
   ],
   "scripts": {
-    "build": "rs lib --syntax es2023",
+    "build": "rs lib --syntax es2023 --exports",
     "dev": "rs lib --syntax es2023 -w",
     "start": "node ./dist/index.js"
   },

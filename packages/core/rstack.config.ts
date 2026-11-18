@@ -106,6 +106,19 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
 };
 
 rstack.lib({
+  exports: {
+    include: ['index'],
+    custom: {
+      './jiti': {
+        types: './compiled/jiti/lib/jiti.d.mts',
+        default: './compiled/jiti/lib/jiti.mjs',
+      },
+      './types': {
+        types: './types.d.ts',
+      },
+      './package.json': './package.json',
+    },
+  },
   source: {
     define,
   },

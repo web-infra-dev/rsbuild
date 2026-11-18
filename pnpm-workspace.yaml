@@ -13,6 +13,9 @@ packages:
 
 catalogMode: prefer
 
+overrides:
+  '@rslib/core': 1.1.0-beta.0
+
 cleanupUnusedCatalogs: true
 
 catalog:

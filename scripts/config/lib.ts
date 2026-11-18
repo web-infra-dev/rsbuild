@@ -1,4 +1,4 @@
-import type { LibConfig, Rsbuild } from 'rstack/lib';
+import type { LibConfig, Rsbuild, RslibConfig } from 'rstack/lib';
 
 export const nodeMinifyConfig = {
   jsOptions: {
@@ -23,7 +23,7 @@ export const runtimeModeConfig: LibConfig = {
   },
 };
 
-export const esmConfig: LibConfig = {
+export const esmLibConfig: LibConfig = {
   ...runtimeModeConfig,
   syntax: 'es2023',
   dts: {
@@ -31,5 +31,12 @@ export const esmConfig: LibConfig = {
   },
   output: {
     minify: nodeMinifyConfig,
+  },
+};
+
+export const esmConfig: RslibConfig = {
+  ...esmLibConfig,
+  exports: {
+    include: ['index'],
   },
 };
