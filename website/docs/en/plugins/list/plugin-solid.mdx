@@ -111,7 +111,7 @@ pluginSolid({
 
 ### dev
 
-Controls Solid's development runtime and compiler transforms. With `dev: false`, the dev server disables Solid Refresh and defaults to the `production` export condition for all packages. Set `dev: true` to enable Solid's development runtime and transforms in production builds.
+Controls Solid's development runtime and compiler transforms. With `dev: false`, the dev server disables Solid Refresh and loads the production build of Solid. For other packages that provide separate development and production builds, it also loads the production build by default. Set `dev: true` to enable Solid's development runtime and transforms in production builds.
 
 If `solid.dev` is explicitly configured, it overrides the `dev` setting for compiler transforms without affecting runtime resolution.
 

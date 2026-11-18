@@ -111,7 +111,7 @@ pluginSolid({
 
 ### dev
 
-控制 Solid 的开发环境运行时和编译转换。设置 `dev: false` 时，开发服务器会禁用 Solid Refresh，并默认按 `production` 条件解析所有包。设置 `dev: true` 可以在生产构建中启用 Solid 的开发环境运行时和编译转换。
+控制 Solid 的开发环境运行时和编译转换。设置 `dev: false` 时，开发服务器会禁用 Solid Refresh，并加载 Solid 的生产版本。如果其他依赖也区分开发版本和生产版本，默认也会加载它们的生产版本。设置 `dev: true` 可以在生产构建中启用 Solid 的开发环境运行时和编译转换。
 
 如果显式配置 `solid.dev`，它会覆盖编译转换的 `dev` 设置，但不会影响运行时解析。
 
