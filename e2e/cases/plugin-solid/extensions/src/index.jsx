@@ -4,7 +4,7 @@ import Cjsx from './cjsx.cjsx';
 import Ctsx from './ctsx.ctsx';
 import Mjsx from './mjsx.mjsx';
 import Mtsx from './mtsx.mtsx';
-import Custom from './solid';
+import Custom from './solid.solid';
 import raw from './raw.solid?raw';
 
 function App() {

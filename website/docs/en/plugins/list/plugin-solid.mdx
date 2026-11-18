@@ -94,9 +94,11 @@ pluginSolid({
 
 ### extensions
 
-Additional file extensions to compile as Solid JSX. The plugin supports `.jsx`, `.tsx`, `.mjsx`, `.cjsx`, `.mtsx`, and `.ctsx` by default. Include the extension when importing files such as `./App.mtsx`. To omit the extension, list it in this option (including the leading dot).
+Additional file extensions to compile as Solid JSX, including the leading dot. The plugin supports `.jsx`, `.tsx`, `.mjsx`, `.cjsx`, `.mtsx`, and `.ctsx` by default.
 
 Custom extensions are parsed as JavaScript with JSX. This option applies to both JSX compilation and Solid Refresh.
+
+Use the full filename in imports such as `./App.mtsx` or `./App.solid`. To omit these extensions, configure Rsbuild's [resolve.extensions](/config/resolve/extensions).
 
 - **Type:** `string[]`
 - **Default:** `[]`
