@@ -1,9 +1,9 @@
 import { render } from '@solidjs/web';
 import { createSignal } from 'solid-js';
-import Cjsx from './cjsx';
-import Ctsx from './ctsx';
-import Mjsx from './mjsx';
-import Mtsx from './mtsx';
+import Cjsx from './cjsx.cjsx';
+import Ctsx from './ctsx.ctsx';
+import Mjsx from './mjsx.mjsx';
+import Mtsx from './mtsx.mtsx';
 import Custom from './solid';
 import raw from './raw.solid?raw';
 

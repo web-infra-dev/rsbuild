@@ -94,7 +94,7 @@ pluginSolid({
 
 ### extensions
 
-需要作为 Solid JSX 编译的额外文件扩展名。插件默认支持 `.jsx`、`.tsx`、`.mjsx`、`.cjsx`、`.mtsx` 和 `.ctsx`。扩展名必须以点开头，并会添加到模块解析配置中，因此导入时可以省略扩展名。
+需要作为 Solid JSX 编译的额外文件扩展名。插件默认支持 `.jsx`、`.tsx`、`.mjsx`、`.cjsx`、`.mtsx` 和 `.ctsx`。导入 `./App.mtsx` 这类文件时需带上扩展名。要省略扩展名，可以在此选项中列出对应的扩展名（含开头的点）。
 
 自定义扩展名按 JavaScript JSX 解析。此选项同时作用于 JSX 编译和 Solid Refresh。
 

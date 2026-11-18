@@ -94,7 +94,7 @@ pluginSolid({
 
 ### extensions
 
-Additional file extensions to compile as Solid JSX. The plugin supports `.jsx`, `.tsx`, `.mjsx`, `.cjsx`, `.mtsx`, and `.ctsx` by default. Extensions must include the leading dot and are also added to module resolution, so imports can omit them.
+Additional file extensions to compile as Solid JSX. The plugin supports `.jsx`, `.tsx`, `.mjsx`, `.cjsx`, `.mtsx`, and `.ctsx` by default. Include the extension when importing files such as `./App.mtsx`. To omit the extension, list it in this option (including the leading dot).
 
 Custom extensions are parsed as JavaScript with JSX. This option applies to both JSX compilation and Solid Refresh.
 
