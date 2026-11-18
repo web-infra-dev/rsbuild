@@ -30,6 +30,22 @@ test('should build basic solid component properly', async ({ page, build }) => {
   await expect(button).toHaveText('count: 1');
 });
 
+test('should use the production Solid runtime without Solid Refresh when dev is false', async ({
+  devOnly,
+}) => {
+  const rsbuild = await devOnly({
+    cwd: path.join(import.meta.dirname, 'basic'),
+    config: { plugins: [pluginSolid({ dev: false })] },
+  });
+  const stats = await rsbuild.server!.environments.web.getStats();
+  const modules = stats.toJson({ all: false, modules: true }).modules;
+  const names = modules?.map((mod) => mod.name).join('\n');
+
+  expect(names).toContain('solid-js/dist/solid.js');
+  expect(names).toContain('@solidjs/web/dist/web.js');
+  expect(names).not.toContain('solid-js/dist/refresh');
+});
+
 test('should build solid component with typescript', async ({
   page,
   build,

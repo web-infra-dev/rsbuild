@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { RsbuildMode, RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildMode, RsbuildPlugin, Rspack } from '@rsbuild/core';
 import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 export type { SolidCompiler, SolidPresetOptions } from './types.js';
@@ -49,9 +49,34 @@ export type PluginSolidOptions = {
   solid?: SolidPresetOptions;
 };
 
+const SOLID_RUNTIME_REQUEST =
+  /^(?:solid-js|@solidjs\/(?:web|signals))(?:\/[^?#]*)?(?=[?#]|$)/;
 const DEFAULT_SCRIPT_REGEX = /(?:\.jsx|\.tsx)$/i;
 
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
+
+function applyProductionRuntime(compiler: Rspack.Compiler): void {
+  compiler.hooks.normalModuleFactory.tap(PLUGIN_SOLID_NAME, (factory) => {
+    // Rspack has expanded '...' to include the mode and target conditions.
+    const resolver = factory.getResolver('normal', {
+      dependencyType: 'esm',
+      conditionNames: compiler.options.resolve.conditionNames?.map(
+        (condition) => (condition === 'development' ? 'production' : condition),
+      ),
+    });
+
+    factory.hooks.resolve.tap(PLUGIN_SOLID_NAME, (data) => {
+      const match = SOLID_RUNTIME_REQUEST.exec(data.request);
+      if (match) {
+        const [specifier] = match;
+        const resolved = resolver.resolveSync({}, data.context, specifier);
+        if (resolved) {
+          data.request = resolved + data.request.slice(specifier.length);
+        }
+      }
+    });
+  });
+}
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
   const { compiler = 'native', dev, solid, ssr } = options;
@@ -89,10 +114,17 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
           const environmentConfig = environment.config;
           const useDevMode = isDevModeEnabled(environmentConfig.mode);
           const usingHMR =
+            dev !== false &&
             options.refresh?.disabled !== true &&
             !isProd &&
             environmentConfig.dev.hmr &&
             target === 'web';
+
+          if (dev === false && environmentConfig.mode === 'development') {
+            chain.plugin('solid-production-runtime').use({
+              apply: applyProductionRuntime,
+            });
+          }
 
           const solidOptions: SolidPresetOptions = {
             generate: ssr && target === 'node' ? 'ssr' : 'dom',
