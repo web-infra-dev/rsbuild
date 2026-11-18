@@ -95,7 +95,7 @@ catalog:
   'memfs': '4.80.1'
   'mrmime': '^2.0.1'
   'open': '^11.0.4'
-  'path-serializer': '0.7.0'
+  'path-serializer': '0.8.1'
   'playwright': '1.65.1'
   'postcss': '^8.5.33'
   'postcss-load-config': '6.0.1'
