@@ -113,6 +113,8 @@ pluginSolid({
 
 Whether to enable Solid's development runtime and development-only compiler transforms. Set it to `false` to disable both behaviors in development mode, or set it to `true` to enable them in production mode.
 
+With `dev: false`, the dev server disables Solid Refresh and uses the `production` export condition by default for all packages in the environment. Explicitly configured conditions are preserved.
+
 If `solid.dev` is explicitly configured, it overrides the `dev` setting for compiler transforms without affecting runtime resolution.
 
 - **Type:** `boolean`

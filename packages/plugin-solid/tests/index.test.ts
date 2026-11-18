@@ -151,9 +151,9 @@ describe('plugin-solid', () => {
         plugins: [pluginSolid({ dev: false })],
       },
     });
-    const config = await rsbuild.initConfigs();
+    const config = await rsbuild.initConfigs({ action: 'dev' });
 
-    expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
+    expect(config[0].resolve?.conditionNames).toContain('production');
     expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
       '"dev":false',
     );
