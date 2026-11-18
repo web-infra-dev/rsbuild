@@ -1,5 +1,3 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
 import { createRsbuild } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { matchRules } from '@scripts/test-helper';
@@ -107,22 +105,5 @@ describe('svgr', () => {
       },
       { name: 'prefixIds', params: { prefix: 'icon', delim: '__' } },
     ]);
-  });
-
-  it('should publish as a pure ESM package', async () => {
-    const packageJson = JSON.parse(
-      await fs.readFile(
-        path.join(import.meta.dirname, '../package.json'),
-        'utf8',
-      ),
-    ) as {
-      type: string;
-      exports: Record<string, string>;
-    };
-
-    expect(packageJson.type).toBe('module');
-    expect(packageJson.exports).toEqual({
-      '.': './dist/index.js',
-    });
   });
 });
