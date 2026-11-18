@@ -44,13 +44,35 @@ This is the minimal configuration used by the [Rsbuild React example](https://gi
 
 ### Solid
 
-Remove Vite and its Solid plugin, then install the Rsbuild equivalents:
+Remove Vite and its Solid plugin:
 
 <PackageManagerTabs command="remove vite vite-plugin-solid" />
 
-<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+Choose the configuration for your project's Solid version below.
 
-Keep `@tanstack/solid-start` and `@tanstack/solid-router` installed.
+#### Solid v2
+
+For projects already using Solid v2, install the Rsbuild dependencies:
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-solid -D" />
+
+Replace `vite.config.ts` with `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+import { tanstackStart } from '@tanstack/solid-start/plugin/rsbuild';
+
+export default defineConfig({
+  plugins: [pluginSolid(), tanstackStart()],
+});
+```
+
+#### Solid v1
+
+Install version 1.x of the Solid plugin along with the Babel plugin:
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-babel @rsbuild/plugin-solid@1 -D" />
 
 Replace `vite.config.ts` with `rsbuild.config.ts`:
 

@@ -21,7 +21,7 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then select `Solid` when prompted to "Select framework".
+Select `Solid` when prompted to "Select framework", then choose a template.
 
 ## Full-stack frameworks
 
@@ -49,21 +49,15 @@ To migrate a TanStack Start project from Vite, see [TanStack Start migration](/g
 
 ## Use Solid in an existing project
 
-To compile Solid components, you need to register the Rsbuild [Solid plugin](/plugins/list/plugin-solid). The plugin will automatically add the necessary configuration for Solid builds.
-
-For example, register the plugin in Rsbuild config:
+In an existing Solid v2 project, install the [Solid plugin](/plugins/list/plugin-solid#solid-v2), then register it in your Rsbuild config:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 
 export default defineConfig({
-  plugins: [
-    pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
-    }),
-    pluginSolid(),
-  ],
+  plugins: [pluginSolid()],
 });
 ```
+
+If you use Solid v1, see the [Solid v1 setup](/plugins/list/plugin-solid#solid-v1).

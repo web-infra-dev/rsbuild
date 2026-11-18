@@ -12,19 +12,31 @@ Solid 插件为 Rsbuild 提供 Solid JSX 编译、热更新和服务端渲染支
 
 ## 快速开始
 
-以下配置适用于 Solid v1。使用 Solid v2 时，请参阅 [Solid v2](#solid-v2)。
-
-### 安装插件
-
-执行以下命令安装插件：
-
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+### Solid v2
 
-### 注册插件
+在 Solid v2 项目中，安装 Solid 插件：
 
-在 Rsbuild 配置中注册插件：
+<PackageManagerTabs command="add @rsbuild/plugin-solid -D" />
+
+然后在 Rsbuild 配置中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default {
+  plugins: [pluginSolid()],
+};
+```
+
+插件默认使用原生编译器处理 JSX，无需额外配置 Babel。
+
+### Solid v1
+
+如果你的项目使用 Solid v1，请安装 1.x 版本的 Solid 插件和 [Babel 插件](/plugins/list/plugin-babel)：
+
+<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid@1 -D" />
 
 ```ts title="rsbuild.config.ts"
 import { pluginBabel } from '@rsbuild/plugin-babel';
@@ -37,31 +49,6 @@ export default {
     }),
     pluginSolid(),
   ],
-};
-```
-
-注册后，即可进行 Solid 开发。
-
-:::tip
-由于 Solid 的 JSX 依赖 Babel 进行编译，因此你需要额外添加 [Babel 插件](/plugins/list/plugin-babel)。
-
-Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `include` 来匹配 `.jsx` 和 `.tsx` 文件，从而减少 Babel 带来的性能开销。
-
-:::
-
-## Solid v2
-
-Solid v2 支持目前处于候选发布（RC）阶段，要求 `solid-js` 和 `@solidjs/web` 为 `2.0.0` 或更高版本。默认无需安装 `@rsbuild/plugin-babel`。
-
-安装并注册 `@rsbuild/plugin-solid` 的 RC 版本：
-
-<PackageManagerTabs command="add @rsbuild/plugin-solid@rc -D" />
-
-```ts title="rsbuild.config.ts"
-import { pluginSolid } from '@rsbuild/plugin-solid';
-
-export default {
-  plugins: [pluginSolid()],
 };
 ```
 

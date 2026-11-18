@@ -12,19 +12,31 @@ The Solid plugin adds Solid JSX compilation, hot module replacement, and server-
 
 ## Quick start
 
-The following setup is for Solid v1. For Solid v2, see [Solid v2](#solid-v2).
-
-### Install plugin
-
-Run the following command:
-
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+### Solid v2
 
-### Register plugin
+For a Solid v2 project, install the Solid plugin:
 
-Register the plugin in Rsbuild config:
+<PackageManagerTabs command="add @rsbuild/plugin-solid -D" />
+
+Then register it in your Rsbuild config:
+
+```ts title="rsbuild.config.ts"
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default {
+  plugins: [pluginSolid()],
+};
+```
+
+The plugin uses the native compiler for JSX by default, so no additional Babel setup is needed.
+
+### Solid v1
+
+If your project uses Solid v1, install version 1.x of the Solid plugin and the [Babel plugin](/plugins/list/plugin-babel):
+
+<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid@1 -D" />
 
 ```ts title="rsbuild.config.ts"
 import { pluginBabel } from '@rsbuild/plugin-babel';
@@ -37,31 +49,6 @@ export default {
     }),
     pluginSolid(),
   ],
-};
-```
-
-After registration, you can develop Solid directly.
-
-:::tip
-Since the Solid JSX relies on Babel for compilation, you need to additionally add the [Babel plugin](/plugins/list/plugin-babel).
-
-Babel compilation will introduce extra overhead, in the example above, we use `include` to match `.jsx` and `.tsx` files, thereby reducing the performance cost brought by Babel.
-
-:::
-
-## Solid v2
-
-Solid v2 support is currently in the release candidate (RC) stage and requires `solid-js` and `@solidjs/web` version `2.0.0` or later. The default setup does not require `@rsbuild/plugin-babel`.
-
-Install and register the RC version of `@rsbuild/plugin-solid`:
-
-<PackageManagerTabs command="add @rsbuild/plugin-solid@rc -D" />
-
-```ts title="rsbuild.config.ts"
-import { pluginSolid } from '@rsbuild/plugin-solid';
-
-export default {
-  plugins: [pluginSolid()],
 };
 ```
 
