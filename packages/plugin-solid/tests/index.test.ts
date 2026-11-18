@@ -1,4 +1,9 @@
-import { createRsbuild, type RsbuildConfig, type Rspack } from '@rsbuild/core';
+import {
+  createRsbuild,
+  type RsbuildConfig,
+  rspack,
+  type Rspack,
+} from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
 import { pluginSolid } from '../src';
 
@@ -153,7 +158,9 @@ describe('plugin-solid', () => {
     });
     const config = await rsbuild.initConfigs({ action: 'dev' });
 
-    expect(config[0].resolve?.conditionNames).toContain('production');
+    expect(rspack(config[0]).options.resolve.conditionNames).toContain(
+      'production',
+    );
     expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
       '"dev":false',
     );

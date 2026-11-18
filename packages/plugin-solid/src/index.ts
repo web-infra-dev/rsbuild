@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { RsbuildMode, RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildMode, RsbuildPlugin, Rspack } from '@rsbuild/core';
 import type { SolidCompiler, SolidPresetOptions } from './types.js';
 
 export type { SolidCompiler, SolidPresetOptions } from './types.js';
@@ -53,6 +53,35 @@ const DEFAULT_SCRIPT_REGEX = /(?:\.jsx|\.tsx)$/i;
 
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
+function useProductionConditions(compiler: Rspack.Compiler): void {
+  const configured = compiler.options.resolve;
+  const base = configured.conditionNames ?? ['...'];
+  if (compiler.options.mode !== 'development' || !base.includes('...')) {
+    return;
+  }
+
+  // Rspack has filled in the target and dependency defaults by this point.
+  compiler.hooks.afterEnvironment.tap(PLUGIN_SOLID_NAME, () => {
+    const { resolve } = compiler.options;
+    const update = (options: Rspack.ResolveOptions, explicit?: string[]) => {
+      if (explicit && !explicit.includes('...')) return;
+      if (!options.conditionNames?.includes('development')) return;
+
+      const names = new Set(options.conditionNames);
+      names.add('production');
+      if (!base.includes('development') && !explicit?.includes('development')) {
+        names.delete('development');
+      }
+      options.conditionNames = [...names];
+    };
+
+    update(resolve);
+    for (const [type, options] of Object.entries(resolve.byDependency ?? {})) {
+      update(options, configured.byDependency?.[type]?.conditionNames);
+    }
+  });
+}
+
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
   const { compiler = 'native', dev, solid, ssr } = options;
   const extensions = options.extensions ?? [];
@@ -84,24 +113,6 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
         ];
       });
 
-      if (dev === false) {
-        api.modifyRspackConfig((config, { rspack }) => {
-          if (api.context.action !== 'dev' || config.mode !== 'development') {
-            return;
-          }
-
-          // Expand '...' with production resolve defaults for this target and dependency type.
-          const options = rspack.config.getNormalizedRspackOptions({
-            mode: 'production',
-            context: config.context,
-            target: config.target,
-            resolve: config.resolve,
-          });
-          rspack.config.applyRspackOptionsDefaults(options);
-          config.resolve = options.resolve;
-        });
-      }
-
       api.modifyBundlerChain(
         (chain, { CHAIN_ID, environment, isProd, target }) => {
           const environmentConfig = environment.config;
@@ -112,6 +123,12 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             !isProd &&
             environmentConfig.dev.hmr &&
             target === 'web';
+
+          if (dev === false && api.context.action === 'dev') {
+            chain.plugin('solid-production-conditions').use({
+              apply: useProductionConditions,
+            });
+          }
 
           const solidOptions: SolidPresetOptions = {
             generate: ssr && target === 'node' ? 'ssr' : 'dom',
