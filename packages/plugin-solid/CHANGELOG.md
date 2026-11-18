@@ -1,5 +1,30 @@
 # @rsbuild/plugin-solid
 
+## 2.0.0 (2026-11-18)
+
+### New features
+
+- feat(plugin-solid): support ESM and CommonJS JSX extensions by default by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8932
+- feat(create-rsbuild): use TypeScript 7 in supported templates by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8696
+
+### Performance
+
+- perf(plugin-solid): reuse the default script pattern by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8908
+
+### Bug fixes
+
+- fix(plugin-solid): add the sourceNames option to SolidPresetOptions by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8933
+- fix(create-rsbuild): group Solid versions under one framework by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8694
+
+### Other changes
+
+- chore(deps): upgrade Solid v2 dependencies to stable by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8928
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8651
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8683
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8730
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8820
+- chore(deps): update all patch dependencies by @renovate in https://github.com/web-infra-dev/rsbuild/pull/8856
+
 ## 2.0.0-rc.1 (2026-10-06)
 
 ### Bug fixes
