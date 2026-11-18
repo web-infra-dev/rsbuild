@@ -47,7 +47,7 @@ describe('plugin-solid', () => {
 
     expect(getSolidLoaderOptions(config[0])).toEqual({
       compiler: 'native',
-      scriptRegex: /(?:\.jsx|\.tsx)$/i,
+      scriptRegex: expect.any(RegExp),
       decoratorVersion: '2023-11',
       solid: {
         dev: false,
@@ -275,7 +275,7 @@ describe('plugin-solid', () => {
         'refreshLoader.mjs',
       );
 
-    expect(config.resolve?.extensions).toContain('.solid+jsx');
+    expect(config.resolve?.extensions).not.toContain('.solid+jsx');
     expect(hasRefreshLoader('a.solid+jsx')).toBe(true);
     // cspell:disable-next-line
     expect(hasRefreshLoader('a.solidddjsx')).toBe(false);

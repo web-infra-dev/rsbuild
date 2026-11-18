@@ -94,9 +94,7 @@ pluginSolid({
 
 ### extensions
 
-Additional file extensions to compile as Solid JSX. The default `.jsx` and `.tsx` extensions are always included. Extensions must include the leading dot and are also added to module resolution, so imports can omit them.
-
-`.mtsx` and `.ctsx` files are parsed as TypeScript with JSX; other additional extensions are parsed as JavaScript with JSX. This option applies to both JSX compilation and Solid Refresh.
+The plugin supports `.jsx`, `.tsx`, `.mjsx`, `.cjsx`, `.mtsx`, and `.ctsx` files by default. If your project uses other file extensions, add them to `extensions`. Include the leading dot, as in `.solid`.
 
 - **Type:** `string[]`
 - **Default:** `[]`
@@ -105,9 +103,13 @@ Additional file extensions to compile as Solid JSX. The default `.jsx` and `.tsx
 
 ```ts
 pluginSolid({
-  extensions: ['.mjsx', '.cjsx', '.mtsx', '.ctsx', '.solid'],
+  extensions: ['.solid'],
 });
 ```
+
+With this configuration, the plugin compiles `.solid` files as JavaScript with JSX and supports Solid Refresh for those files during development.
+
+When importing files like `App.mtsx` or `App.solid`, include the extension, as in `import App from './App.solid'`. To omit an extension in imports, add it to Rsbuild's [resolve.extensions](/config/resolve/extensions).
 
 ### dev
 

@@ -94,9 +94,7 @@ pluginSolid({
 
 ### extensions
 
-需要作为 Solid JSX 编译的额外文件扩展名。默认的 `.jsx` 和 `.tsx` 扩展名始终保留。扩展名必须以点开头，并会添加到模块解析配置中，因此导入时可以省略扩展名。
-
-`.mtsx` 和 `.ctsx` 文件按 TypeScript JSX 解析，其他额外扩展名按 JavaScript JSX 解析。此选项同时作用于 JSX 编译和 Solid Refresh。
+插件默认支持 `.jsx`、`.tsx`、`.mjsx`、`.cjsx`、`.mtsx` 和 `.ctsx` 文件。如果项目使用其他扩展名，可以将它们添加到 `extensions` 中。每个扩展名都要以点开头，例如 `.solid`。
 
 - **类型：** `string[]`
 - **默认值：** `[]`
@@ -105,9 +103,13 @@ pluginSolid({
 
 ```ts
 pluginSolid({
-  extensions: ['.mjsx', '.cjsx', '.mtsx', '.ctsx', '.solid'],
+  extensions: ['.solid'],
 });
 ```
+
+这样，插件就会把 `.solid` 文件作为带 JSX 的 JavaScript 编译，并在开发时支持 Solid Refresh。
+
+导入 `App.mtsx` 或 `App.solid` 时，请写上扩展名，例如 `import App from './App.solid'`。如果想省略扩展名，可以将对应的扩展名添加到 Rsbuild 的 [resolve.extensions](/config/resolve/extensions) 中。
 
 ### dev
 
