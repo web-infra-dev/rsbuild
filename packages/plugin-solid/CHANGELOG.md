@@ -1,5 +1,20 @@
 # @rsbuild/plugin-solid
 
+## 2.1.0 (2026-11-19)
+
+### Refactor
+
+- refactor(plugin-solid): use solid-loader for JSX and refresh by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8939
+- refactor(plugin-solid): remove redundant include from the refresh rule by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8940
+
+### Document
+
+- docs: update Solid setup for v2 stable by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8936
+
+### Other changes
+
+- chore: generate package exports with Rslib by @chenjiahan in https://github.com/web-infra-dev/rsbuild/pull/8934
+
 ## 2.0.0 (2026-11-18)
 
 ### New features
