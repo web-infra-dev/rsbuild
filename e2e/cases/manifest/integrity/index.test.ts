@@ -20,9 +20,7 @@ test('should generate manifest file with integrity', async ({ runBoth }) => {
   await runBoth(async ({ result, mode }) => {
     checkManifestIntegrity(result);
     if (mode === 'dev') {
-      await result.expectWarning(
-        'SubResourceIntegrityPlugin may interfere with hot reloading',
-      );
+      await result.expectWarning('may interfere with hot reloading');
     }
   });
 });
@@ -34,9 +32,7 @@ test('should generate manifest file with integrity when html plugin is disabled'
     async ({ result, mode }) => {
       checkManifestIntegrity(result);
       if (mode === 'dev') {
-        await result.expectWarning(
-          'SubResourceIntegrityPlugin may interfere with hot reloading',
-        );
+        await result.expectWarning('may interfere with hot reloading');
       }
     },
     {

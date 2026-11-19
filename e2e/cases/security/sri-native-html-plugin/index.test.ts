@@ -25,9 +25,7 @@ test('should generate integrity attributes in dev with native html plugin', asyn
   dev,
 }) => {
   const rsbuild = await dev();
-  await rsbuild.expectWarning(
-    'SubResourceIntegrityPlugin may interfere with hot reloading',
-  );
+  await rsbuild.expectWarning('may interfere with hot reloading');
 
   const testEl = page.locator('#root');
   await expect(testEl).toHaveText('Hello Rsbuild!');

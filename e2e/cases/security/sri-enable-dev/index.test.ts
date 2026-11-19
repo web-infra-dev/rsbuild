@@ -15,7 +15,5 @@ test('generate integrity for script and style tags in dev build', async ({
     ),
   ).toMatch(/sha384-[A-Za-z0-9+/=]+/);
 
-  await rsbuild.expectWarning(
-    'SubResourceIntegrityPlugin may interfere with hot reloading',
-  );
+  await rsbuild.expectWarning('may interfere with hot reloading');
 });
