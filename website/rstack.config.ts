@@ -155,6 +155,7 @@ define.doc({
       rspack: {
         experiments: {
           nativeWatcher: true,
+          runtimeMode: 'rspack',
         },
       },
     },
