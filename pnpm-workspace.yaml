@@ -13,9 +13,6 @@ packages:
 
 catalogMode: prefer
 
-overrides:
-  '@rslib/core': 1.1.0-beta.0
-
 cleanupUnusedCatalogs: true
 
 catalog:
@@ -119,7 +116,7 @@ catalog:
   'rspack-merge': '1.0.1'
   'rspack-vue-loader': '^17.7.2'
   'rspress-plugin-font-open-sans': '^1.0.4'
-  'rstack': '^0.9.2'
+  'rstack': '^0.9.3'
   'sass': '^1.108.2'
   'sass-embedded': '^1.108.2'
   'sass-loader': '^16.0.8'
