@@ -26,15 +26,11 @@
     "test": "rs test"
   },
   "dependencies": {
-    "@babel/core": "catalog:",
-    "@jridgewell/remapping": "catalog:",
-    "@solidjs/babel-plugin": "catalog:",
-    "@solidjs/compiler": "catalog:"
+    "solid-loader": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "@types/babel__core": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {

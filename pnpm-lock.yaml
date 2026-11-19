@@ -249,12 +249,6 @@ catalogs:
     '@rstest/playwright':
       specifier: ^0.12.6
       version: 0.12.6
-    '@solidjs/babel-plugin':
-      specifier: 2.0.0
-      version: 2.0.0
-    '@solidjs/compiler':
-      specifier: 2.0.0
-      version: 2.0.0
     '@solidjs/web':
       specifier: ^2.0.0
       version: 2.0.0
@@ -480,6 +474,9 @@ catalogs:
     solid-js:
       specifier: ^2.0.0
       version: 2.0.0
+    solid-loader:
+      specifier: ^0.1.1
+      version: 0.1.1
     stacktrace-parser:
       specifier: ^0.1.11
       version: 0.1.11
@@ -1352,18 +1349,9 @@ importers:
 
   packages/plugin-solid:
     dependencies:
-      '@babel/core':
+      solid-loader:
         specifier: 'catalog:'
-        version: 7.29.13(supports-color@8.1.1)
-      '@jridgewell/remapping':
-        specifier: 'catalog:'
-        version: 2.3.5
-      '@solidjs/babel-plugin':
-        specifier: 'catalog:'
-        version: 2.0.0(@babel/core@7.29.13)
-      '@solidjs/compiler':
-        specifier: 'catalog:'
-        version: 2.0.0
+        version: 0.1.1(@rspack/core@2.3.3)(@solidjs/web@2.0.0)(solid-js@2.0.0)(supports-color@8.1.1)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1371,9 +1359,6 @@ importers:
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
-      '@types/babel__core':
-        specifier: 'catalog:'
-        version: 7.20.5
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -5072,6 +5057,13 @@ packages:
   solid-js@2.0.0:
     resolution: {integrity: sha512-9zN4uH2OQeQAYbF4BmIzoaa+L5Hb8Dp6kkP6ZXobHQ1FZVICdmzREPDVDBJY7umzdAE8D6zbFfWhxGtagkyslA==}
     engines: {node: '>=22.12.0'}
+
+  solid-loader@0.1.1:
+    resolution: {integrity: sha512-VMQiDUXRbqj7CnqRgbSKb0lAk5HRktabqu9GI9StSZ8nP3PFBX1pFflzoZEOEIc2iG0WXMX+hTMHUb5lmRkSOA==}
+    peerDependencies:
+      '@rspack/core': ^2.0.0
+      '@solidjs/web': ^2.0.0
+      solid-js: ^2.0.0
 
   source-map-js@1.2.2:
     resolution: {integrity: sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==}
@@ -9208,6 +9200,19 @@ snapshots:
       '@solidjs/signals': 2.0.0
       seroval: 1.8.1
       seroval-plugins: 1.8.0(seroval@1.8.1)
+
+  solid-loader@0.1.1(@rspack/core@2.3.3)(@solidjs/web@2.0.0)(solid-js@2.0.0)(supports-color@8.1.1):
+    dependencies:
+      '@babel/core': 7.29.13(supports-color@8.1.1)
+      '@jridgewell/remapping': 2.3.5
+      '@rspack/core': 2.3.3(@module-federation/runtime-tools@2.9.3)(@swc/helpers@0.5.24)
+      '@solidjs/babel-plugin': 2.0.0(@babel/core@7.29.13)
+      '@solidjs/compiler': 2.0.0
+      '@solidjs/web': 2.0.0(solid-js@2.0.0)
+      solid-js: 2.0.0
+    transitivePeerDependencies:
+      - '@tsrx/core'
+      - supports-color
 
   source-map-js@1.2.2: {}
 

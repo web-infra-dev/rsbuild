@@ -1,6 +1,11 @@
+import { createRequire } from 'node:module';
 import { createRsbuild, type RsbuildConfig, type Rspack } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
 import { pluginSolid } from '../src';
+
+const require = createRequire(import.meta.url);
+const solidLoaderPath = require.resolve('solid-loader');
+const refreshLoaderPath = require.resolve('solid-loader/refresh');
 
 const isRule = (
   rule: Rspack.RuleSetRules[number],
@@ -17,8 +22,7 @@ const getSolidLoaderOptions = (config: Rspack.Configuration) => {
     }
 
     const solidLoader = rule.use.find(
-      (item) =>
-        typeof item === 'object' && item?.loader?.includes('solidLoader.mjs'),
+      (item) => typeof item === 'object' && item?.loader === solidLoaderPath,
     );
 
     if (solidLoader && typeof solidLoader === 'object') {
@@ -28,6 +32,18 @@ const getSolidLoaderOptions = (config: Rspack.Configuration) => {
 
   throw new Error('Solid loader not found');
 };
+
+const getRefreshRule = (config: Rspack.Configuration, filename: string) =>
+  matchRules(config, filename)
+    .filter(isRule)
+    .find(
+      (rule) =>
+        Array.isArray(rule.use) &&
+        rule.use.some(
+          (item) =>
+            typeof item === 'object' && item?.loader === refreshLoaderPath,
+        ),
+    );
 
 describe('plugin-solid', () => {
   const rsbuildConfig: RsbuildConfig = {
@@ -47,6 +63,7 @@ describe('plugin-solid', () => {
 
     expect(getSolidLoaderOptions(config[0])).toEqual({
       compiler: 'native',
+      refresh: false,
       scriptRegex: expect.any(RegExp),
       decoratorVersion: '2023-11',
       solid: {
@@ -220,11 +237,7 @@ describe('plugin-solid', () => {
     });
     const config = await rsbuild.initConfigs();
 
-    expect(
-      JSON.stringify(matchRules(config[0], 'a.tsx')).includes(
-        'refreshLoader.mjs',
-      ),
-    ).toEqual(false);
+    expect(getRefreshRule(config[0], 'a.tsx')).toBeUndefined();
   });
 
   it('should configure granular solid refresh', async () => {
@@ -235,9 +248,7 @@ describe('plugin-solid', () => {
       },
     });
     const config = await rsbuild.initConfigs();
-    const refreshRule = matchRules(config[0], 'a.tsx')
-      .filter(isRule)
-      .find((rule) => JSON.stringify(rule).includes('refreshLoader.mjs'));
+    const refreshRule = getRefreshRule(config[0], 'a.tsx');
 
     expect(refreshRule?.enforce).toBe('pre');
     expect(JSON.stringify(refreshRule)).toContain('"granular":false');
@@ -252,9 +263,7 @@ describe('plugin-solid', () => {
     });
     const config = await rsbuild.initConfigs();
     const hasRefreshLoader = (filename: string) =>
-      JSON.stringify(matchRules(config[0], filename)).includes(
-        'refreshLoader.mjs',
-      );
+      Boolean(getRefreshRule(config[0], filename));
 
     expect(hasRefreshLoader('a.js')).toBe(false);
     expect(hasRefreshLoader('a.ts')).toBe(false);
@@ -271,9 +280,7 @@ describe('plugin-solid', () => {
     });
     const [config] = await rsbuild.initConfigs();
     const hasRefreshLoader = (filename: string) =>
-      JSON.stringify(matchRules(config, filename)).includes(
-        'refreshLoader.mjs',
-      );
+      Boolean(getRefreshRule(config, filename));
 
     expect(config.resolve?.extensions).not.toContain('.solid+jsx');
     expect(hasRefreshLoader('a.solid+jsx')).toBe(true);

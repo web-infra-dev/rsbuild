@@ -1,30 +1,7 @@
-import {
-  esmConfig,
-  esmLibConfig,
-  runtimeModeConfig,
-} from '@scripts/config/lib';
+import { esmConfig } from '@scripts/config/lib';
 import { baseConfig } from '@scripts/config/test';
 import { define } from 'rstack';
 
-define.lib({
-  ...runtimeModeConfig,
-  exports: esmConfig.exports,
-  lib: [
-    esmLibConfig,
-    {
-      source: {
-        entry: {
-          refreshLoader: './src/refreshLoader.ts',
-          solidLoader: './src/solidLoader.ts',
-        },
-      },
-      output: {
-        filename: {
-          js: '[name].mjs',
-        },
-      },
-    },
-  ],
-});
+define.lib(esmConfig);
 
 define.test(baseConfig);
