@@ -48,7 +48,10 @@ export const pluginBasic = (): RsbuildPlugin => ({
             .moduleIds('compact-hashed');
         }
 
-        const usingHMR = isDev && config.dev.hmr && target === 'web';
+        const usingHMR =
+          config.dev.hmr &&
+          target === 'web' &&
+          (isDev || (config.mode === 'none' && api.context.action === 'dev'));
 
         if (usingHMR) {
           chain

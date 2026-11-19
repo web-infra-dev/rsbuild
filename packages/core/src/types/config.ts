@@ -2120,7 +2120,7 @@ export interface DevConfig {
       };
   /**
    * Whether to enable Hot Module Replacement.
-   * @default true
+   * @default false in `none` mode, true otherwise
    */
   hmr?: boolean;
   /**

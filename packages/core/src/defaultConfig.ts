@@ -42,8 +42,7 @@ import type {
   RsbuildMode,
 } from './types';
 
-const getDefaultDevConfig = (): NormalizedDevConfig => ({
-  hmr: true,
+const getDefaultDevConfig = (): Omit<NormalizedDevConfig, 'hmr'> => ({
   liveReload: true,
   browserLogs: {
     stackTrace: DEFAULT_STACK_TRACE,
@@ -338,6 +337,10 @@ export const normalizeConfig = (
 
   const defaultConfig = createDefaultConfig();
   defaultConfig.mode = getMode();
+  defaultConfig.dev = {
+    ...defaultConfig.dev,
+    hmr: defaultConfig.mode !== 'none',
+  };
 
   const mergedConfig = mergeRsbuildConfig(
     defaultConfig,
