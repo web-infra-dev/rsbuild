@@ -32,7 +32,7 @@ export type PluginSolidOptions = {
    */
   ssr?: boolean;
   /**
-   * Configure Solid Refresh when Rsbuild HMR is enabled.
+   * Configure Solid Refresh for HMR in development mode.
    */
   refresh?: {
     /**
@@ -90,9 +90,14 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
       });
 
       api.modifyBundlerChain(
-        (chain, { CHAIN_ID, environment, target, isDev }) => {
+        (chain, { CHAIN_ID, environment, isProd, target }) => {
           const environmentConfig = environment.config;
           const useDevMode = isDevModeEnabled(environmentConfig.mode);
+          const usingHMR =
+            options.refresh?.disabled !== true &&
+            !isProd &&
+            environmentConfig.dev.hmr &&
+            target === 'web';
 
           const solidOptions: SolidPresetOptions = {
             generate: ssr && target === 'node' ? 'ssr' : 'dom',
@@ -101,8 +106,8 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             ...solid,
           };
 
-          // The hydration runtime imports URLs from the server's asset map.
-          // Leave those imports for the browser to resolve.
+          // Solid loads hydration modules from runtime URLs. Preserve native
+          // import() instead of generating an empty context dependency.
           chain.module
             .rule('solid-runtime')
             .set('descriptionData', { name: /^@solidjs\/web$/ })
@@ -143,16 +148,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             } satisfies SolidLoaderOptions);
           }
 
-          if (
-            !options.refresh?.disabled &&
-            (isDev || dev !== false) &&
-            chain.plugins.has(CHAIN_ID.PLUGIN.HMR)
-          ) {
-            // Outside development mode, solid-js/refresh resolves to a no-op.
-            if (!isDev) {
-              chain.resolve.conditionNames.add('development');
-            }
-
+          if (usingHMR) {
             const refreshRule = chain.module
               .rule('solid-refresh')
               .after(CHAIN_ID.RULE.JS)

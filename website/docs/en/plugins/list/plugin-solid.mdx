@@ -116,9 +116,7 @@ pluginSolid({
 
 ### refresh.disabled
 
-Whether to disable Solid Refresh while keeping Rsbuild HMR enabled.
-
-In `none` mode, Solid Refresh adds the `development` export condition to load its runtime. Setting `dev: false` skips Solid Refresh in this mode.
+Whether to disable Solid Refresh for HMR in development mode. This only controls the refresh transform and does not disable Rsbuild HMR.
 
 - **Type:** `boolean`
 - **Default:** `false`
