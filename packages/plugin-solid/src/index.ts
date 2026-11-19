@@ -32,7 +32,7 @@ export type PluginSolidOptions = {
    */
   ssr?: boolean;
   /**
-   * Configure Solid Refresh for HMR in development mode.
+   * Configure Solid Refresh when Rsbuild HMR is enabled.
    */
   refresh?: {
     /**
@@ -90,14 +90,9 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
       });
 
       api.modifyBundlerChain(
-        (chain, { CHAIN_ID, environment, isDev, target }) => {
+        (chain, { CHAIN_ID, environment, target, isDev }) => {
           const environmentConfig = environment.config;
           const useDevMode = isDevModeEnabled(environmentConfig.mode);
-          const usingHMR =
-            options.refresh?.disabled !== true &&
-            isDev &&
-            environmentConfig.dev.hmr &&
-            target === 'web';
 
           const solidOptions: SolidPresetOptions = {
             generate: ssr && target === 'node' ? 'ssr' : 'dom',
@@ -148,7 +143,16 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             } satisfies SolidLoaderOptions);
           }
 
-          if (usingHMR) {
+          if (
+            !options.refresh?.disabled &&
+            (isDev || dev !== false) &&
+            chain.plugins.has(CHAIN_ID.PLUGIN.HMR)
+          ) {
+            // Outside development mode, solid-js/refresh resolves to a no-op.
+            if (!isDev) {
+              chain.resolve.conditionNames.add('development');
+            }
+
             const refreshRule = chain.module
               .rule('solid-refresh')
               .after(CHAIN_ID.RULE.JS)

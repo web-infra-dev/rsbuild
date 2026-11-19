@@ -10,6 +10,7 @@ const refreshLoader = require.resolve('solid-loader/refresh');
 async function getConfig(
   options: PluginSolidOptions,
   config: RsbuildConfig = {},
+  action?: 'build' | 'dev',
 ) {
   const rsbuild = await createRsbuild({
     config: {
@@ -18,7 +19,7 @@ async function getConfig(
       ...config,
     },
   });
-  const [rspackConfig] = await rsbuild.initConfigs();
+  const [rspackConfig] = await rsbuild.initConfigs({ action });
   return rspackConfig;
 }
 
@@ -113,8 +114,12 @@ describe('plugin-solid', () => {
     });
   });
 
-  it('should skip Solid Refresh in none mode even when dev.hmr is enabled', async () => {
-    const config = await getConfig({}, { mode: 'none', dev: { hmr: true } });
+  it('should skip Solid Refresh in a none mode build with dev.hmr enabled', async () => {
+    const config = await getConfig(
+      {},
+      { mode: 'none', dev: { hmr: true } },
+      'build',
+    );
     expect(findLoader(config, refreshLoader)).toBeUndefined();
   });
 
