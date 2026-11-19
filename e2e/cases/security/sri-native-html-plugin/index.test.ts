@@ -26,7 +26,7 @@ test('should generate integrity attributes in dev with native html plugin', asyn
 }) => {
   const rsbuild = await dev();
   await rsbuild.expectWarning(
-    'SubResourceIntegrityPlugin may interfere with hot reloading',
+    /(?:SubresourceIntegrity: SubResourceIntegrityPlugin|SubresourceIntegrityPlugin: This plugin) may interfere with hot reloading/,
   );
 
   const testEl = page.locator('#root');
