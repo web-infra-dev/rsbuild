@@ -158,7 +158,6 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
               .with({ type: { not: 'text' } });
 
-            refreshRule.include.merge(jsRule.include.values());
             refreshRule.exclude.merge(jsRule.exclude.values());
 
             const refreshUse = refreshRule
