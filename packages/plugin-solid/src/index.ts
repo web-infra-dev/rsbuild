@@ -1,8 +1,12 @@
-import path from 'node:path';
+import { createRequire } from 'node:module';
 import type { RsbuildMode, RsbuildPlugin } from '@rsbuild/core';
-import type { SolidCompiler, SolidPresetOptions } from './types.js';
+import type {
+  SolidCompiler,
+  SolidLoaderOptions,
+  SolidPresetOptions,
+} from 'solid-loader';
 
-export type { SolidCompiler, SolidPresetOptions } from './types.js';
+export type { SolidCompiler, SolidPresetOptions } from 'solid-loader';
 
 export type PluginSolidOptions = {
   /**
@@ -49,6 +53,8 @@ export type PluginSolidOptions = {
    */
   solid?: SolidPresetOptions;
 };
+
+const require = createRequire(import.meta.url);
 
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
@@ -131,15 +137,15 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               solidUse.after(CHAIN_ID.USE.SWC);
             }
 
-            solidUse
-              .loader(path.join(import.meta.dirname, 'solidLoader.mjs'))
-              .options({
-                compiler,
-                scriptRegex,
-                decoratorVersion: environmentConfig.source.decorators.version,
-                solid: solidOptions,
-                ...(transformFilename ? { transformFilename } : {}),
-              });
+            solidUse.loader(require.resolve('solid-loader')).options({
+              compiler,
+              // Rsbuild applies Solid Refresh in a separate pre-loader.
+              refresh: false,
+              scriptRegex,
+              decoratorVersion: environmentConfig.source.decorators.version,
+              solid: solidOptions,
+              ...(transformFilename ? { transformFilename } : {}),
+            } satisfies SolidLoaderOptions);
           }
 
           if (usingHMR) {
@@ -157,7 +163,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
 
             const refreshUse = refreshRule
               .use('solid-refresh')
-              .loader(path.join(import.meta.dirname, 'refreshLoader.mjs'));
+              .loader(require.resolve('solid-loader/refresh'));
 
             if (typeof options.refresh?.granular === 'boolean') {
               refreshUse.options({
