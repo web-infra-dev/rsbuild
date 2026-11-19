@@ -208,9 +208,13 @@ function hintUnknownFiles(message: string): string {
 }
 
 const hintAssetsConflict = (message: string): string => {
-  const hint = 'Multiple assets emit different content to the same filename';
-
-  if (message.indexOf(hint) === -1) {
+  if (
+    !message.includes('produce different content for the same output file') &&
+    // TODO: Remove this check after upgrading Rspack past web-infra-dev/rspack#16733.
+    !message.includes(
+      'Multiple assets emit different content to the same filename',
+    )
+  ) {
     return message;
   }
 
