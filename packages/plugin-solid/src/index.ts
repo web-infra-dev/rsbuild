@@ -90,12 +90,12 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
       });
 
       api.modifyBundlerChain(
-        (chain, { CHAIN_ID, environment, isProd, target }) => {
+        (chain, { CHAIN_ID, environment, isDev, target }) => {
           const environmentConfig = environment.config;
           const useDevMode = isDevModeEnabled(environmentConfig.mode);
           const usingHMR =
             options.refresh?.disabled !== true &&
-            !isProd &&
+            isDev &&
             environmentConfig.dev.hmr &&
             target === 'web';
 
@@ -106,8 +106,8 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             ...solid,
           };
 
-          // Solid loads hydration modules from runtime URLs. Preserve native
-          // import() instead of generating an empty context dependency.
+          // The hydration runtime imports URLs from the server's asset map.
+          // Leave those imports for the browser to resolve.
           chain.module
             .rule('solid-runtime')
             .set('descriptionData', { name: /^@solidjs\/web$/ })
@@ -158,7 +158,6 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               .resourceQuery({ not: /[?&]raw(?:&|=|$)/ })
               .with({ type: { not: 'text' } });
 
-            refreshRule.include.merge(jsRule.include.values());
             refreshRule.exclude.merge(jsRule.exclude.values());
 
             const refreshUse = refreshRule

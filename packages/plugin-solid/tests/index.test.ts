@@ -113,6 +113,11 @@ describe('plugin-solid', () => {
     });
   });
 
+  it('should skip Solid Refresh in none mode even when dev.hmr is enabled', async () => {
+    const config = await getConfig({}, { mode: 'none', dev: { hmr: true } });
+    expect(findLoader(config, refreshLoader)).toBeUndefined();
+  });
+
   it('should pass granular to the refresh pre-loader and disable inline refresh', async () => {
     const config = await getConfig(
       { refresh: { granular: false } },
