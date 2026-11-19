@@ -339,7 +339,7 @@ export const normalizeConfig = (
   defaultConfig.mode = getMode();
   defaultConfig.dev = {
     ...defaultConfig.dev,
-    hmr: defaultConfig.mode !== 'none',
+    hmr: defaultConfig.mode === 'development',
   };
 
   const mergedConfig = mergeRsbuildConfig(
