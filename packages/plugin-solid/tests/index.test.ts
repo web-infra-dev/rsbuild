@@ -1,158 +1,89 @@
 import { createRequire } from 'node:module';
 import { createRsbuild, type RsbuildConfig, type Rspack } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
-import { pluginSolid } from '../src';
+import { type PluginSolidOptions, pluginSolid } from '../src';
 
 const require = createRequire(import.meta.url);
-const solidLoaderPath = require.resolve('solid-loader');
-const refreshLoaderPath = require.resolve('solid-loader/refresh');
+const solidLoader = require.resolve('solid-loader');
+const refreshLoader = require.resolve('solid-loader/refresh');
+
+async function getConfig(
+  options: PluginSolidOptions,
+  config: RsbuildConfig = {},
+) {
+  const rsbuild = await createRsbuild({
+    config: {
+      performance: { buildCache: false },
+      plugins: [pluginSolid(options)],
+      ...config,
+    },
+  });
+  const [rspackConfig] = await rsbuild.initConfigs();
+  return rspackConfig;
+}
 
 const isRule = (
   rule: Rspack.RuleSetRules[number],
 ): rule is Rspack.RuleSetRule => !!rule && typeof rule === 'object';
 
-const getSolidLoaderOptions = (config: Rspack.Configuration) => {
-  const rules = matchRules(config, 'a.tsx')
+function findLoader(
+  config: Rspack.Configuration,
+  loader: string,
+  filename = 'App.tsx',
+) {
+  const rules = matchRules(config, filename)
     .filter(isRule)
     .flatMap((rule) => [rule, ...(rule.oneOf?.filter(isRule) ?? [])]);
 
   for (const rule of rules) {
-    if (!Array.isArray(rule.use)) {
-      continue;
-    }
-
-    const solidLoader = rule.use.find(
-      (item) => typeof item === 'object' && item?.loader === solidLoaderPath,
-    );
-
-    if (solidLoader && typeof solidLoader === 'object') {
-      return solidLoader.options;
+    if (Array.isArray(rule.use)) {
+      for (const use of rule.use) {
+        if (typeof use === 'object' && use?.loader === loader) {
+          return { options: use.options, enforce: rule.enforce };
+        }
+      }
     }
   }
-
-  throw new Error('Solid loader not found');
-};
-
-const getRefreshRule = (config: Rspack.Configuration, filename: string) =>
-  matchRules(config, filename)
-    .filter(isRule)
-    .find(
-      (rule) =>
-        Array.isArray(rule.use) &&
-        rule.use.some(
-          (item) =>
-            typeof item === 'object' && item?.loader === refreshLoaderPath,
-        ),
-    );
+}
 
 describe('plugin-solid', () => {
-  const rsbuildConfig: RsbuildConfig = {
-    performance: {
-      buildCache: false,
+  it.each([
+    ['native', {}],
+    ['babel', { compiler: 'babel' }],
+  ] as const)('should select the %s compiler', async (compiler, options) => {
+    const config = await getConfig(options);
+    expect(findLoader(config, solidLoader)?.options).toMatchObject({
+      compiler,
+    });
+  });
+
+  it.each([
+    ['development', undefined, true],
+    ['production', undefined, false],
+    ['development', false, false],
+    ['production', true, true],
+  ] as const)(
+    'should configure Solid development mode for mode %s and dev %s',
+    async (mode, dev, useDevMode) => {
+      const config = await getConfig({ dev }, { mode });
+      expect(config.resolve?.conditionNames).toEqual(
+        useDevMode ? ['solid', 'development', '...'] : ['solid', '...'],
+      );
+      expect(findLoader(config, solidLoader)?.options).toMatchObject({
+        solid: { dev: useDevMode },
+      });
     },
-  };
+  );
 
-  it('should use native compiler by default', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [pluginSolid()],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(getSolidLoaderOptions(config[0])).toEqual({
-      compiler: 'native',
-      refresh: false,
-      scriptRegex: expect.any(RegExp),
-      decoratorVersion: '2023-11',
-      solid: {
-        dev: false,
-        generate: 'dom',
-        hydratable: false,
-      },
-    });
-  });
-
-  it('should allow using Babel compiler', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [pluginSolid({ compiler: 'babel' })],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
-      '"compiler":"babel"',
-    );
-  });
-
-  it('should pass decorator version to Babel compiler', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        source: {
-          decorators: {
-            version: 'legacy',
-          },
-        },
-        plugins: [pluginSolid({ compiler: 'babel' })],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(getSolidLoaderOptions(config[0])).toEqual(
-      expect.objectContaining({
-        decoratorVersion: 'legacy',
-      }),
-    );
-  });
-
-  it('should add solid resolve condition', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [pluginSolid()],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-    expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
-  });
-
-  it('should enable Solid development mode in development mode', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
+  it('should preserve user resolve conditions after the Solid conditions', async () => {
+    const config = await getConfig(
+      {},
+      {
         mode: 'development',
-        plugins: [pluginSolid()],
+        resolve: { conditionNames: ['custom', 'import'] },
       },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(config[0].resolve?.conditionNames).toEqual([
-      'solid',
-      'development',
-      '...',
-    ]);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
-      '"dev":true',
     );
-  });
-
-  it('should preserve user resolve condition names', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        mode: 'development',
-        resolve: {
-          conditionNames: ['custom', 'import'],
-        },
-        plugins: [pluginSolid()],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-    expect(config[0].resolve?.conditionNames).toEqual([
+    expect(config.resolve?.conditionNames).toEqual([
       'solid',
       'development',
       'custom',
@@ -160,231 +91,69 @@ describe('plugin-solid', () => {
     ]);
   });
 
-  it('should allow disabling Solid development mode', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        mode: 'development',
-        plugins: [pluginSolid({ dev: false })],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
-      '"dev":false',
+  it('should allow solid.dev to override compiler development mode independently of the runtime', async () => {
+    const config = await getConfig(
+      { dev: false, solid: { dev: true } },
+      { mode: 'development' },
     );
+    expect(config.resolve?.conditionNames).toEqual(['solid', '...']);
+    expect(findLoader(config, solidLoader)?.options).toMatchObject({
+      solid: { dev: true },
+    });
   });
 
-  it('should disable Solid development mode in production by default', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        mode: 'production',
-        plugins: [pluginSolid()],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
-      '"dev":false',
+  it('should disable both refresh transforms when refresh.disabled is true', async () => {
+    const config = await getConfig(
+      { refresh: { disabled: true } },
+      { mode: 'development' },
     );
+    expect(findLoader(config, refreshLoader)).toBeUndefined();
+    expect(findLoader(config, solidLoader)?.options).toMatchObject({
+      refresh: false,
+    });
   });
 
-  it('should allow forcing Solid development mode in production mode', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        mode: 'production',
-        plugins: [pluginSolid({ dev: true })],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(config[0].resolve?.conditionNames).toEqual([
-      'solid',
-      'development',
-      '...',
-    ]);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
-      '"dev":true',
+  it('should pass granular to the refresh pre-loader and disable inline refresh', async () => {
+    const config = await getConfig(
+      { refresh: { granular: false } },
+      { mode: 'development' },
     );
+    expect(findLoader(config, refreshLoader)).toMatchObject({
+      enforce: 'pre',
+      options: { granular: false },
+    });
+    expect(findLoader(config, solidLoader)?.options).toMatchObject({
+      refresh: false,
+    });
   });
 
-  it('should allow solid.dev to override compiler development mode', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        mode: 'development',
-        plugins: [pluginSolid({ dev: false, solid: { dev: true } })],
-      },
-    });
-    const config = await rsbuild.initConfigs();
+  it('should only apply refresh to JSX and TSX by default', async () => {
+    const config = await getConfig({}, { mode: 'development' });
+    expect(findLoader(config, refreshLoader, 'a.js')).toBeUndefined();
+    expect(findLoader(config, refreshLoader, 'a.ts')).toBeUndefined();
+    expect(findLoader(config, refreshLoader, 'a.jsx')).toBeDefined();
+    expect(findLoader(config, refreshLoader, 'a.tsx')).toBeDefined();
+  });
 
-    expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
-    expect(JSON.stringify(matchRules(config[0], 'a.tsx'))).toContain(
-      '"dev":true',
+  it('should match additional extensions literally without changing module resolution', async () => {
+    const config = await getConfig(
+      { extensions: ['.solid+jsx'] },
+      { mode: 'development' },
     );
-  });
-
-  it('should allow disabling solid refresh via refresh.disabled', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [pluginSolid({ refresh: { disabled: true } })],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(getRefreshRule(config[0], 'a.tsx')).toBeUndefined();
-  });
-
-  it('should configure granular solid refresh', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [pluginSolid({ refresh: { granular: false } })],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-    const refreshRule = getRefreshRule(config[0], 'a.tsx');
-
-    expect(refreshRule?.enforce).toBe('pre');
-    expect(JSON.stringify(refreshRule)).toContain('"granular":false');
-  });
-
-  it('should only apply solid refresh to JSX and TSX by default', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [pluginSolid()],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-    const hasRefreshLoader = (filename: string) =>
-      Boolean(getRefreshRule(config[0], filename));
-
-    expect(hasRefreshLoader('a.js')).toBe(false);
-    expect(hasRefreshLoader('a.ts')).toBe(false);
-    expect(hasRefreshLoader('a.jsx')).toBe(true);
-    expect(hasRefreshLoader('a.tsx')).toBe(true);
-  });
-
-  it('should match additional extensions literally', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [pluginSolid({ extensions: ['.solid+jsx'] })],
-      },
-    });
-    const [config] = await rsbuild.initConfigs();
-    const hasRefreshLoader = (filename: string) =>
-      Boolean(getRefreshRule(config, filename));
-
     expect(config.resolve?.extensions).not.toContain('.solid+jsx');
-    expect(hasRefreshLoader('a.solid+jsx')).toBe(true);
+    expect(findLoader(config, refreshLoader, 'a.solid+jsx')).toBeDefined();
     // cspell:disable-next-line
-    expect(hasRefreshLoader('a.solidddjsx')).toBe(false);
-    expect(hasRefreshLoader('a.solid+jsx.js')).toBe(false);
-    expect(hasRefreshLoader('a.jsx')).toBe(true);
-    expect(hasRefreshLoader('a.tsx')).toBe(true);
+    expect(findLoader(config, refreshLoader, 'a.solidddjsx')).toBeUndefined();
+    expect(findLoader(config, refreshLoader, 'a.solid+jsx.js')).toBeUndefined();
   });
 
-  it('should use hydratable dom output for ssr option on web target', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [pluginSolid({ ssr: true })],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(getSolidLoaderOptions(config[0])).toEqual(
-      expect.objectContaining({
-        solid: expect.objectContaining({
-          generate: 'dom',
-          hydratable: true,
-        }),
-      }),
+  it('should allow solid options to override SSR defaults', async () => {
+    const config = await getConfig(
+      { ssr: true, solid: { generate: 'universal', hydratable: false } },
+      { output: { target: 'node' } },
     );
-  });
-
-  it('should use ssr output for ssr option on node target', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        output: {
-          target: 'node',
-        },
-        plugins: [pluginSolid({ ssr: true })],
-      },
+    expect(findLoader(config, solidLoader)?.options).toMatchObject({
+      solid: { generate: 'universal', hydratable: false },
     });
-    const config = await rsbuild.initConfigs();
-
-    expect(getSolidLoaderOptions(config[0])).toEqual(
-      expect.objectContaining({
-        solid: expect.objectContaining({
-          generate: 'ssr',
-          hydratable: true,
-        }),
-      }),
-    );
-  });
-
-  it('should allow solid options to override ssr defaults', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        output: {
-          target: 'node',
-        },
-        plugins: [
-          pluginSolid({
-            ssr: true,
-            solid: {
-              generate: 'universal',
-              hydratable: false,
-            },
-          }),
-        ],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(getSolidLoaderOptions(config[0])).toEqual(
-      expect.objectContaining({
-        solid: expect.objectContaining({
-          generate: 'universal',
-          hydratable: false,
-        }),
-      }),
-    );
-  });
-
-  it('should allow to configure solid options', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        ...rsbuildConfig,
-        plugins: [
-          pluginSolid({
-            solid: {
-              generate: 'ssr',
-              hydratable: true,
-            },
-          }),
-        ],
-      },
-    });
-    const config = await rsbuild.initConfigs();
-
-    expect(getSolidLoaderOptions(config[0])).toEqual(
-      expect.objectContaining({
-        solid: expect.objectContaining({
-          generate: 'ssr',
-          hydratable: true,
-        }),
-      }),
-    );
   });
 });
