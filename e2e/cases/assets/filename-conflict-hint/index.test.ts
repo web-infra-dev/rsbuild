@@ -8,6 +8,6 @@ test('should print output.filename hints as expected', async ({ build }) => {
   expect(rsbuild.buildError).toBeTruthy();
 
   await rsbuild.expectLog(
-    'You may need to adjust output.filename configuration to prevent name conflicts.',
+    /(?:You may need to adjust output\.filename configuration to prevent name conflicts\.|Multiple assets \(from "\.\.\/\.\.\/\.\.\/assets\/icon\.png" and "\.\.\/\.\.\/\.\.\/assets\/image\.png"\) produce different content for the same output file "static\/image\/image\.png"\.)/,
   );
 });
