@@ -164,7 +164,9 @@ test('should run preview cleanup after the HTTP server has closed', async () => 
   });
 
   const { server } = await rsbuild.preview({ checkDistDir: false });
-  await server.httpServer![Symbol.asyncDispose]();
+  await new Promise<void>((resolve, reject) => {
+    server.httpServer!.close((err) => (err ? reject(err) : resolve()));
+  });
   await server.close();
   expect(closeCalls).toBe(1);
 });
