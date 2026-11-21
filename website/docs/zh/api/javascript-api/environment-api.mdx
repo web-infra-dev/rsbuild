@@ -244,6 +244,7 @@ type EnvironmentAPI = {
     hot: {
       send: HotSend;
       onConnect: HotOnConnect;
+      on: HotOn;
     };
   };
 };
@@ -422,4 +423,46 @@ const unsubscribe = server.environments.web.hot.onConnect((client) => {
 
 :::note
 回调执行时，浏览器端应用可能仍在初始化。请尽早在浏览器端注册自定义事件监听器，并根据需要缓存消息。Rsbuild 不会保存或重放自定义消息。
+:::
+
+### hot.on
+
+监听当前 environment 的 HMR 客户端发送的自定义事件。
+
+- **版本：** `>= v2.3.4`
+- **类型：**
+
+```ts
+type HotOn = <Data = any>(
+  event: string,
+  callback: (data: Data, client: HotClient) => void | Promise<void>,
+) => () => void;
+```
+
+Rsbuild 在 Rspack 的 [import.meta.webpackHot](https://rspack.rs/zh/api/runtime-api/hmr) 对象上扩展了 `send()` 方法。你可以在浏览器端使用它向开发服务器发送自定义事件，并携带可选的 data。data 必须可以被 JSON 序列化。在 WebSocket 连接建立前发送的事件会被缓存，并在连接建立后发送。
+
+```ts title="client.js"
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.on('pong', (data) => {
+    console.log('server replied', data.value);
+  });
+  import.meta.webpackHot.send('ping', { value: 1 });
+}
+```
+
+在服务端，回调会接收事件数据和一个 `client` 对象。使用 `client.send` 可以只回复发送该事件的客户端，参数与 `hot.send` 相同：
+
+```ts
+const unsubscribe = server.environments.web.hot.on('ping', (data, client) => {
+  client.send('custom', {
+    event: 'pong',
+    data: { value: data.value + 1 },
+  });
+});
+```
+
+不再需要监听该事件时，调用返回的 `unsubscribe` 函数即可取消订阅。
+
+:::warning
+事件数据来自浏览器。在使用前请先校验数据，尤其是当回调会读取文件、执行命令或修改服务端状态时。
 :::

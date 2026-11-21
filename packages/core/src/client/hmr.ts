@@ -47,9 +47,15 @@ const formatErrorLikeMessage = (error: unknown): string | undefined => {
 };
 
 // Install a patched `module.hot.on` that records per-module listeners and
-// removes them from the global map when the module is disposed.
-function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
+// removes them from the global map when the module is disposed,
+// and a `module.hot.send` that sends custom events to the server.
+function setupCustomHMR(
+  customListenersMap: CustomListenersMap,
+  send: (event: string, data?: unknown) => void,
+): void {
   RSPACK_INTERCEPT_MODULE_EXECUTION.push(({ module }) => {
+    module.hot.send = send;
+
     const newListeners: CustomListenersMap = new Map();
 
     const addToMap = (
@@ -293,6 +299,14 @@ export function init(
       socket!.send(JSON.stringify(data));
     }
   };
+  // Queue messages sent before the socket is ready
+  const sendOrQueue = (data: ClientMessage) => {
+    if (isSocketReady()) {
+      socketSend(data);
+    } else {
+      queuedMessages.push(data);
+    }
+  };
 
   function onOpen() {
     // Notify users that the WebSocket has successfully connected.
@@ -413,12 +427,7 @@ export function init(
     };
 
     clientErrors.push({ id });
-
-    if (isSocketReady()) {
-      socketSend(messageInfo);
-    } else {
-      queuedMessages.push(messageInfo);
-    }
+    sendOrQueue(messageInfo);
   }
 
   function onUnhandledRejection({ reason }: PromiseRejectionEvent) {
@@ -500,7 +509,9 @@ export function init(
   }
 
   if (import.meta.webpackHot) {
-    setupCustomHMRListeners(customListenersMap);
+    setupCustomHMR(customListenersMap, (event, data) => {
+      sendOrQueue({ type: 'custom', event, data });
+    });
   }
 
   connect();
