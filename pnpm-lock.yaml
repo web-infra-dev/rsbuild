@@ -415,8 +415,8 @@ catalogs:
       specifier: 1.6.5
       version: 1.6.5
     range-parser:
-      specifier: ^1.3.0
-      version: 1.3.0
+      specifier: ^2.0.0
+      version: 2.0.0
     react:
       specifier: ^19.3.1
       version: 19.3.1
@@ -1111,7 +1111,7 @@ importers:
         version: 1.6.5(typescript@6.0.3)
       range-parser:
         specifier: 'catalog:'
-        version: 1.3.0
+        version: 2.0.0
       reduce-configs:
         specifier: 'catalog:'
         version: 2.0.1
@@ -4591,9 +4591,9 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  range-parser@1.3.0:
-    resolution: {integrity: sha512-hek2mFQpPuI4E1BBKrSto+BU3e3x4xuarsbiwr3+lf7p44juvFMV0XFWQAP3xUyqXA4RrXLIoaSUGbSt056ZMw==}
-    engines: {node: '>= 0.6'}
+  range-parser@2.0.0:
+    resolution: {integrity: sha512-oo1OWPM+Kr0RNsLxydqNnFjO1FJMBCK5Pv4zbtUVP5eqESF7mbhFFWkbq1Y2hoR2tQnRtB8XUhm98nJ2AXnvZg==}
+    engines: {node: '>=22'}
 
   react-dom@19.3.1:
     resolution: {integrity: sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==}
@@ -8711,7 +8711,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  range-parser@1.3.0: {}
+  range-parser@2.0.0: {}
 
   react-dom@19.3.1(react@19.3.1):
     dependencies:
