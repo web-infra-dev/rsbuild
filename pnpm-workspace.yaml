@@ -58,7 +58,6 @@ catalog:
   '@types/fs-extra': '^11.0.4'
   '@types/less': '^3.0.8'
   '@types/node': '^26.6.6'
-  '@types/range-parser': '^1.2.7'
   '@types/react': '^19.3.0'
   '@types/react-dom': '^19.3.0'
   '@types/sass-loader': '^8.0.10'
