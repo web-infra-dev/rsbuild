@@ -31,6 +31,12 @@ test('should serve byte ranges for compiled assets', async ({
   expect(unsatisfiable.headers()['content-range']).toBe(
     `bytes */${asset.length}`,
   );
+
+  const malformed = await request.get(url, {
+    headers: { Range: `bytes=2-4,invalid,${asset.length}-` },
+  });
+  expect(malformed.status()).toBe(200);
+  expect(await malformed.body()).toEqual(asset);
 });
 
 test('should return 403 for path traversal', async ({ request, dev }) => {

@@ -427,8 +427,12 @@ export function createAssetsMiddleware(
         const { parse, combineRanges } = await getRangeParser();
         const { code, ranges } = parse(size, rangeHeader);
 
-        // A mixed range set can contain both usable and unsatisfiable ranges.
-        if (ranges.length === 0 && code & 2) {
+        // One malformed range invalidates the entire header, even if others are usable.
+        if (code & 1) {
+          logger.error(
+            "[rsbuild:middleware] A malformed 'Range' header was provided. A regular response will be sent for this request.",
+          );
+        } else if (code === 2 && ranges.length === 0) {
           logger.error(
             "[rsbuild:middleware] Unsatisfiable range for 'Range' header.",
           );
@@ -440,24 +444,21 @@ export function createAssetsMiddleware(
 
           sendError(res, HttpCode.RangeNotSatisfiable);
           return;
-        }
-        const combined = ranges.length > 1 ? combineRanges(ranges) : ranges;
-        if (combined.length === 1) {
-          const [range] = combined;
-          res.statusCode = 206;
-          res.setHeader(
-            'Content-Range',
-            getValueContentRangeHeader('bytes', size, range),
-          );
-          [offset, len] = getOffsetAndLenFromRange(range);
-        } else if (combined.length > 1) {
-          logger.error(
-            "[rsbuild:middleware] A 'Range' header with multiple ranges was provided. Multiple ranges are not supported, so a regular response will be sent for this request.",
-          );
-        } else if (code & 1) {
-          logger.error(
-            "[rsbuild:middleware] A malformed 'Range' header was provided. A regular response will be sent for this request.",
-          );
+        } else if (ranges.length > 0) {
+          const combined = ranges.length > 1 ? combineRanges(ranges) : ranges;
+          if (combined.length === 1) {
+            const [range] = combined;
+            res.statusCode = 206;
+            res.setHeader(
+              'Content-Range',
+              getValueContentRangeHeader('bytes', size, range),
+            );
+            [offset, len] = getOffsetAndLenFromRange(range);
+          } else {
+            logger.error(
+              "[rsbuild:middleware] A 'Range' header with multiple ranges was provided. Multiple ranges are not supported, so a regular response will be sent for this request.",
+            );
+          }
         }
       }
 
