@@ -71,6 +71,16 @@ type HotConnectCallback = (client: HotClient) => void | Promise<void>;
 
 export type HotOnConnect = (callback: HotConnectCallback) => () => void;
 
+type HotEventCallback<Data = any> = (
+  data: Data,
+  client: HotClient,
+) => void | Promise<void>;
+
+export type HotOn = <Data = any>(
+  event: string,
+  callback: HotEventCallback<Data>,
+) => () => void;
+
 export type RsbuildDevServer = RsbuildServerBase & {
   /**
    * Notifies Rsbuild that the custom server has successfully started.
@@ -150,6 +160,33 @@ export async function createDevServer<
   const compileState = createCompileState(context.environmentList.length);
   let hotConnectCallbacks: Map<string, Set<HotConnectCallback>> | undefined =
     new Map();
+  // token -> event -> callbacks
+  let hotEventCallbacks:
+    Map<string, Map<string, Set<HotEventCallback>>> | undefined = new Map();
+  // Reuse the same client object for a socket across `onConnect` and `on`
+  const hotClients = new WeakMap<WebSocket, HotClient>();
+  const getHotClient = (socket: WebSocket): HotClient => {
+    let client = hotClients.get(socket);
+    if (!client) {
+      client = { send: createHotSend(socket) };
+      hotClients.set(socket, client);
+    }
+    return client;
+  };
+  const runHotCallbacks = <T extends (...args: any[]) => unknown>(
+    callbacks: Set<T>,
+    ...args: Parameters<T>
+  ) => {
+    for (const callback of [...callbacks]) {
+      try {
+        Promise.resolve(callback(...args)).catch((error: unknown) => {
+          logger.error(error);
+        });
+      } catch (error) {
+        logger.error(error);
+      }
+    }
+  };
 
   const startCompile: () => Promise<BuildManager> = async () => {
     const compiler = await createCompiler();
@@ -199,19 +236,14 @@ export async function createDevServer<
       resolvedPort: port,
       onSocketConnect: (socket, token) => {
         const callbacks = hotConnectCallbacks?.get(token);
-        if (!callbacks?.size) {
-          return;
+        if (callbacks?.size) {
+          runHotCallbacks(callbacks, getHotClient(socket));
         }
-
-        const client: HotClient = { send: createHotSend(socket) };
-        for (const callback of [...callbacks]) {
-          try {
-            Promise.resolve(callback(client)).catch((error: unknown) => {
-              logger.error(error);
-            });
-          } catch (error) {
-            logger.error(error);
-          }
+      },
+      onSocketCustomMessage: (socket, token, event, data) => {
+        const callbacks = hotEventCallbacks?.get(token)?.get(event);
+        if (callbacks?.size) {
+          runHotCallbacks(callbacks, data, getHotClient(socket));
         }
       },
     });
@@ -286,6 +318,7 @@ export async function createDevServer<
 
     // Prevent new subscriptions during and after shutdown.
     hotConnectCallbacks = undefined;
+    hotEventCallbacks = undefined;
     removeWebSocketListeners();
     unregisterRestart?.();
     unregisterRestart = undefined;
@@ -403,6 +436,33 @@ export async function createDevServer<
 
           return () => {
             hotConnectCallbacks?.get(webSocketToken)?.delete(callback);
+          };
+        },
+        on: (event, callback) => {
+          if (!runCompile) {
+            throw new Error(getErrorMsg('hot.on'));
+          }
+          if (!hotEventCallbacks) {
+            return () => {};
+          }
+
+          let events = hotEventCallbacks.get(webSocketToken);
+          if (!events) {
+            events = new Map();
+            hotEventCallbacks.set(webSocketToken, events);
+          }
+          let callbacks = events.get(event);
+          if (!callbacks) {
+            callbacks = new Set();
+            events.set(event, callbacks);
+          }
+          callbacks.add(callback);
+
+          return () => {
+            hotEventCallbacks
+              ?.get(webSocketToken)
+              ?.get(event)
+              ?.delete(callback);
           };
         },
       },

@@ -80,7 +80,16 @@ interface ImportMeta {
 
 declare namespace Rspack {
   interface Hot {
+    /**
+     * Listen for custom events sent by the dev server.
+     */
     on: <Data = any>(event: string, cb: (data: Data) => void) => void;
+    /**
+     * Send a custom event to the dev server, handled by
+     * `server.environments[name].hot.on()`.
+     * The data must be JSON serializable.
+     */
+    send: <Data = any>(event: string, data?: Data) => void;
   }
 }
 
