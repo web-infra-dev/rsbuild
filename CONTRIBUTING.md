@@ -113,7 +113,7 @@ To fix formatting issues:
 pnpm run format
 ```
 
-Install the [Rslint VS Code extension](https://marketplace.visualstudio.com/items?itemName=rstack.rslint) to see lints while typing.
+Install the [Rstack VS Code extension](https://marketplace.visualstudio.com/items?itemName=rstack.rstack) to see lints while typing.
 
 ---
 
