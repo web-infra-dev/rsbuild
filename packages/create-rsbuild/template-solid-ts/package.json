@@ -14,7 +14,7 @@
   "devDependencies": {
     "@rsbuild/core": "^2.3.3",
     "@rsbuild/plugin-babel": "^2.1.0",
-    "@rsbuild/plugin-solid": "^1.2.2",
+    "@rsbuild/plugin-solid": "^2.1.0",
     "@types/node": "^26.6.6",
     "typescript": "^7.0.2"
   }
