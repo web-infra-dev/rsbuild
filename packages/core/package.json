@@ -52,7 +52,6 @@
     "@rstackjs/load-config": "catalog:",
     "@types/cors": "catalog:",
     "@types/node": "catalog:",
-    "@types/range-parser": "catalog:",
     "@types/ws": "catalog:",
     "browserslist-load-config": "catalog:",
     "cac": "catalog:",

@@ -9,6 +9,36 @@ test('should serve static files', async ({ request, dev }) => {
   expect(await resIndexJs.text()).toContain('Hello Rsbuild!');
 });
 
+test('should serve byte ranges for compiled assets', async ({
+  request,
+  devOnly,
+}) => {
+  const { port } = await devOnly();
+  const url = `http://localhost:${port}/static/js/index.js`;
+  const asset = await (await request.get(url)).body();
+
+  const partial = await request.get(url, {
+    headers: { Range: 'bytes=2-4,5-7' },
+  });
+  expect(partial.status()).toBe(206);
+  expect(partial.headers()['content-range']).toBe(`bytes 2-7/${asset.length}`);
+  expect(await partial.body()).toEqual(asset.subarray(2, 8));
+
+  const unsatisfiable = await request.get(url, {
+    headers: { Range: `bytes=${asset.length}-` },
+  });
+  expect(unsatisfiable.status()).toBe(416);
+  expect(unsatisfiable.headers()['content-range']).toBe(
+    `bytes */${asset.length}`,
+  );
+
+  const malformed = await request.get(url, {
+    headers: { Range: `bytes=2-4,invalid,${asset.length}-` },
+  });
+  expect(malformed.status()).toBe(200);
+  expect(await malformed.body()).toEqual(asset);
+});
+
 test('should return 403 for path traversal', async ({ request, dev }) => {
   const rsbuild = await dev();
   const baseUrl = `http://localhost:${rsbuild.port}`;
