@@ -120,7 +120,7 @@ catalog:
   'sass-loader': '^16.0.8'
   'sirv': '^3.0.2'
   'solid-js': '^2.0.0'
-  'solid-loader': '^0.1.1'
+  'solid-loader': '^1.0.1'
   'stacktrace-parser': '^0.1.11'
   'style-loader': '^4.0.0'
   'svelte': '^5.58.0'
