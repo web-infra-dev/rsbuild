@@ -153,6 +153,24 @@ test('should run plugin hooks correctly when running preview', async () => {
   ]);
 });
 
+test('should run preview cleanup after the HTTP server has closed', async () => {
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+    config: { server: { host: HOST, port: 0 } },
+  });
+  let closeCalls = 0;
+  rsbuild.onClosePreviewServer(() => {
+    closeCalls++;
+  });
+
+  const { server } = await rsbuild.preview({ checkDistDir: false });
+  await new Promise<void>((resolve, reject) => {
+    server.httpServer!.close((err) => (err ? reject(err) : resolve()));
+  });
+  await server.close();
+  expect(closeCalls).toBe(1);
+});
+
 test('should close dev server when onAfterStartDevServer throws', async () => {
   const port = await getRandomPort();
   let devServer: RsbuildDevServer | undefined;

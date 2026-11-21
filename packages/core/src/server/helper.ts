@@ -664,8 +664,9 @@ export function getServerTerminator(
         socket.destroy();
       }
       if (listened) {
-        server.close((err) => {
-          if (err) {
+        server.close((err?: NodeJS.ErrnoException) => {
+          // Continue cleanup if the caller has already closed the HTTP server.
+          if (err && err.code !== 'ERR_SERVER_NOT_RUNNING') {
             reject(err);
           } else {
             resolve();
