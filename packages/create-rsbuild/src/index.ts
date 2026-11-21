@@ -58,28 +58,13 @@ async function getTemplateName({ dir, template }: Argv) {
     }),
   );
 
-  if (framework === 'solid') {
-    return checkCancel<string>(
-      await select({
-        message: 'Select template',
-        options: [
-          { value: 'solid-ts', label: 'Solid 1 (TypeScript)' },
-          { value: 'solid-js', label: 'Solid 1 (JavaScript)' },
-          { value: 'solid2-ts', label: 'Solid 2 (TypeScript)' },
-          { value: 'solid2-js', label: 'Solid 2 (JavaScript)' },
-          { value: 'tanstack-start-solid', label: 'TanStack Start' },
-        ],
-      }),
-    );
-  }
-
   const variant = checkCancel<string>(
     await select({
       message: 'Select template',
       options: [
         { value: 'ts', label: 'Basic (TypeScript)' },
         { value: 'js', label: 'Basic (JavaScript)' },
-        ...(framework === 'react'
+        ...(framework === 'react' || framework === 'solid'
           ? [{ value: 'tanstack-start', label: 'TanStack Start' }]
           : []),
       ],
@@ -248,8 +233,6 @@ await create({
       name: 'tanstack-start-solid',
       create: (context) => createTanStackProject('Solid', context),
     },
-    'solid2-js',
-    'solid2-ts',
     'octane-js',
     'octane-ts',
     {

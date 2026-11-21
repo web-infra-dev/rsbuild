@@ -101,7 +101,7 @@ npx -y create-rsbuild@latest my-app -t svelte-js
 npx -y create-rsbuild@latest my-app -t svelte-ts
 ```
 
-- **Solid 1**
+- **Solid**
 
 ```bash
 # Basic (JavaScript)
@@ -112,16 +112,6 @@ npx -y create-rsbuild@latest my-app -t solid-ts
 
 # TanStack Start (with Rsbuild)
 npx -y create-rsbuild@latest my-app -t tanstack-start-solid
-```
-
-- **Solid 2**
-
-```bash
-# Basic (JavaScript)
-npx -y create-rsbuild@latest my-app -t solid2-js
-
-# Basic (TypeScript)
-npx -y create-rsbuild@latest my-app -t solid2-ts
 ```
 
 - **Octane**
