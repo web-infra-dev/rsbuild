@@ -6,7 +6,7 @@ import type {
 } from 'node:http';
 import { finished } from 'node:stream';
 import { lookup } from 'mrmime';
-import type { Range, Result as RangeResult, Ranges } from 'range-parser';
+import type { Range } from 'range-parser';
 import { cachedImport } from '../../helpers/cachedImport';
 import type { InternalContext, RequestHandler, Rspack } from '../../types';
 import { HttpCode, isServingAssets } from '../helper';
@@ -265,16 +265,6 @@ const getRangeParser = cachedImport(
   () => import(/* rspackChunkName: "range-parser" */ 'range-parser'),
 );
 
-const parseRangeHeaders = async (
-  value: string,
-): Promise<RangeResult | Ranges> => {
-  const { default: rangeParser } = await getRangeParser();
-  const [len, rangeHeader] = value.split('|');
-  return rangeParser(Number(len), rangeHeader, {
-    combine: true,
-  });
-};
-
 function sendError(res: ServerResponse, code: number): void {
   const errorMessages: Record<number, string> = {
     [HttpCode.BadRequest]: 'Bad Request',
@@ -433,16 +423,16 @@ export function createAssetsMiddleware(
         }
       }
 
-      if (rangeHeader) {
-        let parsedRanges: Ranges | RangeResult | [] = await parseRangeHeaders(
-          `${size}|${rangeHeader}`,
-        );
+      if (rangeHeader && isRangeFresh(req.headers, res)) {
+        const { parse, combineRanges } = await getRangeParser();
+        const { code, ranges } = parse(size, rangeHeader);
 
-        if (!isRangeFresh(req.headers, res)) {
-          parsedRanges = [];
-        }
-
-        if (parsedRanges === -1) {
+        // One malformed range invalidates the entire header, even if others are usable.
+        if (code === 1 || code === 3) {
+          logger.error(
+            "[rsbuild:middleware] A malformed 'Range' header was provided. A regular response will be sent for this request.",
+          );
+        } else if (code === 2 && ranges.length === 0) {
           logger.error(
             "[rsbuild:middleware] Unsatisfiable range for 'Range' header.",
           );
@@ -454,25 +444,21 @@ export function createAssetsMiddleware(
 
           sendError(res, HttpCode.RangeNotSatisfiable);
           return;
-        }
-        if (parsedRanges === -2) {
-          logger.error(
-            "[rsbuild:middleware] A malformed 'Range' header was provided. A regular response will be sent for this request.",
-          );
-        } else if (parsedRanges.length > 1) {
-          logger.error(
-            "[rsbuild:middleware] A 'Range' header with multiple ranges was provided. Multiple ranges are not supported, so a regular response will be sent for this request.",
-          );
-        }
-
-        if (parsedRanges !== -2 && parsedRanges.length === 1) {
-          res.statusCode = 206;
-          res.setHeader(
-            'Content-Range',
-            getValueContentRangeHeader('bytes', size, parsedRanges[0]),
-          );
-
-          [offset, len] = getOffsetAndLenFromRange(parsedRanges[0]);
+        } else if (ranges.length > 0) {
+          const combined = ranges.length > 1 ? combineRanges(ranges) : ranges;
+          if (combined.length === 1) {
+            const [range] = combined;
+            res.statusCode = 206;
+            res.setHeader(
+              'Content-Range',
+              getValueContentRangeHeader('bytes', size, range),
+            );
+            [offset, len] = getOffsetAndLenFromRange(range);
+          } else {
+            logger.error(
+              "[rsbuild:middleware] A 'Range' header with multiple ranges was provided. Multiple ranges are not supported, so a regular response will be sent for this request.",
+            );
+          }
         }
       }
 
