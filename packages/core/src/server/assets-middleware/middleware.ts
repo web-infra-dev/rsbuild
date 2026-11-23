@@ -428,7 +428,7 @@ export function createAssetsMiddleware(
         const { code, ranges } = parse(size, rangeHeader);
 
         // One malformed range invalidates the entire header, even if others are usable.
-        if (code & 1) {
+        if (code === 1 || code === 3) {
           logger.error(
             "[rsbuild:middleware] A malformed 'Range' header was provided. A regular response will be sent for this request.",
           );
