@@ -100,12 +100,16 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
           // See https://github.com/sveltejs/svelte-loader/blob/344f00744b06a98ff5ee7e7a04d5e04ac496988c/index.js#L128
           chain.resolveLoader.alias.set('svelte-loader', loaderPath);
 
+          const injectStyles = environmentConfig.css
+            ? environmentConfig.css.exportType === 'style'
+            : environmentConfig.output.injectStyles;
+
           const userLoaderOptions = options.svelteLoaderOptions ?? {};
           const svelteLoaderOptions = {
             preprocess: sveltePreprocess(options.preprocessOptions),
             // NOTE emitCss: true is currently not supported with HMR
             // See https://github.com/web-infra-dev/rsbuild/issues/2744
-            emitCss: isProd && !environmentConfig.output.injectStyles,
+            emitCss: isProd && !injectStyles,
             hotReload: isDev && environmentConfig.dev.hmr,
             ...userLoaderOptions,
             compilerOptions: {

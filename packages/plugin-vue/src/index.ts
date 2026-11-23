@@ -72,7 +72,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         const merged = mergeEnvironmentConfig(extraConfig, config);
 
         // Support `<style module>`, `<style module="customName">` in Vue SFC
-        if (merged.output.cssModules.auto === true) {
+        if (!merged.css && merged.output.cssModules.auto === true) {
           merged.output.cssModules.auto = (path, query) => {
             // For Vue style block, the path might be like:
             // 1. `/path/to/Foo.vue`
@@ -100,7 +100,9 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
           preserveWhitespace: false,
           ...userLoaderOptions.compilerOptions,
         };
-        const emitCss = environment.config.output.emitCss ?? target === 'web';
+        const emitCss = environment.config.css
+          ? !environment.config.css.exportsOnly
+          : (environment.config.output.emitCss ?? target === 'web');
         const vueLoaderOptions = {
           // Always treat this as a client build when invoked from Rstest,
           // since tests are executed in a DOM-based environment.

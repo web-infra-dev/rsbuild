@@ -1,0 +1,4 @@
+.base {
+  color: red;
+  background-image: url('@e2e/assets/image.png');
+}

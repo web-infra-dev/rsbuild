@@ -2,6 +2,8 @@ import { createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
 import { pluginLess } from '../src';
 
+type MatchedRuleWithOneOf = { oneOf?: Record<string, unknown>[] };
+
 describe('plugin-less', () => {
   it('should add less-loader', async () => {
     const rsbuild = await createRsbuild({
@@ -110,5 +112,64 @@ describe('plugin-less', () => {
     const rspackConfigs = await rsbuild.initConfigs();
     expect(matchRules(rspackConfigs[0], 'a.less').length).toBe(1);
     expect(matchRules(rspackConfigs[0], 'b.less').length).toBe(2);
+  });
+
+  it('should copy built-in CSS type, parser, and generator when css is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: true,
+        plugins: [pluginLess()],
+      },
+    });
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+    const lessRules = matchRules(
+      rspackConfig,
+      'a.less',
+    ) as MatchedRuleWithOneOf[];
+    const oneOf = lessRules[0]?.oneOf;
+
+    expect(oneOf).toBeDefined();
+    expect(JSON.stringify(oneOf)).not.toContain('compiled/css-loader');
+    expect(JSON.stringify(oneOf)).not.toContain('cssExtractLoader');
+    expect(
+      oneOf?.find(
+        (rule) => rule.type === 'css/auto' && !rule.resourceQuery && !rule.with,
+      ),
+    ).toMatchObject({
+      type: 'css/auto',
+      sideEffects: true,
+    });
+    expect(
+      oneOf?.find(
+        (rule) => String(rule.resourceQuery) === String(/[?&]inline(?:&|=|$)/),
+      ),
+    ).toMatchObject({
+      type: 'css',
+      parser: {
+        exportType: 'text',
+        namedExports: true,
+      },
+      generator: {
+        exportsOnly: false,
+      },
+    });
+    const urlRule = oneOf?.find(
+      (rule) => String(rule.resourceQuery) === String(/[?&]url(?:&|=|$)/),
+    );
+    expect(urlRule?.use).toEqual([
+      expect.objectContaining({
+        loader: expect.stringContaining('cssUrlLoader'),
+        options: expect.objectContaining({
+          builtinCss: true,
+        }),
+      }),
+      expect.objectContaining({
+        loader: 'builtin:lightningcss-loader',
+      }),
+      expect.objectContaining({
+        loader: expect.stringContaining('less-loader'),
+      }),
+    ]);
   });
 });

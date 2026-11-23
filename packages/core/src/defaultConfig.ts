@@ -24,8 +24,11 @@ import { getNodeEnv, require } from './helpers';
 import { findExists, isFileExists } from './helpers/fs';
 import { mergeRsbuildConfig } from './mergeConfig';
 import type {
+  CSSConfig,
   EnvironmentConfig,
   NormalizedConfig,
+  NormalizedCSSConfig,
+  NormalizedCSSModulesConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
@@ -306,6 +309,48 @@ export const withDefaultConfig = async (
   return config;
 };
 
+export const getDefaultCssModulesConfig = (): NormalizedCSSModulesConfig => ({
+  localIdentHashDigest: 'base64url',
+  localIdentHashDigestLength: 6,
+  localIdentHashFunction: 'xxhash64',
+  localIdentName: '[uniqueName]-[id]-[local]',
+  animation: true,
+  dashedIdents: false,
+  customIdents: false,
+  container: false,
+  grid: false,
+  function: false,
+});
+
+export const getDefaultCssConfig = (): NormalizedCSSConfig => ({
+  exportType: 'link',
+  exportsConvention: 'as-is',
+  exportsOnly: false,
+  esModule: true,
+  modules: getDefaultCssModulesConfig(),
+});
+
+export function normalizeCssConfig(css: undefined): undefined;
+export function normalizeCssConfig(css: false): false;
+export function normalizeCssConfig(css: true | CSSConfig): NormalizedCSSConfig;
+export function normalizeCssConfig(
+  css?: boolean | CSSConfig,
+): NormalizedCSSConfig | false | undefined;
+export function normalizeCssConfig(
+  css?: boolean | CSSConfig,
+): NormalizedCSSConfig | false | undefined {
+  if (css === undefined || css === false) {
+    return css;
+  }
+  if (css === true) {
+    return getDefaultCssConfig();
+  }
+  return mergeRsbuildConfig<NormalizedCSSConfig>(
+    getDefaultCssConfig(),
+    css as NormalizedCSSConfig,
+  );
+}
+
 type NormalizedBaseConfig = Omit<NormalizedConfig, 'environments'> & {
   environments: Record<string, EnvironmentConfig>;
 };
@@ -342,12 +387,13 @@ export const normalizeConfig = (
     hmr: defaultConfig.mode === 'development',
   };
 
-  const mergedConfig = mergeRsbuildConfig(
-    defaultConfig,
-    config,
-  ) as NormalizedBaseConfig;
+  const mergedConfig = mergeRsbuildConfig(defaultConfig, config);
 
-  return mergedConfig;
+  if (mergedConfig.css !== undefined) {
+    mergedConfig.css = normalizeCssConfig(mergedConfig.css);
+  }
+
+  return mergedConfig as NormalizedBaseConfig;
 };
 
 const normalizeHost = (host?: string | boolean): string => {

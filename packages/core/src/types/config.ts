@@ -1219,6 +1219,102 @@ export type CSSModules = {
   namedExport?: boolean;
 };
 
+export type CSSModulesConfig = {
+  /**
+   * Digest type used for the local ident hash.
+   * @default 'base64url'
+   */
+  localIdentHashDigest?: Rspack.CssGeneratorLocalIdentHashDigest;
+  /**
+   * Number of characters used for the local ident hash.
+   * @default 6
+   */
+  localIdentHashDigestLength?: Rspack.CssGeneratorLocalIdentHashDigestLength;
+  /**
+   * Hash algorithm used to generate the local ident hash.
+   * @default 'xxhash64'
+   */
+  localIdentHashFunction?: Rspack.CssGeneratorLocalIdentHashFunction;
+  /**
+   * Salt string added to the hash when generating CSS Modules local identifiers.
+   * @default undefined
+   */
+  localIdentHashSalt?: Rspack.CssGeneratorLocalIdentHashSalt;
+  /**
+   * Format of generated local class names for CSS Modules.
+   * @default '[uniqueName]-[id]-[local]'
+   */
+  localIdentName?: Rspack.CssGeneratorLocalIdentName;
+  /**
+   * Whether to rename local `@keyframes` animation identifiers in CSS Modules.
+   * @default true
+   */
+  animation?: boolean;
+  /**
+   * Whether to rename dashed identifiers (e.g. CSS custom properties) in CSS Modules.
+   * @default false
+   */
+  dashedIdents?: boolean;
+  /**
+   * Whether to rename custom identifiers in CSS Modules.
+   * @default false
+   */
+  customIdents?: boolean;
+  /**
+   * Whether to rename `@container` names in CSS Modules.
+   * @default false
+   */
+  container?: boolean;
+  /**
+   * Whether to rename CSS Grid line and area names in CSS Modules.
+   * @default false
+   */
+  grid?: boolean;
+  /**
+   * Whether to rename CSS function names in CSS Modules.
+   * @default false
+   */
+  function?: boolean;
+};
+
+export interface CSSConfig {
+  /**
+   * Configure how CSS content is exported to JavaScript.
+   * @default 'link'
+   */
+  exportType?: Rspack.CssParserExportType;
+  /**
+   * Customize how CSS export names are exported to JavaScript modules.
+   * @default 'as-is'
+   */
+  exportsConvention?: Rspack.CssGeneratorExportsConvention;
+  /**
+   * If true, only exports identifier mappings from CSS without emitting stylesheet assets.
+   * @default false
+   */
+  exportsOnly?: Rspack.CssGeneratorExportsOnly;
+  /**
+   * Whether to generate ES module syntax for CSS exports.
+   * @default true
+   */
+  esModule?: Rspack.CssGeneratorEsModule;
+  /**
+   * Configure CSS Modules behavior for Rspack's built-in CSS.
+   */
+  modules?: CSSModulesConfig;
+}
+
+export type NormalizedCSSModulesConfig = Omit<
+  Required<CSSModulesConfig>,
+  'localIdentHashSalt'
+> & {
+  localIdentHashSalt?: Rspack.CssGeneratorLocalIdentHashSalt;
+};
+
+export type NormalizedCSSConfig = Required<Omit<CSSConfig, 'modules'>> & {
+  modules: NormalizedCSSModulesConfig;
+};
+
 export type Minify =
   | boolean
   | {
@@ -2290,6 +2386,12 @@ export type AllowedEnvironmentDevKeys =
  */
 export interface EnvironmentConfig {
   /**
+   * Enable and configure Rspack's built-in CSS support.
+   * When enabled (`true` or object), `output.injectStyles` and `output.emitCss` are ignored.
+   * @default undefined
+   */
+  css?: boolean | CSSConfig;
+  /**
    * Configure public directories and build output serving for this environment.
    * Other server options are shared across environments.
    */
@@ -2396,6 +2498,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 }
 
 export type MergedEnvironmentConfig = {
+  css?: boolean | CSSConfig;
   server?: NonNullable<EnvironmentConfig['server']>;
   mode: RsbuildMode;
   root: string;
@@ -2418,7 +2521,8 @@ export type MergedEnvironmentConfig = {
  * The normalized Rsbuild environment config.
  */
 export type NormalizedEnvironmentConfig = TwoLevelReadonly<
-  Omit<MergedEnvironmentConfig, 'dev' | 'server'> & {
+  Omit<MergedEnvironmentConfig, 'dev' | 'server' | 'css'> & {
+    css?: NormalizedCSSConfig | false;
     dev: NormalizedDevConfig;
     server: NormalizedServerConfig;
     _privateMeta?: RsbuildConfigMeta;

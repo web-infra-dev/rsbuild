@@ -1,0 +1,22 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@container card-box (min-width: 100px) {
+  .box-title {
+    font-size: 20px;
+  }
+}
+
+.box-title {
+  --custom-color: rgb(0, 128, 0);
+  color: var(--custom-color);
+  animation: fadeIn 1s;
+  container-name: card-box;
+  grid-template-areas: 'header';
+}

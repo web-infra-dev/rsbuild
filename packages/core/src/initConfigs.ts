@@ -6,6 +6,7 @@ import {
 import {
   getDefaultEntry,
   normalizeConfig,
+  normalizeCssConfig,
   normalizePublicDirs,
 } from './defaultConfig';
 import { camelCase, color, pick } from './helpers';
@@ -283,8 +284,10 @@ export async function initRsbuildConfig({
     );
 
     const publicDir = environmentConfig.server?.publicDir;
+    const { css, ...restEnvironmentConfig } = environmentConfig;
     const normalizedEnvironmentConfig = {
-      ...environmentConfig,
+      ...restEnvironmentConfig,
+      ...(css !== undefined ? { css: normalizeCssConfig(css) } : {}),
       dev: {
         ...normalizedBaseConfig.dev,
         ...environmentConfig.dev,

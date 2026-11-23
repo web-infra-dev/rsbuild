@@ -225,7 +225,20 @@ export const pluginSass = (
         }
         rule.resourceQuery(cssBranchRule.get('resourceQuery'));
 
-        for (const id of Object.keys(cssBranchRule.uses.entries())) {
+        const cssRuleType = cssBranchRule.get('type');
+        if (cssRuleType) {
+          rule.type(cssRuleType);
+        }
+        const cssRuleParser = cssBranchRule.get('parser');
+        if (cssRuleParser) {
+          rule.parser(deepmerge({}, cssRuleParser));
+        }
+        const cssRuleGenerator = cssBranchRule.get('generator');
+        if (cssRuleGenerator) {
+          rule.set('generator', deepmerge({}, cssRuleGenerator));
+        }
+
+        for (const id of Object.keys(cssBranchRule.uses.entries() ?? {})) {
           const loader = cssBranchRule.use<CSSLoaderOptions>(id);
           const cssLoaderPath = loader.get('loader');
 

@@ -114,6 +114,54 @@ export function parseMinifyOptions(config: NormalizedEnvironmentConfig): {
   };
 }
 
+export async function getCSSMinimizerOptionsList(
+  config: NormalizedEnvironmentConfig,
+  browserslist: string[],
+  cssOptions?: OneOrMany<LightningCssMinimizerRspackPluginOptions>,
+): Promise<LightningCssMinimizerRspackPluginOptions[]> {
+  const loaderOptions = await getLightningCSSLoaderOptions(
+    config,
+    browserslist,
+    true,
+  );
+
+  const defaultOptions: LightningCssMinimizerRspackPluginOptions = {
+    // If user has configured `tools.lightningcssLoader` options,
+    // we should will use them as the default minimizer options.
+    // This helps to keep development and production consistent.
+    minimizerOptions: {
+      targets: isPlainObject(loaderOptions.targets)
+        ? browserslist
+        : loaderOptions.targets,
+      ...pick(loaderOptions, [
+        'drafts',
+        'include',
+        'exclude',
+        'nonStandard',
+        'pseudoClasses',
+        'unusedSymbols',
+        'errorRecovery',
+      ]),
+    },
+  };
+
+  const merge = (cssOptionsItem?: LightningCssMinimizerRspackPluginOptions) =>
+    cssOptionsItem
+      ? deepmerge<LightningCssMinimizerRspackPluginOptions>(
+          defaultOptions,
+          cssOptionsItem,
+        )
+      : defaultOptions;
+
+  if (!Array.isArray(cssOptions)) {
+    return [merge(cssOptions)];
+  }
+  if (cssOptions.length === 0) {
+    return [defaultOptions];
+  }
+  return cssOptions.map(merge);
+}
+
 export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild:minimize',
 
@@ -153,42 +201,13 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       }
 
       if (minifyCss) {
-        const loaderOptions = await getLightningCSSLoaderOptions(
+        const minimizerOptionsList = await getCSSMinimizerOptionsList(
           config,
           environment.browserslist,
-          true,
+          cssOptions,
         );
 
-        const defaultOptions: LightningCssMinimizerRspackPluginOptions = {
-          // If user has configured `tools.lightningcssLoader` options,
-          // we should will use them as the default minimizer options.
-          // This helps to keep development and production consistent.
-          minimizerOptions: {
-            targets: isPlainObject(loaderOptions.targets)
-              ? environment.browserslist
-              : loaderOptions.targets,
-            ...pick(loaderOptions, [
-              'drafts',
-              'include',
-              'exclude',
-              'nonStandard',
-              'pseudoClasses',
-              'unusedSymbols',
-              'errorRecovery',
-            ]),
-          },
-        };
-
-        const registerCssMinimizer = (
-          cssOptionsItem?: LightningCssMinimizerRspackPluginOptions,
-          index = 0,
-        ) => {
-          const options = cssOptionsItem
-            ? deepmerge<LightningCssMinimizerRspackPluginOptions>(
-                defaultOptions,
-                cssOptionsItem,
-              )
-            : defaultOptions;
+        minimizerOptionsList.forEach((options, index) => {
           const minimizerId =
             index === 0
               ? CHAIN_ID.MINIMIZER.CSS
@@ -198,15 +217,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
             .minimizer(minimizerId)
             .use(rspack.LightningCssMinimizerRspackPlugin, [options])
             .end();
-        };
-
-        if (!Array.isArray(cssOptions)) {
-          registerCssMinimizer(cssOptions);
-        } else if (cssOptions.length === 0) {
-          registerCssMinimizer();
-        } else {
-          cssOptions.forEach(registerCssMinimizer);
-        }
+        });
       }
     });
   },

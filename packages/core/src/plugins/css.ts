@@ -17,6 +17,7 @@ import { findWorkspaceRoot } from '../helpers/workspace';
 import type {
   CSSLoaderModulesMode,
   CSSLoaderOptions,
+  NormalizedCSSConfig,
   NormalizedEnvironmentConfig,
   OneOrMany,
   PostCSSLoaderOptions,
@@ -26,7 +27,7 @@ import type {
   RspackChain,
   ToolsPostCSSContext,
 } from '../types';
-import { parseMinifyOptions } from './minimize';
+import { getCSSMinimizerOptionsList, parseMinifyOptions } from './minimize';
 
 const getCSSModulesLocalIdentName = (
   config: NormalizedEnvironmentConfig,
@@ -308,12 +309,101 @@ const getCSSLoaderOptions = async ({
   return cssLoaderOptions;
 };
 
+const applyBuiltinCssConfig = ({
+  chain,
+  config,
+  cssConfig,
+  isProd,
+}: {
+  chain: RspackChain;
+  config: NormalizedEnvironmentConfig;
+  cssConfig: NormalizedCSSConfig;
+  isProd: boolean;
+}) => {
+  const cssParserOptions: Rspack.CssParserOptions = {
+    exportType: cssConfig.exportType,
+  };
+
+  const cssModuleParserOptions: Rspack.CssAutoOrModuleParserOptions = {
+    exportType: cssConfig.exportType,
+    animation: cssConfig.modules.animation,
+    dashedIdents: cssConfig.modules.dashedIdents,
+    customIdents: cssConfig.modules.customIdents,
+    container: cssConfig.modules.container,
+    grid: cssConfig.modules.grid,
+    function: cssConfig.modules.function,
+  };
+
+  const cssGeneratorOptions: Rspack.CssGeneratorOptions = {
+    exportsOnly: cssConfig.exportsOnly,
+    esModule: cssConfig.esModule,
+  };
+
+  const cssModuleGeneratorOptions: Rspack.CssModuleGeneratorOptions = {
+    exportsConvention: cssConfig.exportsConvention,
+    exportsOnly: cssConfig.exportsOnly,
+    esModule: cssConfig.esModule,
+    localIdentHashDigest: cssConfig.modules.localIdentHashDigest,
+    localIdentHashDigestLength: cssConfig.modules.localIdentHashDigestLength,
+    localIdentHashFunction: cssConfig.modules.localIdentHashFunction,
+    ...(cssConfig.modules.localIdentHashSalt !== undefined
+      ? { localIdentHashSalt: cssConfig.modules.localIdentHashSalt }
+      : {}),
+    localIdentName: cssConfig.modules.localIdentName,
+  };
+
+  chain.module.parser.merge({
+    css: cssParserOptions,
+    'css/auto': cssModuleParserOptions,
+    'css/global': cssModuleParserOptions,
+    'css/module': cssModuleParserOptions,
+  });
+
+  chain.module.generator.merge({
+    css: cssGeneratorOptions,
+    'css/auto': cssModuleGeneratorOptions,
+    'css/global': cssModuleGeneratorOptions,
+    'css/module': cssModuleGeneratorOptions,
+  });
+
+  if (!cssConfig.exportsOnly && cssConfig.exportType === 'link') {
+    const cssPath = config.output.distPath.css;
+    const cssFilename = getFilename(config, 'css', isProd);
+    const isCssFilenameFn = typeof cssFilename === 'function';
+    const cssAsyncPath =
+      config.output.distPath.cssAsync ??
+      (cssPath ? `${cssPath}/async` : 'async');
+
+    chain.output
+      .set(
+        'cssFilename',
+        isCssFilenameFn
+          ? (...args: Parameters<typeof cssFilename>) => {
+              const name = cssFilename(...args);
+              return posix.join(cssPath, name);
+            }
+          : posix.join(cssPath, cssFilename),
+      )
+      .set(
+        'cssChunkFilename',
+        isCssFilenameFn
+          ? (...args: Parameters<typeof cssFilename>) => {
+              const name = cssFilename(...args);
+              return posix.join(cssAsyncPath, name);
+            }
+          : posix.join(cssAsyncPath, cssFilename),
+      );
+  }
+};
+
 type PostcssrcCache = Map<string, PostCSSOptions | Promise<PostCSSOptions>>;
 
 export const pluginCss = (): RsbuildPlugin => ({
   name: 'rsbuild:css',
   setup(api) {
     const postcssrcCache: PostcssrcCache = new Map();
+    let hasWarnedInjectStyles = false;
+    let hasWarnedEmitCss = false;
 
     api.modifyBundlerChain({
       order: 'pre',
@@ -323,6 +413,23 @@ export const pluginCss = (): RsbuildPlugin => ({
       ) => {
         const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
         const { config } = environment;
+        const builtinCssConfig = config.css || undefined;
+
+        if (builtinCssConfig) {
+          if (!hasWarnedInjectStyles && config.output.injectStyles) {
+            hasWarnedInjectStyles = true;
+            api.logger.warn(
+              `${color.dim('[rsbuild:css]')} \`output.injectStyles\` is ignored when built-in CSS is enabled. Use \`css.exportType: 'style'\` instead.`,
+            );
+          }
+
+          if (!hasWarnedEmitCss && config.output.emitCss !== undefined) {
+            hasWarnedEmitCss = true;
+            api.logger.warn(
+              `${color.dim('[rsbuild:css]')} \`output.emitCss\` is ignored when built-in CSS is enabled. Use \`css.exportsOnly\` instead.`,
+            );
+          }
+        }
 
         cssRule
           .test(CSS_REGEX)
@@ -358,11 +465,39 @@ export const pluginCss = (): RsbuildPlugin => ({
         // Default CSS handling
         const mainRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN);
 
-        const emitCss = config.output.emitCss ?? target === 'web';
+        const emitCss = builtinCssConfig
+          ? !builtinCssConfig.exportsOnly
+          : (config.output.emitCss ?? target === 'web');
 
-        // Create Rspack rule
-        // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
-        if (emitCss) {
+        if (builtinCssConfig) {
+          applyBuiltinCssConfig({
+            chain,
+            config,
+            cssConfig: builtinCssConfig,
+            isProd,
+          });
+
+          urlRule.resolve.preferRelative(true);
+
+          mainRule
+            .type('css/auto')
+            .sideEffects(true)
+            .resolve.preferRelative(true);
+
+          inlineRule
+            .type('css')
+            .parser({
+              exportType: 'text',
+              namedExports: true,
+            })
+            .set('generator', {
+              exportsOnly: false,
+            })
+            .sideEffects(true)
+            .resolve.preferRelative(true);
+        } else if (emitCss) {
+          // Create Rspack rule
+          // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
           // use style-loader
           if (config.output.injectStyles) {
             const styleLoaderOptions = await reduceConfigs({
@@ -408,36 +543,39 @@ export const pluginCss = (): RsbuildPlugin => ({
           await callback(urlRule, 'url');
         };
 
-        const cssLoaderPath = getCompiledPath('css-loader');
-        await updateRules((rule) => {
-          rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
-        });
+        if (!builtinCssConfig) {
+          const cssLoaderPath = getCompiledPath('css-loader');
+          await updateRules((rule) => {
+            rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
+          });
+        }
 
         let cssUrlMinimized = false;
+        let { minifyCss, cssOptions } = parseMinifyOptions(config);
+        let { browserslist } = environment;
+        let minimizerConfig = config;
+
+        // Use the same browserslist and minification as web bundles to ensure consistent
+        // CSS output. Prevent mismatched prefixes or features between SSR and client hydration.
+        if (target === 'node') {
+          const webEnvironment = Object.values(environments).find(
+            (env) => env.config.output.target === 'web',
+          );
+          if (webEnvironment) {
+            browserslist = webEnvironment.browserslist;
+            minimizerConfig = webEnvironment.config;
+            const webMinifyOptions = parseMinifyOptions(webEnvironment.config);
+            minifyCss = webMinifyOptions.minifyCss;
+            cssOptions ??= webMinifyOptions.cssOptions;
+          }
+        }
 
         if (config.tools.lightningcssLoader !== false) {
-          if (emitCss) {
-            importLoaders.normal++;
-          }
-          importLoaders.inline++;
-
-          let { minifyCss, cssOptions } = parseMinifyOptions(config);
-          let { browserslist } = environment;
-
-          // Use the same browserslist and minification as web bundles to ensure consistent
-          // CSS output. Prevent mismatched prefixes or features between SSR and client hydration.
-          if (target === 'node') {
-            const webEnvironment = Object.values(environments).find(
-              (env) => env.config.output.target === 'web',
-            );
-            if (webEnvironment) {
-              browserslist = webEnvironment.browserslist;
-              const webMinifyOptions = parseMinifyOptions(
-                webEnvironment.config,
-              );
-              minifyCss = webMinifyOptions.minifyCss;
-              cssOptions ??= webMinifyOptions.cssOptions;
+          if (!builtinCssConfig) {
+            if (emitCss) {
+              importLoaders.normal++;
             }
+            importLoaders.inline++;
           }
 
           const cssUrlMinimizerOptions = minifyCss
@@ -450,8 +588,11 @@ export const pluginCss = (): RsbuildPlugin => ({
               // so we need to minify them via `builtin:lightningcss-loader`
               const inlineStyle =
                 type === 'inline' ||
-                type === 'url' ||
-                config.output.injectStyles;
+                (type === 'url'
+                  ? !builtinCssConfig
+                  : builtinCssConfig
+                    ? builtinCssConfig.exportType !== 'link'
+                    : config.output.injectStyles);
               const minify = inlineStyle && minifyCss;
 
               let lightningcssOptions = await getLightningCSSLoaderOptions(
@@ -461,6 +602,7 @@ export const pluginCss = (): RsbuildPlugin => ({
               );
 
               if (
+                !builtinCssConfig &&
                 type === 'url' &&
                 lightningcssOptions.minify === true &&
                 cssUrlMinimizerOptions !== false
@@ -495,10 +637,12 @@ export const pluginCss = (): RsbuildPlugin => ({
           typeof postcssLoaderOptions.postcssOptions === 'function' ||
           postcssLoaderOptions.postcssOptions?.plugins?.length
         ) {
-          if (emitCss) {
-            importLoaders.normal++;
+          if (!builtinCssConfig) {
+            if (emitCss) {
+              importLoaders.normal++;
+            }
+            importLoaders.inline++;
           }
-          importLoaders.inline++;
 
           const postcssLoaderPath = getCompiledPath('postcss-loader');
 
@@ -514,99 +658,117 @@ export const pluginCss = (): RsbuildPlugin => ({
           );
         }
 
-        const localIdentName = getCSSModulesLocalIdentName(config, isProd);
-        const cssLoaderOptions = await getCSSLoaderOptions({
-          config,
-          localIdentName,
-          emitCss,
-        });
-
-        await updateRules((rule, type) => {
-          const finalOptions =
-            type === 'inline' || type === 'url'
-              ? {
-                  ...cssLoaderOptions,
-                  exportType: 'string',
-                  modules: false,
-                  importLoaders: importLoaders.inline,
-                }
-              : {
-                  ...cssLoaderOptions,
-                  importLoaders: importLoaders.normal,
-                };
-
-          // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
-          if (!emitCss && type === 'main') {
-            rule.use(CHAIN_ID.USE.IGNORE_CSS).options({
-              modules: finalOptions.modules,
-            });
-          }
-
-          rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
-
-          if (type !== 'url') {
-            // CSS imports should always be treated as sideEffects.
-            // CSS ?url only exports a URL string and does not apply styles.
-            rule.sideEffects(true);
-          }
-
-          // Enable preferRelative by default, which is consistent with the default behavior of css-loader
-          // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
-          rule.resolve.preferRelative(true);
-        });
-
         const cssUrlFilename = getFilename(config, 'css', isProd);
         const cssUrlPath = config.output.distPath.css;
+        const cssUrlFilenameOption =
+          typeof cssUrlFilename === 'function'
+            ? (pathData: Rspack.PathData, assetInfo?: Rspack.AssetInfo) =>
+                posix.join(cssUrlPath, cssUrlFilename(pathData, assetInfo))
+            : posix.join(cssUrlPath, cssUrlFilename);
 
-        urlRule.use(CHAIN_ID.USE.CSS_URL).options({
-          filename:
-            typeof cssUrlFilename === 'function'
-              ? (pathData: Rspack.PathData, assetInfo?: Rspack.AssetInfo) =>
-                  posix.join(cssUrlPath, cssUrlFilename(pathData, assetInfo))
-              : posix.join(cssUrlPath, cssUrlFilename),
-          modules: cssLoaderOptions.modules,
-          minimized: cssUrlMinimized,
-        });
+        if (builtinCssConfig) {
+          const cssUrlMinimizers = minifyCss
+            ? await getCSSMinimizerOptionsList(
+                minimizerConfig,
+                browserslist,
+                cssOptions,
+              )
+            : undefined;
 
-        const isStringExport = cssLoaderOptions.exportType === 'string';
-        if (
-          isStringExport &&
-          mainRule.uses.has(CHAIN_ID.USE.MINI_CSS_EXTRACT)
-        ) {
-          mainRule.uses.delete(CHAIN_ID.USE.MINI_CSS_EXTRACT);
-        }
+          urlRule.use(CHAIN_ID.USE.CSS_URL).options({
+            builtinCss: true,
+            filename: cssUrlFilenameOption,
+            modules: { auto: true },
+            ...(cssUrlMinimizers ? { minimizers: cssUrlMinimizers } : {}),
+          });
+        } else {
+          const localIdentName = getCSSModulesLocalIdentName(config, isProd);
+          const cssLoaderOptions = await getCSSLoaderOptions({
+            config,
+            localIdentName,
+            emitCss,
+          });
 
-        // Apply CSS extract plugin if not using style-loader and emitCss is true
-        if (emitCss && !config.output.injectStyles && !isStringExport) {
-          const extractPluginOptions = config.tools.cssExtract.pluginOptions;
+          await updateRules((rule, type) => {
+            const finalOptions =
+              type === 'inline' || type === 'url'
+                ? {
+                    ...cssLoaderOptions,
+                    exportType: 'string',
+                    modules: false,
+                    importLoaders: importLoaders.inline,
+                  }
+                : {
+                    ...cssLoaderOptions,
+                    importLoaders: importLoaders.normal,
+                  };
 
-          const cssPath = config.output.distPath.css;
-          const cssFilename = getFilename(config, 'css', isProd);
-          const isCssFilenameFn = typeof cssFilename === 'function';
+            // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
+            if (!emitCss && type === 'main') {
+              rule.use(CHAIN_ID.USE.IGNORE_CSS).options({
+                modules: finalOptions.modules,
+              });
+            }
 
-          const cssAsyncPath =
-            config.output.distPath.cssAsync ??
-            (cssPath ? `${cssPath}/async` : 'async');
+            rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
 
-          chain
-            .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
-            .use(rspack.CssExtractRspackPlugin, [
-              {
-                filename: isCssFilenameFn
-                  ? (...args) => {
-                      const name = cssFilename(...args);
-                      return posix.join(cssPath, name);
-                    }
-                  : posix.join(cssPath, cssFilename),
-                chunkFilename: isCssFilenameFn
-                  ? (...args) => {
-                      const name = cssFilename(...args);
-                      return posix.join(cssAsyncPath, name);
-                    }
-                  : posix.join(cssAsyncPath, cssFilename),
-                ...extractPluginOptions,
-              },
-            ]);
+            if (type !== 'url') {
+              // CSS imports should always be treated as sideEffects.
+              // CSS ?url only exports a URL string and does not apply styles.
+              rule.sideEffects(true);
+            }
+
+            // Enable preferRelative by default, which is consistent with the default behavior of css-loader
+            // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
+            rule.resolve.preferRelative(true);
+          });
+
+          urlRule.use(CHAIN_ID.USE.CSS_URL).options({
+            filename: cssUrlFilenameOption,
+            modules: cssLoaderOptions.modules,
+            minimized: cssUrlMinimized,
+          });
+
+          const isStringExport = cssLoaderOptions.exportType === 'string';
+          if (
+            isStringExport &&
+            mainRule.uses.has(CHAIN_ID.USE.MINI_CSS_EXTRACT)
+          ) {
+            mainRule.uses.delete(CHAIN_ID.USE.MINI_CSS_EXTRACT);
+          }
+
+          // Apply CSS extract plugin if not using style-loader and emitCss is true
+          if (emitCss && !config.output.injectStyles && !isStringExport) {
+            const extractPluginOptions = config.tools.cssExtract.pluginOptions;
+
+            const cssPath = config.output.distPath.css;
+            const cssFilename = getFilename(config, 'css', isProd);
+            const isCssFilenameFn = typeof cssFilename === 'function';
+
+            const cssAsyncPath =
+              config.output.distPath.cssAsync ??
+              (cssPath ? `${cssPath}/async` : 'async');
+
+            chain
+              .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
+              .use(rspack.CssExtractRspackPlugin, [
+                {
+                  filename: isCssFilenameFn
+                    ? (...args) => {
+                        const name = cssFilename(...args);
+                        return posix.join(cssPath, name);
+                      }
+                    : posix.join(cssPath, cssFilename),
+                  chunkFilename: isCssFilenameFn
+                    ? (...args) => {
+                        const name = cssFilename(...args);
+                        return posix.join(cssAsyncPath, name);
+                      }
+                    : posix.join(cssAsyncPath, cssFilename),
+                  ...extractPluginOptions,
+                },
+              ]);
+          }
         }
       },
     });

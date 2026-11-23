@@ -85,7 +85,9 @@ export const pluginTailwindcss = (
           base: api.context.rootPath,
           optimize,
         };
-        const emitCss = output.emitCss ?? target === 'web';
+        const emitCss = environment.config.css
+          ? !environment.config.css.exportsOnly
+          : (output.emitCss ?? target === 'web');
 
         const addTailwindLoader = (rule: RspackChain.Rule<unknown>) => {
           incrementCssImportLoaders(rule, CHAIN_ID.USE.CSS);
@@ -97,7 +99,9 @@ export const pluginTailwindcss = (
         };
 
         const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
-        addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL));
+        if (cssRule.oneOfs.has(CHAIN_ID.ONE_OF.CSS_URL)) {
+          addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL));
+        }
         if (emitCss) {
           addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN));
         }
