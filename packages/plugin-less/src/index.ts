@@ -116,6 +116,20 @@ export type PluginLessOptions = {
    * @default false
    */
   parallel?: boolean;
+  /**
+   * Whether to cache Less compilation results using Rspack's loader cache.
+   * Requires enabling `performance.buildCache` and Rspack's experimental
+   * `experiments.newCache` option.
+   *
+   * Loader options must be JSON-serializable; otherwise Rspack skips loader caching.
+   * Note that loader caching only applies when `less-loader` runs directly in the
+   * rule chain (for example, `?inline` imports or `tools.cssLoader.exportType: 'string'`),
+   * not when pitching loaders such as `CssExtractRspackPlugin.loader` or
+   * `style-loader` re-invoke loaders via inline requests.
+   * @experimental
+   * @default false
+   */
+  cache?: boolean;
 };
 
 const getLessLoaderOptions = async (
@@ -191,7 +205,11 @@ export const pluginLess = (
   setup(api) {
     assertCoreVersion(api.context.version);
 
-    const { include = /\.less$/, parallel = false } = pluginOptions;
+    const {
+      include = /\.less$/,
+      parallel = false,
+      cache = false,
+    } = pluginOptions;
 
     const CSS_MAIN = 'css';
     const CSS_INLINE = 'css-inline';
@@ -312,6 +330,9 @@ export const pluginLess = (
 
         if (parallel) {
           loader.parallel(true);
+        }
+        if (cache) {
+          loader.set('cache', true);
         }
       });
     });

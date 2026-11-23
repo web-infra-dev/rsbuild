@@ -26,6 +26,12 @@ Upgrading to the latest version of Rsbuild gives you access to the latest perfor
 
 Rsbuild provides a [performance.buildCache](/config/performance/build-cache) configuration that significantly improves rebuild speed.
 
+When using Rspack's experimental [experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache), the following plugins also support the experimental `cache` option to cache loader results:
+
+- [@rsbuild/plugin-babel - cache](/plugins/list/plugin-babel#cache): cache Babel transformation results.
+- [@rsbuild/plugin-less - cache](/plugins/list/plugin-less#cache): cache Less compilation results.
+- [@rsbuild/plugin-svgr - cache](/plugins/list/plugin-svgr#cache): cache SVGR transformation results.
+
 ### React Compiler
 
 If your project uses React Compiler, enable Rsbuild's built-in Rust version of [React Compiler](/plugins/list/plugin-react#reactcompiler) instead of running React Compiler through Babel to reduce the performance overhead introduced by Babel.

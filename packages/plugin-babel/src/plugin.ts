@@ -123,8 +123,15 @@ export const pluginBabel = (
         options.babelLoaderOptions,
       );
 
-      // calculate cacheIdentifier with the merged options
-      if (mergedOptions.cacheDirectory && !mergedOptions.cacheIdentifier) {
+      if (options.cache) {
+        delete mergedOptions.cacheDirectory;
+        delete mergedOptions.cacheCompression;
+        delete mergedOptions.cacheIdentifier;
+      } else if (
+        mergedOptions.cacheDirectory &&
+        !mergedOptions.cacheIdentifier
+      ) {
+        // calculate cacheIdentifier with the merged options
         mergedOptions.cacheIdentifier = await getCacheIdentifier(mergedOptions);
       }
 
@@ -135,7 +142,7 @@ export const pluginBabel = (
       order: 'pre',
       handler: async (chain, { CHAIN_ID, environment }) => {
         const babelOptions = await getBabelOptions(environment);
-        const { include, exclude, parallel = false } = options;
+        const { include, exclude, parallel = false, cache = false } = options;
 
         if (include || exclude) {
           const rule = chain.module
@@ -167,6 +174,9 @@ export const pluginBabel = (
           if (parallel) {
             loader.parallel(true);
           }
+          if (cache) {
+            loader.set('cache', true);
+          }
         } else {
           const loader = chain.module
             .rule(CHAIN_ID.RULE.JS)
@@ -179,6 +189,9 @@ export const pluginBabel = (
 
           if (parallel) {
             loader.parallel(true);
+          }
+          if (cache) {
+            loader.set('cache', true);
           }
         }
       },

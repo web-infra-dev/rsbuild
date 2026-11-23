@@ -209,4 +209,65 @@ describe('plugins/babel', () => {
     expect(rules.match(/"comments":false/g)).toHaveLength(3);
     expect(rules.match(/"comments":true/g)).toHaveLength(1);
   });
+
+  it('should configure Rspack loader cache when `cache` is true', async () => {
+    const rsbuild = await createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        plugins: [
+          pluginBabel({
+            cache: true,
+            babelLoaderOptions: {
+              cacheDirectory: '/custom-cache',
+            },
+          }),
+          pluginBabel({
+            include: /foo\.js$/,
+            cache: true,
+          }),
+        ],
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+    const jsRules = matchRules(configs[0], 'foo.js');
+
+    const defaultRule = jsRules.find(
+      (rule) => rule && typeof rule === 'object' && 'oneOf' in rule,
+    ) as {
+      oneOf: Array<{
+        use?: Array<{
+          loader?: string;
+          options?: Record<string, unknown>;
+          cache?: boolean;
+        }>;
+      }>;
+    };
+    const defaultBabelUse = defaultRule.oneOf
+      .flatMap((item) => item.use ?? [])
+      .find((use) => use.loader?.includes('babel-loader'));
+
+    expect(defaultBabelUse?.cache).toBe(true);
+    expect(defaultBabelUse?.options?.cacheDirectory).toBeUndefined();
+    expect(defaultBabelUse?.options?.cacheCompression).toBeUndefined();
+    expect(defaultBabelUse?.options?.cacheIdentifier).toBeUndefined();
+
+    const standaloneRule = jsRules.find(
+      (rule) => rule && typeof rule === 'object' && 'use' in rule,
+    ) as {
+      use?: Array<{
+        loader?: string;
+        options?: Record<string, unknown>;
+        cache?: boolean;
+      }>;
+    };
+    const standaloneBabelUse = standaloneRule.use?.find((use) =>
+      use.loader?.includes('babel-loader'),
+    );
+
+    expect(standaloneBabelUse?.cache).toBe(true);
+    expect(standaloneBabelUse?.options?.cacheDirectory).toBeUndefined();
+    expect(standaloneBabelUse?.options?.cacheCompression).toBeUndefined();
+    expect(standaloneBabelUse?.options?.cacheIdentifier).toBeUndefined();
+  });
 });
