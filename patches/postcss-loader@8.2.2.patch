@@ -1,28 +1,30 @@
 # postcss-loader and css-loader use `semver` to compare PostCSS ast version,
 # Rsbuild uses the same PostCSS version and do not need the comparison.
 diff --git a/dist/index.js b/dist/index.js
-index b69663d2ef81e83d18163f76c38cfbb04abd18f8..ee609ebe7e4578c3046b880c6517613b3031e13a 100644
+index 904cd3cb3d102a1d30cd4a3c4cda63c1076faf87..45f80bdf8195c7c48db966af2631a1b5e41a1d49 100644
 --- a/dist/index.js
 +++ b/dist/index.js
-@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
+@@ -5,10 +5,7 @@ Object.defineProperty(exports, "__esModule", {
  });
  exports.default = loader;
  var _nodePath = _interopRequireDefault(require("node:path"));
 -var _package = _interopRequireDefault(require("postcss/package.json"));
+ var _compilationCache = require("./compilation-cache");
+-var _optionsCheck = _interopRequireDefault(require("./options.check.js"));
 -var _options = _interopRequireDefault(require("./options.json"));
  var _utils = require("./utils");
  function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
  let hasExplicitDependencyOnPostCSS = false;
-@@ -25,7 +23,7 @@ let hasExplicitDependencyOnPostCSS = false;
+@@ -30,7 +27,7 @@ const processorCache = (0, _compilationCache.createCompilationCache)();
   * @return {callback} callback Result
   */
  async function loader(content, sourceMap, meta) {
--  const options = this.getOptions(_options.default);
+-  const options = this.getOptions(_options.default, _optionsCheck.default);
 +  const options = this.getOptions();
    const callback = this.async();
    const configOption = typeof options.postcssOptions === "undefined" || typeof options.postcssOptions.config === "undefined" ? true : options.postcssOptions.config;
    let implementation;
-@@ -66,7 +64,7 @@ async function loader(content, sourceMap, meta) {
+@@ -75,7 +72,7 @@ async function loader(content, sourceMap, meta) {
    let root;
  
    // Reuse PostCSS AST from other loaders
@@ -32,7 +34,7 @@ index b69663d2ef81e83d18163f76c38cfbb04abd18f8..ee609ebe7e4578c3046b880c6517613b
        root
      } = meta.ast);
 diff --git a/dist/utils.js b/dist/utils.js
-index 74a4fd455b8d83c4e7dc19bbe91265f2c4e8e7af..01a4751085ce0db7776b5419a526331abe8d86d6 100644
+index 1c958f49e52c19ccbe0d6b0edad465a75a3fa585..0d0ae6a1b671624b8a651f1b23ad1b785089c85f 100644
 --- a/dist/utils.js
 +++ b/dist/utils.js
 @@ -15,7 +15,7 @@ exports.warningFactory = warningFactory;
@@ -41,6 +43,6 @@ index 74a4fd455b8d83c4e7dc19bbe91265f2c4e8e7af..01a4751085ce0db7776b5419a526331a
  var _nodeUrl = _interopRequireDefault(require("node:url"));
 -var _cosmiconfig = require("cosmiconfig");
 +var _cosmiconfig = {};
+ var _compilationCache = require("./compilation-cache");
  function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
  const parentModule = module;
- const stat = (inputFileSystem, filePath) => new Promise((resolve, reject) => {
