@@ -167,20 +167,6 @@ hoistPattern: []
 # Reduce the risk of installing compromised packages
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
-  - '@solidjs/babel-plugin@2.0.0'
-  - '@solidjs/compiler@2.0.0'
-  - '@solidjs/compiler-darwin-arm64@2.0.0'
-  - '@solidjs/compiler-darwin-x64@2.0.0'
-  - '@solidjs/compiler-linux-arm64-gnu@2.0.0'
-  - '@solidjs/compiler-linux-x64-gnu@2.0.0'
-  - '@solidjs/compiler-wasm32-wasi@2.0.0'
-  - '@solidjs/compiler-win32-x64-msvc@2.0.0'
-  - '@solidjs/signals@2.0.0'
-  - '@solidjs/web@2.0.0'
-  - 'solid-js@2.0.0'
-  - 'solid-loader@0.1.1'
-  - 'html-rspack-plugin@6.1.11'
-  - 'path-serializer@0.7.0'
   - '@rspack/*'
   - 'rspack-chain'
   - '@rsbuild/*'
