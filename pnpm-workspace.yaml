@@ -11,6 +11,10 @@ packages:
   - '!**/test-temp-*/**'
   - '!**/_node_modules/**'
 
+# TODO: Remove this setting after upgrading to pnpm v13.
+lockfile:
+  format: v13
+
 catalogMode: prefer
 
 cleanupUnusedCatalogs: true
