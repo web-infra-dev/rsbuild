@@ -30,15 +30,15 @@ test('should receive custom events from HMR clients', async ({ page, dev }) => {
     },
   });
 
-  // Message sent before the WebSocket connected
-  await expect(page.locator('#pong')).toHaveText('2');
+  await expect(page.locator('#pong')).toHaveText('4');
+  expect(received).toEqual([1, 2]);
 
   await page.evaluate(() => window.sendPing(5));
   await expect(page.locator('#pong')).toHaveText('10');
-  expect(received).toEqual([1, 5]);
+  expect(received).toEqual([1, 2, 5]);
 
   unsubscribe();
   await page.evaluate(() => window.sendPing(7));
-  await expectPoll(() => receivedAfterUnsubscribe).toEqual([1, 5, 7]);
-  expect(received).toEqual([1, 5]);
+  await expectPoll(() => receivedAfterUnsubscribe).toEqual([1, 2, 5, 7]);
+  expect(received).toEqual([1, 2, 5]);
 });

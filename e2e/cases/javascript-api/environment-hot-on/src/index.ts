@@ -19,8 +19,11 @@ if (import.meta.webpackHot) {
     import.meta.webpackHot?.send('ping', { value });
   };
 
-  // Sent before the WebSocket connects, so it should be queued
-  window.sendPing(1);
+  // Reuse the payload before the WebSocket connects.
+  const payload = { value: 1 };
+  import.meta.webpackHot.send('ping', payload);
+  payload.value = 2;
+  import.meta.webpackHot.send('ping', payload);
 
   import.meta.webpackHot.accept();
 }

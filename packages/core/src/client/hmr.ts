@@ -108,7 +108,7 @@ export function init(
 ): void {
   logger.level = logLevel;
 
-  const queuedMessages: ClientMessage[] = [];
+  const queuedMessages: string[] = [];
   // Ids of the runtime errors sent to the server
   const clientErrors: { id: string; message?: string }[] = [];
 
@@ -294,17 +294,18 @@ export function init(
   let pingIntervalId: ReturnType<typeof setInterval>;
 
   const isSocketReady = () => socket && socket.readyState === socket.OPEN;
-  const socketSend = (data: ClientMessage) => {
+  const socketSend = (message: string) => {
     if (isSocketReady()) {
-      socket!.send(JSON.stringify(data));
+      socket!.send(message);
     }
   };
   // Queue messages sent before the socket is ready
   const sendOrQueue = (data: ClientMessage) => {
+    const message = JSON.stringify(data);
     if (isSocketReady()) {
-      socketSend(data);
+      socketSend(message);
     } else {
-      queuedMessages.push(data);
+      queuedMessages.push(message);
     }
   };
 
@@ -318,7 +319,7 @@ export function init(
     // To prevent WebSocket timeouts caused by proxies (e.g., nginx, docker),
     // send a periodic ping message to keep the connection alive.
     pingIntervalId = setInterval(() => {
-      socketSend({ type: 'ping' });
+      socketSend(JSON.stringify({ type: 'ping' }));
     }, 30000);
 
     if (queuedMessages.length) {
