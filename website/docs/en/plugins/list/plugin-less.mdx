@@ -144,9 +144,7 @@ pluginLess({
 });
 ```
 
-> This feature is based on Rspack's experimental `Rule.use.cache`. Loader options must be JSON-serializable; otherwise Rspack skips loader caching.
->
-> Note that in Rspack's current implementation, `Rule.use.cache` only applies when `less-loader` runs directly in the rule chain (such as `?inline` imports or `tools.cssLoader.exportType: 'string'`). Rules prefixed by pitching loaders (`CssExtractRspackPlugin.loader`, `style-loader`, or `?url`) re-invoke loaders via inline requests and rely on module-level caching instead.
+> This feature is based on Rspack's experimental loader cache. See [Rspack - rules[].use](https://rspack.rs/config/module-rules#rulesuse) and [Rspack - experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) for more details.
 
 ## Modifying Less version
 

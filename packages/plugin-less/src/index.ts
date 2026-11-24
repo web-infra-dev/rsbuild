@@ -120,12 +120,7 @@ export type PluginLessOptions = {
    * Whether to cache Less compilation results using Rspack's loader cache.
    * Requires enabling `performance.buildCache` and Rspack's experimental
    * `experiments.newCache` option.
-   *
-   * Loader options must be JSON-serializable; otherwise Rspack skips loader caching.
-   * Note that loader caching only applies when `less-loader` runs directly in the
-   * rule chain (for example, `?inline` imports or `tools.cssLoader.exportType: 'string'`),
-   * not when pitching loaders such as `CssExtractRspackPlugin.loader` or
-   * `style-loader` re-invoke loaders via inline requests.
+   * @see https://rspack.rs/config/experiments#experimentsnewcache
    * @experimental
    * @default false
    */

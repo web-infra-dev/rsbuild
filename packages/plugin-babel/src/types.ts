@@ -142,8 +142,7 @@ export type PluginBabelOptions = {
    *
    * When enabled, `babel-loader`'s built-in disk cache (`cacheDirectory`) is
    * disabled so caching is handled by Rspack.
-   *
-   * Loader options must be JSON-serializable; otherwise Rspack skips loader caching.
+   * @see https://rspack.rs/config/experiments#experimentsnewcache
    * @experimental
    * @default false
    */

@@ -53,8 +53,7 @@ export type PluginSvgrOptions = {
    * Whether to cache SVGR transformation results using Rspack's loader cache.
    * Requires enabling `performance.buildCache` and Rspack's experimental
    * `experiments.newCache` option.
-   *
-   * Loader options must be JSON-serializable; otherwise Rspack skips loader caching.
+   * @see https://rspack.rs/config/experiments#experimentsnewcache
    * @experimental
    * @default false
    */
