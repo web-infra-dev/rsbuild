@@ -13,8 +13,6 @@
 /plugins/list/plugin-assets-retry/ https://github.com/rstackjs/rsbuild-plugin-assets-retry 301
 /plugins/list/plugin-solid https://github.com/rstackjs/rsbuild-plugin-solid 301
 /plugins/list/plugin-solid/ https://github.com/rstackjs/rsbuild-plugin-solid 301
-/plugins/list/plugin-solid.html https://github.com/rstackjs/rsbuild-plugin-solid 301
-/plugins/list/plugin-solid.md https://raw.githubusercontent.com/rstackjs/rsbuild-plugin-solid/main/README.md 301
 /plugins/list/plugin-stylus https://github.com/rstackjs/rsbuild-plugin-stylus 301
 /plugins/list/plugin-stylus/ https://github.com/rstackjs/rsbuild-plugin-stylus 301
 /guide/basic/tailwindcss /guide/styling/tailwindcss 301
@@ -37,8 +35,6 @@
 /zh/plugins/list/plugin-assets-retry/ https://github.com/rstackjs/rsbuild-plugin-assets-retry 301
 /zh/plugins/list/plugin-solid https://github.com/rstackjs/rsbuild-plugin-solid 301
 /zh/plugins/list/plugin-solid/ https://github.com/rstackjs/rsbuild-plugin-solid 301
-/zh/plugins/list/plugin-solid.html https://github.com/rstackjs/rsbuild-plugin-solid 301
-/zh/plugins/list/plugin-solid.md https://raw.githubusercontent.com/rstackjs/rsbuild-plugin-solid/main/README.md 301
 /zh/plugins/list/plugin-stylus https://github.com/rstackjs/rsbuild-plugin-stylus 301
 /zh/plugins/list/plugin-stylus/ https://github.com/rstackjs/rsbuild-plugin-stylus 301
 /zh/guide/basic/tailwindcss /zh/guide/styling/tailwindcss 301
