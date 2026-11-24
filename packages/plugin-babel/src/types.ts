@@ -140,8 +140,9 @@ export type PluginBabelOptions = {
    * Requires enabling `performance.buildCache` and Rspack's experimental
    * `experiments.newCache` option.
    *
-   * When enabled, `babel-loader`'s built-in disk cache (`cacheDirectory`) is
-   * disabled so caching is handled by Rspack.
+   * When enabled, `babel-loader`'s built-in cache (`cacheDirectory`,
+   * `cacheCompression`, and `cacheIdentifier`) will no longer take effect so
+   * caching is handled by Rspack.
    * @see https://rspack.rs/config/experiments#experimentsnewcache
    * @experimental
    * @default false

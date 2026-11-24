@@ -46,7 +46,7 @@ export default {
 };
 ```
 
-You can also use Rspack's experimental loader cache via the [`cache`](#cache) option, which disables `babel-loader`'s built-in cache.
+You can also enable Rspack's experimental loader cache via the [`cache`](#cache) option. When enabled, `babel-loader`'s built-in cache (including `cacheDirectory`, `cacheCompression`, and `cacheIdentifier` in `babelLoaderOptions`) will no longer take effect and caching will be handled by Rspack instead.
 
 ## Options
 
@@ -300,13 +300,15 @@ pluginBabel({
 
 Whether to cache Babel transformation results using Rspack's loader cache. Requires enabling [performance.buildCache](/config/performance/build-cache) and Rspack's experimental [experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) option.
 
-When enabled, `babel-loader`'s built-in disk cache (`cacheDirectory`) is disabled so caching is handled by Rspack.
-
 ```ts
 pluginBabel({
   cache: true,
 });
 ```
+
+:::tip
+When `cache: true` is enabled, `babel-loader`'s built-in cache will no longer take effect (`cacheDirectory`, `cacheCompression`, and `cacheIdentifier` in `babelLoaderOptions` will be ignored), and caching will be handled by Rspack instead.
+:::
 
 > This feature is based on Rspack's experimental loader cache. See [Rspack - rules[].use](https://rspack.rs/config/module-rules#rulesuse) and [Rspack - experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) for more details.
 

@@ -46,7 +46,7 @@ export default {
 };
 ```
 
-你也可以通过 [`cache`](#cache) 选项使用 Rspack 的实验性 loader 缓存，开启后会禁用 `babel-loader` 自带的缓存。
+你也可以通过 [`cache`](#cache) 选项启用 Rspack 的实验性 loader 缓存。启用后，`babel-loader` 内置的缓存（包括 `babelLoaderOptions` 中的 `cacheDirectory`、`cacheCompression` 和 `cacheIdentifier`）将会失效，改由 Rspack 统一管理缓存。
 
 ## 选项
 
@@ -300,13 +300,15 @@ pluginBabel({
 
 是否使用 Rspack 的 loader 缓存来缓存 Babel 转换结果。需要先启用 [performance.buildCache](/config/performance/build-cache) 和 Rspack 的实验性 [experiments.newCache](https://rspack.rs/zh/config/experiments#experimentsnewcache) 选项。
 
-开启后，会禁用 `babel-loader` 自带的磁盘缓存（`cacheDirectory`），改由 Rspack 统一管理缓存。
-
 ```ts
 pluginBabel({
   cache: true,
 });
 ```
+
+:::tip
+启用 `cache: true` 后，`babel-loader` 内置的缓存将会失效（`babelLoaderOptions` 中的 `cacheDirectory`、`cacheCompression` 和 `cacheIdentifier` 选项不会生效），改由 Rspack 统一管理缓存。
+:::
 
 > 该功能基于 Rspack 的实验性 loader 缓存实现。详见 [Rspack - rules[].use](https://rspack.rs/zh/config/module-rules#rulesuse) 和 [Rspack - experiments.newCache](https://rspack.rs/zh/config/experiments#experimentsnewcache)。
 
