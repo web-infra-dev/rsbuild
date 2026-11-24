@@ -1,3 +1,5 @@
+import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
 test('should serve static files', async ({ request, dev }) => {
@@ -7,6 +9,46 @@ test('should serve static files', async ({ request, dev }) => {
   expect(await resText.text()).toContain('bar');
   const resIndexJs = await request.get(`${baseUrl}/static/js/index.js`);
   expect(await resIndexJs.text()).toContain('Hello Rsbuild!');
+});
+
+test('should gzip compressible static assets in dev and preview', async ({
+  copySrcDir,
+  request,
+  runBothServe,
+}) => {
+  const publicDir = await copySrcDir();
+  const body = Buffer.alloc(2048, 0xab);
+  const assets = [
+    ['module.wasm', body, 'gzip'],
+    ['app.webmanifest', body, 'gzip'],
+    ['config.toml', body, 'gzip'],
+    ['font.ttf', body, 'gzip'],
+    ['font.otf', body, 'gzip'],
+    ['font.ttc', body, 'gzip'],
+    ['image.bmp', body, 'gzip'],
+    ['font.woff2', body, undefined],
+    ['small.wasm', body.subarray(0, 1024), undefined],
+  ] as const;
+
+  for (const [name, content] of assets) {
+    await writeFile(join(publicDir, name), content);
+  }
+
+  await runBothServe(
+    async ({ result }) => {
+      for (const [name, content, encoding] of assets) {
+        const res = await request.get(
+          `http://localhost:${result.port}/${name}`,
+          {
+            headers: { 'accept-encoding': 'gzip' },
+          },
+        );
+        expect(res.headers()['content-encoding'], name).toBe(encoding);
+        expect(await res.body(), name).toEqual(content);
+      }
+    },
+    { config: { server: { publicDir: { name: publicDir } } } },
+  );
 });
 
 test('should serve byte ranges for compiled assets', async ({

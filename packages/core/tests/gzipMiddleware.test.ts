@@ -33,7 +33,7 @@ test('should support raw header arrays passed to writeHead', async () => {
     gzipMiddleware()(req, res, () => {
       res.writeHead(200, 'OK', [
         'Content-Type',
-        'text/plain; charset=utf-8',
+        'application/vnd.oai.openapi+yaml; charset=utf-8',
         'X-Test-Header',
         'ok',
       ]);
@@ -52,7 +52,7 @@ test('should support raw header arrays passed to writeHead', async () => {
     await response.text();
 
     expect(response.headers.get('content-type')).toBe(
-      'text/plain; charset=utf-8',
+      'application/vnd.oai.openapi+yaml; charset=utf-8',
     );
     expect(response.headers.get('x-test-header')).toBe('ok');
     expect(response.headers.get('content-encoding')).toBe('gzip');
@@ -178,44 +178,38 @@ test('should not compress responses without content-type', async () => {
   }
 });
 
-test.each([
-  ['application/wasm', 'gzip'],
-  ['application/manifest+json; charset=utf-8', 'gzip'],
-  ['application/toml', 'gzip'],
-  ['application/yaml', 'gzip'],
-  ['application/example+yaml', 'gzip'],
-  ['font/collection', 'gzip'],
-  ['font/otf', 'gzip'],
-  ['font/ttf', 'gzip'],
-  ['image/bmp', 'gzip'],
-  ['font/woff2', null],
-  ['text/event-stream; charset=utf-8', null],
-] as const)(
-  'should select gzip by MIME type for %s',
-  async (contentType, encoding) => {
-    const body = Buffer.alloc(2048, 0xab);
-    const server = createServer((req, res) => {
-      gzipMiddleware()(req, res, () => {
-        res.writeHead(200, {
-          'Content-Type': contentType,
-          'Content-Length': body.length,
-        });
-        res.end(body);
-      });
+test('should not compress text/event-stream responses', async () => {
+  const server = createServer((req, res) => {
+    gzipMiddleware()(req, res, () => {
+      res.writeHead(200, 'OK', [
+        'Content-Type',
+        'text/event-stream; charset=utf-8',
+        'Cache-Control',
+        'no-cache',
+      ]);
+      res.end('data: hello\n\n');
     });
+  });
 
-    const port = await listen(server);
-    try {
-      const response = await fetch(`http://localhost:${port}`, {
-        headers: { 'accept-encoding': 'gzip' },
-      });
-      expect(response.headers.get('content-encoding')).toBe(encoding);
-      expect(Buffer.from(await response.arrayBuffer())).toEqual(body);
-    } finally {
-      await closeServer(server);
-    }
-  },
-);
+  const port = await listen(server);
+
+  try {
+    const response = await fetch(`http://localhost:${port}`, {
+      headers: {
+        'accept-encoding': 'gzip',
+      },
+    });
+    const text = await response.text();
+
+    expect(response.headers.get('content-encoding')).toBeNull();
+    expect(response.headers.get('content-type')).toBe(
+      'text/event-stream; charset=utf-8',
+    );
+    expect(text).toBe('data: hello\n\n');
+  } finally {
+    await closeServer(server);
+  }
+});
 
 test.each([
   { contentType: 'text/html', encoding: 'gzip' },
