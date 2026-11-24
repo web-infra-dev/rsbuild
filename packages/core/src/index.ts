@@ -38,6 +38,7 @@ export { createLogger, type Logger, defaultLogger as logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
 export type {
   HotClient,
+  HotOn,
   HotOnConnect,
   RsbuildDevServer,
 } from './server/devServer';

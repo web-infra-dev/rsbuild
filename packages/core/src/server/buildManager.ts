@@ -2,7 +2,11 @@ import fs from 'node:fs';
 import { isMultiCompiler } from '../helpers/compiler';
 import type { InternalContext, NormalizedConfig, Rspack } from '../types';
 import { type AssetsMiddleware, assetsMiddleware } from './assets-middleware';
-import { type SocketConnectionListener, SocketServer } from './socketServer';
+import {
+  type SocketConnectionListener,
+  type SocketCustomMessageListener,
+  SocketServer,
+} from './socketServer';
 
 type Options = {
   context: InternalContext;
@@ -10,6 +14,7 @@ type Options = {
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   resolvedPort: number;
   onSocketConnect?: SocketConnectionListener;
+  onSocketCustomMessage?: SocketCustomMessageListener;
 };
 
 /**
@@ -38,6 +43,7 @@ export class BuildManager {
     compiler,
     resolvedPort,
     onSocketConnect,
+    onSocketCustomMessage,
   }: Options) {
     this.config = config;
     this.context = context;
@@ -49,6 +55,7 @@ export class BuildManager {
       config.dev,
       () => this.outputFileSystem,
       onSocketConnect,
+      onSocketCustomMessage,
     );
     this.context.socketServer = this.socketServer;
   }

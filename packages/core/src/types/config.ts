@@ -21,6 +21,7 @@ import type {
 import type { RspackChain } from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
 import type {
+  HotOn,
   HotOnConnect,
   HotSend,
   RsbuildDevServer,
@@ -1950,6 +1951,12 @@ export type EnvironmentAPI = Record<
        * Returns a function that removes the listener.
        */
       onConnect: HotOnConnect;
+      /**
+       * Listen for custom events sent by `import.meta.webpackHot.send()`
+       * from HMR clients in this environment.
+       * Returns a function that removes the listener.
+       */
+      on: HotOn;
     };
 
     /**

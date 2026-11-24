@@ -122,11 +122,25 @@ export type ClientMessagePing = {
   type: 'ping';
 };
 
-export type ClientMessage = ClientMessagePing | ClientMessageError;
+export type ClientMessageCustom = {
+  type: 'custom';
+  event: string;
+  data?: unknown;
+};
+
+export type ClientMessage =
+  ClientMessagePing | ClientMessageError | ClientMessageCustom;
 
 export type SocketConnectionListener = (
   socket: WebSocket,
   token: string,
+) => void;
+
+export type SocketCustomMessageListener = (
+  socket: WebSocket,
+  token: string,
+  event: string,
+  data: unknown,
 ) => void;
 
 const parseQueryString = (req: IncomingMessage) => {
@@ -187,16 +201,20 @@ export class SocketServer {
 
   private onSocketConnect?: SocketConnectionListener;
 
+  private onSocketCustomMessage?: SocketCustomMessageListener;
+
   constructor(
     context: InternalContext,
     options: DevConfig,
     getOutputFileSystem: () => Rspack.OutputFileSystem,
     onSocketConnect?: SocketConnectionListener,
+    onSocketCustomMessage?: SocketCustomMessageListener,
   ) {
     this.context = context;
     this.options = options;
     this.getOutputFileSystem = getOutputFileSystem;
     this.onSocketConnect = onSocketConnect;
+    this.onSocketCustomMessage = onSocketCustomMessage;
   }
 
   // subscribe upgrade event to handle socket
@@ -421,6 +439,7 @@ export class SocketServer {
   public async close(): Promise<void> {
     this.clearHeartbeatTimer();
     this.onSocketConnect = undefined;
+    this.onSocketCustomMessage = undefined;
 
     // Remove all event listeners
     this.wsServer.removeAllListeners();
@@ -478,6 +497,19 @@ export class SocketServer {
 
         const environment = this.getEnvironmentByToken(token);
         if (!environment) {
+          return;
+        }
+
+        // Custom events sent by `import.meta.webpackHot.send()`
+        if (payload.type === 'custom') {
+          if (typeof payload.event === 'string') {
+            this.onSocketCustomMessage?.(
+              socket,
+              token,
+              payload.event,
+              payload.data,
+            );
+          }
           return;
         }
 
