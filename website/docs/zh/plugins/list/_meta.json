@@ -5,7 +5,6 @@
   "plugin-vue",
   "plugin-preact",
   "plugin-svelte",
-  "plugin-solid",
   "plugin-babel",
   "plugin-tailwindcss",
   "plugin-sass",

@@ -32,7 +32,7 @@
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-rem": "catalog:",
     "@rsbuild/plugin-sass": "workspace:*",
-    "@rsbuild/plugin-solid": "workspace:*",
+    "@rsbuild/plugin-solid": "catalog:",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-tailwindcss": "workspace:*",

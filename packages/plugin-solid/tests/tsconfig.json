@@ -1,7 +1,0 @@
-{
-  "extends": "@scripts/config/tsconfig",
-  "compilerOptions": {
-    "types": ["rstack/test/globals"]
-  },
-  "include": ["./**/*.ts"]
-}
