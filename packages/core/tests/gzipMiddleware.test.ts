@@ -33,7 +33,7 @@ test('should support raw header arrays passed to writeHead', async () => {
     gzipMiddleware()(req, res, () => {
       res.writeHead(200, 'OK', [
         'Content-Type',
-        'application/vnd.oai.openapi+yaml; charset=utf-8',
+        'text/plain; charset=utf-8',
         'X-Test-Header',
         'ok',
       ]);
@@ -52,7 +52,7 @@ test('should support raw header arrays passed to writeHead', async () => {
     await response.text();
 
     expect(response.headers.get('content-type')).toBe(
-      'application/vnd.oai.openapi+yaml; charset=utf-8',
+      'text/plain; charset=utf-8',
     );
     expect(response.headers.get('x-test-header')).toBe('ok');
     expect(response.headers.get('content-encoding')).toBe('gzip');
@@ -148,6 +148,27 @@ test('should not compress responses with writeHead content-encoding', async () =
     await response.text();
 
     expect(response.headers.get('content-encoding')).toBe('identity');
+  } finally {
+    await closeServer(server);
+  }
+});
+
+test('should gzip +yaml responses with a charset parameter', async () => {
+  const body = '- item\n'.repeat(200);
+  const server = createServer((req, res) => {
+    gzipMiddleware()(req, res, () => {
+      res.setHeader('Content-Type', 'application/example+yaml; charset=utf-8');
+      res.end(body);
+    });
+  });
+  const port = await listen(server);
+
+  try {
+    const response = await fetch(`http://localhost:${port}`, {
+      headers: { 'accept-encoding': 'gzip' },
+    });
+    expect(response.headers.get('content-encoding')).toBe('gzip');
+    expect(await response.text()).toBe(body);
   } finally {
     await closeServer(server);
   }
