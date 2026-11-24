@@ -89,7 +89,7 @@ declare namespace Rspack {
      * `server.environments[name].hot.on()`.
      * The data must be JSON serializable.
      */
-    send: <Data = any>(event: string, data?: Data) => void;
+    send: <Data = unknown>(event: string, data?: Data) => void;
   }
 }
 
