@@ -37,7 +37,7 @@
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
-    "@rsbuild/plugin-solid": "workspace:*",
+    "@rsbuild/plugin-solid": "catalog:",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@types/node": "catalog:",

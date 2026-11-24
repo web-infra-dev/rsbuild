@@ -236,6 +236,10 @@ snapshots:
 					"specifier": "^1.0.6",
 					"version": "1.0.6",
 				},
+				"@rsbuild/plugin-solid": {
+					"specifier": "^2.1.1",
+					"version": "2.1.1",
+				},
 				"@rsbuild/plugin-type-check": {
 					"specifier": "^1.6.1",
 					"version": "1.6.1",
@@ -521,10 +525,6 @@ snapshots:
 					"specifier": "^2.0.3",
 					"version": "2.0.3",
 				},
-				"solid-loader": {
-					"specifier": "^1.0.1",
-					"version": "1.0.1",
-				},
 				"stacktrace-parser": {
 					"specifier": "^0.1.11",
 					"version": "0.1.11",
@@ -618,7 +618,7 @@ snapshots:
 				"@rsbuild/plugin-react": "workspace:*",
 				"@rsbuild/plugin-rem": "catalog:",
 				"@rsbuild/plugin-sass": "workspace:*",
-				"@rsbuild/plugin-solid": "workspace:*",
+				"@rsbuild/plugin-solid": "catalog:",
 				"@rsbuild/plugin-svelte": "workspace:*",
 				"@rsbuild/plugin-svgr": "workspace:*",
 				"@rsbuild/plugin-tailwindcss": "workspace:*",
@@ -866,7 +866,7 @@ snapshots:
 			},
 			"devDependencies": {
 				"@rsbuild/core": "workspace:*",
-				"@rsbuild/plugin-solid": "workspace:*",
+				"@rsbuild/plugin-solid": "catalog:",
 			},
 		},
 
@@ -957,7 +957,7 @@ snapshots:
 				"@rsbuild/plugin-babel": "workspace:*",
 				"@rsbuild/plugin-preact": "workspace:*",
 				"@rsbuild/plugin-react": "workspace:*",
-				"@rsbuild/plugin-solid": "workspace:*",
+				"@rsbuild/plugin-solid": "catalog:",
 				"@rsbuild/plugin-svelte": "workspace:*",
 				"@rsbuild/plugin-vue": "workspace:*",
 				"@types/node": "catalog:",
@@ -1053,18 +1053,6 @@ snapshots:
 				"prebundle": "catalog:",
 				"resolve-url-loader": "catalog:",
 				"sass-loader": "catalog:",
-				"typescript": "catalog:",
-			},
-		},
-
-		"packages/plugin-solid": {
-			"name": "@rsbuild/plugin-solid",
-			"dependencies": {
-				"solid-loader": "catalog:",
-			},
-			"devDependencies": {
-				"@rsbuild/core": "workspace:*",
-				"@scripts/test-helper": "workspace:*",
 				"typescript": "catalog:",
 			},
 		},
@@ -2869,6 +2857,36 @@ snapshots:
 			"dependencies": {
 				"deepmerge": "4.3.1",
 				"terser": "5.48.0",
+			},
+		},
+
+		"@rsbuild/plugin-solid@2.1.1": {
+			"integrity": "sha512-5TbZCulM3sbJF8DSX4/xjtltZSqCxqoRBvk8SlAkzg03PcQ6w0uvzW+EuGh67A5zyHvsRQkMCB3jKKD9/KNX2Q==",
+			"peerDependencies": {
+				"@rsbuild/core": {
+					"specifier": "^2.0.0",
+					"version": "link:packages/core",
+					"optional": true,
+				},
+				"@rspack/core": {
+					"version": "2.3.3",
+					"below": true,
+				},
+				"@solidjs/web": {
+					"specifier": "^2.0.0",
+					"version": "2.0.3",
+				},
+				"solid-js": {
+					"specifier": "^2.0.0",
+					"version": "2.0.3",
+				},
+				"supports-color": {
+					"version": "8.1.1",
+					"below": true,
+				},
+			},
+			"dependencies": {
+				"solid-loader": "1.0.1",
 			},
 		},
 
