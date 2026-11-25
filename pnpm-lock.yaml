@@ -265,6 +265,14 @@ snapshots:
 					"specifier": "^1.0.2",
 					"version": "1.0.2",
 				},
+				"@rstackjs/maintainer-skills": {
+					"specifier": "^0.1.0",
+					"version": "0.1.0",
+				},
+				"@rstackjs/skills": {
+					"specifier": "^0.1.0",
+					"version": "0.1.0",
+				},
 				"@rstackjs/test-utils": {
 					"specifier": "^1.0.0",
 					"version": "1.0.0",
@@ -581,6 +589,8 @@ snapshots:
 	"projects": {
 		".": {
 			"devDependencies": {
+				"@rstackjs/maintainer-skills": "catalog:",
+				"@rstackjs/skills": "catalog:",
 				"@scripts/config": "workspace:*",
 				"@scripts/test-helper": "workspace:*",
 				"@types/node": "catalog:",
@@ -3494,6 +3504,14 @@ snapshots:
 					"optional": true,
 				},
 			},
+		},
+
+		"@rstackjs/maintainer-skills@0.1.0": {
+			"integrity": "sha512-nvzAjimX8xKsZA7/HBQvR2XQfJ8RWascchkDmt3j1+gjVqInXZJZeAz8EB2By6UXNouxP7JCLcNbIzYZcD2q1w==",
+		},
+
+		"@rstackjs/skills@0.1.0": {
+			"integrity": "sha512-NxXfvPul2bZQ0jOcUIKT7pgl5FV3q2O1zMrWFYi6XW7yqSwd/KSBvVfUZwOfEwCpqJ49QH+XxTZrnjn6kaC0Cg==",
 		},
 
 		"@rstackjs/test-utils@1.0.0": {

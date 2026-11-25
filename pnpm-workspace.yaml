@@ -46,6 +46,8 @@ catalog:
   '@rstackjs/doc-ui': '1.14.12'
   '@rstackjs/create-toolkit': '2.2.11'
   '@rstackjs/load-config': '^1.0.2'
+  '@rstackjs/maintainer-skills': '^0.1.0'
+  '@rstackjs/skills': '^0.1.0'
   '@rstackjs/test-utils': '^1.0.0'
   '@rstest/core': '^0.12.6'
   '@rstest/playwright': '^0.12.6'
@@ -144,6 +146,17 @@ allowBuilds:
   '@parcel/watcher': false
   core-js: false
   svelte-preprocess: false
+
+permissions:
+  '@rstackjs/maintainer-skills':
+    skills:
+      - create-draft-release-notes
+      - pr-creator
+      - release-blog-writer
+      - rstack-docs-writer
+  '@rstackjs/skills':
+    skills:
+      - rspress-description-generator
 
 autoDedupe: true
 

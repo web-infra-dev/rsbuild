@@ -1,42 +1,12 @@
 {
   "version": 1,
   "skills": {
-    "create-draft-release-notes": {
-      "source": "rstackjs/agent-skills",
-      "sourceType": "github",
-      "skillPath": ".agents/skills/create-draft-release-notes/SKILL.md",
-      "computedHash": "1c07601e93b35361c92cd6f067ddba3c710c27e98fd42f7b11e74b446590d1a9"
-    },
-    "pr-creator": {
-      "source": "rstackjs/agent-skills",
-      "sourceType": "github",
-      "skillPath": ".agents/skills/pr-creator/SKILL.md",
-      "computedHash": "ed4ca0b83b380c9a4a350047ef5f2616c0446b2830d59e3a06839cb827fd39b4"
-    },
-    "release-blog-writer": {
-      "source": "rstackjs/agent-skills",
-      "sourceType": "github",
-      "skillPath": ".agents/skills/release-blog-writer/SKILL.md",
-      "computedHash": "982e423497efa0a1266e06e14f880264c791e22b33144ce283fcd38041a7e814"
-    },
-    "rspress-description-generator": {
-      "source": "rstackjs/agent-skills",
-      "sourceType": "github",
-      "skillPath": "skills/rspress-description-generator/SKILL.md",
-      "computedHash": "0e22059b170e09395e5d95513f17dc133b257f5bba7f16d8bc852b1923edbec9"
-    },
     "rstack-cli-docs": {
       "source": "rstackjs/rstack-cli",
       "ref": "main",
       "sourceType": "github",
       "skillPath": ".agents/skills/rstack-cli-docs/SKILL.md",
       "computedHash": "8b5451af88d29195dc2f257543013ad66aa14a7791e401ab4cffdb11941cf27a"
-    },
-    "rstack-docs-writer": {
-      "source": "rstackjs/agent-skills",
-      "sourceType": "github",
-      "skillPath": ".agents/skills/rstack-docs-writer/SKILL.md",
-      "computedHash": "388aa2b20ab4dc3b01ef7ca30d5082dd13cdcfc931cb66152cab3a5cdfe4b5e8"
     }
   }
 }
