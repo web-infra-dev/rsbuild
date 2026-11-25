@@ -1,6 +1,6 @@
 import type { FSWatcher } from 'chokidar';
 import { castArray } from '../helpers';
-import { cachedImport, getTinyglobby } from '../helpers/cachedImport';
+import { getChokidar, getTinyglobby } from '../helpers/cachedImport';
 import type { Logger } from '../logger';
 import type {
   ChokidarOptions,
@@ -11,10 +11,6 @@ import type {
 } from '../types';
 import type { BuildManager } from './buildManager';
 import { getPublicDirPaths } from './helper';
-
-const getChokidar = cachedImport(
-  () => import(/* rspackChunkName: "chokidar" */ 'chokidar'),
-);
 
 export const DEFAULT_WATCH_FILE_EVENTS: readonly WatchFileEvent[] = [
   'add',
@@ -141,11 +137,10 @@ export async function createChokidar(
   root: string,
   options: ChokidarOptions,
   logger: Logger,
-  literalPaths?: string[],
 ): Promise<FSWatcher> {
   const { default: chokidar } = await getChokidar();
 
-  const watchFiles = new Set(literalPaths);
+  const watchFiles = new Set<string>();
 
   const globPatterns = pathOrGlobs.filter((pathOrGlob) => {
     if (isGlob(pathOrGlob)) {

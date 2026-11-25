@@ -83,7 +83,7 @@ export default {
 - `false`: 不复制文件。
 - `'auto'`: 当 [output.target](/config/output/target) 不是 `'node'` 时，会复制文件，否则不复制。
 
-运行 `rsbuild build --watch` 时，在会被复制到产物目录的 public 目录中新增、修改或删除文件，都会触发构建重启。默认情况下，重启会清理 `dist/` 并重新复制当前的 public 文件。如果将 [output.cleanDistPath](/config/output/clean-dist-path) 设为 `false`，删除源文件后，之前的副本会保留在产物目录中。
+运行 `rsbuild build --watch` 时，Rsbuild 会将新增或修改的 public 文件复制到产物目录，删除文件时也会移除对应的副本。同步文件本身不会触发重新编译。如果 public 文件与构建生成的文件（如默认的 `index.html`）输出路径相同，会保留构建生成的文件。多个 public 目录包含同名文件时，优先使用配置顺序靠后的目录中的文件。
 
 :::tip
 在 dev 构建时，如果你需要拷贝一些静态资源到构建产物目录，可以使用 [output.copy](/config/output/copy) 选项代替。

@@ -1,6 +1,5 @@
 import path from 'node:path';
 import type { ChokidarOptions } from 'chokidar';
-import { shouldCopyPublicDir } from './defaultConfig';
 import { castArray, color, isTTY } from './helpers';
 import type { RestartManager } from './helpers/restartManager';
 import type { Logger } from './logger';
@@ -65,19 +64,8 @@ export function watchFilesForRestart({
   const defaultFiles = context.configFile
     ? [context.configFile, ...context.configFileDependencies]
     : [];
-  const publicDirs: string[] = [];
 
-  if (restartContext.action === 'build') {
-    for (const { config } of context.environmentList) {
-      for (const { name, copyOnBuild } of config.server.publicDir) {
-        if (shouldCopyPublicDir(copyOnBuild, config.output.target)) {
-          publicDirs.push(name);
-        }
-      }
-    }
-  }
-
-  if (!watchFiles.length && !defaultFiles.length && !publicDirs.length) {
+  if (!watchFiles.length && !defaultFiles.length) {
     return;
   }
 
@@ -85,7 +73,6 @@ export function watchFilesForRestart({
     files: string[];
     events?: WatchFileEvent[];
     options?: ChokidarOptions;
-    literalPaths?: string[];
   }[] = [];
 
   for (const { paths, events, options, type } of watchFiles) {
@@ -109,8 +96,8 @@ export function watchFilesForRestart({
     }
   }
 
-  if (defaultFiles.length || publicDirs.length) {
-    watchGroups.push({ files: defaultFiles, literalPaths: publicDirs });
+  if (defaultFiles.length) {
+    watchGroups.push({ files: defaultFiles });
   }
 
   if (!watchGroups.length) {
@@ -163,7 +150,7 @@ export function watchFilesForRestart({
 
   // Initialize watchers in the background so task startup is not delayed.
   const watchersPromise = Promise.all(
-    watchGroups.map(async ({ files, events, options, literalPaths }) => {
+    watchGroups.map(async ({ files, events, options }) => {
       try {
         const watcher = await createChokidar(
           files,
@@ -176,9 +163,7 @@ export function watchFilesForRestart({
             ...options,
           },
           logger,
-          literalPaths,
         );
-        watcher.once('ready', () => logger.debug('restart watcher ready'));
         // Chokidar reports event paths relative to `cwd` when it is configured.
         const cwd = options?.cwd ?? root;
         const watchEvents = events

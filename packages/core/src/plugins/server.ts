@@ -1,83 +1,11 @@
-import type { CopyOptions } from 'node:fs';
 import fs from 'node:fs';
-import path from 'node:path';
-import { isDeno } from '../constants';
-import { shouldCopyPublicDir } from '../defaultConfig';
-import { color } from '../helpers';
-import { dedupeNestedPaths } from '../helpers/path';
-import { getTinyglobby } from '../helpers/cachedImport';
 import { open } from '../server/open';
-import type {
-  EnvironmentContext,
-  OnAfterStartDevServerFn,
-  RsbuildPlugin,
-} from '../types';
-
-const copyPublicDir = async (
-  publicDir: string,
-  distPaths: string[],
-  ignore: string[],
-): Promise<void> => {
-  // Create filter function for ignore patterns
-  let shouldCopy: CopyOptions['filter'] | undefined;
-
-  if (ignore?.length) {
-    const { globSync } = await getTinyglobby();
-
-    const ignoredList = globSync(ignore, {
-      cwd: publicDir,
-      absolute: false,
-      dot: true,
-      onlyFiles: false,
-    });
-
-    const ignoredSet = new Set(
-      ignoredList.map((item) => item.replace(/\\/g, '/').replace(/\/$/, '')), // normalize path separators for Windows
-    );
-
-    shouldCopy = (source: string) => {
-      const relativePath = path.relative(publicDir, source);
-
-      if (!relativePath) {
-        return true;
-      }
-
-      const normalizedPath = relativePath.replace(/\\/g, '/');
-
-      return !ignoredSet.has(normalizedPath);
-    };
-  }
-
-  try {
-    // async errors will missing error stack on copy, move
-    // https://github.com/jprichardson/node-fs-extra/issues/769
-    await Promise.all(
-      distPaths.map(async (distPath) => {
-        // https://github.com/web-infra-dev/rsbuild/issues/5804
-        if (isDeno && fs.existsSync(distPath)) {
-          await fs.promises.rm(distPath, {
-            recursive: true,
-            force: true,
-          });
-        }
-
-        await fs.promises.cp(publicDir, distPath, {
-          recursive: true,
-          // dereference symlinks
-          dereference: true,
-          mode: fs.constants.COPYFILE_FICLONE,
-          filter: shouldCopy,
-        });
-      }),
-    );
-  } catch (err) {
-    if (err instanceof Error) {
-      err.message = `Failed to copy public directory '${color.yellow(publicDir)}' to output directory. To disable public directory copying, set \`${color.cyan('server.publicDir: false')}\` in your config.\n${err.message}`;
-    }
-
-    throw err;
-  }
-};
+import {
+  copyPublicDir,
+  getPublicDirCopies,
+  watchPublicDirs,
+} from '../server/publicDir';
+import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
 
 // For Rsbuild server config
 export const pluginServer = (): RsbuildPlugin => ({
@@ -100,46 +28,40 @@ export const pluginServer = (): RsbuildPlugin => ({
 
     api.onAfterStartDevServer(onStartServer);
     api.onAfterStartPreviewServer(onStartServer);
-    api.onBeforeBuild(async ({ isFirstCompile, environments }) => {
+
+    // A caller can close a watch build before its first onBeforeBuild hook runs.
+    let buildClosed = false;
+    api.onAfterCreateCompiler(() => {
+      buildClosed = false;
+    });
+    let watch: ReturnType<typeof watchPublicDirs> | undefined;
+    api.onBeforeBuild(async ({ isFirstCompile, isWatch, environments }) => {
       if (!isFirstCompile) {
+        await watch?.pause();
         return;
       }
-      // Group environments with the same copy settings to preserve nested output deduplication.
-      const groups = new Map<string, EnvironmentContext[]>();
-      for (const environment of Object.values(environments)) {
-        const key = JSON.stringify(
-          environment.config.server.publicDir.map(
-            ({ name, copyOnBuild, ignore }) => [name, copyOnBuild, ignore],
-          ),
-        );
-        const group = groups.get(key);
-        if (group) {
-          group.push(environment);
-        } else {
-          groups.set(key, [environment]);
+
+      const copies = getPublicDirCopies(environments, isWatch);
+      if (isWatch && !buildClosed && copies.length) {
+        watch = watchPublicDirs(copies, api.logger);
+        await watch.ready;
+      }
+      for (const copy of copies) {
+        if (!isWatch || fs.existsSync(copy.publicDir)) {
+          await copyPublicDir(copy, watch?.copied);
         }
       }
-
-      for (const group of groups.values()) {
-        for (const { name: publicDir, copyOnBuild, ignore } of group[0].config
-          .server.publicDir) {
-          if (copyOnBuild === false || !fs.existsSync(publicDir)) {
-            continue;
-          }
-          const distPaths = dedupeNestedPaths(
-            group
-              .filter(({ config }) =>
-                shouldCopyPublicDir(copyOnBuild, config.output.target),
-              )
-              .map(({ distPath }) => distPath),
-          );
-          if (distPaths.length === 0) {
-            continue;
-          }
-
-          await copyPublicDir(publicDir, distPaths, ignore);
-        }
+    });
+    api.onAfterBuild(async ({ stats }) => {
+      if (stats) {
+        await watch?.resume(stats);
       }
+    });
+    api.onCloseBuild(async () => {
+      buildClosed = true;
+      const current = watch;
+      watch = undefined;
+      await current?.close();
     });
   },
 });

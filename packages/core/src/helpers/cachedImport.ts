@@ -13,3 +13,6 @@ export const cachedImport = <T>(
 
 export const getTinyglobby: () => Promise<typeof import('tinyglobby')> =
   cachedImport(() => import(/* rspackChunkName: "tinyglobby" */ 'tinyglobby'));
+
+export const getChokidar: () => Promise<typeof import('chokidar')> =
+  cachedImport(() => import(/* rspackChunkName: "chokidar" */ 'chokidar'));

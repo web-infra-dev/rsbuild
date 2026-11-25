@@ -1,44 +1,67 @@
 import path, { join } from 'node:path';
-import { expect, test } from '@e2e/helper';
-import { getDistFiles } from '@rstackjs/test-utils';
+import { expect, expectPoll, test } from '@e2e/helper';
+import { getDistFiles, waitForFileContent } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 
-for (const event of ['add', 'change', 'unlink'] as const) {
-  test(`should sync a public file on ${event} in build watch mode`, async ({
-    cwd,
-    execCli,
-    logHelper,
-  }) => {
-    const filename = `test-temp-${event}.txt`;
-    const source = join(cwd, 'public', filename);
-    const output = join(cwd, 'dist', filename);
-    await fse.ensureDir(join(cwd, 'public'));
-    if (event === 'add') {
-      await fse.remove(source);
-    } else {
-      await fse.writeFile(source, 'before');
-    }
+test('should sync public files without rebuilding or replacing generated HTML', async ({
+  cwd,
+  execCli,
+  logHelper,
+}) => {
+  const publicDir = join(cwd, 'public');
+  const source = join(publicDir, 'test-temp-watch.js');
+  const output = join(cwd, 'dist', 'test-temp-watch.js');
+  const publicHtml = join(publicDir, 'index.html');
+  const outputHtml = join(cwd, 'dist', 'index.html');
+  await fse.remove(source);
+  await fse.outputFile(publicHtml, 'public HTML');
 
-    // macOS can miss native events for writes immediately after watcher startup.
-    execCli('build --watch --log-level verbose', {
-      env: process.platform === 'darwin' ? { CHOKIDAR_USEPOLLING: '1' } : {},
-    });
-    await logHelper.expectLog('restart watcher ready');
-    await logHelper.expectBuildEnd();
-    expect(await fse.pathExists(output)).toBe(event !== 'add');
-    logHelper.clearLogs();
-
-    if (event === 'unlink') {
-      await fse.remove(source);
-      await logHelper.expectBuildEnd();
-      expect(await fse.pathExists(output)).toBe(false);
-    } else {
-      await fse.writeFile(source, 'after');
-      await logHelper.expectBuildEnd();
-      expect(await fse.readFile(output, 'utf8')).toBe('after');
-    }
+  // macOS can coalesce native events when fixture files change in quick succession.
+  execCli('build --watch', {
+    env: process.platform === 'darwin' ? { CHOKIDAR_USEPOLLING: '1' } : {},
   });
-}
+  await logHelper.expectLog('watching for changes...');
+  const html = await fse.readFile(outputHtml, 'utf8');
+  expect(html).toContain('<script');
+
+  const js = '// preserve formatting\nconsole.log(  1  );\n';
+  await fse.writeFile(publicHtml, 'changed public HTML');
+  await fse.writeFile(source, js);
+  await waitForFileContent(output, js);
+  expect(await fse.readFile(outputHtml, 'utf8')).toBe(html);
+
+  await fse.remove(publicHtml);
+  await fse.writeFile(source, 'changed');
+  await waitForFileContent(output, 'changed');
+  await fse.remove(source);
+  await expectPoll(() => fse.pathExists(output)).toBe(false);
+  expect(await fse.readFile(outputHtml, 'utf8')).toBe(html);
+  logHelper.expectLogTimes('built in', 1);
+});
+
+test('should restore the previous public file when a higher-priority file is removed', async ({
+  cwd,
+  build,
+  logHelper,
+}) => {
+  const first = join(cwd, 'test-temp-first');
+  const second = join(cwd, 'test-temp-second');
+  const filename = 'nested/file.txt';
+  await fse.outputFile(join(first, filename), 'first');
+  await fse.outputFile(join(second, filename), 'second');
+  const { distPath } = await build({
+    watch: true,
+    config: {
+      server: {
+        publicDir: [{ name: first }, { name: second }],
+      },
+    },
+  });
+  await logHelper.expectLog('watching for changes...');
+  expect(await fse.readFile(join(distPath, filename), 'utf8')).toBe('second');
+  await fse.remove(join(second, filename));
+  await waitForFileContent(join(distPath, filename), 'first');
+});
 
 test('should serve publicDir for dev server correctly', async ({
   page,
