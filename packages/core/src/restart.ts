@@ -62,21 +62,24 @@ export function watchFilesForRestart({
   context: InternalContext;
   restartContext: RestartContext;
 }): WatchFilesResult | undefined {
-  const literalPaths = context.configFile
+  const defaultFiles = context.configFile
     ? [context.configFile, ...context.configFileDependencies]
     : [];
+  const publicDirs: string[] = [];
 
   if (restartContext.action === 'build') {
     for (const { config } of context.environmentList) {
       for (const { name, copyOnBuild } of config.server.publicDir) {
         if (shouldCopyPublicDir(copyOnBuild, config.output.target)) {
-          literalPaths.push(name);
+          publicDirs.push(name);
         }
       }
     }
   }
 
-  const defaultFiles: string[] = [];
+  if (!watchFiles.length && !defaultFiles.length && !publicDirs.length) {
+    return;
+  }
 
   const watchGroups: {
     files: string[];
@@ -106,8 +109,8 @@ export function watchFilesForRestart({
     }
   }
 
-  if (defaultFiles.length || literalPaths.length) {
-    watchGroups.push({ files: defaultFiles, literalPaths });
+  if (defaultFiles.length || publicDirs.length) {
+    watchGroups.push({ files: defaultFiles, literalPaths: publicDirs });
   }
 
   if (!watchGroups.length) {

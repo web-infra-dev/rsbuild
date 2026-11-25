@@ -3,36 +3,42 @@ import { expect, test } from '@e2e/helper';
 import { getDistFiles } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 
-test('should sync public files in build watch mode', async ({
-  cwd,
-  execCli,
-  logHelper,
-}) => {
-  const publicDir = join(cwd, 'public');
-  const dist = join(cwd, 'dist');
-  const added = 'test-temp-added.txt';
-  const changed = 'test-temp-changed.txt';
-  const removed = 'test-temp-removed.txt';
-  await fse.remove(join(publicDir, added));
-  await fse.outputFile(join(publicDir, changed), 'before');
-  await fse.outputFile(join(publicDir, removed), 'before');
+for (const event of ['add', 'change', 'unlink'] as const) {
+  test(`should sync a public file on ${event} in build watch mode`, async ({
+    cwd,
+    execCli,
+    logHelper,
+  }) => {
+    const filename = `test-temp-${event}.txt`;
+    const source = join(cwd, 'public', filename);
+    const output = join(cwd, 'dist', filename);
+    await fse.ensureDir(join(cwd, 'public'));
+    if (event === 'add') {
+      await fse.remove(source);
+    } else {
+      await fse.writeFile(source, 'before');
+    }
 
-  execCli('build --watch --log-level verbose');
-  await logHelper.expectLog('restart watcher ready');
-  await logHelper.expectBuildEnd();
-  expect(await fse.pathExists(join(dist, removed))).toBe(true);
-  logHelper.clearLogs();
+    // macOS can miss native events for writes immediately after watcher startup.
+    execCli('build --watch --log-level verbose', {
+      env: process.platform === 'darwin' ? { CHOKIDAR_USEPOLLING: '1' } : {},
+    });
+    await logHelper.expectLog('restart watcher ready');
+    await logHelper.expectBuildEnd();
+    expect(await fse.pathExists(output)).toBe(event !== 'add');
+    logHelper.clearLogs();
 
-  await Promise.all([
-    fse.writeFile(join(publicDir, added), 'added'),
-    fse.writeFile(join(publicDir, changed), 'after'),
-    fse.remove(join(publicDir, removed)),
-  ]);
-  await logHelper.expectBuildEnd();
-  expect(await fse.readFile(join(dist, added), 'utf8')).toBe('added');
-  expect(await fse.readFile(join(dist, changed), 'utf8')).toBe('after');
-  expect(await fse.pathExists(join(dist, removed))).toBe(false);
-});
+    if (event === 'unlink') {
+      await fse.remove(source);
+      await logHelper.expectBuildEnd();
+      expect(await fse.pathExists(output)).toBe(false);
+    } else {
+      await fse.writeFile(source, 'after');
+      await logHelper.expectBuildEnd();
+      expect(await fse.readFile(output, 'utf8')).toBe('after');
+    }
+  });
+}
 
 test('should serve publicDir for dev server correctly', async ({
   page,
@@ -310,7 +316,7 @@ test('should inherit, replace or disable publicDir per environment', async ({
           output: { distPath: 'dist-copy/inherited/custom' },
           server: {
             publicDir: [
-              { name: publicB },
+              { name: publicB, copyOnBuild: undefined },
               { name: publicA, copyOnBuild: false },
             ],
           },

@@ -358,9 +358,10 @@ const normalizeHost = (host?: string | boolean): string => {
 };
 
 export const shouldCopyPublicDir = (
-  copyOnBuild: Required<PublicDirOptions>['copyOnBuild'],
+  copyOnBuild: PublicDirOptions['copyOnBuild'],
   target: NormalizedOutputConfig['target'],
-): boolean => (copyOnBuild === 'auto' ? target !== 'node' : copyOnBuild);
+): boolean =>
+  typeof copyOnBuild === 'boolean' ? copyOnBuild : target !== 'node';
 
 export const normalizePublicDirs = (
   rootPath: string,
