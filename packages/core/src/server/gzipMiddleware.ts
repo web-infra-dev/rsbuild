@@ -7,7 +7,17 @@ import zlib from 'node:zlib';
 import type { CompressOptions, RequestHandler } from '../types';
 
 const ENCODING_REGEX = /\bgzip\b/;
-const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
+const TEXT_LIKE_MIME_TYPE = /text|javascript|\/json|xml|\+(?:json|yaml)$/;
+const COMPRESSIBLE_ASSET_TYPES = new Set([
+  'application/toml',
+  'application/wasm',
+  'application/yaml',
+  'font/collection',
+  'font/otf',
+  'font/ttf',
+  'image/bmp',
+]);
+
 type WriteHeadHeaders = OutgoingHttpHeaders | OutgoingHttpHeader[];
 
 const getMimeType = (contentType: string) => {
@@ -61,15 +71,16 @@ const shouldCompress = (res: ServerResponse) => {
     return false;
   }
 
-  const contentTypeValue = String(contentType);
-
-  // Only compress text-like responses by default to avoid transforming binary assets.
-  if (!CONTENT_TYPE_REGEX.test(contentTypeValue)) {
+  const mimeType = getMimeType(String(contentType));
+  // Gzip buffering can delay server-sent events.
+  if (mimeType === 'text/event-stream') {
     return false;
   }
 
-  // SSE is text-like, but gzip buffering can delay event delivery.
-  if (getMimeType(contentTypeValue) === 'text/event-stream') {
+  if (
+    !TEXT_LIKE_MIME_TYPE.test(mimeType) &&
+    !COMPRESSIBLE_ASSET_TYPES.has(mimeType)
+  ) {
     return false;
   }
 
