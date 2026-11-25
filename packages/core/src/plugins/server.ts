@@ -123,7 +123,7 @@ export const pluginServer = (): RsbuildPlugin => ({
       for (const group of groups.values()) {
         for (const { name: publicDir, copyOnBuild, ignore } of group[0].config
           .server.publicDir) {
-          if (!fs.existsSync(publicDir)) {
+          if (copyOnBuild === false || !fs.existsSync(publicDir)) {
             continue;
           }
           const distPaths = dedupeNestedPaths(
