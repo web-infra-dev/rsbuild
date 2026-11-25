@@ -542,8 +542,8 @@ snapshots:
 					"version": "4.0.0",
 				},
 				"svelte": {
-					"specifier": "^5.58.0",
-					"version": "5.58.0",
+					"specifier": "^5.59.1",
+					"version": "5.59.1",
 				},
 				"svelte-loader": "3.2.4",
 				"svelte-preprocess": "6.0.5",
@@ -3459,6 +3459,14 @@ snapshots:
 			"integrity": "sha512-ZEkt592DdyDYvsUpxP63Ctnjbw6fI7OfG8QgCOr7wHoHPZZQbQiugme0EvHfnoxiy1GkQ/2As9/2uKg+vgtkfA==",
 			"engines": {"node": "^20.19.0 || >=22.12.0"},
 			"cpu": ["arm64"],
+			"os": ["win32"],
+			"optional": true,
+		},
+
+		"@rstackjs/cli-win32-ia32-msvc@0.9.4": {
+			"integrity": "sha512-MSOxfBHNdRnndquhwVJXjbmuvWiJ293X70EJfRG8bXflme7j4snGMXfdHw8+ou1zwnkgQseQLRB/JcaOeXxJAg==",
+			"engines": {"node": "^20.19.0 || >=22.12.0"},
+			"cpu": ["ia32"],
 			"os": ["win32"],
 			"optional": true,
 		},
@@ -8359,6 +8367,7 @@ snapshots:
 				"@rstackjs/cli-linux-x64-gnu": "0.9.4",
 				"@rstackjs/cli-linux-x64-musl": "0.9.4",
 				"@rstackjs/cli-win32-arm64-msvc": "0.9.4",
+				"@rstackjs/cli-win32-ia32-msvc": "0.9.4",
 				"@rstackjs/cli-win32-x64-msvc": "0.9.4",
 			},
 		},
@@ -8890,7 +8899,7 @@ snapshots:
 			"peerDependencies": {
 				"svelte": {
 					"specifier": ">=3.19.0",
-					"version": "5.58.0",
+					"version": "5.59.1",
 				},
 			},
 		},
@@ -8900,7 +8909,7 @@ snapshots:
 			"peerDependencies": {
 				"svelte": {
 					"specifier": "^3.0.0 || ^4.0.0-next.0 || ^5.0.0-next.1",
-					"version": "5.58.0",
+					"version": "5.59.1",
 				},
 			},
 			"dependencies": {
@@ -8957,7 +8966,7 @@ snapshots:
 				},
 				"svelte": {
 					"specifier": "^4.0.0 || ^5.0.0-next.100 || ^5.0.0",
-					"version": "5.58.0",
+					"version": "5.59.1",
 				},
 				"typescript": {
 					"specifier": "^5.0.0 || ^6.0.0",
@@ -8967,8 +8976,8 @@ snapshots:
 			},
 		},
 
-		"svelte@5.58.0": {
-			"integrity": "sha512-rOMKTD9WP2C6ahWDmntey4p+JqUxtup1w9G3KdVuTbNGHi5u97iMw0CIc8a+F5rZtiH7x98kVniDlBRRR5e98w==",
+		"svelte@5.59.1": {
+			"integrity": "sha512-ADG20W/jYSQut/79AavRRfbXQYebFKMVWT/xAbjVVZfZA4XzIoFfcpanEfYTyN+uWQUaPP+nstFx4qVKwEVnQQ==",
 			"engines": {"node": ">=18"},
 			"dependencies": {
 				"@jridgewell/remapping": "2.3.5",
