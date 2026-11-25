@@ -47,7 +47,15 @@ test('should gzip compressible static assets in dev and preview', async ({
         expect(await res.body(), name).toEqual(content);
       }
     },
-    { config: { server: { publicDir: { name: publicDir } } } },
+    {
+      config: {
+        server: {
+          publicDir: {
+            name: publicDir,
+          },
+        },
+      },
+    },
   );
 });
 
