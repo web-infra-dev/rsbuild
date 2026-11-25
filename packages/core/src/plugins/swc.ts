@@ -9,14 +9,7 @@ import {
   RAW_QUERY_REGEX,
   SCRIPT_REGEX,
 } from '../constants';
-import {
-  castArray,
-  cloneDeep,
-  color,
-  isFunction,
-  isWebTarget,
-  require,
-} from '../helpers';
+import { castArray, color, isFunction, isWebTarget, require } from '../helpers';
 import { normalizeRuleConditionPath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
@@ -218,9 +211,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .set('fullySpecified', false)
           .end()
           .use(CHAIN_ID.USE.SWC)
-          .loader(builtinSwcLoaderName)
-          // Using cloned options to keep options separate from each other
-          .options(cloneDeep(mergedConfig));
+          .cloneFrom(mainRule.use(CHAIN_ID.USE.SWC));
       },
     });
   },
