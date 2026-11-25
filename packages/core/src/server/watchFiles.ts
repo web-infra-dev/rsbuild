@@ -141,10 +141,11 @@ export async function createChokidar(
   root: string,
   options: ChokidarOptions,
   logger: Logger,
+  literalPaths?: string[],
 ): Promise<FSWatcher> {
   const { default: chokidar } = await getChokidar();
 
-  const watchFiles = new Set<string>();
+  const watchFiles = new Set(literalPaths);
 
   const globPatterns = pathOrGlobs.filter((pathOrGlob) => {
     if (isGlob(pathOrGlob)) {

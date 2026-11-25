@@ -357,6 +357,11 @@ const normalizeHost = (host?: string | boolean): string => {
   return host === true ? ALL_INTERFACES_IPV4 : LOCALHOST;
 };
 
+export const shouldCopyPublicDir = (
+  copyOnBuild: Required<PublicDirOptions>['copyOnBuild'],
+  target: NormalizedOutputConfig['target'],
+): boolean => (copyOnBuild === 'auto' ? target !== 'node' : copyOnBuild);
+
 export const normalizePublicDirs = (
   rootPath: string,
   publicDir?: PublicDir,

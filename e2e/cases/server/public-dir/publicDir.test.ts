@@ -3,6 +3,37 @@ import { expect, test } from '@e2e/helper';
 import { getDistFiles } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 
+test('should sync public files in build watch mode', async ({
+  cwd,
+  execCli,
+  logHelper,
+}) => {
+  const publicDir = join(cwd, 'public');
+  const dist = join(cwd, 'dist');
+  const added = 'test-temp-added.txt';
+  const changed = 'test-temp-changed.txt';
+  const removed = 'test-temp-removed.txt';
+  await fse.remove(join(publicDir, added));
+  await fse.outputFile(join(publicDir, changed), 'before');
+  await fse.outputFile(join(publicDir, removed), 'before');
+
+  execCli('build --watch --log-level verbose');
+  await logHelper.expectLog('restart watcher ready');
+  await logHelper.expectBuildEnd();
+  expect(await fse.pathExists(join(dist, removed))).toBe(true);
+  logHelper.clearLogs();
+
+  await Promise.all([
+    fse.writeFile(join(publicDir, added), 'added'),
+    fse.writeFile(join(publicDir, changed), 'after'),
+    fse.remove(join(publicDir, removed)),
+  ]);
+  await logHelper.expectBuildEnd();
+  expect(await fse.readFile(join(dist, added), 'utf8')).toBe('added');
+  expect(await fse.readFile(join(dist, changed), 'utf8')).toBe('after');
+  expect(await fse.pathExists(join(dist, removed))).toBe(false);
+});
+
 test('should serve publicDir for dev server correctly', async ({
   page,
   devOnly,

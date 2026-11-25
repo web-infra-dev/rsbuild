@@ -2,6 +2,7 @@ import type { CopyOptions } from 'node:fs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { isDeno } from '../constants';
+import { shouldCopyPublicDir } from '../defaultConfig';
 import { color } from '../helpers';
 import { dedupeNestedPaths } from '../helpers/path';
 import { getTinyglobby } from '../helpers/cachedImport';
@@ -122,14 +123,13 @@ export const pluginServer = (): RsbuildPlugin => ({
       for (const group of groups.values()) {
         for (const { name: publicDir, copyOnBuild, ignore } of group[0].config
           .server.publicDir) {
-          if (copyOnBuild === false || !fs.existsSync(publicDir)) {
+          if (!fs.existsSync(publicDir)) {
             continue;
           }
           const distPaths = dedupeNestedPaths(
             group
-              .filter(
-                ({ config }) =>
-                  copyOnBuild === true || config.output.target !== 'node',
+              .filter(({ config }) =>
+                shouldCopyPublicDir(copyOnBuild, config.output.target),
               )
               .map(({ distPath }) => distPath),
           );

@@ -83,6 +83,8 @@ Whether to copy files from the public directory to the dist directory on product
 - `false`: do not copy files.
 - `'auto'`: if [output.target](/config/output/target) is not `'node'`, copy files, otherwise do not copy.
 
+When you run `rsbuild build --watch`, adding, changing, or deleting a file in a public directory that is copied to the output restarts the build. With the default output settings, restarting cleans `dist/` and copies the current public files. If [output.cleanDistPath](/config/output/clean-dist-path) is `false`, deleting a source file leaves its previous copy in the output directory.
+
 :::tip
 During dev builds, if you need to copy some static assets to the output directory, you can use the [output.copy](/config/output/copy) option instead.
 :::
