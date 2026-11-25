@@ -158,10 +158,6 @@ permissions:
     skills:
       - rspress-description-generator
 
-skills:
-  dirs:
-    - .agents/skills
-
 autoDedupe: true
 
 dedupePeers: true
