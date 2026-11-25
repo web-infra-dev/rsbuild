@@ -6,7 +6,7 @@
   "devDependencies": {
     "@rstest/adapter-rsbuild": "^0.12.6",
     "@rstest/core": "^0.12.6",
-    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/jest-dom": "^8.0.0",
     "@vue/test-utils": "^2.6.0",
     "happy-dom": "^21.0.4"
   }
