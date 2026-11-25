@@ -1242,7 +1242,7 @@ export type CSSModulesConfig = {
   localIdentHashSalt?: Rspack.CssGeneratorLocalIdentHashSalt;
   /**
    * Format of generated local class names for CSS Modules.
-   * @default '[uniqueName]-[id]-[local]'
+   * @default '[local]-[hash]'
    */
   localIdentName?: Rspack.CssGeneratorLocalIdentName;
   /**
@@ -1284,13 +1284,18 @@ export interface CSSConfig {
    */
   exportType?: Rspack.CssParserExportType;
   /**
+   * Use ES modules named exports for CSS exports.
+   * @default false for `'link'` and `'style'`, true for `'text'` and `'css-style-sheet'`
+   */
+  namedExports?: Rspack.CssParserNamedExports;
+  /**
    * Customize how CSS export names are exported to JavaScript modules.
-   * @default 'as-is'
+   * @default 'camel-case'
    */
   exportsConvention?: Rspack.CssGeneratorExportsConvention;
   /**
    * If true, only exports identifier mappings from CSS without emitting stylesheet assets.
-   * @default false
+   * @default false for 'web' target, true for non-'web' targets
    */
   exportsOnly?: Rspack.CssGeneratorExportsOnly;
   /**

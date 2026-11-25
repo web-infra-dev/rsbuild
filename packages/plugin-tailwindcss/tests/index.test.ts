@@ -45,7 +45,8 @@ describe('plugin-tailwindcss', () => {
     expect(JSON.stringify(urlRule?.use)).toContain('@tailwindcss/webpack');
 
     const mainRule = oneOf?.find((rule) => rule.type === 'css/auto');
-    expect(mainRule?.use).toBeUndefined();
+    expect(JSON.stringify(mainRule?.use)).toContain('ignoreCssLoader');
+    expect(JSON.stringify(mainRule?.use)).not.toContain('@tailwindcss/webpack');
 
     const inlineRule = oneOf?.find(
       (rule) => String(rule.resourceQuery) === String(/[?&]inline(?:&|=|$)/),

@@ -172,4 +172,41 @@ describe('plugin-less', () => {
       }),
     ]);
   });
+
+  it('should place ignoreCssLoader before less-loader and copy parser when css.exportsOnly is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: true,
+        output: {
+          target: 'node',
+        },
+        plugins: [pluginLess()],
+      },
+    });
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+    const lessRules = matchRules(
+      rspackConfig,
+      'a.less',
+    ) as MatchedRuleWithOneOf[];
+    const mainRule = lessRules[0]?.oneOf?.find(
+      (rule) => rule.type === 'css/auto' && !rule.resourceQuery && !rule.with,
+    );
+
+    expect(mainRule).toMatchObject({
+      type: 'css/auto',
+      parser: { url: false },
+    });
+    expect(mainRule?.use).toEqual([
+      expect.objectContaining({
+        loader: expect.stringContaining('ignoreCssLoader'),
+        options: {
+          modules: { auto: true },
+        },
+      }),
+      expect.objectContaining({
+        loader: expect.stringContaining('less-loader'),
+      }),
+    ]);
+  });
 });

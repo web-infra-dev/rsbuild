@@ -144,4 +144,44 @@ describe('plugin-sass', () => {
       }),
     ]);
   });
+
+  it('should place ignoreCssLoader before sass loaders and copy parser when css.exportsOnly is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: true,
+        output: {
+          target: 'node',
+        },
+        plugins: [pluginSass()],
+      },
+    });
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+    const sassRules = matchRules(
+      rspackConfig,
+      'a.scss',
+    ) as MatchedRuleWithOneOf[];
+    const mainRule = sassRules[0]?.oneOf?.find(
+      (rule) => rule.type === 'css/auto' && !rule.resourceQuery && !rule.with,
+    );
+
+    expect(mainRule).toMatchObject({
+      type: 'css/auto',
+      parser: { url: false },
+    });
+    expect(mainRule?.use).toEqual([
+      expect.objectContaining({
+        loader: expect.stringContaining('ignoreCssLoader'),
+        options: {
+          modules: { auto: true },
+        },
+      }),
+      expect.objectContaining({
+        loader: expect.stringContaining('resolve-url-loader'),
+      }),
+      expect.objectContaining({
+        loader: expect.stringContaining('sass-loader'),
+      }),
+    ]);
+  });
 });

@@ -18,6 +18,7 @@ import { initPlugins } from './pluginManager';
 import { generateRspackConfig } from './rspackConfig';
 import type {
   AllowedEnvironmentDevKeys,
+  CSSConfig,
   EnvironmentConfig,
   InspectConfigOptions,
   InternalContext,
@@ -104,7 +105,8 @@ const createEnvironmentNotFoundError = (environments: string[] = []) => {
 };
 
 const initEnvironmentConfigs = (
-  normalizedConfig: Omit<NormalizedConfig, 'environments'> & {
+  normalizedConfig: Omit<NormalizedConfig, 'environments' | 'css'> & {
+    css?: boolean | CSSConfig;
     environments: Record<string, EnvironmentConfig>;
   },
   rootPath: string,
@@ -287,7 +289,9 @@ export async function initRsbuildConfig({
     const { css, ...restEnvironmentConfig } = environmentConfig;
     const normalizedEnvironmentConfig = {
       ...restEnvironmentConfig,
-      ...(css !== undefined ? { css: normalizeCssConfig(css) } : {}),
+      ...(css !== undefined
+        ? { css: normalizeCssConfig(css, environmentConfig.output.target) }
+        : {}),
       dev: {
         ...normalizedBaseConfig.dev,
         ...environmentConfig.dev,
@@ -329,8 +333,14 @@ export async function initRsbuildConfig({
     });
   }
 
+  const { css: baseCss, ...restNormalizedBaseConfig } = normalizedBaseConfig;
   context.normalizedConfig = {
-    ...normalizedBaseConfig,
+    ...restNormalizedBaseConfig,
+    ...(baseCss !== undefined
+      ? {
+          css: normalizeCssConfig(baseCss, normalizedBaseConfig.output.target),
+        }
+      : {}),
     environments,
   };
 

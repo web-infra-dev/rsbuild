@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { runInNewContext } from 'node:vm';
 import { expect, test } from '@e2e/helper';
 import { findFiles, getFileContent } from '@rstackjs/test-utils';
 
@@ -27,9 +28,11 @@ test('should build Rspack built-in CSS with css: true defaults', async ({
   expect(cssContent).toContain('font-weight:700');
   expect(cssContent).toContain('font-style:italic');
 
-  // exportsConvention defaults to 'as-is'
+  // exportsConvention defaults to 'camel-case'
   expect(jsContent).toContain('"box-title"');
-  expect(jsContent).not.toContain('boxTitle');
+  expect(jsContent).toContain('boxTitle');
+  expect(jsContent).toContain('lessBox');
+  expect(jsContent).toContain('sassBox');
   expect(jsContent).toContain('.inline-box{color:#0a141e}');
   expect(jsContent).toContain(
     JSON.stringify(
@@ -110,7 +113,7 @@ test('should apply custom exportsConvention, dashedIdents, and localIdentHashSal
   const rsbuild1 = await build({
     config: {
       css: {
-        exportsConvention: 'camel-case',
+        exportsConvention: 'as-is',
         modules: {
           dashedIdents: true,
           localIdentName: '[local]-[hash]',
@@ -123,7 +126,7 @@ test('should apply custom exportsConvention, dashedIdents, and localIdentHashSal
   const rsbuild2 = await build({
     config: {
       css: {
-        exportsConvention: 'camel-case',
+        exportsConvention: 'as-is',
         modules: {
           dashedIdents: true,
           localIdentName: '[local]-[hash]',
@@ -137,10 +140,55 @@ test('should apply custom exportsConvention, dashedIdents, and localIdentHashSal
   const css2 = getFileContent(rsbuild2.getDistFiles(), 'index.css');
   const js1 = getFileContent(rsbuild1.getDistFiles(), 'index.js');
 
-  // camelCase export generated
-  expect(js1).toContain('boxTitle');
+  // as-is export keeps original kebab-case name only
+  expect(js1).toContain('"box-title"');
+  expect(js1).not.toContain('boxTitle');
   // dashedIdents: true renames --custom-color
   expect(css1).not.toContain('var(--custom-color)');
   // Different salt produces different ident hash
   expect(css1).not.toBe(css2);
+});
+
+test('should support css.namedExports: true and css.exportType: "text"', async ({
+  build,
+}) => {
+  const namedResult = await build({
+    config: {
+      source: {
+        entry: {
+          index: './src/named-exports.ts',
+        },
+      },
+      css: {
+        namedExports: true,
+      },
+    },
+  });
+
+  const namedJs = getFileContent(namedResult.getDistFiles(), 'index.js');
+  expect(namedJs).toMatch(/box-title-/);
+  namedResult.expectNoLog(COMPILE_WARNING);
+
+  const textResult = await build({
+    config: {
+      source: {
+        entry: {
+          index: './src/text-export.ts',
+        },
+      },
+      css: {
+        exportType: 'text',
+      },
+    },
+  });
+
+  const textFiles = textResult.getDistFiles();
+  expect(findFiles(textFiles, '.css')).toHaveLength(0);
+
+  const textJs = getFileContent(textFiles, 'index.js');
+  const sandbox: Record<string, unknown> = {};
+  runInNewContext(textJs, sandbox);
+  expect(typeof sandbox.__cssText).toBe('string');
+  expect(sandbox.__cssText).toContain('color:red');
+  textResult.expectNoLog(COMPILE_WARNING);
 });

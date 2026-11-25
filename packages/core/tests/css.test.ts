@@ -191,14 +191,15 @@ describe('plugin-css builtin css', () => {
 
     expect(rsbuild.getNormalizedConfig().css).toEqual({
       exportType: 'link',
-      exportsConvention: 'as-is',
+      namedExports: false,
+      exportsConvention: 'camel-case',
       exportsOnly: false,
       esModule: true,
       modules: {
         localIdentHashDigest: 'base64url',
         localIdentHashDigestLength: 6,
         localIdentHashFunction: 'xxhash64',
-        localIdentName: '[uniqueName]-[id]-[local]',
+        localIdentName: '[local]-[hash]',
         animation: true,
         dashedIdents: false,
         customIdents: false,
@@ -210,9 +211,10 @@ describe('plugin-css builtin css', () => {
 
     expect(rspackConfig.experiments).not.toHaveProperty('css');
     expect(rspackConfig.module?.parser).toMatchObject({
-      css: { exportType: 'link' },
+      css: { exportType: 'link', namedExports: false },
       'css/auto': {
         exportType: 'link',
+        namedExports: false,
         animation: true,
         dashedIdents: false,
         customIdents: false,
@@ -222,6 +224,7 @@ describe('plugin-css builtin css', () => {
       },
       'css/global': {
         exportType: 'link',
+        namedExports: false,
         animation: true,
         dashedIdents: false,
         customIdents: false,
@@ -231,6 +234,7 @@ describe('plugin-css builtin css', () => {
       },
       'css/module': {
         exportType: 'link',
+        namedExports: false,
         animation: true,
         dashedIdents: false,
         customIdents: false,
@@ -245,31 +249,31 @@ describe('plugin-css builtin css', () => {
         esModule: true,
       },
       'css/auto': {
-        exportsConvention: 'as-is',
+        exportsConvention: 'camel-case',
         exportsOnly: false,
         esModule: true,
         localIdentHashDigest: 'base64url',
         localIdentHashDigestLength: 6,
         localIdentHashFunction: 'xxhash64',
-        localIdentName: '[uniqueName]-[id]-[local]',
+        localIdentName: '[local]-[hash]',
       },
       'css/global': {
-        exportsConvention: 'as-is',
+        exportsConvention: 'camel-case',
         exportsOnly: false,
         esModule: true,
         localIdentHashDigest: 'base64url',
         localIdentHashDigestLength: 6,
         localIdentHashFunction: 'xxhash64',
-        localIdentName: '[uniqueName]-[id]-[local]',
+        localIdentName: '[local]-[hash]',
       },
       'css/module': {
-        exportsConvention: 'as-is',
+        exportsConvention: 'camel-case',
         exportsOnly: false,
         esModule: true,
         localIdentHashDigest: 'base64url',
         localIdentHashDigestLength: 6,
         localIdentHashFunction: 'xxhash64',
-        localIdentName: '[uniqueName]-[id]-[local]',
+        localIdentName: '[local]-[hash]',
       },
     });
     expect(rspackConfig.module?.generator?.css).not.toHaveProperty(
@@ -333,6 +337,7 @@ describe('plugin-css builtin css', () => {
       },
       generator: {
         exportsOnly: false,
+        esModule: true,
       },
     });
   });
@@ -344,7 +349,8 @@ describe('plugin-css builtin css', () => {
       config: {
         css: {
           exportType: 'style',
-          exportsConvention: 'camel-case',
+          namedExports: true,
+          exportsConvention: 'as-is',
           esModule: false,
           modules: {
             dashedIdents: true,
@@ -358,7 +364,8 @@ describe('plugin-css builtin css', () => {
 
     expect(rsbuild.getNormalizedConfig().css).toEqual({
       exportType: 'style',
-      exportsConvention: 'camel-case',
+      namedExports: true,
+      exportsConvention: 'as-is',
       exportsOnly: false,
       esModule: false,
       modules: {
@@ -366,7 +373,7 @@ describe('plugin-css builtin css', () => {
         localIdentHashDigestLength: 6,
         localIdentHashFunction: 'xxhash64',
         localIdentHashSalt: 'my-salt',
-        localIdentName: '[uniqueName]-[id]-[local]',
+        localIdentName: '[local]-[hash]',
         animation: true,
         dashedIdents: true,
         customIdents: false,
@@ -377,8 +384,18 @@ describe('plugin-css builtin css', () => {
     });
     expect(rspackConfig.output).not.toHaveProperty('cssFilename');
     expect(rspackConfig.output).not.toHaveProperty('cssChunkFilename');
+    expect(rspackConfig.module?.parser).toMatchObject({
+      css: {
+        exportType: 'style',
+        namedExports: true,
+      },
+      'css/auto': {
+        exportType: 'style',
+        namedExports: true,
+      },
+    });
     expect(rspackConfig.module?.generator?.['css/auto']).toMatchObject({
-      exportsConvention: 'camel-case',
+      exportsConvention: 'as-is',
       esModule: false,
       localIdentHashSalt: 'my-salt',
     });
@@ -387,6 +404,15 @@ describe('plugin-css builtin css', () => {
       rspackConfig,
       'a.css',
     ) as MatchedRuleWithOneOf[];
+    const inlineRule = cssRules[0]?.oneOf?.find(
+      (rule) => String(rule.resourceQuery) === String(/[?&]inline(?:&|=|$)/),
+    );
+    expect(inlineRule).toMatchObject({
+      generator: {
+        exportsOnly: false,
+        esModule: true,
+      },
+    });
     const mainRule = cssRules[0]?.oneOf?.find(
       (rule) => rule.type === 'css/auto',
     );
@@ -398,6 +424,73 @@ describe('plugin-css builtin css', () => {
         }),
       }),
     ]);
+  });
+
+  it('should derive css.namedExports from css.exportType unless explicitly set', async () => {
+    for (const exportType of ['text', 'css-style-sheet'] as const) {
+      const rsbuild = await createRsbuild({
+        config: {
+          css: { exportType },
+        },
+      });
+      const [rspackConfig] = await rsbuild.initConfigs();
+      expect(rsbuild.getNormalizedConfig().css).toMatchObject({
+        exportType,
+        namedExports: true,
+      });
+      expect(rspackConfig.module?.parser).toMatchObject({
+        css: { exportType, namedExports: true },
+        'css/auto': { exportType, namedExports: true },
+      });
+    }
+
+    const rsbuildOverride = await createRsbuild({
+      config: {
+        css: {
+          exportType: 'text',
+          namedExports: false,
+        },
+      },
+    });
+    const [overrideConfig] = await rsbuildOverride.initConfigs();
+    expect(rsbuildOverride.getNormalizedConfig().css).toMatchObject({
+      exportType: 'text',
+      namedExports: false,
+    });
+    expect(overrideConfig.module?.parser).toMatchObject({
+      css: { exportType: 'text', namedExports: false },
+      'css/auto': { exportType: 'text', namedExports: false },
+    });
+
+    const rsbuildMultiEnv = await createRsbuild({
+      config: {
+        css: true,
+        environments: {
+          web: {},
+          textEnv: {
+            css: {
+              exportType: 'text',
+            },
+          },
+        },
+      },
+    });
+    const [webConfig, textConfig] = await rsbuildMultiEnv.initConfigs();
+    const { environments } = rsbuildMultiEnv.getNormalizedConfig();
+    expect(environments.web.css).toMatchObject({
+      exportType: 'link',
+      namedExports: false,
+    });
+    expect(environments.textEnv.css).toMatchObject({
+      exportType: 'text',
+      namedExports: true,
+    });
+    expect(webConfig.module?.parser?.['css/auto']).toMatchObject({
+      namedExports: false,
+    });
+    expect(textConfig.module?.parser?.['css/auto']).toMatchObject({
+      namedExports: true,
+    });
   });
 
   it('should support css.exportsOnly without emitting CSS files or running main loaders', async () => {
@@ -426,7 +519,17 @@ describe('plugin-css builtin css', () => {
     const mainRule = cssRules[0]?.oneOf?.find(
       (rule) => rule.type === 'css/auto',
     );
-    expect(mainRule?.use).toBeUndefined();
+    expect(mainRule).toMatchObject({
+      parser: { url: false },
+    });
+    expect(mainRule?.use).toEqual([
+      expect.objectContaining({
+        loader: expect.stringContaining('ignoreCssLoader'),
+        options: {
+          modules: { auto: true },
+        },
+      }),
+    ]);
 
     const urlRule = cssRules[0]?.oneOf?.find(
       (rule) => String(rule.resourceQuery) === String(/[?&]url(?:&|=|$)/),
@@ -520,6 +623,134 @@ describe('plugin-css builtin css', () => {
     expect(legacyConfig.module?.parser?.['css/auto']).toBeUndefined();
     expect(customConfig.module?.parser?.['css/auto']).toMatchObject({
       exportType: 'style',
+    });
+  });
+
+  it.for(['node', 'web-worker'] as const)(
+    'should default css.exportsOnly to true for %s target',
+    async (target) => {
+      const rsbuild = await createRsbuild({
+        config: {
+          css: true,
+          output: { target },
+        },
+      });
+
+      const [rspackConfig] = await rsbuild.initConfigs();
+      const envConfig = Object.values(
+        rsbuild.getNormalizedConfig().environments,
+      )[0];
+
+      expect(envConfig.css).toMatchObject({
+        exportsOnly: true,
+        exportType: 'link',
+      });
+      expect(rspackConfig.output).not.toHaveProperty('cssFilename');
+      expect(rspackConfig.output).not.toHaveProperty('cssChunkFilename');
+      expect(rspackConfig.module?.generator?.['css/auto']).toMatchObject({
+        exportsOnly: true,
+      });
+
+      const cssRules = matchRules(
+        rspackConfig,
+        'a.css',
+      ) as MatchedRuleWithOneOf[];
+      const mainRule = cssRules[0]?.oneOf?.find(
+        (rule) => rule.type === 'css/auto',
+      );
+      expect(mainRule).toMatchObject({
+        parser: { url: false },
+      });
+      expect(mainRule?.use).toEqual([
+        expect.objectContaining({
+          loader: expect.stringContaining('ignoreCssLoader'),
+          options: {
+            modules: { auto: true },
+          },
+        }),
+      ]);
+    },
+  );
+
+  it('should respect explicit css.exportsOnly: false on node target', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: {
+          exportsOnly: false,
+        },
+        output: {
+          target: 'node',
+        },
+      },
+    });
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+    const envConfig = rsbuild.getNormalizedConfig().environments.node;
+
+    expect(envConfig.css).toMatchObject({
+      exportsOnly: false,
+    });
+    expect(rspackConfig.output).toMatchObject({
+      cssFilename: 'static/css/[name].css',
+      cssChunkFilename: 'static/css/async/[name].css',
+    });
+
+    const cssRules = matchRules(
+      rspackConfig,
+      'a.css',
+    ) as MatchedRuleWithOneOf[];
+    const mainRule = cssRules[0]?.oneOf?.find(
+      (rule) => rule.type === 'css/auto',
+    );
+    expect(mainRule?.parser).toBeUndefined();
+    expect(JSON.stringify(mainRule?.use)).not.toContain('ignoreCssLoader');
+  });
+
+  it('should derive css.exportsOnly per environment target for top-level css', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: {
+          exportType: 'style',
+        },
+        environments: {
+          web: {},
+          node: {
+            output: { target: 'node' },
+          },
+          nodeEmit: {
+            css: {
+              exportsOnly: false,
+            },
+            output: { target: 'node' },
+          },
+        },
+      },
+    });
+
+    const [webConfig, nodeConfig, nodeEmitConfig] = await rsbuild.initConfigs();
+    const { environments } = rsbuild.getNormalizedConfig();
+
+    expect(environments.web.css).toMatchObject({
+      exportType: 'style',
+      exportsOnly: false,
+    });
+    expect(environments.node.css).toMatchObject({
+      exportType: 'style',
+      exportsOnly: true,
+    });
+    expect(environments.nodeEmit.css).toMatchObject({
+      exportType: 'style',
+      exportsOnly: false,
+    });
+
+    expect(webConfig.module?.generator?.['css/auto']).toMatchObject({
+      exportsOnly: false,
+    });
+    expect(nodeConfig.module?.generator?.['css/auto']).toMatchObject({
+      exportsOnly: true,
+    });
+    expect(nodeEmitConfig.module?.generator?.['css/auto']).toMatchObject({
+      exportsOnly: false,
     });
   });
 });

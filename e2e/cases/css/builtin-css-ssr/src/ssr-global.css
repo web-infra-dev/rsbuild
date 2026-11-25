@@ -1,0 +1,4 @@
+@import './missing-global.css';
+.g {
+  background: url('./missing-global.png');
+}

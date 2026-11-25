@@ -43,6 +43,8 @@ import type {
   RsbuildConfig,
   RsbuildEntry,
   RsbuildMode,
+  RsbuildTarget,
+  Rspack,
 } from './types';
 
 const getDefaultDevConfig = (): Omit<NormalizedDevConfig, 'hmr'> => ({
@@ -313,7 +315,7 @@ export const getDefaultCssModulesConfig = (): NormalizedCSSModulesConfig => ({
   localIdentHashDigest: 'base64url',
   localIdentHashDigestLength: 6,
   localIdentHashFunction: 'xxhash64',
-  localIdentName: '[uniqueName]-[id]-[local]',
+  localIdentName: '[local]-[hash]',
   animation: true,
   dashedIdents: false,
   customIdents: false,
@@ -322,36 +324,49 @@ export const getDefaultCssModulesConfig = (): NormalizedCSSModulesConfig => ({
   function: false,
 });
 
-export const getDefaultCssConfig = (): NormalizedCSSConfig => ({
+export const getDefaultCssConfig = (
+  target: RsbuildTarget = 'web',
+  exportType: Rspack.CssParserExportType = 'link',
+): NormalizedCSSConfig => ({
   exportType: 'link',
-  exportsConvention: 'as-is',
-  exportsOnly: false,
+  namedExports: exportType === 'text' || exportType === 'css-style-sheet',
+  exportsConvention: 'camel-case',
+  exportsOnly: target !== 'web',
   esModule: true,
   modules: getDefaultCssModulesConfig(),
 });
 
-export function normalizeCssConfig(css: undefined): undefined;
-export function normalizeCssConfig(css: false): false;
-export function normalizeCssConfig(css: true | CSSConfig): NormalizedCSSConfig;
+export function normalizeCssConfig(
+  css: undefined,
+  target?: RsbuildTarget,
+): undefined;
+export function normalizeCssConfig(css: false, target?: RsbuildTarget): false;
+export function normalizeCssConfig(
+  css: true | CSSConfig,
+  target?: RsbuildTarget,
+): NormalizedCSSConfig;
 export function normalizeCssConfig(
   css?: boolean | CSSConfig,
+  target?: RsbuildTarget,
 ): NormalizedCSSConfig | false | undefined;
 export function normalizeCssConfig(
   css?: boolean | CSSConfig,
+  target: RsbuildTarget = 'web',
 ): NormalizedCSSConfig | false | undefined {
   if (css === undefined || css === false) {
     return css;
   }
   if (css === true) {
-    return getDefaultCssConfig();
+    return getDefaultCssConfig(target);
   }
   return mergeRsbuildConfig<NormalizedCSSConfig>(
-    getDefaultCssConfig(),
+    getDefaultCssConfig(target, css.exportType),
     css as NormalizedCSSConfig,
   );
 }
 
-type NormalizedBaseConfig = Omit<NormalizedConfig, 'environments'> & {
+type NormalizedBaseConfig = Omit<NormalizedConfig, 'environments' | 'css'> & {
+  css?: boolean | CSSConfig;
   environments: Record<string, EnvironmentConfig>;
 };
 
@@ -388,10 +403,6 @@ export const normalizeConfig = (
   };
 
   const mergedConfig = mergeRsbuildConfig(defaultConfig, config);
-
-  if (mergedConfig.css !== undefined) {
-    mergedConfig.css = normalizeCssConfig(mergedConfig.css);
-  }
 
   return mergedConfig as NormalizedBaseConfig;
 };

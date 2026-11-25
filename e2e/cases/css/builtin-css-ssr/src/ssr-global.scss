@@ -1,0 +1,4 @@
+@use './missing-global.scss';
+.g {
+  color: $missing;
+}

@@ -322,10 +322,12 @@ const applyBuiltinCssConfig = ({
 }) => {
   const cssParserOptions: Rspack.CssParserOptions = {
     exportType: cssConfig.exportType,
+    namedExports: cssConfig.namedExports,
   };
 
   const cssModuleParserOptions: Rspack.CssAutoOrModuleParserOptions = {
     exportType: cssConfig.exportType,
+    namedExports: cssConfig.namedExports,
     animation: cssConfig.modules.animation,
     dashedIdents: cssConfig.modules.dashedIdents,
     customIdents: cssConfig.modules.customIdents,
@@ -484,6 +486,16 @@ export const pluginCss = (): RsbuildPlugin => ({
             .sideEffects(true)
             .resolve.preferRelative(true);
 
+          if (!emitCss) {
+            // Skip reading and transforming non-CSS-Modules stylesheets in non-emitting
+            // builds, while preserving native CSS Modules exports without resolving url().
+            mainRule
+              .parser({ url: false })
+              .use(CHAIN_ID.USE.IGNORE_CSS)
+              .loader(path.join(LOADER_PATH, 'ignoreCssLoader.mjs'))
+              .options({ modules: { auto: true } });
+          }
+
           inlineRule
             .type('css')
             .parser({
@@ -492,6 +504,7 @@ export const pluginCss = (): RsbuildPlugin => ({
             })
             .set('generator', {
               exportsOnly: false,
+              esModule: true,
             })
             .sideEffects(true)
             .resolve.preferRelative(true);
