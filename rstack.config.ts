@@ -1,5 +1,4 @@
 import { define } from 'rstack';
-import skillsLock from './skills-lock.json' with { type: 'json' };
 
 define.test({
   pool: 'vmForks',
@@ -18,8 +17,6 @@ define.fmt({
     'packages/create-rsbuild/**/*.html',
     // Preserve charset attribute syntax in regression fixtures.
     'e2e/cases/html/meta/src/{unquoted,spaced}.html',
-    // Ignore installed Skills because their formatting may differ from this repository.
-    ...Object.keys(skillsLock.skills).map((name) => `.agents/skills/${name}`),
   ],
   plugins: ['heading-case'],
 });
