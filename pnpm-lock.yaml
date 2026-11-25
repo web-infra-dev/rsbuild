@@ -488,8 +488,8 @@ snapshots:
 					"version": "2.3.0",
 				},
 				"rspack-chain": {
-					"specifier": "^2.3.3",
-					"version": "2.3.3",
+					"specifier": "^2.4.0",
+					"version": "2.4.0",
 				},
 				"rspack-manifest-plugin": "5.2.2",
 				"rspack-merge": "1.0.1",
@@ -8098,8 +8098,8 @@ snapshots:
 			"engines": {"node": "^20.19.0 || >=22.12.0"},
 		},
 
-		"rspack-chain@2.3.3": {
-			"integrity": "sha512-qLvubsV8UE42GWCCW0J/dXPruDGu8sBoJTNU9p5q2pJNKU4rrZrUY+j27SQ8DN7QA4n7vpLSR5hh7jsI9OglHA==",
+		"rspack-chain@2.4.0": {
+			"integrity": "sha512-UKWwfu5VesvFOIvcMk8qXv2BKzpbm0GhokVC1grarM6tOGgeadqcjkgaCvuvqAXi+iUqc6ls76SyrgH0BKHbRg==",
 			"peerDependencies": {
 				"@rspack/core": {
 					"specifier": "^2.0.0",
