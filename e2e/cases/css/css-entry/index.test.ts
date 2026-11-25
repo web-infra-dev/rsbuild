@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, isBuiltinCss, test } from '@e2e/helper';
 import { findFiles, getFileContent } from '@rstackjs/test-utils';
 
 test('should build CSS entry', async ({ buildPreview, page }) => {
@@ -6,7 +6,7 @@ test('should build CSS entry', async ({ buildPreview, page }) => {
 
   const files = rsbuild.getDistFiles();
   expect(findFiles(files, '.css')).toHaveLength(1);
-  expect(findFiles(files, '.js')).toHaveLength(1);
+  expect(findFiles(files, '.js')).toHaveLength(isBuiltinCss ? 0 : 1);
   expect(getFileContent(files, 'index.css')).toBe(
     'body{color:red;background-color:#00f}',
   );

@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, isBuiltinCss, test } from '@e2e/helper';
 import { findFile, getFileContent } from '@rstackjs/test-utils';
 
 test.for(['/', 'auto'])(
@@ -22,7 +22,9 @@ test.for([
   ['../', '../'],
   [
     'https://cdn.example.com/my assets/',
-    'https://cdn.example.com/my%20assets/',
+    isBuiltinCss
+      ? 'https://cdn.example.com/my assets/'
+      : 'https://cdn.example.com/my%20assets/',
   ],
   ['https://cdn.example.com/prefix-', 'https://cdn.example.com/prefix-'],
   [(): string => 'https://cdn.example.com/', 'https://cdn.example.com/'],

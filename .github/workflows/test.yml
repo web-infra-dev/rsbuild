@@ -102,3 +102,48 @@ jobs:
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
         run: node --run e2e
+
+  # ======== e2e (built-in CSS) ========
+  e2e-builtin-css:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: changes
+        with:
+          predicate-quantifier: 'every'
+          filters: .github/filters.yml
+
+      - name: Setup Node.js
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26.12.1
+          package-manager-cache: false
+
+      - name: Install Pnpm
+        if: steps.changes.outputs.changed == 'true'
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          run_install: true
+
+      - name: Build
+        if: steps.changes.outputs.changed == 'true'
+        run: node --run build
+
+      - name: Run E2E tests (built-in CSS)
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          RSBUILD_E2E_CSS: builtin
+        run: node --run e2e

@@ -1,5 +1,7 @@
 import { join } from 'node:path';
 
+export const isBuiltinCss = process.env.RSBUILD_E2E_CSS === 'builtin';
+
 export const BUILD_END_LOG = 'built in';
 export const HMR_CONNECTED_LOG = '[rsbuild] WebSocket connected.';
 export const MODULE_BUILD_FAILED_LOG = 'Module build failed';

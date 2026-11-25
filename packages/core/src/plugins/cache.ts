@@ -105,7 +105,9 @@ export const pluginCache = (): RsbuildPlugin => ({
         cacheConfig.cacheDigest.length;
 
       // Invalidate the cache when Rsbuild is upgraded.
-      const cacheVersion = `rsbuild-${RSBUILD_VERSION}-${environment.name}-${env}`;
+      const cacheVersion = `rsbuild-${RSBUILD_VERSION}-${environment.name}-${env}${
+        process.env.RSBUILD_E2E_CSS === 'builtin' ? '-builtin-css' : ''
+      }`;
 
       chain.cache({
         type: 'persistent',

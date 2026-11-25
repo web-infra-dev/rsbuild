@@ -4,8 +4,8 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 
 export default defineConfig({
-  output: {
-    injectStyles: true,
-  },
+  ...(process.env.RSBUILD_E2E_CSS === 'builtin'
+    ? { css: { exportType: 'style' } }
+    : { output: { injectStyles: true } }),
   plugins: [pluginReact(), pluginLess(), pluginSass()],
 });

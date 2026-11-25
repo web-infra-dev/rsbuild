@@ -62,6 +62,9 @@ export const pluginTailwindcss = (
   options: PluginTailwindcssOptions = {},
 ): RsbuildPlugin => ({
   name: PLUGIN_TAILWINDCSS_NAME,
+  // Preprocessor plugins copy the CSS loader chain during setup, so the
+  // Tailwind loader must be added to the CSS rule before Less/Sass clone it.
+  post: ['rsbuild:less', 'rsbuild:sass'],
 
   setup(api) {
     api.modifyBundlerChain(

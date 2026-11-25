@@ -1,8 +1,11 @@
-import { expect, test } from '@e2e/helper';
+import { expect, isBuiltinCss, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
 test('should compile common CSS import correctly', async ({ build }) => {
   const rsbuild = await build();
+  if (isBuiltinCss) {
+    await rsbuild.expectWarning("starts with '~' is deprecated");
+  }
   const files = rsbuild.getDistFiles();
   const indexCss = getFileContent(files, 'index.css');
   expect(indexCss).toEqual('html{min-height:100%}#a{color:red}#b{color:#00f}');

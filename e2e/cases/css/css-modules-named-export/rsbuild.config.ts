@@ -4,9 +4,13 @@ import { pluginSass } from '@rsbuild/plugin-sass';
 
 export default defineConfig({
   plugins: [pluginLess(), pluginSass()],
-  output: {
-    cssModules: {
-      namedExport: true,
-    },
-  },
+  ...(process.env.RSBUILD_E2E_CSS === 'builtin'
+    ? { css: { namedExports: true } }
+    : {
+        output: {
+          cssModules: {
+            namedExport: true,
+          },
+        },
+      }),
 });

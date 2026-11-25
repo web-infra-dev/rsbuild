@@ -1,5 +1,0 @@
-.css-title {
-  composes: other from './other.module.css';
-  color: red;
-  background: url('./icon-mod.svg');
-}

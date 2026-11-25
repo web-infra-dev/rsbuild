@@ -320,13 +320,18 @@ const applyBuiltinCssConfig = ({
   cssConfig: NormalizedCSSConfig;
   isProd: boolean;
 }) => {
+  // Omit `exportType` when it is `'link'` (Rspack's default); setting `'link'`
+  // explicitly triggers a Rspack panic when a CSS file is an entry point.
+  const exportTypeOption =
+    cssConfig.exportType !== 'link' ? { exportType: cssConfig.exportType } : {};
+
   const cssParserOptions: Rspack.CssParserOptions = {
-    exportType: cssConfig.exportType,
+    ...exportTypeOption,
     namedExports: cssConfig.namedExports,
   };
 
   const cssModuleParserOptions: Rspack.CssAutoOrModuleParserOptions = {
-    exportType: cssConfig.exportType,
+    ...exportTypeOption,
     namedExports: cssConfig.namedExports,
     animation: cssConfig.modules.animation,
     dashedIdents: cssConfig.modules.dashedIdents,

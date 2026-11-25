@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { expect, isBuiltinCss, test } from '@e2e/helper';
 import { findFile, getFileContent } from '@rstackjs/test-utils';
 
 test('should inline style when `injectStyles` is enabled', async ({
@@ -91,10 +91,13 @@ test('should allow to disable CSS minification when `injectStyles` is enabled', 
   // should inline CSS
   const indexJs = getFileContent(files, 'index.js');
 
-  expect(
-    indexJs.includes(`html, body {
+  const expectedCss = `html, body {
   margin: 0;
   padding: 0;
-}`),
+}`;
+  expect(
+    indexJs.includes(
+      isBuiltinCss ? JSON.stringify(expectedCss).slice(1, -1) : expectedCss,
+    ),
   ).toBeTruthy();
 });

@@ -211,9 +211,8 @@ describe('plugin-css builtin css', () => {
 
     expect(rspackConfig.experiments).not.toHaveProperty('css');
     expect(rspackConfig.module?.parser).toMatchObject({
-      css: { exportType: 'link', namedExports: false },
+      css: { namedExports: false },
       'css/auto': {
-        exportType: 'link',
         namedExports: false,
         animation: true,
         dashedIdents: false,
@@ -223,7 +222,6 @@ describe('plugin-css builtin css', () => {
         function: false,
       },
       'css/global': {
-        exportType: 'link',
         namedExports: false,
         animation: true,
         dashedIdents: false,
@@ -233,7 +231,6 @@ describe('plugin-css builtin css', () => {
         function: false,
       },
       'css/module': {
-        exportType: 'link',
         namedExports: false,
         animation: true,
         dashedIdents: false,
@@ -243,6 +240,16 @@ describe('plugin-css builtin css', () => {
         function: false,
       },
     });
+    expect(rspackConfig.module?.parser?.css).not.toHaveProperty('exportType');
+    expect(rspackConfig.module?.parser?.['css/auto']).not.toHaveProperty(
+      'exportType',
+    );
+    expect(rspackConfig.module?.parser?.['css/global']).not.toHaveProperty(
+      'exportType',
+    );
+    expect(rspackConfig.module?.parser?.['css/module']).not.toHaveProperty(
+      'exportType',
+    );
     expect(rspackConfig.module?.generator).toMatchObject({
       css: {
         exportsOnly: false,
@@ -564,9 +571,9 @@ describe('plugin-css builtin css', () => {
     const [rspackConfig] = await rsbuild.initConfigs();
 
     expect(warn).toHaveBeenCalledTimes(2);
-    expect(rspackConfig.module?.parser?.['css/auto']).toMatchObject({
-      exportType: 'link',
-    });
+    expect(rspackConfig.module?.parser?.['css/auto']).not.toHaveProperty(
+      'exportType',
+    );
     expect(rspackConfig.module?.generator?.['css/auto']).toMatchObject({
       exportsOnly: false,
     });
@@ -616,9 +623,9 @@ describe('plugin-css builtin css', () => {
 
     const [webConfig, legacyConfig, customConfig] = await rsbuild.initConfigs();
 
-    expect(webConfig.module?.parser?.['css/auto']).toMatchObject({
-      exportType: 'link',
-    });
+    expect(webConfig.module?.parser?.['css/auto']).not.toHaveProperty(
+      'exportType',
+    );
     expect(matchPlugin(legacyConfig, 'CssExtractRspackPlugin')).toBeDefined();
     expect(legacyConfig.module?.parser?.['css/auto']).toBeUndefined();
     expect(customConfig.module?.parser?.['css/auto']).toMatchObject({

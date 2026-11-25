@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, isBuiltinCss, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
 test('should compile nested npm import correctly', async ({
@@ -8,6 +8,9 @@ test('should compile nested npm import correctly', async ({
   await copyNodeModules();
 
   const rsbuild = await build();
+  if (isBuiltinCss) {
+    await rsbuild.expectWarning("starts with '~' is deprecated");
+  }
 
   const files = rsbuild.getDistFiles();
   const cssContent = getFileContent(files, '.css');

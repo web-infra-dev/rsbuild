@@ -203,6 +203,14 @@ export async function createRsbuild(
     };
   }
 
+  // Apply built-in CSS default in e2e runs across fixtures, direct API calls, and CLI commands.
+  if (process.env.RSBUILD_E2E_CSS === 'builtin' && config.css === undefined) {
+    config = {
+      ...config,
+      css: true,
+    };
+  }
+
   const logger =
     config.customLogger ??
     // Inherit the default logger options and level,

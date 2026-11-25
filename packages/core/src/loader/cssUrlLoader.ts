@@ -422,21 +422,32 @@ const compileBuiltinCssUrl = (
         return;
       }
 
+      const discardedFiles = new Set<string>();
       for (const file of entry.files) {
         if (file !== emittedFilename) {
+          discardedFiles.add(file);
+          discardedFiles.add(`${file}.map`);
           deleteAsset(compilation, file);
           deleteAsset(compilation, `${file}.map`);
         }
       }
 
-      compilation.updateAsset(
-        emittedFilename,
-        (source) => source,
-        (info) => ({
-          ...info,
-          sourceFilename,
-        }),
-      );
+      // Re-emit kept child assets via loaderContext.emitFile so Rspack's
+      // persistent build cache records and replays them across warm builds.
+      for (const asset of childCompilation.getAssets()) {
+        if (discardedFiles.has(asset.name)) {
+          continue;
+        }
+        deleteAsset(compilation, asset.name);
+        loaderContext.emitFile(
+          asset.name,
+          asset.source.buffer(),
+          undefined,
+          asset.name === emittedFilename
+            ? { ...asset.info, sourceFilename }
+            : asset.info,
+        );
+      }
 
       for (const file of childCompilation.fileDependencies) {
         loaderContext.addDependency(file);

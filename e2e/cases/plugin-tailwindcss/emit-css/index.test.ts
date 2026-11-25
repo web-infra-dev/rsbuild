@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, isBuiltinCss, test } from '@e2e/helper';
 
 test('should skip Tailwind main-rule transform when CSS is not emitted', async ({
   build,
@@ -20,12 +20,21 @@ test('should run Tailwind main-rule transform when emitCss is enabled', async ({
 }) => {
   const rsbuild = await build({
     catchBuildError: true,
-    config: {
-      output: {
-        emitCss: true,
-        target: 'node',
-      },
-    },
+    config: isBuiltinCss
+      ? {
+          css: {
+            exportsOnly: false,
+          },
+          output: {
+            target: 'node',
+          },
+        }
+      : {
+          output: {
+            emitCss: true,
+            target: 'node',
+          },
+        },
   });
 
   expect(rsbuild.buildError?.message).toBe('Rspack build failed.');
