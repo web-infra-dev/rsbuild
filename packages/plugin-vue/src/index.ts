@@ -135,20 +135,6 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         // Support for lang="postcss" and lang="pcss" in SFC
         chain.module.rule(CHAIN_ID.RULE.CSS).test(/\.(?:css|postcss|pcss)$/);
 
-        if (environment.config.css && environment.config.css.exportsOnly) {
-          // Work around a Rspack panic (`css module should have module id when
-          // rendering local ident`) when concatenating `exportsOnly` built-in
-          // CSS modules loaded via inline `matchResource` (`!=!`) with
-          // `esModule: true`. Disabling `esModule` bails out concatenation for
-          // CSS modules only while keeping JS scope hoisting and matching
-          // client CSS Modules hashes.
-          chain.module.generator.merge({
-            'css/auto': { esModule: false },
-            'css/global': { esModule: false },
-            'css/module': { esModule: false },
-          });
-        }
-
         chain
           .plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN)
           // Ensure that the VueLoaderPlugin is applied before the ReactFastRefreshPlugin

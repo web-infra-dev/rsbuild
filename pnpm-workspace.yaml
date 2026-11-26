@@ -207,3 +207,4 @@ strictPeerDependencies: false
 
 overrides:
   'rspack-vue-loader': 'link:../rspack-vue-loader'
+  '@rspack/core': 'link:/home/jinzhixin/.t3/worktrees/rspack/t3-ca6f5c02-c6124dadddb2d13b/packages/rspack'

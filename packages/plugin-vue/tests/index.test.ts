@@ -88,11 +88,6 @@ describe('plugin-vue', () => {
     expect(vueRule.use?.[0]?.options?.experimentalInlineMatchResource).toBe(
       true,
     );
-    expect(config[0].module?.generator?.['css/auto']).toMatchObject({
-      exportsOnly: true,
-      esModule: false,
-      localIdentName: '[local]-[hash]',
-    });
   });
 
   it('should disable experimentalInlineMatchResource for node target in legacy CSS mode', async () => {
