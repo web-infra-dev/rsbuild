@@ -2,6 +2,7 @@ import type fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
+import { rs } from 'rstack/test';
 
 test('should retain only recent HMR updates and lazy chunks', async ({
   dev,
@@ -29,19 +30,29 @@ test('should retain only recent HMR updates and lazy chunks', async ({
   });
   await page.evaluate('window.hmrState = 123');
 
-  for (let version = 1; version <= 3; version++) {
+  const editVersion = async (version: number) => {
     await editFile(entry, (code) =>
       code
         .replace(`version=${version - 1}`, `version=${version}`)
         .replace(`>${version - 1}<`, `>${version}<`),
     );
     await expect(page.locator('#test')).toHaveText(String(version));
-  }
+  };
 
   const outputFileSystem = compiler.outputFileSystem as typeof fs;
-  const updates = outputFileSystem.readdirSync(
-    join(compiler.outputPath, 'updates'),
-  );
+  const updatesDir = join(compiler.outputPath, 'updates');
+  for (let version = 1; version <= 3; version++) {
+    await editVersion(version);
+  }
+  expect(
+    outputFileSystem
+      .readdirSync(updatesDir)
+      .filter((name) => name.endsWith('.json')),
+  ).toHaveLength(3);
+
+  using _clock = advanceGracePeriod();
+  await editVersion(4);
+  const updates = outputFileSystem.readdirSync(updatesDir);
   const chunks = outputFileSystem.readdirSync(
     join(compiler.outputPath, 'static/js/async'),
   );
@@ -52,6 +63,11 @@ test('should retain only recent HMR updates and lazy chunks', async ({
   expect(chunks.length).toBeLessThanOrEqual(4);
   expect(await page.evaluate('window.hmrState')).toBe(123);
 });
+
+function advanceGracePeriod() {
+  const now = performance.now.bind(performance);
+  return rs.spyOn(performance, 'now').mockImplementation(() => now() + 30_000);
+}
 
 test('should preserve assets still owned by another environment', async ({
   dev,
@@ -98,12 +114,12 @@ test('should preserve assets still owned by another environment', async ({
   });
 
   emitSharedAsset = false;
-  for (let version = 1; version <= 2; version++) {
-    await editFile(entry, (code) =>
-      code.replace(`>${version - 1}<`, `>${version}<`),
-    );
-    await expect(page.locator('#test')).toHaveText(String(version));
-  }
+  await editFile(entry, (code) => code.replace('>0<', '>1<'));
+  await expect(page.locator('#test')).toHaveText('1');
+
+  using _clock = advanceGracePeriod();
+  await editFile(entry, (code) => code.replace('>1<', '>2<'));
+  await expect(page.locator('#test')).toHaveText('2');
 
   const response = await page.request.get(
     `http://localhost:${port}/shared.txt`,

@@ -3,6 +3,8 @@ import type { Compiler } from '@rspack/core';
 import type { IFs } from 'memfs';
 import { getAssetNames } from '../../helpers/compilation';
 
+const ASSET_GRACE_PERIOD_MS = 30_000;
+
 export function setupMemoryFileSystemCleanup(
   fileSystem: IFs,
   compilers: Compiler[],
@@ -18,6 +20,7 @@ export function setupMemoryFileSystemCleanup(
 
   for (const [index, compiler] of compilers.entries()) {
     const lastSeen = lastSeenByCompiler[index];
+    const expiresAt = new Map<number, number>();
     let generation = 0;
     let lastHash: string | null | undefined;
 
@@ -28,10 +31,22 @@ export function setupMemoryFileSystemCleanup(
           return;
         }
 
-        // No-op compilations must not expire the client's HMR update chain.
+        const now = performance.now();
         if (compilation.hash !== lastHash) {
+          // Start the grace period when a newer build replaces this generation.
+          if (generation > 0) {
+            expiresAt.set(generation, now + ASSET_GRACE_PERIOD_MS);
+          }
           generation++;
           lastHash = compilation.hash;
+        }
+
+        // Expirations are ordered. Prune on emit so idle servers need no timer.
+        for (const [retiredGeneration, deadline] of expiresAt) {
+          if (deadline > now) {
+            break;
+          }
+          expiresAt.delete(retiredGeneration);
         }
 
         const outputPath = compilation.getPath(compiler.outputPath);
@@ -44,9 +59,9 @@ export function setupMemoryFileSystemCleanup(
         }
 
         for (const [filePath, seen] of lastSeen) {
-          // Keep two generations so clients can finish an update while the next
-          // compilation emits. This also bounds obsolete chunks and source maps.
-          if (seen >= generation - 1) {
+          // Always keep two generations. During rapid rebuilds, keep older
+          // updates long enough for clients to fetch the rest of the chain.
+          if (seen >= generation - 1 || expiresAt.has(seen)) {
             continue;
           }
 
