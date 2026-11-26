@@ -28,10 +28,13 @@ export const isCSSModules = (
   }
 
   // Only resolve the css-loader-compatible path for `auto` checks that need it.
-  // Align with css-loader: CSS Modules auto detection uses matchResource when present.
-  const resourcePath =
-    (loaderContext._module as NormalModule | undefined)?.matchResource ||
-    loaderContext.resourcePath;
+  // Align with Rspack/css-loader: CSS Modules auto detection uses matchResource
+  // when present (stripping any query/fragment such as Vue SFC style queries).
+  const rawMatchResource = (loaderContext._module as NormalModule | undefined)
+    ?.matchResource;
+  const resourcePath = rawMatchResource
+    ? rawMatchResource.replace(/[?#].*$/, '')
+    : loaderContext.resourcePath;
 
   if (auto instanceof RegExp) {
     return auto.test(resourcePath);

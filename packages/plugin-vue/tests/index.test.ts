@@ -69,4 +69,48 @@ describe('plugin-vue', () => {
     const config = await rsbuild.initConfigs();
     expect(matchRules(config[0], 'a.md')[0]).toMatchSnapshot();
   });
+
+  it('should keep experimentalInlineMatchResource enabled for node target when built-in CSS is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: true,
+        output: {
+          target: 'node',
+        },
+        plugins: [pluginVue()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    const vueRule = matchRules(config[0], 'a.vue')[0] as {
+      use?: { options?: Record<string, unknown> }[];
+    };
+
+    expect(vueRule.use?.[0]?.options?.experimentalInlineMatchResource).toBe(
+      true,
+    );
+    expect(config[0].module?.generator?.['css/auto']).toMatchObject({
+      exportsOnly: true,
+      esModule: false,
+      localIdentName: '[local]-[hash]',
+    });
+  });
+
+  it('should disable experimentalInlineMatchResource for node target in legacy CSS mode', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: {
+          target: 'node',
+        },
+        plugins: [pluginVue()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    const vueRule = matchRules(config[0], 'a.vue')[0] as {
+      use?: { options?: Record<string, unknown> }[];
+    };
+
+    expect(vueRule.use?.[0]?.options?.experimentalInlineMatchResource).toBe(
+      false,
+    );
+  });
 });

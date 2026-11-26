@@ -1,5 +1,6 @@
 import { matchPlugin, matchRules } from '@scripts/test-helper';
 import { createRsbuild } from '../src';
+import { isCSSModules } from '../src/helpers/css';
 import { normalizeCssLoaderOptions } from '../src/plugins/css';
 
 type MatchedRule = Record<string, unknown>;
@@ -759,5 +760,82 @@ describe('plugin-css builtin css', () => {
     expect(nodeEmitConfig.module?.generator?.['css/auto']).toMatchObject({
       exportsOnly: false,
     });
+  });
+});
+
+describe('isCSSModules', () => {
+  const createLoaderContext = ({
+    resourcePath,
+    resourceQuery = '',
+    resourceFragment = '',
+    matchResource,
+  }: {
+    resourcePath: string;
+    resourceQuery?: string;
+    resourceFragment?: string;
+    matchResource?: string;
+  }) =>
+    ({
+      resourcePath,
+      resourceQuery,
+      resourceFragment,
+      _module: matchResource !== undefined ? { matchResource } : undefined,
+    }) as unknown as Parameters<typeof isCSSModules>[1];
+
+  it('should strip query and fragment from matchResource when detecting CSS Modules', () => {
+    expect(
+      isCSSModules(
+        { auto: true },
+        createLoaderContext({
+          resourcePath: '/src/App.vue',
+          resourceQuery: '?vue&type=style&index=0&module=true&lang=css',
+          matchResource:
+            '/src/App.vue.module.css?vue&type=style&index=0&module=true&lang=css',
+        }),
+      ),
+    ).toBe(true);
+
+    expect(
+      isCSSModules(
+        { auto: true },
+        createLoaderContext({
+          resourcePath: '/src/App.vue',
+          resourceQuery: '?vue&type=style&index=0&module=true&lang=less',
+          matchResource:
+            '/src/App.vue.module.less?vue&type=style&index=0&module=true&lang=less',
+        }),
+      ),
+    ).toBe(true);
+
+    expect(
+      isCSSModules(
+        { auto: true },
+        createLoaderContext({
+          resourcePath: '/src/App.vue',
+          resourceQuery: '?vue&type=style&index=0&lang=css',
+          matchResource: '/src/App.vue.css?vue&type=style&index=0&lang=css',
+        }),
+      ),
+    ).toBe(false);
+  });
+
+  it('should fall back to resourcePath when matchResource is absent', () => {
+    expect(
+      isCSSModules(
+        { auto: true },
+        createLoaderContext({
+          resourcePath: '/src/a.module.css',
+        }),
+      ),
+    ).toBe(true);
+
+    expect(
+      isCSSModules(
+        { auto: true },
+        createLoaderContext({
+          resourcePath: '/src/a.css',
+        }),
+      ),
+    ).toBe(false);
   });
 });

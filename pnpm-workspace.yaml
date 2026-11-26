@@ -204,3 +204,6 @@ patchedDependencies:
 strictDepBuilds: true
 
 strictPeerDependencies: false
+
+overrides:
+  'rspack-vue-loader': 'link:../rspack-vue-loader'

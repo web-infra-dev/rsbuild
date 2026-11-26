@@ -1,4 +1,4 @@
-import { expect, isBuiltinCss, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
 
 const getClassName = (content: string, localName: string) => {
@@ -7,24 +7,21 @@ const getClassName = (content: string, localName: string) => {
   return matched![0];
 };
 
-test.skipIf(isBuiltinCss)(
-  'should keep CSS Modules identifiers consistent between web and node targets',
-  async ({ build }) => {
-    const rsbuild = await build();
-    const files = rsbuild.getDistFiles();
+test('should keep CSS Modules identifiers consistent between web and node targets', async ({
+  build,
+}) => {
+  const rsbuild = await build();
+  const files = rsbuild.getDistFiles();
 
-    const clientCss = getFileContent(
-      files,
-      (file) => file.includes('/web/') && file.endsWith('.css'),
-    );
-    const serverJs = getFileContent(
-      files,
-      (file) => file.includes('/node/') && file.endsWith('/index.js'),
-    );
+  const clientCss = getFileContent(
+    files,
+    (file) => file.includes('/web/') && file.endsWith('.css'),
+  );
+  const serverJs = getFileContent(
+    files,
+    (file) => file.includes('/node/') && file.endsWith('/index.js'),
+  );
 
-    expect(getClassName(serverJs, 'red')).toBe(getClassName(clientCss, 'red'));
-    expect(getClassName(serverJs, 'blue')).toBe(
-      getClassName(clientCss, 'blue'),
-    );
-  },
-);
+  expect(getClassName(serverJs, 'red')).toBe(getClassName(clientCss, 'red'));
+  expect(getClassName(serverJs, 'blue')).toBe(getClassName(clientCss, 'blue'));
+});

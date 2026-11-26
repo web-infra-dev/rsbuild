@@ -72,7 +72,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         const merged = mergeEnvironmentConfig(extraConfig, config);
 
         // Support `<style module>`, `<style module="customName">` in Vue SFC
-        if (!merged.css && merged.output.cssModules.auto === true) {
+        if (merged.output.cssModules.auto === true) {
           merged.output.cssModules.auto = (path, query) => {
             // For Vue style block, the path might be like:
             // 1. `/path/to/Foo.vue`
@@ -100,17 +100,18 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
           preserveWhitespace: false,
           ...userLoaderOptions.compilerOptions,
         };
-        const emitCss = environment.config.css
-          ? !environment.config.css.exportsOnly
-          : (environment.config.output.emitCss ?? target === 'web');
         const vueLoaderOptions = {
           // Always treat this as a client build when invoked from Rstest,
           // since tests are executed in a DOM-based environment.
           isServerBuild:
             api.context.callerName === 'rstest' ? false : undefined,
-          // Keep non-emitting targets on the original SFC resource so CSS Modules
-          // hashes match the client build during SSR hydration.
-          experimentalInlineMatchResource: emitCss,
+          // Built-in CSS requires `experimentalInlineMatchResource: true` for all
+          // targets (including non-emitting SSR builds). In legacy `css-loader`
+          // mode, keep non-emitting targets on the original SFC resource so CSS
+          // Modules hashes match the client build during SSR hydration.
+          experimentalInlineMatchResource: environment.config.css
+            ? true
+            : (environment.config.output.emitCss ?? target === 'web'),
           ...userLoaderOptions,
           compilerOptions,
         };
@@ -133,6 +134,20 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
 
         // Support for lang="postcss" and lang="pcss" in SFC
         chain.module.rule(CHAIN_ID.RULE.CSS).test(/\.(?:css|postcss|pcss)$/);
+
+        if (environment.config.css && environment.config.css.exportsOnly) {
+          // Work around a Rspack panic (`css module should have module id when
+          // rendering local ident`) when concatenating `exportsOnly` built-in
+          // CSS modules loaded via inline `matchResource` (`!=!`) with
+          // `esModule: true`. Disabling `esModule` bails out concatenation for
+          // CSS modules only while keeping JS scope hoisting and matching
+          // client CSS Modules hashes.
+          chain.module.generator.merge({
+            'css/auto': { esModule: false },
+            'css/global': { esModule: false },
+            'css/module': { esModule: false },
+          });
+        }
 
         chain
           .plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN)
