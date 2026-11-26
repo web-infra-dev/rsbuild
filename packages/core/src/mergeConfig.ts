@@ -123,7 +123,7 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
  * object-based structure. This ensures some properties can be merged as expected.
  */
 const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
-  let { dev, output } = config as RsbuildConfig;
+  let { dev, output, environments } = config as RsbuildConfig;
   const normalizedConfig = { ...config } as RsbuildConfig;
 
   if (output) {
@@ -147,6 +147,19 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
     }
 
     normalizedConfig.dev = dev;
+  }
+
+  // Environment configs accept the same shorthand values as the top level.
+  if (environments) {
+    environments = { ...environments };
+
+    for (const [name, environment] of Object.entries(environments)) {
+      if (environment) {
+        environments[name] = normalizeConfigStructure(environment);
+      }
+    }
+
+    normalizedConfig.environments = environments;
   }
 
   return normalizedConfig as T;

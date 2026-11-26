@@ -668,6 +668,47 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  test('should merge output.copy and output.distPath in environments', () => {
+    expect(
+      mergeRsbuildConfig(
+        {
+          environments: {
+            web: {
+              output: {
+                copy: [{ from: 'src/static' }],
+                distPath: 'dist-web',
+              },
+            },
+          },
+        },
+        {
+          environments: {
+            web: {
+              output: {
+                copy: { patterns: [{ from: 'src/static2' }] },
+                distPath: { js: 'scripts' },
+              },
+            },
+          },
+        },
+      ),
+    ).toEqual({
+      environments: {
+        web: {
+          output: {
+            copy: {
+              patterns: [{ from: 'src/static' }, { from: 'src/static2' }],
+            },
+            distPath: {
+              root: 'dist-web',
+              js: 'scripts',
+            },
+          },
+        },
+      },
+    });
+  });
+
   it('should accept `undefined` value', () => {
     const config: RsbuildConfig = {
       source: {
