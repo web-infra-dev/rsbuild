@@ -1,13 +1,8 @@
-import {
-  esmConfig,
-  esmLibConfig,
-  runtimeModeConfig,
-} from '@scripts/config/lib';
+import { esmConfig, esmLibConfig } from '@scripts/config/lib';
 import { baseConfig } from '@scripts/config/test';
 import { define } from 'rstack';
 
 define.lib({
-  ...runtimeModeConfig,
   exports: esmConfig.exports,
   lib: [
     esmLibConfig,
