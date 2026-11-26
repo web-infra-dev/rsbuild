@@ -128,7 +128,6 @@ rstack.lib({
   tools: {
     rspack: {
       experiments: {
-        runtimeMode: 'rspack',
         nativeWatcher: true,
       },
     },

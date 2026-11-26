@@ -13,18 +13,7 @@ export const nodeMinifyConfig = {
   },
 } satisfies Rsbuild.Minify;
 
-export const runtimeModeConfig: LibConfig = {
-  tools: {
-    rspack: {
-      experiments: {
-        runtimeMode: 'rspack',
-      },
-    },
-  },
-};
-
 export const esmLibConfig: LibConfig = {
-  ...runtimeModeConfig,
   syntax: 'es2023',
   dts: {
     isolated: true,
