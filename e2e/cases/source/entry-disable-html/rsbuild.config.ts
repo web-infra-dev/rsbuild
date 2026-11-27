@@ -6,6 +6,7 @@ export default {
       },
       bar: {
         import: './src/bar.js',
+        filename: 'bar.js',
         html: false,
       },
     },

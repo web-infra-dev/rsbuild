@@ -122,9 +122,25 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
  * Preprocess config before merging to convert the raw config into a consistent
  * object-based structure. This ensures some properties can be merged as expected.
  */
-const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
-  let { dev, output, environments } = config as RsbuildConfig;
-  const normalizedConfig = { ...config } as RsbuildConfig;
+const normalizeConfigStructure = (
+  config: RsbuildConfig,
+  other?: RsbuildConfig,
+): RsbuildConfig => {
+  let { dev, output, environments } = config;
+  const normalizedConfig = { ...config };
+
+  const entry = config.source?.entry;
+  const otherEntry = other?.source?.entry;
+  if (entry && otherEntry) {
+    const entries = { ...entry };
+    for (const [name, value] of Object.entries(entry)) {
+      // An array paired with a description contributes to its import list.
+      if (Array.isArray(value) && isPlainObject(otherEntry[name])) {
+        entries[name] = { import: value };
+      }
+    }
+    normalizedConfig.source = { ...config.source, entry: entries };
+  }
 
   if (output) {
     output = { ...output };
@@ -165,15 +181,24 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
 
     for (const [name, environment] of Object.entries(environments)) {
       if (environment) {
-        environments[name] = normalizeConfigStructure(environment);
+        environments[name] = normalizeConfigStructure(
+          environment,
+          other?.environments?.[name],
+        );
       }
     }
 
     normalizedConfig.environments = environments;
   }
 
-  return normalizedConfig as T;
+  return normalizedConfig;
 };
+
+const mergeConfigs = (left: RsbuildConfig, right: RsbuildConfig) =>
+  merge(
+    normalizeConfigStructure(left, right),
+    normalizeConfigStructure(right, left),
+  ) as RsbuildConfig;
 
 /**
  * Deeply merges multiple Rsbuild configuration objects.
@@ -184,19 +209,16 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
 export const mergeRsbuildConfig = <T = RsbuildConfig>(
   ...originalConfigs: (T | undefined)[]
 ): T => {
-  const configs = originalConfigs
-    .filter((config) => config !== undefined)
-    .map(normalizeConfigStructure);
+  const configs = originalConfigs.filter(
+    (config) => config !== undefined,
+  ) as RsbuildConfig[];
 
   // In most cases there will be two configs so we perform this check first
   if (configs.length === 2) {
-    return merge(configs[0], configs[1]) as T;
+    return mergeConfigs(configs[0], configs[1]) as T;
   }
   if (configs.length === 0) {
     return {} as T;
   }
-  return configs.reduce(
-    (result, config) => merge(result, config) as T,
-    {} as T,
-  );
+  return configs.reduce(mergeConfigs, {}) as T;
 };
