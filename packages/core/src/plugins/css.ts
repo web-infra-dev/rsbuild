@@ -17,6 +17,7 @@ import { findWorkspaceRoot } from '../helpers/workspace';
 import type {
   CSSLoaderModulesMode,
   CSSLoaderOptions,
+  ModifyBundlerChainUtils,
   NormalizedEnvironmentConfig,
   OneOrMany,
   PostCSSLoaderOptions,
@@ -316,6 +317,8 @@ const getCSSLoaderOptions = async ({
   return cssLoaderOptions;
 };
 
+type CSSRule = RspackChain.Rule<RspackChain.Rule>;
+
 type PostcssrcCache = Map<string, PostCSSOptions | Promise<PostCSSOptions>>;
 
 export const pluginCss = (): RsbuildPlugin => ({
@@ -323,12 +326,112 @@ export const pluginCss = (): RsbuildPlugin => ({
   setup(api) {
     const postcssrcCache: PostcssrcCache = new Map();
 
+    async function applyCSSTransforms(
+      { environment, environments, target, CHAIN_ID }: ModifyBundlerChainUtils,
+      mainRule: CSSRule | undefined,
+      inlineRule: CSSRule,
+      urlRule: CSSRule,
+    ) {
+      const { config } = environment;
+      let cssUrlMinimized = false;
+
+      const useLightningCSS = config.tools.lightningcssLoader !== false;
+      if (useLightningCSS) {
+        let { minifyCss, cssOptions } = parseMinifyOptions(config);
+        let { browserslist } = environment;
+
+        // Use the same browserslist and minification as web bundles to ensure consistent
+        // CSS output. Prevent mismatched prefixes or features between SSR and client hydration.
+        if (target === 'node') {
+          const webEnvironment = Object.values(environments).find(
+            (env) => env.config.output.target === 'web',
+          );
+          if (webEnvironment) {
+            browserslist = webEnvironment.browserslist;
+            const webMinifyOptions = parseMinifyOptions(webEnvironment.config);
+            minifyCss = webMinifyOptions.minifyCss;
+            cssOptions ??= webMinifyOptions.cssOptions;
+          }
+        }
+
+        const cssUrlMinimizerOptions = minifyCss
+          ? getCSSUrlMinimizerOptions(cssOptions)
+          : {};
+
+        const addLightningCSS = async (
+          rule: CSSRule,
+          type: 'main' | 'inline' | 'url',
+        ) => {
+          // Inline styles are not processed by Rspack's minimizers,
+          // so we need to minify them via `builtin:lightningcss-loader`
+          const inlineStyle =
+            type === 'inline' || type === 'url' || config.output.injectStyles;
+          const minify = inlineStyle && minifyCss;
+
+          let lightningcssOptions = await getLightningCSSLoaderOptions(
+            config,
+            browserslist,
+            minify,
+          );
+
+          if (
+            type === 'url' &&
+            lightningcssOptions.minify === true &&
+            cssUrlMinimizerOptions !== false
+          ) {
+            // Apply minimizer transforms before hashing the CSS URL asset,
+            // with the same option precedence as the asset minimizer.
+            lightningcssOptions = mergeCSSMinimizerOptions(
+              lightningcssOptions,
+              cssUrlMinimizerOptions,
+            );
+            cssUrlMinimized = true;
+          }
+
+          rule
+            .use(CHAIN_ID.USE.LIGHTNINGCSS)
+            .loader('builtin:lightningcss-loader')
+            .options(lightningcssOptions);
+        };
+        if (mainRule) {
+          await addLightningCSS(mainRule, 'main');
+        }
+        await addLightningCSS(inlineRule, 'inline');
+        await addLightningCSS(urlRule, 'url');
+      }
+
+      const postcssLoaderOptions = await getPostcssLoaderOptions({
+        config,
+        root: api.context.rootPath,
+        postcssrcCache,
+      });
+
+      const usePostCSS =
+        typeof postcssLoaderOptions.postcssOptions === 'function' ||
+        Boolean(postcssLoaderOptions.postcssOptions?.plugins?.length);
+
+      if (usePostCSS) {
+        const postcssLoaderPath = getCompiledPath('postcss-loader');
+        const addPostCSS = (rule: CSSRule) =>
+          rule
+            .use(CHAIN_ID.USE.POSTCSS)
+            .loader(postcssLoaderPath)
+            .options(postcssLoaderOptions);
+
+        if (mainRule) {
+          addPostCSS(mainRule);
+        }
+        addPostCSS(inlineRule);
+        addPostCSS(urlRule);
+      }
+
+      return { useLightningCSS, usePostCSS, cssUrlMinimized };
+    }
+
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (
-        chain,
-        { target, isProd, CHAIN_ID, environment, environments },
-      ) => {
+      handler: async (chain, utils) => {
+        const { target, isProd, CHAIN_ID, environment } = utils;
         const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
         const { config } = environment;
 
@@ -395,133 +498,21 @@ export const pluginCss = (): RsbuildPlugin => ({
             .loader(path.join(LOADER_PATH, 'ignoreCssLoader.mjs'));
         }
 
-        // Number of loaders applied before css-loader for `@import` at-rules
-        const importLoaders = {
-          normal: 0,
-          inline: 0,
-        };
-
-        // Update CSS rules that share the CSS transform pipeline.
-        const updateRules = async (
-          callback: (
-            rule: RspackChain.Rule<RspackChain.Rule>,
-            type: 'main' | 'inline' | 'url',
-          ) => void | Promise<void>,
-          options: { skipMain?: boolean } = {},
-        ) => {
-          if (!options.skipMain) {
-            await callback(mainRule, 'main');
-          }
-          await callback(inlineRule, 'inline');
-          await callback(urlRule, 'url');
-        };
-
         const cssLoaderPath = getCompiledPath('css-loader');
-        await updateRules((rule) => {
-          rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
-        });
+        mainRule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
+        inlineRule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
+        urlRule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
 
-        let cssUrlMinimized = false;
-
-        if (config.tools.lightningcssLoader !== false) {
-          if (emitCss) {
-            importLoaders.normal++;
-          }
-          importLoaders.inline++;
-
-          let { minifyCss, cssOptions } = parseMinifyOptions(config);
-          let { browserslist } = environment;
-
-          // Use the same browserslist and minification as web bundles to ensure consistent
-          // CSS output. Prevent mismatched prefixes or features between SSR and client hydration.
-          if (target === 'node') {
-            const webEnvironment = Object.values(environments).find(
-              (env) => env.config.output.target === 'web',
-            );
-            if (webEnvironment) {
-              browserslist = webEnvironment.browserslist;
-              const webMinifyOptions = parseMinifyOptions(
-                webEnvironment.config,
-              );
-              minifyCss = webMinifyOptions.minifyCss;
-              cssOptions ??= webMinifyOptions.cssOptions;
-            }
-          }
-
-          const cssUrlMinimizerOptions = minifyCss
-            ? getCSSUrlMinimizerOptions(cssOptions)
-            : {};
-
-          await updateRules(
-            async (rule, type) => {
-              // Inline styles are not processed by Rspack's minimizers,
-              // so we need to minify them via `builtin:lightningcss-loader`
-              const inlineStyle =
-                type === 'inline' ||
-                type === 'url' ||
-                config.output.injectStyles;
-              const minify = inlineStyle && minifyCss;
-
-              let lightningcssOptions = await getLightningCSSLoaderOptions(
-                config,
-                browserslist,
-                minify,
-              );
-
-              if (
-                type === 'url' &&
-                lightningcssOptions.minify === true &&
-                cssUrlMinimizerOptions !== false
-              ) {
-                // Apply minimizer transforms before hashing the CSS URL asset,
-                // with the same option precedence as the asset minimizer.
-                lightningcssOptions = mergeCSSMinimizerOptions(
-                  lightningcssOptions,
-                  cssUrlMinimizerOptions,
-                );
-                cssUrlMinimized = true;
-              }
-
-              rule
-                .use(CHAIN_ID.USE.LIGHTNINGCSS)
-                .loader('builtin:lightningcss-loader')
-                .options(lightningcssOptions);
-            },
-            // If emit CSS is disabled, skip lightningcss-loader to reduce performance overhead
-            { skipMain: !emitCss },
+        const { useLightningCSS, usePostCSS, cssUrlMinimized } =
+          await applyCSSTransforms(
+            utils,
+            emitCss ? mainRule : undefined,
+            inlineRule,
+            urlRule,
           );
-        }
 
-        const postcssLoaderOptions = await getPostcssLoaderOptions({
-          config,
-          root: api.context.rootPath,
-          postcssrcCache,
-        });
-
-        // enable postcss-loader if using PostCSS plugins
-        if (
-          typeof postcssLoaderOptions.postcssOptions === 'function' ||
-          postcssLoaderOptions.postcssOptions?.plugins?.length
-        ) {
-          if (emitCss) {
-            importLoaders.normal++;
-          }
-          importLoaders.inline++;
-
-          const postcssLoaderPath = getCompiledPath('postcss-loader');
-
-          await updateRules(
-            (rule) => {
-              rule
-                .use(CHAIN_ID.USE.POSTCSS)
-                .loader(postcssLoaderPath)
-                .options(postcssLoaderOptions);
-            },
-            // If emit CSS is disabled, skip postcss-loader to reduce performance overhead
-            { skipMain: !emitCss },
-          );
-        }
-
+        // css-loader reapplies the configured transforms to imported stylesheets.
+        const importLoaders = Number(useLightningCSS) + Number(usePostCSS);
         const localIdentName = getCSSModulesLocalIdentName(config, isProd);
         const cssLoaderOptions = await getCSSLoaderOptions({
           config,
@@ -529,18 +520,21 @@ export const pluginCss = (): RsbuildPlugin => ({
           emitCss,
         });
 
-        await updateRules((rule, type) => {
+        const configureCSSLoader = (
+          rule: CSSRule,
+          type: 'main' | 'inline' | 'url',
+        ) => {
           const finalOptions =
             type === 'inline' || type === 'url'
               ? {
                   ...cssLoaderOptions,
                   exportType: 'string',
                   modules: false,
-                  importLoaders: importLoaders.inline,
+                  importLoaders,
                 }
               : {
                   ...cssLoaderOptions,
-                  importLoaders: importLoaders.normal,
+                  importLoaders: emitCss ? importLoaders : 0,
                 };
 
           // Let ignoreCssLoader skip non-CSS Modules before css-loader runs
@@ -561,7 +555,10 @@ export const pluginCss = (): RsbuildPlugin => ({
           // Enable preferRelative by default, which is consistent with the default behavior of css-loader
           // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
           rule.resolve.preferRelative(true);
-        });
+        };
+        configureCSSLoader(mainRule, 'main');
+        configureCSSLoader(inlineRule, 'inline');
+        configureCSSLoader(urlRule, 'url');
 
         const { distPath } = config.output;
         const cssFilename = getFilename(config, 'css', isProd);
