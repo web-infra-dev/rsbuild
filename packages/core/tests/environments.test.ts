@@ -9,6 +9,20 @@ import {
 } from '../src';
 
 describe('environment config', () => {
+  it('should inherit the global data URI limit for unspecified asset types', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        output: { dataUriLimit: 1024 },
+        environments: { web: { output: { dataUriLimit: { image: 0 } } } },
+      },
+    });
+    await rsbuild.initConfigs();
+
+    expect(
+      rsbuild.getNormalizedConfig({ environment: 'web' }).output.dataUriLimit,
+    ).toEqual({ image: 0, svg: 1024, font: 1024, media: 1024, assets: 1024 });
+  });
+
   it('should allow an environment to replace a disabled global publicDir', async () => {
     const config: RsbuildConfig = {
       server: { publicDir: { copyOnBuild: true } },
