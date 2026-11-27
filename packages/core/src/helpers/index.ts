@@ -6,6 +6,7 @@ import type {
   FilenameHash,
   NormalizedConfig,
   NormalizedEnvironmentConfig,
+  OutputConfig,
   RsbuildTarget,
   Rspack,
 } from '../types';
@@ -61,6 +62,11 @@ export const cloneDeep = <T>(value: T): T => {
     isMergeableObject: isPlainObject,
   });
 };
+
+export const normalizeCopyOptions = (
+  copy: NonNullable<OutputConfig['copy']>,
+): Rspack.CopyRspackPluginOptions =>
+  Array.isArray(copy) ? { patterns: copy } : copy;
 
 const DEFAULT_FILENAME_HASH = 'contenthash:10';
 
