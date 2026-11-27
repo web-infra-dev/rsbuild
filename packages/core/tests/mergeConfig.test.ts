@@ -383,6 +383,15 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  it('should prefer the later dev.cliShortcuts.custom callback', () => {
+    const custom = () => [];
+    const config = mergeRsbuildConfig(
+      { dev: { cliShortcuts: { custom: () => [] } } },
+      { dev: { cliShortcuts: { custom } } },
+    );
+    expect(config.dev.cliShortcuts.custom).toBe(custom);
+  });
+
   it('should merge dev.client.overlay.errors correctly', () => {
     const fn1 = () => false;
     const fn2 = () => true;
