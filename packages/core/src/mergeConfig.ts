@@ -19,6 +19,7 @@ const OVERRIDE_PATHS = new Set([
   'resolve.conditionNames',
   'resolve.mainFields',
   'dev.writeToDisk',
+  'dev.cliShortcuts.custom',
   'dev.client.overlay.errors',
   'dev.client.overlay.runtime',
   'provider',
