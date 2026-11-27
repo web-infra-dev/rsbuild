@@ -2354,6 +2354,11 @@ export type LogLevel = 'info' | 'warn' | 'error' | 'silent';
  */
 export interface RsbuildConfig extends EnvironmentConfig {
   /**
+   * Enable experimental Rspack built-in CSS for extracted web stylesheets.
+   * @default false
+   */
+  css?: boolean;
+  /**
    * Specify the build mode for Rsbuild, as each mode has different default behavior and optimizations.
    * @default Depends on `process.env.NODE_ENV`:
    * - `'production'` if NODE_ENV is 'production'
@@ -2403,6 +2408,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 }
 
 export type MergedEnvironmentConfig = {
+  css?: boolean;
   server?: NonNullable<EnvironmentConfig['server']>;
   mode: RsbuildMode;
   root: string;

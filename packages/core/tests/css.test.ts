@@ -1,5 +1,5 @@
-import { matchRules } from '@scripts/test-helper';
-import { createRsbuild } from '../src';
+import { matchPlugin, matchRules } from '@scripts/test-helper';
+import { createRsbuild, type Rspack } from '../src';
 import { normalizeCssLoaderOptions } from '../src/plugins/css';
 
 describe('normalizeCssLoaderOptions', () => {
@@ -37,6 +37,18 @@ describe('normalizeCssLoaderOptions', () => {
 });
 
 describe('plugin-css', () => {
+  it('should use the native CSS rule when css is enabled', async () => {
+    const rsbuild = await createRsbuild({ config: { css: true } });
+    const [config] = await rsbuild.initConfigs();
+    const [cssRule] = matchRules(config, 'style.css') as Rspack.RuleSetRule[];
+
+    expect(cssRule.oneOf?.at(-1)).toMatchObject({
+      type: 'css/auto',
+      use: [{ loader: 'builtin:lightningcss-loader' }],
+    });
+    expect(matchPlugin(config, 'CssExtractRspackPlugin')).toBeNull();
+  });
+
   it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createRsbuild({
       config: {

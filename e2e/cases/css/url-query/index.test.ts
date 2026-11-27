@@ -91,3 +91,12 @@ test('should emit hashed CSS files for `?url` in production', async ({
   expect(files[styleFile]).toContain('.url-query-class');
   expect(jsContent).toMatch(/static\/css\/style\.[a-f0-9]+\.css/);
 });
+
+test('should resolve @import in CSS URLs with built-in CSS enabled', async ({
+  build,
+}) => {
+  const result = await build({ config: { css: true } });
+  expect(getFileContent(result.getDistFiles(), 'style.css')).toContain(
+    '.a-index',
+  );
+});

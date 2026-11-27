@@ -466,14 +466,30 @@ export const pluginCss = (): RsbuildPlugin => ({
           .type('asset/source')
           .resourceQuery(RAW_QUERY_REGEX);
 
-        // Default CSS handling
-        const mainRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN);
-
         const emitCss = config.output.emitCss ?? target === 'web';
+        const useBuiltinCSS =
+          config.css === true &&
+          target === 'web' &&
+          emitCss &&
+          !config.output.injectStyles;
 
-        // Create Rspack rule
-        // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
-        if (emitCss) {
+        if (useBuiltinCSS) {
+          // css-loader turns @import in ?inline and ?url stylesheets into ESM
+          // requests with explicit loaders. Their output is JavaScript.
+          cssRule
+            .oneOf('css-loader-import')
+            .issuer(CSS_REGEX)
+            .dependency('esm')
+            .type('javascript/auto');
+        }
+
+        const mainRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN);
+        if (useBuiltinCSS) {
+          mainRule
+            .type('css/auto')
+            .sideEffects(true)
+            .resolve.preferRelative(true);
+        } else if (emitCss) {
           // use style-loader
           if (config.output.injectStyles) {
             const styleLoaderOptions = await reduceConfigs({
@@ -499,7 +515,9 @@ export const pluginCss = (): RsbuildPlugin => ({
         }
 
         const cssLoaderPath = getCompiledPath('css-loader');
-        mainRule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
+        if (!useBuiltinCSS) {
+          mainRule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
+        }
         inlineRule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
         urlRule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
 
@@ -556,7 +574,6 @@ export const pluginCss = (): RsbuildPlugin => ({
           // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
           rule.resolve.preferRelative(true);
         };
-        configureCSSLoader(mainRule, 'main');
         configureCSSLoader(inlineRule, 'inline');
         configureCSSLoader(urlRule, 'url');
 
@@ -570,6 +587,12 @@ export const pluginCss = (): RsbuildPlugin => ({
           minimized: cssUrlMinimized,
         });
 
+        if (useBuiltinCSS) {
+          chain.output.set('cssFilename', filename);
+          return;
+        }
+
+        configureCSSLoader(mainRule, 'main');
         const isStringExport = cssLoaderOptions.exportType === 'string';
         if (
           isStringExport &&
