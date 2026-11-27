@@ -19,6 +19,7 @@ const OVERRIDE_PATHS = new Set([
   'resolve.extensions',
   'resolve.conditionNames',
   'resolve.mainFields',
+  'splitChunks.chunks',
   'dev.writeToDisk',
   'dev.cliShortcuts.custom',
   'dev.client.overlay.errors',

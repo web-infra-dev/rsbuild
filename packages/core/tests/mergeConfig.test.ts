@@ -445,6 +445,15 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  it('should let a callback override splitChunks.chunks', () => {
+    const chunks = () => true;
+    const config = mergeRsbuildConfig<RsbuildConfig>(
+      { splitChunks: { chunks: 'initial' } },
+      { splitChunks: { chunks } },
+    );
+    expect(config.splitChunks).toEqual({ chunks });
+  });
+
   it('should merge Rspack plugins as expected', () => {
     class A {
       a = 1;
