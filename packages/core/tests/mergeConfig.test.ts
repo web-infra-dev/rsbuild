@@ -650,6 +650,17 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  test('should preserve the manifest filename when merging manifest options', () => {
+    const config = mergeRsbuildConfig<RsbuildConfig>(
+      { output: { manifest: 'assets.json' } },
+      { output: { manifest: { prefix: false } } },
+    );
+    expect(config.output?.manifest).toEqual({
+      filename: 'assets.json',
+      prefix: false,
+    });
+  });
+
   test('should merge output.distPath as expected', () => {
     expect(
       mergeRsbuildConfig(
