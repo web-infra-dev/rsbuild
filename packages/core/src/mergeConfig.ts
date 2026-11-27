@@ -1,5 +1,5 @@
 import { cloneDeep, isPlainObject } from './helpers';
-import type { RsbuildConfig } from './types';
+import type { NormalizedDataUriLimit, RsbuildConfig } from './types';
 
 const OVERRIDE_PATHS = new Set([
   'performance.removeConsole',
@@ -134,6 +134,16 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
     }
     if (typeof output.distPath === 'string') {
       output.distPath = { root: output.distPath };
+    }
+    const { dataUriLimit } = output;
+    if (typeof dataUriLimit === 'number') {
+      output.dataUriLimit = {
+        svg: dataUriLimit,
+        font: dataUriLimit,
+        image: dataUriLimit,
+        media: dataUriLimit,
+        assets: dataUriLimit,
+      } satisfies NormalizedDataUriLimit;
     }
 
     normalizedConfig.output = output;
