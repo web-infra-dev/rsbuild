@@ -22,9 +22,23 @@ test('should apply mixed proxy rules', async ({ dev, page }) => {
   const rsbuild2 = await dev({
     cwd: cwd2,
     config: mergeRsbuildConfig<RsbuildConfig>(
-      { server: { proxy: { '/foo': target } } },
-      { server: { proxy: [{ pathFilter: '/bar', target }] } },
-      { server: { proxy: { '/baz': { target } } } },
+      {
+        server: {
+          proxy: { '/foo': target },
+        },
+      },
+      {
+        server: {
+          proxy: [{ pathFilter: '/bar', target }],
+        },
+      },
+      {
+        server: {
+          proxy: {
+            '/baz': { target },
+          },
+        },
+      },
     ),
   });
 
