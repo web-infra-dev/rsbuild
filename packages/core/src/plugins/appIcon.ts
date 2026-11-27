@@ -9,9 +9,8 @@ import { fileExistsByCompilation, readFileAsync } from '../helpers/fs';
 import { ensureAssetPrefix, isURL } from '../helpers/url';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
-type IconExtra = {
+type IconAssetMeta = {
   src: string;
-  sizes: string;
   mimeType?: string;
 } & (
   | { isURL: true }
@@ -22,12 +21,16 @@ type IconExtra = {
     }
 );
 
+type IconExtra = IconAssetMeta & {
+  sizes: string;
+};
+
 export const pluginAppIcon = (): RsbuildPlugin => ({
   name: 'rsbuild:appIcon',
 
   setup(api) {
     const htmlTagsMap = new Map<string, HtmlBasicTag[]>();
-    const iconFormatMap = new Map<string, AppIconItem & IconExtra>();
+    const iconFormatMap = new Map<string, IconAssetMeta>();
 
     const formatIcon = (
       icon: AppIconItem,
@@ -37,47 +40,41 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
     ): AppIconItem & IconExtra => {
       const { src, size } = icon;
       const cacheKey = `${distDir}|${publicPath}|${src}`;
-      const cached = iconFormatMap.get(cacheKey);
+      let assetMeta = iconFormatMap.get(cacheKey);
 
-      if (cached) {
-        return cached;
+      if (!assetMeta) {
+        if (isURL(src)) {
+          assetMeta = {
+            src,
+            isURL: true as const,
+            mimeType: lookup(src),
+          };
+        } else {
+          const absolutePath = path.isAbsolute(src)
+            ? src
+            : path.join(api.context.rootPath, src);
+          const relativePath = path.posix.join(
+            distDir,
+            path.basename(absolutePath),
+          );
+
+          assetMeta = {
+            src: ensureAssetPrefix(relativePath, publicPath),
+            isURL: false as const,
+            absolutePath,
+            relativePath,
+            mimeType: lookup(absolutePath),
+          };
+        }
+
+        iconFormatMap.set(cacheKey, assetMeta);
       }
 
-      const sizes = `${size}x${size}`;
-
-      if (isURL(src)) {
-        const formatted = {
-          ...icon,
-          src,
-          sizes,
-          isURL: true as const,
-          mimeType: lookup(src),
-        };
-
-        iconFormatMap.set(cacheKey, formatted);
-        return formatted;
-      }
-
-      const absolutePath = path.isAbsolute(src)
-        ? src
-        : path.join(api.context.rootPath, src);
-      const relativePath = path.posix.join(
-        distDir,
-        path.basename(absolutePath),
-      );
-
-      const formatted = {
+      return {
         ...icon,
-        sizes,
-        src: ensureAssetPrefix(relativePath, publicPath),
-        isURL: false as const,
-        absolutePath,
-        relativePath,
-        mimeType: lookup(absolutePath),
+        ...assetMeta,
+        sizes: `${size}x${size}`,
       };
-
-      iconFormatMap.set(cacheKey, formatted);
-      return formatted;
     };
 
     api.processAssets(
@@ -97,6 +94,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
           formatIcon(icon, distDir, publicPath, lookup),
         );
         const tags: HtmlBasicTag[] = [];
+        const emittedPaths = new Set<string>();
 
         for (const icon of icons) {
           if (icon.target === 'web-app-manifest' && !appIcon.name) {
@@ -111,7 +109,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             continue;
           }
 
-          if (!icon.isURL) {
+          if (!icon.isURL && !emittedPaths.has(icon.absolutePath)) {
             if (!compilation.inputFileSystem) {
               addCompilationError(
                 compilation,
@@ -143,6 +141,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
               icon.relativePath,
               new sources.RawSource(source),
             );
+            emittedPaths.add(icon.absolutePath);
           }
 
           if (

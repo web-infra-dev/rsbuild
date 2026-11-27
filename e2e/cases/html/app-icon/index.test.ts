@@ -377,3 +377,65 @@ test('should apply asset prefix to apple-touch-icon URL', async ({ build }) => {
     '<link rel="apple-touch-icon" sizes="180x180" href="https://www.example.com/static/image/icon.png">',
   );
 });
+
+test('should preserve per-icon options when reusing the same icon src', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      html: {
+        appIcon: {
+          name: 'My Website',
+          icons: [
+            {
+              src: '../../../assets/icon.png',
+              size: 180,
+              target: 'apple-touch-icon',
+            },
+            {
+              src: '../../../assets/icon.png',
+              size: 192,
+              target: 'web-app-manifest',
+              purpose: 'any',
+            },
+            {
+              src: '../../../assets/icon.png',
+              size: 512,
+              target: 'web-app-manifest',
+              purpose: 'maskable',
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+  const iconFile = findFile(files, 'static/image/icon.png');
+  expect(iconFile.endsWith('static/image/icon.png')).toBeTruthy();
+
+  const html = getFileContent(files, 'index.html');
+  expect(html.match(/rel="apple-touch-icon"/g)).toHaveLength(1);
+  expect(html).toContain(
+    '<link rel="apple-touch-icon" sizes="180x180" href="/static/image/icon.png">',
+  );
+
+  const manifestPath = findFile(files, 'manifest.webmanifest');
+  expect(JSON.parse(files[manifestPath])).toEqual({
+    name: 'My Website',
+    icons: [
+      {
+        src: '/static/image/icon.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/static/image/icon.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
+    ],
+  });
+});
