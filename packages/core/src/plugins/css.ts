@@ -28,23 +28,13 @@ import type {
 } from '../types';
 import { parseMinifyOptions } from './minimize';
 
-const getCSSFilenames = (
-  config: NormalizedEnvironmentConfig,
-  isProd: boolean,
-) => {
-  const { css, cssAsync } = config.output.distPath;
-  const filename = getFilename(config, 'css', isProd);
-
-  const withDistPath = (distPath: string): Rspack.CssFilename =>
-    typeof filename === 'function'
-      ? (...args) => posix.join(distPath, filename(...args))
-      : posix.join(distPath, filename);
-
-  return {
-    filename: withDistPath(css),
-    chunkFilename: withDistPath(cssAsync ?? (css ? `${css}/async` : 'async')),
-  };
-};
+const getCSSOutputFilename = (
+  distPath: string,
+  filename: Rspack.CssFilename,
+): Rspack.CssFilename =>
+  typeof filename === 'function'
+    ? (...args) => posix.join(distPath, filename(...args))
+    : posix.join(distPath, filename);
 
 const getCSSModulesLocalIdentName = (
   config: NormalizedEnvironmentConfig,
@@ -573,10 +563,12 @@ export const pluginCss = (): RsbuildPlugin => ({
           rule.resolve.preferRelative(true);
         });
 
-        const cssFilenames = getCSSFilenames(config, isProd);
+        const { distPath } = config.output;
+        const cssFilename = getFilename(config, 'css', isProd);
+        const filename = getCSSOutputFilename(distPath.css, cssFilename);
 
         urlRule.use(CHAIN_ID.USE.CSS_URL).options({
-          filename: cssFilenames.filename,
+          filename,
           modules: cssLoaderOptions.modules,
           minimized: cssUrlMinimized,
         });
@@ -591,11 +583,16 @@ export const pluginCss = (): RsbuildPlugin => ({
 
         // Apply CSS extract plugin if not using style-loader and emitCss is true
         if (emitCss && !config.output.injectStyles && !isStringExport) {
+          const cssAsyncPath =
+            distPath.cssAsync ??
+            (distPath.css ? `${distPath.css}/async` : 'async');
+
           chain
             .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
             .use(rspack.CssExtractRspackPlugin, [
               {
-                ...cssFilenames,
+                filename,
+                chunkFilename: getCSSOutputFilename(cssAsyncPath, cssFilename),
                 ...config.tools.cssExtract.pluginOptions,
               },
             ]);
