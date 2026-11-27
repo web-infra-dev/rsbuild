@@ -130,39 +130,31 @@ export function getFilename(
   isServer?: boolean,
 ) {
   const { filename, filenameHash } = config.output;
-  const hashConfig = normalizeFilenameHash(filenameHash);
-  const hashTemplate = `[${hashConfig.format}]`;
-
-  const getHash = () => (hashConfig.enable !== false ? `.${hashTemplate}` : '');
-
-  const getJsCssHash = (flag?: boolean) => {
-    if (
-      hashConfig.enable === 'always' ||
-      (hashConfig.enable === true && flag)
-    ) {
-      return `.${hashTemplate}`;
-    }
-    return '';
+  const getHash = (useHash?: boolean) => {
+    const { enable, format } = normalizeFilenameHash(filenameHash);
+    return enable === 'always' || (enable && useHash) ? `.[${format}]` : '';
   };
 
   switch (type) {
     case 'js':
-      return filename.js ?? `[name]${getJsCssHash(isProd && !isServer)}.js`;
+      return filename.js ?? `[name]${getHash(isProd && !isServer)}.js`;
     case 'css':
-      return filename.css ?? `[name]${getJsCssHash(isProd)}.css`;
+      return filename.css ?? `[name]${getHash(isProd)}.css`;
     case 'svg':
-      return filename.svg ?? `[name]${getHash()}.svg`;
+      return filename.svg ?? `[name]${getHash(true)}.svg`;
     case 'font':
-      return filename.font ?? `[name]${getHash()}[ext]`;
+      return filename.font ?? `[name]${getHash(true)}[ext]`;
     case 'image':
-      return filename.image ?? `[name]${getHash()}[ext]`;
+      return filename.image ?? `[name]${getHash(true)}[ext]`;
     case 'media':
-      return filename.media ?? `[name]${getHash()}[ext]`;
+      return filename.media ?? `[name]${getHash(true)}[ext]`;
     case 'assets':
-      return filename.assets ?? `[name]${getHash()}[ext]`;
-    case 'wasm': {
-      return filename.wasm ?? `${hashTemplate}.module.wasm`;
-    }
+      return filename.assets ?? `[name]${getHash(true)}[ext]`;
+    case 'wasm':
+      return (
+        filename.wasm ??
+        `[${normalizeFilenameHash(filenameHash).format}].module.wasm`
+      );
     case 'html':
       if (filename.html) {
         return filename.html;
