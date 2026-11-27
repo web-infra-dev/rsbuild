@@ -28,6 +28,14 @@ import type {
 } from '../types';
 import { parseMinifyOptions } from './minimize';
 
+const getCSSOutputFilename = (
+  distPath: string,
+  filename: Rspack.CssFilename,
+): Rspack.CssFilename =>
+  typeof filename === 'function'
+    ? (...args) => posix.join(distPath, filename(...args))
+    : posix.join(distPath, filename);
+
 const getCSSModulesLocalIdentName = (
   config: NormalizedEnvironmentConfig,
   isProd: boolean,
@@ -555,15 +563,12 @@ export const pluginCss = (): RsbuildPlugin => ({
           rule.resolve.preferRelative(true);
         });
 
-        const cssUrlFilename = getFilename(config, 'css', isProd);
-        const cssUrlPath = config.output.distPath.css;
+        const { distPath } = config.output;
+        const cssFilename = getFilename(config, 'css', isProd);
+        const filename = getCSSOutputFilename(distPath.css, cssFilename);
 
         urlRule.use(CHAIN_ID.USE.CSS_URL).options({
-          filename:
-            typeof cssUrlFilename === 'function'
-              ? (pathData: Rspack.PathData, assetInfo?: Rspack.AssetInfo) =>
-                  posix.join(cssUrlPath, cssUrlFilename(pathData, assetInfo))
-              : posix.join(cssUrlPath, cssUrlFilename),
+          filename,
           modules: cssLoaderOptions.modules,
           minimized: cssUrlMinimized,
         });
@@ -578,33 +583,17 @@ export const pluginCss = (): RsbuildPlugin => ({
 
         // Apply CSS extract plugin if not using style-loader and emitCss is true
         if (emitCss && !config.output.injectStyles && !isStringExport) {
-          const extractPluginOptions = config.tools.cssExtract.pluginOptions;
-
-          const cssPath = config.output.distPath.css;
-          const cssFilename = getFilename(config, 'css', isProd);
-          const isCssFilenameFn = typeof cssFilename === 'function';
-
           const cssAsyncPath =
-            config.output.distPath.cssAsync ??
-            (cssPath ? `${cssPath}/async` : 'async');
+            distPath.cssAsync ??
+            (distPath.css ? `${distPath.css}/async` : 'async');
 
           chain
             .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
             .use(rspack.CssExtractRspackPlugin, [
               {
-                filename: isCssFilenameFn
-                  ? (...args) => {
-                      const name = cssFilename(...args);
-                      return posix.join(cssPath, name);
-                    }
-                  : posix.join(cssPath, cssFilename),
-                chunkFilename: isCssFilenameFn
-                  ? (...args) => {
-                      const name = cssFilename(...args);
-                      return posix.join(cssAsyncPath, name);
-                    }
-                  : posix.join(cssAsyncPath, cssFilename),
-                ...extractPluginOptions,
+                filename,
+                chunkFilename: getCSSOutputFilename(cssAsyncPath, cssFilename),
+                ...config.tools.cssExtract.pluginOptions,
               },
             ]);
         }
