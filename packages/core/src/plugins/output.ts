@@ -1,6 +1,6 @@
 import { posix } from 'node:path';
 import { DEFAULT_ASSET_PREFIX, DEFAULT_PORT, LOCALHOST } from '../constants';
-import { getFilename } from '../helpers';
+import { getFilename, normalizeCopyOptions } from '../helpers';
 import { formatPublicPath, urlJoin } from '../helpers/url';
 import { getHostInUrl, isWildcardHost } from '../server/helper';
 import { replacePortPlaceholder } from '../server/open';
@@ -142,13 +142,11 @@ export const pluginOutput = (): RsbuildPlugin => ({
             .workerChunkLoading('import');
         }
 
-        if (config.output.copy) {
-          const { copy } = config.output;
-          const options = Array.isArray(copy) ? { patterns: copy } : copy;
-
+        const { copy } = config.output;
+        if (copy) {
           chain
             .plugin(CHAIN_ID.PLUGIN.COPY)
-            .use(rspack.CopyRspackPlugin, [options]);
+            .use(rspack.CopyRspackPlugin, [normalizeCopyOptions(copy)]);
         }
       },
     );

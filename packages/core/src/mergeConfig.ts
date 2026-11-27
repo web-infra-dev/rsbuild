@@ -1,4 +1,9 @@
-import { cloneDeep, isPlainObject, normalizeFilenameHash } from './helpers';
+import {
+  cloneDeep,
+  isPlainObject,
+  normalizeCopyOptions,
+  normalizeFilenameHash,
+} from './helpers';
 import type { NormalizedDataUriLimit, RsbuildConfig } from './types';
 
 const OVERRIDE_PATHS = new Set([
@@ -132,8 +137,8 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
   if (output) {
     output = { ...output };
 
-    if (Array.isArray(output.copy)) {
-      output.copy = { patterns: output.copy };
+    if (output.copy) {
+      output.copy = normalizeCopyOptions(output.copy);
     }
     if (typeof output.distPath === 'string') {
       output.distPath = { root: output.distPath };
