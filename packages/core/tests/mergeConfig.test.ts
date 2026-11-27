@@ -650,6 +650,17 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  test('should preserve the filename hash format when overriding enable', () => {
+    const config = mergeRsbuildConfig<RsbuildConfig>(
+      { output: { filenameHash: 'contenthash:16' } },
+      { output: { filenameHash: { enable: 'always' } } },
+    );
+    expect(config.output?.filenameHash).toEqual({
+      enable: 'always',
+      format: 'contenthash:16',
+    });
+  });
+
   test('should preserve the manifest filename when merging manifest options', () => {
     const config = mergeRsbuildConfig<RsbuildConfig>(
       { output: { manifest: 'assets.json' } },
