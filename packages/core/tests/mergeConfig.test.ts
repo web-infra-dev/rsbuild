@@ -1,5 +1,5 @@
 import { runInNewContext } from 'node:vm';
-import type { RsbuildConfig, Rspack } from '../src';
+import { defaultAllowedOrigins, type RsbuildConfig, type Rspack } from '../src';
 import { mergeRsbuildConfig } from '../src/mergeConfig';
 
 describe('mergeRsbuildConfig', () => {
@@ -440,6 +440,55 @@ describe('mergeRsbuildConfig', () => {
       server: {
         compress: {
           filter: filter2,
+        },
+      },
+    });
+  });
+
+  it('should override server.cors.origin when merging configs', () => {
+    const originFn = (
+      _origin: string | undefined,
+      callback: (err: Error | null, origin?: boolean) => void,
+    ) => {
+      callback(null, true);
+    };
+
+    expect(
+      mergeRsbuildConfig<RsbuildConfig>(
+        { server: { cors: { origin: defaultAllowedOrigins } } },
+        { server: { cors: { origin: originFn } } },
+      ),
+    ).toEqual({
+      server: {
+        cors: {
+          origin: originFn,
+        },
+      },
+    });
+
+    expect(
+      mergeRsbuildConfig<RsbuildConfig>(
+        { server: { cors: { origin: defaultAllowedOrigins } } },
+        { server: { cors: { origin: ['https://example.com'] } } },
+      ),
+    ).toEqual({
+      server: {
+        cors: {
+          origin: ['https://example.com'],
+        },
+      },
+    });
+
+    expect(
+      mergeRsbuildConfig<RsbuildConfig>(
+        { server: { cors: { origin: defaultAllowedOrigins } } },
+        { server: { cors: { credentials: true } } },
+      ),
+    ).toEqual({
+      server: {
+        cors: {
+          origin: defaultAllowedOrigins,
+          credentials: true,
         },
       },
     });
