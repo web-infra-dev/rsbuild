@@ -64,7 +64,7 @@ export const cloneDeep = <T>(value: T): T => {
 
 const DEFAULT_FILENAME_HASH = 'contenthash:10';
 
-const normalizeFilenameHash = (
+export const normalizeFilenameHash = (
   filenameHash: FilenameHash,
 ): {
   enable: boolean | 'always';
