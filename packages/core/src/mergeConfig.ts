@@ -136,6 +136,9 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
     if (typeof output.distPath === 'string') {
       output.distPath = { root: output.distPath };
     }
+    if (typeof output.manifest === 'string') {
+      output.manifest = { filename: output.manifest };
+    }
     const { dataUriLimit } = output;
     if (typeof dataUriLimit === 'number') {
       output.dataUriLimit = {
