@@ -6,6 +6,7 @@ const OVERRIDE_PATHS = new Set([
   'output.inlineScripts',
   'output.inlineStyles',
   'output.cssModules.auto',
+  'output.cssModules.mode',
   'output.manifest.filter',
   'output.manifest.generate',
   'output.overrideBrowserslist',

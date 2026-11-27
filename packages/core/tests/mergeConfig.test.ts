@@ -606,6 +606,15 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  test('should let a callback override output.cssModules.mode', () => {
+    const mode = () => 'global' as const;
+    const config = mergeRsbuildConfig<RsbuildConfig>(
+      { output: { cssModules: { mode: 'local' } } },
+      { output: { cssModules: { mode } } },
+    );
+    expect(config.output?.cssModules?.mode).toBe(mode);
+  });
+
   test('should merge output.copy as expected', () => {
     expect(
       mergeRsbuildConfig(
