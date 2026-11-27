@@ -1,4 +1,4 @@
-import { cloneDeep, isPlainObject } from './helpers';
+import { cloneDeep, isPlainObject, normalizeProxyConfig } from './helpers';
 import type { NormalizedDataUriLimit, RsbuildConfig } from './types';
 
 const OVERRIDE_PATHS = new Set([
@@ -70,8 +70,14 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
   if (isArrayX && isArrayY) {
     return x.concat(y);
   } else if (isArrayX) {
+    if (path === 'server.proxy' && isPlainObject(y)) {
+      return x.concat(normalizeProxyConfig(y));
+    }
     return [...x, y];
   } else if (isArrayY) {
+    if (path === 'server.proxy' && isPlainObject(x)) {
+      return normalizeProxyConfig(x).concat(y);
+    }
     return [x, ...y];
   }
 

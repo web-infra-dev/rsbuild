@@ -1,6 +1,6 @@
 import { format } from 'node:util';
 import type { RequestHandler } from 'http-proxy-middleware';
-import { color } from '../helpers';
+import { color, normalizeProxyConfig } from '../helpers';
 import type { Logger } from '../logger';
 import type {
   RequestHandler as Middleware,
@@ -9,7 +9,13 @@ import type {
 } from '../types';
 import { HttpCode, type UpgradeEvent } from './helper';
 
-function formatProxyOptions(proxyOptions: ProxyConfig, logger: Logger) {
+export async function createProxyMiddleware(
+  proxyOptions: ProxyConfig,
+  logger: Logger,
+): Promise<{
+  middlewares: Middleware[];
+  upgrade: UpgradeEvent;
+}> {
   const logPrefix = color.dim('[http-proxy-middleware]: ');
   const defaultOptions: ProxyOptions = {
     changeOrigin: true,
@@ -26,30 +32,6 @@ function formatProxyOptions(proxyOptions: ProxyConfig, logger: Logger) {
     },
   };
 
-  if (Array.isArray(proxyOptions)) {
-    return proxyOptions.map((options) => ({
-      ...defaultOptions,
-      ...options,
-    }));
-  }
-
-  return Object.entries(proxyOptions).map(([pathFilter, value]) => ({
-    ...defaultOptions,
-    pathFilter,
-    ...(typeof value === 'string' ? { target: value } : value),
-  }));
-}
-
-export async function createProxyMiddleware(
-  proxyOptions: ProxyConfig,
-  logger: Logger,
-): Promise<{
-  middlewares: Middleware[];
-  upgrade: UpgradeEvent;
-}> {
-  // If it is not an array, it may be an object that uses the context attribute
-  // or an object in the form of { source: ProxyDetail }
-  const formattedOptions = formatProxyOptions(proxyOptions, logger);
   const proxyMiddlewares: RequestHandler[] = [];
   const middlewares: Middleware[] = [];
 
@@ -57,7 +39,8 @@ export async function createProxyMiddleware(
     /* rspackChunkName: "http-proxy-middleware" */ 'http-proxy-middleware'
   );
 
-  for (const opts of formattedOptions) {
+  for (const rule of normalizeProxyConfig(proxyOptions)) {
+    const opts = { ...defaultOptions, ...rule };
     const proxyMiddleware = baseMiddleware({
       ...opts,
       // Rsbuild dispatches upgrades explicitly and removes its listener on close.

@@ -6,6 +6,8 @@ import type {
   FilenameHash,
   NormalizedConfig,
   NormalizedEnvironmentConfig,
+  ProxyConfig,
+  ProxyOptions,
   RsbuildTarget,
   Rspack,
 } from '../types';
@@ -52,6 +54,14 @@ export const castArray = <T>(arr?: T | T[]): T[] => {
   }
   return Array.isArray(arr) ? arr : [arr];
 };
+
+export const normalizeProxyConfig = (proxy: ProxyConfig): ProxyOptions[] =>
+  Array.isArray(proxy)
+    ? proxy
+    : Object.entries(proxy).map(([pathFilter, value]) => ({
+        pathFilter,
+        ...(typeof value === 'string' ? { target: value } : value),
+      }));
 
 export const cloneDeep = <T>(value: T): T => {
   if (value === null || value === undefined) {
