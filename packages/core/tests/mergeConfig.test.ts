@@ -257,6 +257,21 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  test('should merge options for the same proxy path before appending rules', () => {
+    const target = 'http://localhost:3000';
+    const extraRule = { pathFilter: '/assets', target };
+    const config = mergeRsbuildConfig<RsbuildConfig>(
+      { server: { proxy: { '/api': { target } } } },
+      { server: { proxy: { '/api': { changeOrigin: false } } } },
+      { server: { proxy: [extraRule] } },
+    );
+
+    expect(config.server?.proxy).toEqual([
+      { pathFilter: '/api', target, changeOrigin: false },
+      extraRule,
+    ]);
+  });
+
   test('should merge server.open correctly', () => {
     expect(
       mergeRsbuildConfig(
