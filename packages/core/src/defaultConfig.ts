@@ -25,6 +25,8 @@ import { findExists, isFileExists } from './helpers/fs';
 import { mergeRsbuildConfig } from './mergeConfig';
 import type {
   CSSConfig,
+  CSSModulesConfig,
+  CSSModulesLocalsConvention,
   EnvironmentConfig,
   NormalizedConfig,
   NormalizedCSSConfig,
@@ -311,6 +313,110 @@ export const withDefaultConfig = async (
   return config;
 };
 
+const CSS_MODULES_LOCALS_CONVENTION_MAP: Record<
+  CSSModulesLocalsConvention,
+  Rspack.CssGeneratorExportsConvention
+> = {
+  asIs: 'as-is',
+  camelCase: 'camel-case',
+  camelCaseOnly: 'camel-case-only',
+  dashes: 'dashes',
+  dashesOnly: 'dashes-only',
+};
+
+const RSPACK_HASH_FUNCTIONS = new Set<string>(['xxhash64', 'md4', 'sha256']);
+const RSPACK_HASH_DIGESTS = new Set<string>([
+  'hex',
+  'base64',
+  'base64url',
+  'base62',
+  'base58',
+  'base52',
+  'base49',
+  'base36',
+  'base32',
+  'base26',
+]);
+
+export const parseLegacyLocalIdentName = (
+  template: string,
+): Pick<
+  CSSModulesConfig,
+  | 'localIdentName'
+  | 'localIdentHashFunction'
+  | 'localIdentHashDigest'
+  | 'localIdentHashDigestLength'
+> => {
+  let localIdentHashFunction: CSSModulesConfig['localIdentHashFunction'];
+  let localIdentHashDigest: CSSModulesConfig['localIdentHashDigest'];
+  let localIdentHashDigestLength: CSSModulesConfig['localIdentHashDigestLength'];
+
+  const localIdentName = template.replace(
+    /\[(?:([a-z0-9]+):)?(hash|fullhash)(?::([^\]]+))?\]/gi,
+    (match, rawFn?: string, kind?: string, rest?: string) => {
+      let parsedFn: string | undefined;
+      if (rawFn !== undefined) {
+        const lowerFn = rawFn.toLowerCase();
+        if (!RSPACK_HASH_FUNCTIONS.has(lowerFn)) {
+          return match;
+        }
+        parsedFn = lowerFn;
+      }
+
+      let parsedDigest: string | undefined;
+      let parsedLength: number | undefined;
+      if (rest !== undefined) {
+        const parts = rest.split(':');
+        if (parts.length === 1) {
+          const part = parts[0];
+          if (/^\d+$/.test(part)) {
+            parsedLength = Number(part);
+          } else {
+            const lowerDigest = part.toLowerCase();
+            if (!RSPACK_HASH_DIGESTS.has(lowerDigest)) {
+              return match;
+            }
+            parsedDigest = lowerDigest;
+          }
+        } else if (parts.length === 2) {
+          const [rawDigest, rawLen] = parts;
+          const lowerDigest = rawDigest.toLowerCase();
+          if (!RSPACK_HASH_DIGESTS.has(lowerDigest) || !/^\d+$/.test(rawLen)) {
+            return match;
+          }
+          parsedDigest = lowerDigest;
+          parsedLength = Number(rawLen);
+        } else {
+          return match;
+        }
+      }
+
+      if (parsedFn !== undefined) {
+        localIdentHashFunction = parsedFn;
+      }
+      if (parsedDigest !== undefined) {
+        // css-loader's `base64` produces CSS-ident-safe chars matching Rspack's `base64url`
+        localIdentHashDigest =
+          parsedDigest === 'base64' ? 'base64url' : parsedDigest;
+      }
+      if (parsedLength !== undefined && parsedLength > 0) {
+        localIdentHashDigestLength = parsedLength;
+      }
+
+      return `[${(kind ?? 'hash').toLowerCase()}]`;
+    },
+  );
+
+  return {
+    localIdentName,
+    ...(localIdentHashFunction !== undefined ? { localIdentHashFunction } : {}),
+    ...(localIdentHashDigest !== undefined ? { localIdentHashDigest } : {}),
+    ...(localIdentHashDigestLength !== undefined
+      ? { localIdentHashDigestLength }
+      : {}),
+  };
+};
+
 export const getDefaultCssModulesConfig = (): NormalizedCSSModulesConfig => ({
   localIdentHashDigest: 'base64url',
   localIdentHashDigestLength: 6,
@@ -322,6 +428,7 @@ export const getDefaultCssModulesConfig = (): NormalizedCSSModulesConfig => ({
   container: false,
   grid: false,
   function: false,
+  pure: false,
 });
 
 export const getDefaultCssConfig = (
@@ -336,33 +443,84 @@ export const getDefaultCssConfig = (
   modules: getDefaultCssModulesConfig(),
 });
 
+type LegacyCssOutputConfig = Partial<
+  Pick<
+    NormalizedOutputConfig,
+    'target' | 'injectStyles' | 'emitCss' | 'cssModules'
+  >
+>;
+
 export function normalizeCssConfig(
   css: undefined,
-  target?: RsbuildTarget,
+  output?: LegacyCssOutputConfig,
 ): undefined;
-export function normalizeCssConfig(css: false, target?: RsbuildTarget): false;
+export function normalizeCssConfig(
+  css: false,
+  output?: LegacyCssOutputConfig,
+): false;
 export function normalizeCssConfig(
   css: true | CSSConfig,
-  target?: RsbuildTarget,
+  output?: LegacyCssOutputConfig,
 ): NormalizedCSSConfig;
 export function normalizeCssConfig(
   css?: boolean | CSSConfig,
-  target?: RsbuildTarget,
+  output?: LegacyCssOutputConfig,
 ): NormalizedCSSConfig | false | undefined;
 export function normalizeCssConfig(
   css?: boolean | CSSConfig,
-  target: RsbuildTarget = 'web',
+  output?: LegacyCssOutputConfig,
 ): NormalizedCSSConfig | false | undefined {
   if (css === undefined || css === false) {
     return css;
   }
-  if (css === true) {
-    return getDefaultCssConfig(target);
-  }
-  return mergeRsbuildConfig<NormalizedCSSConfig>(
-    getDefaultCssConfig(target, css.exportType),
-    css as NormalizedCSSConfig,
+
+  const target = output?.target ?? 'web';
+  const legacyCssModules = output?.cssModules;
+  const userCss = css === true ? {} : css;
+
+  const exportType =
+    userCss.exportType ?? (output?.injectStyles ? 'style' : 'link');
+  const exportsOnly =
+    userCss.exportsOnly ??
+    (output?.emitCss !== undefined ? !output.emitCss : target !== 'web');
+  const namedExports =
+    userCss.namedExports ??
+    (legacyCssModules?.namedExport
+      ? true
+      : exportType === 'text' || exportType === 'css-style-sheet');
+  const exportsConvention =
+    userCss.exportsConvention ??
+    (legacyCssModules?.exportLocalsConvention
+      ? (CSS_MODULES_LOCALS_CONVENTION_MAP[
+          legacyCssModules.exportLocalsConvention
+        ] ?? 'camel-case')
+      : 'camel-case');
+  const esModule = userCss.esModule ?? true;
+
+  const legacyLocalIdent =
+    userCss.modules?.localIdentName === undefined &&
+    legacyCssModules?.localIdentName !== undefined
+      ? parseLegacyLocalIdentName(legacyCssModules.localIdentName)
+      : undefined;
+  const legacyModulesFallback: CSSModulesConfig = {
+    ...legacyLocalIdent,
+    ...(legacyCssModules?.mode === 'pure' ? { pure: true } : {}),
+  };
+
+  const modules = mergeRsbuildConfig<NormalizedCSSModulesConfig>(
+    getDefaultCssModulesConfig(),
+    legacyModulesFallback as NormalizedCSSModulesConfig,
+    userCss.modules as NormalizedCSSModulesConfig,
   );
+
+  return {
+    exportType,
+    namedExports,
+    exportsConvention,
+    exportsOnly,
+    esModule,
+    modules,
+  };
 }
 
 type NormalizedBaseConfig = Omit<NormalizedConfig, 'environments' | 'css'> & {

@@ -207,6 +207,7 @@ describe('plugin-css builtin css', () => {
         container: false,
         grid: false,
         function: false,
+        pure: false,
       },
     });
 
@@ -221,6 +222,7 @@ describe('plugin-css builtin css', () => {
         container: false,
         grid: false,
         function: false,
+        pure: false,
       },
       'css/global': {
         namedExports: false,
@@ -239,8 +241,12 @@ describe('plugin-css builtin css', () => {
         container: false,
         grid: false,
         function: false,
+        pure: false,
       },
     });
+    expect(rspackConfig.module?.parser?.['css/global']).not.toHaveProperty(
+      'pure',
+    );
     expect(rspackConfig.module?.parser?.css).not.toHaveProperty('exportType');
     expect(rspackConfig.module?.parser?.['css/auto']).not.toHaveProperty(
       'exportType',
@@ -388,6 +394,7 @@ describe('plugin-css builtin css', () => {
         container: false,
         grid: false,
         function: false,
+        pure: false,
       },
     });
     expect(rspackConfig.output).not.toHaveProperty('cssFilename');
@@ -555,7 +562,7 @@ describe('plugin-css builtin css', () => {
     ]);
   });
 
-  it('should ignore output.injectStyles and output.emitCss and warn when css is enabled', async () => {
+  it('should auto-convert output.injectStyles and output.emitCss and let css fields win without warnings', async () => {
     const rsbuild = await createRsbuild({
       config: {
         css: true,
@@ -571,37 +578,382 @@ describe('plugin-css builtin css', () => {
 
     const [rspackConfig] = await rsbuild.initConfigs();
 
-    expect(warn).toHaveBeenCalledTimes(2);
-    expect(rspackConfig.module?.parser?.['css/auto']).not.toHaveProperty(
-      'exportType',
-    );
-    expect(rspackConfig.module?.generator?.['css/auto']).toMatchObject({
-      exportsOnly: false,
+    expect(warn).not.toHaveBeenCalled();
+    expect(rsbuild.getNormalizedConfig().css).toMatchObject({
+      exportType: 'style',
+      exportsOnly: true,
     });
-    expect(rspackConfig.output).toMatchObject({
-      cssFilename: 'static/css/[name].css',
-      cssChunkFilename: 'static/css/async/[name].css',
+    expect(rspackConfig.module?.parser?.['css/auto']).toMatchObject({
+      exportType: 'style',
+    });
+    expect(rspackConfig.module?.generator?.['css/auto']).toMatchObject({
+      exportsOnly: true,
     });
 
-    const rsbuildExportsOnly = await createRsbuild({
+    const rsbuildNode = await createRsbuild({
       config: {
-        css: {
-          exportsOnly: true,
-        },
+        css: true,
         output: {
+          target: 'node',
           emitCss: true,
         },
       },
     });
-    const warn2 = rstest
-      .spyOn(rsbuildExportsOnly.logger, 'warn')
+    const [nodeConfig] = await rsbuildNode.initConfigs();
+    expect(rsbuildNode.getNormalizedConfig().css).toMatchObject({
+      exportType: 'link',
+      exportsOnly: false,
+    });
+    expect(nodeConfig.output).toMatchObject({
+      cssFilename: 'static/css/[name].css',
+    });
+
+    const rsbuildOverride = await createRsbuild({
+      config: {
+        css: {
+          exportType: 'link',
+          exportsOnly: false,
+        },
+        output: {
+          injectStyles: true,
+          emitCss: false,
+        },
+      },
+    });
+    const warnOverride = rstest
+      .spyOn(rsbuildOverride.logger, 'warn')
       .mockImplementation(() => {});
 
-    const [rspackConfig2] = await rsbuildExportsOnly.initConfigs();
-    expect(warn2).toHaveBeenCalledTimes(1);
-    expect(rspackConfig2.module?.generator?.['css/auto']).toMatchObject({
-      exportsOnly: true,
+    const [overrideConfig] = await rsbuildOverride.initConfigs();
+    expect(warnOverride).not.toHaveBeenCalled();
+    expect(rsbuildOverride.getNormalizedConfig().css).toMatchObject({
+      exportType: 'link',
+      exportsOnly: false,
     });
+    expect(overrideConfig.module?.parser?.['css/auto']).not.toHaveProperty(
+      'exportType',
+    );
+    expect(overrideConfig.output).toMatchObject({
+      cssFilename: 'static/css/[name].css',
+      cssChunkFilename: 'static/css/async/[name].css',
+    });
+  });
+
+  it('should auto-convert output.cssModules options and prefer explicit config.css fields', async () => {
+    const conventions = [
+      ['asIs', 'as-is'],
+      ['camelCase', 'camel-case'],
+      ['camelCaseOnly', 'camel-case-only'],
+      ['dashes', 'dashes'],
+      ['dashesOnly', 'dashes-only'],
+    ] as const;
+
+    for (const [legacyConvention, builtinConvention] of conventions) {
+      const rsbuild = await createRsbuild({
+        config: {
+          css: true,
+          output: {
+            cssModules: {
+              exportLocalsConvention: legacyConvention,
+            },
+          },
+        },
+      });
+      const [rspackConfig] = await rsbuild.initConfigs();
+      expect(rsbuild.getNormalizedConfig().css).toMatchObject({
+        exportsConvention: builtinConvention,
+      });
+      expect(rspackConfig.module?.generator?.['css/auto']).toMatchObject({
+        exportsConvention: builtinConvention,
+      });
+    }
+
+    const localIdentCases = [
+      {
+        input: '[hash:base64:8]',
+        expected: {
+          localIdentName: '[hash]',
+          localIdentHashDigest: 'base64url',
+          localIdentHashDigestLength: 8,
+        },
+      },
+      {
+        input: '[hash:hex:4]',
+        expected: {
+          localIdentName: '[hash]',
+          localIdentHashDigest: 'hex',
+          localIdentHashDigestLength: 4,
+        },
+      },
+      {
+        input: '[local]_[hash:8]',
+        expected: {
+          localIdentName: '[local]_[hash]',
+          localIdentHashDigest: 'base64url',
+          localIdentHashDigestLength: 8,
+        },
+      },
+      {
+        input: '[sha256:hash:hex:10]',
+        expected: {
+          localIdentName: '[hash]',
+          localIdentHashFunction: 'sha256',
+          localIdentHashDigest: 'hex',
+          localIdentHashDigestLength: 10,
+        },
+      },
+    ] as const;
+
+    for (const { input, expected } of localIdentCases) {
+      const rsbuild = await createRsbuild({
+        config: {
+          css: true,
+          output: {
+            cssModules: {
+              localIdentName: input,
+            },
+          },
+        },
+      });
+      await rsbuild.initConfigs();
+      expect(rsbuild.getNormalizedConfig().css).toMatchObject({
+        modules: expected,
+      });
+    }
+
+    const rsbuildPure = await createRsbuild({
+      config: {
+        css: true,
+        output: {
+          cssModules: {
+            namedExport: true,
+            mode: 'pure',
+          },
+        },
+      },
+    });
+    const [pureConfig] = await rsbuildPure.initConfigs();
+    expect(rsbuildPure.getNormalizedConfig().css).toMatchObject({
+      namedExports: true,
+      modules: {
+        pure: true,
+      },
+    });
+    expect(pureConfig.module?.parser?.['css/auto']).toMatchObject({
+      namedExports: true,
+      pure: true,
+    });
+    expect(pureConfig.module?.parser?.['css/module']).toMatchObject({
+      namedExports: true,
+      pure: true,
+    });
+
+    const rsbuildOverride = await createRsbuild({
+      config: {
+        css: {
+          namedExports: false,
+          exportsConvention: 'as-is',
+          modules: {
+            pure: false,
+            localIdentName: '[local]__[hash]',
+            localIdentHashDigest: 'base32',
+            localIdentHashDigestLength: 5,
+            localIdentHashFunction: 'md4',
+          },
+        },
+        output: {
+          cssModules: {
+            namedExport: true,
+            exportLocalsConvention: 'dashesOnly',
+            mode: 'pure',
+            localIdentName: '[sha256:hash:hex:10]',
+          },
+        },
+      },
+    });
+    const [overrideConfig] = await rsbuildOverride.initConfigs();
+    expect(rsbuildOverride.getNormalizedConfig().css).toMatchObject({
+      namedExports: false,
+      exportsConvention: 'as-is',
+      modules: {
+        pure: false,
+        localIdentName: '[local]__[hash]',
+        localIdentHashDigest: 'base32',
+        localIdentHashDigestLength: 5,
+        localIdentHashFunction: 'md4',
+      },
+    });
+    expect(overrideConfig.module?.generator?.['css/auto']).toMatchObject({
+      exportsConvention: 'as-is',
+      localIdentName: '[local]__[hash]',
+      localIdentHashDigest: 'base32',
+      localIdentHashDigestLength: 5,
+      localIdentHashFunction: 'md4',
+    });
+  });
+
+  it('should map output.cssModules.auto and mode to built-in CSS rule types and sub-rules', async () => {
+    const getMainAndUrl = async (
+      rsbuild: Awaited<ReturnType<typeof createRsbuild>>,
+    ) => {
+      const [rspackConfig] = await rsbuild.initConfigs();
+      const cssRules = matchRules(
+        rspackConfig,
+        'a.css',
+      ) as MatchedRuleWithOneOf[];
+      const oneOf = cssRules[0]?.oneOf;
+      const mainRule = oneOf?.find(
+        (rule) => !rule.resourceQuery && !rule.with,
+      ) as
+        | {
+            type?: string;
+            rules?: {
+              type?: string;
+              resource?: RegExp | ((path: string) => boolean);
+              parser?: Record<string, unknown>;
+            }[];
+            use?: { loader?: string; options?: Record<string, unknown> }[];
+          }
+        | undefined;
+      const urlRule = oneOf?.find(
+        (rule) => String(rule.resourceQuery) === String(/[?&]url(?:&|=|$)/),
+      ) as
+        | {
+            use?: { loader?: string; options?: Record<string, unknown> }[];
+          }
+        | undefined;
+      return { mainRule, urlRule };
+    };
+
+    const rsbuildFalse = await createRsbuild({
+      config: {
+        css: { exportsOnly: true },
+        output: { cssModules: { auto: false } },
+      },
+    });
+    const falseRules = await getMainAndUrl(rsbuildFalse);
+    expect(falseRules.mainRule?.type).toBe('css');
+    expect(falseRules.mainRule?.rules).toBeUndefined();
+    expect(falseRules.mainRule?.use?.[0]?.options).toEqual({
+      modules: { auto: false },
+    });
+    expect(falseRules.urlRule?.use?.[0]?.options).toMatchObject({
+      modules: { auto: false },
+    });
+
+    const autoFn = (resourcePath: string) => resourcePath.includes('.scoped.');
+    const rsbuildAutoFn = await createRsbuild({
+      config: {
+        css: true,
+        output: { cssModules: { auto: autoFn } },
+      },
+    });
+    const fnRules = await getMainAndUrl(rsbuildAutoFn);
+    expect(fnRules.mainRule?.type).toBe('css');
+    expect(fnRules.mainRule?.rules).toHaveLength(1);
+    expect(fnRules.mainRule?.rules?.[0]).toMatchObject({
+      type: 'css/module',
+      resource: expect.any(Function),
+    });
+    expect(
+      (fnRules.mainRule?.rules?.[0]?.resource as (path: string) => boolean)(
+        '/src/a.scoped.css',
+      ),
+    ).toBe(true);
+    expect(
+      (fnRules.mainRule?.rules?.[0]?.resource as (path: string) => boolean)(
+        '/src/a.css',
+      ),
+    ).toBe(false);
+
+    const rsbuildGlobal = await createRsbuild({
+      config: {
+        css: true,
+        output: { cssModules: { mode: 'global' } },
+      },
+    });
+    const globalRules = await getMainAndUrl(rsbuildGlobal);
+    expect(globalRules.mainRule?.type).toBe('css');
+    expect(globalRules.mainRule?.rules).toHaveLength(1);
+    expect(globalRules.mainRule?.rules?.[0]).toMatchObject({
+      type: 'css/global',
+      resource: expect.any(RegExp),
+    });
+  });
+
+  it('should warn once and fall back to local behavior for function mode when built-in CSS is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: true,
+        output: {
+          cssModules: {
+            mode: () => 'global',
+          },
+        },
+        environments: {
+          web: {},
+          node: { output: { target: 'node' } },
+        },
+      },
+    });
+    const warn = rstest
+      .spyOn(rsbuild.logger, 'warn')
+      .mockImplementation(() => {});
+
+    const [webConfig, nodeConfig] = await rsbuild.initConfigs();
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining(
+        'Function type `output.cssModules.mode` is not supported',
+      ),
+    );
+    for (const rspackConfig of [webConfig, nodeConfig]) {
+      const cssRules = matchRules(
+        rspackConfig,
+        'a.css',
+      ) as MatchedRuleWithOneOf[];
+      const mainRule = cssRules[0]?.oneOf?.find(
+        (rule) => !rule.resourceQuery && !rule.with,
+      );
+      expect(mainRule?.type).toBe('css/auto');
+      expect(mainRule?.rules).toBeUndefined();
+    }
+  });
+
+  it('should warn once for unsupported mode: icss and exportGlobals when built-in CSS is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: true,
+        output: {
+          cssModules: {
+            mode: 'icss',
+            exportGlobals: true,
+          },
+        },
+        environments: {
+          web: {},
+          node: { output: { target: 'node' } },
+        },
+      },
+    });
+    const warn = rstest
+      .spyOn(rsbuild.logger, 'warn')
+      .mockImplementation(() => {});
+
+    await rsbuild.initConfigs();
+
+    expect(warn).toHaveBeenCalledTimes(2);
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining(
+        "`output.cssModules.mode: 'icss'` is not supported",
+      ),
+    );
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining(
+        '`output.cssModules.exportGlobals` is not supported',
+      ),
+    );
   });
 
   it('should support multi-environment overrides for top-level css', async () => {

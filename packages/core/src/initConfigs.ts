@@ -290,7 +290,7 @@ export async function initRsbuildConfig({
     const normalizedEnvironmentConfig = {
       ...restEnvironmentConfig,
       ...(css !== undefined
-        ? { css: normalizeCssConfig(css, environmentConfig.output.target) }
+        ? { css: normalizeCssConfig(css, environmentConfig.output) }
         : {}),
       dev: {
         ...normalizedBaseConfig.dev,
@@ -338,7 +338,7 @@ export async function initRsbuildConfig({
     ...restNormalizedBaseConfig,
     ...(baseCss !== undefined
       ? {
-          css: normalizeCssConfig(baseCss, normalizedBaseConfig.output.target),
+          css: normalizeCssConfig(baseCss, normalizedBaseConfig.output),
         }
       : {}),
     environments,

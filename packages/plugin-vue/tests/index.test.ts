@@ -88,6 +88,14 @@ describe('plugin-vue', () => {
     expect(vueRule.use?.[0]?.options?.experimentalInlineMatchResource).toBe(
       true,
     );
+
+    const cssRules = matchRules(config[0], 'a.css') as {
+      oneOf?: { type?: string; resourceQuery?: unknown; with?: unknown }[];
+    }[];
+    expect(
+      cssRules[0]?.oneOf?.find((rule) => !rule.resourceQuery && !rule.with)
+        ?.type,
+    ).toBe('css/auto');
   });
 
   it('should disable experimentalInlineMatchResource for node target in legacy CSS mode', async () => {

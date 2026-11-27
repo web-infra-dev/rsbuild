@@ -1,4 +1,4 @@
-import { expect, isBuiltinCss, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { findFiles, getFileContent } from '@rstackjs/test-utils';
 
 test('should not emit CSS files when build node target', async ({ build }) => {
@@ -23,21 +23,12 @@ test('should allow to emit CSS with output.emitCss when build node target', asyn
   build,
 }) => {
   const rsbuild = await build({
-    config: isBuiltinCss
-      ? {
-          css: {
-            exportsOnly: false,
-          },
-          output: {
-            target: 'node',
-          },
-        }
-      : {
-          output: {
-            target: 'node',
-            emitCss: true,
-          },
-        },
+    config: {
+      output: {
+        target: 'node',
+        emitCss: true,
+      },
+    },
   });
   const files = rsbuild.getDistFiles();
 
@@ -73,21 +64,12 @@ test('should allow to emit CSS with output.emitCss when build web-worker target'
   build,
 }) => {
   const rsbuild = await build({
-    config: isBuiltinCss
-      ? {
-          css: {
-            exportsOnly: false,
-          },
-          output: {
-            target: 'web-worker',
-          },
-        }
-      : {
-          output: {
-            target: 'web-worker',
-            emitCss: true,
-          },
-        },
+    config: {
+      output: {
+        target: 'web-worker',
+        emitCss: true,
+      },
+    },
   });
   const files = rsbuild.getDistFiles();
 
@@ -103,21 +85,12 @@ test('should allow to disable CSS emit with output.emitCss when build web target
   build,
 }) => {
   const rsbuild = await build({
-    config: isBuiltinCss
-      ? {
-          css: {
-            exportsOnly: true,
-          },
-          output: {
-            target: 'web',
-          },
-        }
-      : {
-          output: {
-            target: 'web',
-            emitCss: false,
-          },
-        },
+    config: {
+      output: {
+        target: 'web',
+        emitCss: false,
+      },
+    },
   });
   const files = rsbuild.getDistFiles();
 

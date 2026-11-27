@@ -1275,6 +1275,12 @@ export type CSSModulesConfig = {
    * @default false
    */
   function?: boolean;
+  /**
+   * Whether to enable strict pure mode in CSS Modules, requiring every selector
+   * to contain at least one local class or ID selector.
+   * @default false
+   */
+  pure?: boolean;
 };
 
 export interface CSSConfig {
@@ -2392,7 +2398,9 @@ export type AllowedEnvironmentDevKeys =
 export interface EnvironmentConfig {
   /**
    * Enable and configure Rspack's built-in CSS support.
-   * When enabled (`true` or object), `output.injectStyles` and `output.emitCss` are ignored.
+   * When enabled (`true` or object), compatible options under `output.cssModules`,
+   * `output.emitCss`, and `output.injectStyles` are automatically mapped unless
+   * explicitly configured under `css`.
    * @default undefined
    */
   css?: boolean | CSSConfig;

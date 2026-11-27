@@ -209,4 +209,35 @@ describe('plugin-less', () => {
       }),
     ]);
   });
+
+  it('should copy nested CSS Modules rules onto the less rule when css is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: true,
+        output: {
+          cssModules: {
+            mode: 'global',
+          },
+        },
+        plugins: [pluginLess()],
+      },
+    });
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+    const lessRules = matchRules(
+      rspackConfig,
+      'a.less',
+    ) as MatchedRuleWithOneOf[];
+    const mainRule = lessRules[0]?.oneOf?.find(
+      (rule) => rule.type === 'css' && !rule.resourceQuery && !rule.with,
+    ) as { rules?: { type?: string; resource?: RegExp }[] } | undefined;
+
+    expect(mainRule).toBeDefined();
+    expect(mainRule?.rules).toEqual([
+      expect.objectContaining({
+        type: 'css/global',
+        resource: expect.any(RegExp),
+      }),
+    ]);
+  });
 });

@@ -1,6 +1,6 @@
 import { type BuildResult, expect, isBuiltinCss, test } from '@e2e/helper';
 import { getFileContent } from '@rstackjs/test-utils';
-import type { CSSModulesLocalsConvention, Rspack } from '@rsbuild/core';
+import type { CSSModulesLocalsConvention } from '@rsbuild/core';
 
 declare global {
   interface Window {
@@ -8,33 +8,15 @@ declare global {
   }
 }
 
-const conventionMap: Record<
-  CSSModulesLocalsConvention,
-  Rspack.CssGeneratorExportsConvention
-> = {
-  camelCaseOnly: 'camel-case-only',
-  camelCase: 'camel-case',
-  dashes: 'dashes',
-  dashesOnly: 'dashes-only',
-  asIs: 'as-is',
-};
-
 const getLocalsConventionConfig = (
   exportLocalsConvention: CSSModulesLocalsConvention,
-) =>
-  isBuiltinCss
-    ? {
-        css: {
-          exportsConvention: conventionMap[exportLocalsConvention],
-        },
-      }
-    : {
-        output: {
-          cssModules: {
-            exportLocalsConvention,
-          },
-        },
-      };
+) => ({
+  output: {
+    cssModules: {
+      exportLocalsConvention,
+    },
+  },
+});
 
 const expectCSSContext = (rsbuild: BuildResult) => {
   const files = rsbuild.getDistFiles();

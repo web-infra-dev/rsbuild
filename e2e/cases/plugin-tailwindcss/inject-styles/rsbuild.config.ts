@@ -5,8 +5,8 @@ export default defineConfig({
   html: {
     template: './src/index.html',
   },
-  ...(process.env.RSBUILD_E2E_CSS === 'builtin'
-    ? { css: { exportType: 'style' } }
-    : { output: { injectStyles: true } }),
+  output: {
+    injectStyles: true,
+  },
   plugins: [pluginTailwindcss()],
 });

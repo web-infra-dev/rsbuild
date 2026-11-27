@@ -12,6 +12,7 @@ import {
   URL_QUERY_REGEX,
 } from '../constants';
 import { castArray, color, getFilename, isPlainObject } from '../helpers';
+import { CSS_MODULE_REGEX } from '../helpers/css';
 import { getCompiledPath } from '../helpers/path';
 import { findWorkspaceRoot } from '../helpers/workspace';
 import type {
@@ -330,7 +331,7 @@ const applyBuiltinCssConfig = ({
     namedExports: cssConfig.namedExports,
   };
 
-  const cssModuleParserOptions: Rspack.CssAutoOrModuleParserOptions = {
+  const cssGlobalParserOptions: Rspack.CssModuleParserOptions = {
     ...exportTypeOption,
     namedExports: cssConfig.namedExports,
     animation: cssConfig.modules.animation,
@@ -339,6 +340,11 @@ const applyBuiltinCssConfig = ({
     container: cssConfig.modules.container,
     grid: cssConfig.modules.grid,
     function: cssConfig.modules.function,
+  };
+
+  const cssModuleParserOptions: Rspack.CssAutoOrModuleParserOptions = {
+    ...cssGlobalParserOptions,
+    pure: cssConfig.modules.pure,
   };
 
   const cssGeneratorOptions: Rspack.CssGeneratorOptions = {
@@ -362,7 +368,7 @@ const applyBuiltinCssConfig = ({
   chain.module.parser.merge({
     css: cssParserOptions,
     'css/auto': cssModuleParserOptions,
-    'css/global': cssModuleParserOptions,
+    'css/global': cssGlobalParserOptions,
     'css/module': cssModuleParserOptions,
   });
 
@@ -409,8 +415,9 @@ export const pluginCss = (): RsbuildPlugin => ({
   name: 'rsbuild:css',
   setup(api) {
     const postcssrcCache: PostcssrcCache = new Map();
-    let hasWarnedInjectStyles = false;
-    let hasWarnedEmitCss = false;
+    let hasWarnedIcssMode = false;
+    let hasWarnedModeFn = false;
+    let hasWarnedExportGlobals = false;
 
     api.modifyBundlerChain({
       order: 'pre',
@@ -423,17 +430,30 @@ export const pluginCss = (): RsbuildPlugin => ({
         const builtinCssConfig = config.css || undefined;
 
         if (builtinCssConfig) {
-          if (!hasWarnedInjectStyles && config.output.injectStyles) {
-            hasWarnedInjectStyles = true;
+          if (
+            !hasWarnedExportGlobals &&
+            config.output.cssModules.exportGlobals
+          ) {
+            hasWarnedExportGlobals = true;
             api.logger.warn(
-              `${color.dim('[rsbuild:css]')} \`output.injectStyles\` is ignored when built-in CSS is enabled. Use \`css.exportType: 'style'\` instead.`,
+              `${color.dim('[rsbuild:css]')} \`output.cssModules.exportGlobals\` is not supported when built-in CSS is enabled.`,
             );
           }
 
-          if (!hasWarnedEmitCss && config.output.emitCss !== undefined) {
-            hasWarnedEmitCss = true;
+          if (!hasWarnedIcssMode && config.output.cssModules.mode === 'icss') {
+            hasWarnedIcssMode = true;
             api.logger.warn(
-              `${color.dim('[rsbuild:css]')} \`output.emitCss\` is ignored when built-in CSS is enabled. Use \`css.exportsOnly\` instead.`,
+              `${color.dim('[rsbuild:css]')} \`output.cssModules.mode: 'icss'\` is not supported when built-in CSS is enabled.`,
+            );
+          }
+
+          if (
+            !hasWarnedModeFn &&
+            typeof config.output.cssModules.mode === 'function'
+          ) {
+            hasWarnedModeFn = true;
+            api.logger.warn(
+              `${color.dim('[rsbuild:css]')} Function type \`output.cssModules.mode\` is not supported when built-in CSS is enabled.`,
             );
           }
         }
@@ -486,10 +506,35 @@ export const pluginCss = (): RsbuildPlugin => ({
 
           urlRule.resolve.preferRelative(true);
 
-          mainRule
-            .type('css/auto')
-            .sideEffects(true)
-            .resolve.preferRelative(true);
+          mainRule.sideEffects(true).resolve.preferRelative(true);
+
+          const { auto, mode } = config.output.cssModules;
+
+          if (auto === false) {
+            mainRule.type('css');
+          } else if (auto === true) {
+            if (mode === 'global') {
+              mainRule.type('css');
+              mainRule
+                .rule('css-modules')
+                .resource(CSS_MODULE_REGEX)
+                .type('css/global');
+            } else {
+              mainRule.type('css/auto');
+            }
+          } else {
+            mainRule.type('css');
+            const autoCondition =
+              typeof auto === 'function'
+                ? (resourcePath: string) => Boolean(auto(resourcePath, '', ''))
+                : auto;
+            if (autoCondition) {
+              mainRule
+                .rule('css-modules')
+                .resource(autoCondition)
+                .type(mode === 'global' ? 'css/global' : 'css/module');
+            }
+          }
 
           if (!emitCss) {
             // Skip reading and transforming non-CSS-Modules stylesheets in non-emitting
@@ -498,7 +543,7 @@ export const pluginCss = (): RsbuildPlugin => ({
               .parser({ url: false })
               .use(CHAIN_ID.USE.IGNORE_CSS)
               .loader(path.join(LOADER_PATH, 'ignoreCssLoader.mjs'))
-              .options({ modules: { auto: true } });
+              .options({ modules: { auto } });
           }
 
           inlineRule
@@ -696,7 +741,7 @@ export const pluginCss = (): RsbuildPlugin => ({
           urlRule.use(CHAIN_ID.USE.CSS_URL).options({
             builtinCss: true,
             filename: cssUrlFilenameOption,
-            modules: { auto: true },
+            modules: { auto: config.output.cssModules.auto },
             ...(cssUrlMinimizers ? { minimizers: cssUrlMinimizers } : {}),
           });
         } else {

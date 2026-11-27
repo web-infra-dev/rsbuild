@@ -298,6 +298,28 @@ export const pluginLess = (
           rule.set('generator', deepmerge({}, cssRuleGenerator));
         }
 
+        for (const [subRuleId, subRule] of Object.entries(
+          cssBranchRule.rules.entries() ?? {},
+        )) {
+          const targetSubRule = rule.rule(subRuleId);
+          const subResource = subRule.get('resource');
+          if (subResource) {
+            targetSubRule.resource(subResource);
+          }
+          const subType = subRule.get('type');
+          if (subType) {
+            targetSubRule.type(subType);
+          }
+          const subParser = subRule.get('parser');
+          if (subParser) {
+            targetSubRule.parser(deepmerge({}, subParser));
+          }
+          const subGenerator = subRule.get('generator');
+          if (subGenerator) {
+            targetSubRule.set('generator', deepmerge({}, subGenerator));
+          }
+        }
+
         for (const id of Object.keys(cssBranchRule.uses.entries() ?? {})) {
           const loader = cssBranchRule.use<CSSLoaderOptions>(id);
           const cssLoaderPath = loader.get('loader');

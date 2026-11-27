@@ -42,3 +42,23 @@ test.skipIf(isBuiltinCss)(
     expect(cssContent).toContain('.title{color:red}');
   },
 );
+
+test('should allow `.module.css?url` when output.cssModules.auto is false', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      output: {
+        filenameHash: false,
+        cssModules: {
+          auto: false,
+        },
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+  const jsContent = getFileContent(files, 'index.js');
+  const cssContent = getFileContent(files, 'style.module.css');
+  expect(jsContent).toContain('static/css/style.module.css');
+  expect(cssContent).toContain('.title{color:red}');
+});

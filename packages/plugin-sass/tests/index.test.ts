@@ -184,4 +184,39 @@ describe('plugin-sass', () => {
       }),
     ]);
   });
+
+  it('should copy nested CSS Modules rules onto the sass rule when css is enabled', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        css: true,
+        output: {
+          cssModules: {
+            auto: (path) => path.includes('.scoped.'),
+          },
+        },
+        plugins: [pluginSass()],
+      },
+    });
+
+    const [rspackConfig] = await rsbuild.initConfigs();
+    const sassRules = matchRules(
+      rspackConfig,
+      'a.scss',
+    ) as MatchedRuleWithOneOf[];
+    const mainRule = sassRules[0]?.oneOf?.find(
+      (rule) => rule.type === 'css' && !rule.resourceQuery && !rule.with,
+    ) as
+      | { rules?: { type?: string; resource?: (path: string) => boolean }[] }
+      | undefined;
+
+    expect(mainRule).toBeDefined();
+    expect(mainRule?.rules).toEqual([
+      expect.objectContaining({
+        type: 'css/module',
+        resource: expect.any(Function),
+      }),
+    ]);
+    expect(mainRule?.rules?.[0]?.resource?.('a.scoped.scss')).toBe(true);
+    expect(mainRule?.rules?.[0]?.resource?.('a.scss')).toBe(false);
+  });
 });
