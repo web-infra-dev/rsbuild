@@ -2354,7 +2354,7 @@ export type LogLevel = 'info' | 'warn' | 'error' | 'silent';
  */
 export interface RsbuildConfig extends EnvironmentConfig {
   /**
-   * Enable experimental Rspack built-in CSS for extracted web stylesheets.
+   * Enable experimental Rspack built-in CSS.
    * @default false
    */
   css?: boolean;
