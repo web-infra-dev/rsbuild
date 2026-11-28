@@ -37,6 +37,12 @@ describe('normalizeCssLoaderOptions', () => {
 });
 
 describe('plugin-css', () => {
+  it('should use the native CSS rule when css is enabled', async () => {
+    const rsbuild = await createRsbuild({ config: { css: true } });
+    const [config] = await rsbuild.initConfigs();
+    expect(matchRules(config, 'style.css')).toMatchSnapshot();
+  });
+
   it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createRsbuild({
       config: {
