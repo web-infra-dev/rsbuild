@@ -20,6 +20,7 @@ const OVERRIDE_PATHS = new Set([
   'performance.printFileSize.total',
   'server.open',
   'server.compress.filter',
+  'server.cors.origin',
   'server.printUrls',
   'resolve.extensions',
   'resolve.conditionNames',

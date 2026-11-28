@@ -111,6 +111,72 @@ test('should allow to configure CORS', async ({ request, buildPreview }) => {
   );
 });
 
+test('should support custom function for `server.cors.origin`', async ({
+  request,
+  dev,
+}) => {
+  const rsbuild = await dev({
+    config: {
+      server: {
+        cors: {
+          origin(origin, callback) {
+            callback(null, origin === 'https://example.com');
+          },
+        },
+      },
+    },
+  });
+
+  const allowedRes = await request.get(`http://localhost:${rsbuild.port}`, {
+    headers: {
+      origin: 'https://example.com',
+    },
+  });
+  expect(allowedRes.headers()['access-control-allow-origin']).toEqual(
+    'https://example.com',
+  );
+
+  const deniedRes = await request.get(`http://localhost:${rsbuild.port}`, {
+    headers: {
+      origin: 'https://disallowed.example',
+    },
+  });
+  expect(deniedRes.headers()).not.toHaveProperty('access-control-allow-origin');
+});
+
+test('should replace default origins when `server.cors.origin` is an array', async ({
+  request,
+  dev,
+}) => {
+  const rsbuild = await dev({
+    config: {
+      server: {
+        cors: {
+          origin: ['https://example.com'],
+        },
+      },
+    },
+  });
+
+  const allowedRes = await request.get(`http://localhost:${rsbuild.port}`, {
+    headers: {
+      origin: 'https://example.com',
+    },
+  });
+  expect(allowedRes.headers()['access-control-allow-origin']).toEqual(
+    'https://example.com',
+  );
+
+  const localhostRes = await request.get(`http://localhost:${rsbuild.port}`, {
+    headers: {
+      origin: 'http://localhost:3000',
+    },
+  });
+  expect(localhostRes.headers()).not.toHaveProperty(
+    'access-control-allow-origin',
+  );
+});
+
 test('should override `server.cors` for dev server when `server.headers` is set', async ({
   request,
   dev,
