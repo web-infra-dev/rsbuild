@@ -19,8 +19,6 @@ export const pluginBuiltinCss = (): RsbuildPlugin => ({
         const { config, browserslist } = environment;
         if (!config.css) return;
 
-        // TODO: Before release, review unsupported CSS features and decide
-        // which need diagnostics (e.g. SSR, style injection, ?inline and ?url).
         const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
         cssRule.test(CSS_REGEX).dependency({ not: 'url' });
         cssRule
