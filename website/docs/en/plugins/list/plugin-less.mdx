@@ -131,6 +131,21 @@ pluginLess({
 
 > This feature is based on Rspack's parallel loader. Options transferred to worker threads must comply with the [HTML structured clone algorithm](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist). Otherwise, transmission will fail. For example, functions cannot be passed as options. See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
 
+### cache
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Whether to cache Less compilation results using Rspack's loader cache. Requires enabling [performance.buildCache](/config/performance/build-cache) and Rspack's experimental [experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) option.
+
+```ts
+pluginLess({
+  cache: true,
+});
+```
+
+> This feature is based on Rspack's experimental loader cache. See [Rspack - rules[].use](https://rspack.rs/config/module-rules#rulesuse) and [Rspack - experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) for more details.
+
 ## Modifying Less version
 
 In some scenarios, if you need to use a specific version of Less instead of the built-in Less v4 in Rsbuild, you can install the desired Less version in your project and set it up using the `implementation` option of the `less-loader`.

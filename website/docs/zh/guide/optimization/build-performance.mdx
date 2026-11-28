@@ -26,6 +26,12 @@ Rsbuild 默认对构建性能进行了充分优化，但是随着使用场景变
 
 Rsbuild 提供了 [performance.buildCache](/config/performance/build-cache) 配置，开启后可以显著提升重构建的速度。
 
+在使用 Rspack 的实验性 [experiments.newCache](https://rspack.rs/zh/config/experiments#experimentsnewcache) 时，以下插件还支持实验性的 `cache` 选项来缓存 loader 结果：
+
+- [@rsbuild/plugin-babel - cache](/plugins/list/plugin-babel#cache)：缓存 Babel 转换结果。
+- [@rsbuild/plugin-less - cache](/plugins/list/plugin-less#cache)：缓存 Less 编译结果。
+- [@rsbuild/plugin-svgr - cache](/plugins/list/plugin-svgr#cache)：缓存 SVGR 转换结果。
+
 ### React Compiler
 
 如果项目中使用了 React Compiler，建议通过 [Rsbuild 内置的 Rust 版本的 React Compiler](/plugins/list/plugin-react#reactcompiler) 来启用，而不是通过 Babel 接入 React Compiler，从而减少 Babel 带来的性能开销。

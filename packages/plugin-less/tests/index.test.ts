@@ -111,4 +111,40 @@ describe('plugin-less', () => {
     expect(matchRules(rspackConfigs[0], 'a.less').length).toBe(1);
     expect(matchRules(rspackConfigs[0], 'b.less').length).toBe(2);
   });
+
+  it('should configure Rspack loader cache when `cache` is true', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [
+          pluginLess({
+            cache: true,
+          }),
+        ],
+      },
+    });
+
+    const rspackConfigs = await rsbuild.initConfigs();
+    const [lessRule] = matchRules(rspackConfigs[0], 'a.less') as Array<{
+      oneOf: Array<{
+        use?: Array<{ loader?: string; cache?: boolean }>;
+      }>;
+    }>;
+
+    const usesWithUse = lessRule.oneOf.filter((item) => item.use?.length);
+    expect(usesWithUse).toHaveLength(3);
+
+    for (const branch of usesWithUse) {
+      const uses = branch.use ?? [];
+      const lessUses = uses.filter((use) =>
+        use.loader?.includes('less-loader'),
+      );
+      const otherUses = uses.filter(
+        (use) => !use.loader?.includes('less-loader'),
+      );
+
+      expect(lessUses).toHaveLength(1);
+      expect(lessUses[0].cache).toBe(true);
+      expect(otherUses.every((use) => use.cache === undefined)).toBe(true);
+    }
+  });
 });

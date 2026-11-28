@@ -46,6 +46,8 @@ export default {
 };
 ```
 
+You can also enable Rspack's experimental loader cache via the [`cache`](#cache) option. When enabled, `babel-loader`'s built-in cache (including `cacheDirectory`, `cacheCompression`, and `cacheIdentifier` in `babelLoaderOptions`) will no longer take effect and caching will be handled by Rspack instead.
+
 ## Options
 
 ### babelLoaderOptions
@@ -290,6 +292,25 @@ pluginBabel({
 ```
 
 > This feature is based on Rspack's parallel loader. Options transferred to worker threads must comply with the [HTML structured clone algorithm](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist). Otherwise, transmission will fail. For example, functions cannot be passed as options. See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
+
+### cache
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Whether to cache Babel transformation results using Rspack's loader cache. Requires enabling [performance.buildCache](/config/performance/build-cache) and Rspack's experimental [experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) option.
+
+```ts
+pluginBabel({
+  cache: true,
+});
+```
+
+:::tip
+When `cache: true` is enabled, `babel-loader`'s built-in cache will no longer take effect (`cacheDirectory`, `cacheCompression`, and `cacheIdentifier` in `babelLoaderOptions` will be ignored), and caching will be handled by Rspack instead.
+:::
+
+> This feature is based on Rspack's experimental loader cache. See [Rspack - rules[].use](https://rspack.rs/config/module-rules#rulesuse) and [Rspack - experiments.newCache](https://rspack.rs/config/experiments#experimentsnewcache) for more details.
 
 ## Configure multiple plugins
 

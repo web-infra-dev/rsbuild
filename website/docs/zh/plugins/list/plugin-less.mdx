@@ -131,6 +131,21 @@ pluginLess({
 
 > 该功能基于 Rspack 的 parallel loader 实现。传递给 worker 线程的选项必须符合 [HTML 结构化克隆算法](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist) 的要求，否则会传输失败。例如，不能将函数作为选项传递。详见 [Rspack - Rule.use.parallel](https://rspack.rs/zh/config/module-rules#rulesuseparallel)。
 
+### cache
+
+- **类型：** `boolean`
+- **默认值：** `false`
+
+是否使用 Rspack 的 loader 缓存来缓存 Less 编译结果。需要先启用 [performance.buildCache](/config/performance/build-cache) 和 Rspack 的实验性 [experiments.newCache](https://rspack.rs/zh/config/experiments#experimentsnewcache) 选项。
+
+```ts
+pluginLess({
+  cache: true,
+});
+```
+
+> 该功能基于 Rspack 的实验性 loader 缓存实现。详见 [Rspack - rules[].use](https://rspack.rs/zh/config/module-rules#rulesuse) 和 [Rspack - experiments.newCache](https://rspack.rs/zh/config/experiments#experimentsnewcache)。
+
 ## 修改 Less 版本
 
 在某些场景下，如果你需要使用特定的 Less 版本，而不是使用 Rsbuild 内置的 Less v4，可以在项目中安装需要使用的 Less 版本，并通过 `less-loader` 的 `implementation` 选项设置。

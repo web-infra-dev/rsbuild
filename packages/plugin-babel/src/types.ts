@@ -135,4 +135,17 @@ export type PluginBabelOptions = {
    * @default false
    */
   parallel?: boolean;
+  /**
+   * Whether to cache Babel transformation results using Rspack's loader cache.
+   * Requires enabling `performance.buildCache` and Rspack's experimental
+   * `experiments.newCache` option.
+   *
+   * When enabled, `babel-loader`'s built-in cache (`cacheDirectory`,
+   * `cacheCompression`, and `cacheIdentifier`) will no longer take effect so
+   * caching is handled by Rspack.
+   * @see https://rspack.rs/config/experiments#experimentsnewcache
+   * @experimental
+   * @default false
+   */
+  cache?: boolean;
 };

@@ -50,6 +50,16 @@ export type PluginSvgrOptions = {
   parallel?: boolean;
 
   /**
+   * Whether to cache SVGR transformation results using Rspack's loader cache.
+   * Requires enabling `performance.buildCache` and Rspack's experimental
+   * `experiments.newCache` option.
+   * @see https://rspack.rs/config/experiments#experimentsnewcache
+   * @experimental
+   * @default false
+   */
+  cache?: boolean;
+
+  /**
    * Exclude specific SVG files from SVGR transformation.
    */
   exclude?: Rspack.RuleSetCondition;
@@ -138,7 +148,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
   setup(api) {
     assertCoreVersion(api.context.version);
-    const { parallel = false } = options;
+    const { parallel = false, cache = false } = options;
 
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
@@ -217,6 +227,9 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       if (parallel) {
         svgReactUse.parallel(true);
       }
+      if (cache) {
+        svgReactUse.set('cache', true);
+      }
 
       // SVG in JS files
       const { mixedImport = false } = options;
@@ -250,6 +263,9 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
         if (parallel) {
           svgUse.parallel(true);
+        }
+        if (cache) {
+          svgUse.set('cache', true);
         }
 
         /**
