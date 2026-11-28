@@ -31,37 +31,6 @@ const getDevtool = (config: NormalizedEnvironmentConfig): Rspack.DevTool => {
   return sourceMap.js;
 };
 
-// Rspack's non-eval source-map devtools match both JS and CSS assets.
-// Apply the same options to JS assets when native CSS maps are disabled.
-export class JavaScriptSourceMapPlugin {
-  apply(compiler: Rspack.Compiler): void {
-    compiler.hooks.afterEnvironment.tap('JavaScriptSourceMapPlugin', () => {
-      const { devtool, output } = compiler.options;
-      if (!devtool || devtool.startsWith('eval')) return;
-
-      const cheap = devtool.includes('cheap');
-      compiler.options.devtool = false;
-      new compiler.webpack.SourceMapDevToolPlugin({
-        test: /\.[cm]?js($|\?)/i,
-        filename: devtool.includes('inline') ? null : output.sourceMapFilename,
-        append: devtool.includes('hidden') ? false : undefined,
-        module: !cheap || devtool.includes('module'),
-        columns: !cheap,
-        noSources: devtool.includes('nosources'),
-        debugIds: devtool.includes('debugids'),
-        moduleFilenameTemplate: output.devtoolModuleFilenameTemplate,
-        fallbackModuleFilenameTemplate:
-          output.devtoolFallbackModuleFilenameTemplate,
-        namespace: output.devtoolNamespace,
-      }).apply(compiler);
-      // Loaders can read devtool after Rspack finishes installing its plugins.
-      compiler.hooks.afterPlugins.tap('JavaScriptSourceMapPlugin', () => {
-        compiler.options.devtool = devtool;
-      });
-    });
-  }
-}
-
 export const pluginSourceMap = (): RsbuildPlugin => ({
   name: 'rsbuild:source-map',
 

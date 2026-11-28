@@ -28,7 +28,6 @@ import type {
   ToolsPostCSSContext,
 } from '../types';
 import { parseMinifyOptions } from './minimize';
-import { JavaScriptSourceMapPlugin } from './sourceMap';
 
 const getCSSOutputFilename = (
   distPath: string,
@@ -590,9 +589,6 @@ export const pluginCss = (): RsbuildPlugin => ({
 
         if (useBuiltinCSS) {
           chain.output.set('cssFilename', filename);
-          if (!getCSSSourceMap(config)) {
-            chain.plugin('source-map-js-only').use(JavaScriptSourceMapPlugin);
-          }
           return;
         }
 
