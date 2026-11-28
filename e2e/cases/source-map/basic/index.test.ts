@@ -185,3 +185,20 @@ test('should generate source maps only for CSS files', async ({ build }) => {
     version: 3,
   });
 });
+
+test('should emit only JavaScript source maps when native CSS maps are disabled', async ({
+  build,
+}) => {
+  const result = await build({
+    config: {
+      css: true,
+      output: {
+        sourceMap: { js: 'source-map', css: false },
+      },
+    },
+  });
+  const files = result.getDistFiles({ sourceMaps: true });
+  expect(findFiles(files, '.js.map').length).toBeGreaterThan(0);
+  expect(findFiles(files, '.css.map')).toHaveLength(0);
+  expect(getFileContent(files, 'index.css')).not.toContain('sourceMappingURL');
+});
