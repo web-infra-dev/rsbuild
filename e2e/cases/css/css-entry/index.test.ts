@@ -33,8 +33,14 @@ test.for([
       config: {
         css,
         environments: {
-          native: { css: native, output: { distPath: 'dist/native' } },
-          legacy: { css: legacy, output: { distPath: 'dist/legacy' } },
+          native: {
+            css: native,
+            output: { distPath: 'dist/native' },
+          },
+          legacy: {
+            css: legacy,
+            output: { distPath: 'dist/legacy' },
+          },
         },
       },
     });
