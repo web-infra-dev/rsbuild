@@ -88,7 +88,7 @@ const applyDefaultMiddlewares = async ({
 }): Promise<{
   onUpgrade: UpgradeEvent;
 }> => {
-  const upgradeEvents: UpgradeEvent[] = [];
+  let proxyUpgrade: UpgradeEvent | undefined;
   const { server } = config;
   const { logger } = context;
   const servedEnvironments = context.environmentList.filter((environment) =>
@@ -124,7 +124,7 @@ const applyDefaultMiddlewares = async ({
   if (server.proxy) {
     const { middlewares: proxyMiddlewares, upgrade } =
       await createProxyMiddleware(server.proxy, logger);
-    upgradeEvents.push(upgrade);
+    proxyUpgrade = upgrade;
 
     for (const middleware of proxyMiddlewares) {
       middlewares.use(middleware);
@@ -202,9 +202,6 @@ const applyDefaultMiddlewares = async ({
 
   if (buildManager) {
     middlewares.use(buildManager.assetsMiddleware);
-
-    // subscribe upgrade event to handle websocket
-    upgradeEvents.push(buildManager.socketServer.upgrade);
 
     middlewares.use(function hotUpdateJsonFallbackMiddleware(req, res, next) {
       const url = req.url;
@@ -299,8 +296,9 @@ const applyDefaultMiddlewares = async ({
 
   return {
     onUpgrade: (...args) => {
-      for (const cb of upgradeEvents) {
-        cb(...args);
+      // Internal HMR sockets belong to the dev server, not the proxy.
+      if (!buildManager?.socketServer.upgrade(...args)) {
+        proxyUpgrade?.(...args);
       }
     },
   };

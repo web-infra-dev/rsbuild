@@ -222,9 +222,9 @@ export class SocketServer {
     req: IncomingMessage,
     socket: Socket,
     head: Buffer,
-  ): void => {
+  ): boolean => {
     if (!this.wsServer.shouldHandle(req)) {
-      return;
+      return false;
     }
 
     const query = parseQueryString(req);
@@ -235,12 +235,13 @@ export class SocketServer {
     // If the request does not contain a valid token, reject the request.
     if (!hasValidToken) {
       socket.destroy();
-      return;
+      return true;
     }
 
     this.wsServer.handleUpgrade(req, socket, head, (connection) => {
       this.wsServer.emit('connection', connection, req);
     });
+    return true;
   };
 
   // detect and close broken connections
