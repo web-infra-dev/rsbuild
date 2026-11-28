@@ -22,3 +22,27 @@ test.for([false, true])(
     );
   },
 );
+
+test.for([
+  { css: true, native: undefined, legacy: false },
+  { css: undefined, native: true, legacy: undefined },
+])(
+  'should respect environment CSS options with root css=$css',
+  async ({ css, native, legacy }, { build }) => {
+    const rsbuild = await build({
+      config: {
+        css,
+        environments: {
+          native: { css: native, output: { distPath: 'dist/native' } },
+          legacy: { css: legacy, output: { distPath: 'dist/legacy' } },
+        },
+      },
+    });
+
+    const files = rsbuild.getDistFiles();
+    expect(findFiles(files, '.css')).toHaveLength(2);
+    expect(findFiles(files, '.js')).toEqual([
+      expect.stringContaining('/dist/legacy/static/js/index.js'),
+    ]);
+  },
+);
