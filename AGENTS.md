@@ -4,5 +4,6 @@
 - Keep shared dependency versions in `pnpm-workspace.yaml` catalogs.
 - Run `pnpm build` once before unit or e2e tests, including focused runs; tests depend on built workspace packages.
 - Prefer e2e coverage for build/dev behavior; use unit tests for single-function behavior.
+- Before editing files under `e2e/`, read [e2e/AGENTS.md](./e2e/AGENTS.md).
 - Keep tests minimal and focused on observable behavior; avoid redundant coverage, implementation details, and unnecessary complexity.
 - Update all affected unit test snapshots, not just a subset.
