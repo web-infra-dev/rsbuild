@@ -2297,6 +2297,11 @@ export type AllowedEnvironmentDevKeys =
  */
 export interface EnvironmentConfig {
   /**
+   * Enable experimental Rspack built-in CSS.
+   * @default false
+   */
+  css?: boolean;
+  /**
    * Configure public directories and build output serving for this environment.
    * Other server options are shared across environments.
    */
@@ -2353,11 +2358,6 @@ export type LogLevel = 'info' | 'warn' | 'error' | 'silent';
  * The Rsbuild config.
  */
 export interface RsbuildConfig extends EnvironmentConfig {
-  /**
-   * Enable experimental Rspack built-in CSS.
-   * @default false
-   */
-  css?: boolean;
   /**
    * Specify the build mode for Rsbuild, as each mode has different default behavior and optimizations.
    * @default Depends on `process.env.NODE_ENV`:
