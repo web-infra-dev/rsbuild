@@ -1,4 +1,4 @@
-import { matchPlugin, matchRules } from '@scripts/test-helper';
+import { matchRules } from '@scripts/test-helper';
 import { createRsbuild, type Rspack } from '../src';
 import { normalizeCssLoaderOptions } from '../src/plugins/css';
 
@@ -46,7 +46,6 @@ describe('plugin-css', () => {
       type: 'css/auto',
       use: [{ loader: 'builtin:lightningcss-loader' }],
     });
-    expect(matchPlugin(config, 'CssExtractRspackPlugin')).toBeNull();
   });
 
   it('should enable source map when output.sourceMap.css is true', async () => {

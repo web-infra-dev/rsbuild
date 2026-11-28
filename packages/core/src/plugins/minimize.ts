@@ -9,7 +9,7 @@ import type {
   OneOrMany,
   RsbuildPlugin,
 } from '../types';
-import { getLightningCSSLoaderOptions } from './css';
+import { getLightningCSSLoaderOptions } from './cssShared';
 
 const CONSOLE_METHODS = [
   'assert',

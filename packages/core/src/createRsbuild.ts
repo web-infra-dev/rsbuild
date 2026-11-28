@@ -25,6 +25,7 @@ import { createPluginManager } from './pluginManager';
 import { pluginAppIcon } from './plugins/appIcon';
 import { pluginAsset } from './plugins/asset';
 import { pluginBasic } from './plugins/basic';
+import { pluginBuiltinCss } from './plugins/builtinCss';
 import { pluginCache } from './plugins/cache';
 import { pluginCleanOutput } from './plugins/cleanOutput';
 import { pluginCss } from './plugins/css';
@@ -97,6 +98,7 @@ function applyDefaultPlugins(
     pluginNodeAddons(),
     pluginDefine(),
     pluginCss(),
+    pluginBuiltinCss(),
     pluginMinimize(),
     pluginProgress(),
     pluginWorker(),
